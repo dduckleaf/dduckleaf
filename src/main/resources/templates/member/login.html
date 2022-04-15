@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<style>
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        const successMessage = "[[${ successMessage }]]";
+        if(successMessage) {
+            alert(successMessage);
+        }
+    </script>
+</head>
+<body>
+    <h1>로그인</h1>
+    <div class="login-form">
+        <form action="/member/login" method="post">
+            <label>ID : </label><input type="text" name="memberId"><br>
+            <label>PWD : </label><input type="text" name="memberPwd"><br>
+            <button type="submit">로그인</button>
+        </form>
+    </div>
+</body>
+</html>
