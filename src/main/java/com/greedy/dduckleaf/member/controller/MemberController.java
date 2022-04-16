@@ -47,6 +47,9 @@ public class MemberController {
         return mv;
     }
 
+    @GetMapping("/logout")
+    public void logout() {}
+
     @GetMapping("/regist")
     public void registMember() {}
 

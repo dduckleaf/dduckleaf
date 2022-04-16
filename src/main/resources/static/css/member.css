@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 body {
     width: 100%;
 }
@@ -20,7 +22,7 @@ body {
     font-size: 17px;
 }
 .logo {
-    background: url("../../static/images/logo.png") no-repeat;
+    background: url("../images/logo.png") no-repeat;
     width: 300px;
     height: 100px;
     border: white;
