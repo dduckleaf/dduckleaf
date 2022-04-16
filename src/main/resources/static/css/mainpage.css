@@ -1,0 +1,120 @@
+/* progress bar 하단 텍스트 */
+.progressbar {
+    float: left;
+    color: #BAC34E;
+}
+
+.progressbar1 {
+    float: right;
+    font-size: 10pt;
+    color: #ABAEAB;
+}
+
+/* 실시간랭킹 스크롤박스 배치 */
+.ranktext1 {
+    float: right;
+    margin-right: 3%;
+}
+
+/* progress bar*/
+
+.progress {
+    background-color: white;
+    width: 100%;
+    height: 7px;
+    margin-bottom: 3%;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #ABAEAB;
+    border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #BAC34E;
+    border-radius: 10px;
+}
+
+/* 실시간랭킹 이미지 */
+#rankingimg {
+    height: 70px;
+}
+
+/* 떡잎추천 항목 margin속성 */
+.mainproduct {
+    margin-bottom: 3%;
+}
+
+.pt-8 {
+    padding-top: 0% !important;
+}
+
+.order-1 {
+    float: left;
+    padding-left: 0% !important;
+    margin-left: 0% !important;
+}
+
+/* 떡잎추천 이미지 */
+.mainimg {
+    height: 180px;
+}
+
+/* 실시간랭킹 가로영역*/
+#productrank {
+    width: 400px !important;
+    display: block;
+}
+
+.widgets-area {
+    width: 400px;
+    margin-left: 10%;
+}
+
+.rank-content {
+    width: 250px;
+}
+
+/* 실시간랭킹 순위 번호 */
+.ranking {
+    margin-right: 25px;
+}
+
+/* 실시간랭킹 상품 텍스트 */
+.rank-name {
+    font-weight: bold;
+    font-size: 14pt;
+}
+
+.product-list-item {
+    border: rgba(0, 0, 0, 0);
+}
+
+.product-name {
+    float: left;
+    font-weight: bold;
+    font-size: 12pt;
+}
+
+.new-price {
+    float: left;
+    font-size: 10pt !important;
+    color: #ABAEAB;
+    margin-top: -25px;
+}
+
+.product-content {
+    padding-left: 0%;
+    padding-right: 0%;
+    padding-top: 5%;
+    border: rgba(0, 0, 0, 0);
+}
+
+.rank-percent {
+    color: #BAC34E;
+    margin-right: 10px;
+}
+
+.rank-compony {
+    color: #ABAEAB;
+}
