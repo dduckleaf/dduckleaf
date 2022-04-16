@@ -10,7 +10,7 @@
 }
 .login-form input {
     width: 90%;
-    height: 21px;
+    height: 17px;
     padding: 16px;
     margin-top: 10px;
     border: 1px solid #C8B5B5;
@@ -23,6 +23,21 @@
     border: white;
     left: 15%;
     position: relative;
+}
+.small-btn {
+    width: 90px;
+    border-radius: 5px;
+    font-size: 12px;
+    background: #BAC34E;
+    color: white;
+    border: none;
+    height: 35px;
+}
+.medium-btn {
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+    font-size: 16px;
 }
 .big-btn {
     width: 160px;
@@ -59,4 +74,26 @@
     color: #BAC34E;
     position: relative;
     left: 42%;
+}
+.regist-title {
+    font-size: 37px;
+    margin-bottom: 10px;
+}
+.regist-form {
+    position: relative;
+    top: 30%;
+    left: 37%;
+    align: center;
+    width: 25%;
+}
+.regist-form input {
+    width: 90%;
+    height: 17px;
+    padding: 16px;
+    margin-top: 10px;
+    border: 1px solid #C8B5B5;
+    font-size: 17px;
+}
+.email-verification-div, .phone-verification-div {
+    display: none;
 }
