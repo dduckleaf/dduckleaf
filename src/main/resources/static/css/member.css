@@ -1,0 +1,128 @@
+body {
+    width: 100%;
+}
+.login-title {
+    font-size: 37px;
+}
+.login-form {
+    position: relative;
+    top: 30%;
+    left: 37%;
+    align: center;
+    width: 25%;
+}
+.login-form input {
+    width: 90%;
+    height: 17px;
+    padding: 16px;
+    margin-top: 10px;
+    border: 1px solid #C8B5B5;
+    font-size: 17px;
+}
+.logo {
+    background: url("../../static/images/logo.png") no-repeat;
+    width: 300px;
+    height: 100px;
+    border: white;
+    left: 15%;
+    position: relative;
+}
+.small-btn {
+    width: 90px;
+    border-radius: 5px;
+    font-size: 12px;
+    background: #BAC34E;
+    color: white;
+    border: none;
+    height: 35px;
+}
+.medium-btn {
+    width: 100px;
+    height: 35px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+.big-btn {
+    width: 160px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+.bigbig-btn {
+    width: 300px;
+    height: 45px;
+    border-radius: 5px;
+    font-size: 24px;
+}
+.bigbigbig-btn {
+    width: 100%;
+    height: 45px;
+    border-radius: 3px;
+    font-size: 20px;
+    color: white;
+    background: #BAC34E;
+    border: 1px solid white;
+    margin-bottom: 25px;
+}
+.login-find {
+    float: right;
+    margin-top: 18px;
+    margin-bottom: 18px;
+    border: none;
+    background: white;
+}
+.login-regist {
+    text-decoration: underline;
+    font-weight: normal;
+    color: #BAC34E;
+    position: relative;
+    left: 42%;
+}
+.regist-title {
+    font-size: 37px;
+    margin-bottom: 10px;
+}
+.regist-form {
+    position: relative;
+    top: 30%;
+    left: 37%;
+    align: center;
+    width: 400px;
+    /*border: 1px solid red;*/
+}
+.regist-form input {
+    width: 360px;
+    height: 17px;
+    padding: 16px;
+    margin-top: 5px;
+    border: 1px solid #C8B5B5;
+    font-size: 17px;
+}
+.email-verification-div, .phone-verification-div {
+    display: block;
+}
+#send-email {
+    position: relative;
+    top: -44px;
+    left: 295px;
+}
+#check-email {
+    position: relative;
+    top: -44px;
+    left: 295px;
+}
+#send-phone {
+    position: relative;
+    top: -44px;
+    left: 295px;
+}
+#check-phone {
+    position: relative;
+    top: -44px;
+    left: 295px;
+}
+#id-dupleication {
+    position: relative;
+    top: -44px;
+    left: 295px;
+}
