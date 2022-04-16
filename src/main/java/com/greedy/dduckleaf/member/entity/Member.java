@@ -29,7 +29,7 @@ public class Member {
     @Column(name = "MEMBER_ROLE")
     private String memberRole;
 
-    @Column(name = "DETELE_STATUS")
+    @Column(name = "DELETE_STATUS")
     private String deleteStatus;
 
     public Member() {
