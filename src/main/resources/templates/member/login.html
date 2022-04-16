@@ -5,6 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="../../static/css/sangbum.css">
     <script>
         const successMessage = "[[${ successMessage }]]";
         if(successMessage) {
@@ -13,13 +14,16 @@
     </script>
 </head>
 <body>
-    <h1>로그인</h1>
     <div class="login-form">
+        <button onclick="location.href='/main/main'" class="logo"></button><br>
+        <h1 class="login-title">로그인</h1>
         <form action="/member/login" method="post">
-            <label>ID : </label><input type="text" name="memberId"><br>
-            <label>PWD : </label><input type="text" name="memberPwd"><br>
-            <button type="submit">로그인</button>
+            <input type="text" name="memberId" placeholder="아이디"><br>
+            <input type="password" name="memberPwd" placeholder="비밀번호"><br>
+            <button onclick="location.href='/member/findid'" class="login-find">아이디·비밀번호 찾기></button><br>
+            <button type="submit" class="bigbigbig-btn">로그인</button>
         </form>
+        <a align="center" onclick="location.href='/member/regist'" class="login-regist">회원가입</a>
     </div>
 </body>
 </html>
