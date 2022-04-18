@@ -1,0 +1,9 @@
+.test {
+    border: 1px solid red;
+    position: absolute;
+    z-index: 10;
+    left: 33%;
+    right: 15%;
+    top: 500px;
+    width: 25%;
+}
