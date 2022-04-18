@@ -11,12 +11,12 @@ public class MemberDTO {
     private String email;
     private String phone;
     private String memberRole;
-    private String deleteStatus;
+    private String withdrawalStatus;
 
     public MemberDTO() {
     }
 
-    public MemberDTO(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String deleteStatus) {
+    public MemberDTO(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String withdrawalStatus) {
         this.memberNo = memberNo;
         this.memberName = memberName;
         this.memberId = memberId;
@@ -24,7 +24,7 @@ public class MemberDTO {
         this.email = email;
         this.phone = phone;
         this.memberRole = memberRole;
-        this.deleteStatus = deleteStatus;
+        this.withdrawalStatus = withdrawalStatus;
     }
 
     public int getMemberNo() {
@@ -83,12 +83,12 @@ public class MemberDTO {
         this.memberRole = memberRole;
     }
 
-    public String getDeleteStatus() {
-        return deleteStatus;
+    public String getWithdrawalStatus() {
+        return withdrawalStatus;
     }
 
-    public void setDeleteStatus(String deleteStatus) {
-        this.deleteStatus = deleteStatus;
+    public void setWithdrawalStatus(String withdrawalStatus) {
+        this.withdrawalStatus = withdrawalStatus;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class MemberDTO {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", memberRole='" + memberRole + '\'' +
-                ", deleteStatus='" + deleteStatus + '\'' +
+                ", withdrawalStatus='" + withdrawalStatus + '\'' +
                 '}';
     }
 }

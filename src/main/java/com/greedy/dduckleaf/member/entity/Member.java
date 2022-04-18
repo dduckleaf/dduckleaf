@@ -29,10 +29,21 @@ public class Member {
     @Column(name = "MEMBER_ROLE")
     private String memberRole;
 
-    @Column(name = "DELETE_STATUS")
-    private String deleteStatus;
+    @Column(name = "WITHDRAWAL_STATUS")
+    private String withdrawalStatus;
 
     public Member() {
+    }
+
+    public Member(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String withdrawalStatus) {
+        this.memberNo = memberNo;
+        this.memberName = memberName;
+        this.memberId = memberId;
+        this.memberPwd = memberPwd;
+        this.email = email;
+        this.phone = phone;
+        this.memberRole = memberRole;
+        this.withdrawalStatus = withdrawalStatus;
     }
 
     public int getMemberNo() {
@@ -91,23 +102,12 @@ public class Member {
         this.memberRole = memberRole;
     }
 
-    public String getDeleteStatus() {
-        return deleteStatus;
+    public String getWithdrawalStatus() {
+        return withdrawalStatus;
     }
 
-    public void setDeleteStatus(String deleteStatus) {
-        this.deleteStatus = deleteStatus;
-    }
-
-    public Member(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String deleteStatus) {
-        this.memberNo = memberNo;
-        this.memberName = memberName;
-        this.memberId = memberId;
-        this.memberPwd = memberPwd;
-        this.email = email;
-        this.phone = phone;
-        this.memberRole = memberRole;
-        this.deleteStatus = deleteStatus;
+    public void setWithdrawalStatus(String withdrawalStatus) {
+        this.withdrawalStatus = withdrawalStatus;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class Member {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", memberRole='" + memberRole + '\'' +
-                ", deleteStatus='" + deleteStatus + '\'' +
+                ", withdrawalStatus='" + withdrawalStatus + '\'' +
                 '}';
     }
 }
