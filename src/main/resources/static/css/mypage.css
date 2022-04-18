@@ -71,6 +71,10 @@
     margin: 80px auto 15px;
 }
 
+.member-icon:hover {
+    cursor: pointer;
+}
+
 .supporter-tab aside div.member-name, .farmer-tab aside div.member-name {
     font-size: 20px;
     text-align: center;
