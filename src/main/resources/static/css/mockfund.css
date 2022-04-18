@@ -1,0 +1,106 @@
+body{
+    margin:0;
+    padding:0;
+    background-color: #FFF;
+    font-size:14px;
+}
+
+button.accordion {
+    background-color:#FFF;
+    cursor: pointer;
+    width: 150%;
+    border: none;
+    font-size: 16px;
+    transition: 0.5s;
+    text-align: left;
+    padding:10px;
+    padding-bottom: 0px;
+    display: inline;
+}
+
+button.accordion>p{
+    float: left;
+    margin-left: 10px;
+}
+
+
+button.accordion.active{
+    color : #000;
+}
+
+button.accordion.active:after {
+    background-image: url("assets/images/product/medium-size/arrow.png");
+    content:"";
+}
+
+div.panel {
+    padding: 0 18px;
+    padding-top: 0px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.fundmenutitle {
+    font-size: 20pt;
+}
+
+div.fundmenu > * {
+    font-size: 16pt;
+}
+
+.arrow {
+    margin-left: 30px;
+}
+
+.col-md-2, .col-md-7 {
+    float: left;
+}
+
+.col-md-2 {
+    margin-top: 20px !important;
+}
+
+.col-md-7 {
+    margin-left: 10%;
+    margin-top: 50px !important;
+}
+
+.fundtitle {
+    font-size: 30pt;
+}
+
+.funddata {
+    font-size: 20pt;
+    margin-top: 20px;
+    width: 800px;
+    border: 1px solid black;
+    border-top: 10px solid #BAC34E;
+}
+
+.fundsubtitle {
+    margin-left: 20px;
+    line-height: 70px;
+    padding-right: 30px;
+}
+
+.fundstatus {
+    font-size: 12pt;
+}
+
+.fund-btn {
+    float: right;
+    margin-right: 20px;
+    margin-top: 22px;
+    font-size: 14pt;
+    color: #BAC34E;
+    border: 1px solid #BAC34E;
+    border-radius: 5px;
+    text-align: center;
+    width: 100px;
+    height: 30px;
+}
+
+.fund-btn:hover {
+    cursor: pointer;
+}
