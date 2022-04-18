@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    <link rel="stylesheet" type="text/css" th:href="@{/css/member.css}">-->
+    <link rel="stylesheet" type="text/css" href="../../../static/css/member.css">
+</head>
+<body style="overflow: hidden">
+<div class="top-area">
+    <h1>아이디·비밀번호 찾기</h1>
+    <input type="button" id="findId1" value="아이디 찾기">
+    <input type="button" id="findPwd1" value="비밀번호 찾기">
+</div>
+<div class="bottom-area">
+    <p style="font-size: 40px; font-weight: bold">입력하신 e-mail로<br>
+        아이디를 발송했습니다.</p>
+    <h4>e-mail에서 확인해주세요.</h4>
+    <button class="bigbigbig-btn" id="goToHome">확인</button>
+</div>
+</body>
+<script>
+    document.getElementById("findPwd1").onclick = function () {
+        location.href="/member/findpwd.html";
+    }
+</script>
+</html>
