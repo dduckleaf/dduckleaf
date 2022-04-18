@@ -29,7 +29,7 @@ button.accordion.active{
 }
 
 button.accordion.active:after {
-    background-image: url("assets/images/product/medium-size/arrow.png");
+    background-image: url("../images/common/arrow.png");
     content:"";
 }
 
@@ -64,10 +64,13 @@ div.fundmenu > * {
 .col-md-7 {
     margin-left: 10%;
     margin-top: 50px !important;
+    float: right;
+    width: 700px !important;
 }
 
 .fundtitle {
     font-size: 30pt;
+    width: 800px;
 }
 
 .funddata {
