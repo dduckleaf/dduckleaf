@@ -16,7 +16,7 @@ public class CustomUser extends User {
     private String email;
     private String phone;
     private String memberRole;
-    private String deleteStatus;
+    private String withdrawStatus;
 
     public int getMemberNo() {
         return memberNo;
@@ -74,12 +74,12 @@ public class CustomUser extends User {
         this.memberRole = memberRole;
     }
 
-    public String getDeleteStatus() {
-        return deleteStatus;
+    public String getWithdrawStatus() {
+        return withdrawStatus;
     }
 
-    public void setDeleteStatus(String deleteStatus) {
-        this.deleteStatus = deleteStatus;
+    public void setWithdrawStatus(String withdrawStatus) {
+        this.withdrawStatus = withdrawStatus;
     }
 
     public CustomUser(MemberDTO member, Collection<? extends GrantedAuthority> authorities) {
@@ -96,7 +96,7 @@ public class CustomUser extends User {
         this.email = member.getEmail();
         this.phone = member.getPhone();
         this.memberRole = member.getMemberRole();
-        this.deleteStatus = member.getDeleteStatus();
+        this.withdrawStatus = member.getWithdrawStatus();
     }
 
     @Override
@@ -109,7 +109,7 @@ public class CustomUser extends User {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", memberRole='" + memberRole + '\'' +
-                ", deleteStatus='" + deleteStatus + '\'' +
+                ", withdrawStatus='" + withdrawStatus + '\'' +
                 '}';
     }
 }

@@ -2,6 +2,8 @@ package com.greedy.dduckleaf.member.dto;
 
 import org.springframework.stereotype.Controller;
 
+import java.sql.Date;
+
 public class MemberDTO {
 
     private int memberNo;
@@ -11,12 +13,12 @@ public class MemberDTO {
     private String email;
     private String phone;
     private String memberRole;
-    private String deleteStatus;
+    private String withdrawStatus;
 
     public MemberDTO() {
     }
 
-    public MemberDTO(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String deleteStatus) {
+    public MemberDTO(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String withdrawStatus) {
         this.memberNo = memberNo;
         this.memberName = memberName;
         this.memberId = memberId;
@@ -24,7 +26,7 @@ public class MemberDTO {
         this.email = email;
         this.phone = phone;
         this.memberRole = memberRole;
-        this.deleteStatus = deleteStatus;
+        this.withdrawStatus = withdrawStatus;
     }
 
     public int getMemberNo() {
@@ -83,12 +85,12 @@ public class MemberDTO {
         this.memberRole = memberRole;
     }
 
-    public String getDeleteStatus() {
-        return deleteStatus;
+    public String getWithdrawStatus() {
+        return withdrawStatus;
     }
 
-    public void setDeleteStatus(String deleteStatus) {
-        this.deleteStatus = deleteStatus;
+    public void setWithdrawStatus(String withdrawStatus) {
+        this.withdrawStatus = withdrawStatus;
     }
 
     @Override
@@ -101,7 +103,7 @@ public class MemberDTO {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", memberRole='" + memberRole + '\'' +
-                ", deleteStatus='" + deleteStatus + '\'' +
+                ", withdrawStatus='" + withdrawStatus + '\'' +
                 '}';
     }
 }

@@ -18,15 +18,11 @@ public class MainController {
     @GetMapping(value = {"/", "/main"})
     public String mainM() {
 
-        System.out.println("여기오낭");
-
         return "main/main";
     }
 
     @PostMapping(value = "/")
     public ModelAndView redirectMain(ModelAndView mv){
-
-        System.out.println("여기오나??!??!");
 
         mv.setViewName("/main/main");
 

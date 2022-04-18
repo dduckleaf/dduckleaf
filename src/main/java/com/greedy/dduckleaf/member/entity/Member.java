@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.member.entity;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity(name = "Member")
 @Table(name = "TBL_MEMBER")
@@ -29,10 +30,29 @@ public class Member {
     @Column(name = "MEMBER_ROLE")
     private String memberRole;
 
-    @Column(name = "DELETE_STATUS")
-    private String deleteStatus;
+    @Column(name = "WITHDRAWAL_STATUS")
+    private String withdrawalStatus;
+
+    @Column(name = "WITHDRAWAL_DATE")
+    private Date withdrawalDate;
+
+    @Column(name = "WITHDRAWAL_REASON")
+    private  String withdrawalReason;
 
     public Member() {
+    }
+
+    public Member(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String withdrawalStatus, Date withdrawalDate, String withdrawalReason) {
+        this.memberNo = memberNo;
+        this.memberName = memberName;
+        this.memberId = memberId;
+        this.memberPwd = memberPwd;
+        this.email = email;
+        this.phone = phone;
+        this.memberRole = memberRole;
+        this.withdrawalStatus = withdrawalStatus;
+        this.withdrawalDate = withdrawalDate;
+        this.withdrawalReason = withdrawalReason;
     }
 
     public int getMemberNo() {
@@ -91,23 +111,28 @@ public class Member {
         this.memberRole = memberRole;
     }
 
-    public String getDeleteStatus() {
-        return deleteStatus;
+    public String getWithdrawalStatus() {
+        return withdrawalStatus;
     }
 
-    public void setDeleteStatus(String deleteStatus) {
-        this.deleteStatus = deleteStatus;
+    public void setWithdrawalStatus(String withdrawalStatus) {
+        this.withdrawalStatus = withdrawalStatus;
     }
 
-    public Member(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String deleteStatus) {
-        this.memberNo = memberNo;
-        this.memberName = memberName;
-        this.memberId = memberId;
-        this.memberPwd = memberPwd;
-        this.email = email;
-        this.phone = phone;
-        this.memberRole = memberRole;
-        this.deleteStatus = deleteStatus;
+    public Date getWithdrawalDate() {
+        return withdrawalDate;
+    }
+
+    public void setWithdrawalDate(Date withdrawalDate) {
+        this.withdrawalDate = withdrawalDate;
+    }
+
+    public String getWithdrawalReason() {
+        return withdrawalReason;
+    }
+
+    public void setWithdrawalReason(String withdrawalReason) {
+        this.withdrawalReason = withdrawalReason;
     }
 
     @Override
@@ -120,7 +145,9 @@ public class Member {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
                 ", memberRole='" + memberRole + '\'' +
-                ", deleteStatus='" + deleteStatus + '\'' +
+                ", withdrawalStatus='" + withdrawalStatus + '\'' +
+                ", withdrawalDate=" + withdrawalDate +
+                ", withdrawalReason='" + withdrawalReason + '\'' +
                 '}';
     }
 }

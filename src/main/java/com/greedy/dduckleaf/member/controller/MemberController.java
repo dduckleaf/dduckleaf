@@ -70,4 +70,10 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @GetMapping("/find/id")
+    public String findMemberId() {
+
+        return "/member/find/id";
+    }
+
 }
