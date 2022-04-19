@@ -153,12 +153,15 @@ div.fundmenu > * {
     width: 700px;
     height: 50px;
     font-size: 16pt;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .mockfundtitle2 {
     width: 650px;
     height: 50px;
     font-size: 16pt;
+    padding-left: 10px;
 }
 
 input[type="date"]::before {
@@ -200,10 +203,58 @@ select::-ms-expand {
     margin-left: 20px;
 }
 
-.guideline:hover {
+.guideline:hover, .home:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.panel > p {
     cursor: pointer;
 }
 
 .story {
     height: 1200px !important;
+}
+
+/* ========================= 스토리 구분선========================= */
+.reward-area {
+    border: 1px solid black;
+    height: 300px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.rewardtitle-section > * {
+    width: 100px;
+}
+
+.rewardtitle-section, .rewarddetail-section {
+    float: left;
+}
+
+.rewardtitle {
+    color: #BAC34E;
+    font-weight: bold;
+    margin-top: 30px !important;
+    margin-bottom: 55px !important;
+    display: block;
+}
+
+.rewarddetail {
+    margin-top: 30px;
+    display: block;
+}
+
+button.reward {
+    position: relative;
+    top: 300px;
+}
+
+.big-btn {
+    border: none;
+}
+
+hr {
+    position: relative;
+    bottom: 15px;
 }
