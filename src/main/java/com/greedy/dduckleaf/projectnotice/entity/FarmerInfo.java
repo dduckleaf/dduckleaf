@@ -1,26 +1,61 @@
-package com.greedy.dduckleaf.projectnotice.dto;
+package com.greedy.dduckleaf.projectnotice.entity;
 
-public class FarmerInfoDTO {
+import javax.persistence.*;
 
-    private String farmerName;
-    private String farmerEmail;
-    private String farmerPhone;
-    private String businessOwnType;
-    private String businessOwnNo;
-    private String businessName;
-    private String representativeName;
-    private String representativeEmail;
-    private String representativeSSN;
-    private String corporateName;
-    private String corporationType;
-    private String taxType;
-    private String taxTypeCategory;
-    private int corporateLicenseNo;
+@Entity(name = "FarmerInfo")
+@Table(name = "TBL_FARMER_INFO")
+public class FarmerInfo {
+
+    @Id
+    @Column(name = "MEMBER_NO")
     private int memberNo;
 
-    public FarmerInfoDTO() {}
+    @Column(name = "FARMER_NAME")
+    private String farmerName;
 
-    public FarmerInfoDTO(String farmerName, String farmerEmail, String farmerPhone, String businessOwnType, String businessOwnNo, String businessName, String representativeName, String representativeEmail, String representativeSSN, String corporateName, String corporationType, String taxType, String taxTypeCategory, int corporateLicenseNo, int memberNo) {
+    @Column(name = "FARMER_EMAIL")
+    private String farmerEmail;
+
+    @Column(name = "FARMER_PHONE")
+    private String farmerPhone;
+
+    @Column(name = "BUSINESS_OWN_TYPE")
+    private String businessOwnType;
+
+    @Column(name = "BUSINESS_OWN_NO")
+    private String businessOwnNo;
+
+    @Column(name = "BUSINESS_NAME")
+    private String businessName;
+
+    @Column(name = "REPRESENTATIVE_NAME")
+    private String representativeName;
+
+    @Column(name = "REPRESENTATIVE_EMAIL")
+    private String representativeEmail;
+
+    @Column(name = "REPRESENTATIVE_SSN")
+    private String representativeSSN;
+
+    @Column(name = "CORPORATE_NAME")
+    private String corporateName;
+
+    @Column(name = "CORPORATION_TYPE")
+    private String corporationType;
+
+    @Column(name = "TAX_TYPE")
+    private String taxType;
+
+    @Column(name = "TAX_TYPE_CATEGORY")
+    private String taxTypeCategory;
+
+    @Column(name = "CORPORATE_LICENSE_NO")
+    private int corporateLicenseNo;
+
+    public FarmerInfo() {}
+
+    public FarmerInfo(int memberNo, String farmerName, String farmerEmail, String farmerPhone, String businessOwnType, String businessOwnNo, String businessName, String representativeName, String representativeEmail, String representativeSSN, String corporateName, String corporationType, String taxType, String taxTypeCategory, int corporateLicenseNo) {
+        this.memberNo = memberNo;
         this.farmerName = farmerName;
         this.farmerEmail = farmerEmail;
         this.farmerPhone = farmerPhone;
@@ -35,6 +70,13 @@ public class FarmerInfoDTO {
         this.taxType = taxType;
         this.taxTypeCategory = taxTypeCategory;
         this.corporateLicenseNo = corporateLicenseNo;
+    }
+
+    public int getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(int memberNo) {
         this.memberNo = memberNo;
     }
 
@@ -150,18 +192,11 @@ public class FarmerInfoDTO {
         this.corporateLicenseNo = corporateLicenseNo;
     }
 
-    public int getMemberNo() {
-        return memberNo;
-    }
-
-    public void setMemberNo(int memberNo) {
-        this.memberNo = memberNo;
-    }
-
     @Override
     public String toString() {
-        return "FarmerInfoDTO{" +
-                "farmerName='" + farmerName + '\'' +
+        return "FarmerInfo{" +
+                "memberNo=" + memberNo +
+                ", farmerName='" + farmerName + '\'' +
                 ", farmerEmail='" + farmerEmail + '\'' +
                 ", farmerPhone='" + farmerPhone + '\'' +
                 ", businessOwnType='" + businessOwnType + '\'' +
@@ -175,7 +210,6 @@ public class FarmerInfoDTO {
                 ", taxType='" + taxType + '\'' +
                 ", taxTypeCategory='" + taxTypeCategory + '\'' +
                 ", corporateLicenseNo=" + corporateLicenseNo +
-                ", memberNo=" + memberNo +
                 '}';
     }
 }

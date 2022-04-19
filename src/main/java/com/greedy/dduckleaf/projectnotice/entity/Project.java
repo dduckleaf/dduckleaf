@@ -1,37 +1,74 @@
-package com.greedy.dduckleaf.projectnotice.dto;
+package com.greedy.dduckleaf.projectnotice.entity;
 
+import javax.persistence.*;
 import java.util.Date;
 
-public class ProjectDTO {
+@Entity(name = "Project")
+@Table(name = "TBL_PROJECT")
+public class Project {
 
-    private String projectName;
-    private int fundTargetAmount;
-    private java.util.Date openDate;
-    private java.util.Date endDate;
-    private String projectStatus;
-    private double achievementRate;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JoinColumn(name = "PROJECT_NO")
     private int projectNo;
+
+    @Column(name = "PROJECT_NAME")
+    private String projectName;
+
+    @Column(name = "FUND_TARGET_AMOUNT")
+    private int fundTargetAmount;
+
+    @Column(name = "OPEN_DATE")
+    private java.util.Date openDate;
+
+    @Column(name = "END_DATE")
+    private java.util.Date endDate;
+
+    @Column(name = "PROJECT_STATUS")
+    private String projectStatus;
+
+    @Column(name = "ACHIEVEMENT_RATE")
+    private double achievementRate;
+
+    @Column(name = "EXAMINE_STATUS")
     private String examineStatus;
+
+    @Column(name = "PROJECT_EXAMINE_STAUTS")
     private String projectExamineStatus;
+
+    @Column(name = "PROGRESS_STATUS")
     private int progressStatus;
+
+    @Column(name = "MAX_TARGET_AMOUNT")
     private int maxTargetAmount;
-    private int farmerNo;
 
-    public ProjectDTO() {}
+    @ManyToOne
+    @JoinColumn(name = "FARMER_NO")
+    private FarmerInfo farmerNo;
 
-    public ProjectDTO(String projectName, int fundTargetAmount, Date openDate, Date endDate, String projectStatus, double achievementRate, int projectNo, String examineStatus, String projectExamineStatus, int progressStatus, int maxTargetAmount, int farmerNo) {
+    public Project() {}
+
+    public Project(int projectNo, String projectName, int fundTargetAmount, Date openDate, Date endDate, String projectStatus, double achievementRate, String examineStatus, String projectExamineStatus, int progressStatus, int maxTargetAmount, FarmerInfo farmerNo) {
+        this.projectNo = projectNo;
         this.projectName = projectName;
         this.fundTargetAmount = fundTargetAmount;
         this.openDate = openDate;
         this.endDate = endDate;
         this.projectStatus = projectStatus;
         this.achievementRate = achievementRate;
-        this.projectNo = projectNo;
         this.examineStatus = examineStatus;
         this.projectExamineStatus = projectExamineStatus;
         this.progressStatus = progressStatus;
         this.maxTargetAmount = maxTargetAmount;
         this.farmerNo = farmerNo;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
     }
 
     public String getProjectName() {
@@ -82,14 +119,6 @@ public class ProjectDTO {
         this.achievementRate = achievementRate;
     }
 
-    public int getProjectNo() {
-        return projectNo;
-    }
-
-    public void setProjectNo(int projectNo) {
-        this.projectNo = projectNo;
-    }
-
     public String getExamineStatus() {
         return examineStatus;
     }
@@ -122,24 +151,24 @@ public class ProjectDTO {
         this.maxTargetAmount = maxTargetAmount;
     }
 
-    public int getFarmerNo() {
+    public FarmerInfo getFarmerNo() {
         return farmerNo;
     }
 
-    public void setFarmerNo(int farmerNo) {
+    public void setFarmerNo(FarmerInfo farmerNo) {
         this.farmerNo = farmerNo;
     }
 
     @Override
     public String toString() {
-        return "ProjectDTO{" +
-                "projectName='" + projectName + '\'' +
+        return "Project{" +
+                "projectNo=" + projectNo +
+                ", projectName='" + projectName + '\'' +
                 ", fundTargetAmount=" + fundTargetAmount +
                 ", openDate=" + openDate +
                 ", endDate=" + endDate +
                 ", projectStatus='" + projectStatus + '\'' +
                 ", achievementRate=" + achievementRate +
-                ", projectNo=" + projectNo +
                 ", examineStatus='" + examineStatus + '\'' +
                 ", projectExamineStatus='" + projectExamineStatus + '\'' +
                 ", progressStatus=" + progressStatus +
