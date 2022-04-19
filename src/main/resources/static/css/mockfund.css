@@ -1,8 +1,19 @@
-body{
+body {
     margin:0;
     padding:0;
     background-color: #FFF;
     font-size:14px;
+}
+
+div.row1 {
+    height: 600px;
+}
+
+.leaf {
+    width: 25px;
+    height: 27px;
+    margin-right: 7px;
+    vertical-align: 5%;
 }
 
 button.accordion {
@@ -22,7 +33,6 @@ button.accordion>p{
     float: left;
     margin-left: 10px;
 }
-
 
 button.accordion.active{
     color : #000;
@@ -62,10 +72,14 @@ div.fundmenu > * {
 }
 
 .col-md-7 {
-    margin-left: 10%;
+    margin-left: 30%;
     margin-top: 50px !important;
     float: right;
     width: 700px !important;
+}
+
+.col-md-7:not(.footer) {
+    float: unset;
 }
 
 .fundtitle {
@@ -76,7 +90,7 @@ div.fundmenu > * {
 .funddata {
     font-size: 20pt;
     margin-top: 20px;
-    width: 800px;
+    width: 700px;
     border: 1px solid black;
     border-top: 10px solid #BAC34E;
 }
@@ -84,7 +98,7 @@ div.fundmenu > * {
 .fundsubtitle {
     margin-left: 20px;
     line-height: 70px;
-    padding-right: 30px;
+    padding-right: 20px;
 }
 
 .fundstatus {
