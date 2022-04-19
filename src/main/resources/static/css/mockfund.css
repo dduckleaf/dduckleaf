@@ -178,5 +178,32 @@ select::-ms-expand {
 
 .btn1 {
     float: right;
-    margin-top: 100px;
+    margin-top: 50px;
+}
+
+/* ========================= 기본 정보 구분선========================= */
+.projectsummary {
+    width: 700px;
+    height: 150px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.story-btn {
+    margin-top: 10px;
+    float: none;
+}
+
+.guideline {
+    color: #BAC34E;
+    text-decoration: underline;
+    margin-left: 20px;
+}
+
+.guideline:hover {
+    cursor: pointer;
+}
+
+.story {
+    height: 1200px !important;
 }

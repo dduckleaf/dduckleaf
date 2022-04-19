@@ -13,6 +13,10 @@ public class MockFundController {
     @GetMapping("mockfundmain")
     public void mockFundMain() {}
 
+    @GetMapping("regist/basicinfo")
+    public void mockFundBasicInfo() {}
 
+    @GetMapping("regist/story")
+    public void mockFundStory() {}
 
 }

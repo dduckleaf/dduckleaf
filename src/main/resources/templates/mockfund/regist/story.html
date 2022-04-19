@@ -20,7 +20,7 @@
 <div th:replace="/common/userheader.html"></div>
 <div class="container">
     <div style="width: 1000px;">
-        <div class="row1">
+        <div class="row1 story">
 
             <div class="col-md-2 fundmenu">
                 <button class="accordion">
@@ -34,38 +34,33 @@
             </div>
             <div class="col-md-7">
                 <div class="breadcrumb">
-                    <span class="breadcrumb">펀딩 준비</span>&nbsp;
+                    <span class="breadcrumb">모의펀딩 준비</span>&nbsp;
                     <span class="breadcrumb">></span>&nbsp;
-                    <span class="breadcrumb">기본 정보</span>
+                    <span class="breadcrumb">스토리 작성</span>
                 </div>
-                <a style="font-size: 30pt; font-weight: bold;">기본 정보</a><br>
-                <a>프로젝트의 추가 정보를 입력해주세요.</a>
+                <a style="font-size: 30pt; font-weight: bold;">스토리 작성</a><br>
+                <a>파머님의 프로젝트를 소개해주세요.</a>
                 <div class="basicmenu">
-                    <a class="basictitle">프로젝트 제목</a><br>
-                    <input class="mockfundtitle1" type="text" placeholder="프로젝트 제목">
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">목표 티켓</a><br>
-                    <input class="mockfundtitle2" type="number" placeholder="200"><a class="basictitle" style="margin-left: 15px;">개</a>
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">대표 이미지</a><br>
+                    <a class="basictitle">소개 사진 등록</a><br>
+                    <a class="basicsubtitle">프로젝트 페이지 상단에 노출될 사진을 올려주세요.</a><br>
                     <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
-                    <a class="basicsubtitle">3MB 이하의 JPEG, PNG 파일<br>
-                        해상도 1200x675 픽셀 이상<br>텍스트 및 로고 삽입 금치</a>
+                    <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
+                        해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
                 </div>
                 <div class="basicmenu">
-                    <a class="basictitle">카테고리</a><br>
-                    <select class="mockfundtitle1">
-                        <option value="">곡류</option>
-                        <option value="서류">서류</option>
-                    </select>
-                    <!--                    <input class="mockfundtitle1" type="text" placeholder="프로젝트 제목">-->
+                    <a class="basictitle">프로젝트 요약</a><br>
+                    <a class="basicsubtitle">프로젝트 페이지 상단에 노출됩니다.</a><br>
+                    <input class="projectsummary" type="text">
                 </div>
-                <div class="basicmenu form-date">
-                    <a class="basictitle">프로젝트 종료일</a><br>
-                    <a class="basicsubtitle">요건·콘텐츠 확인 및 프로젝트 진행 일정과 리워드 발송을 함께 고려하여 종료일을 설정해 주세요.</a>
-                    <input class="mockfundtitle1" id="endDate" type="date">
+                <div>
+                    <a class="basictitle">스토리 광고 심의 동의</a><br>
+                    <a class="basicsubtitle">스토리 작성 전, 플랫폼에서 제공하는 광고 심의 가이드라인을 반드시 확인하세요.
+                    <br>동의를 진행해야 스토리 작성이 가능합니다.</a><br>
+                    <button class="btn1 big-btn story-btn">동의하기</button><a class="guideline">식품 표시·광고 가이드라인</a>
+                </div>
+                <div class="basicmenu">
+                    <a class="basictitle">프로젝트 스토리</a><br>
+                    <input class="projectsummary" type="text">
                 </div>
                 <div>
                     <button class="btn1 big-btn">저장하기</button>
