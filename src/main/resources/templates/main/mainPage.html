@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
@@ -12,19 +12,18 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="../../static/images/favicon.ico" />
 
-    <!-- CSS
-    ============================================ -->
+    <!-- CSS ============================================ -->
 
     <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
-    <link rel="stylesheet" href="../../static/css/vendor/font-awesome.min.css" />
-    <link rel="stylesheet" href="../../static/css/vendor/Pe-icon-7-stroke.css" />
+    <link rel="stylesheet" th:href="@{css/vendor/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{css/vendor/Pe-icon-7-stroke.css}" />
 
     <!-- Plugin CSS (Global Plugins Files) -->
-    <link rel="stylesheet" href="../../static/css/plugins/animate.min.css">
-    <link rel="stylesheet" href="../../static/css/plugins/jquery-ui.min.css">
-    <link rel="stylesheet" href="../../static/css/plugins/swiper-bundle.min.css">
-    <link rel="stylesheet" href="../../static/css/plugins/nice-select.css">
-    <link rel="stylesheet" href="../../static/css/plugins/magnific-popup.min.css" />
+    <link rel="stylesheet" th:href="@{css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/jquery-ui.min.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/magnific-popup.min.css}"/>
 
     <!-- Style CSS -->
     <link rel="stylesheet" href="../../static/css/style.css">
@@ -33,6 +32,9 @@
 </head>
 
 <body>
+
+<div th:replace="/common/userheader.html"></div>
+
 <!-- Begin Slider Area -->
 <div class="slider-area">
 
@@ -40,27 +42,28 @@
     <div class="swiper-container main-slider swiper-arrow with-bg_white">
         <div class="swiper-wrapper">
             <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height" data-bg-image="../../static/images/logo.png">
+                <div class="slide-inner bg-height">
+                    <img src="/images/main/banner.png">
 
                 </div>
             </div>
             <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height" data-bg-image="../../static/images/logo.png">
+                <div class="slide-inner bg-height">
+                    <img src="/images/main/bean.png">
+                </div>
+            </div>
+            <div class="swiper-slide animation-style-01">
+                <div class="slide-inner bg-height" data-bg-image="../../static/images/common/logo.png">
 
                 </div>
             </div>
             <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height" data-bg-image="../../static/images/logo.png">
+                <div class="slide-inner bg-height" data-bg-image="../../static/images/common/logo.png">
 
                 </div>
             </div>
             <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height" data-bg-image="../../static/images/logo.png">
-
-                </div>
-            </div>
-            <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height" data-bg-image="../../static/images/logo.png">
+                <div class="slide-inner bg-height" data-bg-image="../../static/images/common/logo.png">
 
                 </div>
             </div>
@@ -94,24 +97,28 @@
                                 <div class="widgets-item">
                                     <div class="swiper-container">
                                         <div class="swiper-wrapper" id="productrank">
-                                            <div class="swiper-slide">
-                                                <div class="product-list-item">
-                                                    <div>
-                                                        <h2 class="ranking">1</h2>
-                                                    </div>
-                                                    <div class="rank-content">
-                                                        <a class="rank-name" href="single-product.html">하트모양 포도가 있다!?!</a>
-                                                        <div class="price-box pb-1">
-                                                            <span class="rank-percent">1250%</span><span class="rank-compony">하트하트</span>
+                                            <div th:each="project : ${ rankingList }">
+                                                <div class="swiper-slide">
+                                                    <div class="product-list-item">
+                                                        <div>
+                                                            <h2 class="ranking">1</h2>
                                                         </div>
-                                                    </div>
-                                                    <div class="product-img img-zoom-effect">
-                                                        <a href="single-product.html">
-                                                            <img class="img-full" id="rankingimg" src="../../static/images/main/grape.png" alt="Product Images">
-                                                        </a>
+                                                        <div class="rank-content">
+                                                            <a class="rank-name" href="single-product.html" th:text="${ project.projectName }"></a>
+                                                            <div class="price-box pb-1">
+                                                                <span class="rank-percent" th:text="${ project.achievementRate + '%' }"></span><span class="rank-compony" th:text="${ project.projectName }"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-img img-zoom-effect">
+                                                            <a href="single-product.html">
+                                                                <img class="img-full" id="rankingimg" th:src="@{images/main/grape.png}" alt="Product Images">
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+
+
                                             <div class="swiper-slide">
                                                 <div class="product-list-item">
                                                     <div>
@@ -125,7 +132,7 @@
                                                     </div>
                                                     <div class="product-img img-zoom-effect">
                                                         <a href="single-product.html">
-                                                            <img class="img-full" id="rankingimg" src="../../static/images/main/bean.png" alt="Product Images">
+                                                            <img class="img-full" id="rankingimg" th:src="@{images/main/bean.png}" alt="Product Images">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -143,7 +150,7 @@
                                                     </div>
                                                     <div class="product-img img-zoom-effect">
                                                         <a href="single-product.html">
-                                                            <img class="img-full" id="rankingimg" src="../../static/images/main/ginseng.png" alt="Product Images">
+                                                            <img class="img-full" id="rankingimg" th:src="@{images/main/ginseng.png}" alt="Product Images">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -161,7 +168,7 @@
                                                     </div>
                                                     <div class="product-img img-zoom-effect">
                                                         <a href="single-product.html">
-                                                            <img class="img-full" id="rankingimg" src="../../static/images/main/potato.png" alt="Product Images">
+                                                            <img class="img-full" id="rankingimg" th:src="@{images/main/potato.png}" alt="Product Images">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -179,7 +186,7 @@
                                                     </div>
                                                     <div class="product-img img-zoom-effect">
                                                         <a href="single-product.html">
-                                                            <img class="img-full" id="rankingimg" src="../../static/images/main/persimmon.png" alt="Product Images">
+                                                            <img class="img-full" id="rankingimg" th:src="@{images/main/persimmon.png}" alt="Product Images">
                                                         </a>
                                                     </div>
                                                 </div>
@@ -199,7 +206,7 @@
                                         <div class="product-item">
                                             <div class="product-img img-zoom-effect">
                                                 <a href="single-product.html">
-                                                    <img class="img-full mainimg" src="../../static/images/main/tomato.png" alt="Product Images">
+                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
                                                 </a>
                                             </div>
                                             <div class="product-content">
@@ -216,7 +223,7 @@
                                         <div class="product-item">
                                             <div class="product-img img-zoom-effect">
                                                 <a href="single-product.html">
-                                                    <img class="img-full mainimg" src="../../static/images/mainpeach.png" alt="Product Images">
+                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
                                                 </a>
                                             </div>
                                             <div class="product-content">
@@ -233,7 +240,7 @@
                                         <div class="product-item">
                                             <div class="product-img img-zoom-effect">
                                                 <a href="single-product.html">
-                                                    <img class="img-full mainimg" src="../../static/images/main/mushroom.png" alt="Product Images">
+                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
                                                 </a>
                                             </div>
                                             <div class="product-content">
@@ -250,7 +257,7 @@
                                         <div class="product-item">
                                             <div class="product-img img-zoom-effect">
                                                 <a href="single-product.html">
-                                                    <img class="img-full mainimg" src="../../static/images/main/greenonion.png" alt="Product Images">
+                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
                                                 </a>
                                             </div>
                                             <div class="product-content">
@@ -267,7 +274,7 @@
                                         <div class="product-item">
                                             <div class="product-img img-zoom-effect">
                                                 <a href="single-product.html">
-                                                    <img class="img-full mainimg" src="../../static/images/main/lemon.png" alt="Product Images">
+                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
                                                 </a>
                                             </div>
                                             <div class="product-content">
@@ -284,7 +291,7 @@
                                         <div class="product-item">
                                             <div class="product-img img-zoom-effect">
                                                 <a href="single-product.html">
-                                                    <img class="img-full mainimg" src="../../static/images/main/brownrice.png" alt="Product Images">
+                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
                                                 </a>
                                             </div>
                                             <div class="product-content">

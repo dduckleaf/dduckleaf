@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div class="paging-area" align="center">
+        <th:block th:with="start = ${ selectCriteria.startPage }, last = ${ selectCriteria.endPage }">
+            <button class="paging-btn first"><<</button>
+            <button class="paging-btn prev"><</button>
+            <th:block th:each="p : ${ #numbers.sequence(start, last} }">
+                <th:block th:if="${ selectCriteria.pageNo eq p }">
+                    <button class="paging-btn" th:text="${ p }" disabled></button>
+                </th:block>
+                <th:block th:if="${ selectCriteria.pageNo ne p }">
+                    <button th:text="${ p }"></button>
+                </th:block>
+            </th:block>
+            <button class="paging-btn next">></button>
+            <button class="paging-btn last">>></button>
+        </th:block>
+    </div>
+</body>
+</html>
