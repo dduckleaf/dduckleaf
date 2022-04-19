@@ -1,12 +1,7 @@
 package com.greedy.dduckleaf.projectnotice.repository;
 
-import com.greedy.dduckleaf.projectnotice.entity.Project;
 import com.greedy.dduckleaf.projectnotice.entity.ProjectNotice;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
-import javax.persistence.JoinColumn;
-import java.util.List;
 
 public interface ProjectNoticeRepository extends JpaRepository<ProjectNotice, Integer> {
 
@@ -14,4 +9,5 @@ public interface ProjectNoticeRepository extends JpaRepository<ProjectNotice, In
 //    List<ProjectNotice> findProjectNotice();
 //    List<ProjectNotice> findAll();
 //    List<ProjectNotice> findAllNoticeList();
+
 }
