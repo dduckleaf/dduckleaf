@@ -6,7 +6,7 @@ body {
 }
 
 div.row1 {
-    height: 600px;
+    height: 1080px;
 }
 
 .leaf {
@@ -120,4 +120,63 @@ div.fundmenu > * {
 
 .fund-btn:hover {
     cursor: pointer;
+}
+
+/* ================= 신청 메인 구분선 =================== */
+.breadcrumb:not(.div) {
+    margin-bottom: 0px;
+}
+
+.basictitle {
+    font-size: 20pt;
+}
+
+.basicsubtitle {
+    font-size: 10pt;
+    color: #C5C5C5;
+}
+
+.basicmenu {
+    margin-top: 20px;
+}
+
+.basicimg {
+    width: 70px;
+    height: 70px;
+}
+
+.basicimg:hover {
+    cursor: pointer;
+}
+
+.mockfundtitle1 {
+    width: 700px;
+    height: 50px;
+    font-size: 16pt;
+}
+
+.mockfundtitle2 {
+    width: 650px;
+    height: 50px;
+    font-size: 16pt;
+}
+
+input[type="date"]::before {
+    content: attr(data-th-placeholder);
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url("../images/common/vector.png") no-repeat 98% 50%;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.btn1 {
+    float: right;
+    margin-top: 100px;
 }
