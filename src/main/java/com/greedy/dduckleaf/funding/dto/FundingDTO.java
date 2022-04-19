@@ -1,6 +1,6 @@
 package com.greedy.dduckleaf.funding.dto;
 
-public class Funding {
+public class FundingDTO {
     private int fundingInfoNo;
     private java.sql.Date fundingDate;
     private int fundingAmount;

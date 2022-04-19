@@ -1,6 +1,6 @@
 package com.greedy.dduckleaf.funding.dto;
 
-public class Project {
+public class ProjectDTO {
     private int projectNo;
     private String projectName;
     private int fundTargetAmount;

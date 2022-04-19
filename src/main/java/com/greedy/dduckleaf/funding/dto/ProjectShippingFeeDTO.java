@@ -1,6 +1,6 @@
 package com.greedy.dduckleaf.funding.dto;
 
-public class ProjectShippingFee {
+public class ProjectShippingFeeDTO {
     private int shppingFeeNo;
     private int shippingFee;
     private int extraShippingFee;

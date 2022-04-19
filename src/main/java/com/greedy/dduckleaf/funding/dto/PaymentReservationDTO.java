@@ -1,6 +1,6 @@
 package com.greedy.dduckleaf.funding.dto;
 
-public class PaymentReservation {
+public class PaymentReservationDTO {
     private int paymentReservationNo;
     private int fundingTotalAmount;
     private java.sql.Date paymentDueDate;

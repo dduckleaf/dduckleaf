@@ -1,6 +1,6 @@
 package com.greedy.dduckleaf.funding.dto;
 
-public class Member {
+public class MemberDTO {
     private int memberNo;
     private String memberName;
     private String memberId;
