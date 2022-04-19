@@ -20,7 +20,7 @@ public class MainController {
 
         System.out.println("여기오낭");
 
-        return "main/main";
+        return "main/mainPage";
     }
 
     @PostMapping(value = "/")
@@ -28,7 +28,7 @@ public class MainController {
 
         System.out.println("여기오나??!??!");
 
-        mv.setViewName("/main/main");
+        mv.setViewName("/main/mainPage");
 
         return mv;
     }
