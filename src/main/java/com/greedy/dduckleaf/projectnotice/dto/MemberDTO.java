@@ -1,12 +1,6 @@
-package com.greedy.dduckleaf.authentication.model.dto;
+package com.greedy.dduckleaf.projectnotice.dto;
 
-import com.greedy.dduckleaf.member.dto.MemberDTO;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-
-import java.util.Collection;
-
-public class CustomUser extends User {
+public class MemberDTO {
 
     private int memberNo;
     private String memberName;
@@ -16,6 +10,20 @@ public class CustomUser extends User {
     private String phone;
     private String memberRole;
     private String withdrawalStatus;
+
+    public MemberDTO() {
+    }
+
+    public MemberDTO(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String withdrawalStatus) {
+        this.memberNo = memberNo;
+        this.memberName = memberName;
+        this.memberId = memberId;
+        this.memberPwd = memberPwd;
+        this.email = email;
+        this.phone = phone;
+        this.memberRole = memberRole;
+        this.withdrawalStatus = withdrawalStatus;
+    }
 
     public int getMemberNo() {
         return memberNo;
@@ -81,26 +89,9 @@ public class CustomUser extends User {
         this.withdrawalStatus = withdrawalStatus;
     }
 
-    public CustomUser(MemberDTO member, Collection<? extends GrantedAuthority> authorities) {
-        super(member.getMemberId(), member.getMemberPwd(), authorities);
-        setDetails(member);
-    }
-
-    private void setDetails(MemberDTO member) {
-
-        this.memberNo = member.getMemberNo();
-        this.memberName = member.getMemberName();
-        this.memberId = member.getMemberId();
-        this.memberPwd = member.getMemberPwd();
-        this.email = member.getEmail();
-        this.phone = member.getPhone();
-        this.memberRole = member.getMemberRole();
-        this.withdrawalStatus = member.getWithdrawalStatus();
-    }
-
     @Override
     public String toString() {
-        return "CustomUser{" +
+        return "MemberDTO{" +
                 "memberNo=" + memberNo +
                 ", memberName='" + memberName + '\'' +
                 ", memberId='" + memberId + '\'' +

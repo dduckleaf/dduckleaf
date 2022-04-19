@@ -1,37 +1,75 @@
-package com.greedy.dduckleaf.projectnotice.dto;
+package com.greedy.dduckleaf.projectnotice.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Date;
 
-public class ProjectDTO {
+@Entity(name = "Project")
+@Table(name = "TBL_PROJECT")
+public class Project {
 
-    private String projectName;
-    private int fundTargetAmount;
-    private java.util.Date openDate;
-    private java.util.Date endDate;
-    private String projectStatus;
-    private double achivementStatus;
+    @Id
+    @Column(name = "PROJECT_NO")
     private int projectNo;
+
+    @Column(name = "PROJECT_NAME")
+    private String projectName;
+
+    @Column(name = "FUND_TARGET_AMOUNT")
+    private int fundTargetAmount;
+
+    @Column(name = "OPEN_DATE")
+    private java.util.Date openDate;
+
+    @Column(name = "END_DATE")
+    private java.util.Date endDate;
+
+    @Column(name = "PROJECT_STATUS")
+    private String projectStatus;
+
+    @Column(name = "ACHIEVEMENT_RATE")
+    private double achivementStatus;
+
+    @Column(name = "EXAMINE_STATUS")
     private String examineStatus;
+
+    @Column(name = "PROJECT_EXAMINE_STAUTS")
     private String projectExamineStatus;
+
+    @Column(name = "PROGRESS_STATUS")
     private int progressStatus;
+
+    @Column(name = "MAX_TARGET_AMOUNT")
     private int maxTargetAmount;
+
+    @Column(name = "")
     private int farmer;
 
-    public ProjectDTO() {}
+    public Project() {}
 
-    public ProjectDTO(String projectName, int fundTargetAmount, Date openDate, Date endDate, String projectStatus, double achivementStatus, int projectNo, String examineStatus, String projectExamineStatus, int progressStatus, int maxTargetAmount, int farmer) {
+    public Project(int projectNo, String projectName, int fundTargetAmount, Date openDate, Date endDate, String projectStatus, double achivementStatus, String examineStatus, String projectExamineStatus, int progressStatus, int maxTargetAmount, int farmer) {
+        this.projectNo = projectNo;
         this.projectName = projectName;
         this.fundTargetAmount = fundTargetAmount;
         this.openDate = openDate;
         this.endDate = endDate;
         this.projectStatus = projectStatus;
         this.achivementStatus = achivementStatus;
-        this.projectNo = projectNo;
         this.examineStatus = examineStatus;
         this.projectExamineStatus = projectExamineStatus;
         this.progressStatus = progressStatus;
         this.maxTargetAmount = maxTargetAmount;
         this.farmer = farmer;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
     }
 
     public String getProjectName() {
@@ -82,14 +120,6 @@ public class ProjectDTO {
         this.achivementStatus = achivementStatus;
     }
 
-    public int getProjectNo() {
-        return projectNo;
-    }
-
-    public void setProjectNo(int projectNo) {
-        this.projectNo = projectNo;
-    }
-
     public String getExamineStatus() {
         return examineStatus;
     }
@@ -132,14 +162,14 @@ public class ProjectDTO {
 
     @Override
     public String toString() {
-        return "ProjectDTO{" +
-                "projectName='" + projectName + '\'' +
+        return "Project{" +
+                "projectNo=" + projectNo +
+                ", projectName='" + projectName + '\'' +
                 ", fundTargetAmount=" + fundTargetAmount +
                 ", openDate=" + openDate +
                 ", endDate=" + endDate +
                 ", projectStatus='" + projectStatus + '\'' +
                 ", achivementStatus=" + achivementStatus +
-                ", projectNo=" + projectNo +
                 ", examineStatus='" + examineStatus + '\'' +
                 ", projectExamineStatus='" + projectExamineStatus + '\'' +
                 ", progressStatus=" + progressStatus +
