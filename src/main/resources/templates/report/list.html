@@ -3,22 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+<!--    <link rel="stylesheet" th:src="@{/css/report.css}">-->
     <style>
-        .test {
+        .tab-body-area {
             border: 1px solid red;
             position: absolute;
-            z-index: 10;
+            z-index: 1;
             left: 33%;
-            right: 15%;
-            top: 500px;
-            width: 25%;
+            right: 25%;
+            top: 18%;
+            width: 50%;
+            height: 1220px;
         }
     </style>
 </head>
 <body>
+    <main style="width: 1920px">
+    <div th:replace="/common/userheader.html"></div>
+
     <div class="mypage" th:replace="/common/supporterpage.html"></div>
-    <div class="test">
-        테스트
+    <div class="tab-body-area">
+        <div class="title-div">
+            <span style="font-size: 28pt; font-weight: bold;">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">관심 프로젝트</span>
+            <hr width="100%">
+        </div>
     </div>
+
+    <div th:replace="/common/footer.html"></div>
+    </main>
 </body>
 </html>
