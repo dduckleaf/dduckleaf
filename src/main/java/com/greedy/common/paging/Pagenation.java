@@ -1,4 +1,4 @@
-package com.greedy.data.common.paging;
+package com.greedy.common.paging;
 
 import org.springframework.data.domain.Page;
 
