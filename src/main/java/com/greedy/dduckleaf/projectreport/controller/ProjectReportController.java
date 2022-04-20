@@ -22,8 +22,8 @@ public class ProjectReportController {
     }
 
     @GetMapping("/list")
-    public ModelAndView projectReportPage(ModelAndView mv) {
-        List<ProjectReportDTO> reportList = service.findProjectReportListByMemberId("USER01");
+    public ModelAndView findProjectReportListByMemberNo(ModelAndView mv) {
+        List<ProjectReportDTO> reportList = service.findProjectReportListByMemberNo(3);
 
         mv.addObject("reportList", reportList);
         mv.setViewName("report/list");

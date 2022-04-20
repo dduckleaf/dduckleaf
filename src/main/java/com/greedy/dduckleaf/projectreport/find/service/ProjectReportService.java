@@ -22,9 +22,9 @@ public class ProjectReportService {
         this.modelMapper = modelMapper;
     }
 
-    public List<ProjectReportDTO> findProjectReportListByMemberId(String memberId) {
+    public List<ProjectReportDTO> findProjectReportListByMemberNo(int memberNo) {
 
-        List<ProjectReport> reportList = repository.findProjectReportListByMemberId(memberId);
+        List<Object> reportList = repository.findProjectReportListByMemberNo(memberNo);
 
         return reportList.stream().map(projectReport -> modelMapper.map(projectReport, ProjectReportDTO.class)).collect(Collectors.toList());
     }
