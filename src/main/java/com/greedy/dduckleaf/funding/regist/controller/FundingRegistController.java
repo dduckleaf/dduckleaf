@@ -1,5 +1,7 @@
-package com.greedy.dduckleaf.funding.regist;
+package com.greedy.dduckleaf.funding.regist.controller;
 
+import com.greedy.dduckleaf.funding.regist.dto.FundingDTO;
+import com.greedy.dduckleaf.funding.regist.dto.ProjectDTO;
 import com.greedy.dduckleaf.funding.regist.dto.ProjectForFundingRegistDTO;
 import com.greedy.dduckleaf.funding.regist.service.FundingRegistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,19 @@ public class FundingRegistController {
     }
 
 
-    @GetMapping("/amount/{projectNo}")
-    public ModelAndView registFundingPage(ModelAndView mv, @PathVariable int projectNo){
+    @GetMapping("/reward/{projectNo}")
+    public ModelAndView registFundingChoicePage(ModelAndView mv, @PathVariable int projectNo){
 
-        ProjectForFundingRegistDTO fundingInfo = service.findProjectFundingInfo(projectNo);
+        ProjectDTO fundingInfo = service.findProjectFundingInfo(projectNo);
         mv.addObject("fundingInfo", fundingInfo);
-        mv.setViewName("/funding/regist");
+        mv.setViewName("/funding/regist/fundingamount");
+
+        return mv;
+    }
+
+    @GetMapping("/funding/regist/detail")
+    public ModelAndView registFundingConfirmPage(ModelAndView mv, FundingDTO fundingInfo) {
+
 
         return mv;
     }

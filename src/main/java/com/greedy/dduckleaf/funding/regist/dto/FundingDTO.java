@@ -1,5 +1,12 @@
-package com.greedy.dduckleaf.funding.dto;
+package com.greedy.dduckleaf.funding.regist.dto;
 
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString
 public class FundingDTO {
     private int fundingInfoNo;
     private java.sql.Date fundingDate;
