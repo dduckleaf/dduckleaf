@@ -8,11 +8,11 @@ import java.sql.Date;
 
     import lombok.*;
 
-    @NoArgsConstructor
-    @AllArgsConstructor
-    @Setter
-    @Getter
-    @ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString
 public class ProjectReportDTO {
     private int projectReportNo;
     private Date projectReportDate;

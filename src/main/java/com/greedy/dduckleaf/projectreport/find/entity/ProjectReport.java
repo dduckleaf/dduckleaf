@@ -20,36 +20,38 @@ public class ProjectReport {
     @Column(name = "PROJECT_REPORT_DATE")
     private Date projectReportDate;
 
+    @Transient
     @Column(name = "PROJECT_REPORT_CONTENT")
     private String projectReportContent;
 
+    @Transient
     @Column(name = "REPORT_REF_URL")
     private String reportRefUrl;
 
+    @Transient
     @Column(name = "REPORTER_PHONE")
     private String reporterPhone;
 
+    @Transient
     @Column(name = "REPORTER_EMAIL")
     private String reporterEmail;
 
+    @Transient
     @Column(name = "REPORTER_NAME")
     private String reporterName;
 
-//    @OneToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "MEMBER_NO")
-//    private Member member;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "MEMBER_NO")
+    private Member member;
 
-    @Column(name = "MEMBER_NO")
     @Transient
-    private int memberNo;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "FARMER_NO")
+    private FarmerInfo farmer;
 
-//    @JoinColumn(name = "FARMER_NO")
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    private FarmerInfo farmerInfo;
-
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "PROJECT_REPORT_CATEGORY_NO")
-//    private ReportCategory reportCategory;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "PROJECT_REPORT_CATEGORY_NO", nullable=true)
+    private ReportCategory reportCategory;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PROJECT_NO")
@@ -68,7 +70,7 @@ public class ProjectReport {
                 ", reporterPhone='" + reporterPhone + '\'' +
                 ", reporterEmail='" + reporterEmail + '\'' +
                 ", reporterName='" + reporterName + '\'' +
-                ", memberNo=" + memberNo +
+                ", member=" + member +
                 ", project=" + project +
                 ", projectReportStatus='" + projectReportStatus + '\'' +
                 '}';
