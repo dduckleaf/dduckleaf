@@ -1,59 +1,27 @@
-package com.greedy.dduckleaf.projectreport.entity;
+package com.greedy.dduckleaf.projectreport.find.dto;
+
+import com.greedy.dduckleaf.projectreport.find.entity.Project;
 
 import javax.persistence.*;
 import java.sql.Date;
 
-@Entity(name = "ProjectReport")
-@Table(name = "TBL_PROJECT_REPORT")
-public class ProjectReport {
+public class ProjectReportDTO {
 
-    @Id
-    @Column(name = "PROJECT_REPORT_NO")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int projectReportNo;
-
-    @Column(name = "PROJECT_REPORT_DATE")
     private Date projectReportDate;
-
-    @Column(name = "PROJECT_REPORT_CONTENT")
     private String projectReportContent;
-
-    @Column(name = "REPORT_REF_URL")
     private String reportRefUrl;
-
-    @Column(name = "REPORTER_PHONE")
     private String reporterPhone;
-
-    @Column(name = "REPORTER_EMAIL")
     private String reporterEmail;
-
-    @Column(name = "REPORTER_NAME")
     private String reporterName;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "MEMBER_NO1")
     private int memberNo;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "FARMER_NO")
-    private int farmerNo;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "PROJECT_REPORT_CATEGORY_NO")
-    private ProjectReportCategory reportCategory;
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "PROJECT_NO")
     private Project project;
-
-    @Column(name = "PROJECT_REPORT_STATUS")
     private String projectReportStatus;
 
-    public ProjectReport() {}
+    public ProjectReportDTO() {}
 
-    public ProjectReport(int projectReportNo, Date projectReportDate, String projectReportContent, String reportRefUrl,
-                         String reporterPhone, String reporterEmail, String reporterName, int memberNo, int farmerNo,
-                         ProjectReportCategory reportCategory, Project project, String projectReportStatus) {
+    public ProjectReportDTO(int projectReportNo, Date projectReportDate, String projectReportContent,
+                            String reportRefUrl, String reporterPhone, String reporterEmail, String reporterName, int memberNo, Project project, String projectReportStatus) {
         this.projectReportNo = projectReportNo;
         this.projectReportDate = projectReportDate;
         this.projectReportContent = projectReportContent;
@@ -62,8 +30,6 @@ public class ProjectReport {
         this.reporterEmail = reporterEmail;
         this.reporterName = reporterName;
         this.memberNo = memberNo;
-        this.farmerNo = farmerNo;
-        this.reportCategory = reportCategory;
         this.project = project;
         this.projectReportStatus = projectReportStatus;
     }
@@ -132,22 +98,6 @@ public class ProjectReport {
         this.memberNo = memberNo;
     }
 
-    public int getFarmerNo() {
-        return farmerNo;
-    }
-
-    public void setFarmerNo(int farmerNo) {
-        this.farmerNo = farmerNo;
-    }
-
-    public ProjectReportCategory getReportCategory() {
-        return reportCategory;
-    }
-
-    public void setProjectReportCategoryNo(ProjectReportCategory reportCategory) {
-        this.reportCategory = reportCategory;
-    }
-
     public Project getProject() {
         return project;
     }
@@ -166,7 +116,7 @@ public class ProjectReport {
 
     @Override
     public String toString() {
-        return "ProjectReport{" +
+        return "ProjectReportDTO{" +
                 "projectReportNo=" + projectReportNo +
                 ", projectReportDate=" + projectReportDate +
                 ", projectReportContent='" + projectReportContent + '\'' +
@@ -175,8 +125,6 @@ public class ProjectReport {
                 ", reporterEmail='" + reporterEmail + '\'' +
                 ", reporterName='" + reporterName + '\'' +
                 ", memberNo=" + memberNo +
-                ", farmerNo=" + farmerNo +
-                ", reportCategory=" + reportCategory +
                 ", project=" + project +
                 ", projectReportStatus='" + projectReportStatus + '\'' +
                 '}';

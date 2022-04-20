@@ -1,10 +1,13 @@
-package com.greedy.dduckleaf.projectreport.entity;
+package com.greedy.dduckleaf.projectreport.find.entity;
+
+import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 
 @Entity(name = "MemberForProjectReport")
+@Table(name = "TBL_MEMBER")
 public class Member {
 
     @Id
@@ -33,13 +36,9 @@ public class Member {
     @Column(name = "WITHDRAWAL_STATUS")
     private String withdrawalStatus;
 
-    @OneToMany(mappedBy = "category")
-    private List<ProjectReport> reportList;
-
     public Member() {}
 
-    public Member(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone,
-                  int memberRole, String withdrawalStatus, List<ProjectReport> reportList) {
+    public Member(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, int memberRole, String withdrawalStatus) {
         this.memberNo = memberNo;
         this.memberName = memberName;
         this.memberId = memberId;
@@ -48,7 +47,6 @@ public class Member {
         this.phone = phone;
         this.memberRole = memberRole;
         this.withdrawalStatus = withdrawalStatus;
-        this.reportList = reportList;
     }
 
     public int getMemberNo() {
@@ -115,14 +113,6 @@ public class Member {
         this.withdrawalStatus = withdrawalStatus;
     }
 
-    public List<ProjectReport> getReportList() {
-        return reportList;
-    }
-
-    public void setReportList(List<ProjectReport> reportList) {
-        this.reportList = reportList;
-    }
-
     @Override
     public String toString() {
         return "Member{" +
@@ -132,7 +122,7 @@ public class Member {
                 ", memberPwd='" + memberPwd + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", memberRole='" + memberRole + '\'' +
+                ", memberRole=" + memberRole +
                 ", withdrawalStatus='" + withdrawalStatus + '\'' +
                 '}';
     }
