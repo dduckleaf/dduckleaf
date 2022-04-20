@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.funding.entity;
+package com.greedy.dduckleaf.funding.regist.entity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,18 +14,18 @@ public class ProjectForFundingRegist {
     @Column(name = "PROJECT_NAME")
     private String projectName;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "PROJECT_NO")
-    private List<RewardInfo> rewardInfo;
+    private RewardInfo rewardInfo;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "PROJECT_NO")
-    private List<ProjectShippingFee> projectShippingFee;
+    private ProjectShippingFee projectShippingFee;
 
     public ProjectForFundingRegist() {
     }
 
-    public ProjectForFundingRegist(int projectNo, String projectName, List<RewardInfo> rewardInfo, List<ProjectShippingFee> projectShippingFee) {
+    public ProjectForFundingRegist(int projectNo, String projectName, RewardInfo rewardInfo, ProjectShippingFee projectShippingFee) {
         this.projectNo = projectNo;
         this.projectName = projectName;
         this.rewardInfo = rewardInfo;
@@ -48,19 +48,19 @@ public class ProjectForFundingRegist {
         this.projectName = projectName;
     }
 
-    public List<RewardInfo> getRewardInfo() {
+    public RewardInfo getRewardInfo() {
         return rewardInfo;
     }
 
-    public void setRewardInfo(List<RewardInfo> rewardInfo) {
+    public void setRewardInfo(RewardInfo rewardInfo) {
         this.rewardInfo = rewardInfo;
     }
 
-    public List<ProjectShippingFee> getProjectShippingFee() {
+    public ProjectShippingFee getProjectShippingFee() {
         return projectShippingFee;
     }
 
-    public void setProjectShippingFee(List<ProjectShippingFee> projectShippingFee) {
+    public void setProjectShippingFee(ProjectShippingFee projectShippingFee) {
         this.projectShippingFee = projectShippingFee;
     }
 
@@ -69,6 +69,8 @@ public class ProjectForFundingRegist {
         return "ProjectForFundingRegist{" +
                 "projectNo=" + projectNo +
                 ", projectName='" + projectName + '\'' +
+                ", rewardInfo=" + rewardInfo +
+                ", projectShippingFee=" + projectShippingFee +
                 '}';
     }
 }
