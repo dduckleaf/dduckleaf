@@ -1,0 +1,331 @@
+
+.tab-menu {
+    position: relative;
+}
+
+.tab-menu .supporter-tab-btn {
+    position: absolute;
+    right: -4.8%;
+    top: -231px;
+    border-top: 1px solid #bac34e;
+    border-left: 1px solid #bac34e;
+    border-right: 1px solid #bac34e;
+    border-radius: 30px 30px 0px 0px;
+    padding: 25px 25px 15px;
+    background: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 10px;
+}
+
+.tab-menu .farmer-tab-btn {
+    position: absolute;
+    right: -14%;
+    top: -231px;
+    border-top: 1px solid #bac34e;
+    border-left: 1px solid #bac34e;
+    border-right: 1px solid #bac34e;
+    border-radius: 30px 30px 0px 0px;
+    padding: 25px 25px 15px;
+    background: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 10px;
+}
+
+.tab-menu .tab-btn a {
+    color: #000;
+}
+
+.tab-menu .tab-btn a.active {
+    color: #bac34e;
+}
+
+.supporter-tab, .farmer-tab {
+    width: 1332px;
+    height: 1400px;
+    background: #fff;
+    /* border: 1px solid red; */
+    position: absolute;
+    left: 50%;
+    top: -180px;
+    transform: translate(-50%, 0);
+}
+
+.supporter-tab aside, .farmer-tab aside {
+    float: left;
+    width: 300px;
+    height: 100%;
+    /* border: 1px solid red; */
+}
+
+.supporter-tab aside div.member-icon, .farmer-tab aside div.member-icon {
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 50px;
+    background: #BF360C;
+    color: #fff;
+    font-size: 40px;
+    text-align: center;
+    margin: 80px auto 15px;
+}
+
+.member-icon:hover {
+    cursor: pointer;
+}
+
+.supporter-tab aside div.member-name, .farmer-tab aside div.member-name {
+    font-size: 20px;
+    text-align: center;
+}
+
+.supporter-tab aside div.member-name span, .farmer-tab aside div.member-name span {
+    font-weight: bold;
+}
+
+.supporter-tab aside div.logout-btn, .farmer-tab aside div.logout-btn {
+    width: 160px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    text-align: center;
+    border: 1px solid #a09292;
+    border-radius: 20px;
+    margin: 30px auto 60px;
+}
+
+.supporter-tab aside li, .farmer-tab aside li {
+    width: 220px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 5px;
+    background: #bac34e;
+    font-size: 24px;
+    text-align: center;
+    margin: 10px auto;
+}
+
+.supporter-tab aside li:last-child {
+    line-height: 30px;
+}
+
+.supporter-tab aside li a, .farmer-tab aside li a {
+    color: #fff;
+    /* text-shadow: -1px 0 #ada1a1, 0 1px #ada1a1, 1px 0 #ada1a1, 0 -1px #ada1a1; */
+}
+
+.supporter-tab div.content, .farmer-tab div.content {
+    float: right;
+    width: 1030px;
+    height: 100%;
+    /* border: 1px solid red; */
+}
+
+.farmer-tab div.content div.subcontent {
+    float: left;
+    width: 514px;
+    height: 100%;
+    /* border: 1px solid blue; */
+}
+
+.farmer-tab div.content div.subcontent div.wrap {
+    width: 260px;
+    margin: 0 auto;
+}
+
+.farmer-tab div.content div.subcontent h3 {
+    font-family: "Poppins", sans-serif;
+    font-weight: normal;
+    font-size: 20px;
+}
+
+.farmer-tab div.content div.subcontent h3.future-project {
+    margin-top: 30px;
+}
+
+.farmer-tab div.content div.subcontent h3.present-project {
+    margin-top: 30px;
+}
+
+.farmer-tab div.content div.subcontent h3.past-project {
+    margin-top: 30px;
+}
+
+.farmer-tab div.content div.subcontent div.success-project {
+    margin-top: 30px;
+}
+
+.farmer-tab div.content div.subcontent h3.present-simul {
+    margin-top: 30px;
+}
+
+.farmer-tab div.content div.subcontent h3.past-simul {
+    margin-top: 30px;
+}
+
+.farmer-tab div.content div.subcontent span {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.farmer-tab div.content div.subcontent span.winlose {
+    color: #020202;
+    font-weight: normal;
+}
+
+.supporter-tab div.content div.title-div, .farmer-tab div.content div.title-div {
+    width: 840px;
+    margin: 70px auto 0;
+}
+
+.supporter-tab div.content table.funding-table {
+    width: 840px;
+    height: 200px;
+    margin: 40px auto 0;
+    border: 1px solid #a09292;
+    border-collapse: separate;
+    border-radius: 10px;
+}
+
+.supporter-tab div.content table.funding-table tr:first-child {
+    height: 150px;
+}
+
+.supporter-tab div.content table.funding-table tr:first-child td:first-child {
+    border-right: 1px solid #a09292;
+}
+
+.supporter-tab div.content table.funding-table tr:first-child td:nth-child(2) {
+    border-right: 1px solid #a09292;
+}
+
+.supporter-tab div.content table.funding-table tr:last-child {
+    height: 50px;
+}
+
+.supporter-tab div.content table.funding-table tr:last-child td {
+    background: #F2F4F6;
+}
+
+.supporter-tab div.content table.funding-table td {
+    width: 280px;
+    /* border: 1px solid #a09292; */
+    text-align: center;
+}
+
+.supporter-tab div.content table.funding-table td span.amount {
+    font-size: 42px;
+}
+
+.supporter-tab div.content table.funding-table td span.title {
+    font-size: 14pt;
+    color: #9A8D8D;
+}
+
+div.hidden {
+    display: none;
+}
+
+.farmer-tab div.content div.story-mod1, .farmer-tab div.content div.story-mod2 {
+    width: 840px;
+    margin: 30px auto 0;
+}
+
+.farmer-tab div.content div.story-mod1 h3, .farmer-tab div.content div.story-mod2 h3 {
+    font-family: "Poppins", sans-serif;
+    font-weight: normal;
+    font-size: 20px;
+}
+
+.farmer-tab div.content div.story-mod1 div.story-tbn {
+    padding: 20px;
+    height: 680px;
+    border: 1px solid #ababab;
+}
+
+.story-mod-esc {
+    margin: 30px 10px 0 600px;
+}
+
+.story-mod-ent {
+    margin-top: 30px;
+}
+
+.farmer-tab div.content div.story-mod2 table, .farmer-tab div.content div.story-mod2 table td {
+    /* border: 1px solid red; */
+}
+
+.farmer-tab div.content div.story-mod2 table {
+    margin-top: 50px;
+}
+
+.farmer-tab div.content div.story-mod2 table td.intro-img {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.farmer-tab div.content div.story-mod2 table input.ul-file {
+    width: 220px;
+}
+
+.farmer-tab div.content div.story-mod2 table input.ul-submit {
+    border: none;
+    border-radius: 5px;
+    color: #FFF;
+    background: #BAC34E;
+}
+
+.farmer-tab div.content div.story-mod2 table td.ul-info, .farmer-tab div.content div.story-mod2 table td.ul-size {
+    font-size: 14px;
+    color: #ababab;
+}
+
+.farmer-tab div.content div.story-mod2 table td.ul-size {
+    padding-top: 10px;
+}
+
+.bgcolor-div {
+    background: #f5f7fa;
+    width: 100%;
+    height: 1400px;
+}
+
+/* ---Data Background Image--- */
+[data-bg-image]:not(.bg-pattern) {
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.supporter-tab-btn, .farmer-tab-btn {
+    display: inline-block;
+
+}
+
+.background-img-area {
+    width: 100%;
+    height: 350px;
+}
+
+.mypage-area {
+    border: 2px solid #ababab;
+}
+
+.mypage-tab-btn {
+    border-left: 3px solid #E8D0D0;
+    border-right: 3px solid #E8D0D0;
+    border-top: 3px solid #E8D0D0;
+    border-bottom: none;
+    background: #ffffff;
+    width: 100px;
+    height: 50px;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+    font-weight: bold;
+}
+
+.mypage-tab-btn:hover {
+    color: #BAC34E;
+    font-weight: bold;
+}

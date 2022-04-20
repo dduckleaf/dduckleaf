@@ -113,8 +113,10 @@ progress::-webkit-progress-value {
 .rank-percent {
     color: #BAC34E;
     margin-right: 10px;
+    font-size: 15px;
 }
 
 .rank-compony {
     color: #ABAEAB;
 }
+

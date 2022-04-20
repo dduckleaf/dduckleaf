@@ -1,4 +1,4 @@
-package com.greedy.common.exception.member;
+package com.greedy.dduckleaf.common.exception.member;
 
 public class LoginFailedException extends Exception{
 
