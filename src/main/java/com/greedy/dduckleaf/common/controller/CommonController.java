@@ -9,12 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CommonController {
 
     @GetMapping("/supporterpage")
-    public void goToSupporterPage() {
-        System.out.println("서포터탭가기");
-    }
+    public void goToSupporterPage() {}
 
     @GetMapping("/farmerpage")
-    public void goToFarmerPage() {
-        System.out.println("파머탭가기");
-    }
+    public void goToFarmerPage() {}
 }
