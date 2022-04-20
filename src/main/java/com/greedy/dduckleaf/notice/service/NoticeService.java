@@ -36,30 +36,30 @@ public class NoticeService {
         return noticeRepository.findAll(pageable).map(notice -> modelMapper.map(notice, NoticeDTO.class));
     }
 
-    @Transactional
-    public List<NoticeDTO> searchPosts(String keyword) {
+//    @Transactional
+//    public List<NoticeDTO> searchPosts(String keyword) {
+//
+//        List<Notice> notices = noticeRepository.findByTitleContaining(keyword);
+//        List<NoticeDTO> noticeDTOList = new ArrayList<>();
+//
+//        if(notices.isEmpty()) return noticeDTOList;
+//
+//        for(Notice notice : notices) {
+//            noticeDTOList.add(this.convertEntityToDTO(notice));
+//        }
+//
+//        return noticeDTOList;
+//    }
 
-        List<Notice> notices = noticeRepository.findByTitleContaining(keyword);
-        List<NoticeDTO> noticeDTOList = new ArrayList<>();
-
-        if(notices.isEmpty()) return noticeDTOList;
-
-        for(Notice notice : notices) {
-            noticeDTOList.add(this.convertEntityToDTO(notice));
-        }
-
-        return noticeDTOList;
-    }
-
-    private NoticeDTO convertEntityToDTO(Notice notice) {
-
-        return NoticeDTO.builder()
-                .no(notice.getNoticeNo())
-                .categoryNo(notice.getNoticeCategoryNo())
-                .name(notice.getNoticeName())
-                .adminNo(notice.getAdminNo())
-                .registDate(notice.getNoticeRegistDate())
-                .count(notice.getNoticeCount())
-                .build();
-    }
+//    private NoticeDTO convertEntityToDTO(Notice notice) {
+//
+//        return NoticeDTO.builder()
+//                .noticeNo(notice.getNoticeNo())
+//                .noticeCategoryNo(notice.getNoticeCategoryNo())
+//                .noticeName(notice.getNoticeName())
+//                .adminNo(notice.getAdminNo())
+//                .noticeRegistDate(notice.getNoticeRegistDate())
+//                .noticeCount(notice.getNoticeCount())
+//                .build();
+//    }
 }

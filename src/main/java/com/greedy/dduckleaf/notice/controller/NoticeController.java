@@ -41,12 +41,12 @@ public class NoticeController {
         return mv;
     }
 
-    @GetMapping("/search")
-    public ModelAndView search(@RequestParam(value = "keyword") String keyword, ModelAndView mv) {
-        List<NoticeDTO> noticeDTOList = noticeService.searchPosts(keyword);
-        mv.addObject("noticeList", noticeDTOList);
-        mv.setViewName("notice/list");
-
-        return mv;
-    }
+//    @GetMapping("/search")
+//    public ModelAndView search(@RequestParam(value = "keyword") String keyword, ModelAndView mv) {
+//        List<NoticeDTO> noticeDTOList = noticeService.searchPosts(keyword);
+//        mv.addObject("noticeList", noticeDTOList);
+//        mv.setViewName("notice/list");
+//
+//        return mv;
+//    }
 }
