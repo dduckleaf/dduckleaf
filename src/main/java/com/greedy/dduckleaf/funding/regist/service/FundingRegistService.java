@@ -1,7 +1,7 @@
 package com.greedy.dduckleaf.funding.regist.service;
 
 import com.greedy.dduckleaf.funding.regist.dto.ProjectDTO;
-import com.greedy.dduckleaf.funding.regist.dto.ProjectForFundingRegistDTO;
+import com.greedy.dduckleaf.funding.regist.entity.Project;
 import com.greedy.dduckleaf.funding.regist.repository.ProjectFundingRegist;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class FundingRegistService {
         this.modelMapper = modelMapper;
     }
 
-    public ProjectForFundingRegistDTO findProjectFundingInfo(int projectNo) {
+    public ProjectDTO findProjectFundingInfo(int projectNo) {
 
         repository.findById(projectNo);
 

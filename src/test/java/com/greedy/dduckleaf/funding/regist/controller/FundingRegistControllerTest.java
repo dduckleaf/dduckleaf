@@ -39,21 +39,22 @@ class FundingRegistControllerTest {
     public void initTest() {
 
         assertNotNull(controller);
+        assertNotNull(mockMvc);
     }
 
     @Test
     @DisplayName("펀딩신청 핸들러 메소드 url 매핑 확인")
     public void registFundingPage_url_test() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/funding/reward/amount/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/funding/regist/reward/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.forwardedUrl("/funding/regist/shipping"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("/funding/regist/fundingamount"))
                 .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     @DisplayName("펀딩신청 핸들러 Model Object 전달 확인")
     public void registFundingPage_model_test() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/funding/regist/amount/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/funding/regist/reward/1"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("fundingInfo"))
                 .andDo(MockMvcResultHandlers.print());
 
