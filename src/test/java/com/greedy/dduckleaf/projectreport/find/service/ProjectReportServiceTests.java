@@ -50,7 +50,6 @@ public class ProjectReportServiceTests {
         List<ProjectReportDTO> reportList = service.findProjectReportListByMemberNo(memberNo);
 
         //then
-        assertEquals(ProjectReportDTO.class, reportList.get);
         assertNotNull(reportList);
         reportList.forEach(System.out::println);
     }
