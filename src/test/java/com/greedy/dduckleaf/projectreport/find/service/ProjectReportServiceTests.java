@@ -42,12 +42,12 @@ public class ProjectReportServiceTests {
 
     @Test
     @DisplayName("서포터 프로젝트신고내역 목록조회 테스트")
-    public void findProjectReportListByMemberId_test() {
+    public void findProjectReportListByMemberNo_test() {
         //given
-        String memberId = "USER01";
+        int memberNo = 3;
 
         //when
-        List<ProjectReportDTO> reportList = service.findProjectReportListByMemberId(memberId);
+        List<ProjectReportDTO> reportList = service.findProjectReportListByMemberNo(memberNo);
 
         //then
         assertNotNull(reportList);

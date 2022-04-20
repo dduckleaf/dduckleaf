@@ -43,7 +43,7 @@ public class ProjectReportControllerTests {
 
     @Test
     @DisplayName("서포터 프로젝트신고내역 목록조회 테스트")
-    public void projectReportPage_test() throws Exception {
+    public void findProjectReportListByMemberNo_test() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/report/list"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.forwardedUrl("report/list"))

@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import java.util.List;
 
@@ -32,24 +33,50 @@ public class ProjectReportRepositoryTests {
     @Autowired
     private ProjectReportRepository repository;
 
+    @Autowired
+    private Member000Repository repository2;
+
+
+
     @Test
     public void initTest() {
         assertNotNull(entityManager);
         assertNotNull(repository);
+        assertNotNull(repository2);
     }
 
     @Test
     @DisplayName("서포터 프로젝트신고목록조회 테스트")
-    public void findProjectReportListByMemberId_test() {
-        //given
-        String memberId = "USER01";
+    @Transactional
+    public void findProjectReportListByMemberNo_test() {
 
-        //when
-        List<ProjectReport> reportList = repository.findProjectReportListByMemberId(memberId);
+        int memberNo = 3;
 
-        //then
-        assertNotNull(reportList);
-        reportList.forEach(System.out::println);
+        List<Object> projectReportList = repository.findProjectReportListByMemberNo(memberNo);
 
+        assertNotNull(projectReportList);
+        projectReportList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("모든 신고 조회 테스트")
+    @Transactional
+    public void test1() {
+
+        List<ProjectReport> projectReportList = repository.findAll();
+
+        assertNotNull(projectReportList);
+        projectReportList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("모든 신고 + 카테고리 조회 테스트")
+    @Transactional
+    public void test2() {
+
+        List<ProjectReport> projectReportList = repository.findAllWithCategory();
+
+        assertNotNull(projectReportList);
+        projectReportList.forEach(System.out::println);
     }
 }
