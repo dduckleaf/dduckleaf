@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.funding.regist;
+package com.greedy.dduckleaf.funding.regist.controller;
 
 import com.greedy.dduckleaf.funding.regist.dto.ProjectForFundingRegistDTO;
 import com.greedy.dduckleaf.funding.regist.service.FundingRegistService;
@@ -20,14 +20,17 @@ public class FundingRegistController {
     }
 
 
-    @GetMapping("/amount/{projectNo}")
-    public ModelAndView registFundingPage(ModelAndView mv, @PathVariable int projectNo){
+    @GetMapping("/reward/{projectNo}")
+    public ModelAndView registFundingChoicePage(ModelAndView mv, @PathVariable int projectNo){
 
         ProjectForFundingRegistDTO fundingInfo = service.findProjectFundingInfo(projectNo);
         mv.addObject("fundingInfo", fundingInfo);
-        mv.setViewName("/funding/regist");
+        mv.setViewName("/funding/regist/shipping");
 
         return mv;
     }
+
+    @GetMapping("/funding/regist/detail")
+    public ModelAndView registFundingConfirmPage(ModelAndView mv, )
 
 }

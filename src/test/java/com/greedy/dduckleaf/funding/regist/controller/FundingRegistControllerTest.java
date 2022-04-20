@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.funding.regist;
+package com.greedy.dduckleaf.funding.regist.controller;
 
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
@@ -44,9 +44,9 @@ class FundingRegistControllerTest {
     @Test
     @DisplayName("펀딩신청 핸들러 메소드 url 매핑 확인")
     public void registFundingPage_url_test() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/funding/regist/amount/1"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/funding/reward/amount/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.forwardedUrl("/funding/regist"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("/funding/regist/shipping"))
                 .andDo(MockMvcResultHandlers.print());
     }
 

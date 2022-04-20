@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.funding.entity;
+package com.greedy.dduckleaf.funding.regist.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
