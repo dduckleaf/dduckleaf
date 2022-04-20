@@ -11,21 +11,22 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ProjectRepostService {
+public class ProjectReportService {
 
     private final ProjectReportRepository repository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ProjectRepostService(ProjectReportRepository repository, ModelMapper modelMapper) {
+    public ProjectReportService(ProjectReportRepository repository, ModelMapper modelMapper) {
         this.repository = repository;
         this.modelMapper = modelMapper;
     }
 
-    public List<ProjectReportDTO> findProjectReportListByMemberNo(int memberNo) {
+    public List<ProjectReportDTO> findProjectReportListByMemberId(String memberId) {
 
-        List<ProjectReport> reportList = repository.findByMemberNo(memberNo);
+        List<ProjectReport> reportList = repository.findProjectReportListByMemberId(memberId);
 
         return reportList.stream().map(projectReport -> modelMapper.map(projectReport, ProjectReportDTO.class)).collect(Collectors.toList());
     }
+
 }
