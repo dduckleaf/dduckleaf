@@ -6,9 +6,9 @@
   spring:
     datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://59.7.165.209:3306/sys
-      username: root
-      password: root
+      url: jdbc:mysql://220.78.127.194:3306/dduckleaf
+      username: team2member
+      password: team2
 #      driver-class-name: oracle.jdbc.driver.OracleDriver
 #      url: jdbc:oracle:thin:@oracle.team-greedy.com:1521:xe
 #      username: C##SPRING
@@ -24,6 +24,7 @@
     properties:
       hibernate:
         '[format_sql]': true
+        ddl-auto: validate
 
 #Live Reload 기능 활성화
   devtools:
