@@ -15,6 +15,7 @@ public class ProjectNotice {
     @Column(name = "PROJECT_NOTICE_CONTENT")
     private String projectNoticeContent;
 
+<<<<<<< HEAD
 //    @ManyToOne
 //    @JoinColumn(name = "PROJECT_NO")
 //    private Project project;
@@ -117,17 +118,13 @@ public class ProjectNotice {
         this.farmerNo = farmerNo;
     }
 
+=======
+>>>>>>> 1e101362e7c22ff1649529fcd9be5a852352e32f
     @Override
     public String toString() {
         return "ProjectNotice{" +
                 "projectNoticeNo=" + projectNoticeNo +
                 ", projectNoticeContent='" + projectNoticeContent + '\'' +
-                ", projectNo=" + projectNo +
-                ", registDate=" + registDate +
-                ", projectNoticeStatus='" + projectNoticeStatus + '\'' +
-                ", projectNoticeTitle='" + projectNoticeTitle + '\'' +
-                ", projectNoticeCount=" + projectNoticeCount +
-                ", farmerNo=" + farmerNo +
                 '}';
     }
 }
