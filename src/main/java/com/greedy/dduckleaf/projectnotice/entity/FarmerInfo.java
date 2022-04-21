@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class FarmerInfo {
 
     @Id
-    @Column(name = "MEMBER_NO")
+    @Column(name = "FARMER_NO")
     private int memberNo;
 
     @Column(name = "FARMER_NAME")

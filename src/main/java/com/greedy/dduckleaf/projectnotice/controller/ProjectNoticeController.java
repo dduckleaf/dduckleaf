@@ -1,64 +1,65 @@
 package com.greedy.dduckleaf.projectnotice.controller;
 
+import com.greedy.dduckleaf.common.paging.Pagenation;
+import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.projectnotice.dto.ProjectNoticeDTO;
 import com.greedy.dduckleaf.projectnotice.service.ProjectNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 @Controller
-@RequestMapping("/projectNotice")
+@RequestMapping("/project/notice")
 public class ProjectNoticeController {
 
-    private final ProjectNoticeService projectNoticeService;
+    private final ProjectNoticeService projectService;
 
     @Autowired
-    public ProjectNoticeController(ProjectNoticeService projectNoticeService) {
-
-        this.projectNoticeService = projectNoticeService;
+    public ProjectNoticeController(ProjectNoticeService projectService) {
+        this.projectService = projectService;
     }
 
-//    @GetMapping("/list")
-//    public ModelAndView findProjectNoticeList(ModelAndView mv, @PageableDefault Pageable pageable) {
+//    @GetMapping("/list/{projectNo}")
+//    public ModelAndView findProjectNoticeList(ModelAndView mv, @PageableDefault Pageable pageable, @PathVariable int projectNo) {
 //
-//        System.out.println("pageable = " + pageable);
-//
-//        Page<ProjectNoticeDTO> projectNoticeList = projectNoticeService.findProjectNoticeList(pageable);
-//
-//        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectNoticeList);
+//        Page<ProjectNoticeDTO> projectNoticeList = projectService.findProjectNoticeList(pageable, projectNo);
 //
 //        System.out.println("projectNoticeList = " + projectNoticeList);
+//        projectNoticeList.forEach(System.out::println);
+//        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectNoticeList);
 //
 //        mv.addObject("projectNoticeList", projectNoticeList);
 //        mv.addObject("paging", paging);
-//        mv.setViewName("project/notice/list");
+//        mv.setViewName("project/end/detail");
 //
 //        return mv;
 //    }
 
-    @GetMapping("/list")
-    public ModelAndView findProjectNoticeList(ModelAndView mv) {
+    @GetMapping (value = "/list/{projectNo}", produces = "application/json")
+    @ResponseBody
+    public ModelAndView findProjectNoticeList(/*HttpServletRequest request,*/ ModelAndView mv,//일단 검색 기능 보류
+                                              @PageableDefault Pageable pageable, @PathVariable int projectNo) {
 
-        List<ProjectNoticeDTO> projectNoticeList = projectNoticeService.selectProjectNoticeList();
+
+
+        Page<ProjectNoticeDTO> projectNoticeList = projectService.findProjectNoticeList(pageable, projectNo);
+
+        System.out.println("projectNoticeList = " + projectNoticeList);
+        projectNoticeList.forEach(System.out::println);
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectNoticeList);
 
         mv.addObject("projectNoticeList", projectNoticeList);
-        mv.setViewName("/project/notice/list");
+        mv.addObject("paging", paging);
+        mv.setViewName("project/end/detail");
 
         return mv;
     }
 
 
 
-//    private MemberDTO selectMemberNoById(@AuthenticationPrincipal User user) {
-//
-//        String id = user.getUsername();
-//
-//        MemberDTO member = projectNoticeService.selectMemberNoById(id);
-//
-//        return member;
-//    }
+
 }

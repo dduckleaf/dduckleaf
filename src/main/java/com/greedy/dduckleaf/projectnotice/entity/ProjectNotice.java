@@ -1,7 +1,7 @@
 package com.greedy.dduckleaf.projectnotice.entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity(name = "ProjectNotice")
 @Table(name = "TBL_PROJECT_NOTICE")
@@ -15,11 +15,15 @@ public class ProjectNotice {
     @Column(name = "PROJECT_NOTICE_CONTENT")
     private String projectNoticeContent;
 
-    @Column(name = "PROJECT_NO")
+//    @ManyToOne
+//    @JoinColumn(name = "PROJECT_NO")
+//    private Project project;
+
+    @JoinColumn(name = "PROJECT_NO")
     private int projectNo;
 
     @Column(name = "REGIST_DATE")
-    private java.util.Date registDate;
+    private java.sql.Date registDate;
 
     @Column(name = "PROJECT_NOTICE_STATUS")
     private String projectNoticeStatus;
@@ -30,9 +34,11 @@ public class ProjectNotice {
     @Column(name = "PROJECT_NOTICE_COUNT")
     private int projectNoticeCount;
 
-//    @ManyToOne
     @Column(name = "FARMER_NO")
     private int farmerNo;
+//    @ManyToOne
+//    @JoinColumn(name = "FARMER_NO")
+//    private Member member;
 
     public ProjectNotice() {}
 
