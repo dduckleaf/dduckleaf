@@ -2,20 +2,13 @@ package com.greedy.dduckleaf.projectreport.find.service;
 
 import com.greedy.dduckleaf.config.*;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportSummeryInfoDTO;
-import com.greedy.dduckleaf.projectreport.find.entity.Project;
-import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
-import com.greedy.dduckleaf.projectreport.find.entity.ReportCategory;
-import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportRepository;
+import com.greedy.dduckleaf.projectreport.detail.repository.ProjectReportRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
