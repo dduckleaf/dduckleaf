@@ -3,22 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <style>
-        .test {
-            border: 1px solid red;
-            position: absolute;
-            z-index: 10;
-            left: 33%;
-            right: 15%;
-            top: 500px;
-            width: 25%;
-        }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/report.css}">
 </head>
 <body>
+<main style="width: 1920px">
+    <div th:replace="/common/userheader.html"></div>
+
     <div class="mypage" th:replace="/common/supporterpage.html"></div>
-    <div class="test">
-        테스트
+
+     <div class="tab-body-area">
+        <div class="title-div">
+            <span class="text-title">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">나의 신고내역 조회</span>
+            <hr width="100%">
+        </div>
+        <!-- Begin 게시판영역 -->
+        <table class="basic-table" id="project-qna-table" align="center">
+            <tr>
+                <th style="width: 15%;">진행상태</th>
+                <th style="width: 70%;">신고 프로젝트 명</th>
+                <th style="width: 15%;">작성일</th>
+            </tr>
+            <th:block th:if="${ projectReportList eq null }">
+                <td colspan="3" align="center">신고내역이 없습니다.</td>
+            </th:block>
+            <th:block th:if="${ projectReportList ne null }">
+                <tr th:each="report: ${ projectReportList }" class="board-detail">
+                    <td th:text="${ report.projectReportStatus }">미답변</td>
+                    <td th:text="${ report.project.projectName}">솔향기가 솔솔나나여?</td>
+                    <td th:text="${ report.projectReportDate }">2022-02-20 07:15</td>
+                </tr>
+            </th:block>
+        </table>
+         <br>
+        <!-- paging -->
+        <div align="center" th:replace="/common/paging.html"></div>
+
+    <!-- 게시판영역 End Here -->
     </div>
+
+    <div th:replace="/common/footer.html"></div>
+</main>
+<script>
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for(let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function() {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function() {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function() {
+                const reportNo = this.parentNode.children[0].innerText;
+                location.href = "/report/detail/" + reportNo;
+            }
+        }
+    }
+
+    /* paging */
+
+
+
+</script>
 </body>
 </html>

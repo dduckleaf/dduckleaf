@@ -1,0 +1,20 @@
+.tab-body-area {
+    border: 1px solid red;
+    position: absolute;
+    z-index: 1;
+    left: 33%;
+    right: 25%;
+    top: 18%;
+    width: 50%;
+    height: 1220px;
+}
+
+#regist {
+    margin-top: 10px;
+    float: right;
+}
+
+.btn-td2 {
+    border: none;
+    background: none;
+}
