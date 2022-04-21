@@ -1,21 +1,53 @@
-package com.greedy.dduckleaf.authentication.model.dto;
+package com.greedy.dduckleaf.projectnotice.entity;
 
-import com.greedy.dduckleaf.member.dto.MemberDTO;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
+import javax.persistence.*;
 
-import java.util.Collection;
+@Entity(name = "MemberForProjectNotice")
+@Table(name = "TBL_MEMBER")
+public class Member {
 
-public class CustomUser extends User {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "MEMBER_NO")
     private int memberNo;
+
+    @Column(name = "MEMBER_NAME")
     private String memberName;
+
+    @Column(name = "MEMBER_ID")
     private String memberId;
+
+//    @OneToMany(mappedBy = "member")
+//    private List<ProjectNotice> projectNoticeList;
+
+    @Column(name = "MEMBER_PWD")
     private String memberPwd;
+
+    @Column(name = "EMAIL")
     private String email;
+
+    @Column(name = "PHONE")
     private String phone;
+
+    @Column(name = "MEMBER_ROLE")
     private String memberRole;
+
+    @Column(name = "WITHDRAWAL_STATUS")
     private String withdrawalStatus;
+
+    public Member() {
+    }
+
+    public Member(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String withdrawalStatus) {
+        this.memberNo = memberNo;
+        this.memberName = memberName;
+        this.memberId = memberId;
+        this.memberPwd = memberPwd;
+        this.email = email;
+        this.phone = phone;
+        this.memberRole = memberRole;
+        this.withdrawalStatus = withdrawalStatus;
+    }
 
     public int getMemberNo() {
         return memberNo;
@@ -81,26 +113,9 @@ public class CustomUser extends User {
         this.withdrawalStatus = withdrawalStatus;
     }
 
-    public CustomUser(MemberDTO member, Collection<? extends GrantedAuthority> authorities) {
-        super(member.getMemberId(), member.getMemberPwd(), authorities);
-        setDetails(member);
-    }
-
-    private void setDetails(MemberDTO member) {
-
-        this.memberNo = member.getMemberNo();
-        this.memberName = member.getMemberName();
-        this.memberId = member.getMemberId();
-        this.memberPwd = member.getMemberPwd();
-        this.email = member.getEmail();
-        this.phone = member.getPhone();
-        this.memberRole = member.getMemberRole();
-        this.withdrawalStatus = member.getWithdrawalStatus();
-    }
-
     @Override
     public String toString() {
-        return "CustomUser{" +
+        return "Member{" +
                 "memberNo=" + memberNo +
                 ", memberName='" + memberName + '\'' +
                 ", memberId='" + memberId + '\'' +
