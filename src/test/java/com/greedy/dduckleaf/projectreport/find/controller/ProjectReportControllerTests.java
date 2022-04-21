@@ -47,7 +47,7 @@ public class ProjectReportControllerTests {
         mockMvc.perform(MockMvcRequestBuilders.get("/report/list"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.forwardedUrl("report/list"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("reportList"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("projectReportSummeryInfo"))
                 .andDo(MockMvcResultHandlers.print());
     }
 }

@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.projectreport.find.repository;
 
 import com.greedy.dduckleaf.config.*;
+import com.greedy.dduckleaf.projectreport.find.entity.Member;
 import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
 import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +35,7 @@ public class ProjectReportRepositoryTests {
     private ProjectReportRepository repository;
 
     @Autowired
-    private Member000Repository repository2;
+    private MemberForProjectReportRepository repository2;
 
 
 
@@ -78,5 +79,28 @@ public class ProjectReportRepositoryTests {
 
         assertNotNull(projectReportList);
         projectReportList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("서포터 정보로 프로젝트신고내역 목록 조회")
+    @Transactional
+    public void test3() {
+
+        int memberNo = 3;
+
+//        Member member = repository2.findMemberByMemberNo(memberNo);
+        Member member = repository2.findById(memberNo).get();
+        assertNotNull(member);
+        System.out.println("member = " + member);
+
+        List<ProjectReport> projectReportList = member.getProjectReportList();
+        assertNotNull(projectReportList);
+        projectReportList.forEach( projectReport -> {
+            System.out.println("projectReport = " + projectReport);
+            System.out.println("projectReport.getProject().getProjectName() = " + projectReport.getProject().getProjectName());
+            System.out.println("projectReport.getReportCategory().getReportCategoryName() = " + projectReport.getReportCategory().getReportCategoryName());
+        });
+
+        System.out.println("projectReportList.size() =  " + projectReportList.size());
     }
 }
