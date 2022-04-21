@@ -7,7 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProjectNoticeRepository extends JpaRepository<ProjectNotice, Integer> {
 
-
     Page<ProjectNotice> findAllByProjectNo(int projectNo, Pageable pageable);
-
 }

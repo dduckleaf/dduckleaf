@@ -1,7 +1,6 @@
 package com.greedy.dduckleaf.projectnotice.dto;
 
 import java.util.List;
-
 import lombok.*;
 
 @NoArgsConstructor
@@ -19,5 +18,7 @@ public class ProjectDTO {
     private int progressStatus;
     private int farmerNo;
     private List<ProjectNoticeDTO> projectNoticeList;
+
+
 
 }
