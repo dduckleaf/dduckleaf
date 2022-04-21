@@ -38,10 +38,10 @@
 					<div class="col-8" style="text-align: right">
 					</div>
 					<div class="col-2" style="text-align: right">
-						<span>수량:d d1개</span>
+						<span>수량: [[${ registInfo.rewardAmount }]]개</span>
 					</div>
 					<div class="col-2" style="text-align: center">
-						<span>200dd00원</span>
+						<span>[[${ registInfo.rewardTotal }]]원</span>
 					</div>
 				</div>
 			</div>
@@ -52,7 +52,7 @@
 						<label>추가 후원금</label>
 					</div>
 					<div class="col-2" style="text-align: center">
-						20000원
+						[[${ registInfo.donate }]]원
 					</div>
 				</div>
 			</div>
@@ -63,7 +63,12 @@
 						<label>배송비</label>
 					</div>
 					<div class="col-2" style="text-align: center">
-						2500원
+						<th:block th:if="${ registInfo.shippingFee > 0 }">
+							[[${ registInfo.shippingFee }]]원
+						</th:block>
+						<th:block th:if="${ registInfo.extraShippingFee > 0 }">
+							[[${ registInfo.extraShippingFee }]]원
+						</th:block>
 					</div>
 				</div>
 			</div>
@@ -74,7 +79,7 @@
 						<label>최종 결제 금액</label>
 					</div>
 					<div class="col-2" style="text-align: center">
-						<label class="total-price">20000원</label>
+						<label class="total-price">[[${ registInfo.totalFunding }]]원</label>
 					</div>
 				</div>
 			</div>

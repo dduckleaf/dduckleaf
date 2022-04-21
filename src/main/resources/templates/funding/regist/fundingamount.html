@@ -17,6 +17,8 @@
 	
 	<!-- JQuery-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div th:replace="/common/userheader.html"></div>
@@ -45,28 +47,36 @@
 		<label class="title" style="margin-bottom: 1%">펀딩금 정하기</label>
 		<label class="sub-title">리워드 수량을 조절하여 펀딩하실 금액을 확정해주세요.</label>
 		<div class="funding-box">
-			<div>
-				<span class="funding-box-title" >수량</span><br>
-				<input id="rewardAmount" type="number" min="1">
-				<label style="font-size: 1.2em; font-weight: 800;margin-left: 2%">펀딩금액</label>
-				<label id="rewardTotalPrice"></label>원
-			</div>
-			<div>
-				<span class="funding-box-title">후원금 더하기(선택)</span><br>
-				<input id="donate" type="number" min="0" placeholder="0">
-				<label> 원을 추가로 후원합니다.</label>
-			</div>
-			<div>
-				<span class="funding-box-title">배송비</span><br>
-				<select id="shippingFee" name="shippingFee" class="shipping-fee-select">
-					<option disabled selected>배송비 선택</option>
-					<option th:value="${ fundingInfo.projectShippingFee.shippingFee }" th:text="기본배송비 + ${ fundingInfo.projectShippingFee.shippingFee }"></option>
-					<th:block th:if="${ fundingInfo.projectShippingFee.shippingFee < fundingInfo.projectShippingFee.extraShippingFee}">
-						<option th:value="${ fundingInfo.projectShippingFee.extraShippingFee }" th:text="${ fundingInfo.projectShippingFee.extraShippingFeeInfo + ' ' + fundingInfo.projectShippingFee.extraShippingFee}"></option>
-					</th:block>
-					
-				</select>
-			</div>
+			<form id="reward-funding-info">
+				<div>
+					<span class="funding-box-title" >수량</span><br>
+					<input id="rewardAmount" name="rewardAmount" value="0" type="number" min="1" required>
+					<label style="font-size: 1.2em; font-weight: 800;margin-left: 2%">펀딩금액</label>
+					<label id="rewardTotalPrice"></label>원
+				</div>
+				<div>
+					<span class="funding-box-title">후원금 더하기(선택)</span><br>
+					<input id="donate" nam="donate" type="number" min="0" value="0" required>
+					<label> 원을 추가로 후원합니다.</label>
+				</div>
+				<div>
+					<span class="funding-box-title">배송비</span><br>
+					<select id="shippingFee" class="shipping-fee-select" required>
+						<option disabled selected>배송비 선택</option>
+						<option th:value="${ fundingInfo.projectShippingFee.shippingFee }" th:text="기본배송비 + ${ fundingInfo.projectShippingFee.shippingFee }"></option>
+						<th:block th:if="${ fundingInfo.projectShippingFee.shippingFee < fundingInfo.projectShippingFee.extraShippingFee}">
+							<option th:value="${ fundingInfo.projectShippingFee.extraShippingFee }" th:text="${ fundingInfo.projectShippingFee.extraShippingFeeInfo + ' ' + fundingInfo.projectShippingFee.extraShippingFee}"></option>
+						</th:block>
+						
+					</select>
+				</div>
+				<input type="hidden" id="rewardTotal" name="rewardTotal">
+				<input type="hidden" id="rewardPrice-forwarding" name="rewardPrice">
+				<input type="hidden" id="totalFunding-forwarding" name="totalFunding">
+				<input type="hidden" id="shippingFee-forwarding" name="shippingFee">
+				<input type="hidden" id="extraShippingFee-forwarding" name="extraShippingFee">
+				<input type="hidden" id="projectNo" name="projectNo">
+			</form>
 		</div>
 		<div style="height: 200px"> </div>
 		<!-- 결제 총 금액 -->
@@ -79,28 +89,28 @@
 		</div>
 		
 		<div style="text-align: center; width: 100%; margin: 5%">
-			<button class="basic-btn btn1 bigbig-btn">펀딩하기</button>
+				<label id ="test"></label>
+				<input id="fundinginfo-submit" type="button" class="basic-btn btn1 bigbig-btn" value="펀딩하기">
 		</div>
 	</div>
 </div>
+
+
 <footer class="footer" th:replace="/common/footer.html"></footer>
-<script>
+<script th:inline="javascript">
 	const $rewardPrice = document.getElementById("rewardPrice").innerText;
     const $rewardCount = document.getElementById("rewardAmount");
     const $rewardTotal = document.getElementById("rewardTotalPrice");
     const $shippingFee = document.getElementById("shippingFee");
     const $donate = document.getElementById("donate");
     const $totalFunding = document.getElementById("totalFunding");
-
-    function calculateTotal() {
-        $totalFunding.innerText = "";
-        $totalFunding.innerText = $rewardTotal.innerText + $shippingFee.value + $donate.value;
-    }
+	const $$rewardTotal = document.getElementById("rewardTotal");
+	
     
     if($rewardCount) {
         $rewardCount.onchange = function() {
             $rewardTotal.innerText = $rewardPrice * $rewardCount.value;
-            
+            $$rewardTotal.value = parseInt($rewardTotal.innerText);
             let $fee = $shippingFee.value;
             if($shippingFee.value == '배송비 선택') {
                 $fee = 0;
@@ -128,8 +138,48 @@
             $totalFunding.innerText = parseInt($rewardTotal.innerText) + parseInt($fee) + parseInt($donate.value);
         }
     }
-
     
+    const $fundinginfo = document.getElementById("reward-funding-info");
+    const $submit = document.getElementById("fundinginfo-submit");
+    
+    if($submit) {
+        $submit.onclick = function() {
+            const $$projectNo = "[[${ fundingInfo.projectNo }]]";
+            const $$rewardAmount = document.getElementById("rewardAmount").value;
+            const $$donate = document.getElementById("donate").value;
+            const $$shippingFee = document.getElementById("shippingFee");
+            const $$totalFunding = document.getElementById("totalFunding").innerText;
+            
+            if($$rewardAmount == 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '리워드수량을 입력하세요!'
+                })
+            } else if($$shippingFee.value == '배송비 선택') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '배송비를 선택하세요!'
+                })
+            } else {
+                document.getElementById("shippingFee-forwarding").value = 0;
+                document.getElementById("extraShippingFee-forwarding").value = 0;
+                
+                if($$shippingFee.children[1].selected) {
+                    document.getElementById("shippingFee-forwarding").value = $$shippingFee.value;
+                } else {
+                    document.getElementById("extraShippingFee-forwarding").value = $$shippingFee.value;
+                }
+                
+                document.getElementById("rewardPrice-forwarding").value = "[[${ fundingInfo.rewardInfo.rewardPrice }]]";
+                document.getElementById("totalFunding-forwarding").value = parseInt($$totalFunding);
+                document.getElementById("projectNo").value = $$projectNo;
+                
+	            $fundinginfo.method = "get";
+	            $fundinginfo.action = "/funding/regist/shipping";
+	            $fundinginfo.submit();
+            }
+	    }
+    }
 </script>
 </body>
 </html>

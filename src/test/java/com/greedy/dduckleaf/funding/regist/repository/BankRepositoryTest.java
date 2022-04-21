@@ -3,7 +3,7 @@ package com.greedy.dduckleaf.funding.regist.repository;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
-import com.greedy.dduckleaf.funding.regist.entity.Project;
+import com.greedy.dduckleaf.funding.regist.entity.Bank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +11,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * <pre>
+ * Class : BankRepositoryTest
+ * Comment :
+ *
+ * History
+ * 2022-04-22 h99ww
+ * </pre>
+ *
+ * @author h99ww
+ * @version 1.0.0
+ */
 @SpringBootTest
 @ContextConfiguration(classes = {
         BeanConfiguration.class,
@@ -23,10 +33,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         DduckleafApplication.class,
         JPAConfiguration.class
 })
-class ProjectFundingRegistTest {
+class BankRepositoryTest {
 
     @Autowired
-    private ProjectFundingRegist repo;
+    private BankRepository repo;
 
     @Test
     public void initTest() {
@@ -34,20 +44,11 @@ class ProjectFundingRegistTest {
     }
 
     @Test
-    @DisplayName("프로젝트의 배송비, 리워드 정보 전체 조회 테스트")
-    public void findAll_test() {
-
-        List<Project> projectInfoList =  repo.findAll();
-        assertNotNull(projectInfoList);
-        projectInfoList.forEach(System.out::println);
+    @DisplayName("은행명 전체 조회 테스트")
+    public void findAllBank() {
+        List<Bank> bankList = repo.findAll();
+        assertNotNull(bankList);
+        bankList.forEach(System.out::println);
     }
 
-    @Test
-    @DisplayName("프로젝트 번호로 특정 프로젝트의 배송비, 리워드정보 조회")
-    public void findById_test() {
-
-        Optional<Project> projectInfo = repo.findById(1);
-        assertNotNull(projectInfo);
-        System.out.println("projectInfo = " + projectInfo);
-    }
 }
