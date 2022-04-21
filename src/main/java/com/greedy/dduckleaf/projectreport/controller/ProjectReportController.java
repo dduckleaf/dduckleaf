@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.projectreport.controller;
 
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
+import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportSummeryInfoDTO;
 import com.greedy.dduckleaf.projectreport.find.service.ProjectReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,12 +24,11 @@ public class ProjectReportController {
 
     @GetMapping("/list")
     public ModelAndView findProjectReportListByMemberNo(ModelAndView mv) {
-        List<ProjectReportDTO> reportList = service.findProjectReportListByMemberNo(3);
+        List<ProjectReportSummeryInfoDTO> projectReportSummeryInfo = service.findProjectReportListByMemberNo(3);
 
-        mv.addObject("reportList", reportList);
+        mv.addObject("projectReportSummeryInfo", projectReportSummeryInfo);
         mv.setViewName("report/list");
 
-        System.out.println(reportList);
         return mv;
     }
 }
