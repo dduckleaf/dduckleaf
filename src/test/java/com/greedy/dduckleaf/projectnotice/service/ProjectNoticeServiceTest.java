@@ -62,5 +62,17 @@ class ProjectNoticeServiceTest {
         noticeList.forEach(System.out::println);
     }
 
+    @Test
+    @DisplayName("프로젝트 공지사항 번호로 공지사항 상세조회 테스트")
+    public void findPojectNoticeDetail_test() {
+
+        int projectNoticeNo = 2;
+
+        ProjectNoticeDTO notice = ProjectNoticeService.findProjectNoticeDetail(projectNoticeNo);
+
+        assertNotNull(notice);
+        System.out.println("notice = " + notice);
+    }
+
 
 }

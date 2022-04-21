@@ -4,7 +4,6 @@ import com.greedy.dduckleaf.member.dto.MemberDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import java.sql.Date;
 import java.util.Collection;
 
 public class CustomUser extends User {

@@ -54,13 +54,25 @@ class ProjectNoticeControllerTest {
     public void findProjectNoticeList_test() throws Exception {
 
         int projectNo = 2;
-        Pageable pageable = PageRequest.of(10, 10);
+//        Pageable pageable = PageRequest.of(10, 10);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/projectNotice/list"))
+        mockMvc.perform(MockMvcRequestBuilders.get("/project/notice/list" + projectNo))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.forwardedUrl("project/notice/list"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("project/end/detail"))
                 .andDo(MockMvcResultHandlers.print());
 
+    }
+
+    @Test
+    @DisplayName("프로젝트 공지사항 번호로 공지사항 상세조회 테스트")
+    public void findPojectNoticeDetail_test() throws Exception {
+
+        int projectNoticeNo = 2;
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/project/notice/detail" + projectNoticeNo))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.forwardedUrl("project/end/detail"))
+                .andDo(MockMvcResultHandlers.print());
     }
 
 

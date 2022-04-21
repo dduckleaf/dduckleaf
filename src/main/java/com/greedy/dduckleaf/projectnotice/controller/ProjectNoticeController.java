@@ -1,7 +1,7 @@
 package com.greedy.dduckleaf.projectnotice.controller;
 
-import com.greedy.dduckleaf.common.paging.Pagenation;
-import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
+import com.greedy.common.paging.Pagenation;
+import com.greedy.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.projectnotice.dto.ProjectNoticeDTO;
 import com.greedy.dduckleaf.projectnotice.service.ProjectNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,28 +23,10 @@ public class ProjectNoticeController {
         this.projectService = projectService;
     }
 
-//    @GetMapping("/list/{projectNo}")
-//    public ModelAndView findProjectNoticeList(ModelAndView mv, @PageableDefault Pageable pageable, @PathVariable int projectNo) {
-//
-//        Page<ProjectNoticeDTO> projectNoticeList = projectService.findProjectNoticeList(pageable, projectNo);
-//
-//        System.out.println("projectNoticeList = " + projectNoticeList);
-//        projectNoticeList.forEach(System.out::println);
-//        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectNoticeList);
-//
-//        mv.addObject("projectNoticeList", projectNoticeList);
-//        mv.addObject("paging", paging);
-//        mv.setViewName("project/end/detail");
-//
-//        return mv;
-//    }
-
     @GetMapping (value = "/list/{projectNo}", produces = "application/json")
     @ResponseBody
     public ModelAndView findProjectNoticeList(/*HttpServletRequest request,*/ ModelAndView mv,//일단 검색 기능 보류
-                                              @PageableDefault Pageable pageable, @PathVariable int projectNo) {
-
-
+                                                                              @PageableDefault Pageable pageable, @PathVariable int projectNo) {
 
         Page<ProjectNoticeDTO> projectNoticeList = projectService.findProjectNoticeList(pageable, projectNo);
 
@@ -54,10 +36,25 @@ public class ProjectNoticeController {
 
         mv.addObject("projectNoticeList", projectNoticeList);
         mv.addObject("paging", paging);
+        mv.setViewName("project/notice/list");
+
+        return mv;
+    }
+
+    @GetMapping(value = "/detail/{projectNoticeNo}", produces = "application/json")
+    @ResponseBody
+    public ModelAndView findProjectNoticeDetail(ModelAndView mv, @PathVariable int projectNoticeNo) {
+
+        int projectNo = 2;
+
+        ProjectNoticeDTO projectNotice = projectService.findProjectNoticeDetail(projectNoticeNo);
+
+        mv.addObject("projectNotice", projectNotice);
         mv.setViewName("project/end/detail");
 
         return mv;
     }
+
 
 
 
