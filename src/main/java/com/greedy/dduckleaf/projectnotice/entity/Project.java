@@ -1,67 +1,51 @@
 package com.greedy.dduckleaf.projectnotice.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.Date;
+import com.greedy.dduckleaf.projectnotice.dto.ProjectNoticeDTO;
+
+import javax.persistence.*;
+import java.sql.Date;
+import java.util.List;
 
 @Entity(name = "Project")
 @Table(name = "TBL_PROJECT")
 public class Project {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PROJECT_NO")
     private int projectNo;
 
     @Column(name = "PROJECT_NAME")
     private String projectName;
 
-    @Column(name = "FUND_TARGET_AMOUNT")
-    private int fundTargetAmount;
-
     @Column(name = "OPEN_DATE")
-    private java.util.Date openDate;
+    private java.sql.Date openDate;
 
     @Column(name = "END_DATE")
-    private java.util.Date endDate;
+    private java.sql.Date endDate;
 
     @Column(name = "PROJECT_STATUS")
     private String projectStatus;
 
-    @Column(name = "ACHIEVEMENT_RATE")
-    private double achivementStatus;
-
-    @Column(name = "EXAMINE_STATUS")
-    private String examineStatus;
-
-    @Column(name = "PROJECT_EXAMINE_STAUTS")
-    private String projectExamineStatus;
-
     @Column(name = "PROGRESS_STATUS")
     private int progressStatus;
 
-    @Column(name = "MAX_TARGET_AMOUNT")
-    private int maxTargetAmount;
+    @Column(name = "FARMER_NO")
+    private Integer farmerNo;
 
-    @Column(name = "")
-    private int farmer;
+//    @OneToMany(mappedBy = "project")
+//    private List<ProjectNotice> projectNoticeList;
 
     public Project() {}
 
-    public Project(int projectNo, String projectName, int fundTargetAmount, Date openDate, Date endDate, String projectStatus, double achivementStatus, String examineStatus, String projectExamineStatus, int progressStatus, int maxTargetAmount, int farmer) {
+    public Project(int projectNo, String projectName, Date openDate, Date endDate, String projectStatus, int progressStatus, Integer farmerNo) {
         this.projectNo = projectNo;
         this.projectName = projectName;
-        this.fundTargetAmount = fundTargetAmount;
         this.openDate = openDate;
         this.endDate = endDate;
         this.projectStatus = projectStatus;
-        this.achivementStatus = achivementStatus;
-        this.examineStatus = examineStatus;
-        this.projectExamineStatus = projectExamineStatus;
         this.progressStatus = progressStatus;
-        this.maxTargetAmount = maxTargetAmount;
-        this.farmer = farmer;
+        this.farmerNo = farmerNo;
     }
 
     public int getProjectNo() {
@@ -78,14 +62,6 @@ public class Project {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
-    }
-
-    public int getFundTargetAmount() {
-        return fundTargetAmount;
-    }
-
-    public void setFundTargetAmount(int fundTargetAmount) {
-        this.fundTargetAmount = fundTargetAmount;
     }
 
     public Date getOpenDate() {
@@ -112,30 +88,6 @@ public class Project {
         this.projectStatus = projectStatus;
     }
 
-    public double getAchivementStatus() {
-        return achivementStatus;
-    }
-
-    public void setAchivementStatus(double achivementStatus) {
-        this.achivementStatus = achivementStatus;
-    }
-
-    public String getExamineStatus() {
-        return examineStatus;
-    }
-
-    public void setExamineStatus(String examineStatus) {
-        this.examineStatus = examineStatus;
-    }
-
-    public String getProjectExamineStatus() {
-        return projectExamineStatus;
-    }
-
-    public void setProjectExamineStatus(String projectExamineStatus) {
-        this.projectExamineStatus = projectExamineStatus;
-    }
-
     public int getProgressStatus() {
         return progressStatus;
     }
@@ -144,20 +96,12 @@ public class Project {
         this.progressStatus = progressStatus;
     }
 
-    public int getMaxTargetAmount() {
-        return maxTargetAmount;
+    public Integer getFarmerNo() {
+        return farmerNo;
     }
 
-    public void setMaxTargetAmount(int maxTargetAmount) {
-        this.maxTargetAmount = maxTargetAmount;
-    }
-
-    public int getFarmer() {
-        return farmer;
-    }
-
-    public void setFarmer(int farmer) {
-        this.farmer = farmer;
+    public void setFarmerNo(Integer farmerNo) {
+        this.farmerNo = farmerNo;
     }
 
     @Override
@@ -165,16 +109,11 @@ public class Project {
         return "Project{" +
                 "projectNo=" + projectNo +
                 ", projectName='" + projectName + '\'' +
-                ", fundTargetAmount=" + fundTargetAmount +
                 ", openDate=" + openDate +
                 ", endDate=" + endDate +
                 ", projectStatus='" + projectStatus + '\'' +
-                ", achivementStatus=" + achivementStatus +
-                ", examineStatus='" + examineStatus + '\'' +
-                ", projectExamineStatus='" + projectExamineStatus + '\'' +
                 ", progressStatus=" + progressStatus +
-                ", maxTargetAmount=" + maxTargetAmount +
-                ", farmer=" + farmer +
+                ", farmerNo=" + farmerNo +
                 '}';
     }
 }

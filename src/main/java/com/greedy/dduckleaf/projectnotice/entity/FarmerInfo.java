@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class FarmerInfo {
 
     @Id
-    @JoinColumn(name = "FARMER_NO")
+    @Column(name = "FARMER_NO")
     private int memberNo;
 
     @Column(name = "FARMER_NAME")

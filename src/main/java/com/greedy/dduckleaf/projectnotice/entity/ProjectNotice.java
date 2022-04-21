@@ -1,24 +1,29 @@
 package com.greedy.dduckleaf.projectnotice.entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity(name = "ProjectNotice")
 @Table(name = "TBL_PROJECT_NOTICE")
 public class ProjectNotice {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PROJECT_NOTICE_NO")
     private int projectNoticeNo;
 
     @Column(name = "PROJECT_NOTICE_CONTENT")
     private String projectNoticeContent;
 
+//    @ManyToOne
+//    @JoinColumn(name = "PROJECT_NO")
+//    private Project project;
+
     @JoinColumn(name = "PROJECT_NO")
     private int projectNo;
 
     @Column(name = "REGIST_DATE")
-    private java.util.Date registDate;
+    private java.sql.Date registDate;
 
     @Column(name = "PROJECT_NOTICE_STATUS")
     private String projectNoticeStatus;
@@ -31,6 +36,9 @@ public class ProjectNotice {
 
     @Column(name = "FARMER_NO")
     private int farmerNo;
+//    @ManyToOne
+//    @JoinColumn(name = "FARMER_NO")
+//    private Member member;
 
     public ProjectNotice() {}
 
@@ -113,7 +121,7 @@ public class ProjectNotice {
     public String toString() {
         return "ProjectNotice{" +
                 "projectNoticeNo=" + projectNoticeNo +
-                ", projectNoticeContent=" + projectNoticeContent +
+                ", projectNoticeContent='" + projectNoticeContent + '\'' +
                 ", projectNo=" + projectNo +
                 ", registDate=" + registDate +
                 ", projectNoticeStatus='" + projectNoticeStatus + '\'' +
