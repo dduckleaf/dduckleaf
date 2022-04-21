@@ -1,8 +1,10 @@
 package com.greedy.dduckleaf.projectreport.find.service;
 
 import com.greedy.dduckleaf.config.*;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
+import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportSummeryInfoDTO;
+import com.greedy.dduckleaf.projectreport.find.entity.Project;
 import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
+import com.greedy.dduckleaf.projectreport.find.entity.ReportCategory;
 import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,10 +12,13 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.springframework.test.util.AssertionErrors.assertEquals;
 
 @SpringBootTest(classes = {
         DduckleafApplication.class,
@@ -42,15 +47,15 @@ public class ProjectReportServiceTests {
 
     @Test
     @DisplayName("서포터 프로젝트신고내역 목록조회 테스트")
-    public void findProjectReportListByMemberId_test() {
+    public void findProjectReportListByMemberNo_test() {
         //given
-        String memberId = "USER01";
+        int memberNo = 3;
 
         //when
-        List<ProjectReportDTO> reportList = service.findProjectReportListByMemberId(memberId);
+        List<ProjectReportSummeryInfoDTO> projectReportSummeryInfo = service.findProjectReportListByMemberNo(memberNo);
 
         //then
-        assertNotNull(reportList);
-        reportList.forEach(System.out::println);
+        assertNotNull(projectReportSummeryInfo);
+        projectReportSummeryInfo.forEach(System.out::println);
     }
 }

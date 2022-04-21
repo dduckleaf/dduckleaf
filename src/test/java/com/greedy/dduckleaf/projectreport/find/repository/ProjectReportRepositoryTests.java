@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.projectreport.find.repository;
 
 import com.greedy.dduckleaf.config.*;
+import com.greedy.dduckleaf.projectreport.find.entity.Member;
 import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
 import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -11,6 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import java.util.List;
 
@@ -32,24 +34,73 @@ public class ProjectReportRepositoryTests {
     @Autowired
     private ProjectReportRepository repository;
 
+    @Autowired
+    private MemberForProjectReportRepository repository2;
+
+
+
     @Test
     public void initTest() {
         assertNotNull(entityManager);
         assertNotNull(repository);
+        assertNotNull(repository2);
     }
 
     @Test
     @DisplayName("서포터 프로젝트신고목록조회 테스트")
-    public void findProjectReportListByMemberId_test() {
-        //given
-        String memberId = "USER01";
+    @Transactional
+    public void findProjectReportListByMemberNo_test() {
 
-        //when
-        List<ProjectReport> reportList = repository.findProjectReportListByMemberId(memberId);
+        int memberNo = 3;
 
-        //then
-        assertNotNull(reportList);
-        reportList.forEach(System.out::println);
+        List<Object> projectReportList = repository.findProjectReportListByMemberNo(memberNo);
 
+        assertNotNull(projectReportList);
+        projectReportList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("모든 신고 조회 테스트")
+    @Transactional
+    public void test1() {
+
+        List<ProjectReport> projectReportList = repository.findAll();
+
+        assertNotNull(projectReportList);
+        projectReportList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("모든 신고 + 카테고리 조회 테스트")
+    @Transactional
+    public void test2() {
+
+        List<ProjectReport> projectReportList = repository.findAllWithCategory();
+
+        assertNotNull(projectReportList);
+        projectReportList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("서포터 정보로 프로젝트신고내역 목록 조회")
+    @Transactional
+    public void test3() {
+
+        int memberNo = 3;
+
+//        Member member = repository2.findMemberByMemberNo(memberNo);
+        Member member = repository2.findById(memberNo).get();
+        assertNotNull(member);
+        System.out.println("member = " + member);
+
+        List<ProjectReport> projectReportList = member.getProjectReportList();
+        assertNotNull(projectReportList);
+        projectReportList.forEach( projectReport -> {
+            System.out.println("projectReport = " + projectReport);
+            System.out.println("projectReport.getProject().getProjectName() = " + projectReport.getProject().getProjectName());
+            System.out.println("projectReport.getReportCategory().getReportCategoryName() = " + projectReport.getReportCategory().getReportCategoryName());
+        });
+
+        System.out.println("projectReportList.size() =  " + projectReportList.size());
     }
 }
