@@ -1,25 +1,25 @@
-  .btn-project {
-    color: #bac34e;
-    background-color: #fff;
-    border-color: #bac34e;
-    height: 50px;
-    text-align: center;
-  }  
+.btn-project {
+  color: #bac34e;
+  background-color: #fff;
+  border-color: #bac34e;
+  height: 50px;
+  text-align: center;
+}
 
-  .btn-open:hover {
-    background-color: #bac34e;
-    border-color: #fff;
-    color: #fff;
-  }
+.btn-open:hover {
+  background-color: #bac34e;
+  border-color: #fff;
+  color: #fff;
+}
 
-  .btn-fill-green {
-    color: #fff;
-    background-color: #bac34e;
-    border-color: #fff;
-    height: 40px;
-    width: 500px;
-    text-align: center;
-  }
+.btn-fill-green {
+  color: #fff;
+  background-color: #bac34e;
+  border-color: #fff;
+  height: 40px;
+  width: 500px;
+  text-align: center;
+}
 
 .btn-fill-white {
   color: #bac34e;
@@ -104,4 +104,9 @@
   display: table-cell;
   vertical-align: middle;
   text-align: center;
+}
+
+/* 신고하기 버튼 화살표 */
+.right-arrow {
+  margin-bottom: 1%;
 }
