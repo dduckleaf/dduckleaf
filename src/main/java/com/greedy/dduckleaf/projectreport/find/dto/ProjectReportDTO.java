@@ -22,6 +22,7 @@ public class ProjectReportDTO {
     private String reporterEmail;
     private String reporterName;
     private int memberNo;
-    private Project project;
+    private ProjectDTO project;
+    private ReportCategoryDTO reportCategory;
     private String projectReportStatus;
 }
