@@ -9,7 +9,7 @@ import com.greedy.dduckleaf.projectreport.find.entity.Project;
 import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
 import com.greedy.dduckleaf.projectreport.find.entity.ReportCategory;
 import com.greedy.dduckleaf.projectreport.find.repository.MemberForProjectReportRepository;
-import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportRepository;
+import com.greedy.dduckleaf.projectreport.detail.repository.ProjectReportRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
