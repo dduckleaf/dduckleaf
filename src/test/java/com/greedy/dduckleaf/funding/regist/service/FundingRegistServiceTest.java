@@ -29,7 +29,7 @@ class FundingRegistServiceTest {
     public void initTest() {
         assertNotNull(service);
     }
-    
+
     @Test
     @DisplayName("한 프로젝트의 펀딩등록 시 필요 정보 조회 테스트")
     public void findProjectInfoById_test() {
