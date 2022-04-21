@@ -27,18 +27,18 @@
                     <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/common/vector.png }"></p>
                 </button>
                 <div class="panel">
-                    <p>기본정보</p>
-                    <p>스토리 작성</p>
-                    <p>리워드 설계</p>
+                    <p onclick="location.href='../basicinfo/1'">기본정보</p>
+                    <p onclick="location.href='../story/1'">스토리 작성</p>
+                    <p onclick="location.href='../reward/1'">리워드 설계</p>
                 </div>
             </div>
             <div class="col-md-7">
                 <div class="breadcrumb">
-                    <span class="breadcrumb">모의펀딩 준비</span>&nbsp;
+                    <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">모의펀딩 준비</span>&nbsp;
                     <span class="breadcrumb">></span>&nbsp;
                     <span class="breadcrumb">스토리 작성</span>
                 </div>
-                <a style="font-size: 30pt; font-weight: bold;">스토리 작성</a><br>
+                <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">스토리 작성</a><br><hr>
                 <a>파머님의 프로젝트를 소개해주세요.</a>
                 <div class="basicmenu">
                     <a class="basictitle">소개 사진 등록</a><br>
@@ -50,7 +50,7 @@
                 <div class="basicmenu">
                     <a class="basictitle">프로젝트 요약</a><br>
                     <a class="basicsubtitle">프로젝트 페이지 상단에 노출됩니다.</a><br>
-                    <input class="projectsummary" type="text">
+                    <input class="projectsummary" type="text" th:value="${ info.mockFundDetail }">
                 </div>
                 <div>
                     <a class="basictitle">스토리 광고 심의 동의</a><br>
@@ -60,7 +60,10 @@
                 </div>
                 <div class="basicmenu">
                     <a class="basictitle">프로젝트 스토리</a><br>
-                    <input class="projectsummary" type="text">
+                    <a class="basicsubtitle">프로젝트 스토리로 사용할 사진을 등록해주세요.</a><br>
+                    <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
+                    <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
+                        해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
                 </div>
                 <div>
                     <button class="btn1 big-btn">저장하기</button>
