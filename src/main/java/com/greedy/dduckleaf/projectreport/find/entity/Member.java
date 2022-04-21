@@ -48,7 +48,7 @@ public class Member {
     @Column(name = "WITHDRAWAL_STATUS")
     private String withdrawalStatus;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)
     List<ProjectReport> projectReportList;
 
     @Override

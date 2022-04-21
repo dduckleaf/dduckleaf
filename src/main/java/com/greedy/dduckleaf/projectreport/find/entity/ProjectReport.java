@@ -49,11 +49,11 @@ public class ProjectReport {
     @JoinColumn(name = "FARMER_NO")
     private FarmerInfo farmer;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_REPORT_CATEGORY_NO", nullable=true)
     private ReportCategory reportCategory;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_NO")
     private Project project;
 
