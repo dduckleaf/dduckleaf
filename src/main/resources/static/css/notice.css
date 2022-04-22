@@ -5,13 +5,14 @@
 }
 
 .main-content div.title-div, .main-content div.cont-div {
-    width: 840px;
+    width: 70%;
     margin: 30px auto 0;
 }
 
 .main-content div.cont-div .basic-btn {
-    float: right;
+    margin-top: 20px;
     margin-bottom: 20px;
+    margin-left: 10px;
 }
 
 .main-content div.cont-div table {
@@ -33,8 +34,16 @@
     border-bottom: 1px solid #ccc;
 }
 
+tr.title, td.title {
+    border-bottom: none !important;
+}
+
+.main-content div.cont-div td.title, .main-content div.cont-div td.author, .main-content div.cont-div td.date {
+    background: #efefef;
+}
+
 .main-content div.cont-div table, .main-content div.cont-div th, .main-content div.cont-div td {
-    /* border: 1px solid red; */
+     /*border: 1px solid red;*/
 }
 
 #paging {
@@ -48,4 +57,39 @@
 
 #search-form {
     text-align: center;
+}
+
+.regist-form {
+    height: 500px;
+    padding: 40px 80px 0;
+    border-radius: 10px;
+    border: 1px solid #ababab;
+}
+
+.regist-wrap {
+    width: 100%;
+    text-align: right;
+    /*border: 1px solid red;*/
+}
+
+.regist-form label {
+    float: left;
+}
+
+.regist-form input, textarea#content {
+    width: 95%;
+    border-radius: 5px;
+    border: 1px solid #ababab;
+}
+
+textarea#content {
+    height: 300px;
+}
+
+.content-form {
+    margin-top: 25px;
+}
+
+.content-form label {
+    vertical-align: top;
 }

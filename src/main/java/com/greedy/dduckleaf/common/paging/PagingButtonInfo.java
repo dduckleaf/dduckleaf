@@ -1,4 +1,4 @@
-package com.greedy.common.paging;
+package com.greedy.dduckleaf.common.paging;
 
 public class PagingButtonInfo {
 

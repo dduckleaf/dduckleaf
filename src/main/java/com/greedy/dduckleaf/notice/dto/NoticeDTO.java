@@ -18,4 +18,28 @@ public class NoticeDTO {
     private int noticeCount;
     private int noticeCategoryNo;
 
+//    public NoticeEntity toEntity() {
+//        NoticeEntity noticeEntity = NoticeEntity.builder()
+//                .no(noticeNo)
+//                .name(noticeName)
+//                .content(noticeContent)
+//                .registDate(noticeRegistDate)
+//                .status(noticeStatus)
+//                .adminNo(adminNo)
+//                .count(noticeCount)
+//                .categoryNo(noticeCategoryNo)
+//                .build();
+//
+//        return noticeEntity;
+//    }
+
+//    @Builder
+//    public NoticeDTO(int noticeNo, String noticeName, String noticeContent, java.sql.Date noticeRegistDate, String noticeStatus, int adminNo, int noticeCount, int noticeCategoryNo) {
+//
+//        this.no = noticeNo;
+//        this.name = noticeName;
+//
+//
+//
+//    }
 }
