@@ -54,12 +54,19 @@ public class NoticeService {
 //    private NoticeDTO convertEntityToDTO(Notice notice) {
 //
 //        return NoticeDTO.builder()
-//                .noticeNo(notice.getNoticeNo())
-//                .noticeCategoryNo(notice.getNoticeCategoryNo())
-//                .noticeName(notice.getNoticeName())
+//                .no(notice.getNoticeNo())
+//                .categoryNo(notice.getNoticeCategoryNo())
+//                .name(notice.getNoticeName())
 //                .adminNo(notice.getAdminNo())
-//                .noticeRegistDate(notice.getNoticeRegistDate())
-//                .noticeCount(notice.getNoticeCount())
+//                .registDate(notice.getNoticeRegistDate())
+//                .count(notice.getNoticeCount())
 //                .build();
 //    }
+
+    public NoticeDTO findNoticeDetail(int noticeNo) {
+
+        Notice notice = noticeRepository.findById(noticeNo).get();
+
+        return modelMapper.map(notice, NoticeDTO.class);
+    }
 }

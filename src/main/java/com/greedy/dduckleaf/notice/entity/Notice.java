@@ -27,7 +27,7 @@ public class Notice {
     private String noticeContent;
 
     @Column(name = "NOTICE_REGIST_DATE")
-    private Date noticeRegistDate;
+    private java.sql.Date noticeRegistDate;
 
     @Column(name = "NOTICE_STATUS")
     private String noticeStatus;
@@ -43,7 +43,7 @@ public class Notice {
 
     public Notice() {}
 
-    public Notice(int noticeNo, String noticeName, String noticeContent, Date noticeRegistDate, String noticeStatus, int adminNo, int noticeCount, int noticeCategoryNo) {
+    public Notice(int noticeNo, String noticeName, String noticeContent, java.sql.Date noticeRegistDate, String noticeStatus, int adminNo, int noticeCount, int noticeCategoryNo) {
         this.noticeNo = noticeNo;
         this.noticeName = noticeName;
         this.noticeContent = noticeContent;
@@ -78,7 +78,7 @@ public class Notice {
         this.noticeContent = noticeContent;
     }
 
-    public Date getNoticeRegistDate() {
+    public java.sql.Date getNoticeRegistDate() {
         return noticeRegistDate;
     }
 
