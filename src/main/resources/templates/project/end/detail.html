@@ -269,51 +269,25 @@
               <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
                 <div class="product-shipping-body">
                   <div th:include="@{ /project/notice/list.html }"></div>
-                  <!--                  <div class="title">공지사항</div>-->
-                  <!--                  &lt;!&ndash; Begin 게시판영역 &ndash;&gt;-->
-                  <!--                  <table class="basic-table" id="project-qna-table" align="center">-->
-                  <!--                    <tr>-->
-                  <!--                      <th>번호</th>-->
-                  <!--                      <th>제목</th>-->
-                  <!--                      <th>작성일</th>-->
-                  <!--                      <th>조회수</th>-->
-                  <!--                    </tr>-->
-                  <!--                    <tr th:each="project : ${ projectNoticeList }">-->
-                  <!--                      <td th:text="${ project.projectNoticeNo }"></td>-->
-                  <!--                      <td th:text="${ project.projectNoticeTitle }"></td>-->
-                  <!--                      <td th:text="${ project.registDate }"></td>&lt;!&ndash;이름을 넣어야하는데..어떻게 들고오나....수바&ndash;&gt;-->
-                  <!--                      <td th:text="${ project.projectNoticeCount }"></td>-->
-                  <!--                    </tr>-->
-                  <!--                  </table>-->
-                  <!--                  <div id="paging" align="center">-->
-                  <!--                    &lt;!&ndash; 맨 앞으로 이동 &ndash;&gt;-->
-                  <!--                    <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.startPage}} + '\''"-->
-                  <!--                            th:disabled="${ projectNoticeList.first }" class="paging-btn first"><<</button>-->
+<!--                  <div th:include="@{ /project/notice/detail.html }"></div>-->
 
-                  <!--                    &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
-                  <!--                    <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.currentPage - 1}} + '\''"-->
-                  <!--                            th:disabled="${ projectNoticeList.first }" class="paging-btn prev"><</button>-->
-
-                  <!--                    &lt;!&ndash; 숫자 버튼&ndash;&gt;-->
-                  <!--                    <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">-->
-                  <!--                      <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${page}} + '\''"-->
-                  <!--                              th:text="${ page }" th:disabled="${ paging.currentPage eq page}" class="paging-btn"></button>-->
-                  <!--                    </th:block>-->
-
-                  <!--                    &lt;!&ndash; 다음 페이지로 이동 &ndash;&gt;-->
-                  <!--                    <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.currentPage + 1}} + '\''"-->
-                  <!--                            th:disabled="${ projectNoticeList.last}" class="paging-btn next">></button>-->
-
-                  <!--                    &lt;!&ndash; 맨 마지막으로 이동&ndash;&gt;-->
-                  <!--                    <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.endPage}} + '\''"-->
-                  <!--                            th:disabled="${ projectNoticeList.last }" class="paging-btn last">>></button>-->
-                  <!--                  </div>-->
-
-                  <!--                  &lt;!&ndash; 게시판영역 End Here &ndash;&gt;-->
-                  <!--                </div>-->
-                  <!--
-                              </div>
-                              Begin 연관상품 추천이 종료된 프로젝트에는 필요 없는 것 같아서 제외했습니다. -->
+                  <div class="notice-wrap" th:if="${ projectNoticeDetail }">
+                    <div class="cont-div">
+                      <table>
+                        <tr class="title" th:each="notice : ${ projectNoticeDetail }">
+                          <input class="projectNo" id="projectNo" type="hidden" th:value="${ notice.projectNo }">
+                          <td class="title" colspan="2" th:text="${ notice.projectNoticeTitle }">제목</td>
+                        </tr>
+                        <tr th:each="notice : ${ projectNoticeDetail }">
+                          <td class="date" th:text="${ notice.registDate }">작성일</td>
+                        </tr>
+                        <tr th:each="notice : ${ projectNoticeDetail }">
+                          <td class="content" colspan="2" th:text="${ notice.projectNoticeContent }">내용</td>
+                        </tr>
+                      </table>
+                      <button class="basic-btn small-btn btn3 back" id="back">목록보기</button>
+                    </div>
+                  </div>
 
                   <div class="product-slider-area section-space-top-55 section-space-bottom-100">
                     <div class="container">

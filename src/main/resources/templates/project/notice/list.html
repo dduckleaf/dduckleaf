@@ -19,7 +19,9 @@
 <body>
 <div class="title">공지사항</div>
 <!-- Begin 게시판영역 -->
-<table class="basic-table" id="project-qna-table" align="center">
+
+<div id="projectNoticeList">
+<table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
   <tr>
     <th>번호</th>
     <th>제목</th>
@@ -27,12 +29,35 @@
     <th>조회수</th>
   </tr>
   <tr th:each="project : ${ projectNoticeList }" class="noticeList" id="noticeList">
+<!--    <input type="hidden" th:text="${ project.projectNoticeNo }">-->
     <td th:text="${ project.projectNoticeNo }"></td>
     <td th:text="${ project.projectNoticeTitle }"></td>
     <td th:text="${ project.registDate }"></td><!--이름을 넣어야하는데..어떻게 들고오나....수바-->
     <td th:text="${ project.projectNoticeCount }"></td>
   </tr>
 </table>
+</div>
+
+<div class="notice-wrap" id="projectNoticeDetail" style="display:none">
+    <div class="cont-div">
+        <table>
+            <tr class="title" th:each="notice : ${ projectNoticeDetail }">
+                <input class="projectNo" id="projectNo" type="hidden" th:value="${ notice.projectNo }">
+                <td class="title" colspan="2" th:text="${ notice.projectNoticeTitle }">제목</td>
+            </tr>
+            <tr th:each="notice : ${ projectNoticeDetail }">
+                <td class="date" th:text="${ notice.registDate }">작성일</td>
+            </tr>
+            <tr th:each="notice : ${ projectNoticeDetail }">
+                <td class="content" colspan="2" th:text="${ notice.projectNoticeContent }">내용</td>
+            </tr>
+        </table>
+        <button class="basic-btn small-btn btn3 back" id="back">목록보기</button>
+    </div>
+</div>
+
+  </main>
+</div>
 <!--<td th:te></td>-->
 <div id="pagination" class="pagenumbers" align="center">
   <!-- 맨 앞으로 이동 -->
@@ -60,13 +85,18 @@
 </div>
 <script>
 
-  /* 공지사항 목록 조회회 */    // $("#notice").click(function() {
+  /* 공지사항 목록 조회 */    // $("#notice").click(function() {
   console.log("도착?");
   const projectNo = 2;
 
-  function projectNoticeData(projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate) {
+  $("#back").click(function() {
+    // const projectNo =
+    location.href='/project/notice/list/' + projectNo;
+  });
 
-    return {projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate};
+  function projectNoticeData(projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate, projectNo) {
+
+    return {projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate, projectNo};
   }
 
   function findProjectNoticeList() {
@@ -85,59 +115,63 @@
       } else {
         json.forEach((projectNoticeData, idx) => {
           console.log("게시글있음");
-          //
-          // });
-
-
 
         });
       }
+    });
+  }
 
-  //     /* 페이징 */
-  // const projectNotice = document.getElementById('noticeList');
-  // const paging = document.getElementById('pagination');
-  // console.log(projectNotice);
-  // console.log("왜 안나와");
-  // let currentPage = 1;
-  // let rows = 10;
+  /* 목록 눌러서 상세조회로 이동 */
+  /* 게시글을 클릭하면 해당 게시글 번호로 이동한다. */
+  if(document.querySelectorAll("#noticeList td")) {
+    const $tds = document.querySelectorAll("#noticeList td");
+    for( let i = 0; i < $tds.length; i++) {
+
+      $tds[i].onclick = function() {
+        const projectNoticeNo = this.parentNode.children[0].innerText;
+        console.log(projectNoticeNo);
+
+          // document.getElementById("projectNoticeList").style.display = "none";
+          // document.getElementById("pagination").style.display = "none";
+          // document.getElementById("projectNoticeDetail").style.display = "block";
+
+          location.href = '/project/notice/detail/' + projectNoticeNo;
+
+      }
+    }
+  }
+
+  // const projectNo = 2;
   //
-  // function ProjectNoticeList (items, wrapper, rows_per_page, page) {
-  //     wrapper.innerHTML = "";
-  //     page--;
+  // function projectNoticeData(projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate) {
   //
-  //     let start = rows_per_page * page;
-  //     let end = loop_start + rows_per_page;
-  //     let paginatedList = items.slice(start, end);
+  //     return {projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate};
+  // }
   //
-  //     json.forEach((projectNoticeData, idx) => {
-  //         console.log("게시글있음");
+  // function findProjectNoticeList() {
+  //     fetch('/project/notice/list/{projectNo}').then(resonse => {
+  //         if (resonse.ok) {
+  //             return resonse.json();
+  //         }
+  //     }).then(json => {
+  //         let html = '';
   //
+  //         if (!json.length) {
+  //             // alert("암것도 없음");
+  //             // console.log("암것도 없음");
+  //             html = '<td colspan="5">등록된 게시글이 없습니다.</td>';
+  //         } else {
+  //             json.forEach((projectNoticeData, idx) => {
+  //                 // console.log("게시글있음");
+  //             });
+  //         }
   //     });
+  //
   // }
-  //
-  // function SetupPagination (items, wrapper, rows_per_page) {
-  //     wrapper.innerHTML = "";
-  //
-  //     let page_count = Math.ceil(items.length / rows_per_page);
-  //     for(let i =1; l< page_count + 1; i++) {
-  //         let btn = PaginationButton(i);
-  //         wrapper.appendChild(btn);
-  //     }
-  // }
-  //
-  // function PaginationButton (page, items) {
-  //     let button = document.createElement('button');
-  //     button.innerText = page;
-  //     console.log("무가뜨긴하나")
-  //     if(currentPage == page) {
-  //         button.classList.add('active');
-  //     }
-  //
-  //     return button;
-  // }
-  //
-  // ProjectNoticeList(projectNoticeData, projectNotice, rows, currentPage);
-  // SetupPagination(projectNoticeData, paging, rows);
+
+
+  /* 공지사항 상세조회 */
+
 
 </script>
 <script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>

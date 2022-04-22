@@ -36,7 +36,7 @@ public class ProjectNoticeController {
 
         mv.addObject("projectNoticeList", projectNoticeList);
         mv.addObject("paging", paging);
-        mv.setViewName("project/notice/list");
+        mv.setViewName("project/end/detail");
 
         return mv;
     }
