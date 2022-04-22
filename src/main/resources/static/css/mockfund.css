@@ -6,7 +6,7 @@ body {
 }
 
 div.row1 {
-    height: 600px;
+    height: 1080px;
 }
 
 .leaf {
@@ -120,4 +120,141 @@ div.fundmenu > * {
 
 .fund-btn:hover {
     cursor: pointer;
+}
+
+/* ================= 신청 메인 구분선 =================== */
+.breadcrumb:not(.div) {
+    margin-bottom: 0px;
+}
+
+.basictitle {
+    font-size: 20pt;
+}
+
+.basicsubtitle {
+    font-size: 10pt;
+    color: #C5C5C5;
+}
+
+.basicmenu {
+    margin-top: 20px;
+}
+
+.basicimg {
+    width: 70px;
+    height: 70px;
+}
+
+.basicimg:hover {
+    cursor: pointer;
+}
+
+.mockfundtitle1 {
+    width: 700px;
+    height: 50px;
+    font-size: 16pt;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.mockfundtitle2 {
+    width: 650px;
+    height: 50px;
+    font-size: 16pt;
+    padding-left: 10px;
+}
+
+input[type="date"]::before {
+    content: attr(data-th-placeholder);
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url("../images/common/vector.png") no-repeat 98% 50%;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.btn1 {
+    float: right;
+    margin-top: 50px;
+}
+
+/* ========================= 기본 정보 구분선========================= */
+.projectsummary {
+    width: 700px;
+    height: 150px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.story-btn {
+    margin-top: 10px;
+    float: none;
+}
+
+.guideline {
+    color: #BAC34E;
+    text-decoration: underline;
+    margin-left: 20px;
+}
+
+.guideline:hover, .home:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.panel > p {
+    cursor: pointer;
+}
+
+.story {
+    height: 1200px !important;
+}
+
+/* ========================= 스토리 구분선========================= */
+.reward-area {
+    border: 1px solid black;
+    height: 300px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.rewardtitle-section > * {
+    width: 100px;
+}
+
+.rewardtitle-section, .rewarddetail-section {
+    float: left;
+}
+
+.rewardtitle {
+    color: #BAC34E;
+    font-weight: bold;
+    margin-top: 30px !important;
+    margin-bottom: 55px !important;
+    display: block;
+}
+
+.rewarddetail {
+    margin-top: 30px;
+    display: block;
+}
+
+button.reward {
+    position: relative;
+    top: 300px;
+}
+
+.big-btn {
+    border: none;
+}
+
+hr {
+    position: relative;
+    bottom: 15px;
 }
