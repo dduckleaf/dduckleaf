@@ -110,3 +110,64 @@
 .right-arrow {
   margin-bottom: 1%;
 }
+
+
+@charset "UTF-8";
+
+.main-content div.notice-wrap {
+  height: 1400px;
+}
+
+.main-content div.title-div, .main-content div.cont-div {
+  width: 840px;
+  margin: 30px auto 0;
+}
+
+.main-content div.cont-div .basic-btn {
+  float: right;
+  margin-bottom: 20px;
+}
+
+.main-content div.cont-div table {
+  width: 100%;
+  border-top: 1px solid black;
+  margin-bottom: 20px;
+}
+
+.main-content div.cont-div th {
+  text-align: center;
+  height: 50px;
+  background: #efefef;
+  border-bottom: 1px solid #ababab;
+}
+
+.main-content div.cont-div td {
+  text-align: center;
+  height: 30px;
+  border-bottom: 1px solid #ccc;
+}
+
+tr.title, td.title {
+  border-bottom: none !important;
+}
+
+.main-content div.cont-div td.title, .main-content div.cont-div td.author, .main-content div.cont-div td.date {
+  background: #efefef;
+}
+
+.main-content div.cont-div table, .main-content div.cont-div th, .main-content div.cont-div td {
+  /*border: 1px solid red;*/
+}
+
+#paging {
+  margin-bottom: 20px;
+}
+
+#paging button {
+  border: none;
+  background: none;
+}
+
+#search-form {
+  text-align: center;
+}
