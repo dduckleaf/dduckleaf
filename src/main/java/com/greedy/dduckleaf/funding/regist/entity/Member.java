@@ -1,7 +1,16 @@
 package com.greedy.dduckleaf.funding.regist.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
 @Entity(name = "MemberForFunding")
 @Table(name = "TBL_MEMBER")
 public class Member {
@@ -31,4 +40,17 @@ public class Member {
     @Column(name = "WITHDRAWAL_STATUS")
     private String whthdrawalStatus;
 
+    @Override
+    public String toString() {
+        return "Member{" +
+                "memberNo=" + memberNo +
+                ", memberName='" + memberName + '\'' +
+                ", memberId='" + memberId + '\'' +
+                ", memberPwd='" + memberPwd + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", memberRole=" + memberRole +
+                ", whthdrawalStatus='" + whthdrawalStatus + '\'' +
+                '}';
+    }
 }

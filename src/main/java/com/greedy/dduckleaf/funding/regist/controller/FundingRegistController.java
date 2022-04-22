@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.funding.regist.controller;
 
+import com.greedy.dduckleaf.funding.regist.dto.BankListAndMemberDTO;
 import com.greedy.dduckleaf.funding.regist.dto.FundingRegistDTO;
 import com.greedy.dduckleaf.funding.regist.dto.ProjectDTO;
 import com.greedy.dduckleaf.funding.regist.service.FundingRegistService;
@@ -34,9 +35,14 @@ public class FundingRegistController {
     @GetMapping("/shipping")
     public ModelAndView registFundingConfirmPage(ModelAndView mv, FundingRegistDTO registInfo) {
 
+        String memberId = "USER01";
+        BankListAndMemberDTO bankListAndMember = service.findBankAndUserInfo(memberId);
+
+        mv.addObject("bankList", bankListAndMember.getBankList());
+        mv.addObject("member", bankListAndMember.getMember());
         mv.addObject("registInfo", registInfo);
 
-        System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);System.out.println("registInfo = " + registInfo);
+
         mv.setViewName("/funding/regist/shippinginfo");
 
         return mv;
