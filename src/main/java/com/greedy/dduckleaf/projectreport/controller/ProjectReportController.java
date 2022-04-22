@@ -31,4 +31,9 @@ public class ProjectReportController {
 
         return mv;
     }
+
+    @GetMapping("/detail")
+    public void findProjectReportDetail(ModelAndView mv) {
+
+    }
 }
