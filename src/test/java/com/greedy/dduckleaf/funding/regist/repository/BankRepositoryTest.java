@@ -1,18 +1,31 @@
-package com.greedy.dduckleaf.funding.regist.service;
+package com.greedy.dduckleaf.funding.regist.repository;
 
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
-import com.greedy.dduckleaf.funding.regist.dto.ProjectDTO;
-import com.greedy.dduckleaf.funding.regist.dto.ProjectForFundingRegistDTO;
+import com.greedy.dduckleaf.funding.regist.entity.Bank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * <pre>
+ * Class : BankRepositoryTest
+ * Comment :
+ *
+ * History
+ * 2022-04-22 h99ww
+ * </pre>
+ *
+ * @author h99ww
+ * @version 1.0.0
+ */
 @SpringBootTest
 @ContextConfiguration(classes = {
         BeanConfiguration.class,
@@ -20,68 +33,22 @@ import static org.junit.jupiter.api.Assertions.*;
         DduckleafApplication.class,
         JPAConfiguration.class
 })
-class FundingRegistServiceTest {
+class BankRepositoryTest {
 
     @Autowired
-    private FundingRegistService service;
+    private BankRepository repo;
 
     @Test
     public void initTest() {
-        assertNotNull(service);
+        assertNotNull(repo);
     }
 
     @Test
-    @DisplayName("한 프로젝트의 펀딩등록 시 필요 정보 조회 테스트")
-    public void findProjectInfoById_test() {
-        int projectNo = 1;
-
-        ProjectDTO projectInfoDTO = service.findProjectFundingInfo(projectNo);
-        
-        assertNotNull(projectInfoDTO);
-        System.out.println("projectInfoDTO = " + projectInfoDTO);
+    @DisplayName("은행명 전체 조회 테스트")
+    public void findAllBank() {
+        List<Bank> bankList = repo.findAll();
+        assertNotNull(bankList);
+        bankList.forEach(System.out::println);
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

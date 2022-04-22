@@ -3,6 +3,7 @@ package com.greedy.dduckleaf.funding.regist.controller;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
+import com.greedy.dduckleaf.funding.regist.dto.FundingRegistDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,6 +57,18 @@ class FundingRegistControllerTest {
     public void registFundingPage_model_test() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/funding/regist/reward/1"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("fundingInfo"))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    @DisplayName("펀딩신청 배송지 환불계좌 입력 페이지 url요청")
+    public void registFundingConfirmPage_test() throws Exception {
+        FundingRegistDTO registInfo = new FundingRegistDTO(12500, 10000, 10000, 0, 0, 2500, 0, 1);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/funding/regist/shipping"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.forwardedUrl("/funding/regist/shippinginfo"))
                 .andDo(MockMvcResultHandlers.print());
 
     }

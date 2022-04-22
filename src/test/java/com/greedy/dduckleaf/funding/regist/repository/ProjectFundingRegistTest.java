@@ -50,5 +50,4 @@ class ProjectFundingRegistTest {
         assertNotNull(projectInfo);
         System.out.println("projectInfo = " + projectInfo);
     }
-
 }
