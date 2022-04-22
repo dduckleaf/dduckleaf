@@ -14,6 +14,8 @@
 	<!-- Style CSS -->
 	<link rel="stylesheet" th:href="@{ /css/funding.css }">
 	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div th:replace="/common/userheader.html"></div>
@@ -94,17 +96,17 @@
 			<div class="funding-regist-sup-info-name">
 				<div class="row">
 					<div class="col-2"><label>이름</label></div>
-					<div class="col"><span>박상범</span></div>
+					<div class="col"><span>[[${ member.memberName}]]</span></div>
 				</div>
 				<br>
 				<div class="row">
 					<div class="col-2"><label>이메일</label></div>
-					<div class="col"><span>h99www@gmail.com</span></div>
+					<div class="col"><span>[[${ member.email }]]</span></div>
 				</div>
 				<br>
 				<div class="row">
 					<div class="col-2"><label>휴대폰 번호</label></div>
-					<div class="col"><span>010-6552-4838</span></div>
+					<div class="col"><span>[[${ member.phone }]]</span></div>
 				</div>
 			</div>
 			<div class="funding-regist-sup-info-check">
@@ -117,35 +119,46 @@
 		</div>
 		
 		<br><br><br><br>
-		<label class="title">리워드 배송지 입력</label><br>
-		<hr style="color: #ABABAB;" size="6px"><br>
-		<div class="funding-regist-shipping-area">
-			<div class="funding-regist-shipping-area-info">
-				<label>이름</label><br>
-				<input type="text"><br>
-				<label>휴대폰 번호</label><span>('-' 없이 숫자만 입력해주세요.)</span><br>
-				<input type="text"><br>
-				<label>주소</label><br>
-				<input type="text" name="zipCode" id="zipCode" readonly><input type="button" value="검색" class="basic-btn btn1 small-btn" id="searchZipCode" style="margin-left: 1%;"><br>
-				<input type="text" name="address1" id="address1"><br>
-				<input type="text" name="address2" id="address2"><br>
-			
-				<label>배송 요청사항 (선택)</label><br>
-				<input type="text" placeholder=" 예) 부재 시 연락 바랍니다."><br><br>
+		<form id="sendform">
+			<label class="title">리워드 배송지 입력</label><br>
+			<hr style="color: #ABABAB;" size="6px"><br>
+			<div class="funding-regist-shipping-area">
+				<div class="funding-regist-shipping-area-info">
+					<label>이름</label><br>
+					<input name="shippingMemberName" type="text"><br>
+					<label>휴대폰 번호</label><span>('-' 없이 숫자만 입력해주세요.)</span><br>
+					<input name="shippingMemberPhone" type="text"><br>
+					<label>주소</label><br>
+					<input type="text" name="zipCode" id="zipCode" readonly><input type="button" value="검색" class="basic-btn btn1 small-btn" id="searchZipCode" style="margin-left: 1%;"><br>
+					<input type="text" name="address1" id="address1"><br>
+					<input type="text" name="address2" id="address2"><br>
+
+					<label>배송 요청사항 (선택)</label><br>
+					<input name="shippingRequire" type="text" placeholder=" 예) 부재 시 연락 바랍니다."><br><br>
+				</div>
 			</div>
-		</div>
-		
-		<!-- 환불 계좌 입력-->
-		<div style="margin-top: 2%"></div>
-		<label class="title">환불 계좌 입력</label><br>
-		<hr style="color: #ABABAB;" size="6px"><br>
-		<div>
-			<select class="shipping-fee-select">
-				<option disabled selected>은행명</option><input class="shipping-fee-select-account" type="number" placeholder="'-' 없이 숫자만 입력해주세요.">
-			
-			</select>
-		</div>
-		
+
+			<!-- 환불 계좌 입력-->
+			<div style="margin-top: 2%"></div>
+			<label class="title">환불 계좌 입력</label><br>
+			<hr style="color: #ABABAB;" size="6px"><br>
+			<div>
+				<select class="shipping-fee-select" name="bankCode">
+					<option disabled selected>은행명</option>
+					<option th:each="bank : ${ bankList }" th:value="${bank.bankNo}" th:text="${bank.bankName}"></option>
+				</select>
+				<input class="shipping-fee-select-account" name="accountNo" type="number" placeholder="'-' 없이 숫자만 입력해주세요.">
+			</div>
+
+			<input type="hidden" id="totalFunding" name="totalFunding">
+			<input type="hidden" id="rewardTotal" name="rewardTotal">
+			<input type="hidden" id="rewardPrice" name="rewardPrice">
+			<input type="hidden" id="rewardAmount" name="rewardAmount">
+			<input type="hidden" id="donate" name="donate">
+			<input type="hidden" id="shippingFee" name="shippingFee">
+			<input type="hidden" id="extraShippingFee" name="extraShippingFee">
+			<input type="hidden" id="projectNo" name="projectNo">
+		</form>
 		<!-- 약관 동의 -->
 		<div style="margin-top: 4%"></div>
 		<label class="title">약관 동의</label><br>
@@ -186,11 +199,11 @@
 		
 		<!-- 버튼 -->
 		<div style="text-align: center; width: 100%; margin: 5%">
-			<button class="basic-btn btn1 bigbig-btn">결제 예약하기</button>
+			<button id="funding-submit" class="basic-btn btn1 bigbig-btn">결제 예약하기</button>
 		</div>
 	</div>
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script>
+	<script th:inline="javascript">
         const $searchZipCode = document.getElementById("searchZipCode");
         const $goMain = document.getElementById("goMain");
 
@@ -209,9 +222,133 @@
         $goMain.onclick = function() {
             location.href = "/";
         }
+
+		const $submit = document.getElementById("funding-submit");
+
+		if($submit) {
+			$submit.onclick = function() {
+				const $sendform = document.getElementById("sendform")
+
+				const $totalFunding = document.getElementById("totalFunding");
+				const $rewardTotal = document.getElementById("rewardTotal");
+				const $rewardPrice = document.getElementById("rewardPrice");
+				const $rewardAmount = document.getElementById("rewardAmount");
+				const $donate = document.getElementById("donate");
+				const $shippingFee = document.getElementById("shippingFee");
+				const $extraShippingFee = document.getElementById("");
+				const $projectNo = document.getElementById("projectNo");
+
+				// if(~~~ == 0) {
+				// 	Swal.fire({
+				// 		icon: 'warning',
+				// 		title: '리워드수량을 입력하세요!'
+				// 	})
+				}
+
+
+
+
+
+				$totalFunding.value = "[[${ registInfo.totalFunding }]]";
+				$rewardTotal.value = "[[${ registInfo.rewardTotal }]]";
+				$rewardPrice.value = "[[${ registInfo.rewardPrice }]]";
+				$rewardAmount.value = "[[${ registInfo.rewardAmount }]]";
+				$donate.value = "[[${ registInfo.donate }]]";
+				$shippingFee.value = "[[${ registInfo.shippingFee }]]";
+				$extraShippingFee.value = "[[${ registInfo.extraShippingFee }]]";
+				$projectNo.value = "[[${ registInfo.projectNo }]]";
+
+				$sendform.method = "get";
+				$sendform.action = "/funding/regist/reserve/api";
+
+				$sendform.submit();
+
+
+			}
+		}
+
+
+
+
 	</script>
 </div>
 <footer class="footer" th:replace="/common/footer.html"></footer>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

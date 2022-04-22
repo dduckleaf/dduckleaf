@@ -64,7 +64,7 @@ class FundingRegistControllerTest {
     @Test
     @DisplayName("펀딩신청 배송지 환불계좌 입력 페이지 url요청")
     public void registFundingConfirmPage_test() throws Exception {
-        FundingRegistDTO registInfo = new FundingRegistDTO(12500, 10000, 10000, 0, 0, 2500, 0, 1);
+        FundingRegistDTO registInfo = new FundingRegistDTO(12500, 10000, 10000, 0, 0, 2500, 0, 1, null, null);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/funding/regist/shipping"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
