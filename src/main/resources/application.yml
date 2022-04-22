@@ -38,3 +38,16 @@
   thymeleaf:
     cache: false
     prefix: file:src/main/resources/templates/
+
+## SMTP config
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: tkdjawlwhs@gmail.com
+    password: a33196417
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true

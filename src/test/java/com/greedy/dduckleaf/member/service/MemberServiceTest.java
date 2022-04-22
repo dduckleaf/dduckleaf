@@ -1,0 +1,62 @@
+package com.greedy.dduckleaf.member.service;
+
+import com.greedy.dduckleaf.config.BeanConfiguration;
+import com.greedy.dduckleaf.config.DduckleafApplication;
+import com.greedy.dduckleaf.config.JPAConfiguration;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
+
+import javax.mail.MessagingException;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
+@ContextConfiguration(classes = {
+        com.greedy.dduckleaf.config.ContextConfiguration.class,
+        JPAConfiguration.class,
+        BeanConfiguration.class,
+        DduckleafApplication.class
+})
+class MemberServiceTest {
+
+    @Autowired
+    MemberService memberService;
+
+    @Test
+    public void initTest() {
+        assertNotNull(memberService);
+    }
+
+    @Test
+    @DisplayName("이메일 인증번호 생성해서 중복되는 이메일이면 이미 사용중인 이메일 입니다. 출력")
+    public void emailTest() throws MessagingException {
+
+        //given
+        String email = "h99www@gmail.com";
+
+        //when
+        String result = memberService.sendEmailVerification(email);
+
+        //then
+        System.out.println(result);
+        assertEquals(result, "이미 사용중인 이메일 입니다.");
+    }
+
+    @Test
+    @DisplayName("이메일 인증번호 생성해서 중복되는 이메일이 아니면 인증번호 전송")
+    public void emailSendTest() throws MessagingException {
+
+        //given
+        String email = "sangbum0497@gmail.com";
+
+        //when
+        String result = memberService.sendEmailVerification(email);
+
+        //then
+        System.out.println(result);
+        assertNotEquals(result, "이미 사용중인 이메일 입니다.");
+    }
+}
