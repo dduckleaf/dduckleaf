@@ -18,3 +18,30 @@
     border: none;
     background: none;
 }
+
+.body-area {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    width: 70%;
+}
+
+.box {
+    border: 1px solid #ababab;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
+}
+
+#find-all, #reply-waiting, #reply-complete {
+    width: 170px;
+    height: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    font-size: 14pt;
+}
