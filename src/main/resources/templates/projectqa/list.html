@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/projectqa.css}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<!-- Style CSS -->
+<link rel="stylesheet" href="../../static/css/style.css">
+<link rel="stylesheet" href="../../static/css/projectqa.css">
+
+<body>
+
+<ul class="nav product-tab-nav product-tab-style-2" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="btn btn-custom-size" id="story-tab" data-bs-toggle="tab" href="#story" role="tab" aria-controls="story" aria-selected="true">
+            스토리
+        </a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="btn btn-custom-size" id="farmerInfo-tab" data-bs-toggle="tab" href="#farmerInfo" role="tab" aria-controls="farmerInfo" aria-selected="false">
+            파머 정보
+        </a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="active btn btn-custom-size" id="qna-tab" data-bs-toggle="tab" href="#qna" role="tab" aria-controls="qna" aria-selected="false">
+            관련 문의
+        </a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="btn btn-custom-size" id="farmnote-tab" data-bs-toggle="tab" href="#farmnote" role="tab" aria-controls="farmnote" aria-selected="false">
+            농사 일지
+        </a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="btn btn-custom-size" id="refundpolicy-tab" data-bs-toggle="tab" href="#refundpolicy" role="tab" aria-controls="refundpolicy" aria-selected="false">
+            반환 정책
+        </a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="btn btn-custom-size" id="notice-tab" data-bs-toggle="tab" href="#notice" role="tab" aria-controls="notice" aria-selected="false">
+            공지사항
+        </a>
+    </li>
+</ul>
+
+<!-- Begin 게시판영역 -->
+
+<table class="basic-table" id="project-qna-table" align="center">
+
+    <tr>
+        <th style="width: 8%;">답변상태</th>
+        <th style="width: 70%;">제목</th>
+        <th style="width: 12%;">작성자</th>
+        <th style="width: 10%;">작성일</th>
+    </tr>
+
+    <tr class="board-detail">
+        <td>미답변</td>
+        <td align="left">비밀글입니다.<img class="lock-img" src="../../static/images/board/lock-icon.png"></td>
+        <td>mmmj*****</td>
+        <td>2022-02-20<br>07:15</td>
+    </tr>
+
+    <tr class="board-detail">
+        <td></td>
+        <td align="left">솔향기가 솔솔나나여?솔향기가 솔솔나나여?솔향기가 솔솔나나여?솔향기가 솔솔나나여?솔향기가 솔솔나나여?솔향기가 솔솔나나여?솔향기가 솔솔나나여?솔향기가 솔솔나나여?솔향기가 솔솔나나여?</td>
+        <td></td>
+        <td><button class="btn-td">수정</button> | <button class="btn-td">삭제</button></td>
+    </tr>
+    <tr class="board-detail">
+        <td></td>
+        <td align="left"><img src="../../static/images/board/reply-icon.png" style="height: 20px; margin-right: 5px;">답글답글답글답글답글답글답글</td>
+        <td>파머</td>
+        <td><button class="btn-td">수정</button> | <button class="btn-td">삭제</button></td>
+    </tr>
+    <tr>
+        <td>답변완료</td>
+        <td align="left">비밀글입니다.<img src="../../static/images/board/lock-icon.png" class="lock-img"></td>
+        <td>mmmj*****</td>
+        <td>2022-02-20<br>07:15</td>
+    </tr>
+    <tr>
+        <td>답변완료</td>
+        <td align="left">비밀글입니다.<img src="../../static/images/board/lock-icon.png" class="lock-img"></td>
+        <td>mmmj*****</td>
+        <td>2022-02-20<br>07:15</td>
+    </tr>
+</table>
+
+
+<div class="btn-area">
+    <button class="basic-btn medium-btn btn1" id="regist">문의작성</button>
+</div>
+
+<!-- switch button -->
+<div class="switch-btn-area">
+    <label>내 문의 보기</label>
+    <label class="switch-btn">
+        <input type="checkbox">
+        <span class="onoff-switch"></span>
+    </label>
+</div>
+
+<!-- paging -->
+<div class="paging-area" align="center">
+    <button class="paging-btn first"><<</button>
+    <button class="paging-btn prev"><</button>
+    <button class="paging-btn">1</button>
+    <button class="paging-btn next">></button>
+    <button class="paging-btn last">>></button>
+</div>
+
+<!-- 게시판영역 End Here -->
+
+</body>
+</html>
