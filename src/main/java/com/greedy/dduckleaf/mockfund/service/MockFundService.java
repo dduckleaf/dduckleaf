@@ -87,6 +87,5 @@ public class MockFundService {
     @Transactional
     public void modifyBasicInfo(MockFundInfoDTO mockFundInfo) {
 
-
     }
 }
