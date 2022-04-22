@@ -1,0 +1,80 @@
+.button-margin {
+    margin-top: 30pt;
+    font-weight: bold;
+    font-size: 15pt;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+button.small-btn {
+    cursor: default;
+    border: none;
+    margin-left: 20pt;
+
+}
+span.infront-fee {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-left: 60px;
+}
+span.front-fee {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-left: 40px;
+}
+span.front-fee2 {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-left: 50px;
+}
+
+span.back-fee1 {
+    font-size: 20pt; margin-left: 60px; font-weight: bold;
+}
+span.back-fee2 {
+    font-size: 20pt; margin-left: 70px; font-weight: bold;
+}
+span.back-fee3 {
+    font-size: 20pt; margin-left: 10px; font-weight: bold;
+}
+
+input.back-fee1 {
+    margin-left: 60px; width: 80px;
+}
+input.back-fee2 {
+    margin-left: 60px; width: 80px;
+}
+input.back-fee3 {
+    margin-left: 40px; width: 100px;
+}
+button.btn5{
+    color: #ABABAB;
+}
+
+button.big-btn {
+    width: 250px !important;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 18px !important;
+    text-align: center;
+    margin-top: 23%;
+}
+
+button.bigbig-btn {
+    margin-left: 30%;
+    margin-top: 27%;
+}
+
+td.inmargin {
+    padding: 20px;
+}
+
+
+.content-context {
+    border: 1px solid #ABABAB;
+    width: 840px;
+    height: 200px;
+    margin-top: 50px;
+    border-radius: 5px;
+}
