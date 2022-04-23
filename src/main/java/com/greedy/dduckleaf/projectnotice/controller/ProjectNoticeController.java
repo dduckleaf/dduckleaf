@@ -11,6 +11,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/project/notice")
@@ -45,13 +46,24 @@ public class ProjectNoticeController {
     @ResponseBody
     public ModelAndView findProjectNoticeDetail(ModelAndView mv, @PathVariable int projectNoticeNo) {
 
-        int projectNo = 2;
-
         ProjectNoticeDTO projectNoticeDetail = projectService.findProjectNoticeDetail(projectNoticeNo);
 
         mv.addObject("projectNoticeDetail", projectNoticeDetail);
         mv.setViewName("project/notice/detail");
 
+        return mv;
+    }
+
+    @GetMapping("/regist")
+    public ModelAndView registProjectNotice(ModelAndView mv, RedirectAttributes rttr) {
+
+        ProjectNoticeDTO newNotice = new ProjectNoticeDTO();
+
+        projectService.save(newNotice);
+
+        rttr.addFlashAttribute("message", "공지사항이 등록되었습니다.");
+
+//        mv.setViewName("미확정");
         return mv;
     }
 
