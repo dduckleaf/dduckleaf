@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Controller
-@RequestMapping("mockfund")
+@RequestMapping("/mockfund")
 public class MockFundController {
 
     private final MockFundService mockFundService;
