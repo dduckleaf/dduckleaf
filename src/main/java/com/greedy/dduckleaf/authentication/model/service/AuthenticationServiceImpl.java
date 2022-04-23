@@ -69,6 +69,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         memberPermitList.add("/member/update");
         memberPermitList.add("/member/logout");
         memberPermitList.add("/member/delete");
+        memberPermitList.add("/main/main");
 
         /* 관리자 권한 */
         /* 관리자만 할 수 있는 url 예)관리자페이지*/
