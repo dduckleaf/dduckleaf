@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/report.css}">
+</head>
+<body>
+    <main style="width: 1920px;">
+        <div th:replace="/common/adminheader.html"></div>
+        <div class="body-area">
+            <div class="title-div">
+                <span class="text-title">
+                    <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">프로젝트 신고 관리</span>
+            </div>
+            <div class="box">
+                <button class="basic-btn btn1" id="find-all" onclick="location.href='/report/platformmanager/list'">전체 신고목록</button>
+                <button class="basic-btn btn1" id="reply-waiting" onclick="location.href='/report/platformmanager/list'">처리 대기중</button>
+                <button class="basic-btn btn1" id="reply-complete" onclick="location.href='/report/platformmanager/list'">처리 완료</button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
