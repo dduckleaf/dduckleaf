@@ -26,9 +26,9 @@ import java.util.Locale;
  * 2022/04/18 (박상범) 처음 작성 / 로그인, 로그 아웃 관련 메소드 추가
  * 2022/04/19 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 시작
  * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료, 휴대폰 인증 번호 전송 관련 메소드 구현 시작
- * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료
+ * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료, 회원 가입 관련 메소드 구현 완료
  * </pre>
- * @version 1.0.4
+ * @version 1.0.5
  * @author 박상범
  */
 @Controller
@@ -155,5 +155,35 @@ public class MemberController {
                 .create();
 
         return gson.toJson(checkResult);
+    }
+
+    /**
+     * registMember : 떡잎펀드 서비스를 이용하기 위해 회원 가입을 합니다.
+     * @param member: 회원가입할 회원의 정보
+     * @param request:
+     * @param rttr:
+     * @param locale:
+     * @return "/member/login"
+     * @author 박상범
+     */
+    @PostMapping("/regist")
+    public String registMember(@ModelAttribute MemberDTO member, HttpServletRequest request, RedirectAttributes rttr, Locale locale){
+
+        String phone = request.getParameter("phone").replace("-", "");
+        String email = request.getParameter("email");
+
+        System.out.println(phone);
+
+        member.setMemberPwd(passwordEncoder.encode(member.getMemberPwd()));
+        member.setPhone(phone);
+        member.setEmail(email);
+        member.setMemberRole(1);
+        member.setWithdrawalStatus("N");
+
+        memberService.registMember(member);
+
+        rttr.addFlashAttribute("successMessage", messageSource.getMessage("registMemberSuccess", null, locale));
+
+        return "/member/login";
     }
 }

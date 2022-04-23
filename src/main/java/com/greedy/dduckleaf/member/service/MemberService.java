@@ -24,9 +24,9 @@ import java.util.List;
  * 2022/04/18 (박상범) 처음 작성
  * 2022/04/19 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 시작
  * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료
- * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 메소드 구현 완료
+ * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료, 회원 가입 관련 메소드 구현 완료
  * </pre>
- * @version 1.0.4
+ * @version 1.0.5
  * @author 박상범
  * @see EmailSender
  * @see ModelMapper
@@ -134,5 +134,15 @@ public class MemberService{
         }
 
         return "사용가능한 아이디입니다.";
+    }
+
+    /**
+     * registMember : 입력받은 회원 정보로 회원 가입을 한다.
+     * @param member: 회원 가입할 회원 정보
+     * @author 박상범
+     */
+    @Transactional
+    public void registMember(MemberDTO member) {
+        memberRepository.save(modelMapper.map(member, Member.class));
     }
 }
