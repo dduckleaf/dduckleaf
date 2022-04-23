@@ -143,7 +143,7 @@ public class MemberService{
     public void registMember(MemberDTO member) {
         memberRepository.save(modelMapper.map(member, Member.class));
     }
-
+ 
     /**
      * sendEmailMemberId: 입력한 이메일이 등록되어있는지 확인합니다.
      * @param email: 중복 확인할 아이디
