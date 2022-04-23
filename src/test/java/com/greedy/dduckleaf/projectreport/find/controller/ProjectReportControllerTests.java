@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.projectreport.find.controller;
 
+import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.config.*;
 import com.greedy.dduckleaf.projectreport.controller.ProjectReportController;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,10 +45,11 @@ public class ProjectReportControllerTests {
     @Test
     @DisplayName("서포터 프로젝트신고내역 목록조회 테스트")
     public void findProjectReportListByMemberNo_test() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/report/list"))
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/report/member/list"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.forwardedUrl("report/list"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("projectReportSummeryInfo"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("report/member/list"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("projectReportList"))
                 .andDo(MockMvcResultHandlers.print());
     }
 }
