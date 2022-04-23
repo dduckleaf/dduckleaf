@@ -2,7 +2,7 @@ package com.greedy.dduckleaf.projectreport.find.service;
 
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportSummeryInfoDTO;
+import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportSummaryInfoDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ReportCategoryDTO;
 import com.greedy.dduckleaf.projectreport.find.entity.Member;
 import com.greedy.dduckleaf.projectreport.find.entity.Project;
@@ -32,7 +32,7 @@ public class ProjectReportService {
         this.modelMapper = modelMapper;
     }
 
-    public List<ProjectReportSummeryInfoDTO> findProjectReportListByMemberNo(int memberNo) {
+    public List<ProjectReportSummaryInfoDTO> findProjectReportListByMemberNo(int memberNo) {
 
         Member member = repository.findMemberByMemberNo(memberNo);
 
@@ -71,7 +71,7 @@ public class ProjectReportService {
         }
         projectReportDTOList.forEach(System.out::println);
 
-        List<ProjectReportSummeryInfoDTO> projectReportSummeryInfo = new ArrayList<>();
+        List<ProjectReportSummaryInfoDTO> projectReportSummeryInfo = new ArrayList<>();
         for(int i = 0; i < projectReportSummeryInfo.size(); i++) {
             projectReportSummeryInfo.get(i).setProjectReport(projectReportDTOList.get(i));
             projectReportSummeryInfo.get(i).setProject(projectDTOList.get(i));
