@@ -174,4 +174,32 @@ class MemberServiceTest {
         //then
         assertEquals(result, "사용가능한 아이디입니다.");
     }
+
+    @Test
+    @DisplayName("등록된 이메일이 없을 경우")
+    public void notExistEmailTest() {
+
+        //given
+        String email = "sangbum0313@nate.com";
+
+        //when
+        String result = memberService.sendEmailMemberId(email);
+
+        //then
+        assertEquals(result, "등록된 아이디가 없습니다.");
+    }
+
+    @Test
+    @DisplayName("등록된 이메일이 있는 경우 이메일로 아이디 전송")
+    public void existEmailTest() {
+
+        //given
+        String email = "tkdjawlwhs@naver.com";
+
+        //when
+        String result = memberService.sendEmailMemberId(email);
+
+        //then
+        assertEquals(result, "qwer");
+    }
 }

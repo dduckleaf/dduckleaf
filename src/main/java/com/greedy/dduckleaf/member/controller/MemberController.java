@@ -186,4 +186,21 @@ public class MemberController {
 
         return "/member/login";
     }
+
+    @GetMapping("/find/id")
+    public ModelAndView sendMemberId(ModelAndView mv, String email, RedirectAttributes rttr) {
+
+        String result = memberService.sendEmailMemberId(email);
+
+        if(result == "등록된 아이디가 없습니다.") {
+            rttr.addFlashAttribute("message", result);
+            mv.setViewName("redirect:/member/find/id");
+        }
+        if(result != "등록된 아이디가 없습니다.") {
+            mv.addObject("memberId", result);
+            mv.setViewName("redirect:/member/find/success");
+        }
+
+        return mv;
+    }
 }

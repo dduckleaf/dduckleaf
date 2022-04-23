@@ -53,17 +53,14 @@ public class MemberService{
      */
     public String sendEmailVerification(String email) throws MessagingException {
 
-        List<Member> member = memberRepository.findMemberByEmail(email);
+        Member member = memberRepository.findMemberByEmail(email);
 
-        //중복된 이메일을 가진 멤버가 없을 경우
-        if(member.size() == 0) {
-            emailSender.sendMail(email);
-        }
-        if(member.size() > 0) {
+        //중복된 이메일을 가진 멤버가 있을 경우
+        if(member != null) {
             return "이미 사용중인 이메일 입니다.";
         }
 
-        return (int) (Math.random() * 899999) + 100000 + "";
+        return emailSender.sendMailVerification(email);
     }
 
     /**
@@ -74,7 +71,7 @@ public class MemberService{
      */
     public String sendPhoneVerification(String phone) {
 
-        List<Member> member = memberRepository.findMemberByPhone(phone);
+        Member member = memberRepository.findMemberByPhone(phone);
 
         if(phone.length() == 0){
             return "휴대폰 번호를 입력해주세요.";
@@ -84,7 +81,7 @@ public class MemberService{
             return "휴대폰 번호가 유효하지 않습니다.";
         }
 
-        if(member.size() > 0) {
+        if(member == null) {
             return "이미 사용중인 휴대전화 번호입니다.";
         }
 
@@ -144,5 +141,17 @@ public class MemberService{
     @Transactional
     public void registMember(MemberDTO member) {
         memberRepository.save(modelMapper.map(member, Member.class));
+    }
+
+    public String sendEmailMemberId(String email) {
+
+        Member member = memberRepository.findMemberByEmail(email);
+
+        //등록된 이메일이 없는 경우
+        if(member == null) {
+            return "등록된 아이디가 없습니다.";
+        }
+
+        return emailSender.sendMailMemberId(member);
     }
 }

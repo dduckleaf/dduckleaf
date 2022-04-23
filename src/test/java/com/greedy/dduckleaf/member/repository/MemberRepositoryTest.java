@@ -44,11 +44,10 @@ class MemberRepositoryTest {
         String email = "USER01@GMAIL.COM";
 
         //when
-        List<Member> member = memberRepository.findMemberByEmail(email);
+        Member member = memberRepository.findMemberByEmail(email);
 
         //then
         assertNotNull(member);
-        member.forEach(System.out::println);
     }
 
     @Test
@@ -59,10 +58,10 @@ class MemberRepositoryTest {
         String email = "sangbum0313@nate.com";
 
         //when
-        List<Member> member = memberRepository.findMemberByEmail(email);
+        Member member = memberRepository.findMemberByEmail(email);
 
         //then
-        assertEquals(member.size(),0);
+        assertNull(member);
     }
 
     @Test
@@ -73,10 +72,10 @@ class MemberRepositoryTest {
         String phone = "01065524838";
 
         //when
-        List<Member> member = memberRepository.findMemberByPhone(phone);
+        Member member = memberRepository.findMemberByPhone(phone);
 
         //then
-        assertNotEquals(member.size(), 0);
+        assertNotNull(member);
     }
 
     @Test
@@ -87,10 +86,10 @@ class MemberRepositoryTest {
         String phone = "01038109897";
 
         //when
-        List<Member> member = memberRepository.findMemberByPhone(phone);
+        Member member = memberRepository.findMemberByPhone(phone);
 
         //then
-        assertEquals(member.size(), 0);
+        assertNull(member);
     }
 
     @Test
@@ -105,5 +104,20 @@ class MemberRepositoryTest {
 
         //then
         assertNotNull(member);
+    }
+
+    @Test
+    @DisplayName("이메일로 아이디 찾기")
+    public void findMemberIdByEmailTest() {
+
+        //given
+        String email = "tkdjawlwhs@naver.com";
+
+        //when
+        String memberId = memberRepository.findMemberByEmail(email).getMemberId();
+
+        //then
+        assertNotNull(memberId);
+        System.out.println(memberId);
     }
 }
