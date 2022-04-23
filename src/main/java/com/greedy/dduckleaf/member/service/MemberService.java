@@ -39,7 +39,7 @@ public class MemberService{
         this.memberRepository = memberRepository;
         this.emailSender = emailSender;
     }
-
+ 
     /**
      * sendEmailVerification: 입력받은 이메일 주소로 인증번호를 전송한다.
      * @param email: 인증 번호를 받을 이메일 주소
