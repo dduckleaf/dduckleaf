@@ -1,7 +1,6 @@
 package com.greedy.dduckleaf.projectreport.find.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 @Entity(name = "ProjectForProjectReport")
 @Table(name = "TBL_PROJECT")

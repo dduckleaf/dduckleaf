@@ -1,9 +1,6 @@
 package com.greedy.dduckleaf.projectreport.find.entity;
 
-import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
-
 import javax.persistence.*;
-import java.sql.Date;
 import java.util.List;
     import lombok.*;
 
@@ -24,7 +21,6 @@ public class Member {
     @Column(name = "MEMBER_NAME")
     private String memberName;
 
-    @Transient
     @Column(name = "MEMBER_ID")
     private String memberId;
 
