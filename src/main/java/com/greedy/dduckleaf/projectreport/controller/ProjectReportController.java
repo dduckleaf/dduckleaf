@@ -1,9 +1,12 @@
 package com.greedy.dduckleaf.projectreport.controller;
 
+import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportSummaryInfoDTO;
 import com.greedy.dduckleaf.projectreport.find.service.ProjectReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,10 +46,15 @@ public class ProjectReportController {
      *           "report/list" : 요약정보를 출력할 브라우저 화면 경로
     */
     @GetMapping("/list")
-    public ModelAndView findProjectReportListByMemberNo(ModelAndView mv) {
-        List<ProjectReportSummaryInfoDTO> projectReportSummeryInfo = service.findProjectReportListByMemberNo(3);
+    public ModelAndView findProjectReportListByMemberNo(@AuthenticationPrincipal CustomUser user, ModelAndView mv) {
 
-        mv.addObject("projectReportSummeryInfo", projectReportSummeryInfo);
+        int memberNo = user.getMemberNo();
+        System.out.println("memberNo = " + memberNo);
+
+        List<ProjectReportDTO> projectReportList = service.findProjectReportListByMemberNo(memberNo);
+        System.out.println("projectReportList = " + projectReportList);
+        
+        mv.addObject("projectReportList", projectReportList);
         mv.setViewName("report/list");
 
         return mv;
