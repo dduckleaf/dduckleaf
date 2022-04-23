@@ -16,48 +16,44 @@
     <link rel="stylesheet" th:href="@{/css/projectNotice.css }">
 </head>
 <body>
-<div class="main-wrapper">
-    <div th:include="/common/menubar.html"></div>
+<div th:replace="/common/menubar.html"></div>
 
-    <div class="mypage" th:replace="/common/supporterpage.html"></div>
+<div class="mypage" th:replace="/common/project.html"></div>
 
-    <div class="tab-body-area">
-        <div class="title-div">
+<div class="title">공지사항</div>
+<div class="tab-body-area">
+    <div class="title-div">
             <span class="text-title">
                 <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">공지사항</span>
-            <hr width="100%">
-            <div class="notice-wrap" style="border: #0a3420">
-                <div class="cont-div">
-                    <div class="regist-form">
-                        <div class="regist-wrap">
-                            <div class="title-form">
-                                <label for="title">제목</label>
-                                <input type="text" id="title">
-                            </div>
-                            <div class="content-form">
-                                <label for="content">내용</label>
-                                <textarea id="content"></textarea>
-                            </div>
-                            <div class="btn-area">
-                                <button class="basic-btn medium-btn btn1 regist">등록</button>
-                                <button class="basic-btn medium-btn btn3">취소</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <hr width="100%">
+        <div class="notice-wrap">
+            <div class="cont-div">
+                <table>
+                    <tr class="title" th:each="notice : ${ projectNoticeDetail }">
+                        <input class="projectNo" id="projectNo" type="hidden" th:value="${ notice.projectNo }">
+                        <td class="title" colspan="2" th:text="${ notice.projectNoticeTitle }">제목</td>
+                    </tr>
+                    <tr th:each="notice : ${ projectNoticeDetail }">
+                        <td class="date" th:text="${ notice.registDate }">작성일</td>
+                    </tr>
+                    <tr th:each="notice : ${ projectNoticeDetail }">
+                        <td class="content" colspan="2" th:text="${ notice.projectNoticeContent }">내용</td>
+                    </tr>
+                </table><br>
+                <button class="basic-btn small-btn btn3 back" id="back">목록보기</button>
             </div>
         </div>
-
-        <!-- 게시판영역 End Here -->
     </div>
-
-    <!-- Begin Footer Area -->
-    <footer th:replace="/common/footer.html"></footer>
-    <!-- Footer Area End Here -->
-
+</div>
+</main>
 <script>
 
-    $(.regist)
+    /* 지금은 버튼 누르면 상세페이지ㅣ로 이동하니까 파머탭 내에서 이동하게끔 수정해야됨 */
+    $("#back").click(function() {
+        const projectNo = $("#projectNo").val();
+        console.log(projectNo);
+        location.href='/project/notice/list/';
+    });
 
 </script>
 <script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
