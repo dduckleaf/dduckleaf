@@ -42,5 +42,9 @@ public class ProjectNoticeService {
     }
 
 
+    public void save(ProjectNoticeDTO newNotice) {
 
+        projectNoticeRepository.save(modelMapper.map(newNotice, ProjectNotice.class));
+
+    }
 }
