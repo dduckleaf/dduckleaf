@@ -65,11 +65,11 @@ public class NoticeController {
     @GetMapping("/regist")
     public void registNotice() {}
 
-    @PostMapping("/regist")
-    public ModelAndView registNotice(ModelAndView mv, NoticeDTO newNotice, RedirectAttributes rttr) {
-
-        noticeService.registNewNotice(newNotice);
-
-
-    }
+//    @PostMapping("/regist")
+//    public ModelAndView registNotice(ModelAndView mv, NoticeDTO newNotice, RedirectAttributes rttr) {
+//
+//        noticeService.registNewNotice(newNotice);
+//
+//
+//    }
 }
