@@ -132,4 +132,46 @@ class MemberServiceTest {
         //then
         assertEquals(result, "인증번호 전송 실패");
     }
+
+    @Test
+    @DisplayName("아이디 중복 체크 아이디를 입력안한경우")
+    public void notInputMemberIdTest() {
+
+        //given
+        String memberId = "";
+
+        //when
+        String result = memberService.checkDuplicationMemberId(memberId);
+
+        //then
+        assertEquals(result, "아이디를 입력해주세요.");
+    }
+
+    @Test
+    @DisplayName("아이디 중복 체크 중복된 아이디인 경우")
+    public void duplicatedMemberId() {
+
+        //given
+        String memberId = "admin";
+
+        //when
+        String result = memberService.checkDuplicationMemberId(memberId);
+
+        //then
+        assertEquals(result, "중복된 아이디입니다.");
+    }
+
+    @Test
+    @DisplayName("아이디 중복 체크 사용가능한 아이디인 경우")
+    public void usableMemberId() {
+
+        //given
+        String memberId = "흥칫뿡야";
+
+        //when
+        String result = memberService.checkDuplicationMemberId(memberId);
+
+        //then
+        assertEquals(result, "사용가능한 아이디입니다.");
+    }
 }
