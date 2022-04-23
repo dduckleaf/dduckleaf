@@ -20,7 +20,6 @@
 
 <div class="mypage" th:replace="/common/project.html"></div>
 
-<div class="title">공지사항</div>
 <div class="tab-body-area">
     <div class="title-div">
             <span class="text-title">
@@ -40,7 +39,9 @@
                         <td class="content" colspan="2" th:text="${ notice.projectNoticeContent }">내용</td>
                     </tr>
                 </table><br>
-                <button class="basic-btn small-btn btn3 back" id="back">목록보기</button>
+                <button class="basic-btn small-btn btn1 back" id="back">목록</button>
+                <button class="basic-btn small-btn btn3 back" id="modifyProjectNotice">수정</button>
+                <button class="basic-btn small-btn btn2 back" id="removeProjectNotice">삭제</button>
             </div>
         </div>
     </div>
@@ -48,11 +49,14 @@
 </main>
 <script>
 
-    /* 지금은 버튼 누르면 상세페이지ㅣ로 이동하니까 파머탭 내에서 이동하게끔 수정해야됨 */
     $("#back").click(function() {
-        const projectNo = $("#projectNo").val();
-        console.log(projectNo);
-        location.href='/project/notice/list/';
+
+        location.href='/project/notice/list';
+    });
+
+    $("#removeProjectNotice").click(function() {
+
+        location.href='/project/notice/remove';
     });
 
 </script>

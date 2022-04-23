@@ -17,20 +17,20 @@
 </head>
 <body>
 <div class="main-wrapper">
-    <div th:include="/common/menubar.html"></div>
+<div th:include="/common/menubar.html"></div>
 
-    <div class="mypage" th:replace="/common/project.html"></div>
+<div class="mypage" th:replace="/common/project.html"></div>
 
-    <div class="tab-body-area">
+    <div class="regist-body-area">
         <div class="title-div">
             <span class="text-title">
                 <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">공지사항</span>
             <hr width="100%">
-            <div class="notice-wrap" style="border: #0a3420">
-                <form method="post" action="/project/notice/regist">
-                    <div class="cont-div">
-                        <div class="regist-form">
-                            <div class="regist-wrap">
+            <div class="notice-wrap">
+                <div class="cont-div">
+                     <div class="regist-form">
+                         <div class="regist-wrap">
+                             <form method="post" action="/project/notice/regist">
                                 <div class="title-form">
                                     <label for="projectNoticeTitle">제목</label>
                                     <input type="text" id="projectNoticeTitle" name="projectNoticeTitle">
@@ -42,14 +42,13 @@
                                     <textarea id="projectNoticeContent" name="projectNoticeContent"></textarea>
                                 </div>
                                 <div class="btn-area">
-                                    <button class="basic-btn small-btn btn1" type="submit">등록</button>
-                                    <button class="basic-btn small-btn btn3 back">취소</button>
+                                    <button class="basic-btn small-btn btn1 registProjectNotice" type="submit">등록</button>
+                                    <button class="basic-btn small-btn btn3 back" type="button">취소</button>
                                 </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </form>
+                             </form>
+                         </div>
+                     </div>
+                </div>
             </div>
         </div>
     </div>
@@ -60,14 +59,25 @@
 
     <script>
 
-        const projectNo = 2;
+        $(".registProjectNotice").click(function () {
 
-        $("#back").click(function() {
-            const projectNo = $("#projectNo").val();
-            console.log(projectNo);
-            location.href='/project/notice/list/';
+            const projectNoticeTitle = $("#projectNoticeTitle").val();
+            console.log(projectNoticeTitle);
+            const projectNoticeContent = $("#projectNoticeContent").val();
+            console.log(projectNoticeContent);
+            if(projectNoticeTitle == "" || projectNoticeTitle == null) {
+                alert("제목을 입력하세요");
+                // location.reload(false);
+            } else if (projectNoticeContent == "" || projectNoticeContent == null) {
+                alert("내용을 입력하세요");
+            }
+
+        })
+
+        $(".back").click(function() {
+
+            location.href='/project/notice/list';
         });
-
 
         document.getElementById('registDate').value = new Date().toISOString().substring(0, 10);;
 

@@ -25,8 +25,9 @@ import java.util.List;
  * 2022/04/19 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 시작
  * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료
  * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료, 회원 가입 관련 메소드 구현 완료
+ * 2022/04/23 (박상범) 아이디 찾기 관련 메소드 구현 완료
  * </pre>
- * @version 1.0.5
+ * @version 1.0.6
  * @author 박상범
  * @see EmailSender
  * @see ModelMapper
@@ -53,17 +54,14 @@ public class MemberService{
      */
     public String sendEmailVerification(String email) throws MessagingException {
 
-        List<Member> member = memberRepository.findMemberByEmail(email);
+        Member member = memberRepository.findMemberByEmail(email);
 
-        //중복된 이메일을 가진 멤버가 없을 경우
-        if(member.size() == 0) {
-            emailSender.sendMail(email);
-        }
-        if(member.size() > 0) {
+        //중복된 이메일을 가진 멤버가 있을 경우
+        if(member != null) {
             return "이미 사용중인 이메일 입니다.";
         }
 
-        return (int) (Math.random() * 899999) + 100000 + "";
+        return emailSender.sendMailVerification(email);
     }
 
     /**
@@ -74,7 +72,7 @@ public class MemberService{
      */
     public String sendPhoneVerification(String phone) {
 
-        List<Member> member = memberRepository.findMemberByPhone(phone);
+        Member member = memberRepository.findMemberByPhone(phone);
 
         if(phone.length() == 0){
             return "휴대폰 번호를 입력해주세요.";
@@ -84,7 +82,7 @@ public class MemberService{
             return "휴대폰 번호가 유효하지 않습니다.";
         }
 
-        if(member.size() > 0) {
+        if(member == null) {
             return "이미 사용중인 휴대전화 번호입니다.";
         }
 
@@ -144,5 +142,23 @@ public class MemberService{
     @Transactional
     public void registMember(MemberDTO member) {
         memberRepository.save(modelMapper.map(member, Member.class));
+    }
+ 
+    /**
+     * sendEmailMemberId: 입력한 이메일이 등록되어있는지 확인합니다.
+     * @param email: 중복 확인할 아이디
+     * @return 결과에 따라 다른 메시지를 return합니다.
+     * @author 박상범
+     */
+    public String sendEmailMemberId(String email) {
+
+        Member member = memberRepository.findMemberByEmail(email);
+
+        //등록된 이메일이 없는 경우
+        if(member == null) {
+            return "등록된 아이디가 없습니다.";
+        }
+
+        return emailSender.sendMailMemberId(member);
     }
 }
