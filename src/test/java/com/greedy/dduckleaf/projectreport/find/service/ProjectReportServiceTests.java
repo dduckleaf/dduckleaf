@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.projectreport.find.service;
 
 import com.greedy.dduckleaf.config.*;
+import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportSummaryInfoDTO;
 import com.greedy.dduckleaf.projectreport.detail.repository.ProjectReportRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -45,10 +46,10 @@ public class ProjectReportServiceTests {
         int memberNo = 3;
 
         //when
-        List<ProjectReportSummaryInfoDTO> projectReportSummeryInfo = service.findProjectReportListByMemberNo(memberNo);
+        List<ProjectReportDTO> projectReportList = service.findProjectReportListByMemberNo(memberNo);
 
         //then
-        assertNotNull(projectReportSummeryInfo);
-        projectReportSummeryInfo.forEach(System.out::println);
+        assertNotNull(projectReportList);
+        projectReportList.forEach(System.out::println);
     }
 }
