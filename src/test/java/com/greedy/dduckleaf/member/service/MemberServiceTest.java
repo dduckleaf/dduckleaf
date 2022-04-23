@@ -59,4 +59,77 @@ class MemberServiceTest {
         System.out.println(result);
         assertNotEquals(result, "이미 사용중인 이메일 입니다.");
     }
+
+    @Test
+    @DisplayName("중복되는 휴대본 번호면 이미 사용중인 휴대전화 번호입니다. 출력 ")
+    public void phoneSendTest() {
+
+        //given
+        String phone = "01065524838";
+
+        //when
+        String result = memberService.sendPhoneVerification(phone);
+
+        //then
+        assertEquals(result,"이미 사용중인 휴대전화 번호입니다.");
+    }
+
+    @Test
+    @DisplayName("중복되는 휴대폰 번호가 아니면 인증번호 리턴")
+    public void phoneVerificationTest() {
+
+        //given
+        String phone = "01038109897";
+
+        //when
+        String result = memberService.sendPhoneVerification(phone);
+
+        //then
+        assertNotEquals(result, "인증번호 전송 실패");
+        assertNotEquals(result, "이미 사용중인 휴대전화 번호입니다.");
+        assertNotEquals(result, "휴대폰 번호가 유효하지 않습니다.");
+        assertNotEquals(result, "휴대폰 번호를 입력해주세요.");
+    }
+
+    @Test
+    @DisplayName("휴대폰 번호를 입력 안했을 경우")
+    public void phoneNullTest() {
+
+        //given
+        String phone = "";
+
+        //when
+        String result = memberService.sendPhoneVerification(phone);
+
+        //then
+        assertEquals(result, "휴대폰 번호를 입력해주세요.");
+    }
+
+    @Test
+    @DisplayName("휴대폰 번호가 형식에 맞지 않은 경우")
+    public void phoneOutOfFormatTest() {
+
+        //given
+        String phone = "123";
+
+        //when
+        String result = memberService.sendPhoneVerification(phone);
+
+        //then
+        assertEquals(result, "휴대폰 번호가 유효하지 않습니다.");
+    }
+
+    @Test
+    @DisplayName("휴대폰 번호 형식은 맞지만 존재하지않거나 010으로 시작하지 않을 경우")
+    public void phoneNotExistTest() {
+
+        //given
+        String phone = "qweqwerqwer";
+
+        //when
+        String result = memberService.sendPhoneVerification(phone);
+
+        //then
+        assertEquals(result, "인증번호 전송 실패");
+    }
 }

@@ -25,7 +25,8 @@ import java.util.Locale;
  * History
  * 2022/04/18 (박상범) 처음 작성 / 로그인, 로그 아웃 관련 메소드 추가
  * 2022/04/19 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 시작
- * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료
+ * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료, 휴대폰 인증 번호 전송 관련 메소드 구현 시작
+ * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료
  * </pre>
  * @version 1.0.3
  * @author 박상범
@@ -110,4 +111,26 @@ public class MemberController {
         return gson.toJson(emailResult);
     }
 
+    /**
+     * sendPhoneVerification: 회원 가입을 위해 휴대폰 번호로 인증번호를 전송한다.
+     * @param phone: 휴대폰 인증 번호를 전송할 휴대폰 번호
+     * @return gson.toJson(phoneResult)
+     * @author 박상범
+     */
+    @GetMapping(value = "/sendPhoneVerification", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String sendPhoneVerification(String phone){
+
+        String phoneResult = memberService.sendPhoneVerification(phone);
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .setPrettyPrinting()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .create();
+
+        return gson.toJson(phoneResult);
+    }
 }

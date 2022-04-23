@@ -64,4 +64,32 @@ class MemberRepositoryTest {
         //then
         assertEquals(member.size(),0);
     }
+
+    @Test
+    @DisplayName("휴대폰 번호 중복 체크 중복인 경우")
+    public void phoneDupleTest() {
+
+        //given
+        String phone = "01065524838";
+
+        //when
+        List<Member> member = memberRepository.findMemberByPhone(phone);
+
+        //then
+        assertNotEquals(member.size(), 0);
+    }
+
+    @Test
+    @DisplayName("휴대폰 번호 중복 체크 중복이 아닌 경우")
+    public void phoneNotDupleTest() {
+
+        //given
+        String phone = "01038109897";
+
+        //when
+        List<Member> member = memberRepository.findMemberByPhone(phone);
+
+        //then
+        assertEquals(member.size(), 0);
+    }
 }
