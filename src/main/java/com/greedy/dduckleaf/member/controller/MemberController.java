@@ -26,9 +26,9 @@ import java.util.Locale;
  * 2022/04/18 (박상범) 처음 작성 / 로그인, 로그 아웃 관련 메소드 추가
  * 2022/04/19 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 시작
  * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료, 휴대폰 인증 번호 전송 관련 메소드 구현 시작
- * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료
+ * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료
  * </pre>
- * @version 1.0.3
+ * @version 1.0.4
  * @author 박상범
  */
 @Controller
@@ -132,5 +132,28 @@ public class MemberController {
                 .create();
 
         return gson.toJson(phoneResult);
+    }
+
+    /**
+     * checkDuplicateMemberId: 회원 가입을 위해 아이디 중복 확인을 한다.
+     * @param memberId: 아이디 증복 확인할 아이디를 전달받는다.
+     * @return gson.toJson(checkResult)
+     * @author 박상범
+     */
+    @GetMapping(value = "/checkDuplicateMemberId", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String checkDuplicateMemberId(String memberId){
+
+        String checkResult = memberService.checkDuplicationMemberId(memberId);
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .setPrettyPrinting()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .create();
+
+        return gson.toJson(checkResult);
     }
 }
