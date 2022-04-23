@@ -8,7 +8,16 @@
     width: 55%;
     height: 1000px;
 }
-
+.regist-body-area {
+    border: 1px solid red;
+    position: absolute;
+    z-index: 1;
+    left: 33%;
+    right: 15%;
+    top: 68%;
+    width: 55%;
+    height: 1000px;
+}
 tr.title, td.title {
     border-bottom: none !important;
 }
@@ -20,6 +29,14 @@ tr.title, td.title {
 /* 공지사항 작성 하기 */
 .regist-form {
     height: 500px;
+    padding: 40px 80px 0;
+    border-radius: 10px;
+    border: 1px solid #ababab;
+}
+
+#projectNoticeContent {
+    height: 300px;
+    width: 95%;
     padding: 40px 80px 0;
     border-radius: 10px;
     border: 1px solid #ababab;
@@ -53,7 +70,7 @@ table {
     height: 300px;
 }
 
-#back {
+.back {
     float: right;
 }
 
