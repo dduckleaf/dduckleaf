@@ -14,7 +14,7 @@ public class CustomUser extends User {
     private String memberPwd;
     private String email;
     private String phone;
-    private String memberRole;
+    private int memberRole;
     private String withdrawalStatus;
 
     public int getMemberNo() {
@@ -65,11 +65,11 @@ public class CustomUser extends User {
         this.phone = phone;
     }
 
-    public String getMemberRole() {
+    public int getMemberRole() {
         return memberRole;
     }
 
-    public void setMemberRole(String memberRole) {
+    public void setMemberRole(int memberRole) {
         this.memberRole = memberRole;
     }
 

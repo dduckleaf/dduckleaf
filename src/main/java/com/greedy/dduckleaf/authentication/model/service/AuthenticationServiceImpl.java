@@ -41,8 +41,16 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         }
         loginMember = modelMapper.map(member, MemberDTO.class);
 
+        String memberRole = "";
+
+        if(member.getMemberRole() == 1) {
+            memberRole = "ADMIN";
+        } else {
+            memberRole = "MEMBER";
+        }
+
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(member.getMemberRole()));
+        authorities.add(new SimpleGrantedAuthority(memberRole));
 
         return new CustomUser(loginMember, authorities);
     }

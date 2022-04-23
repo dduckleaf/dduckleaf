@@ -7,7 +7,7 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
-public class ProjectReportSummeryInfoDTO {
+public class ProjectReportSummaryInfoDTO {
 
     private ProjectReportDTO projectReport;
     private ProjectDTO project;

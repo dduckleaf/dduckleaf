@@ -92,4 +92,18 @@ class MemberRepositoryTest {
         //then
         assertEquals(member.size(), 0);
     }
+
+    @Test
+    @DisplayName("아이디 찾기 테스트")
+    public void loginTest() {
+
+        //given
+        String memberId = "admin";
+
+        //when
+        Member member = memberRepository.findMemberByMemberId(memberId);
+
+        //then
+        assertNotNull(member);
+    }
 }

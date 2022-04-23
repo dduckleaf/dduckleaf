@@ -2,14 +2,13 @@ package com.greedy.dduckleaf.projectreport.find.service;
 
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportSummeryInfoDTO;
+import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportSummaryInfoDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ReportCategoryDTO;
 import com.greedy.dduckleaf.projectreport.find.entity.Member;
 import com.greedy.dduckleaf.projectreport.find.entity.Project;
 import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
 import com.greedy.dduckleaf.projectreport.find.entity.ReportCategory;
 import com.greedy.dduckleaf.projectreport.find.repository.MemberForProjectReportRepository;
-import com.greedy.dduckleaf.projectreport.detail.repository.ProjectReportRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,18 +20,16 @@ import java.util.stream.Collectors;
 @Service
 public class ProjectReportService {
 
-    private final ProjectReportRepository repository2;
     private final MemberForProjectReportRepository repository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ProjectReportService(ProjectReportRepository repository2, MemberForProjectReportRepository repository, ModelMapper modelMapper) {
-        this.repository2 = repository2;
+    public ProjectReportService(MemberForProjectReportRepository repository, ModelMapper modelMapper) {
         this.repository = repository;
         this.modelMapper = modelMapper;
     }
 
-    public List<ProjectReportSummeryInfoDTO> findProjectReportListByMemberNo(int memberNo) {
+    public List<ProjectReportDTO> findProjectReportListByMemberNo(int memberNo) {
 
         Member member = repository.findMemberByMemberNo(memberNo);
 
@@ -52,8 +49,10 @@ public class ProjectReportService {
         }
         System.out.println("reportCategoryList = " + reportCategoryList);
 
+        /* 영속성을 해제하기 위해 projectList와 reportCategoryList, projetReportList를 각각 DTO타입으로 parsing한다. */
         List<ProjectDTO> projectDTOList = projectList.stream().map(project ->
                 modelMapper.map(project, ProjectDTO.class)).collect(Collectors.toList());
+
         List<ReportCategoryDTO> reportCategoryDTOList = reportCategoryList.stream().map(reportCategory ->
                 modelMapper.map(reportCategory, ReportCategoryDTO.class)).collect(Collectors.toList());
 
@@ -65,20 +64,13 @@ public class ProjectReportService {
         System.out.println("reportCategoryDTOList = " + reportCategoryDTOList);
 
         for(int i = 0; i < projectDTOList.size(); i++) {
-            System.out.println("뭐가들었는지 확인 : " + projectReportDTOList.get(i).getProject());
+            /* projectDTO 리스트를 한행씩 꺼내 projectReportDTO에 각각 set한다. */
             projectReportDTOList.get(i).setProject(projectDTOList.get(i));
+            /* reportCategoryDTO 리스트를 한행씩 꺼내 projectReportDTO에 각각 set한다. */
             projectReportDTOList.get(i).setReportCategory(reportCategoryDTOList.get(i));
         }
         projectReportDTOList.forEach(System.out::println);
 
-        List<ProjectReportSummeryInfoDTO> projectReportSummeryInfo = new ArrayList<>();
-        for(int i = 0; i < projectReportSummeryInfo.size(); i++) {
-            projectReportSummeryInfo.get(i).setProjectReport(projectReportDTOList.get(i));
-            projectReportSummeryInfo.get(i).setProject(projectDTOList.get(i));
-            projectReportSummeryInfo.get(i).setReportCategory(reportCategoryDTOList.get(i));
-        }
-        projectReportSummeryInfo.forEach(System.out::println);
-
-        return projectReportSummeryInfo;
+        return projectReportDTOList;
     }
 }
