@@ -13,6 +13,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
+/**
+ * <pre>
+ * Class: ProjectNoticeService
+ * Comment : 프로젝트 공지사항
+ * History
+ * 2022/04/18 (박휘림) 처음 작성 / 목록 조회 메소드 작성 시작
+ * 2022/04/21 (박휘림) 목록 조회 메소드 작성 완료, 공지사항 상세조회 메소드 작성 시작
+ * 2022/04/22 (박휘림) 공지사항 상세조회 메소드 작성 완료, 공지사항 작성하기 메소드 작성 시작
+ * 2022/04/23 (박휘림) 공지사항 작성하기 메소드 작성 완료, 공지사항 수정하기 메소드 작성 시작
+ * 2022/04/24 (박휘림) 공지사항 수정하기,삭제하기 메소드 작성 완료
+ * </pre>
+ * @version 1.0.5
+ * @author 박휘림
+ */
 @Service
 public class ProjectNoticeService {
 
@@ -42,9 +58,24 @@ public class ProjectNoticeService {
     }
 
 
-    public void save(ProjectNoticeDTO newNotice) {
+    @Transactional
+    public void registProjectNotice(ProjectNoticeDTO newNotice) {
 
         projectNoticeRepository.save(modelMapper.map(newNotice, ProjectNotice.class));
 
+    }
+
+    @Transactional
+    public void modifyProjectNotice(ProjectNoticeDTO updateNotice) {
+
+        ProjectNotice notice = projectNoticeRepository.findById(updateNotice.getProjectNoticeNo()).get();
+        notice.setProjectNoticeTitle(updateNotice.getProjectNoticeTitle());
+        notice.setProjectNoticeContent(updateNotice.getProjectNoticeContent());
+    }
+
+    public void removeProjectNotice(ProjectNoticeDTO removeNotice) {
+
+        ProjectNotice notice = projectNoticeRepository.findById(removeNotice.getProjectNoticeNo()).get();
+        notice.setProjectNoticeStatus(removeNotice.getProjectNoticeStatus());
     }
 }

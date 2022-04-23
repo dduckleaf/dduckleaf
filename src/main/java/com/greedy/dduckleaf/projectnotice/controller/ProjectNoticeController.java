@@ -27,11 +27,11 @@ import javax.servlet.http.HttpServletRequest;
  * 2022/04/21 (박휘림) 목록 조회 메소드 작성 완료, 공지사항 상세조회 메소드 작성 시작
  * 2022/04/22 (박휘림) 공지사항 상세조회 메소드 작성 완료, 공지사항 작성하기 메소드 작성 시작
  * 2022/04/23 (박휘림) 공지사항 작성하기 메소드 작성 완료, 공지사항 수정하기 메소드 작성 시작
+ * 2022/04/24 (박휘림) 공지사항 수정하기,삭제하기 메소드 작성 완료
  * </pre>
- * @version 1.0.4
+ * @version 1.0.5
  * @author 박휘림
  */
-
 @Controller
 @RequestMapping("/project/notice")
 public class ProjectNoticeController {
@@ -73,7 +73,7 @@ public class ProjectNoticeController {
     /**
      * findProjectNoticeDetail: 프로젝트 공지사항 목록을 조회합니다.
      * @param projectNoticeNo: 조회할 프로젝트 공지사항 번호
-     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     * @return mv
      *            projectNoticeDetail 조회하려는 공지사항 상세정보
      *            "projectnotice/detail" 프로젝트 공지사항 상세정보를 출력하는 뷰 경로
      * @author 박휘림
@@ -92,13 +92,16 @@ public class ProjectNoticeController {
 
     /**
      * registPage: 프로젝트 공지사항을 작성하기 위해 작성 폼으로 이동합니다.
-     * @return "projectnotice/regist" 프로젝트 공지사항 작성하기폼을 출력하는 뷰 경로
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "projectnotice/regist" 프로젝트 공지사항 작성하기폼을 출력하는 뷰 경로
      * @author 박휘림
      */
     @GetMapping("/regist")
-    public String registPage() {
+    public ModelAndView registPage(ModelAndView mv) {
 
-        return "projectnotice/regist";
+        mv.setViewName("projectnotice/regist");
+
+        return mv;
     }
 
     /**
@@ -122,15 +125,61 @@ public class ProjectNoticeController {
 
         System.out.println("newNotice = " + newNotice);
 
-        projectService.save(newNotice);
+        projectService.registProjectNotice(newNotice);
+
+        mv.setViewName("redirect:/project/notice/list");
+
+        return mv;
+    }
+
+    /**
+     * modifyPage: 프로젝트 공지사항을 작성하기 위해 작성 폼으로 이동합니다.
+     * @param projectNoticeNo: 수정할 프로젝트 공지사항 번호
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "projectnotice/modify" 프로젝트 공지사항 수정하기폼을 출력하는 뷰 경로
+     * @author 박휘림
+     */
+    @GetMapping("/modify")
+    public ModelAndView modifyPage(ModelAndView mv, int projectNoticeNo) {
+
+        ProjectNoticeDTO projectNoticeDetail = projectService.findProjectNoticeDetail(projectNoticeNo);
+
+        mv.addObject("projectNoticeDetail", projectNoticeDetail);
+        mv.setViewName("projectnotice/modify");
+
+        return mv;
+    }
+
+    /**
+     * modifyProjectNotice: 프로젝트 공지사항을 수정합니다.
+     * @param updateNotice: 수정할 프로젝트 공지사항 정보를 담은 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/project/notice/list"
+     * @author 박휘림
+     */
+    @PostMapping("/modify")
+    public ModelAndView modifyProjectNotice(ModelAndView mv, ProjectNoticeDTO updateNotice) {
+
+        projectService.modifyProjectNotice(updateNotice);
 
         mv.setViewName("redirect:/project/notice/list");
         return mv;
     }
 
+    /**
+     * removeProjectNotice: 프로젝트 공지사항을 삭제합니다.
+     * @param removeNotice: 삭제할 프로젝트 공지사항 정보를 담은 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/project/notice/list"
+     * @author 박휘림
+     */
+    @GetMapping("/remove")
+    public ModelAndView removeProjectNotice(ModelAndView mv, ProjectNoticeDTO removeNotice) {
 
+        projectService.removeProjectNotice(removeNotice);
 
-
-
+        mv.setViewName("redirect:/project/notice/list");
+        return mv;
+    }
 
 }
