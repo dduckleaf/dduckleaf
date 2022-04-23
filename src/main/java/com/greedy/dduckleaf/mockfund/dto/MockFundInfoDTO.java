@@ -14,7 +14,7 @@ public class MockFundInfoDTO {
     private java.util.Date endDate;
     private String mockFundDetail;
     private int targetTicketAmount;
-    private int mockFundNo;
+    private MockFundDTO mockFund;
     private RewardCategoryDTO rewardCategory;
 
 }
