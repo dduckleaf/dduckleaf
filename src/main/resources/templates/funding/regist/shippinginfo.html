@@ -16,6 +16,8 @@
 	<link rel="stylesheet" th:href="@{ /css/style.css }">
 	<!-- 신기한 모달 -->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- 다음 주소 API CDN -->
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 <div th:replace="/common/userheader.html"></div>
@@ -167,20 +169,20 @@
 		
 		<div class="funding-regist-policy-check">
 			<div class="funding-regist-policy-check-area">
-				<label for="supply">
+				<label for="supply" style="width: 90%">
 					<input type="checkbox" name="supply" id="supply">
 					<span style="margin-left: 10px"> 개인정보 제3자 제공 동의 </span>
 				</label>
-				<a href="" style="margin-left: 70%; color: #ababab">자세히 보기</a>
+				<a href="" style=" color: #ababab">자세히 보기</a>
 			</div>
 		</div>
 		<div class="funding-regist-policy-check">
 			<div class="funding-regist-policy-check-area">
-				<label for="responsibility">
+				<label for="responsibility" style="width: 90%">
 					<input type="checkbox" name="responsibility" id="responsibility">
 					<span style="margin-left: 10px"> 책임 규정에 대한 동의 </span>
 				</label>
-				<a href="" style="margin-left: 70%; color: #ababab">자세히 보기</a>
+				<a href="" style=" color: #ababab">자세히 보기</a>
 			</div>
 		</div>
 		
@@ -202,10 +204,8 @@
 			<button id="funding-submit" class="basic-btn btn1 bigbig-btn">결제 예약하기</button>
 		</div>
 	</div>
-	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script th:inline="javascript">
+	<script>
         const $searchZipCode = document.getElementById("searchZipCode");
-        const $goMain = document.getElementById("goMain");
 
         $searchZipCode.onclick = function() {
 
@@ -218,53 +218,47 @@
                 }
             }).open();
         }
-
-        $goMain.onclick = function() {
-            location.href = "/";
-        }
-
+	
+	</script>
+	<script th:inline="javascript">
+  
 		const $submit = document.getElementById("funding-submit");
 
 		if($submit) {
 			$submit.onclick = function() {
-				const $sendform = document.getElementById("sendform")
+                const $sendform = document.getElementById("sendform")
 
-				const $totalFunding = document.getElementById("totalFunding");
-				const $rewardTotal = document.getElementById("rewardTotal");
-				const $rewardPrice = document.getElementById("rewardPrice");
-				const $rewardAmount = document.getElementById("rewardAmount");
-				const $donate = document.getElementById("donate");
-				const $shippingFee = document.getElementById("shippingFee");
-				const $extraShippingFee = document.getElementById("");
-				const $projectNo = document.getElementById("projectNo");
+                const $totalFunding = document.getElementById("totalFunding");
+                const $rewardTotal = document.getElementById("rewardTotal");
+                const $rewardPrice = document.getElementById("rewardPrice");
+                const $rewardAmount = document.getElementById("rewardAmount");
+                const $donate = document.getElementById("donate");
+                const $shippingFee = document.getElementById("shippingFee");
+                const $extraShippingFee = document.getElementById("extraShippingFee");
+                const $projectNo = document.getElementById("projectNo");
 
-				// if(~~~ == 0) {
-				// 	Swal.fire({
-				// 		icon: 'warning',
-				// 		title: '리워드수량을 입력하세요!'
-				// 	})
-				}
-
-
+                // if(~~~ == 0) {
+                // 	Swal.fire({
+                // 		icon: 'warning',
+                // 		title: '리워드수량을 입력하세요!'
+                // 	})
+                // }
 
 
+                $totalFunding.value = "[[${ registInfo.totalFunding }]]";
+                $rewardTotal.value = "[[${ registInfo.rewardTotal }]]";
+                $rewardPrice.value = "[[${ registInfo.rewardPrice }]]";
+                $rewardAmount.value = "[[${ registInfo.rewardAmount }]]";
+                $donate.value = "[[${ registInfo.donate }]]";
+                $shippingFee.value = "[[${ registInfo.shippingFee }]]";
+                $extraShippingFee.value = "[[${ registInfo.extraShippingFee }]]";
+                $projectNo.value = "[[${ registInfo.projectNo }]]";
 
-				$totalFunding.value = "[[${ registInfo.totalFunding }]]";
-				$rewardTotal.value = "[[${ registInfo.rewardTotal }]]";
-				$rewardPrice.value = "[[${ registInfo.rewardPrice }]]";
-				$rewardAmount.value = "[[${ registInfo.rewardAmount }]]";
-				$donate.value = "[[${ registInfo.donate }]]";
-				$shippingFee.value = "[[${ registInfo.shippingFee }]]";
-				$extraShippingFee.value = "[[${ registInfo.extraShippingFee }]]";
-				$projectNo.value = "[[${ registInfo.projectNo }]]";
+                $sendform.method = "get";
+                $sendform.action = "/funding/regist/reserve/api";
 
-				$sendform.method = "get";
-				$sendform.action = "/funding/regist/reserve/api";
-
-				$sendform.submit();
-
-
-			}
+                $sendform.submit();
+            }
 		}
 
 
