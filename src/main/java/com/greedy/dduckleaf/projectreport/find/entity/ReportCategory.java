@@ -25,7 +25,7 @@ public class ReportCategory {
     @Column(name = "REPORT_CATEGORY_CONTENT")
     private String reportCategoryContent;
 
-    @OneToMany(mappedBy = "reportCategory", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "reportCategory", fetch=FetchType.EAGER)
     private List<ProjectReport> projectReportList;
 
     @Override

@@ -20,23 +20,18 @@ public class ProjectReport {
     @Column(name = "PROJECT_REPORT_DATE")
     private Date projectReportDate;
 
-    @Transient
     @Column(name = "PROJECT_REPORT_CONTENT")
     private String projectReportContent;
 
-    @Transient
     @Column(name = "REPORT_REF_URL")
     private String reportRefUrl;
 
-    @Transient
     @Column(name = "REPORTER_PHONE")
     private String reporterPhone;
 
-    @Transient
     @Column(name = "REPORTER_EMAIL")
     private String reporterEmail;
 
-    @Transient
     @Column(name = "REPORTER_NAME")
     private String reporterName;
 
@@ -50,7 +45,7 @@ public class ProjectReport {
     private FarmerInfo farmer;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "PROJECT_REPORT_CATEGORY_NO", nullable=true)
+    @JoinColumn(name = "PROJECT_REPORT_CATEGORY_NO")
     private ReportCategory reportCategory;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -59,6 +54,9 @@ public class ProjectReport {
 
     @Column(name = "PROJECT_REPORT_STATUS")
     private String projectReportStatus;
+
+    @Column(name = "DELETE_YN")
+    private String deleteYn;
 
     @Override
     public String toString() {
@@ -71,8 +69,11 @@ public class ProjectReport {
                 ", reporterEmail='" + reporterEmail + '\'' +
                 ", reporterName='" + reporterName + '\'' +
                 ", member=" + member +
+                ", farmer=" + farmer +
+                ", reportCategory=" + reportCategory +
                 ", project=" + project +
                 ", projectReportStatus='" + projectReportStatus + '\'' +
+                ", deleteYn='" + deleteYn + '\'' +
                 '}';
     }
 }

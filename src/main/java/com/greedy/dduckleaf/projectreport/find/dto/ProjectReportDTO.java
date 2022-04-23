@@ -1,12 +1,8 @@
 package com.greedy.dduckleaf.projectreport.find.dto;
 
-import com.greedy.dduckleaf.projectreport.find.entity.Project;
 import lombok.*;
 
-import javax.persistence.*;
 import java.sql.Date;
-
-    import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor

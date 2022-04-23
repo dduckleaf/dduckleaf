@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.projectreport.find.controller;
+package com.greedy.dduckleaf.projectreport.controller;
 
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.config.*;
@@ -50,6 +50,18 @@ public class ProjectReportControllerTests {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.forwardedUrl("report/member/list"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("projectReportList"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    @DisplayName("모든 프로젝트신고내역 목록조회 테스트")
+    public void findAllProjectReportList_test() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/report/platformmanager/listAll"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeExists("projectReportList"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("pagingInfo"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("report/platformmanager/list"))
                 .andDo(MockMvcResultHandlers.print());
     }
 }
