@@ -2,7 +2,7 @@ package com.greedy.dduckleaf.projectreport.find.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-    import lombok.*;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,7 +35,7 @@ public class ProjectReport {
     @Column(name = "REPORTER_NAME")
     private String reporterName;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "MEMBER_NO")
     private Member member;
 
