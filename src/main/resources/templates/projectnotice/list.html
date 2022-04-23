@@ -19,7 +19,7 @@
 <body>
 <div th:replace="/common/menubar.html"></div>
 <div class="mypage" th:replace="/common/project.html"></div>
-<div class="title">공지사항</div>
+
 <!-- Begin 게시판영역 -->
 <div class="tab-body-area">
     <div class="title-div">
@@ -86,14 +86,14 @@
         // const projectNo =
         location.href='/project/notice/list';
     });
-
+    //요 친구가 조회해와야하는 필드명을 적는 곳
     function projectNoticeData(projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate, projectNo) {
 
         return {projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate, projectNo};
     }
-
+    //컨틀롤러 메소드
     function findProjectNoticeList() {
-
+        //컨트롤러 주소
         fetch('/project/notice/list/{projectNo}').then(resonse => {
             if (resonse.ok) {
                 return resonse.json();
