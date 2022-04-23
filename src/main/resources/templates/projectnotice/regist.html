@@ -17,18 +17,17 @@
 </head>
 <body>
 <div class="main-wrapper">
-    <div th:include="/common/userheader.html"></div>
+    <div th:include="/common/menubar.html"></div>
+    <div class="mypage" th:replace="/common/project.html"></div>
 
-    <div class="mypage" th:replace="/common/supporterpage.html"></div>
-
-    <div class="regist-body-area">
+    <div class="tab-body-area">
         <div class="title-div">
             <span class="text-title">
                 <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">공지사항</span>
             <hr width="100%">
             <div class="notice-wrap" style="border: #0a3420">
                 <form method="post" action="/project/notice/regist">
-                <div class="cont-div">
+                    <div class="cont-div">
                         <div class="regist-form">
                             <div class="regist-wrap">
                                 <div class="title-form">
@@ -47,8 +46,7 @@
                                 </div>
                             </div>
                         </div>
-
-                </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -60,14 +58,10 @@
 
 <script>
 
-    const projectNo = 2;
-
     $("#back").click(function() {
-        const projectNo = $("#projectNo").val();
-        console.log(projectNo);
+
         location.href='/project/notice/list/';
     });
-
 
     document.getElementById('registDate').value = new Date().toISOString().substring(0, 10);;
 
