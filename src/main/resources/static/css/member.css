@@ -22,7 +22,7 @@ body {
     font-size: 17px;
 }
 .logo {
-    background: url("../images/logo.png") no-repeat;
+    background: url("../images/common/logo.png") no-repeat;
     width: 300px;
     height: 100px;
     border: white;
@@ -100,31 +100,64 @@ body {
     border: 1px solid #C8B5B5;
     font-size: 17px;
 }
-.email-verification-div, .phone-verification-div {
-    display: block;
-}
 #send-email {
     position: relative;
     top: -44px;
     left: 295px;
+    width: 90px;
+    height: 35px;
+    font-size: 12px;
+    margin-top: 0px;
+    text-align: center;
+    padding: 0px;
 }
-#check-email {
+#check-email-verification {
     position: relative;
     top: -44px;
     left: 295px;
+    width: 90px;
+    height: 35px;
+    font-size: 12px;
+    margin-top: 0px;
+    text-align: center;
+    padding: 0px;
 }
 #send-phone {
     position: relative;
     top: -44px;
     left: 295px;
+    width: 90px;
+    height: 35px;
+    font-size: 12px;
+    margin-top: 0px;
+    text-align: center;
+    padding: 0px;
 }
-#check-phone {
+#check-phone-verification {
     position: relative;
     top: -44px;
     left: 295px;
+    width: 90px;
+    height: 35px;
+    font-size: 12px;
+    margin-top: 0px;
+    text-align: center;
+    padding: 0px;
 }
-#id-dupleication {
+#check-id-duplication {
     position: relative;
     top: -44px;
     left: 295px;
+    width: 90px;
+    height: 35px;
+    font-size: 12px;
+    margin-top: 0px;
+    text-align: center;
+    padding: 0px;
+}
+#email-verification-div{
+    display: none;
+}
+#phone-verification-div {
+    display: none;
 }
