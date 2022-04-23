@@ -14,8 +14,9 @@ import java.util.List;
  * 2022/04/18 (박상범) 처음 작성 / 로그인 관련 findMemberByMemberId 작성
  * 2022/04/19 (박상범) 이메일 중복 확인 관련 findMemberByEmail 작성
  * 2022/04/22 (박상범) 휴대폰 번호 중복 확인 관련 findMemberByPhone 작성
+ * 2022/04/23 (박상범) findMemberByEmail 수정, findMemberByPhone 수정
  * </pre>
- * @version 1.0.2
+ * @version 1.0.3
  * @author 박상범
  */
 @Repository
@@ -23,7 +24,8 @@ public interface MemberRepository extends JpaRepository<Member, Integer> {
 
     Member findMemberByMemberId(String memberId);
 
-    List<Member> findMemberByEmail(String email);
+    Member findMemberByEmail(String email);
 
-    List<Member> findMemberByPhone(String phone);
+    Member findMemberByPhone(String phone);
+
 }
