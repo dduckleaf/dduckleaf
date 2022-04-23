@@ -11,7 +11,7 @@
 
     <div class="mypage" th:replace="/common/supporterpage.html"></div>
 
-     <div class="tab-body-area">
+    <div class="tab-body-area">
         <div class="title-div">
             <span class="text-title">
                 <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">나의 신고내역 조회</span>
@@ -25,30 +25,31 @@
                 <th style="width: 20%;">신고유형</th>
                 <th style="width: 10%;">작성일</th>
             </tr>
-            <th:block th:if="${ #strings.isEmpty(projectReportSummeryInfo) }">
+            <th:block th:if="${ #strings.isEmpty(projectReportList) }">
                 <tr>
                     <td colspan="3" align="center">신고내역이 없습니다.</td>
                 </tr>
             </th:block>
-            <th:block th:if="${ !#strings.isEmpty(projectReportSummeryInfo) }">
-                <tr th:each="summary : ${ projectReportSummeryInfo }" class="board-detail">
-                    <td th:text="${ summary.getProjectReport().getProjectReportStatus() }">미답변</td>
-                    <td th:text="${ summary.getProject().getProjectName() }">솔향기가 솔솔나나여?</td>
-                    <td th:text="${ summary.getReportCategory.getReportCategoryName() }">2022-02-20 07:15</td>
-                    <td th:text="${ summary.getProjectReport.getProjectReportDate() }">2022-02-20 07:15</td>
+            <th:block th:if="${ !#strings.isEmpty(projectReportList) }">
+                <tr th:each="report : ${ projectReportList }" class="board-detail">
+                    <td th:text="${ report.getProjectReportNo() }" hidden></td>
+                    <td th:text="${ report.getProjectReportStatus() }"></td>
+                    <td th:text="${ report.project.getProjectName() }"></td>
+                    <td th:text="${ report.reportCategory.getReportCategoryName() }"></td>
+                    <td th:text="${ report.getProjectReportDate() }"></td>
                 </tr>
             </th:block>
-<!--            <th:block th:if="${ projectReportSummeryInfo ne null }">-->
-<!--            </th:block>-->
+            <!--            <th:block th:if="${ projectReportSummeryInfo ne null }">-->
+            <!--            </th:block>-->
         </table>
-         <script>
-             console.log(document.getElementsByTagName("td"));
-         </script>
-         <br>
+        <script>
+            console.log(document.getElementsByTagName("td"));
+        </script>
+        <br>
         <!-- paging -->
-<!--        <div align="center" th:replace="/common/paging.html"></div>-->
+        <!--        <div align="center" th:replace="/common/paging.html"></div>-->
 
-    <!-- 게시판영역 End Here -->
+        <!-- 게시판영역 End Here -->
     </div>
 
     <div th:replace="/common/footer.html"></div>
