@@ -8,6 +8,7 @@ import com.greedy.dduckleaf.projectreport.find.service.ProjectReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -87,7 +88,7 @@ public class ProjectReportController {
      *            "report/platformmanager/list" : 요약정보를 출력할 브라우저 화면 경로
      */
     @GetMapping("/platformmanager/listAll")
-    public ModelAndView findAllProjectReportList(ModelAndView mv, Pageable pageable) {
+    public ModelAndView findAllProjectReportList(ModelAndView mv, @PageableDefault Pageable pageable) {
 
         Page<ProjectReportDTO> projectReportList = service.findProjectReportList(pageable);
 
