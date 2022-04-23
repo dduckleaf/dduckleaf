@@ -10,13 +10,13 @@ public class MemberDTO {
     private String memberPwd;
     private String email;
     private String phone;
-    private String memberRole;
+    private int memberRole;
     private String withdrawalStatus;
 
     public MemberDTO() {
     }
 
-    public MemberDTO(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String withdrawalStatus) {
+    public MemberDTO(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, int memberRole, String withdrawalStatus) {
         this.memberNo = memberNo;
         this.memberName = memberName;
         this.memberId = memberId;
@@ -75,11 +75,11 @@ public class MemberDTO {
         this.phone = phone;
     }
 
-    public String getMemberRole() {
+    public int getMemberRole() {
         return memberRole;
     }
 
-    public void setMemberRole(String memberRole) {
+    public void setMemberRole(int memberRole) {
         this.memberRole = memberRole;
     }
 

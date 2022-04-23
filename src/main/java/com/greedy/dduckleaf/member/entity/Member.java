@@ -27,7 +27,7 @@ public class Member {
     private String phone;
 
     @Column(name = "MEMBER_ROLE")
-    private String memberRole;
+    private int memberRole;
 
     @Column(name = "WITHDRAWAL_STATUS")
     private String withdrawalStatus;
@@ -35,7 +35,7 @@ public class Member {
     public Member() {
     }
 
-    public Member(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, String memberRole, String withdrawalStatus) {
+    public Member(int memberNo, String memberName, String memberId, String memberPwd, String email, String phone, int memberRole, String withdrawalStatus) {
         this.memberNo = memberNo;
         this.memberName = memberName;
         this.memberId = memberId;
@@ -94,11 +94,11 @@ public class Member {
         this.phone = phone;
     }
 
-    public String getMemberRole() {
+    public int getMemberRole() {
         return memberRole;
     }
 
-    public void setMemberRole(String memberRole) {
+    public void setMemberRole(int memberRole) {
         this.memberRole = memberRole;
     }
 
