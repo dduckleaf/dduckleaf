@@ -18,6 +18,18 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
+/**
+ * <pre>
+ * Class: MemberController
+ * Comment : 회원관리
+ * History
+ * 2022/04/18 (박상범) 처음 작성 / 로그인, 로그 아웃 관련 메소드 추가
+ * 2022/04/19 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 시작
+ * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료
+ * </pre>
+ * @version 1.0.3
+ * @author 박상범
+ */
 @Controller
 @RequestMapping("/member")
 public class MemberController {
