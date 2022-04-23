@@ -1,10 +1,10 @@
 .tab-body-area {
-    /*border: 1px solid red;*/
+    border: 1px solid red;
     position: absolute;
     z-index: 1;
     left: 33%;
     right: 15%;
-    top: 33%;
+    top: 25%;
     width: 55%;
     height: 1000px;
 }
@@ -40,15 +40,19 @@ tr.title, td.title {
     border-radius: 5px;
     border: 1px solid #ababab;
 }
+.cont-div {
+    width: 100%;
+}
 
-textarea#content {
+table {
+    width: 100%;
+    text-align: center;
+}
+
+.content {
     height: 300px;
 }
 
-.content-form {
-    margin-top: 25px;
-}
-
-.content-form label {
-    vertical-align: top;
+#back {
+    float: right;
 }
