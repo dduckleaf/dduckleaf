@@ -25,8 +25,9 @@ import java.util.List;
  * 2022/04/19 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 시작
  * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료
  * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료, 회원 가입 관련 메소드 구현 완료
+ * 2022/04/23 (박상범) 아이디 찾기 관련 메소드 구현 완료
  * </pre>
- * @version 1.0.5
+ * @version 1.0.6
  * @author 박상범
  * @see EmailSender
  * @see ModelMapper
@@ -143,6 +144,12 @@ public class MemberService{
         memberRepository.save(modelMapper.map(member, Member.class));
     }
 
+    /**
+     * sendEmailMemberId: 입력한 이메일이 등록되어있는지 확인합니다.
+     * @param email: 중복 확인할 아이디
+     * @return 결과에 따라 다른 메시지를 return합니다.
+     * @author 박상범
+     */
     public String sendEmailMemberId(String email) {
 
         Member member = memberRepository.findMemberByEmail(email);

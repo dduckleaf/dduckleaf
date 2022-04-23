@@ -27,8 +27,9 @@ import java.util.Locale;
  * 2022/04/19 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 시작
  * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료, 휴대폰 인증 번호 전송 관련 메소드 구현 시작
  * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료, 회원 가입 관련 메소드 구현 완료
+ * 2022/04/23 (박상범) 아이디 찾기 관련 메소드 구현 완료
  * </pre>
- * @version 1.0.5
+ * @version 1.0.6
  * @author 박상범
  */
 @Controller
@@ -59,10 +60,7 @@ public class MemberController {
     /**
      * login: 떡잎 펀드 서비스를 이용하기 위해 로그인 합니다.
      * @param member: 로그인을 시도할 로그인 정보
-     * @param mv:
-     * @param rttr:
-     * @param locale:
-     * @return
+     * @return mv
      * @author 박상범
      */
     @PostMapping("/login")
@@ -160,9 +158,6 @@ public class MemberController {
     /**
      * registMember : 떡잎펀드 서비스를 이용하기 위해 회원 가입을 합니다.
      * @param member: 회원가입할 회원의 정보
-     * @param request:
-     * @param rttr:
-     * @param locale:
      * @return "/member/login"
      * @author 박상범
      */
@@ -187,6 +182,12 @@ public class MemberController {
         return "/member/login";
     }
 
+    /**
+     * sendMemberId : 입력한 이메일로 등록된 아이디를 전송합니다.
+     * @param email: 회원가입할 회원의 정보
+     * @return mv
+     * @author 박상범
+     */
     @GetMapping("/find/id")
     public ModelAndView sendMemberId(ModelAndView mv, String email, RedirectAttributes rttr) {
 
