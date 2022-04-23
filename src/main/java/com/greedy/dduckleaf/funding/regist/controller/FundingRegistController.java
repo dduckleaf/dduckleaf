@@ -9,7 +9,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-
+/**
+ * <pre>
+ * Class : FundingRegistController
+ * Comment : 서포터의 펀딩 신청 프로세스를 담당하는 컨트롤러.
+ * History
+ * 2022/04/18 : registFundingChoicePage 메소드 작성.
+ * 2022/04/20 : registFundingConfirmPage 메소드 작성.
+ * </pre>
+ * @version 1.0.1
+ * @author 홍성원
+ */
 @Controller
 @RequestMapping("/funding/regist")
 public class FundingRegistController {
@@ -46,5 +56,11 @@ public class FundingRegistController {
         mv.setViewName("/funding/regist/shippinginfo");
 
         return mv;
+    }
+
+    @GetMapping("/reserve/api")
+    public void registByApi(FundingRegistDTO registDTO) {
+        System.out.println("registDTO = " + registDTO);
+
     }
 }
