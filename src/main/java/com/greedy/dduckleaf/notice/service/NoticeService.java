@@ -1,11 +1,11 @@
 package com.greedy.dduckleaf.notice.service;
 
+import com.greedy.dduckleaf.notice.dto.AdminDTO;
 import com.greedy.dduckleaf.notice.dto.NoticeCategoryDTO;
 import com.greedy.dduckleaf.notice.dto.NoticeDTO;
 import com.greedy.dduckleaf.notice.dto.NoticeForListDTO;
 import com.greedy.dduckleaf.notice.entity.Notice;
 import com.greedy.dduckleaf.notice.entity.NoticeCategory;
-import com.greedy.dduckleaf.notice.entity.NoticeForList;
 import com.greedy.dduckleaf.notice.repository.NoticeCategoryRepository;
 import com.greedy.dduckleaf.notice.repository.NoticeForListRepository;
 import com.greedy.dduckleaf.notice.repository.NoticeRepository;
@@ -20,8 +20,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static jdk.internal.logger.DefaultLoggerFinder.SharedLoggers.system;
 
 @Service
 public class NoticeService {
@@ -45,11 +43,17 @@ public class NoticeService {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
                 Sort.by("noticeNo").descending());
+        Page<NoticeForListDTO> nl = noticeForListRepository.findAll(pageable).map(notice -> {
+            NoticeForListDTO noticeDTO = modelMapper.map(notice, NoticeForListDTO.class);
+            noticeDTO.setNoticeCategoryDTO(modelMapper.map(notice.getNoticeCategory(), NoticeCategoryDTO.class));
+            noticeDTO.setAdmin(modelMapper.map(notice.getAdmin(), AdminDTO.class));
 
-        List<NoticeForList> nl = (List<NoticeForList>) noticeForListRepository.findAll(pageable);
+            return noticeDTO;
+        });
+
         nl.forEach(System.out::println);
 
-        return noticeForListRepository.findAll(pageable).map(notice -> modelMapper.map(notice, NoticeForListDTO.class));
+        return nl;
     }
 
 //    @Transactional

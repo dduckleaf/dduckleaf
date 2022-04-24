@@ -15,7 +15,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -91,8 +90,6 @@ public class NoticeController {
         newNotice.setAdminNo(memberNo);
         newNotice.setNoticeStatus("Y");
         noticeService.registNewNotice(newNotice);
-        System.out.println(newNotice);
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaa");
 
         mv.setViewName("redirect:/notice/list");
 
