@@ -2,6 +2,7 @@ package com.greedy.dduckleaf.notice.controller;
 
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
+import com.greedy.dduckleaf.notice.dto.NoticeCategoryDTO;
 import com.greedy.dduckleaf.notice.dto.NoticeDTO;
 import com.greedy.dduckleaf.notice.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/notice")
@@ -63,13 +63,23 @@ public class NoticeController {
     }
 
     @GetMapping("/regist")
-    public void registNotice() {}
+    public void registPage() {}
+
+    @GetMapping(value = "/category", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public List<NoticeCategoryDTO> findNoticeCategoryList() {
+
+        return noticeService.findAllNoticeCategory();
+    }
 
     @PostMapping("/regist")
-    public ModelAndView registNotice(ModelAndView mv, NoticeDTO newNotice, RedirectAttributes rttr) {
+    public ModelAndView registNotice(ModelAndView mv, NoticeDTO newNotice) {
 
         noticeService.registNewNotice(newNotice);
 
+        mv.setViewName("redirect:/notice/list");
 
+        return mv;
     }
+
 }

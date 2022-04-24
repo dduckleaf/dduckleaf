@@ -5,18 +5,10 @@ import java.sql.Date;
 
 @Entity(name = "Notice")
 @Table(name = "TBL_NOTICE")
-@SequenceGenerator(
-        name = "NOTICE_SEQ_GENERATOR",
-        sequenceName = "SEQ_NOTICE_NO",
-        initialValue = 1,
-        allocationSize = 1
-)
 public class Notice {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE,
-                    generator = "NOTICE_SEQ_GENERATOR"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "NOTICE_NO")
     private int noticeNo;
 

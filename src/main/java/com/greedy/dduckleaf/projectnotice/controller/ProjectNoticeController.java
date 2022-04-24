@@ -1,7 +1,7 @@
 package com.greedy.dduckleaf.projectnotice.controller;
 
-import com.greedy.common.paging.Pagenation;
-import com.greedy.common.paging.PagingButtonInfo;
+import com.greedy.dduckleaf.common.paging.Pagenation;
+import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.projectnotice.dto.ProjectNoticeDTO;
 import com.greedy.dduckleaf.projectnotice.service.ProjectNoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
