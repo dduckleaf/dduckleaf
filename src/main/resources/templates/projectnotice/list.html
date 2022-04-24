@@ -13,43 +13,46 @@
 
     <!-- Style CSS -->
     <link rel="stylesheet" th:href="@{/css/style.css }">
-    <link rel="stylesheet" th:href="@{/css/projectNotice.css }">
+    <link rel="stylesheet" th:href="@{/css/projectnotice.css }">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
-<div th:replace="/common/menubar.html"></div>
+<div class="main-wrapper">
+<div th:include="/common/menubar.html"></div>
+
 <div class="mypage" th:replace="/common/project.html"></div>
 
 <!-- Begin 게시판영역 -->
-<div class="tab-body-area">
-    <div class="title-div">
+    <div class="tab-body-area">
+        <div class="title-div">
             <span class="text-title">
                 <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">공지사항</span>
-        <hr width="100%">
-        <div class="notice-wrap">
-            <div class="cont-div">
-                <div id="projectNoticeList">
-                    <table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
-                        <tr>
-                            <th>번호</th>
-                            <th>제목</th>
-                            <th>작성일</th>
-                            <th>조회수</th>
-                        </tr>
-                        <tr th:each="project : ${ projectNoticeList }" class="noticeList" id="noticeList">
+                <hr width="100%">
+                <div class="notice-wrap">
+                    <div class="cont-div">
+                        <div id="projectNoticeList">
+                            <table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
+                                <tr>
+                                    <th>번호</th>
+                                    <th>제목</th>
+                                    <th>작성일</th>
+                                    <th>조회수</th>
+                                </tr>
+                                <tr th:each="project : ${ projectNoticeList }" class="noticeList" id="noticeList">
                             <!--                    <input type="hidden" th:text="${ project.projectNoticeNo }">-->
-                            <td th:text="${ project.projectNoticeNo }"></td>
-                            <td th:text="${ project.projectNoticeTitle }"></td>
-                            <td th:text="${ project.registDate }"></td><!--이름을 넣어야하는데..어떻게 들고오나....수바-->
-                            <td th:text="${ project.projectNoticeCount }"></td>
-                        </tr>
-                    </table>
-                </div><br>
-                <button class="basic-btn small-btn btn1 registProjectNotice" type="button">작성하기</button>
+                                    <td th:text="${ project.projectNoticeNo }"></td>
+                                    <td th:text="${ project.projectNoticeTitle }"></td>
+                                    <td th:text="${ project.registDate }"></td><!--이름을 넣어야하는데..어떻게 들고오나....수바-->
+                                    <td th:text="${ project.projectNoticeCount }"></td>
+                                </tr>
+                            </table>
+                        </div><br>
+                        <button class="basic-btn small-btn btn1 registProjectNotice" type="button">작성하기</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    </main>
     <!--<td th:te></td>-->
     <div id="pagination" class="pagenumbers" align="center">
         <!-- 맨 앞으로 이동 -->
