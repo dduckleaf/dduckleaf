@@ -73,9 +73,10 @@ public class ProjectNoticeService {
         notice.setProjectNoticeContent(updateNotice.getProjectNoticeContent());
     }
 
-    public void removeProjectNotice(ProjectNoticeDTO removeNotice) {
+    @Transactional
+    public void removeProjectNotice(int projectNoticeNo) {
 
-        ProjectNotice notice = projectNoticeRepository.findById(removeNotice.getProjectNoticeNo()).get();
-        notice.setProjectNoticeStatus(removeNotice.getProjectNoticeStatus());
+        ProjectNotice notice = projectNoticeRepository.findById(projectNoticeNo).get();
+        notice.setProjectNoticeStatus("N");
     }
 }

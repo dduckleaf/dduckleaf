@@ -168,15 +168,15 @@ public class ProjectNoticeController {
 
     /**
      * removeProjectNotice: 프로젝트 공지사항을 삭제합니다.
-     * @param removeNotice: 삭제할 프로젝트 공지사항 정보를 담은 객체
+     * @param projectNoticeNo: 삭제할 프로젝트 공지사항 정보를 담은 객체
      * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
      *            "redirect:/project/notice/list"
      * @author 박휘림
      */
-    @GetMapping("/remove")
-    public ModelAndView removeProjectNotice(ModelAndView mv, ProjectNoticeDTO removeNotice) {
+    @GetMapping("/remove/{projectNoticeNo}")
+    public ModelAndView removeProjectNotice(ModelAndView mv, @PathVariable int projectNoticeNo) {
 
-        projectService.removeProjectNotice(removeNotice);
+        projectService.removeProjectNotice(projectNoticeNo);
 
         mv.setViewName("redirect:/project/notice/list");
         return mv;
