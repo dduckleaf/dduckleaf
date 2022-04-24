@@ -26,9 +26,9 @@
                             <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/mockfund/sidebararrow.png }"></p>
                         </button>
                         <div class="panel">
-                            <p onclick="location.href='regist/basicinfo/1'">기본정보</p>
-                            <p onclick="location.href='regist/story/1'">스토리 작성</p>
-                            <p onclick="location.href='regist/reward/1'">리워드 설계</p>
+                            <p onclick="location.href='/mockfund/basicinfo/1'">기본정보</p>
+                            <p onclick="location.href='/mockfund/story/1'">스토리 작성</p>
+                            <p onclick="location.href='/mockfund/reward/1'">리워드 설계</p>
                         </div>
                     </div>
                     <div class="col-md-7">
@@ -36,13 +36,13 @@
                             <img class="leaf" th:src="@{ /images/common/Leaf.png }"> 모의펀딩 준비
                         </div><hr>
                         <div class="funddata">
-                            <a class="fundsubtitle">기본정보</a><a class="fundstatus" th:text="${ mockFund.mockFundProgressStatus }"></a><a class="fund-btn" onclick="location.href='/mockfund/basicinfo/1'">작성하기</a>
+                            <a class="fundsubtitle">기본정보</a><a class="fund-btn" onclick="location.href='/mockfund/basicinfo/1'">작성하기</a>
                         </div>
                         <div class="funddata">
-                            <a class="fundsubtitle">스토리 작성</a><a class="fundstatus" th:text="${ mockFund.mockFundProgressStatus }"></a><a class="fund-btn" onclick="location.href='/mockfund/story/1'">작성하기</a>
+                            <a class="fundsubtitle">스토리 작성</a><a class="fund-btn" onclick="location.href='/mockfund/story/1'">작성하기</a>
                         </div>
                         <div class="funddata">
-                            <a class="fundsubtitle">리워드 설계</a><a class="fundstatus" th:text="${ mockFund.mockFundProgressStatus }"></a><a class="fund-btn" onclick="location.href='/mockfund/reward/1'">작성하기</a>
+                            <a class="fundsubtitle">리워드 설계</a><a class="fund-btn" onclick="location.href='/mockfund/reward/1'">작성하기</a>
                         </div>
                     </div>
                 </div>

@@ -141,11 +141,25 @@
             confirmButtonText: '확인',
             cancelButtonText: '취소',
             allowEnterKey: false,
+            customClass: {
+                confirmButton: 'savesuccess',
+                cancelButton: 'savecancel',
+                popup: 'savepopup'
+            },
+            buttonsStyling: false,
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({
                     title: '저장되었습니다',
                     confirmButtonText: "확인",
+                    allowEnterKey: false,title: '저장되었습니다',
+                    confirmButtonText: "확인",
+                    allowEnterKey: false,
+                    customClass: {
+                        confirmButton: 'saveok',
+                        popup: 'savepopup'
+                    },
+                    buttonsStyling: false,
                 }).then(function(mockFundName, targetTicketAmount, category, endDate) {
                     let saveForm = document.saveForm;
                     let url = '/mockfund/modify';
