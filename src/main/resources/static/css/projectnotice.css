@@ -3,21 +3,23 @@
     position: absolute;
     z-index: 1;
     left: 33%;
-    right: 15%;
-    top: 24%;
-    width: 55%;
-    height: 1000px;
+    right: 25%;
+    top: 64%;
+    width: 50%;
+    height: 1220px;
 }
+
 .regist-body-area {
     border: 1px solid red;
     position: absolute;
     z-index: 1;
     left: 33%;
-    right: 15%;
+    right: 25%;
     top: 68%;
-    width: 55%;
-    height: 1000px;
+    width: 50%;
+    height: 1220px;
 }
+
 tr.title, td.title {
     border-bottom: none !important;
 }
