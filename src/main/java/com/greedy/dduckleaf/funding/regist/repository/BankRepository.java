@@ -1,6 +1,6 @@
 package com.greedy.dduckleaf.funding.regist.repository;
 
-import com.greedy.dduckleaf.funding.regist.entity.Bank;
+import com.greedy.dduckleaf.funding.entity.Bank;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

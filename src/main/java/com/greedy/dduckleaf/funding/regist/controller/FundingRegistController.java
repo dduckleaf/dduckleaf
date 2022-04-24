@@ -1,8 +1,8 @@
 package com.greedy.dduckleaf.funding.regist.controller;
 
-import com.greedy.dduckleaf.funding.regist.dto.BankListAndMemberDTO;
-import com.greedy.dduckleaf.funding.regist.dto.FundingRegistDTO;
-import com.greedy.dduckleaf.funding.regist.dto.ProjectDTO;
+import com.greedy.dduckleaf.funding.dto.BankListAndMemberDTO;
+import com.greedy.dduckleaf.funding.dto.FundingRegistDTO;
+import com.greedy.dduckleaf.funding.dto.ProjectDTO;
 import com.greedy.dduckleaf.funding.regist.service.FundingRegistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author 홍성원
  */
 @Controller
-@RequestMapping("/funding")
+@RequestMapping("/funding/regist")
 public class FundingRegistController {
 
     private final FundingRegistService service;
@@ -31,7 +31,7 @@ public class FundingRegistController {
         this.service = service;
     }
 
-    @GetMapping("/regist/reward/{projectNo}")
+    @GetMapping("/reward/{projectNo}")
     public ModelAndView registFundingChoicePage(ModelAndView mv, @PathVariable int projectNo){
 
         ProjectDTO fundingInfo = service.findProjectFundingInfo(projectNo);
@@ -43,7 +43,7 @@ public class FundingRegistController {
         return mv;
     }
 
-    @GetMapping("/regist/shipping")
+    @GetMapping("/shipping")
     public ModelAndView registFundingConfirmPage(ModelAndView mv, FundingRegistDTO registInfo) {
 
         String memberId = "USER01";
@@ -62,7 +62,7 @@ public class FundingRegistController {
     }
 
     //redirect로 만들고 상세페이지 요청 핸들러메소드 따로 만들것. 펀딩번호를 PathVariable로 보내서..
-    @GetMapping("/regist/fundinginfo")
+    @GetMapping("/fundinginfo")
     public String registByApi(FundingRegistDTO registDTO) {
         registDTO.setProjectNo(1);
         registDTO.setMemberNo(5);
@@ -83,7 +83,7 @@ public class FundingRegistController {
      *
      * @author 홍성원
      */
-    @GetMapping("/regist/result/{fundingNo}")
+    @GetMapping("/result/{fundingNo}")
     public ModelAndView sendToFundingResultDetailInfo(ModelAndView mv, @PathVariable int fundingNo){
 
 //        java.sql.Date endDate = service.findProjectEndDate(fundingNo);
@@ -103,7 +103,7 @@ public class FundingRegistController {
      *
      * @author 홍성원
      */
-    @GetMapping("/result/list/member")
+    @GetMapping("/list/member")
     public String redirectFundingListPage() {
 
         return "redirect:/funding/list/member";

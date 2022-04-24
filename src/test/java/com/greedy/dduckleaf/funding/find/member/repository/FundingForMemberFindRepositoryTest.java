@@ -1,25 +1,24 @@
-package com.greedy.dduckleaf.funding.regist.repository;
+package com.greedy.dduckleaf.funding.find.member.repository;
 
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.funding.entity.Funding;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
-import javax.transaction.Transactional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * <pre>
- * Class : FundingRepositoryTest
- * Comment :
+ * Class : FundingForMemberFindRepositoryTest
+ * Comment : 서포터의 펀딩 신청관련 정보를 조회하기 위한 FundingRepository를 테스트하는 클래스입니다.
  *
  * History
- * 2022-04-24 h99ww
+ * 2022-04-25 h99ww
  * </pre>
  *
  * @author h99ww
@@ -29,13 +28,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @ContextConfiguration(classes = {
         BeanConfiguration.class,
         JPAConfiguration.class,
-        com.greedy.dduckleaf.config.ContextConfiguration.class,
-        DduckleafApplication.class
+        DduckleafApplication.class,
+        com.greedy.dduckleaf.config.ContextConfiguration.class
 })
-class FundingRepositoryTest {
-
+class FundingForMemberFindRepositoryTest {
     @Autowired
-    private FundingRepository repo;
+    private FundingForMemberFindRepository repo;
 
     @Test
     public void initTest() {
@@ -43,26 +41,15 @@ class FundingRepositoryTest {
     }
 
     @Test
-    @Transactional
-    public void 펀딩신청정보_삽입_테스트() {
-        Funding funding = new Funding();
+    @DisplayName("PK로 Funding엔티티 조회 테스트")
+    public void findById_test() {
+        Funding funding = repo.findById(4).get();
+        assertNotNull(funding);
 
-
-
+        System.out.println("funding = " + funding);
     }
 
-
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

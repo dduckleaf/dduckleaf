@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.funding.regist.dto;
+package com.greedy.dduckleaf.funding.dto;
 
 import lombok.*;
 
