@@ -254,7 +254,7 @@
                 $extraShippingFee.value = "[[${ registInfo.extraShippingFee }]]";
                 $projectNo.value = "[[${ registInfo.projectNo }]]";
 
-                $sendform.method = "post";
+                $sendform.method = "get";
                 $sendform.action = "/funding/regist/fundinginfo";
 
                 $sendform.submit();
