@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>펀딩 목록 조회</title>
+	<meta name="robots" content="noindex, follow" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+	<script src="https://kit.fontawesome.com/c24bc5c6f2.js" crossorigin="anonymous"></script>
+	<!-- Style CSS -->
+	<link rel="stylesheet" th:href="@{ /css/funding.css }">
+	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	
+	<!-- JQuery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div th:replace="/common/supporterpage.html"></div>
+<div th:replace="/common/footer.html"></div>
+
+</body>
+</html>
