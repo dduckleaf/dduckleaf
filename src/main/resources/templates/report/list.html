@@ -7,8 +7,7 @@
 </head>
 <body>
 <main style="width: 1920px">
-    <div th:replace="/common/userheader.html"></div>
-
+    <div th:replace="/common/menubar.html"></div>
     <div class="mypage" th:replace="/common/supporterpage.html"></div>
 
     <div class="tab-body-area">
@@ -39,16 +38,11 @@
                     <td th:text="${ report.getProjectReportDate() }"></td>
                 </tr>
             </th:block>
-            <!--            <th:block th:if="${ projectReportSummeryInfo ne null }">-->
-            <!--            </th:block>-->
         </table>
         <script>
             console.log(document.getElementsByTagName("td"));
         </script>
         <br>
-        <!-- paging -->
-        <!--        <div align="center" th:replace="/common/paging.html"></div>-->
-
         <!-- 게시판영역 End Here -->
     </div>
 
@@ -57,28 +51,23 @@
 <script>
     const tds = document.getElementsByTagName("td");
     if(tds) {
-        for(let i = 0; i < tds.length; i++) {
+        for (let i = 0; i < tds.length; i++) {
 
-            tds[i].onmouseenter = function() {
+            tds[i].onmouseenter = function () {
                 this.parentNode.style.backgroundColor = "#f0f0f0";
                 this.parentNode.style.cursor = "pointer";
             }
 
-            tds[i].onmouseout = function() {
+            tds[i].onmouseout = function () {
                 this.parentNode.style.backgroundColor = "#fff";
             }
 
-            tds[i].onclick = function() {
+            tds[i].onclick = function () {
                 const reportNo = this.parentNode.children[0].innerText;
                 location.href = "/report/detail/" + reportNo;
             }
         }
     }
-
-    /* paging */
-
-
-
 </script>
 </body>
 </html>
