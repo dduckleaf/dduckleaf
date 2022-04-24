@@ -7,7 +7,6 @@ import javax.persistence.*;
 public class NoticeCategory {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "NOTICE_CATEGORY_NO")
     private int noticeCategoryNo;
 

@@ -8,4 +8,6 @@ import java.util.List;
 public interface NoticeRepository extends JpaRepository<Notice, Integer> {
 
 //    List<Notice> findByTitleContaining(String keyword);
+
+    List<Notice> findByNoticeNameContaining(String noticeName);
 }
