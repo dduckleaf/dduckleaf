@@ -139,8 +139,8 @@ public class ProjectNoticeController {
      *            "projectnotice/modify" 프로젝트 공지사항 수정하기폼을 출력하는 뷰 경로
      * @author 박휘림
      */
-    @GetMapping("/modify")
-    public ModelAndView modifyPage(ModelAndView mv, int projectNoticeNo) {
+    @GetMapping("/modify/{projectNoticeNo}")
+    public ModelAndView modifyPage(ModelAndView mv, @PathVariable int projectNoticeNo) {
 
         ProjectNoticeDTO projectNoticeDetail = projectService.findProjectNoticeDetail(projectNoticeNo);
 
@@ -159,7 +159,7 @@ public class ProjectNoticeController {
      */
     @PostMapping("/modify")
     public ModelAndView modifyProjectNotice(ModelAndView mv, ProjectNoticeDTO updateNotice) {
-
+        System.out.println("updateNotice = " + updateNotice);
         projectService.modifyProjectNotice(updateNotice);
 
         mv.setViewName("redirect:/project/notice/list");
@@ -168,15 +168,15 @@ public class ProjectNoticeController {
 
     /**
      * removeProjectNotice: 프로젝트 공지사항을 삭제합니다.
-     * @param removeNotice: 삭제할 프로젝트 공지사항 정보를 담은 객체
+     * @param projectNoticeNo: 삭제할 프로젝트 공지사항 정보를 담은 객체
      * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
      *            "redirect:/project/notice/list"
      * @author 박휘림
      */
-    @GetMapping("/remove")
-    public ModelAndView removeProjectNotice(ModelAndView mv, ProjectNoticeDTO removeNotice) {
+    @GetMapping("/remove/{projectNoticeNo}")
+    public ModelAndView removeProjectNotice(ModelAndView mv, @PathVariable int projectNoticeNo) {
 
-        projectService.removeProjectNotice(removeNotice);
+        projectService.removeProjectNotice(projectNoticeNo);
 
         mv.setViewName("redirect:/project/notice/list");
         return mv;
