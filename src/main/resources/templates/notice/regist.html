@@ -38,7 +38,7 @@
 <div class="main-wrapper">
 
     <!-- Begin Main Header Area -->
-    <header th:replace="/common/userheader.html"></header>
+    <header th:replace="/common/menubar.html"></header>
     <!-- Main Header Area End Here -->
 
     <!-- 마이 페이지 -->
@@ -51,20 +51,26 @@
             </div>
             <div class="cont-div">
                 <div class="regist-form">
-                    <div class="regist-wrap">
+                    <form class="regist-wrap" action="/notice/regist" method="post">
                         <div class="title-form">
                             <label for="title">제목</label>
                             <input type="text" id="title">
+                        </div>
+                        <div class="category-form">
+                            <label for="categoryNo">분류</label>
+                            <select name="categoryNo" id="categoryNo">
+                                <!--fetch로 조회-->
+                            </select>
                         </div>
                         <div class="content-form">
                             <label for="content">내용</label>
                             <textarea id="content"></textarea>
                         </div>
                         <div class="btn-area">
-                            <button class="basic-btn medium-btn btn1">등록</button>
+                            <button class="basic-btn medium-btn btn1" type="submit">등록</button>
                             <button class="basic-btn medium-btn btn3">취소</button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -95,23 +101,52 @@
 <!-- Global Vendor, plugins JS -->
 
 <!-- Vendor JS -->
-<script th:src="@{ js/vendor/bootstrap.bundle.min.js }"></script>
-<script th:src="@{ js/vendor/jquery-3.5.1.min.js }"></script>
-<script th:src="@{ js/vendor/jquery-migrate-3.3.0.min.js }"></script>
-<script th:src="@{ js/vendor/modernizr-3.11.2.min.js }"></script>
-<script th:src="@{ js/vendor/jquery.waypoints.js }"></script>
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
 
 <!--Plugins JS-->
-<script th:src="@{ js/plugins/wow.min.js }"></script>
-<script th:src="@{ js/plugins/jquery-ui.min.js }"></script>
-<script th:src="@{ js/plugins/swiper-bundle.min.js }"></script>
-<script th:src="@{ js/plugins/jquery.nice-select.js }"></script>
-<script th:src="@{ js/plugins/parallax.min.js }"></script>
-<script th:src="@{ js/plugins/jquery.magnific-popup.min.js }"></script>
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
 
 <!--Main JS (Common Activation Codes)-->
-<script th:src="@{ js/main.js }"></script>
+<script th:src="@{ /js/main.js }"></script>
 
+<script>
+    //조회해 와야 하는 필드명
+    function noticeCategoryData(noticeCategoryNo, noticeCategoryName) {
+
+        return {noticeCategoryNo, noticeCategoryName};
+    }
+    //컨트롤러 메소드
+    function findNoticeCategoryList() {
+        //컨트롤러 주소
+        fetch('/notice/category').then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+        }).then(json => {
+            let html = '';
+
+            if (!json.length) {
+                alert("암것도 없음");
+                console.log("암것도 없음");
+                html = '<option>등록된 분류가 없습니다.</option>';
+            } else {
+                json.forEach((noticeCategoryData, idx) => {
+                    console.log("분류 있음");
+
+                });
+            }
+        });
+    }
+</script>
 </body>
 
 </html>
