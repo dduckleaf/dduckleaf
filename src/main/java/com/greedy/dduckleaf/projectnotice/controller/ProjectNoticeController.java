@@ -28,8 +28,9 @@ import javax.servlet.http.HttpServletRequest;
  * 2022/04/22 (박휘림) 공지사항 상세조회 메소드 작성 완료, 공지사항 작성하기 메소드 작성 시작
  * 2022/04/23 (박휘림) 공지사항 작성하기 메소드 작성 완료, 공지사항 수정하기 메소드 작성 시작
  * 2022/04/24 (박휘림) 공지사항 수정하기,삭제하기 메소드 작성 완료
+ * 2022/04/24 (박휘림) 회원 번호로 진행 중인 프로젝트 번호 조회 메소드 작성
  * </pre>
- * @version 1.0.5
+ * @version 1.0.6
  * @author 박휘림
  */
 @Controller
@@ -46,6 +47,7 @@ public class ProjectNoticeController {
     /**
      * findProjectNoticeList: 프로젝트 공지사항 목록을 조회합니다.
      * @param pageable: 페이징 정보를 담는 객체
+     * @param user: 로그인한 사용자의 정보를 받는 객체
      * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
      *            projectNoticeList 해당 프로젝트의 공지사항 목록
      *            paging 목록 페이징을 위한 객체
@@ -54,12 +56,12 @@ public class ProjectNoticeController {
      */
     @GetMapping (value = "/list", produces = "application/json")
     @ResponseBody
-    public ModelAndView findProjectNoticeList(/*HttpServletRequest request,*/ ModelAndView mv,//일단 검색 기능 보류
-                                                                              @PageableDefault Pageable pageable/*, @PathVariable(value = "projectNo") int projectNo*/) {
-        int projectNo = 2;
+    public ModelAndView findProjectNoticeList(ModelAndView mv, @PageableDefault Pageable pageable, @AuthenticationPrincipal CustomUser user) {
+
+        int projectNo = findProjectNoByFarmerNo(user);
+
         Page<ProjectNoticeDTO> projectNoticeList = projectService.findProjectNoticeList(pageable, projectNo);
 
-        System.out.println("projectNoticeList = " + projectNoticeList);
         projectNoticeList.forEach(System.out::println);
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectNoticeList);
 
@@ -71,7 +73,22 @@ public class ProjectNoticeController {
     }
 
     /**
-     * findProjectNoticeDetail: 프로젝트 공지사항 목록을 조회합니다.
+     * findProjectNoByFarmerNo: 로그인한 회원번호로 진행중인 프로젝트의 번호를 조회합니다.
+     * @param user: 로그인한 사용자의 정보를 받는 객체
+     * @return projectNo 로그인한 사용자가 진행 중인 프로젝트 번호
+     * @author 박휘림
+     */
+    public int findProjectNoByFarmerNo(@AuthenticationPrincipal CustomUser user) {
+
+        int farmerNo = user.getMemberNo();
+
+        int projectNo = projectService.findProjectNoByFarmerId(farmerNo);
+
+        return projectNo;
+    }
+
+    /**
+     * findProjectNoticeDetail: 프로젝트 공지사항 상세정보를 조회합니다.
      * @param projectNoticeNo: 조회할 프로젝트 공지사항 번호
      * @return mv
      *            projectNoticeDetail 조회하려는 공지사항 상세정보
@@ -116,14 +133,12 @@ public class ProjectNoticeController {
     public ModelAndView registProjectNotice(ModelAndView mv, @AuthenticationPrincipal CustomUser user,
                                             ProjectNoticeDTO newNotice) {
 
-//        int farmerNo = user.getMemberNo();
-        int farmerNo = 4;
-        int projectNo = 2;
+        int farmerNo = user.getMemberNo();
+
+        int projectNo = findProjectNoByFarmerNo(user);
 
         newNotice.setFarmerNo(farmerNo);
         newNotice.setProjectNo(projectNo);
-
-        System.out.println("newNotice = " + newNotice);
 
         projectService.registProjectNotice(newNotice);
 
@@ -159,16 +174,17 @@ public class ProjectNoticeController {
      */
     @PostMapping("/modify")
     public ModelAndView modifyProjectNotice(ModelAndView mv, ProjectNoticeDTO updateNotice) {
-        System.out.println("updateNotice = " + updateNotice);
+
         projectService.modifyProjectNotice(updateNotice);
 
         mv.setViewName("redirect:/project/notice/list");
+
         return mv;
     }
 
     /**
      * removeProjectNotice: 프로젝트 공지사항을 삭제합니다.
-     * @param projectNoticeNo: 삭제할 프로젝트 공지사항 정보를 담은 객체
+     * @param projectNoticeNo: 삭제할 프로젝트 번호
      * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
      *            "redirect:/project/notice/list"
      * @author 박휘림
@@ -179,6 +195,7 @@ public class ProjectNoticeController {
         projectService.removeProjectNotice(projectNoticeNo);
 
         mv.setViewName("redirect:/project/notice/list");
+
         return mv;
     }
 

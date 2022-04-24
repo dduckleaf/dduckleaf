@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
 
-@Entity(name = "Project")
+@Entity(name = "ProjectForProjectNotice")
 @Table(name = "TBL_PROJECT")
 public class Project {
 
