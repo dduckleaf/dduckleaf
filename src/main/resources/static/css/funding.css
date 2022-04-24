@@ -78,6 +78,20 @@ button.bigbig-btn {
     background-color: #E5DDCC;
     border: 1px solid #ababab;
 }
+.complete-funding-info {
+    margin-top: 15px;
+    background-color: #E5DDCC;
+}
+.complete-funding-info-text {
+    margin-left: 3%;
+    margin-top: 10px;
+    height: 55px;
+    color: #444444;
+}
+.funding-result-btn{
+    margin: 2%;
+}
+
 .funding-regist-sup-info-name{
     margin-left: 6%;
     margin-top: 7%;
