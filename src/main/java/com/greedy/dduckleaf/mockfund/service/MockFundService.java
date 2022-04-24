@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,13 +42,6 @@ public class MockFundService {
         this.rewardCategoryRepository = rewardCategoryRepository;
         this.modelMapper = modelMapper;
     }
-
-//    public List<MockFundInfoDTO> findMockFundInfoList() {
-//
-//        List<MockFundInfo> infoList = mockFundInfoRepository.findAll();
-//
-//        return infoList.stream().map(mockFundInfo -> modelMapper.map(mockFundInfo, MockFundInfoDTO.class)).collect(Collectors.toList());
-//    }
 
     public MockFundInfoDTO findMockFundInfoByCode(int infoCode) {
 
@@ -87,5 +81,13 @@ public class MockFundService {
     @Transactional
     public void modifyBasicInfo(MockFundInfoDTO mockFundInfo) {
 
+        MockFundInfo foundInfo = mockFundInfoRepository.findById(mockFundInfo.getMockFundInfoNo()).get();
+        foundInfo.setMockFundName(mockFundInfo.getMockFundName());
+        foundInfo.setTargetTicketAmount(mockFundInfo.getTargetTicketAmount());
+        foundInfo.setEndDate(mockFundInfo.getEndDate());
+
+        RewardCategory category = rewardCategoryRepository.findById(mockFundInfo.getRewardCategory().getProjectCategoryNo()).get();
+        foundInfo.setRewardCategory(category);
     }
+
 }
