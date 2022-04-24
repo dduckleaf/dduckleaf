@@ -28,8 +28,9 @@ import java.util.Locale;
  * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료, 휴대폰 인증 번호 전송 관련 메소드 구현 시작
  * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료, 회원 가입 관련 메소드 구현 완료
  * 2022/04/23 (박상범) 아이디 찾기 관련 메소드 구현 완료
+ * 2022/04/24 (박상범) 비밀번호 찾기 관련 메소드 구현 완료
  * </pre>
- * @version 1.0.6
+ * @version 1.0.7
  * @author 박상범
  */
 @Controller
@@ -51,7 +52,7 @@ public class MemberController {
     }
 
     /**
-     * login: 로그인을 위해 로그인 페이지로 포워딩 한다.
+     * login: 로그인을 위해 로그인 페이지로 포워드합니다.
      * @author 박상범
      */
     @GetMapping("/login")
@@ -80,14 +81,14 @@ public class MemberController {
     public void logout() {}
 
     /**
-     * registMember: 회원 가입을 위해 회원 가입 페이지로 포워딩합니다.
+     * registMember: 회원 가입을 위해 회원 가입 페이지로 포워드합니다.
      * @author 박상범
      */
     @GetMapping("/regist")
     public void registMember() {}
 
     /**
-     * sendEmailVerification: 회원 가입을 위해 이메일로 인증번호를 전송한다.
+     * sendEmailVerification: 회원 가입을 위해 이메일로 인증번호를 전송합니다.
      * @param email: 이메일 인증 번호를 전송할 이메일 주소
      * @return gson.toJson(emailResult)
      * @author 박상범
@@ -110,7 +111,7 @@ public class MemberController {
     }
 
     /**
-     * sendPhoneVerification: 회원 가입을 위해 휴대폰 번호로 인증번호를 전송한다.
+     * sendPhoneVerification: 회원 가입을 위해 휴대폰 번호로 인증번호를 전송합니다.
      * @param phone: 휴대폰 인증 번호를 전송할 휴대폰 번호
      * @return gson.toJson(phoneResult)
      * @author 박상범
@@ -133,8 +134,8 @@ public class MemberController {
     }
 
     /**
-     * checkDuplicateMemberId: 회원 가입을 위해 아이디 중복 확인을 한다.
-     * @param memberId: 아이디 증복 확인할 아이디를 전달받는다.
+     * checkDuplicateMemberId: 회원 가입을 위해 아이디 중복 확인을 합니다.
+     * @param memberId: 아이디 증복 확인할 아이디
      * @return gson.toJson(checkResult)
      * @author 박상범
      */
@@ -209,6 +210,48 @@ public class MemberController {
             mv.addObject("memberId", result);
             mv.setViewName("/member/find/success");
         }
+
+        return mv;
+    }
+
+    /**
+     * checkMemberIdAndEmail : 비밀번호를 변경하기 위해 아이디와 이메일을 입력하여 회원가입여부를 확인합니다.
+     * @param member: 회원가입 여부를 확인할 아이디와 비밀번호를 담은 MemberDTO 객체
+     * @return gson.toJson(result)
+     * @author 박상범
+     */
+    @PostMapping("/find/check")
+    @ResponseBody
+    public String checkMemberIdAndEmail(MemberDTO member) {
+
+        String result = memberService.findMember(member);
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .setPrettyPrinting()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .create();
+
+        return gson.toJson(result);
+    }
+
+    /**
+     * modifyMemberPwd : 회원의 비밀번호를 변경합니다.
+     * @param member: 회원번호와 변경할 비밀번호를담은  MemberDTO 객체
+     * @return mv
+     * @author 박상범
+     */
+    @PostMapping("/modify/pwd")
+    public ModelAndView modifyMemberPwd(ModelAndView mv, MemberDTO member, RedirectAttributes rttr) {
+
+        member.setMemberPwd(passwordEncoder.encode(member.getMemberPwd()));
+
+        String result = memberService.modifyMemberPwd(member);
+
+        rttr.addFlashAttribute("message", result);
+        mv.setViewName("/member/login");
 
         return mv;
     }
