@@ -9,8 +9,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -119,5 +121,54 @@ class MemberRepositoryTest {
         //then
         assertNotNull(memberId);
         System.out.println(memberId);
+    }
+
+    @Test
+    @DisplayName("입력한 아이디와 이메일로 회원가입여부 확인 성공")
+    public void findMemberByMemberIdAndEmailSuccessTest() {
+
+        //given
+        String memberId = "qwer";
+        String email = "tkdjawlwhs@naver.com";
+
+        //when
+        Member member = memberRepository.findMember(memberId, email);
+
+        //then
+        assertNotNull(member);
+        System.out.println(member);
+    }
+
+    @Test
+    @DisplayName("입력한 아이디와 이메일로 회원가입여부 확인 실패")
+    public void findMemberByMemberAndEmailFailedTest() {
+
+        //given
+        String memberId = "asdf";
+        String email = "tkdjawlwhs@naver.com";
+
+        //when
+        Member member = memberRepository.findMember(memberId, email);
+
+        //then
+        assertNull(member);
+    }
+
+    @Test
+    @DisplayName("회원번호로 비밀번호 변경")
+    @Transactional
+    public void modifyMemberPwd() {
+
+        //given
+        int memberNo = 67;
+        String memberPwd = "@@@@@@@@@@@@@@@@@@@@@@@@@@";
+
+        //when
+        Member member = memberRepository.findMemberByMemberNo(memberNo);
+        member.setMemberPwd(memberPwd);
+
+        //then
+        Member findMember = memberRepository.findById(67).get();
+        assertEquals(findMember.getMemberPwd(), "@@@@@@@@@@@@@@@@@@@@@@@@@@");
     }
 }

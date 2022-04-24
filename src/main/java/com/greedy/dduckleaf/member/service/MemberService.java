@@ -26,8 +26,9 @@ import java.util.List;
  * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료
  * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료, 회원 가입 관련 메소드 구현 완료
  * 2022/04/23 (박상범) 아이디 찾기 관련 메소드 구현 완료
+ * 2022/04/24 (박상범) 비밀번호 찾기 관련 메소드 구현 완료
  * </pre>
- * @version 1.0.6
+ * @version 1.0.7
  * @author 박상범
  * @see EmailSender
  * @see ModelMapper
@@ -65,9 +66,9 @@ public class MemberService{
     }
 
     /**
-     * sendPhoneVerification: 입력받은 휴대폰 번호로 인증번호를 전송한다.
+     * sendPhoneVerification: 입력받은 휴대폰 번호로 인증번호를 전송합니다.
      * @param phone: 인증 번호를 받을 휴대폰 번호
-     * @return 결과에 따라 다른 메시지를 return한다.
+     * @return 결과에 따라 다른 메시지를 return합니다.
      * @author 박상범
      */
     public String sendPhoneVerification(String phone) {
@@ -135,7 +136,7 @@ public class MemberService{
     }
 
     /**
-     * registMember : 입력받은 회원 정보로 회원 가입을 한다.
+     * registMember : 입력받은 회원 정보로 회원 가입을 합니다.
      * @param member: 회원 가입할 회원 정보
      * @author 박상범
      */
@@ -160,5 +161,42 @@ public class MemberService{
         }
 
         return emailSender.sendMailMemberId(member);
+    }
+
+    /**
+     * findMember: 입력한 이메일이 등록되어있는지 확인합니다.
+     * @param member: 중복 확인할 아이디
+     * @return 결과에 따라 다른 메시지를 return합니다.
+     * @author 박상범
+     */
+    public String findMember(MemberDTO member) {
+
+        Member foundMember = memberRepository.findMember(member.getMemberId(), member.getEmail());
+
+        if(foundMember == null) {
+            return "아이디와 이메일이 일치하는 회원의 정보가 없습니다.";
+        }
+
+        return emailSender.sendMailVerification(member.getEmail());
+    }
+
+    /**
+     * modifyMemberPwd: 회원의 비밀번호를 변경합니다.
+     * @param member: 회원번호와 변경할 비밀번호를 담은 MemberDTO 객체
+     * @return 결과에 따라 다른 메시지를 return합니다.
+     * @author 박상범
+     */
+    @Transactional
+    public String modifyMemberPwd(MemberDTO member) {
+
+        Member foundMember = memberRepository.findMemberByMemberNo(member.getMemberNo());
+
+        if(foundMember != null) {
+            foundMember.setMemberPwd(member.getMemberPwd());
+
+            return "비밀번호가 변경되었습니다. 로그인페이지로 이동힙니다.";
+        }
+
+        return "비밀번호 변경 실패";
     }
 }
