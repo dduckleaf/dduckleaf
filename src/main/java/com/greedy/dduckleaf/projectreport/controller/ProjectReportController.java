@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
+import com.greedy.dduckleaf.projectreport.find.dto.ReportDetailInfo;
 import com.greedy.dduckleaf.projectreport.find.service.ProjectReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -100,6 +102,24 @@ public class ProjectReportController {
         mv.addObject("projectReportList", projectReportList);
         mv.addObject("pagingInfo", pagingInfo);
         mv.setViewName("report/platformmanager/list");
+
+        return mv;
+    }
+
+    /**
+    * 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
+    *  @param projectReportNo 상세조회를 요청할 프로젝트신고번호
+    * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
+    *            projectReportInfo : 프로젝트신고내역 상세정보
+    *            "report/platformmanager/detail" : 상세정보를 출력할 브라우저 화면 경로
+    */
+    @GetMapping("/platformmanager/detail/{projectReportNo}")
+    public ModelAndView findProjectReportDetail(ModelAndView mv, @PathVariable int projectReportNo) {
+
+        ReportDetailInfo reportDetailInfo = service.findProjectReportAndReply(projectReportNo);
+
+        mv.addObject("reportDetailInfo", reportDetailInfo);
+        mv.setViewName("report/platformmanager/detail");
 
         return mv;
     }

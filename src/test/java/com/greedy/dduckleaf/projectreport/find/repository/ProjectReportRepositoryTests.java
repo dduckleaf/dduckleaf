@@ -59,17 +59,18 @@ public class ProjectReportRepositoryTests {
 
     }
 
-    /*=========================================너는 사용하지 말아봐봐*/
     @Test
-    @DisplayName("모든 프로젝트신고내역 목록조회")
-    public void findAllProjectReport_test() {
+    @DisplayName("프로젝트 신고번호로 해당 신고내용 상세조회 테스트")
+    public void findByProjectReportNo_test() {
+        
         //given
-
+        int projectReportNo = 1;
+        
         //when
-        List<Object> projectReportList = repository.findAllProjectReport();
-
+        ProjectReport projectReport = repository.findByProjectReportNo(projectReportNo);
+        
         //then
-        assertNotNull(projectReportList);
-        projectReportList.forEach(System.out::println);
+        assertNotNull(projectReport);
+        System.out.println("projectReport = " + projectReport);
     }
 }

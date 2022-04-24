@@ -2,7 +2,7 @@ package com.greedy.dduckleaf.projectreport.detail.entity;
 
 import javax.persistence.*;
 
-import com.greedy.dduckleaf.projectreport.find.entity.FarmerInfo;
+import com.greedy.dduckleaf.projectreport.find.entity.*;
 import com.greedy.dduckleaf.projectreport.find.entity.Member;
 import com.greedy.dduckleaf.projectreport.find.entity.Project;
 import com.greedy.dduckleaf.projectreport.find.entity.ReportCategory;

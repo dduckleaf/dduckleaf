@@ -1,7 +1,9 @@
-package com.greedy.dduckleaf.projectreport.detail.entity;
+package com.greedy.dduckleaf.projectreport.find.entity;
 
 import javax.persistence.*;
 
+import com.greedy.dduckleaf.projectreport.detail.entity.Member;
+import com.greedy.dduckleaf.projectreport.detail.entity.ProjectReport;
 import lombok.*;
 
 import java.sql.Date;
@@ -33,6 +35,9 @@ public class ProjectReportReply {
     @JoinColumn(name = "ADMIN_NO")
     private Member adminNo;                                 //신고 답변 관리자
 
+    @Column(name = "DELETE_YN")
+    private String deleteYn;
+
     @Override
     public String toString() {
         return "ProjectReportReply{" +
@@ -41,6 +46,7 @@ public class ProjectReportReply {
                 ", projectReportReplyDate=" + projectReportReplyDate +
                 ", projectReport=" + projectReport +
                 ", adminNo=" + adminNo +
+                ", deleteYn='" + deleteYn + '\'' +
                 '}';
     }
 }
