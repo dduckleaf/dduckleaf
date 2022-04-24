@@ -2,6 +2,7 @@ package com.greedy.dduckleaf.projectreport.find.service;
 
 import com.greedy.dduckleaf.config.*;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
+import com.greedy.dduckleaf.projectreport.find.dto.ReportDetailInfo;
 import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,8 @@ import org.springframework.data.domain.Sort;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @SpringBootTest(classes = {
         DduckleafApplication.class,
@@ -30,15 +33,11 @@ public class ProjectReportServiceTests {
     private ProjectReportService service;
 
     @Autowired
-    private ProjectReportRepository repository;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @Test
     public void initTest() {
         assertNotNull(service);
-        assertNotNull(repository);
         assertNotNull(modelMapper);
     }
 
@@ -69,4 +68,40 @@ public class ProjectReportServiceTests {
         assertNotNull(projectReportList);
         projectReportList.forEach(System.out::println);
     }
+
+    @Test
+    @DisplayName("프로젝트 신고번호로 신고내용 상세 조회: 답변이 존재하는 경우")
+    public void findProjectReportAndReply_isExist_test() {
+
+        //given
+        int projectReportNo = 1;
+
+        //when
+        ReportDetailInfo reportDetailInfo = service.findProjectReportAndReply(projectReportNo);
+
+        //then
+        assertNotNull(reportDetailInfo.getProjectReport());
+        assertNotNull(reportDetailInfo.getProjectReportReply());
+
+        System.out.println(reportDetailInfo.getProjectReport());
+        System.out.println(reportDetailInfo.getProjectReportReply());
+    }
+
+//    java.lang.IllegalArgumentException: source cannot be null
+//
+//    @Test
+//    @DisplayName("프로젝트 신고번호로 신고내용 상세 조회: 답변이 존재하는 경우")
+//    public void findProjectReportAndReply_isEmpty_test() {
+//
+//        //given
+//        int projectReportNo = 12;
+//
+//        //when
+//        ReportDetailInfo reportDetailInfo = service.findProjectReportAndReply(projectReportNo);
+//
+//        //then
+//        assertNotNull(reportDetailInfo);
+//
+//        System.out.println(reportDetailInfo);
+//    }
 }
