@@ -4,6 +4,69 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/report.css}">
+    <style>
+        /* 모달창 */
+        .focusout {
+            display: none;
+            top: 0;
+            left: 0;
+            position: absolute;
+            content: none;
+            width: 100%;
+            height: 1600px;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .modalWrap {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 30%;
+            right: 30%;
+            /* width: 350px; */
+            /* height: 180px; */
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;
+            background: #fff;
+            z-index: 2;
+        }
+
+        .popup-area {
+            border-radius: 5px;
+            background-color: #fff;;
+            width: 500px;
+            height: 550px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20%;
+            margin-bottom: 20%;
+        }
+
+        .popup-content {
+            width: 90%;
+            margin-top: 5%;
+            margin-bottom: 50px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .modal-btn-area {
+            display: flex;
+            justify-content: center;
+        }
+
+        #popup-submit, #popup-cancel {
+            margin-top: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+
+        textarea {
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <main style="width: 1920px">
@@ -31,7 +94,7 @@
                 </tr>
                 <tr>
                     <th>신고사유</th>
-                    <td><textarea cols="95" rows="7" style="margin-top: 10px; resize: none;">신고사유사유사유</textarea></td>
+                    <td><textarea cols="95" rows="7" style="margin-top: 10px; resize: none;" readonly>신고사유사유사유</textarea></td>
                 </tr>
                 <tr>
                     <th>참고 URL</th><td>www.naver.com</td>
@@ -71,14 +134,37 @@
                 </tr>
                 <tr>
                     <th>내용</th>
-                    <td><textarea cols="95" rows="7" style="margin-top: 10px; resize: none;">아이고야 확인했습니다. 빠른 조치 취하도록 하겠습니다. 신고 감사합니다.</textarea></td>
+                    <td><textarea cols="95" rows="7" style="margin-top: 10px; resize: none;" readonly>아이고야 확인했습니다. 빠른 조치 취하도록 하겠습니다. 신고 감사합니다.</textarea></td>
                 </tr>
                 <!--                </th:block>-->
             </table>
 
             <div class="btn-area">
                 <input type="button" value="목록으로" class="basic-btn medium-btn btn3" id="back" style="float:left;">
-                <input type="submit" value="신고 답변" class="basic-btn medium-btn btn1" id="remove">
+                <input type="button" value="신고 답변" class="basic-btn medium-btn btn1" id="regist">
+            </div>
+        </div>
+
+        <!-- 모달창 -->
+        <div class="focusout">
+            <div class="popup-area modalWrap" id="modalWrap">
+                <div class="popup-content">
+                    <div class="title-div">
+                    <span class="text-subtitle"  style="font-weight: bold !important;" th:align="left">
+                        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 17px; height: 20px; margin-right: 7px;">프로젝트 신고 답변</span>
+                        <hr width="100%">
+                    </div>
+                    <form action="/report/platformmanager/regist" method="post" style="width: 100%">
+                        <span>제목</span>
+                        <input type="text" style="width: 100%;"><br><br>
+                        <span>내용</span>
+                        <textarea rows="12" style="resize: none;"></textarea>
+                        <div class="modal-btn-area">
+                            <input class="basic-btn small-btn btn1" id="popup-submit" type="submit" value="등록">
+                            <input class="basic-btn small-btn btn3" id="popup-cancel" type="reset" value="닫기">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </main>
@@ -93,11 +179,34 @@
     }
 
     /* 답변 작성 화면으로 이동 */
-    const registReply = document.getElementById("regist");
-    if(registReply) {
-        registReply.onclick = function() {
-            location.href = "/report/platformmanager/regist";
+    // const registReply = document.getElementById("regist");
+    // if(registReply) {
+    //     registReply.onclick = function() {
+    //         location.href = "/report/platformmanager/regist";
+    //     }
+    // }
+
+
+    /* 신고 답변 등록용 모달 */
+    window.onload = function() {
+
+        function onclick() {
+            document.querySelector('.focusout').style.display = 'block';
+            document.querySelector('.modalWrap').style.display = 'block';
         }
-    }
+
+        function offclick() {
+            document.querySelector('.focusout').style.display = 'none';
+            document.querySelector('.modalWrap').style.display = 'none';
+        }
+
+        function registReply() {
+
+        }
+
+        document.getElementById('regist').addEventListener('click', onclick);
+        document.getElementById('popup-cancel').addEventListener('click', offclick);
+        document.getElementById('popup-submit').addEventListener('click', registReply);
+    };
 </script>
 </html>
