@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.projectreport.detail.dto;
+package com.greedy.dduckleaf.projectreport.find.dto;
 
 import lombok.*;
 
@@ -16,4 +16,5 @@ public class ProjectReportReplyDTO {
     private Date projectReportReplyDate;            //답변발신일
     private int projectReportNo;                    //신고번호
     private int adminNo;                            //신고 답변 관리자
+    private String deleteYn;                        //삭제여부
 }
