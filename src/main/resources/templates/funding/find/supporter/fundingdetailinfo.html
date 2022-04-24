@@ -32,26 +32,84 @@
 		<hr width="100%" >
 		
 		<div class="funding-detail-info-border">
-			<div class="funding-detail-info-box bl">
+			<div class="funding-detail-info-box">
 				<label class="category">곡류</label><br>
 				<label class="projectStatus">진행중</label><br>
 				<label class="projectName">국내산 송이버섯</label><br>
 				<label class="farmerName">by 감자합니다</label><br>
 				<br>
 				<br>
-				<label class="funding-order">주문번호</label><br>
-				<label class="funding-order">주문일</label><br>
-				<label class="funding-detail-info">펀딩 종료일</label>
-				<label class="funding-detail-info">펀딩 상태</label>
-				<br><br>
+				<div class="row">
+					<div class="col-10 ">
+						<label class="funding-order">주문번호</label><br>
+					</div>
+					<div class="col" style="text-align: right;">
+						<label class="funding-order">주문번호</label><br>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-10">
+						<label class="funding-order">주문일</label><br>
+					</div>
+					<div class="col " style="text-align: right;">
+						<label class="funding-order">주문일</label><br>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-10 ">
+						<label class="funding-detail-info">펀딩 종료일</label><br>
+					</div>
+					<div class="col " style="text-align: right;">
+						<label class="funding-detail-info">펀딩 종료일</label><br>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-10 ">
+						<label class="funding-detail-info">펀딩 상태</label>
+					</div>
+					<div class="col " style="text-align: right;">
+						<label class="funding-detail-info">펀딩 상태</label>
+					</div>
+				</div>
+				<br>
+				<button class="basic-btn btn3 totallybig-btn">환불 신청</button>
+				
+			</div>
+		</div>
+		<div class="funding-detail-info-border">
+			<div class="funding-detail-reward-info-box">
+				<label class="funding-detail-reward-name">[향긋] 국내산 송이버섯</label><br><br>
+				<label class="funding-detail-reward-info">송이버섯 1box(500g)</label><br><br>
+				<label class="funding-detail-reward-info">20000원 / 1box</label>
+				<label class="funding-detail-reward-info">발송 시작일: 2022년 04월 말(21~말일) 예정</label><br><br>
+				<label class="funding-detail-reward-info">* 프로젝트 교환/ 펀딩금반환/AS정책은 반환정책을 확인하세요</label><br><br>
+				<a class="funding-detail-reward-info" style="font-size: 1em;"><u>프로젝트 반환 정책 바로가기</u></a><br><br>
 				<button class="basic-btn btn3 totallybig-btn">환불 신청</button>
 			</div>
-		
+		</div>
+		<div class="funding-detail-info-border">
+			<div class="funding-detail-shipping-info-box">
+				<label>배송지 정보</label><br><br>
+				<label>박상범</label><br>
+				<label>010-1234-1234</label><br><br>
+				<label>[12321]우리집 주소~</label><br>
+				<label>14층</label><br><br>
+				<button class="basic-btn btn3 totallybig-btn">환불 신청</button>
+			</div>
 		</div>
 		
 		
-	</div>
-</div>
+		<div style="; text-align: right;margin: 3%">
+			<button class="basic-btn btn3 medium-btn">뒤로가기</button>
+		</div>
+
+<div th:replace="/common/footer.html"></div>
+<script>
+
+
+</script>
+
+
 
 </body>
 </html>
