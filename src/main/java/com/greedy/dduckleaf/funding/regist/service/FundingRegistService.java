@@ -2,10 +2,7 @@ package com.greedy.dduckleaf.funding.regist.service;
 
 import com.greedy.dduckleaf.funding.regist.dto.*;
 import com.greedy.dduckleaf.funding.regist.entity.*;
-import com.greedy.dduckleaf.funding.regist.repository.BankRepository;
-import com.greedy.dduckleaf.funding.regist.repository.MemberForFundingRegistRepository;
-import com.greedy.dduckleaf.funding.regist.repository.ProjectFundingRegistRepository;
-import com.greedy.dduckleaf.funding.regist.repository.ShippingFeeForFundingRepository;
+import com.greedy.dduckleaf.funding.regist.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +20,20 @@ public class FundingRegistService {
     private final BankRepository bankRepository;
     private final MemberForFundingRegistRepository memberRepo;
     private final ShippingFeeForFundingRepository shippingRepo;
+    private final FundingRepository fundingRepo;
+    private final PaymentHistoryForFundingRepository payHistoryRepo;
+    private final ShippingAddressForFundingRepository shippingAddressRepo;
 
     @Autowired
-    public FundingRegistService(ProjectFundingRegistRepository repository, ModelMapper modelMapper, BankRepository bankRepository, MemberForFundingRegistRepository memberRepo, ShippingFeeForFundingRepository shippingRepo) {
+    public FundingRegistService(ProjectFundingRegistRepository repository, ModelMapper modelMapper, BankRepository bankRepository, MemberForFundingRegistRepository memberRepo, ShippingFeeForFundingRepository shippingRepo, FundingRepository fundingRepo, PaymentHistoryForFundingRepository payHistoryRepo, ShippingAddressForFundingRepository shippingAddressRepo) {
         this.projectRepository = repository;
         this.modelMapper = modelMapper;
         this.bankRepository = bankRepository;
         this.memberRepo = memberRepo;
         this.shippingRepo = shippingRepo;
+        this.fundingRepo = fundingRepo;
+        this.payHistoryRepo = payHistoryRepo;
+        this.shippingAddressRepo = shippingAddressRepo;
     }
 
     public ProjectDTO findProjectFundingInfo(int projectNo) {
@@ -53,6 +56,7 @@ public class FundingRegistService {
         return  bankListAndMember;
     }
 
+    /* 펀딩신청내역 저장 메소드 */
     @Transactional
     public void registFunding(FundingRegistDTO registDTO) {
 
@@ -72,7 +76,12 @@ public class FundingRegistService {
         PaymentHistory history = parsingPaymentHistory(registDTO);
         history.setFunding(funding);
 
+        /* 엔티티에 삽입한 행을 DB에 저장 */
+        fundingRepo.save(funding);
+        payHistoryRepo.save(history);
+        shippingAddressRepo.save(shippingAddress);
     }
+
 
     private PaymentHistory parsingPaymentHistory(FundingRegistDTO registDTO) {
 
@@ -113,6 +122,9 @@ public class FundingRegistService {
             extraShippingFeeStatus = "N";
         }
         funding.setExtraShippingFeeStatus(extraShippingFeeStatus);
+        funding.setRefundBankCode(registDTO.getRefundAccountInfo().getBankCode());
+        funding.setRefundAccount(registDTO.getRefundAccountInfo().getAccountNo());
+
 
         return funding;
     }

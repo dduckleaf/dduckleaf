@@ -36,9 +36,10 @@ public class FundingRegistController {
 
         ProjectDTO fundingInfo = service.findProjectFundingInfo(projectNo);
         mv.addObject("fundingInfo", fundingInfo);
-        System.out.println("fundingInfo = " + fundingInfo);
         mv.setViewName("/funding/regist/fundingamount");
 
+        System.out.println("##1");
+        System.out.println("fundingInfo = " + fundingInfo);
         return mv;
     }
 
@@ -55,6 +56,8 @@ public class FundingRegistController {
 
         mv.setViewName("/funding/regist/shippinginfo");
 
+        System.out.println("##2");
+        System.out.println("fundingInfo = " + registInfo);
         return mv;
     }
 
@@ -63,6 +66,9 @@ public class FundingRegistController {
         registDTO.setProjectNo(1);
         registDTO.setMemberNo(5);
         service.registFunding(registDTO);
+
+        System.out.println("##1");
+        System.out.println("fundingInfo = " + registDTO);
 
         return "redirect:/funding/regist/reward/1";
     }

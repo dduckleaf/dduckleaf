@@ -47,6 +47,12 @@ public class Funding {
     @Column(name = "EXTRA_SHIPPING_FEE_STATUS")
     private String extraShippingFeeStatus;
 
+    @Column(name = "REFUND_BANK_CODE")
+    private int refundBankCode;
+
+    @Column(name = "REFUND_ACCOUNT")
+    private int refundAccount;
+
     @Override
     public String toString() {
         return "Funding{" +
@@ -55,10 +61,13 @@ public class Funding {
                 ", fundingAmount=" + fundingAmount +
                 ", rewardAmount=" + rewardAmount +
                 ", fundingStatus='" + fundingStatus + '\'' +
-                ", shippingFeeNo=" + projectShippingFee +
+                ", donateAmount=" + donateAmount +
+                ", project=" + project +
+                ", projectShippingFee=" + projectShippingFee +
                 ", memberNo=" + memberNo +
-                ", donateAmount = " + donateAmount +
-                ", extraShippingFeeStatus = " + extraShippingFeeStatus +
+                ", extraShippingFeeStatus='" + extraShippingFeeStatus + '\'' +
+                ", refundBankCode=" + refundBankCode +
+                ", refundAccount=" + refundAccount +
                 '}';
     }
 }
