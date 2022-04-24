@@ -2,6 +2,7 @@ package com.greedy.dduckleaf.funding.regist.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity(name = "ProjectForFunding")
 @Table(name = "TBL_PROJECT")
@@ -48,6 +49,9 @@ public class Project {
     @OneToOne
     @JoinColumn(name = "PROJECT_NO")
     private ProjectShippingFee projectShippingFee;
+
+    @OneToMany(mappedBy = "project")
+    private List<Funding> fundingList;
 
     public Project() {
     }

@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 
@@ -26,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class ProjectFundingRegistTest {
 
     @Autowired
-    private ProjectFundingRegist repo;
+    private ProjectFundingRegistRepository repo;
 
     @Test
     public void initTest() {
@@ -40,6 +41,7 @@ class ProjectFundingRegistTest {
         List<Project> projectInfoList =  repo.findAll();
         assertNotNull(projectInfoList);
         projectInfoList.forEach(System.out::println);
+        assertDoesNotThrow(() -> repo.save(new Project()));
     }
 
     @Test
@@ -48,6 +50,5 @@ class ProjectFundingRegistTest {
 
         Optional<Project> projectInfo = repo.findById(1);
         assertNotNull(projectInfo);
-        System.out.println("projectInfo = " + projectInfo);
     }
 }

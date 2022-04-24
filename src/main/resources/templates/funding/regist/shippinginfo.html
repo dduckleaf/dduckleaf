@@ -127,16 +127,16 @@
 			<div class="funding-regist-shipping-area">
 				<div class="funding-regist-shipping-area-info">
 					<label>이름</label><br>
-					<input name="shippingMemberName" type="text"><br>
+					<input name="shippingAddress.shippingMemberName" type="text"><br>
 					<label>휴대폰 번호</label><span>('-' 없이 숫자만 입력해주세요.)</span><br>
-					<input name="shippingMemberPhone" type="text"><br>
+					<input name="shippingAddress.shippingMemberPhone" type="text"><br>
 					<label>주소</label><br>
-					<input type="text" name="zipCode" id="zipCode" readonly><input type="button" value="검색" class="basic-btn btn1 small-btn" id="searchZipCode" style="margin-left: 1%;"><br>
-					<input type="text" name="address1" id="address1"><br>
-					<input type="text" name="address2" id="address2"><br>
+					<input type="text" name="shippingAddress.zipCode" id="zipCode" readonly><input type="button" value="검색" class="basic-btn btn1 small-btn" id="searchZipCode" style="margin-left: 1%;"><br>
+					<input type="text" name="shippingAddress.address1" id="address1"><br>
+					<input type="text" name="shippingAddress.address2" id="address2"><br>
 
 					<label>배송 요청사항 (선택)</label><br>
-					<input name="shippingRequire" type="text" placeholder=" 예) 부재 시 연락 바랍니다."><br><br>
+					<input name="shippingAddress.shippingRequire" type="text" placeholder=" 예) 부재 시 연락 바랍니다."><br><br>
 				</div>
 			</div>
 
@@ -145,11 +145,11 @@
 			<label class="title">환불 계좌 입력</label><br>
 			<hr style="color: #ABABAB;" size="6px"><br>
 			<div>
-				<select class="shipping-fee-select" name="bankCode">
+				<select class="shipping-fee-select" name="refundAccountInfo.bankCode">
 					<option disabled selected>은행명</option>
 					<option th:each="bank : ${ bankList }" th:value="${bank.bankNo}" th:text="${bank.bankName}"></option>
 				</select>
-				<input class="shipping-fee-select-account" name="accountNo" type="number" placeholder="'-' 없이 숫자만 입력해주세요.">
+				<input class="shipping-fee-select-account" name="refundAccountInfo.accountNo" type="number" placeholder="'-' 없이 숫자만 입력해주세요.">
 			</div>
 
 			<input type="hidden" id="totalFunding" name="totalFunding">
@@ -254,95 +254,15 @@
                 $extraShippingFee.value = "[[${ registInfo.extraShippingFee }]]";
                 $projectNo.value = "[[${ registInfo.projectNo }]]";
 
-                $sendform.method = "get";
-                $sendform.action = "/funding/regist/reserve/api";
+                $sendform.method = "post";
+                $sendform.action = "/funding/regist/fundinginfo";
 
                 $sendform.submit();
             }
 		}
-
-
-
 
 	</script>
 </div>
 <footer class="footer" th:replace="/common/footer.html"></footer>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
