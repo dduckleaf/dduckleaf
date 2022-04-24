@@ -118,7 +118,7 @@ public class ProjectReportService {
     * @param projectReportNo 프로젝트 신고번호
     * @param deleteYn 삭제 여부
     * @return ProjectReportReplyDTO
-     *        영속성 해제를 위해 DTO 타입으로 변환해준 신고 답변 내역
+    *         영속성 해제를 위해 DTO 타입으로 변환해준 신고 답변 내역
     */
     private ProjectReportReplyDTO findReplyByProjectReportNo(int projectReportNo, String deleteYn) {
 

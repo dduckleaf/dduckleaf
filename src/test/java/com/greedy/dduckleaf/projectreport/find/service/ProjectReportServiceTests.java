@@ -16,8 +16,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @SpringBootTest(classes = {
@@ -87,21 +86,25 @@ public class ProjectReportServiceTests {
         System.out.println(reportDetailInfo.getProjectReportReply());
     }
 
-//    java.lang.IllegalArgumentException: source cannot be null
-//
-//    @Test
-//    @DisplayName("프로젝트 신고번호로 신고내용 상세 조회: 답변이 존재하는 경우")
-//    public void findProjectReportAndReply_isEmpty_test() {
-//
-//        //given
-//        int projectReportNo = 12;
-//
-//        //when
-//        ReportDetailInfo reportDetailInfo = service.findProjectReportAndReply(projectReportNo);
-//
-//        //then
-//        assertNotNull(reportDetailInfo);
-//
-//        System.out.println(reportDetailInfo);
-//    }
+/*   java.lang.IllegalArgumentException: source cannot be null
+ *   null 익셉션 문제를 해결하기 위해 ModelMapper를 상속받아 커스터마이징한 클래스를 config 패키지 하위에 작성하였습니다.
+ */
+    @Test
+    @DisplayName("프로젝트 신고번호로 신고내용 상세 조회: 답변이 존재하는 경우")
+    public void findProjectReportAndReply_isEmpty_test() {
+
+        //given
+        int projectReportNo = 12;
+
+        //when
+        ReportDetailInfo reportDetailInfo = service.findProjectReportAndReply(projectReportNo);
+
+        //then
+        assertNotNull(reportDetailInfo);
+        assertNotNull(reportDetailInfo.getProjectReport());
+        assertNotNull(reportDetailInfo.getProjectReportReply());
+        assertEquals(reportDetailInfo.getProjectReportReply().getProjectReportNo(), 0);
+
+        System.out.println(reportDetailInfo);
+    }
 }
