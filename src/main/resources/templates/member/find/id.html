@@ -29,5 +29,11 @@
         document.getElementById("find-id-pwd").onclick = function () {
             location.href = "/member/find/pwd";
         }
+
+        document.getElementById("send-email-id").onclick = function() {
+            const $email = document.getElementById("findMemberIdByEmail").value
+
+            location.href = "/member/find/id?email=" + $email;
+        }
     </script>
 </html>
