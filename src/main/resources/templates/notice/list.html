@@ -72,9 +72,9 @@
                     </tr>
                     <tr th:each="notice : ${ noticeList }">
                         <td th:text="${ notice.noticeNo }"></td>
-                        <td th:text="${ notice.noticeCategoryNo }"></td>
+                        <td th:text="${ notice.noticeCategoryDTO.noticeCategoryName }"></td>
                         <td th:text="${ notice.noticeName }"></td>
-                        <td th:text="${ notice.adminNo }"></td>
+                        <td th:text="${ notice.admin.memberName }"></td>
                         <td th:text="${ notice.noticeRegistDate }"></td>
                         <td th:text="${ notice.noticeCount }"></td>
                     </tr>

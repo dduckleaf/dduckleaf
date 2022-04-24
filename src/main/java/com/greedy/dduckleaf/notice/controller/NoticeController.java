@@ -1,18 +1,20 @@
 package com.greedy.dduckleaf.notice.controller;
 
+import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.notice.dto.NoticeCategoryDTO;
 import com.greedy.dduckleaf.notice.dto.NoticeDTO;
+import com.greedy.dduckleaf.notice.dto.NoticeForListDTO;
 import com.greedy.dduckleaf.notice.service.NoticeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -30,7 +32,8 @@ public class NoticeController {
 
         System.out.println("pageable = " + pageable);
 
-        Page<NoticeDTO> noticeList = noticeService.findNoticeList(pageable);
+        Page<NoticeForListDTO> noticeList = noticeService.findNoticeList(pageable);
+        noticeList.forEach(System.out::println);
 
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(noticeList);
 
@@ -63,7 +66,14 @@ public class NoticeController {
     }
 
     @GetMapping("/regist")
-    public void registPage() {}
+    public ModelAndView registPage(ModelAndView mv) {
+
+        List<NoticeCategoryDTO> categoryList = noticeService.findAllNoticeCategory();
+        mv.addObject("categoryList", categoryList);
+        mv.setViewName("/notice/regist");
+
+        return mv;
+    }
 
     @GetMapping(value = "/category", produces = "application/json; charset=UTF-8")
     @ResponseBody
@@ -73,8 +83,12 @@ public class NoticeController {
     }
 
     @PostMapping("/regist")
-    public ModelAndView registNotice(ModelAndView mv, NoticeDTO newNotice) {
+    public ModelAndView registNotice(@AuthenticationPrincipal CustomUser user, ModelAndView mv, NoticeDTO newNotice) {
 
+        int memberNo = user.getMemberNo();
+
+        newNotice.setAdminNo(memberNo);
+        newNotice.setNoticeStatus("Y");
         noticeService.registNewNotice(newNotice);
 
         mv.setViewName("redirect:/notice/list");
