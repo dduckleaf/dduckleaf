@@ -66,15 +66,21 @@ public class ProjectReportController {
     }
 
     /**
-    * 메소드에 관한 설명
-    *  @param first 첫 번째 파라미터에 대한 설명
-    * @param second 두 번째 파라미터에 대한 설명
-    * @return 리턴값에 대한 설명
-    * @exception 예외 이유에 대한 설명
-    */
-    @GetMapping("/detail")
-    public void findProjectReportDetail(ModelAndView mv) {
+     * 서포터 마이페이지 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
+     *  @param projectReportNo 상세조회를 요청할 프로젝트신고번호
+     * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
+     *            projectReportInfo : 프로젝트신고내역 상세정보
+     *            "report/detail" : 상세정보를 출력할 브라우저 화면 경로
+     */
+    @GetMapping("/detail/{projectReportNo}")
+    public ModelAndView findProjectReportDetailForMember(ModelAndView mv, @PathVariable int projectReportNo) {
 
+        ReportDetailInfo reportDetailInfo = service.findProjectReportAndReply(projectReportNo);
+
+        mv.addObject("reportDetailInfo", reportDetailInfo);
+        mv.setViewName("report/detail");
+
+        return mv;
     }
 
     /**
@@ -107,7 +113,7 @@ public class ProjectReportController {
     }
 
     /**
-    * 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
+    * 플랫폼관리 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
     *  @param projectReportNo 상세조회를 요청할 프로젝트신고번호
     * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
     *            projectReportInfo : 프로젝트신고내역 상세정보
