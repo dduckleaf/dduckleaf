@@ -33,7 +33,7 @@ public class MockFundInfo {
 
     public MockFundInfo() {}
 
-    public MockFundInfo(int mockFundInfoNo, String mockFundName, Date endDate, String mockFundDetail, int targetTicketAmount, int mockFundNo, int projectCategoryNo) {
+    public MockFundInfo(int mockFundInfoNo, String mockFundName, Date endDate, String mockFundDetail, int targetTicketAmount, MockFund mockFund, RewardCategory rewardCategory) {
         this.mockFundInfoNo = mockFundInfoNo;
         this.mockFundName = mockFundName;
         this.endDate = endDate;
@@ -95,7 +95,7 @@ public class MockFundInfo {
         return rewardCategory;
     }
 
-    public void setRewardCategory(int projectCategoryNo) {
+    public void setRewardCategory(RewardCategory rewardCategory) {
         this.rewardCategory = rewardCategory;
     }
 

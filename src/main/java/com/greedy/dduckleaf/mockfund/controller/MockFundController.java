@@ -16,6 +16,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+/**
+ * <pre>
+ * Class : MockFundController
+ * Comment : 모의펀딩 신청
+ * History
+ * 2022/04/20 (조남기) 모의펀딩 기본 정보 조회 관련 메소드 구현 시작
+ * 2022/04/21 (조남기) 모의펀딩 기본 정보, 스토리, 리워드 정보 조회 관련 메소드 구현 완료, 기본 정보 업데이트 관련 메소드 구현 시작
+ * 2022/04/22 (조남기) 모의펀딩 기본 정보 컬럼 1개 업데이트 완료
+ * 2022/04/23 (조남기) 모의펀딩 기본 정보 이미지 제외 업데이트 완료
+ * 2022/04/24 (조남기) 모의펀딩 기본 정보 업데이트 모달 추가 작업
+ * </pre>
+ * @version 1.0.3
+ * @author 조남기
+ */
 @Controller
 @RequestMapping("/mockfund")
 public class MockFundController {
@@ -73,6 +87,9 @@ public class MockFundController {
         return mv;
     }
 
+    @GetMapping("/modify")
+    public void modifyMockFundInfo() {}
+
     @PostMapping("/modify")
     public String modifyMockFundBasicInfo(RedirectAttributes rttr, MockFundInfoDTO mockFundInfo) {
 
@@ -80,7 +97,7 @@ public class MockFundController {
 
         rttr.addFlashAttribute("modifySeccessMessage", "기본정보 수정 성공");
 
-        return "redirect:mockfund/mockfundmain";
+        return "redirect:/mockfund/" + mockFundInfo.getMockFundInfoNo();
     }
 
 }
