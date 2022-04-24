@@ -28,10 +28,6 @@
 		<div class="fundingrewardstep">
 			<img class=""  src="/images/funding/regist/fundingrewardstep3.png">
 		</div>
-		
-		
-		
-		
 		<div style="height: 100px;"></div>
 		<label class="title">펀딩 완료</label><br>
 		<div class="complete-funding-info">
@@ -45,10 +41,6 @@
 			</div>
 		</div>
 		
-		
-		
-		
-		
 		<!-- 버튼 -->
 		<div style="text-align: center; width: 100%; margin: 5%">
 			<button id="funding-list" class="funding-result-btn basic-btn btn3 bigbig-btn">펀딩 내역 보기</button>
@@ -56,6 +48,46 @@
 		</div>
 	</div>
 </div>
+<script th:inline="javascript">
+    $fundinglist = document.getElementById("funding-list");
+    $dduckleafhome = document.getElementById("dduckleaf-home");
+    
+    if($fundinglist) {
+        $fundinglist.onclick = function() {
+            location.href = '/funding/result/list/member';
+        }
+    }
+    if($dduckleafhome) {
+        $dduckleafhome.onclick = function() {
+            location.href = '/';
+        }
+    }
+    
+</script>
 <footer class="footer" th:replace="/common/footer.html"></footer>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

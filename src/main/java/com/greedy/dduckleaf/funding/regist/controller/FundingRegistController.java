@@ -21,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author 홍성원
  */
 @Controller
-@RequestMapping("/funding/regist")
+@RequestMapping("/funding")
 public class FundingRegistController {
 
     private final FundingRegistService service;
@@ -31,7 +31,7 @@ public class FundingRegistController {
         this.service = service;
     }
 
-    @GetMapping("/reward/{projectNo}")
+    @GetMapping("/regist/reward/{projectNo}")
     public ModelAndView registFundingChoicePage(ModelAndView mv, @PathVariable int projectNo){
 
         ProjectDTO fundingInfo = service.findProjectFundingInfo(projectNo);
@@ -43,7 +43,7 @@ public class FundingRegistController {
         return mv;
     }
 
-    @GetMapping("/shipping")
+    @GetMapping("/regist/shipping")
     public ModelAndView registFundingConfirmPage(ModelAndView mv, FundingRegistDTO registInfo) {
 
         String memberId = "USER01";
@@ -61,15 +61,93 @@ public class FundingRegistController {
         return mv;
     }
 
-    @GetMapping("/fundinginfo")
+    //redirect로 만들고 상세페이지 요청 핸들러메소드 따로 만들것. 펀딩번호를 PathVariable로 보내서..
+    @GetMapping("/regist/fundinginfo")
     public String registByApi(FundingRegistDTO registDTO) {
         registDTO.setProjectNo(1);
         registDTO.setMemberNo(5);
         service.registFunding(registDTO);
 
-        System.out.println("##1");
+        System.out.println("##3");
         System.out.println("fundingInfo = " + registDTO);
 
-        return "/funding/regist/fundingresult";
+        return "redirect:/funding/regist/result/14";
     }
-}
+
+
+
+    /**
+     * sendToFundingResultDetailInfo : 펀딩결제 후 리다이렉트 받는 핸들러메소드.
+     * @param fundingNo : 결제성공한 해당 펀딩의 번호를 전달받는다.
+     * @return
+     *
+     * @author 홍성원
+     */
+    @GetMapping("/regist/result/{fundingNo}")
+    public ModelAndView sendToFundingResultDetailInfo(ModelAndView mv, @PathVariable int fundingNo){
+
+//        java.sql.Date endDate = service.findProjectEndDate(fundingNo);
+
+//        mv.addObject("endDate", endDate);
+        mv.setViewName("/funding/regist/fundingresult");
+
+        return mv;
+    }
+
+
+
+    /**
+     * redirectFundingListPage :
+     * @param
+     * @return
+     *
+     * @author 홍성원
+     */
+    @GetMapping("/result/list/member")
+    public String redirectFundingListPage() {
+
+        return "redirect:/funding/list/member";
+    }
+
+    @GetMapping("/list/member")
+    public ModelAndView sendMemberFundingListPage(ModelAndView mv) {
+
+        mv.setViewName("/funding/find/supporter/fundinglist");
+
+        return mv;
+    }
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
