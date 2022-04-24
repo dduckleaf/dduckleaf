@@ -1,7 +1,7 @@
-package com.greedy.dduckleaf.funding.regist.dto;
+package com.greedy.dduckleaf.funding.dto;
 
-import com.greedy.dduckleaf.funding.regist.entity.ProjectShippingFee;
-import com.greedy.dduckleaf.funding.regist.entity.RewardInfo;
+import com.greedy.dduckleaf.funding.entity.ProjectShippingFee;
+import com.greedy.dduckleaf.funding.entity.RewardInfo;
 
 import lombok.*;
 

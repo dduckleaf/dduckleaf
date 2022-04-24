@@ -1,7 +1,6 @@
-package com.greedy.dduckleaf.funding.regist.entity;
+package com.greedy.dduckleaf.funding.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 import lombok.*;
 

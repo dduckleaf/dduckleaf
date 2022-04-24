@@ -3,7 +3,7 @@ package com.greedy.dduckleaf.funding.regist.repository;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
-import com.greedy.dduckleaf.funding.regist.entity.Project;
+import com.greedy.dduckleaf.funding.entity.Project;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

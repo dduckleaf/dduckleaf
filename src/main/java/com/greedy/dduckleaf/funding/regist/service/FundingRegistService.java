@@ -1,7 +1,7 @@
 package com.greedy.dduckleaf.funding.regist.service;
 
-import com.greedy.dduckleaf.funding.regist.dto.*;
-import com.greedy.dduckleaf.funding.regist.entity.*;
+import com.greedy.dduckleaf.funding.dto.*;
+import com.greedy.dduckleaf.funding.entity.*;
 import com.greedy.dduckleaf.funding.regist.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
