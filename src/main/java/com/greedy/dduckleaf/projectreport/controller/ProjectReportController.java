@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
+import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportReplyDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ReportDetailInfo;
 import com.greedy.dduckleaf.projectreport.find.service.ProjectReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -128,5 +127,14 @@ public class ProjectReportController {
         mv.setViewName("report/platformmanager/detail");
 
         return mv;
+    }
+
+    @GetMapping("/platformmanager/regist")
+    public void registpage() {}
+
+    @PostMapping("/platformmanager/regist")
+    public void registProjectReportReply(@ModelAttribute("projectReportReply")ProjectReportReplyDTO projectReportReply, @AuthenticationPrincipal CustomUser user) {
+        System.out.println("projectReportReply = " + projectReportReply);
+
     }
 }
