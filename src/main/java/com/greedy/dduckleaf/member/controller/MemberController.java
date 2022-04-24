@@ -183,8 +183,18 @@ public class MemberController {
     }
 
     /**
+     * find : 아이디 찾기 페이지로 포워딩합니다.
+     * @return /member/find/id
+     * @author 박상범
+     */
+    @GetMapping("/find")
+    public String find() {
+        return "/member/find/id";
+    }
+
+    /**
      * sendMemberId : 입력한 이메일로 등록된 아이디를 전송합니다.
-     * @param email: 회원가입할 회원의 정보
+     * @param email: 아이디를 전송 받을 이메일 주소
      * @return mv
      * @author 박상범
      */
