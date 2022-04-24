@@ -1,7 +1,10 @@
 package com.greedy.dduckleaf.notice.service;
 
+import com.greedy.dduckleaf.notice.dto.NoticeCategoryDTO;
 import com.greedy.dduckleaf.notice.dto.NoticeDTO;
 import com.greedy.dduckleaf.notice.entity.Notice;
+import com.greedy.dduckleaf.notice.entity.NoticeCategory;
+import com.greedy.dduckleaf.notice.repository.NoticeCategoryRepository;
 import com.greedy.dduckleaf.notice.repository.NoticeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +17,19 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NoticeService {
 
     private final NoticeRepository noticeRepository;
+    private final NoticeCategoryRepository noticeCategoryRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public NoticeService(NoticeRepository noticeRepository, ModelMapper modelMapper) {
+    public NoticeService(NoticeRepository noticeRepository, NoticeCategoryRepository noticeCategoryRepository, ModelMapper modelMapper) {
         this.noticeRepository = noticeRepository;
+        this.noticeCategoryRepository = noticeCategoryRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -69,4 +75,18 @@ public class NoticeService {
 
         return modelMapper.map(notice, NoticeDTO.class);
     }
+
+    public List<NoticeCategoryDTO> findAllNoticeCategory() {
+
+        List<NoticeCategory> noticeCategoryList = noticeCategoryRepository.findAllNoticeCategory();
+
+        return noticeCategoryList.stream().map(noticeCategory -> modelMapper.map(noticeCategory, NoticeCategoryDTO.class)).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void registNewNotice(NoticeDTO newNotice) {
+
+        noticeRepository.save(modelMapper.map(newNotice, Notice.class));
+    }
+
 }
