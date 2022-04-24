@@ -1,13 +1,9 @@
 package com.greedy.dduckleaf.projectreport.find.service;
 
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ReportCategoryDTO;
-import com.greedy.dduckleaf.projectreport.find.entity.Member;
-import com.greedy.dduckleaf.projectreport.find.entity.Project;
-import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
-import com.greedy.dduckleaf.projectreport.find.entity.ReportCategory;
+import com.greedy.dduckleaf.projectreport.find.dto.*;
+import com.greedy.dduckleaf.projectreport.find.entity.*;
 import com.greedy.dduckleaf.projectreport.find.repository.MemberForProjectReportRepository;
+import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportReplyRepository;
 import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,25 +25,34 @@ import java.util.stream.Collectors;
  * History
  * 2022-04-19 회원정보로 접근하여 프로젝트 신고내역 목록 조회용 서비스메소드 작성
  * 2022-04-23 전체 프로젝트 신고내역 목록 조회용 서비스메소드 작성
+ * 2022-04-24 프로젝트 신고내역 목록 상세 조회용 서비스메소드 작성
  * </pre>
  *
  * @author 장민주
- * @version 1.0.1
+ * @version 1.0.2
  */
 @Service
 public class ProjectReportService {
 
     private final MemberForProjectReportRepository memberRepository;
     private final ProjectReportRepository reportRepository;
+    private final ProjectReportReplyRepository replyRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ProjectReportService(MemberForProjectReportRepository memberRepository, ProjectReportRepository reportRepository, ModelMapper modelMapper) {
+    public ProjectReportService(MemberForProjectReportRepository memberRepository, ProjectReportRepository reportRepository, ProjectReportReplyRepository replyRepository, ModelMapper modelMapper) {
         this.memberRepository = memberRepository;
         this.reportRepository = reportRepository;
+        this.replyRepository = replyRepository;
         this.modelMapper = modelMapper;
     }
 
+    /**
+    * 회원번호로 로그인한 서포터의 신고내역 목록조회용 메소드입니다.
+    *  @param memberNo 로그인한 회원의 회원번호
+    * @return List<ProjectReportDTO>
+     *        로그인한 회원이 등록한 모든 신고내역
+    */
     public List<ProjectReportDTO> findProjectReportListByMemberNo(int memberNo) {
 
         Member member = memberRepository.findMemberByMemberNo(memberNo);
@@ -94,9 +99,10 @@ public class ProjectReportService {
     }
 
     /**
-    * 메소드에 관한 설명
-    *  @param pageable: 페이징에 필요한 정보를 담는 객체
-    * @return 페이징 처리가 된 조회 결과를 DTO로 변환한 프로젝트신고목록
+    * 해당 페이지의 프로젝트신고내역 목록 조회를 요청하는 메소드입니다.
+    * @param pageable: 페이징에 필요한 정보를 담는 객체
+    * @return Page<ProjectReportDTO>
+     *        페이징 처리가 된 조회 결과를 DTO로 변환한 프로젝트신고목록
     */
     public Page<ProjectReportDTO> findProjectReportList(Pageable pageable) {
 
@@ -105,5 +111,54 @@ public class ProjectReportService {
                 Sort.by("projectReportNo").descending());
 
         return reportRepository.findAll(pageable).map(projectReport -> modelMapper.map(projectReport, ProjectReportDTO.class));
+    }
+
+    /**
+    * 내부연산 메소드: 프로젝트 신고번호로 해당 신고의 답변 조회 요청 메소드입니다.
+    * @param projectReportNo 프로젝트 신고번호
+    * @param deleteYn 삭제 여부
+    * @return ProjectReportReplyDTO
+     *        영속성 해제를 위해 DTO 타입으로 변환해준 신고 답변 내역
+    */
+    private ProjectReportReplyDTO findReplyByProjectReportNo(int projectReportNo, String deleteYn) {
+
+        return modelMapper.map(
+                replyRepository.findAllByProjectReport_ProjectReportNoAndDeleteYn(projectReportNo, deleteYn)
+              , ProjectReportReplyDTO.class
+        );
+    }
+
+    /**
+     * 내부연산 메소드: 프로젝트 신고번호로 해당 프로젝트신고 상세내용 조회용 메소드입니다.
+     * @param projectReportNo 프로젝트 신고번호
+     * @return ProjectReportDTO
+     *         영속성 해제를 위해 DTO 타입으로 변환해준 신고 상세내용
+     */
+    private ProjectReportDTO findProjectReportDetail(int projectReportNo) {
+
+        return modelMapper.map(reportRepository.findByProjectReportNo(projectReportNo), ProjectReportDTO.class);
+    }
+
+    /**
+    * 프로젝트 신고번호로 프로젝트신고내역 상세 조회 요청용 메소드입니다.
+    * @param projectReportNo 프로젝트 신고번호
+    * @return ReportDetailInfo
+    *         신고내역 상세정보와 해당 신고내역의 답변 정보를 저장한 DTO
+    */
+    public ReportDetailInfo findProjectReportAndReply(int projectReportNo) {
+
+        ReportDetailInfo reportDetailInfo = new ReportDetailInfo();
+
+        /* 프로젝트 신고번호로 해당 프로젝트신고 상세내용 조회 */
+        ProjectReportDTO projectReport = findProjectReportDetail(projectReportNo);
+        reportDetailInfo.setProjectReport(projectReport);
+
+        /* 프로젝트 신고번호로 해당 신고의 답변 조회 */
+        ProjectReportReplyDTO reply = findReplyByProjectReportNo(projectReportNo, "N");
+        if(reply != null) {
+            reportDetailInfo.setProjectReportReply(reply);
+        }
+
+        return reportDetailInfo;
     }
 }

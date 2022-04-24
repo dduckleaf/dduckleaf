@@ -11,7 +11,7 @@ import java.util.List;
 public interface ProjectReportRepository extends JpaRepository<ProjectReport, Integer> {
 
     /**
-    * 모든 프로젝트신고내역 목록조회용 메소드
+    * 모든 프로젝트신고내역 목록조회용 메소드입니다.
     *  @param pageable: 페이징에 필요한 정보를 담는 객체
     * @return 한 페이지에 담길 프로젝트신고목록 리스트
     */
@@ -36,7 +36,7 @@ public interface ProjectReportRepository extends JpaRepository<ProjectReport, In
     List<Object> findReportAndReply();
 
     /**
-    * 모든 프로젝트 신고내역 데이터를 데이터베이스에 요청하기 위한 메소드입니다.
+    * 모든 프로젝트 신고내역 데이터를 조회하기 위한 메소드입니다.
     * @return 모든 프로젝트 신고내역
     */
     @Query(value = "SELECT\n" +
@@ -57,4 +57,11 @@ public interface ProjectReportRepository extends JpaRepository<ProjectReport, In
             "  JOIN TBL_PROJECT D ON (A.PROJECT_NO = D.PROJECT_NO)",
     nativeQuery = true)
     List<Object> findAllProjectReport();
+
+    /**
+    * 프로젝트 신고번호로 프로젝트 신고 상세내용 데이터를 조회하기 위한 메소드입니다.
+    * @param projectReportNo 프로젝트 신고번호
+    * @return ProjectReport 해당하는 프로젝트 신고 상세내용
+    */
+    ProjectReport findByProjectReportNo(int projectReportNo);
 }
