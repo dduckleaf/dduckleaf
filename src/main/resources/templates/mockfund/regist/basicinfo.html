@@ -15,6 +15,7 @@
     <!-- Style CSS -->
     <link rel="stylesheet" th:href="@{ /css/mockfund.css }">
     <link rel="stylesheet" th:href="@{ /css/style.css }">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div th:replace="/common/userheader.html"></div>
@@ -32,72 +33,71 @@
                     <p onclick="location.href='../reward/1'">리워드 설계</p>
                 </div>
             </div>
-            <form action="/mockfund/modify" method="post">
-            <div class="col-md-7">
-                <div class="breadcrumb">
-                    <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">모의펀딩 준비</span>&nbsp;
-                    <span class="breadcrumb">></span>&nbsp;
-                    <span class="breadcrumb">기본 정보</span>
+            <form name="saveForm">
+                <div class="col-md-7">
+                    <div class="breadcrumb">
+                        <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">모의펀딩 준비</span>&nbsp;
+                        <span class="breadcrumb">></span>&nbsp;
+                        <span class="breadcrumb">기본 정보</span>
+                    </div>
+                    <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">기본 정보</a><br><hr>
+                    <a>프로젝트의 추가 정보를 입력해주세요.</a>
+                    <div class="basicmenu">
+                        <a class="basictitle">프로젝트 제목</a><br>
+                        <input name="mockFundInfoNo" type="hidden" value="1">
+                        <input class="mockfundtitle1" id="mockFundName" name="mockFundName" type="text" th:value="${ info.mockFundName }">
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">목표 티켓</a><br>
+                        <input class="mockfundtitle2" id="targetTicketAmount" name="targetTicketAmount" type="number" th:value="${ info.targetTicketAmount }"><a class="basictitle" style="margin-left: 15px;">개</a>
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">대표 이미지</a><br>
+                        <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <a class="basicsubtitle">3MB 이하의 JPEG, PNG 파일<br>
+                            해상도 1200x675 픽셀 이상<br>텍스트 및 로고 삽입 금지</a>
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">카테고리</a><br>
+                        <select class="mockfundtitle1" id="category" name="rewardCategory.projectCategoryNo">
+                            <option th:each="categoryList : ${ categoryList }" th:value="${ categoryList.projectCategoryNo }" th:utext="${ categoryList.projectCategoryName }" th:selected="${ info.rewardCategory.projectCategoryNo == categoryList.projectCategoryNo }"></option>
+                        </select>
+                    </div>
+                    <div class="basicmenu form-date">
+                        <a class="basictitle">프로젝트 종료일</a><br>
+                        <a class="basicsubtitle">요건·콘텐츠 확인 및 프로젝트 진행 일정과 리워드 발송을 함께 고려하여 종료일을 설정해 주세요.</a>
+                        <input class="mockfundtitle1" id="endDate" name="endDate" th:value="${ info.endDate }" type="date">
+                    </div>
+                    <div>
+                        <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
+                    </div>
                 </div>
-                <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">기본 정보</a><br><hr>
-                <a>프로젝트의 추가 정보를 입력해주세요.</a>
-                <div class="basicmenu">
-                    <a class="basictitle">프로젝트 제목</a><br>
-                    <input class="mockfundtitle1" name="title" type="text" th:value="${ info.mockFundName }">
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">목표 티켓</a><br>
-                    <input class="mockfundtitle2" name="amount" type="number" th:value="${ info.targetTicketAmount }"><a class="basictitle" style="margin-left: 15px;">개</a>
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">대표 이미지</a><br>
-                    <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
-                    <a class="basicsubtitle">3MB 이하의 JPEG, PNG 파일<br>
-                    해상도 1200x675 픽셀 이상<br>텍스트 및 로고 삽입 금지</a>
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">카테고리</a><br>
-                    <select class="mockfundtitle1" selected="">
-                        <option th:value="${ info.rewardCategory.projectCategoryName }" th:utext="${ info.rewardCategory.projectCategoryName }"></option>
-                        <option th:each="categoryList : ${ categoryList }" th:value="${ categoryList.projectCategoryName }" th:utext="${ categoryList.projectCategoryName }"></option>
-                    </select>
-<!--                    <input class="mockfundtitle1" type="text" placeholder="프로젝트 제목">-->
-                </div>
-                <div class="basicmenu form-date">
-                    <a class="basictitle">프로젝트 종료일</a><br>
-                    <a class="basicsubtitle">요건·콘텐츠 확인 및 프로젝트 진행 일정과 리워드 발송을 함께 고려하여 종료일을 설정해 주세요.</a>
-                    <input class="mockfundtitle1" id="endDate" type="date" th:value="${ info.endDate }">
-                </div>
-                <div>
-                    <button type="submit" class="btn1 big-btn" onclick="location.href='/mockfund/modify'">저장하기</button>
-                </div>
-            </div>
             </form>
         </div>
     </div>
 </div>
 <footer class="footer" th:replace="/common/footer.html"></footer>
-    <!-- JS Files
-    ============================================ -->
-    <!-- Global Vendor, plugins JS -->
+<!-- JS Files
+============================================ -->
+<!-- Global Vendor, plugins JS -->
 
-    <!-- Vendor JS -->
-    <script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
-    <script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
-    <script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
-    <script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
-    <script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
+<!-- Vendor JS -->
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
 
-    <!--Plugins JS-->
-    <script th:src="@{ /js/plugins/wow.min.js }"></script>
-    <script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
-    <script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
-    <script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
-    <script th:src="@{ /js/plugins/parallax.min.js }"></script>
-    <script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
+<!--Plugins JS-->
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
 
-    <!--Main JS (Common Activation Codes)-->
-    <script th:src="@{ /js/main.js }"></script>
+<!--Main JS (Common Activation Codes)-->
+<script th:src="@{ /js/main.js }"></script>
 
 </body>
 <script>
@@ -128,16 +128,36 @@
         }
     }
 
-    $(".btn1").click(function() {
+    let today = new Date();
+    let endDate = today.setMonth(today.getMonth() + 1);
+    let endDay = new Date(endDate).toISOString().slice(0, 10);
 
-        const title = $('input[name=title]').val();
+    document.getElementById('endDate').setAttribute("min", endDay);
 
+    $("#saveclick").click(function() {
+        Swal.fire({
+            title: 'Do you want to save the changes?',
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire('Saved!', '', 'success')
+                    .then(function(mockFundName, targetTicketAmount, category, endDate) {
+                    let saveForm = document.saveForm;
+                    let url = '/mockfund/modify';
+                    saveForm.mockFundName = mockFundName;
+                    saveForm.targetTicketAmount = targetTicketAmount;
+                    saveForm.projectCategoryNo = category;
+                    saveForm.endDate = endDate;
 
-
-        /*const amount = $('input[name=amount]').val();
-
-        console.log("title = " + title);
-        console.log("amount = " + amount);*/
+                    saveForm.action = url;
+                    saveForm.method = 'post';
+                    saveForm.submit();
+                });
+            }
+        })
     });
+
+
 </script>
 </html>
