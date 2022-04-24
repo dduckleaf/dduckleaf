@@ -167,8 +167,6 @@ public class MemberController {
         String phone = request.getParameter("phone").replace("-", "");
         String email = request.getParameter("email");
 
-        System.out.println(phone);
-
         member.setMemberPwd(passwordEncoder.encode(member.getMemberPwd()));
         member.setPhone(phone);
         member.setEmail(email);
@@ -209,7 +207,7 @@ public class MemberController {
         }
         if(result != "등록된 아이디가 없습니다.") {
             mv.addObject("memberId", result);
-            mv.setViewName("redirect:/member/find/success");
+            mv.setViewName("/member/find/success");
         }
 
         return mv;
