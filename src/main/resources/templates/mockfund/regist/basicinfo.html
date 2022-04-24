@@ -18,14 +18,14 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-<div th:replace="/common/userheader.html"></div>
+<div th:replace="/common/menubar.html"></div>
 <div class="container">
     <div style="width: 1000px;">
         <div class="row1">
 
             <div class="col-md-2 fundmenu">
                 <button class="accordion">
-                    <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/common/vector.png }"></p>
+                    <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/mockfund/sidebararrow.png }"></p>
                 </button>
                 <div class="panel">
                     <p onclick="location.href='../basicinfo/1'">기본정보</p>
@@ -136,13 +136,17 @@
 
     $("#saveclick").click(function() {
         Swal.fire({
-            title: 'Do you want to save the changes?',
+            title: '저장하시겠습니까?',
             showCancelButton: true,
-            confirmButtonText: 'Save',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            allowEnterKey: false,
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire('Saved!', '', 'success')
-                    .then(function(mockFundName, targetTicketAmount, category, endDate) {
+                Swal.fire({
+                    title: '저장되었습니다',
+                    confirmButtonText: "확인",
+                }).then(function(mockFundName, targetTicketAmount, category, endDate) {
                     let saveForm = document.saveForm;
                     let url = '/mockfund/modify';
                     saveForm.mockFundName = mockFundName;

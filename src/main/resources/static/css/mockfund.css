@@ -172,7 +172,7 @@ select {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: url("../images/common/vector.png") no-repeat 98% 50%;
+    background: url("../images/mockfund/sidebararrow.png") no-repeat 98% 50%;
 }
 
 select::-ms-expand {
@@ -258,3 +258,35 @@ hr {
     position: relative;
     bottom: 15px;
 }
+
+/* sweetalert 속성 */
+.swal2-popup {
+    height: 250px;
+}
+
+.swal2-title {
+    font-family: inherit !important;
+    font-weight: normal;
+    padding-top: 80px !important;
+    font-size: 15pt !important;
+}
+
+.swal2-confirm {
+    background-color: #BAC34E !important;
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+    width: 100px !important;
+}
+
+.swal2-cancel {
+    background-color: #ffffff !important;
+    color: #BAC34E !important;
+    border: 1px solid #BAC34E !important;
+    width: 100px !important;
+}
+
+/*.swal2-confirm {
+    background-color: #BAC34E !important;
+    color: #ffffff !important;
+    width: 350px !important;
+}*/
