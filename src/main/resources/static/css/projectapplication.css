@@ -1,0 +1,342 @@
+body {
+    margin:0;
+    padding:0;
+    background-color: #FFF;
+    font-size:14px;
+}
+
+div.row1 {
+    height: 1080px;
+}
+
+.leaf {
+    width: 25px;
+    height: 27px;
+    margin-right: 7px;
+    vertical-align: 5%;
+}
+
+button.accordion {
+    background-color:#FFF;
+    cursor: pointer;
+    width: 150%;
+    border: none;
+    font-size: 16px;
+    transition: 0.5s;
+    text-align: left;
+    padding:10px;
+    padding-bottom: 0px;
+    display: inline;
+}
+
+button.accordion>p{
+    float: left;
+    margin-left: 10px;
+}
+
+button.accordion.active{
+    color : #000;
+}
+
+button.accordion.active:after {
+    background-image: url("../images/common/arrow.png");
+    content:"";
+}
+
+div.panel {
+    padding: 0 18px;
+    padding-top: 0px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.fundmenutitle {
+    font-size: 20pt;
+}
+
+div.fundmenu > * {
+    font-size: 16pt;
+}
+
+.arrow {
+    margin-left: 30px;
+}
+
+.col-md-2, .col-md-7 {
+    float: left;
+}
+
+.col-md-2 {
+    margin-top: 20px !important;
+}
+
+.col-md-7 {
+    margin-left: 30%;
+    margin-top: 50px !important;
+    float: right;
+    width: 700px !important;
+}
+
+.col-md-7:not(.footer) {
+    float: unset;
+}
+
+.fundtitle {
+    font-size: 30pt;
+    width: 800px;
+}
+
+.funddata {
+    font-size: 20pt;
+    margin-top: 20px;
+    width: 700px;
+    border: 1px solid black;
+    border-top: 10px solid #BAC34E;
+}
+
+.fundsubtitle {
+    margin-left: 20px;
+    line-height: 70px;
+    padding-right: 20px;
+}
+
+.fundstatus {
+    font-size: 12pt;
+}
+
+.fund-btn {
+    float: right;
+    margin-right: 20px;
+    margin-top: 22px;
+    font-size: 14pt;
+    color: #BAC34E;
+    border: 1px solid #BAC34E;
+    border-radius: 5px;
+    text-align: center;
+    width: 100px;
+    height: 30px;
+}
+
+.fund-btn:hover {
+    cursor: pointer;
+}
+
+/* ================= 신청 메인 구분선 =================== */
+.breadcrumb:not(.div) {
+    margin-bottom: 0px;
+}
+
+.basictitle {
+    font-size: 14pt;
+    width: 130%;
+}
+
+.basicsubtitle {
+    font-size: 10pt;
+    color: #C5C5C5;
+}
+
+.basictitle2 {
+    font-size: 12pt;
+    width: 130%;
+}
+
+.basicsubtitle2 {
+    font-size: 10pt;
+    color: black;
+}
+
+.policyinfo {
+    font-size: 9pt;
+}
+
+.basicmenu {
+    margin-top: 20px;
+}
+
+.basicimg {
+    width: 70px;
+    height: 70px;
+}
+
+.basicimg:hover {
+    cursor: pointer;
+}
+
+.mockfundtitle1 {
+    width: 700px;
+    height: 50px;
+    font-size: 16pt;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.mockfundtitle2 {
+    width: 650px;
+    height: 50px;
+    font-size: 12pt;
+    padding-left: 10px;
+}
+
+#rewardPreparingStatus, #rewardDeliveryPlan{
+    height: 100px;
+    width: 100%;
+}
+
+input[type="date"]::before {
+    content: attr(data-th-placeholder);
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url("../images/common/vector.png") no-repeat 98% 50%;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.btn1 {
+    float: right;
+    margin-top: 50px;
+}
+
+/* ========================= 기본 정보 구분선========================= */
+.projectsummary {
+    width: 700px;
+    height: 150px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.story-btn {
+    margin-top: 10px;
+    float: none;
+}
+
+.guideline {
+    color: #BAC34E;
+    text-decoration: underline;
+    margin-left: 20px;
+}
+
+.guideline:hover, .home:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.panel > p {
+    cursor: pointer;
+    width: 150px;
+}
+
+.story {
+    height: 1200px !important;
+}
+
+/* ========================= 스토리 구분선========================= */
+.reward-area {
+    border: 1px solid black;
+    height: 300px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.rewardtitle-section > * {
+    width: 100px;
+}
+
+.rewardtitle-section, .rewarddetail-section {
+    float: left;
+}
+
+.rewardtitle {
+    color: #BAC34E;
+    font-weight: bold;
+    margin-top: 30px !important;
+    margin-bottom: 55px !important;
+    display: block;
+}
+
+.rewarddetail {
+    margin-top: 30px;
+    display: block;
+}
+
+button.reward {
+    position: relative;
+    top: 300px;
+}
+
+.big-btn {
+    border: none;
+}
+
+hr {
+    position: relative;
+    bottom: 15px;
+}
+
+.agree-btn {
+    color: #FFF;
+    background: #C4C4C4;
+    border: 1px solid #C4C4C4;
+    width: 250px;
+    height: 40px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+.refundpolicy {
+    width: 100%;
+    height: 300px;
+}
+
+.farmerinfo {
+    width: 100%;
+}
+
+.kakaotalk {
+    width: 100%;
+    margin-top: 1%;
+}
+
+.green {
+    color: #BAC34E;
+    text-decoration: underline;
+}
+
+.upload-btn {
+    display: flex;
+    justify-content: center;
+}
+
+label {
+    cursor: pointer;
+    font-size: 13pt;
+    color: #BAC34E;
+    border: 1px solid #BAC34E;
+    border-radius: 10%;
+    float: right;
+}
+
+#uploadfile, #uploadfile2 {
+    visibility: hidden;
+}
+
+.representativeinfo {
+    height: 2300px !important;
+}
+
+.colorbox {
+    background-color: #F9FAFB;
+    height: 50px;
+}
+
+.registration {
+    width: 47%;
+    margin-right: 2%;
+}
