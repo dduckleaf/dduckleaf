@@ -61,7 +61,7 @@ public class FundingRegistController {
         return mv;
     }
 
-    @PostMapping("/fundinginfo")
+    @GetMapping("/fundinginfo")
     public String registByApi(FundingRegistDTO registDTO) {
         registDTO.setProjectNo(1);
         registDTO.setMemberNo(5);
@@ -70,6 +70,6 @@ public class FundingRegistController {
         System.out.println("##1");
         System.out.println("fundingInfo = " + registDTO);
 
-        return "redirect:/funding/regist/reward/1";
+        return "/funding/regist/fundingresult";
     }
 }
