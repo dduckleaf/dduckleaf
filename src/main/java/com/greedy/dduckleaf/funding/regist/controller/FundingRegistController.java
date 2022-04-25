@@ -109,13 +109,7 @@ public class FundingRegistController {
         return "redirect:/funding/list/member";
     }
 
-    @GetMapping("/list/member")
-    public ModelAndView sendMemberFundingListPage(ModelAndView mv) {
 
-        mv.setViewName("/funding/find/supporter/fundingdetailinfo");
-
-        return mv;
-    }
 }
 
 

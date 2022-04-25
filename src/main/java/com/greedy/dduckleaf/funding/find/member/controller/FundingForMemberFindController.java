@@ -33,6 +33,14 @@ public class FundingForMemberFindController {
         this.service = service;
     }
 
+    @GetMapping("/result/member")
+    public ModelAndView sendMemberFundingListPage(ModelAndView mv) {
+
+        mv.setViewName("/funding/find/supporter/fundingdetailinfo");
+
+        return mv;
+    }
+
 
     /**
      * 회원번호를 이용해 해당 회원의 펀딩목록을 조회합니다.
