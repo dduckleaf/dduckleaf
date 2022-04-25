@@ -44,52 +44,23 @@
 				<button class="review-btn basic-btn btn1 medium-btn">평가하기</button>
 			</div>
 		</div>
-		<div class="funding-list-box">
-			<div style="margin: 2%">
-				<label class="category">버섯류</label><br>
-				<label class="projectStatus">진행중</label><br>
-				<label class="projectName">국내산 송이버섯</label><br>
-				<label class="farmerName">by향긋</label><br>
-				<br>
-				<label class="fundingStatus">결제 예약</label>
-				<button class="review-btn basic-btn btn1 medium-btn">평가하기</button>
+		<th:block th:each="funding : ${fundingList}">
+			<div class="funding-list-box">
+				<div style="margin: 2%">
+					<label class="category">[[${funding.rewardCategoryName}]]</label><br>
+					<label class="projectStatus">
+						<th:block th:if="${ funding.getProject.progressStatus eq '3'}">진행중</th:block>
+						<th:block th:if="${ funding.project.progressStatus eq '4'}">완료</th:block>
+					</label><br>
+					<label class="projectName">[[${funding.project.projectName}]]</label><br>
+					<label class="farmerName">by향긋</label><br>
+					<br>
+					<label class="fundingStatus">결제 예약</label>
+					<button class="review-btn basic-btn btn1 medium-btn">평가하기</button>
+				</div>
 			</div>
-		</div>
-		<div class="funding-list-box">
-			<div style="margin: 2%">
-				<label class="category">버섯류</label><br>
-				<label class="projectStatus">진행중</label><br>
-				<label class="projectName">국내산 송이버섯</label><br>
-				<label class="farmerName">by향긋</label><br>
-				<br>
-				<label class="fundingStatus">결제 예약</label>
-				<button class="review-btn basic-btn btn1 medium-btn">평가하기</button>
-			</div>
-		</div>
-		<div class="funding-list-box">
-			<div style="margin: 2%">
-				<label class="category">버섯류</label><br>
-				<label class="projectStatus">진행중</label><br>
-				<label class="projectName">국내산 송이버섯</label><br>
-				<label class="farmerName">by향긋</label><br>
-				<br>
-				<label class="fundingStatus">결제 예약</label>
-				<button class="review-btn basic-btn btn1 medium-btn">평가하기</button>
-			</div>
-		</div>
-		<div class="funding-list-box">
-			<div style="margin: 2%">
-				<label class="category">버섯류</label><br>
-				<label class="projectStatus">진행중</label><br>
-				<label class="projectName">국내산 송이버섯</label><br>
-				<label class="farmerName">by향긋</label><br>
-				<br>
-				<label class="fundingStatus">결제 예약</label>
-				<button class="review-btn basic-btn btn1 medium-btn">평가하기</button>
-			</div>
-		</div>
+		</th:block>
 	</div>
-	
 </div>
 
 
