@@ -16,5 +16,7 @@ public class FundingDTO {
     private int projectNo;
     private int shippingFeeNo;
     private int memberNo;
+    private String rewardCategoryName;
+    private ProjectDTO project;
 
 }

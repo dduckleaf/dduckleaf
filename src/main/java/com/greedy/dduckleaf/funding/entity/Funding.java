@@ -60,9 +60,9 @@ public class Funding {
                 ", fundingAmount=" + fundingAmount +
                 ", rewardAmount=" + rewardAmount +
                 ", fundingStatus='" + fundingStatus + '\'' +
-                ", donateAmount=" + donateAmount +
-                ", project=" + project +
-                ", projectShippingFee=" + projectShippingFee +
+                ", donateAmount=" + donateAmount + "\n" +
+                ", project=" + project + "\n" +
+                ", projectShippingFee=" + projectShippingFee + "\n" +
                 ", memberNo=" + memberNo +
                 ", extraShippingFeeStatus='" + extraShippingFeeStatus + '\'' +
                 ", refundBankCode=" + refundBankCode +

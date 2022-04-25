@@ -1,9 +1,12 @@
 package com.greedy.dduckleaf.funding.dto;
 
+import com.greedy.dduckleaf.funding.entity.ProjectRegistInfo;
 import com.greedy.dduckleaf.funding.entity.ProjectShippingFee;
 import com.greedy.dduckleaf.funding.entity.RewardInfo;
 
 import lombok.*;
+
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,6 +25,8 @@ public class ProjectDTO {
     private String projectExamineStatus;
     private String progressStatus;
     private int maxTargetAmount;
-    private RewardInfo rewardInfo;
-    private ProjectShippingFee projectShippingFee;
+    private RewardInfoDTO rewardInfo;
+    private ProjectShippingFeeDTO projectShippingFee;
+    private List<ProjectRegistInfoDTO> registInfo;
+
 }
