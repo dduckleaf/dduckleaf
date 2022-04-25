@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity(name = "projectProgressStatus")
+@Entity(name = "projectProgressStatusForProjectNotice")
 @Table(name = "TBL_PROJECT_PROGRESS_STATUS")
 public class ProjectProgressStatus {
 

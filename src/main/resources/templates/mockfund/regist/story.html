@@ -22,9 +22,9 @@
 <div class="container">
     <div style="width: 1000px;">
         <div class="row1 story">
-
+        <form name="saveForm">
             <div class="col-md-2 fundmenu">
-                <button class="accordion">
+                <button class="accordion" type="button">
                     <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/mockfund/sidebararrow.png }"></p>
                 </button>
                 <div class="panel">
@@ -47,17 +47,26 @@
                     <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
                     <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
                         해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
+                    <input name="mockFundInfoNo" type="hidden" value="1">
                 </div>
                 <div class="basicmenu">
                     <a class="basictitle">프로젝트 요약</a><br>
                     <a class="basicsubtitle">프로젝트 페이지 상단에 노출됩니다.</a><br>
-                    <input class="projectsummary" type="text" th:value="${ info.mockFundDetail }">
+                    <input class="projectsummary" name="mockFundDetail" type="text" th:value="${ info.mockFundDetail }">
+                    <input type="hidden" class="mockFundAgreementStatus" id="mockFundAgreementStatus" name="mockFundAgreementStatus" th:value="${ info.mockFundAgreementStatus }">
                 </div>
-                <div>
+                <div class="checkdiv">
                     <a class="basictitle">스토리 광고 심의 동의</a><br>
                     <a class="basicsubtitle">스토리 작성 전, 플랫폼에서 제공하는 광고 심의 가이드라인을 반드시 확인하세요.
                     <br>동의를 진행해야 스토리 작성이 가능합니다.</a><br>
-                    <button class="btn1 big-btn story-btn" id="agreement"><img class="check" th:src="@{ /images/common/check.png }"> 동의하기</button><a class="guideline">식품 표시·광고 가이드라인</a>
+                    <th:block th:if="${ info.mockFundAgreementStatus == 'N'}">
+                    <button type="button" class="btn1 big-btn story-btn" id="agreement"><img class="check" th:src="@{ /images/common/check.png }"> 동의하기</button>
+                    </th:block>
+                    <th:block th:if="${ info.mockFundAgreementStatus == 'Y'}">
+                        <div class="agreementcheck">동의완료</div>
+                        <div class="agreementDate" th:text="${ info.agreementDate }"></div>
+                    </th:block>
+                        <a class="guideline">식품 표시·광고 가이드라인</a>
                 </div>
                 <div class="basicmenu">
                     <a class="basictitle">프로젝트 스토리</a><br>
@@ -70,6 +79,7 @@
                     <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
                 </div>
             </div>
+        </form>
         </div>
     </div>
 </div>
@@ -125,7 +135,7 @@
         }
     }
 
-    $("#agreement").click(async function () {
+    $("#agreement").click(async function (agreement) {
         // const {value: accept} = await Swal.fire({
         //     id: 'agreement',
         //     title: 'Terms and conditions',
@@ -179,17 +189,17 @@
                 '이를 확인하지 않거나 오인하여 발생한 손해에 대한 책임은 파머가 부담하여야 합니다.</p>' +
                 '</div>' +
                 '<div class="btnArea">' +
-                '<button class="confirmbtn" disabled="disabled">스토리 작성 시작하기</button>' +
+                '<button class="confirmbtn" id="confirmbtn" disabled="disabled">스토리 작성 시작하기</button>' +
                 '</div>',
-            showConfirmButton: false,
             focusConfirm: false,
+            showConfirmButton: false,
             customClass: {
                 title: 'confirmtitle',
                 popup: 'confirmpopup',
                 htmlContainer: 'confirmcontainer',
             },
             buttonsStyling: false,
-        }).then($("#order2_chk").click(function () {
+        }).then($("#order2_chk").click(await function () {
             var order2Chk = $("#order2_chk").prop("checked");
 
             if (order2Chk) {
@@ -198,7 +208,7 @@
                     "backgroundColor": "#BAC34E",
                     "cursor": "pointer",
                     "color": "#fff"
-                }).prop("disabled", false);
+                }).prop("disabled", false)
             } else {
                 $(".order2_chks").prop("checked", false);
                 $(".btnArea button").css({
@@ -207,12 +217,16 @@
                     "color": "#303033"
                 }).prop("disabled", true);
             }
-        }))
-    })
+        })).then($("#confirmbtn").click(await function() {
+            let saveForm = document.saveForm;
+            let url = '/mockfund/agreement';
 
-
-
-
+            saveForm.action = url;
+            saveForm.method = 'post';
+            saveForm.submit();
+            scroll()
+        }));
+    });
 
     $("#saveclick").click(function() {
         Swal.fire({
@@ -239,13 +253,10 @@
                         popup: 'savepopup'
                     },
                     buttonsStyling: false,
-                }).then(function(mockFundName, targetTicketAmount, category, endDate) {
+                }).then(function(mockFundDetail) {
                     let saveForm = document.saveForm;
-                    let url = '/mockfund/modify';
-                    saveForm.mockFundName = mockFundName;
-                    saveForm.targetTicketAmount = targetTicketAmount;
-                    saveForm.projectCategoryNo = category;
-                    saveForm.endDate = endDate;
+                    let url = '/mockfund/modify/story';
+                    saveForm.mockFundDetail = mockFundDetail;
 
                     saveForm.action = url;
                     saveForm.method = 'post';
@@ -255,10 +266,6 @@
         })
     });
 
-    if (accept) {
-        Swal.fire('You agreed with T&C :)')
-    }
-
-    document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);;
+    document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);
 </script>
 </html>

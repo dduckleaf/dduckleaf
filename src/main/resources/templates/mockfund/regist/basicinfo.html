@@ -152,8 +152,6 @@
                 Swal.fire({
                     title: '저장되었습니다',
                     confirmButtonText: "확인",
-                    allowEnterKey: false,title: '저장되었습니다',
-                    confirmButtonText: "확인",
                     allowEnterKey: false,
                     customClass: {
                         confirmButton: 'saveok',
@@ -162,7 +160,7 @@
                     buttonsStyling: false,
                 }).then(function(mockFundName, targetTicketAmount, category, endDate) {
                     let saveForm = document.saveForm;
-                    let url = '/mockfund/modify';
+                    let url = '/mockfund/modify/basicinfo';
                     saveForm.mockFundName = mockFundName;
                     saveForm.targetTicketAmount = targetTicketAmount;
                     saveForm.projectCategoryNo = category;

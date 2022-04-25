@@ -23,6 +23,12 @@ public class MockFundInfo {
     @Column(name = "TARGET_TICKET_AMOUNT")
     private int targetTicketAmount;
 
+    @Column(name = "MOCK_FUND_AGREEMENT_STATUS")
+    private String mockFundAgreementStatus;
+
+    @Column(name = "AGREEMENT_DATE")
+    private java.sql.Date agreementDate;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "MOCK_FUND_NO")
     private MockFund mockFund;
@@ -33,12 +39,14 @@ public class MockFundInfo {
 
     public MockFundInfo() {}
 
-    public MockFundInfo(int mockFundInfoNo, String mockFundName, Date endDate, String mockFundDetail, int targetTicketAmount, MockFund mockFund, RewardCategory rewardCategory) {
+    public MockFundInfo(int mockFundInfoNo, String mockFundName, Date endDate, String mockFundDetail, int targetTicketAmount, String mockFundAgreementStatus, java.sql.Date agreementDate, MockFund mockFund, RewardCategory rewardCategory) {
         this.mockFundInfoNo = mockFundInfoNo;
         this.mockFundName = mockFundName;
         this.endDate = endDate;
         this.mockFundDetail = mockFundDetail;
         this.targetTicketAmount = targetTicketAmount;
+        this.mockFundAgreementStatus = mockFundAgreementStatus;
+        this.agreementDate = agreementDate;
         this.mockFund = mockFund;
         this.rewardCategory = rewardCategory;
     }
@@ -83,6 +91,22 @@ public class MockFundInfo {
         this.targetTicketAmount = targetTicketAmount;
     }
 
+    public String getMockFundAgreementStatus() {
+        return mockFundAgreementStatus;
+    }
+
+    public void setMockFundAgreementStatus(String mockFundAgreementStatus) {
+        this.mockFundAgreementStatus = mockFundAgreementStatus;
+    }
+
+    public Date getAgreementDate() {
+        return agreementDate;
+    }
+
+    public void setAgreementDate(Date agreementDate) {
+        this.agreementDate = agreementDate;
+    }
+
     public MockFund getMockFund() {
         return mockFund;
     }
@@ -107,6 +131,8 @@ public class MockFundInfo {
                 ", endDate=" + endDate +
                 ", mockFundDetail='" + mockFundDetail + '\'' +
                 ", targetTicketAmount=" + targetTicketAmount +
+                ", mockFundAgreementStatus=" + mockFundAgreementStatus + '\'' +
+                ", agreementDate=" + agreementDate +
                 '}';
     }
 }
