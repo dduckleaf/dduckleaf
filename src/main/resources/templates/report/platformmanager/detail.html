@@ -5,6 +5,11 @@
     <title>Title</title>
     <link rel="stylesheet" th:href="@{/css/report.css}">
 </head>
+<style>
+    #registPage, #registReply, #backToList, #backToDetail {
+        margin-top: 10px !important;
+    }
+</style>
 <body>
 <main style="width: 1920px">
     <div th:replace="/common/adminheader.html"></div>
@@ -60,6 +65,7 @@
         </table>
         <br><br>
         <span class="test-subtitle">신고 답변</span>
+        <div id="replyArea">
         <table class="basic-table detail-view" align="center">
             <!-- 처리상태가 '미답변'인 경우 보여질 내용 -->
             <th:block th:if="${ reportDetailInfo.projectReportReply.getProjectReportReplyNo() eq 0 }">
@@ -82,28 +88,71 @@
                 </tr>
             </th:block>
         </table>
-
         <div class="btn-area">
-            <input type="button" value="목록으로" class="basic-btn medium-btn btn3" id="back" style="float:left;">
-            <input type="button" value="신고 답변" class="basic-btn medium-btn btn1" id="regist">
+            <input type="button" value="목록으로" class="basic-btn medium-btn btn3" id="backToList" style="float:left;">
+            <input type="button" value="신고 답변" class="basic-btn medium-btn btn1" id="registPage" style="float:right;">
         </div>
+        </div>
+
+        <!-- 숨겨진 답변등록용 div -->
+        <div id="registArea" style="display: none;">
+            <form th:action="@{/report/platformmanager/regist}" method="post">
+                <table class="basic-table detail-view" align="center">
+                    <tr>
+                        <th>답변일</th>
+                        <td name="projectReportReplyDate">
+                            <input name="projectReportReplyDate" type="text" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" readonly>
+                            <input name="projectReportNo" id="test" type="hidden" th:value="${ reportDetailInfo.projectReport.projectReportNo }">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>내용</th>
+                        <td><textarea name="projectReportReplyContent" cols="95" rows="7" style="margin-top: 10px; resize: none;"></textarea></td>
+                    </tr>
+                </table>
+                <div class="btn-area">
+                    <input type="button" value="이전화면" class="basic-btn medium-btn btn3" id="backToDetail" onclick="location.href='/report/platformmanager/detail'" style="float:left;">
+                    <input type="submit" value="답변등록" class="basic-btn medium-btn btn1" id="registReply" style="float:right;">
+                </div>
+            </form>
+        </div>
+
     </div>
 </main>
 </body>
 <script>
     /* 목록화면으로 이동 */
-    const back = document.getElementById("back");
-    if(back) {
-        back.onclick = function() {
+    const backToList = document.getElementById("backToList");
+    if(backToList) {
+        backToList.onclick = function() {
             location.href = "/report/platformmanager/listAll";
         }
     }
 
-    /* 답변 작성 화면으로 이동 */
-    const registReply = document.getElementById("regist");
-    if(registReply) {
-        registReply.onclick = function() {
-            location.href = "/report/platformmanager/regist";
+    /* 상세조회 화면으로 돌아가기 */
+    const backToDetail = document.getElementById("backToDetail");
+    if(backToDetail) {
+        backToDetail.onclick = function() {
+            location.href = "/report/platformmanager/detail/[[${ reportDetailInfo.projectReport.projectReportNo }]]";
+        }
+    }
+
+    /* 답변 작성 영역 보여주기 */
+    const showRegistArea = document.getElementById("registPage");
+
+    if(showRegistArea) {
+        showRegistArea.onclick = function () {
+            const replyArea = document.getElementById('replyArea');
+            const registArea = document.getElementById("registArea");
+            console.log(replyArea);
+            console.log(registArea);
+
+            if('[[${ reportDetailInfo.projectReportReply.getProjectReportReplyNo() }]]' == 0) {
+                replyArea.style.display = 'none';
+                registArea.style.display = 'block';
+            } else {
+                alert("답변을 완료하였습니다.");
+            }
         }
     }
 </script>

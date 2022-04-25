@@ -129,12 +129,9 @@ public class ProjectReportController {
         return mv;
     }
 
-    @GetMapping("/platformmanager/regist")
-    public void registpage() {}
-
     @PostMapping("/platformmanager/regist")
-    public void registProjectReportReply(@ModelAttribute("projectReportReply")ProjectReportReplyDTO projectReportReply, @AuthenticationPrincipal CustomUser user) {
+    public String registProjectReportReply(@ModelAttribute ProjectReportReplyDTO projectReportReply, @AuthenticationPrincipal CustomUser user) {
         System.out.println("projectReportReply = " + projectReportReply);
-
+        return "redirect:/report/platformmanager/listAll";
     }
 }
