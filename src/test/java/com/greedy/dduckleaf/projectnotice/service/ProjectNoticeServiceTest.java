@@ -14,6 +14,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 
+import javax.transaction.Transactional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -49,6 +51,7 @@ class ProjectNoticeServiceTest {
 //    }
 
     @Test
+    @Transactional
     @DisplayName("프로젝트 번호로 해당 프로젝트의 공지사항 조회 테스트")
     public void findProjectNoticeList_test() {
 
