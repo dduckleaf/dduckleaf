@@ -2,9 +2,9 @@ package com.greedy.dduckleaf.projectreport.find.entity;
 
 import javax.persistence.*;
 
-import com.greedy.dduckleaf.projectreport.detail.entity.Member;
-import com.greedy.dduckleaf.projectreport.detail.entity.ProjectReport;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.sql.Date;
 
@@ -14,6 +14,7 @@ import java.sql.Date;
 @Getter
 @Entity(name = "ProjectReportReply")
 @Table(name = "TBL_PROJECT_REPORT_REPLY")
+@DynamicInsert
 public class ProjectReportReply {
 
     @Id
@@ -31,11 +32,11 @@ public class ProjectReportReply {
     @JoinColumn(name = "PROJECT_REPORT_NO")
     private ProjectReport projectReport;                    //신고번호
 
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ADMIN_NO")
-    private Member adminNo;                                 //신고 답변 관리자
+    @Column(name = "ADMIN_NO")
+    private int adminNo;                                 //신고 답변 관리자
 
     @Column(name = "DELETE_YN")
+    @ColumnDefault("N")
     private String deleteYn;
 
     @Override

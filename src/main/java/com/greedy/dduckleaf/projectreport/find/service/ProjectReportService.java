@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,13 +24,17 @@ import java.util.stream.Collectors;
  * Comment : 프로젝트신고 업무에 사용되는 트랜젝션 메소드를 작성하였습니다.
  *
  * History
- * 2022-04-19 회원정보로 접근하여 프로젝트 신고내역 목록 조회용 서비스메소드 작성
- * 2022-04-23 전체 프로젝트 신고내역 목록 조회용 서비스메소드 작성
- * 2022-04-24 프로젝트 신고내역 목록 상세 조회용 서비스메소드 작성
+ * 2022-04-19 findProjectReportListByMemberNo 서비스메소드 작성
+ * 2022-04-23 findProjectReportList 서비스메소드 작성
+ * 2022-04-24 findProjectReportAndReply 서비스메소드 작성
+ * 2022-04-24 findReplyByProjectReportNo 내부연산 메소드 작성
+ * 2022-04-24 findProjectReportDetail 내부연산 메소드 작성
+ * 2022-04-25 registProjectReportReply 서비스메소드 작성
+ * 2022-04-25 registReply 서비스메소드 작성
  * </pre>
  *
  * @author 장민주
- * @version 1.0.2
+ * @version 1.0.3
  */
 @Service
 public class ProjectReportService {
@@ -160,5 +165,16 @@ public class ProjectReportService {
         }
 
         return reportDetailInfo;
+    }
+
+    /**
+    * 프로젝트신고 답변 등록용 메소드입니다.
+    *  @param projectReportReply 등록해줄 신고답변 내용
+    * @exception 예외 답변 등록 실패
+    */
+    @Transactional
+    public void registReply(ProjectReportReplyDTO reply) {
+
+        replyRepository.save(modelMapper.map(reply, ProjectReportReply.class));
     }
 }

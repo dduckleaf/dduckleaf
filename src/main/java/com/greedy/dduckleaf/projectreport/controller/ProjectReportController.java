@@ -15,20 +15,25 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
  * <pre>
  * Class : FundingRegistController
- * Comment : 프로젝트 신고 프로세스를 담당하는 컨트롤러 클래스.
+ * Comment : 프로젝트 신고 프로세스를 담당하는 컨트롤러 클래스입니다.
  * History
- * 2022/04/18 : findProjectReportListByMemberNo 메소드 작성.
- * 2022/04/22 : findProjectReportDetail 메소드 작성.
- * 2022/04/23 : platformManagerDefaultPage 메소드 작성.
- * 2022/04/23 :  findAllProjectReportList 메소드 작성.
+ * 2022/04/18 (장민주) findProjectReportListByMemberNo 메소드 작성.
+ * 2022/04/22 (장민주) findProjectReportDetail 메소드 작성.
+ * 2022/04/23 (장민주) platformManagerDefaultPage 메소드 작성.
+ * 2022/04/23 (장민주) findAllProjectReportList 메소드 작성.
+ * 2022/04/24 (장민주) findProjectReportDetail 메소드 작성.
+ * 2022/04/24 (장민주) findProjectReportListByMemberNo 메소드 작성.
+ * 2022/04/25 (장민주) registProjectReportReply 메소드 작성.
  * </pre>
- * @version 1.0.2
+ * @version 1.0.4
  * @author 장민주
  */
 @Controller
@@ -129,9 +134,34 @@ public class ProjectReportController {
         return mv;
     }
 
+    /**
+    * 프로젝트 신고내역에 대한 답변 등록 요청 메소드입니다.
+    *  @param projectReportReply: 첫 번째 파라미터에 대한 설명
+    * @param user: 로그인한 관리자 회원 정보
+    * @return mv: 답변 등록 성공 메시지, redirect 할 화면경로
+    */
     @PostMapping("/platformmanager/regist")
-    public String registProjectReportReply(@ModelAttribute ProjectReportReplyDTO projectReportReply, @AuthenticationPrincipal CustomUser user) {
+    public ModelAndView registProjectReportReply(ModelAndView mv, @ModelAttribute ProjectReportReplyDTO projectReportReply,
+                                           @AuthenticationPrincipal CustomUser user, RedirectAttributes rttr) {
+
+        /* 세션에서 로그인한 관리자의 회원번호 추출 */
+        int adminNo = user.getMemberNo();
+
+        /* 데이터베이스에 삽입해줄 현재 날짜, 시간정보 생성 */
+        long miliseconds = System.currentTimeMillis();
+        Date date = new Date(miliseconds);
+        System.out.println(date);
+
+        projectReportReply.setAdminNo(adminNo);
+        projectReportReply.setProjectReportReplyDate(date);
+
         System.out.println("projectReportReply = " + projectReportReply);
-        return "redirect:/report/platformmanager/listAll";
+
+        service.registReply(projectReportReply);
+
+        rttr.addFlashAttribute("registSuccessMessage", "답변 등록에 성공하였습니다.");
+        mv.setViewName("redirect:/report/platformmanager/listAll");
+
+        return mv;
     }
 }
