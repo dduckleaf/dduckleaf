@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import javax.transaction.Transactional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -42,6 +44,7 @@ class FundingForMemberFindRepositoryTest {
 
     @Test
     @DisplayName("PK로 Funding엔티티 조회 테스트")
+    @Transactional
     public void findById_test() {
         Funding funding = repo.findById(4).get();
         assertNotNull(funding);

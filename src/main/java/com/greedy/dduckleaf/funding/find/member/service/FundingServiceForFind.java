@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.funding.find.member.service;
 
 import com.greedy.dduckleaf.funding.dto.FundingDTO;
+import com.greedy.dduckleaf.funding.dto.ProjectRegistInfoDTO;
 import com.greedy.dduckleaf.funding.entity.Funding;
 import com.greedy.dduckleaf.funding.find.member.repository.FundingForMemberFindRepository;
 import org.modelmapper.ModelMapper;
@@ -43,9 +44,23 @@ public class FundingServiceForFind {
      */
     public List<FundingDTO> findFundingByMemberNo(int memberNo) {
 
-        List<Funding> fundingList = fundingRepo.findByMemberNo(5);
-        fundingList.forEach(System.out::println);
+        return parsingFundingList(fundingRepo.findByMemberNo(5));
+    }
 
-        return fundingList.stream().map(funding -> mapper.map(funding, FundingDTO.class)).collect(Collectors.toList());
+
+    private List<FundingDTO> parsingFundingList(List<Funding> fundingList) {
+        List<FundingDTO> fundingDTOList = fundingList.stream().map(funding -> {
+            FundingDTO fundingDTO = mapper.map(funding, FundingDTO.class);
+
+            List<ProjectRegistInfoDTO> infoList = fundingDTO.getProject().getRegistInfo();
+            infoList.forEach(info ->{
+                if(info.getProjectRegistInfoCategory().equals("리워드")) {
+                    fundingDTO.setRewardCategoryName(info.getCategory().getProjectCategoryName());
+                }
+            });
+
+            return fundingDTO;
+        }).collect(Collectors.toList());
+        return fundingDTOList;
     }
 }
