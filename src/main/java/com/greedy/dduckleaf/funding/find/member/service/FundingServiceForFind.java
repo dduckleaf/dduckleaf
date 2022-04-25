@@ -14,18 +14,19 @@ import java.util.stream.Collectors;
 /**
  * <pre>
  * Class : FundingServiceForFind
- * Comment : 회원의 펀딩정보 조회 프로세스에서 service layer를 담당하는 클래스입니다.
+ * Comment : 회원의 펀딩정보 조회 프로세스에서 서비스 클래스
  *
  * History
- * 2022-04-25 h99ww
+ * 2022-04-25 (홍성원)
  * </pre>
  *
- * @author h99ww
+ * @author (홍성원)
  * @version 1.0.0
  */
 @Service
 public class FundingServiceForFind {
 
+    /* 서비스에 필요한 JPARepository와 엔티티를 DTO를 변환해 줄 ModelMapper를 DI받습니다. */
     private final FundingForMemberFindRepository fundingRepo;
     private final ModelMapper mapper;
 
@@ -46,7 +47,6 @@ public class FundingServiceForFind {
 
         return parsingFundingList(fundingRepo.findByMemberNo(5));
     }
-
 
     private List<FundingDTO> parsingFundingList(List<Funding> fundingList) {
 
