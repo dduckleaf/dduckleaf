@@ -1,15 +1,10 @@
 package com.greedy.dduckleaf.projectreport.find.service;
 
-import com.greedy.dduckleaf.common.exception.member.ProjectReportReplyRegistException;
 import com.greedy.dduckleaf.config.*;
 import com.greedy.dduckleaf.projectreport.find.dto.MemberDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportReplyDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ReportDetailInfo;
-import com.greedy.dduckleaf.projectreport.find.entity.Member;
-import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
-import com.greedy.dduckleaf.projectreport.find.entity.ProjectReportReply;
-import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -25,7 +20,6 @@ import java.sql.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.springframework.test.util.AssertionErrors.assertTrue;
 
 @SpringBootTest(classes = {
         DduckleafApplication.class,
