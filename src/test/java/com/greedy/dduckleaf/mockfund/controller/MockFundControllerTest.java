@@ -87,5 +87,16 @@ class MockFundControllerTest {
 
     }
 
+    @Test
+    @DisplayName("모의펀딩 스토리 동의하기 url 매핑 테스트")
+    public void mockFundAgreement() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/mockfund/agreement"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.forwardedUrl("/mockfund/story/1"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("mockFund"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
 
 }

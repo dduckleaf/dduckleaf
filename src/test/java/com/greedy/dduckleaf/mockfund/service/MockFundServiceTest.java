@@ -7,6 +7,8 @@ import com.greedy.dduckleaf.mockfund.dto.MockFundDTO;
 import com.greedy.dduckleaf.mockfund.dto.MockFundInfoDTO;
 import com.greedy.dduckleaf.mockfund.dto.MockFundRewardDTO;
 import com.greedy.dduckleaf.mockfund.dto.RewardCategoryDTO;
+import com.greedy.dduckleaf.mockfund.entity.Farmer;
+import com.greedy.dduckleaf.mockfund.entity.MockFundInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,5 +111,35 @@ class MockFundServiceTest {
     }
 
     //assertDoesNotThrow(() ->이자리에 테스트하고싶은 메소드 호출 ));  update
+    
+    @Test
+    @DisplayName("모의펀딩 스토리 동의 체크 테스트")
+    public void modifyAgreementStatus() {
+        
+        //given
+        int infoCode = 1;
+        String status = "Y";
+        
+        //when
+        MockFundInfoDTO info = mockFundService.findMockFundInfoByCode(infoCode);
+        
+        //then
+        assertNotNull(info);
+        info.setMockFundAgreementStatus(status);
+        System.out.println("info = " + info);
+    }
+
+    @Test
+    public void modifyAgreementStatus_test() {
+
+        //given
+        int memberNo = 3;
+
+        //when
+        mockFundService.modifyAgreementStatus( memberNo);
+
+        //then
+
+    }
 
 }
