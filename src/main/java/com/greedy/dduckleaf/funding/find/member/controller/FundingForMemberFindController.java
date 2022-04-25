@@ -33,14 +33,13 @@ public class FundingForMemberFindController {
         this.service = service;
     }
 
-    @GetMapping("/result/member")
+    @GetMapping("/detail/member")
     public ModelAndView sendMemberFundingListPage(ModelAndView mv) {
 
         mv.setViewName("/funding/find/supporter/fundingdetailinfo");
 
         return mv;
     }
-
 
     /**
      * 회원번호를 이용해 해당 회원의 펀딩목록을 조회합니다.
@@ -53,7 +52,10 @@ public class FundingForMemberFindController {
 
         int memberNo = user.getMemberNo();
         List<FundingDTO> fundingList = service.findFundingByMemberNo(memberNo);
-
+        fundingList.forEach(fundingDTO -> {
+            System.out.print("FundingInfoNo() = " + fundingDTO.getFundingInfoNo());
+            System.out.println(" > getProgressStatus() = " + fundingDTO.getProject().getProgressStatus());
+        });
         mv.addObject("fundingList", fundingList);
         mv.setViewName("/funding/find/supporter/fundinglist");
 

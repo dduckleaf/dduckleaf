@@ -49,11 +49,13 @@ public class FundingServiceForFind {
 
 
     private List<FundingDTO> parsingFundingList(List<Funding> fundingList) {
+
         List<FundingDTO> fundingDTOList = fundingList.stream().map(funding -> {
             FundingDTO fundingDTO = mapper.map(funding, FundingDTO.class);
 
             List<ProjectRegistInfoDTO> infoList = fundingDTO.getProject().getRegistInfo();
             infoList.forEach(info ->{
+
                 if(info.getProjectRegistInfoCategory().equals("리워드")) {
                     fundingDTO.setRewardCategoryName(info.getCategory().getProjectCategoryName());
                 }
@@ -61,6 +63,7 @@ public class FundingServiceForFind {
 
             return fundingDTO;
         }).collect(Collectors.toList());
+
         return fundingDTOList;
     }
 }
