@@ -298,3 +298,114 @@ body {
     top: -10px;
     left: 520px;
 }
+#find-pwd-id {
+    cursor: pointer;
+    position: relative;
+    top: 115px;
+    left: 450px;
+    width: 90px;
+    height: 47px;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    background: none;
+    border-bottom: 6px solid transparent;
+}
+#find-pwd-pwd {
+    position: relative;
+    top: 116px;
+    left: 455px;
+    font-size: 15px;
+    font-weight: 700;
+    background: none;
+    width: 105px;
+    height: 47px;
+    cursor: pointer;
+    border: none;
+    border-bottom: 6px solid #bac34e;
+    color: #bac34e;
+}
+.find-pwd-form {
+    position: relative;
+    top: 40px;
+    left: 750px;
+    width: 400px;
+}
+.find-pwd-form input {
+    width: 100%;
+    height: 60px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #C8B5B5;
+}
+.find-pwd-form p {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    font-size: 20px;
+    font-weight: 700;
+}
+#email-verification {
+    position: relative;
+    top: -71px;
+    left: 303px;
+    width: 90px;
+    height: 43px;
+}
+#check-verification {
+    position: relative;
+    top: -129px;
+    left: 303px;
+    width: 90px;
+    height: 43px;
+}
+#verification {
+    position: relative;
+    top: -57px;
+}
+.find-pwd-form button {
+    width: 100%;
+    height: 55px ;
+    border-radius: 3px;
+    font-size: 23px;
+    color: white;
+    background: #BAC34E;
+    border: 1px solid white;
+    margin-bottom: 25px;
+}
+.find-modify-title {
+    font-family: inherit;
+    font-size: 45px;
+    position: relative;
+    top: 100px;
+    left: 200px;
+}
+.find-modify-pwd-form {
+    width: 400px;
+    position: relative;
+    top: 200px;
+    left: 750px;
+}
+.find-modify-subtitle {
+    width: 700px;
+    font-family: inherit;
+    font-size: 20px;
+    position: relative;
+}
+.find-modify-pwd-form input {
+    width: 100%;
+    height: 60px;
+    border: 1px solid #C8B5B5;
+    margin-bottom: 8px;
+    margin-top: 3px;
+    font-size: 17px;
+}
+.find-modify-pwd-form button{
+    width: 100%;
+    height: 55px ;
+    border-radius: 3px;
+    font-size: 23px;
+    color: white;
+    background: #BAC34E;
+    border: 1px solid white;
+}
