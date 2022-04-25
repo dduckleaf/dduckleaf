@@ -14,6 +14,8 @@ public class MockFundInfoDTO {
     private java.sql.Date endDate;
     private String mockFundDetail;
     private int targetTicketAmount;
+    private String mockFundAgreementStatus;
+    private java.sql.Date agreementDate;
     private MockFundDTO mockFund;
     private RewardCategoryDTO rewardCategory;
 

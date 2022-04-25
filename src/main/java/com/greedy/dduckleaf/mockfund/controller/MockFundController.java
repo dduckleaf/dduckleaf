@@ -87,15 +87,43 @@ public class MockFundController {
         return mv;
     }
 
-    @GetMapping("/modify")
+    @GetMapping("/modify/basicinfo")
     public void modifyMockFundInfo() {}
 
-    @PostMapping("/modify")
+    @PostMapping("/modify/basicinfo")
     public String modifyMockFundBasicInfo(RedirectAttributes rttr, MockFundInfoDTO mockFundInfo) {
 
         mockFundService.modifyBasicInfo(mockFundInfo);
 
-        rttr.addFlashAttribute("modifySeccessMessage", "기본정보 수정 성공");
+        rttr.addFlashAttribute("modifySuccessMessage", "기본정보 수정 성공");
+
+        return "redirect:/mockfund/" + mockFundInfo.getMockFundInfoNo();
+    }
+
+    @GetMapping("/agreement")
+    public void modifyAgreement() {}
+
+    @PostMapping("/agreement")
+    public String modifyMockFundAgreementStatus(RedirectAttributes rttr) {
+        System.out.println("=============");
+        /* session에 있는 memberNo 받아와서 넘겨줘야함 */
+        int memberNo = 3;
+        int infoNo = mockFundService.modifyAgreementStatus(memberNo);
+
+        rttr.addFlashAttribute("modifySuccessMessage", "동의 성공");
+
+        return "redirect:/mockfund/story/" + infoNo;
+    }
+
+    @GetMapping("/modify/story")
+    public void modifyStory() {}
+
+    @PostMapping("/modify/story")
+    public String modifyMockFundStory(RedirectAttributes rttr, MockFundInfoDTO mockFundInfo) {
+
+        mockFundService.modifyStory(mockFundInfo);
+
+        rttr.addFlashAttribute("modifySuccessMessage", "기본정보 수정 성공");
 
         return "redirect:/mockfund/" + mockFundInfo.getMockFundInfoNo();
     }

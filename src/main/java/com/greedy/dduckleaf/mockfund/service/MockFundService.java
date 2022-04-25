@@ -4,10 +4,7 @@ import com.greedy.dduckleaf.mockfund.dto.MockFundDTO;
 import com.greedy.dduckleaf.mockfund.dto.MockFundInfoDTO;
 import com.greedy.dduckleaf.mockfund.dto.MockFundRewardDTO;
 import com.greedy.dduckleaf.mockfund.dto.RewardCategoryDTO;
-import com.greedy.dduckleaf.mockfund.entity.MockFund;
-import com.greedy.dduckleaf.mockfund.entity.MockFundInfo;
-import com.greedy.dduckleaf.mockfund.entity.MockFundReward;
-import com.greedy.dduckleaf.mockfund.entity.RewardCategory;
+import com.greedy.dduckleaf.mockfund.entity.*;
 import com.greedy.dduckleaf.mockfund.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,4 +87,26 @@ public class MockFundService {
         foundInfo.setRewardCategory(category);
     }
 
+    @Transactional
+    public int modifyAgreementStatus(int memberNo) {
+
+        Farmer farmer = farmerRepository.findById(memberNo).get();
+        MockFund fund = farmer.getMockFundList().get(0);
+        MockFundInfo info = fund.getMockFundInfoList().get(0);
+
+        Long mills = System.currentTimeMillis();
+        Date date = new Date(mills);
+        System.out.println("date = " + date);
+        info.setMockFundAgreementStatus("Y");
+        info.setAgreementDate(date);
+
+        return info.getMockFundInfoNo();
+    }
+
+    @Transactional
+    public void modifyStory(MockFundInfoDTO mockFundInfo) {
+
+        MockFundInfo foundInfo = mockFundInfoRepository.findById(mockFundInfo.getMockFundInfoNo()).get();
+        foundInfo.setMockFundDetail(mockFundInfo.getMockFundDetail());
+    }
 }
