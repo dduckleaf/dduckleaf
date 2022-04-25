@@ -197,6 +197,11 @@ select::-ms-expand {
     color: #BAC34E;
     text-decoration: underline;
     margin-left: 20px;
+    margin-top: 5px;
+}
+
+.checkdiv {
+    height: 150px;
 }
 
 .guideline:hover, .home:hover {
@@ -210,6 +215,35 @@ select::-ms-expand {
 
 .story {
     height: 1200px !important;
+}
+
+.agreementcheck {
+    border: 1px solid #BAC34E;
+    border-radius: 5px;
+    background-color: #BAC34E;
+    pointer-events: none;
+    color: #FFF;
+    font-size: 10pt;
+    padding: 5px 8px 5px 8px;
+    width: 80px;
+    text-align: center;
+}
+
+.agreementDate {
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.agreementcheck, .agreementDate, .guideline {
+    float: left;
+}
+
+.agreementcheck:not(*) {
+    margin-top: 10px;
+}
+
+.story-btn, .guideline {
+    float: left;
 }
 
 /* ========================= 스토리 구분선========================= */
