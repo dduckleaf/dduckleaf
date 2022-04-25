@@ -15,6 +15,7 @@
     <!-- Style CSS -->
     <link rel="stylesheet" th:href="@{ /css/mockfund.css }">
     <link rel="stylesheet" th:href="@{ /css/style.css }">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div th:replace="/common/userheader.html"></div>
@@ -56,7 +57,7 @@
                     <a class="basictitle">스토리 광고 심의 동의</a><br>
                     <a class="basicsubtitle">스토리 작성 전, 플랫폼에서 제공하는 광고 심의 가이드라인을 반드시 확인하세요.
                     <br>동의를 진행해야 스토리 작성이 가능합니다.</a><br>
-                    <button class="btn1 big-btn story-btn"><img class="check" th:src="@{ /images/common/check.png }"> 동의하기</button><a class="guideline">식품 표시·광고 가이드라인</a>
+                    <button class="btn1 big-btn story-btn" id="agreement"><img class="check" th:src="@{ /images/common/check.png }"> 동의하기</button><a class="guideline">식품 표시·광고 가이드라인</a>
                 </div>
                 <div class="basicmenu">
                     <a class="basictitle">프로젝트 스토리</a><br>
@@ -66,7 +67,7 @@
                         해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
                 </div>
                 <div>
-                    <button class="btn1 big-btn">저장하기</button>
+                    <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
                 </div>
             </div>
         </div>
@@ -122,6 +123,140 @@
             }
 
         }
+    }
+
+    $("#agreement").click(async function () {
+        // const {value: accept} = await Swal.fire({
+        //     id: 'agreement',
+        //     title: 'Terms and conditions',
+        //     input: 'checkbox',
+        //     inputValue: 1,
+        //     inputPlaceholder:
+        //         'I agree with the terms and conditions',
+        //     confirmButtonText:
+        //         '스토리 작성 시작하기',
+        //     customClass: {
+        //         confirmButton: 'startregist',
+        //         popup: 'registpopup'
+        //     },
+        //     buttonsStyling: false,
+        //     inputValidator: (result) => {
+        //         return !result && 'You need to agree with T&C'
+        //     }
+        // })
+        // const { value: formValues } = await Swal.fire({
+        //     title: 'Multiple inputs',
+        //     html:
+        //         '<a class="modalid">id</a><br>' +
+        //         '<input id="swal-input1" class="swal2-input"><br>' +
+        //         '<a class="modalid">pw</a><br>' +
+        //         '<input id="swal-input2" class="swal2-input"><br>' +
+        //         '<a class="modalid">id</a><br>' +
+        //         '<input id="swal-input3" class="swal2-input"><br>' +
+        //         '<a class="modalid">id</a><br>' +
+        //         '<input id="swal-input4" class="swal2-input">',
+        //     focusConfirm: false,
+        //     preConfirm: () => {
+        //         return [
+        //             document.getElementById('swal-input1').value,
+        //             document.getElementById('swal-input2').value,
+        //             document.getElementById('swal-input3').value,
+        //             document.getElementById('swal-input4').value
+        //         ]
+        //     }
+        const {value: formValues} = await Swal.fire({
+            title: '<img class="leaf" src="/images/common/Leaf.png" style="vertical-align: -20%; margin-right: 10px;">광고 심의 동의를 진행하고 스토리 작성을 시작하세요.',
+            html:
+                '<p>떡잎펀드는 파머님들을 위해 스토리 광고 심의에 대한 가이드를 <br> 제공하고 있습니다. 꼼꼼하게 확인하고 숙지해주세요.</p>' +
+                '<div class="checkedarea">' +
+                '<div class="checkT">' +
+                '<p><input type="checkbox" id="order2_chk"><label for="order2_chk"></label></p>' +
+                '</div>' +
+                '<p class="confirmsub">떡잎펀드 심의 가이드라인을 숙지해주세요</p>' +
+                '</div>' +
+                '<div class="checkedarea2">' +
+                '<p class="confirmsub2">개설자(이하 “파머”)는 떡잎펀드(주)(이하 떡잎펀드)가 게시 및 안내하는 심의 가이드라인을 확인하고 이를 숙지하여야 합니다.' +
+                '이를 확인하지 않거나 오인하여 발생한 손해에 대한 책임은 파머가 부담하여야 합니다.</p>' +
+                '</div>' +
+                '<div class="btnArea">' +
+                '<button class="confirmbtn" disabled="disabled">스토리 작성 시작하기</button>' +
+                '</div>',
+            showConfirmButton: false,
+            focusConfirm: false,
+            customClass: {
+                title: 'confirmtitle',
+                popup: 'confirmpopup',
+                htmlContainer: 'confirmcontainer',
+            },
+            buttonsStyling: false,
+        }).then($("#order2_chk").click(function () {
+            var order2Chk = $("#order2_chk").prop("checked");
+
+            if (order2Chk) {
+                $(".order2_chks").prop("checked", true);
+                $(".btnArea button").css({
+                    "backgroundColor": "#BAC34E",
+                    "cursor": "pointer",
+                    "color": "#fff"
+                }).prop("disabled", false);
+            } else {
+                $(".order2_chks").prop("checked", false);
+                $(".btnArea button").css({
+                    "backgroundColor": "#cbcbcb",
+                    "cursor": "auto",
+                    "color": "#303033"
+                }).prop("disabled", true);
+            }
+        }))
+    })
+
+
+
+
+
+    $("#saveclick").click(function() {
+        Swal.fire({
+            title: '저장하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            allowEnterKey: false,
+            confirmButtonWidth: '100px',
+            customClass: {
+                confirmButton: 'savesuccess',
+                cancelButton: 'savecancel',
+                popup: 'savepopup'
+            },
+            buttonsStyling: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: '저장되었습니다',
+                    confirmButtonText: "확인",
+                    allowEnterKey: false,
+                    customClass: {
+                        confirmButton: 'saveok',
+                        popup: 'savepopup'
+                    },
+                    buttonsStyling: false,
+                }).then(function(mockFundName, targetTicketAmount, category, endDate) {
+                    let saveForm = document.saveForm;
+                    let url = '/mockfund/modify';
+                    saveForm.mockFundName = mockFundName;
+                    saveForm.targetTicketAmount = targetTicketAmount;
+                    saveForm.projectCategoryNo = category;
+                    saveForm.endDate = endDate;
+
+                    saveForm.action = url;
+                    saveForm.method = 'post';
+                    saveForm.submit();
+                });
+            }
+        })
+    });
+
+    if (accept) {
+        Swal.fire('You agreed with T&C :)')
     }
 
     document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);;
