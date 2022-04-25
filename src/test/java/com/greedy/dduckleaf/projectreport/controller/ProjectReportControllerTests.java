@@ -78,4 +78,19 @@ public class ProjectReportControllerTests {
                 .andExpect(MockMvcResultMatchers.forwardedUrl("report/platformmanager/detail"))
                 .andDo(MockMvcResultHandlers.print());
     }
+
+//    @Test
+//    @DisplayName("프로젝트 신고 답변 등록 요청 테스트")
+//    public void registProjectReportReply_test() throws Exception {
+//
+//        //given
+//        CustomUser user = new CustomUser();
+//        user.setMemberNo(1);
+//
+//        mockMvc.perform(MockMvcRequestBuilders.post("/report/platformmanager/regist"))
+//                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+//                .andExpect(MockMvcResultMatchers.flash().attributeExists("registSuccessMessage"))
+//                .andExpect(MockMvcResultMatchers.redirectedUrl("/report/platformmanager/listAll"))
+//                .andDo(MockMvcResultHandlers.print());
+//    }
 }
