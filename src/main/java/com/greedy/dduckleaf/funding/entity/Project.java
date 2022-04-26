@@ -13,6 +13,7 @@ import lombok.*;
 @Entity(name = "ProjectForFunding")
 @Table(name = "TBL_PROJECT")
 public class Project {
+
     @Id
     @Column(name = "PROJECT_NO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

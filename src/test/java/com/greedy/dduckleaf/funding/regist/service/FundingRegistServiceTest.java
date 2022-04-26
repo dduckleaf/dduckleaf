@@ -43,16 +43,17 @@ class FundingRegistServiceTest {
     }
 
     @Test
+    @DisplayName("은행목록과 회원정보 조회 테스트")
     public void findBankAndUserInfo_test() {
         String memberId = "USER01";
 
-        BankListAndMemberDTO bml = service.findBankAndUserInfo(memberId);
-        assertNotNull(bml);
+        BankListAndMemberDTO bankListAndMember = service.findBankAndUserInfo(memberId);
+        assertNotNull(bankListAndMember);
 
-        List<BankDTO> bankList = bml.getBankList();
+        List<BankDTO> bankList = bankListAndMember.getBankList();
         assertNotNull(bankList);
 
-        MemberDTO member = bml.getMember();
+        MemberDTO member = bankListAndMember.getMember();
         assertNotNull(member);
 
         System.out.println("bankList ==========");
@@ -61,51 +62,5 @@ class FundingRegistServiceTest {
         System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
         System.out.println("member=====");
         System.out.println("member = " + member);
-
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @ToString
 public class RefundAccountDTO {
+
     private int bankCode;
     private int accountNo;
 }

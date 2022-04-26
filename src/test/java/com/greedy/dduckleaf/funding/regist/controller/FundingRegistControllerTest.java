@@ -32,6 +32,7 @@ class FundingRegistControllerTest {
 
     @BeforeEach
     public void setUp() {
+
         mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
     }
 
@@ -45,6 +46,7 @@ class FundingRegistControllerTest {
     @Test
     @DisplayName("펀딩신청 핸들러 메소드 url 매핑 확인")
     public void registFundingPage_url_test() throws Exception {
+
         mockMvc.perform(MockMvcRequestBuilders.get("/funding/regist/reward/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.forwardedUrl("/funding/regist/fundingamount"))
@@ -54,6 +56,7 @@ class FundingRegistControllerTest {
     @Test
     @DisplayName("펀딩신청 핸들러 Model Object 전달 확인")
     public void registFundingPage_model_test() throws Exception {
+
         mockMvc.perform(MockMvcRequestBuilders.get("/funding/regist/reward/1"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("fundingInfo"))
                 .andDo(MockMvcResultHandlers.print());
@@ -71,60 +74,3 @@ class FundingRegistControllerTest {
 
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

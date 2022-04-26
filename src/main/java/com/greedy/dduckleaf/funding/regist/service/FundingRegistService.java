@@ -12,11 +12,23 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * <pre>
+ * Class : FundingRegistService
+ * Comment : 펀딩등록 프로세스의 로직을 담당하는 서비스
+ *
+ * History
+ *  (홍성원) 처음 작성 /
+ * </pre>
+ * @version 1.0.0
+ * @author 홍성원
+ */
 @Service
 public class FundingRegistService {
 
-    private final ProjectFundingRegistRepository projectRepository;
+    /* 펀딩등록에 필요한 JPARepository와 Entity를 DTO로 변환해 줄 ModelMapper을 의존성 주입 받습니다. */
     private final ModelMapper modelMapper;
+    private final ProjectFundingRegistRepository projectRepository;
     private final BankRepository bankRepository;
     private final MemberForFundingRegistRepository memberRepo;
     private final ShippingFeeForFundingRepository shippingRepo;
@@ -36,14 +48,31 @@ public class FundingRegistService {
         this.shippingAddressRepo = shippingAddressRepo;
     }
 
+
+
+    /**
+     * findProjectFundingInfo :
+     * @param projectNo : 프로젝트 번호를 전달받습니다.
+     * @return projectDTO : 펀딩하려는 프로젝트의 정보를 반환합니다.
+     *
+     * @author 홍성원
+     */
     public ProjectDTO findProjectFundingInfo(int projectNo) {
 
         projectRepository.findById(projectNo);
 
-
         return modelMapper.map((Object) projectRepository.findById(projectNo).get(), (Type) ProjectDTO.class);
     }
 
+
+
+    /**
+     * findBankAndUserInfo
+     * @param
+     * @return
+     *
+     * @author 홍성원
+     */
     public BankListAndMemberDTO findBankAndUserInfo(String memberId) {
 
         BankListAndMemberDTO bankListAndMember = new BankListAndMemberDTO();
@@ -125,40 +154,6 @@ public class FundingRegistService {
         funding.setRefundBankCode(registDTO.getRefundAccountInfo().getBankCode());
         funding.setRefundAccount(registDTO.getRefundAccountInfo().getAccountNo());
 
-
         return funding;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

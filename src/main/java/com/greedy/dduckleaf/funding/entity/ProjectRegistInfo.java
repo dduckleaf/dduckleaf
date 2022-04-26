@@ -13,6 +13,7 @@ import lombok.*;
 @Entity(name = "ProjectRegistInfoForFunding")
 @Table(name = "TBL_PROJECT_REGIST_INFO")
 public class ProjectRegistInfo {
+
     @Id
     @Column(name = "PROJECT_REGIST_INFO_NO")
     private int projectRegistInfoNo;

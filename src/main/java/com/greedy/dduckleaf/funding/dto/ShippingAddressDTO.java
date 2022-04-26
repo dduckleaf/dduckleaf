@@ -15,5 +15,4 @@ public class ShippingAddressDTO {
     private String address1;
     private String address2;
     private String shippingRequire;
-
 }

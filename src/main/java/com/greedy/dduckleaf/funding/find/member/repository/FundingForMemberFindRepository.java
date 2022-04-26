@@ -8,15 +8,16 @@ import java.util.List;
 /**
  * <pre>
  * Class : FundingForMemberFindRepository
- * Comment :
+ * Comment : Funding엔티티의 레파지토리
  *
  * History
- * 2022-04-25 h99ww
+ * 2022-04-25 (홍성원) 처음 작성 /
  * </pre>
- *
- * @author h99ww
  * @version 1.0.0
+ * @author 홍성원
  */
 public interface FundingForMemberFindRepository extends JpaRepository<Funding, Integer> {
 
-    List<Funding> findByMemberNo(int memberNo);}
+    /* 회원번호로 펀딩목록을 조회홥니다. */
+    List<Funding> findByMemberNo(int memberNo);
+}
