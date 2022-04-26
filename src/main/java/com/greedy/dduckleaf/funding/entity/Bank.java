@@ -11,18 +11,6 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
-/**
- * <pre>
- * Class : Bank
- * Comment :
- *
- * History
- * 2022-04-22 h99ww
- * </pre>
- *
- * @author h99ww
- * @version 1.0.0
- */
 @Entity(name = "BankForFundingRegist")
 @Table(name = "TBL_BANK")
 public class Bank {

@@ -8,10 +8,10 @@ import lombok.*;
 @Getter
 @ToString
 public class ProjectForFundingRegistDTO {
+
     private int projectNo;
     private String projectName;
     private java.util.Date endDate;
     private RewardInfoDTO rewardInfo;
     private ProjectShippingFeeDTO projectShippingFee;
-
 }

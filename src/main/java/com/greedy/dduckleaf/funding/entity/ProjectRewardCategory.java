@@ -5,21 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-/**
- * <pre>
- * Class : ProjectRewardCategory
- * Comment :
- *
- * History
- * 2022-04-25 h99ww
- * </pre>
- *
- * @author h99ww
- * @version 1.0.0
- */
 @Entity(name = "ProjectRewardCategoryForFunding")
 @Table(name = "TBL_PROJECT_REWARD_CATEGORY")
 public class ProjectRewardCategory {
+
     @Id
     @Column(name = "PROJECT_CATEGORY_NO")
     private int projectCategoryNo;

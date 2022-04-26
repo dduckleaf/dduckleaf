@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @ToString
 public class ProjectRegistInfoDTO {
+
     private int projectRegistInfoNo;
     private int projectNo;
     private String projectRegistInfoCategory;

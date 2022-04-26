@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @ToString
 public class MemberDTO {
+
     private int memberNo;
     private String memberName;
     private String memberId;
@@ -16,5 +17,4 @@ public class MemberDTO {
     private String phone;
     private int memberRole;
     private String whthdrawalStatus;
-
 }

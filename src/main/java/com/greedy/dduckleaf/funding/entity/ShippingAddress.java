@@ -11,6 +11,7 @@ import lombok.*;
 @Entity(name = "ShippingAddressForFunding")
 @Table(name = "TBL_SHIPPING_ADDRESS")
 public class ShippingAddress {
+
     @Id
     @Column(name = "SHIPPING_ADDRESS_NO")
     private int shippingAddresNo;

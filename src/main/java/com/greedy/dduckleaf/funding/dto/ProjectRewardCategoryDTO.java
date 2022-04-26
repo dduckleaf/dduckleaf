@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @ToString
 public class ProjectRewardCategoryDTO {
+
     private int projectCategoryNo;
     private String projectCategoryName;
 }

@@ -29,11 +29,27 @@ public class ProjectApplicationController {
 
     @Autowired
     public ProjectApplicationController(ProjectApplicationService projectApplicationService) {
+
         this.projectApplicationService = projectApplicationService;
     }
 
+    /* 프로젝트 오픈 신청 누르면 프로젝트 번호 생성되고 기본 데이터값 인서트 */
+    @GetMapping("/regist")
+    public ModelAndView registProjectApplication(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+
+        int farmerNo = user.getMemberNo();
+
+        projectApplicationService.registProjectApplication(farmerNo);
+
+        mv.setViewName("/project/regist/main");
+
+        return mv;
+    }
+
     @GetMapping("/basicreq")
-    public ModelAndView findBasicReqByProjectNo(ModelAndView mv, int projectNo) {
+    public ModelAndView findBasicReqByProjectNo(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+
+        int projectNo = findProjectNoByFarmerNo(user);
 
         RewardRegistInfoDTO basicReq = projectApplicationService.findRewardRegistInfoByProjectNo(projectNo);
 

@@ -32,17 +32,12 @@ public class FundingForMemberFindController {
 
     @Autowired
     public FundingForMemberFindController(FundingServiceForFind service) {
+
         this.service = service;
     }
 
-
-
-
-
     /**
-     * sendMemberFundingListPage :
-     * @param
-     * @return
+     * sendMemberFundingListPage : 회원의 펀딩목록 페이지로 포워딩합니다.
      *
      * @author 홍성원
      */
@@ -55,10 +50,11 @@ public class FundingForMemberFindController {
     }
 
     /**
-     * 회원번호를 이용해 해당 회원의 펀딩목록을 조회합니다.
+     * findFundingListByMemberNo : 회원번호를 이용해 해당 회원의 펀딩목록을 조회합니다.
      *
      * @param user : 회원번호를 이용하기위해 CustomUser 인스턴스를 전달받습니다.
      * @return fundingList : 해당 회원의 펀딩목록을 반환합니다.
+     * @author 홍성원
      */
     @GetMapping("/list/member")
     public ModelAndView findFundingListByMemberNo(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
@@ -75,42 +71,3 @@ public class FundingForMemberFindController {
         return mv;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
