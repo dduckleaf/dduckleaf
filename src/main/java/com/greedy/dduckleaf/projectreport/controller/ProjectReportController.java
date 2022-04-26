@@ -164,4 +164,10 @@ public class ProjectReportController {
 
         return mv;
     }
+
+    @GetMapping("/projectmanager/list")
+    public void findProjectReportListByProjectNo() {}
+
+    @GetMapping("/projectmanager/detail")
+    public void find() {}
 }
