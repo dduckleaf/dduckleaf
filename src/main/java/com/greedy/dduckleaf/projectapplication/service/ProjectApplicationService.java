@@ -49,22 +49,22 @@ public class ProjectApplicationService {
         reward.setRewardUnit("리워드 단위");
         reward.setProjectNo(projectNo);
 
-        ProjectDTO openProject = new ProjectDTO();
-        openProject.setProjectName("프로젝트 명");
-        openProject.setOpenDate(Date.valueOf(LocalDate.now()));
-        openProject.setEndDate(Date.valueOf(LocalDate.now().plusMonths(1)));
-        openProject.setFarmerNo(68);
-        openProject.setProgressStatus(1);
-        openProject.setProjectStatus("Y");
-        openProject.setProjectNo(10);
+//        ProjectDTO openProject = new ProjectDTO();
+//        openProject.setProjectName("프로젝트 명");
+//        openProject.setOpenDate(Date.valueOf(LocalDate.now()));
+//        openProject.setEndDate(Date.valueOf(LocalDate.now().plusMonths(1)));
+//        openProject.setFarmerNo(68);
+//        openProject.setProgressStatus(1);
+//        openProject.setProjectStatus("Y");
+//        openProject.setProjectNo(10);
 
         rewardRegistInfoRepository.save(modelMapper.map(reward, RewardRegistInfo.class));
-        projectForApplicationRepository.save(modelMapper.map(openProject, Project.class));
+//        projectForApplicationRepository.save(modelMapper.map(openProject, Project.class));
     }
 
     public int findProjectNoByFarmerId(int farmerNo) {
 
-        com.greedy.dduckleaf.projectnotice.entity.Project project = projectForApplicationRepository.findByFarmerNoAndAndProgressStatus(farmerNo, 3);
+        Project project = projectForApplicationRepository.findByFarmerNoAndAndProgressStatus(farmerNo, 1);
 
         return project != null? project.getProjectNo() : 0;
     }
@@ -75,5 +75,23 @@ public class ProjectApplicationService {
         RewardRegistInfo updateBasicReq = rewardRegistInfoRepository.findById(basicreq.getProjectNo()).get();
         updateBasicReq.setRewardPreparingStatus(basicreq.getRewardPreparingStatus());
         updateBasicReq.setRewardDeliveryPlan(basicreq.getRewardDeliveryPlan());
+    }
+
+    public void registProjectApplication(int farmerNo) {
+
+        ProjectDTO openProject = new ProjectDTO();
+        openProject.setProjectName("프로젝트 명");
+        openProject.setOpenDate(Date.valueOf(LocalDate.now()));
+        openProject.setEndDate(Date.valueOf(LocalDate.now().plusMonths(1)));
+        openProject.setFarmerNo(farmerNo);
+        openProject.setProgressStatus(1);
+        openProject.setProjectStatus("Y");
+        openProject.setExamineStatus("1");
+        openProject.setAchievementRate(0.0);
+//        openProject.setProjectExamineStatus("");
+
+//        openProject.setProjectNo(10);
+
+        projectForApplicationRepository.save(modelMapper.map(openProject, Project.class));
     }
 }

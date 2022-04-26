@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @version 1.0.1
  * @author 박휘림
  */
-public interface ProjectRepository extends JpaRepository<Project, Integer> {
+public interface ProjectForProjectNoticeRepository extends JpaRepository<Project, Integer> {
 
     Project findByFarmerNoAndAndProgressStatus(int farmerNo, int i);
 }

@@ -4,7 +4,7 @@ import com.greedy.dduckleaf.projectnotice.dto.ProjectNoticeDTO;
 import com.greedy.dduckleaf.projectnotice.entity.Project;
 import com.greedy.dduckleaf.projectnotice.entity.ProjectNotice;
 import com.greedy.dduckleaf.projectnotice.repository.ProjectNoticeRepository;
-import com.greedy.dduckleaf.projectnotice.repository.ProjectRepository;
+import com.greedy.dduckleaf.projectnotice.repository.ProjectForProjectNoticeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,11 +34,11 @@ import javax.transaction.Transactional;
 public class ProjectNoticeService {
 
     private final ProjectNoticeRepository projectNoticeRepository;
-    private final ProjectRepository projectRepository;
+    private final ProjectForProjectNoticeRepository projectRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ProjectNoticeService(ProjectNoticeRepository projectNoticeRepository, ProjectRepository projectRepository, ModelMapper modelMapper) {
+    public ProjectNoticeService(ProjectNoticeRepository projectNoticeRepository, ProjectForProjectNoticeRepository projectRepository, ModelMapper modelMapper) {
         this.projectNoticeRepository = projectNoticeRepository;
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
