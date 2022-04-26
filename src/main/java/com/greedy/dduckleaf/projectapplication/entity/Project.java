@@ -36,6 +36,9 @@ public class Project {
     @Column(name = "PROJECT_STATUS")
     private String projectStatus;
 
+    @Column(name = "ACHIEVEMENT_RATE")
+    private double achievementRate;
+
     @Column(name = "EXAMINE_STATUS")
     private String examineStatus;               //심사상태
 

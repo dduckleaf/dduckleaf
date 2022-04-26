@@ -80,8 +80,8 @@ public class ProjectNoticeController {
      */
     public int findProjectNoByFarmerNo(@AuthenticationPrincipal CustomUser user) {
 
-        int farmerNo = user.getMemberNo();
-
+//        int farmerNo = user.getMemberNo();
+        int farmerNo = 68;
         int projectNo = projectService.findProjectNoByFarmerId(farmerNo);
 
         return projectNo;
