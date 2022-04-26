@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+    <main style="width: 1920px">
+        <div class="row">
+        <div th:replace="/common/adminheader.html"></div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <div th:replace="/common/projectmanager/menubar.html"></div>
+            </div>
+            <div class="col-10">
+                <div class="body-area">
+                    <div class="title-div">
+                        <span class="text-title">
+                            <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">프로젝트 신고내역 </span>
+                        <hr width="100%">
+                    </div>
+                    <table class="basic-table" style="width: 100%">
+                        <tr>
+                            <th style="width: 5%;">신고번호</th>
+                            <th style="width: 8%;">처리상태</th>
+                            <th style="width: 45%;">신고 프로젝트 명</th>
+                            <th style="width: 25%;">신고유형</th>
+                            <th style="width: 8%;">신고자 아이디</th>
+                            <th style="width: 9%;">신고일</th>
+                        </tr>
+                        <tr>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                    </table>
+                    <!-- paging -->
+<!--                    <div id="paging-area" align="center">-->
+<!--                        &lt;!&ndash; 맨 앞으로 이동 &ndash;&gt;-->
+<!--                        <button class="paging-btn first" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.startPage}}  + '\''"-->
+<!--                                th:disabled="${ menuList.first }"><<</button>-->
+
+<!--                        &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
+<!--                        <button class="paging-btn prev" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.currentPage - 1}}  + '\''"-->
+<!--                                th:disabled="${ menuList.first }"><</button>-->
+
+<!--                        &lt;!&ndash; 숫자 버튼 &ndash;&gt;-->
+<!--                        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">-->
+<!--                            <button class="paging-btn" th:onclick="'location.href=\'/menu/list?page=' + @{${page}}  + '\''"-->
+<!--                                    th:text="${ page }"-->
+<!--                                    th:disabled="${ paging.currentPage eq page }"></button>-->
+<!--                        </th:block>-->
+
+<!--                        &lt;!&ndash; 다음 페이지로 이동 &ndash;&gt;-->
+<!--                        <button class="paging-btn next" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.currentPage + 1}}  + '\''"-->
+<!--                                th:disabled="${ menuList.last }">></button>-->
+
+<!--                        &lt;!&ndash; 맨 마지막으로 이동 &ndash;&gt;-->
+<!--                        <button class="paging-btn last" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.endPage}}  + '\''"-->
+<!--                                th:disabled="${ menuList.last }">>></button>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for(let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function() {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function() {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function() {
+                const reportNo = this.parentNode.children[0].innerText;
+                location.href = "/report/projectmanager/detail/" + reportNo;
+            }
+        }
+    }
+</script>
+</html>
