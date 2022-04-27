@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.faq.service;
 
 import com.greedy.dduckleaf.faq.dto.FaqDTO;
+import com.greedy.dduckleaf.faq.dto.MemberDTO;
 import com.greedy.dduckleaf.faq.entity.Faq;
 import com.greedy.dduckleaf.faq.repository.FaqRepository;
 import org.modelmapper.ModelMapper;
@@ -27,22 +28,24 @@ public class FaqService {
     }
 
 
-    public Page<FaqDTO> findFaqList(Pageable pageable, int faqNo){
+    public Page<FaqDTO> findFaqList(Pageable pageable){
 
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() -1,
                 pageable.getPageSize(),
                 Sort.by("faqNo").descending());
-        Page<Faq> faqList = faqRepository.findAll()
-        return
+
+        Page<FaqDTO> fq = faqRepository.findAll(pageable).map(faq -> {
+            FaqDTO faqDTO= modelMapper.map(faq, FaqDTO.class);
+            faqDTO.setMember(modelMapper.map(faq.getMember(), MemberDTO.class));
+
+            return faqDTO;
+        });
+
+        fq.forEach(System.out::println);
+
+        return fq;
 
     }
 
-//    public FaqDTO findfaqlist(int faqNo) {
-//
-//        Faq faq = repository.findById(faqNo).get();
-//
-//        return modelMapper.map(faq, FaqDTO.class);
-//
-//
-//    }
+
 }

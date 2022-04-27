@@ -1,12 +1,15 @@
 package com.greedy.dduckleaf.faq.controller;
 
+import com.greedy.dduckleaf.common.paging.Pagenation;
+import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.faq.dto.FaqDTO;
 import com.greedy.dduckleaf.faq.service.FaqService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,9 +19,10 @@ import java.util.List;
 @RequestMapping("/faq")
 public class FaqController {
 
-    @Autowired
+
     private final FaqService service;
 
+    @Autowired
     public FaqController(FaqService service) {
         this.service = service;
     }
@@ -28,11 +32,16 @@ public class FaqController {
 //    public void FaqPage() {}
 
     @GetMapping("/list")
-    public ModelAndView findFaqList(ModelAndView mv, @PathVariable int faqNo){
+    public ModelAndView findFaqList(ModelAndView mv, @PageableDefault Pageable pageable){
 
-        FaqDTO faq = service.findfaqlist(faqNo);
+        System.out.println("pageable= " + pageable);
+        Page<FaqDTO> faqList = service.findFaqList(pageable);
+        faqList.forEach(System.out::println);
 
-        mv.addObject("FAQInfo", faq);
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(faqList);
+
+        mv.addObject("faqList", faqList);
+        mv.addObject("paging", paging);
         mv.setViewName("faq/list");
 
         return mv;
