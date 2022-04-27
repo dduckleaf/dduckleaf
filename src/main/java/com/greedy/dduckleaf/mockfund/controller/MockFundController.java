@@ -65,12 +65,12 @@ public class MockFundController {
         return mv;
     }
 
-    @GetMapping("/reward/{infoCode}")
-    public ModelAndView findRewardByCode(ModelAndView mv, @PathVariable int infoCode) {
+    @GetMapping("/reward/{rewardNo}")
+    public ModelAndView findRewardByCode(ModelAndView mv, @PathVariable int rewardNo) {
 
-        MockFundRewardDTO info = mockFundService.findRewardByCode(infoCode);
+        MockFundRewardDTO reward = mockFundService.findRewardByCode(rewardNo);
 
-        mv.addObject("info", info);
+        mv.addObject("reward", reward);
         mv.setViewName("/mockfund/regist/reward");
 
         return mv;
@@ -123,9 +123,22 @@ public class MockFundController {
 
         mockFundService.modifyStory(mockFundInfo);
 
-        rttr.addFlashAttribute("modifySuccessMessage", "기본정보 수정 성공");
+        rttr.addFlashAttribute("modifySuccessMessage", "스토리 수정 성공");
 
         return "redirect:/mockfund/" + mockFundInfo.getMockFundInfoNo();
+    }
+
+    @GetMapping("/modify/reward")
+    public void modifyReward() {}
+
+    @PostMapping("/modify/reward")
+    public String modifyMockFundReward(RedirectAttributes rttr, MockFundRewardDTO mockFundReward) {
+
+        mockFundService.modifyReward(mockFundReward);
+
+        rttr.addFlashAttribute("modifySuccessMessage", "리워드 수정 성공");
+
+        return "redirect:/mockfund/" + mockFundReward.getMockFundRewardNo();
     }
 
 }

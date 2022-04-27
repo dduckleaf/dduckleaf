@@ -96,7 +96,6 @@ public class MockFundService {
 
         Long mills = System.currentTimeMillis();
         Date date = new Date(mills);
-        System.out.println("date = " + date);
         info.setMockFundAgreementStatus("Y");
         info.setAgreementDate(date);
 
@@ -108,5 +107,13 @@ public class MockFundService {
 
         MockFundInfo foundInfo = mockFundInfoRepository.findById(mockFundInfo.getMockFundInfoNo()).get();
         foundInfo.setMockFundDetail(mockFundInfo.getMockFundDetail());
+    }
+
+    @Transactional
+    public void modifyReward(MockFundRewardDTO mockFundReward) {
+
+        MockFundReward reward = mockFundRewardRepository.findById(mockFundReward.getMockFundRewardNo()).get();
+        reward.setRewardName(mockFundReward.getRewardName());
+        reward.setRewardDetail(mockFundReward.getRewardDetail());
     }
 }
