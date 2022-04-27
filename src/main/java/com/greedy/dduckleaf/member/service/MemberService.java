@@ -165,7 +165,7 @@ public class MemberService{
 
     /**
      * findMember: 입력한 이메일이 등록되어있는지 확인합니다.
-     * @param member: 중복 확인할 아이디
+     * @param member: 중복 확인할 아이디와 이메일을 담은 객체
      * @return 결과에 따라 다른 메시지를 return합니다.
      * @author 박상범
      */
@@ -178,6 +178,19 @@ public class MemberService{
         }
 
         return emailSender.sendMailVerification(member.getEmail());
+    }
+
+    /**
+     * findMemberNo: 입력한 이메일이 등록되어있는지 확인합니다.
+     * @param member: 중복 확인할 아이디와 이메일을 담은 객체
+     * @return 회원번호를 return합니다.
+     * @author 박상범
+     */
+    public int findMemberNo(MemberDTO member) {
+
+        Member foundMember = memberRepository.findMember(member.getMemberId(), member.getEmail());
+
+        return foundMember.getMemberNo();
     }
 
     /**
@@ -199,4 +212,5 @@ public class MemberService{
 
         return "비밀번호 변경 실패";
     }
+
 }

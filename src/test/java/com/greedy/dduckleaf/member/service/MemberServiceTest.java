@@ -227,6 +227,7 @@ class MemberServiceTest {
         assertNotEquals(result,"아이디와 이메일이 일치하는 회원의 정보가 없습니다.");
     }
 
+
     @Test
     @DisplayName("입력한 아이디와 이메일로 회원가입 여부 확인 실패")
     public void findMemberByMemberIdAndEmailFailedTest() {
@@ -241,6 +242,23 @@ class MemberServiceTest {
 
         //then
         assertEquals(result, "아이디와 이메일이 일치하는 회원의 정보가 없습니다.");
+    }
+
+    @Test
+    @DisplayName("입력한 아이디와 이메일로 회원번호 리턴")
+    public void findMemberNo() {
+
+        //given
+        MemberDTO member = new MemberDTO();
+        member.setMemberId("qwer");
+        member.setEmail("tkdjawlwhs@naver.com");
+
+        //when
+        int memberId = memberService.findMemberNo(member);
+
+        //then
+        System.out.println(memberId);
+        assertNotNull(memberId);
     }
 
     @Test
