@@ -80,7 +80,6 @@ public class MemberForProjectReportRepositoryTests {
 
         System.out.println("projectReportList.size() =  " + projectReportList.size());
     }
-
 }
 
 

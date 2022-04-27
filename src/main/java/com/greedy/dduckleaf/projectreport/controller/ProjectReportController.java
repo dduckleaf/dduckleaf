@@ -28,10 +28,12 @@ import java.util.List;
  * 2022/04/18 (장민주) findProjectReportListByMemberNo 메소드 작성.
  * 2022/04/22 (장민주) findProjectReportDetail 메소드 작성.
  * 2022/04/23 (장민주) platformManagerDefaultPage 메소드 작성.
- * 2022/04/23 (장민주) findAllProjectReportList 메소드 작성.
+ *                    findAllProjectReportList 메소드 작성.
  * 2022/04/24 (장민주) findProjectReportDetail 메소드 작성.
- * 2022/04/24 (장민주) findProjectReportListByMemberNo 메소드 작성.
+ *                    findProjectReportListByMemberNo 메소드 작성.
  * 2022/04/25 (장민주) registProjectReportReply 메소드 작성.
+ * 2022/04/27 (장민주) findProjectReportListByProjectNo 메소드 작성.
+ *                    findProjectReportDetailForProjectManager 메소드 작성.
  * </pre>
  * @version 1.0.4
  * @author 장민주
@@ -48,7 +50,7 @@ public class ProjectReportController {
     }
 
     /**
-    * 회원번호로 로그인회원의 프로젝트신고내역 조회 요청 메소드입니다.
+    * findProjectReportListByMemberNo:회원번호로 로그인회원의 프로젝트신고내역 조회 요청 메소드입니다.
     *  @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
     * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
      *           projectReportSummeryInfo : 프로젝트신고내역 요약정보
@@ -70,7 +72,7 @@ public class ProjectReportController {
     }
 
     /**
-     * 서포터 마이페이지 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
+     * findProjectReportDetailForMember: 서포터 마이페이지 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
      *  @param projectReportNo 상세조회를 요청할 프로젝트신고번호
      * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
      *            projectReportInfo : 프로젝트신고내역 상세정보
@@ -88,13 +90,13 @@ public class ProjectReportController {
     }
 
     /**
-    * 관리자페이지 플랫폼관리 메뉴 하위의 신고관리 첫 화면으로 이동하기 위한 getMapping 메소드입니다
+    * platformManagerDefaultPage: 관리자페이지 플랫폼관리 메뉴 하위의 신고관리 첫 화면으로 이동하기 위한 getMapping 메소드입니다
     */
     @GetMapping("/platformmanager/default")
     public void platformManagerDefaultPage() {}
 
     /**
-     * 프로젝트 신고내역 전체조회 요청 메소드입니다.
+     * findAllProjectReportList: 프로젝트 신고내역 전체조회 요청 메소드입니다.
      * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
      *            projectReportSummaryInfo : 프로젝트신고내역 요약정보
      *            "report/platformmanager/list" : 요약정보를 출력할 브라우저 화면 경로
@@ -117,7 +119,7 @@ public class ProjectReportController {
     }
 
     /**
-    * 플랫폼관리 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
+    * findProjectReportDetail: 플랫폼관리 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
     *  @param projectReportNo 상세조회를 요청할 프로젝트신고번호
     * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
     *            projectReportInfo : 프로젝트신고내역 상세정보
@@ -135,7 +137,7 @@ public class ProjectReportController {
     }
 
     /**
-    * 프로젝트 신고내역에 대한 답변 등록 요청 메소드입니다.
+    * registProjectReportReply: 프로젝트 신고내역에 대한 답변 등록 요청 메소드입니다.
     *  @param projectReportReply: 첫 번째 파라미터에 대한 설명
     * @param user: 로그인한 관리자 회원 정보
     * @return mv: 답변 등록 성공 메시지, redirect 할 화면경로
@@ -165,9 +167,25 @@ public class ProjectReportController {
         return mv;
     }
 
+    /**
+     * findProjectReportListByProjectNo: 프로젝트 번호로 해당 프로젝트의 신고내역 조회를 요청하는 메소드입니다.
+     * @param first: 설명
+     * @param second:
+     * @param third:
+     * @return
+     * @author 장민주
+     */
     @GetMapping("/projectmanager/list")
     public void findProjectReportListByProjectNo() {}
 
+    /**
+     * findProjectReportDetailForProjectManager: 프로젝트관리 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다
+     * @param first: 설명
+     * @param second:
+     * @param third:
+     * @return
+     * @author 장민주
+     */
     @GetMapping("/projectmanager/detail")
-    public void find() {}
+    public void findProjectReportDetailForProjectManager() {}
 }

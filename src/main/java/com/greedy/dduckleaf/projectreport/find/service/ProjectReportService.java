@@ -4,7 +4,7 @@ import com.greedy.dduckleaf.projectreport.find.dto.*;
 import com.greedy.dduckleaf.projectreport.find.entity.*;
 import com.greedy.dduckleaf.projectreport.find.repository.MemberForProjectReportRepository;
 import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportReplyRepository;
-import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportRepository;
+import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportMainRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,12 +40,12 @@ import java.util.stream.Collectors;
 public class ProjectReportService {
 
     private final MemberForProjectReportRepository memberRepository;
-    private final ProjectReportRepository reportRepository;
+    private final ProjectReportMainRepository reportRepository;
     private final ProjectReportReplyRepository replyRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ProjectReportService(MemberForProjectReportRepository memberRepository, ProjectReportRepository reportRepository, ProjectReportReplyRepository replyRepository, ModelMapper modelMapper) {
+    public ProjectReportService(MemberForProjectReportRepository memberRepository, ProjectReportMainRepository reportRepository, ProjectReportReplyRepository replyRepository, ModelMapper modelMapper) {
         this.memberRepository = memberRepository;
         this.reportRepository = reportRepository;
         this.replyRepository = replyRepository;

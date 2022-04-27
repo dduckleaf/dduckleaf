@@ -15,10 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ContextConfiguration(classes = {
@@ -34,7 +31,7 @@ public class ProjectReportRepositoryTests {
     private EntityManager entityManager;
 
     @Autowired
-    private ProjectReportRepository repository;
+    private ProjectReportMainRepository repository;
 
     @Test
     public void initTest() {
@@ -72,5 +69,21 @@ public class ProjectReportRepositoryTests {
         //then
         assertNotNull(projectReport);
         System.out.println("projectReport = " + projectReport);
+    }
+
+    @Test
+    @DisplayName("프로젝트 번호로 해당 프로젝트의 신고목록 조회 테스트")
+    public void findByProjectNo() {
+
+        //given
+        int projectNo = 1;
+        int progressStatus = 3;
+
+        //when
+        ProjectReport report = repository.findByProjectNo(projectNo, progressStatus);
+        
+        //then
+        assertNotNull(report);
+        System.out.println("report = " + report);
     }
 }
