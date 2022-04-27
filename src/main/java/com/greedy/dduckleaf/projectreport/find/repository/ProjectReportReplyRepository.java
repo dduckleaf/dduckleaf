@@ -6,15 +6,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * <pre>
  * Class : ProjectReportReplyRepository
- * Comment : 프로젝트신고 업무에 사용되는 데이터조회, 데이터삽입 메소드를 작성하였습니다.
+ * Comment : ProjectReportReply 엔티티를 이용하여 구현한 엔티티 저장소 입니다.
  *
  * History
  * 2022-04-24 (장민주) 프로젝트 신고번호로 해당 신고의 답변 조회용 메소드 작성
- * 2022-04-25 (장민주) 프로젝트 신고 답변 등록 메소드 작성
  * </pre>
  *
  * @author 장민주
- * @version 1.0.1
+ * @version 1.0.0
  */
 public interface ProjectReportReplyRepository extends JpaRepository<ProjectReportReply, Integer> {
 

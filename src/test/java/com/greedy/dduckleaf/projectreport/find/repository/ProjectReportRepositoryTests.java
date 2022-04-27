@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.projectreport.find.repository;
 
 import com.greedy.dduckleaf.config.*;
+import com.greedy.dduckleaf.projectreport.find.entity.Project;
 import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,6 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @ContextConfiguration(classes = {
@@ -34,7 +34,7 @@ public class ProjectReportRepositoryTests {
     private EntityManager entityManager;
 
     @Autowired
-    private ProjectReportRepository repository;
+    private ProjectReportMainRepository repository;
 
     @Test
     public void initTest() {
@@ -72,5 +72,24 @@ public class ProjectReportRepositoryTests {
         //then
         assertNotNull(projectReport);
         System.out.println("projectReport = " + projectReport);
+    }
+
+    @Test
+    @DisplayName("프로젝트 번호로 해당 프로젝트의 신고목록 조회 테스트")
+    public void findByProjectNo() {
+
+        //given
+        int projectNo = 1;
+
+        Pageable pageable = PageRequest.of(0,
+                10,
+                Sort.by("projectReportNo").descending());
+
+        //when
+        Page<ProjectReport> reportList = repository.findByProject_ProjectNo(projectNo, pageable);
+        
+        //then
+        assertNotNull(reportList);
+        reportList.forEach(System.out::println);
     }
 }

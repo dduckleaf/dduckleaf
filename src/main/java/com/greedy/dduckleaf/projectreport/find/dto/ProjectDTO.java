@@ -10,4 +10,5 @@ public class ProjectDTO {
 
     private int projectNo;
     private String projectName;
+    private int progressStatus;
 }

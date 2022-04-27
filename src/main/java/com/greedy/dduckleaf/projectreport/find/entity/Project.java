@@ -14,6 +14,9 @@ public class Project {
     @Column(name = "PROJECT_NAME")
     private String projectName;
 
+    @Column(name = "PROGRESS_STATUS")
+    private int progressStatus;
+
     public Project() {}
 
     public Project(int projectNo, String projectName) {
