@@ -1,11 +1,11 @@
 package com.greedy.dduckleaf.member.controller;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.greedy.dduckleaf.authentication.model.service.AuthenticationService;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
 import com.greedy.dduckleaf.member.service.MemberService;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,9 +28,9 @@ import java.util.Locale;
  * 2022/04/21 (박상범) 이메일 인증 번호 전송 관련 메소드 구현 완료, 휴대폰 인증 번호 전송 관련 메소드 구현 시작
  * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료, 회원 가입 관련 메소드 구현 완료
  * 2022/04/23 (박상범) 아이디 찾기 관련 메소드 구현 완료
- * 2022/04/24 (박상범) 비밀번호 찾기 관련 메소드 구현 완료
+ * 2022/04/27 (박상범) 비밀번호 찾기 관련 메소드 구현 완료
  * </pre>
- * @version 1.0.7
+ * @version 1.0.8
  * @author 박상범
  */
 @Controller
@@ -215,14 +215,33 @@ public class MemberController {
     }
 
     /**
+     * findMemberPwd : 비밀번호 찾기 페이지로 포워딩합니다.
+     * @return /member/find/pwd
+     * @author 박상범
+     */
+    @GetMapping("/find/pwd")
+    public String findMemberPwd() {
+        return "/member/find/pwd";
+    }
+
+    /**
      * checkMemberIdAndEmail : 비밀번호를 변경하기 위해 아이디와 이메일을 입력하여 회원가입여부를 확인합니다.
-     * @param member: 회원가입 여부를 확인할 아이디와 비밀번호를 담은 MemberDTO 객체
+     * @param data: 회원가입 여부를 확인할 아이디, 이메일
      * @return gson.toJson(result)
      * @author 박상범
      */
-    @PostMapping("/find/check")
+    @PostMapping(value = {"/find/check"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public String checkMemberIdAndEmail(MemberDTO member) {
+    public String checkMemberIdAndEmail(@RequestBody String data) {
+
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonElement = jsonParser.parse(data);
+        String memberId = jsonElement.getAsJsonObject().get("memberId").getAsString();
+        String email = jsonElement.getAsJsonObject().get("email").getAsString();
+
+        MemberDTO member = new MemberDTO();
+        member.setMemberId(memberId);
+        member.setEmail(email);
 
         String result = memberService.findMember(member);
 
@@ -238,6 +257,28 @@ public class MemberController {
     }
 
     /**
+     * modifyPage : 비밀번호를 변경하기 위해 아이디와 이메일을 입력하여 회원가입여부를 확인합니다.
+     * @param memberId: 회원가입 여부를 확인할 아이디
+     * @param email: 회원가입 여부를 확인하고 인증번호를 전송할 이메일
+     * @return mv
+     * @author 박상범
+     */
+    @PostMapping("/find/modify")
+    public ModelAndView modifyPage(ModelAndView mv, String memberId, String email) {
+
+        MemberDTO member = new MemberDTO();
+        member.setMemberId(memberId);
+        member.setEmail(email);
+
+        int memberNo = memberService.findMemberNo(member);
+
+        mv.addObject("memberNo", memberNo);
+        mv.setViewName("/member/find/modify");
+
+        return mv;
+    }
+
+    /**
      * modifyMemberPwd : 회원의 비밀번호를 변경합니다.
      * @param member: 회원번호와 변경할 비밀번호를담은  MemberDTO 객체
      * @return mv
@@ -250,8 +291,8 @@ public class MemberController {
 
         String result = memberService.modifyMemberPwd(member);
 
-        rttr.addFlashAttribute("message", result);
-        mv.setViewName("/member/login");
+        rttr.addFlashAttribute("successMessage", result);
+        mv.setViewName("redirect:/member/login");
 
         return mv;
     }
