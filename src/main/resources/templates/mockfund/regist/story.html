@@ -136,44 +136,6 @@
     }
 
     $("#agreement").click(async function (agreement) {
-        // const {value: accept} = await Swal.fire({
-        //     id: 'agreement',
-        //     title: 'Terms and conditions',
-        //     input: 'checkbox',
-        //     inputValue: 1,
-        //     inputPlaceholder:
-        //         'I agree with the terms and conditions',
-        //     confirmButtonText:
-        //         '스토리 작성 시작하기',
-        //     customClass: {
-        //         confirmButton: 'startregist',
-        //         popup: 'registpopup'
-        //     },
-        //     buttonsStyling: false,
-        //     inputValidator: (result) => {
-        //         return !result && 'You need to agree with T&C'
-        //     }
-        // })
-        // const { value: formValues } = await Swal.fire({
-        //     title: 'Multiple inputs',
-        //     html:
-        //         '<a class="modalid">id</a><br>' +
-        //         '<input id="swal-input1" class="swal2-input"><br>' +
-        //         '<a class="modalid">pw</a><br>' +
-        //         '<input id="swal-input2" class="swal2-input"><br>' +
-        //         '<a class="modalid">id</a><br>' +
-        //         '<input id="swal-input3" class="swal2-input"><br>' +
-        //         '<a class="modalid">id</a><br>' +
-        //         '<input id="swal-input4" class="swal2-input">',
-        //     focusConfirm: false,
-        //     preConfirm: () => {
-        //         return [
-        //             document.getElementById('swal-input1').value,
-        //             document.getElementById('swal-input2').value,
-        //             document.getElementById('swal-input3').value,
-        //             document.getElementById('swal-input4').value
-        //         ]
-        //     }
         const {value: formValues} = await Swal.fire({
             title: '<img class="leaf" src="/images/common/Leaf.png" style="vertical-align: -20%; margin-right: 10px;">광고 심의 동의를 진행하고 스토리 작성을 시작하세요.',
             html:
@@ -199,7 +161,7 @@
                 htmlContainer: 'confirmcontainer',
             },
             buttonsStyling: false,
-        }).then($("#order2_chk").click(await function () {
+        }).then($("#order2_chk").click(await function() {
             var order2Chk = $("#order2_chk").prop("checked");
 
             if (order2Chk) {
