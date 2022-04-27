@@ -53,6 +53,19 @@ public class ProjectApplicationController {
     }
 
     /**
+     * projectApplicationMainPage: 프로젝트 신청 페이지로 이동합니다.
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "project/regist/main" 프로젝트 신청 메인페이지 뷰 경로
+     * @author 박휘림
+     */
+    @GetMapping("/goMain")
+    public ModelAndView projectApplicationMainPage(ModelAndView mv) {
+
+        mv.setViewName("project/regist/main");
+        return mv;
+    }
+
+    /**
      * findProjectNoByFarmerNo: 회원번호로 프로젝트 번호를 조회합니다.
      * @param user: 로그인한 사용자의 정보를 받는 객체
      * @return projectNo 프로젝트 번호
@@ -81,6 +94,7 @@ public class ProjectApplicationController {
         int projectNo = findProjectNoByFarmerNo(user);
 
         RewardRegistInfoDTO basicReq = projectApplicationService.findRewardRegistInfoByProjectNo(projectNo);
+        System.out.println("basicReq = " + basicReq);
 
         mv.addObject("basicReq", basicReq);
         mv.setViewName("project/regist/basicreq");
@@ -95,12 +109,23 @@ public class ProjectApplicationController {
      *            "redirect:/project/regist/main" 프로젝트 신청 메인페이지 경로
      * @author 박휘림
      */
-    @PostMapping("/basicreq")
+    @PostMapping("/modify/basicreq")
     public ModelAndView modifyBasicReq(ModelAndView mv, RewardRegistInfoDTO basicreq) {
-
+        System.out.println("basicreq = " + basicreq);
         projectApplicationService.modifyBasicReq(basicreq);
 
-        mv.setViewName("redirect:/project/regist/main");
+        mv.setViewName("redirect:/project/application/goMain");
+
+        return mv;
+    }
+
+    @PostMapping("/rewardagreement")
+    public ModelAndView modifyRewardAgreementStatus(ModelAndView mv, RewardRegistInfoDTO basicreq) {
+
+        projectApplicationService.modifyRewardAgreementStatus(basicreq);
+        System.out.println("basicreq = " + basicreq);
+
+        mv.setViewName("redirect:/project/application/basicreq");
 
         return mv;
     }

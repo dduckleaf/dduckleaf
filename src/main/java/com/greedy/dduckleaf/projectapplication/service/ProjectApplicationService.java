@@ -9,6 +9,8 @@ import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  * <pre>
@@ -47,19 +49,19 @@ public class ProjectApplicationService {
     }
 
     /* 프로젝트 신청 시 프로젝트 기본데이터 등록하고 프로젝트 번호 리턴 */
-    private int openProject(int farmerNo) {
-
-        Project openProject = new Project();
-        openProject.setFarmerNo(farmerNo);
-        openProject.setProgressStatus(1);
-        System.out.println("openProject = " + openProject);
-
-        projectForApplicationRepository.save(openProject);
-
-        Project foundProject = projectForApplicationRepository.findById(openProject.getProjectNo()).get();
-
-        return foundProject.getProjectNo();
-    }
+//    private int openProject(int farmerNo) {
+//
+//        Project openProject = new Project();
+//        openProject.setFarmerNo(farmerNo);
+//        openProject.setProgressStatus(1);
+//        System.out.println("openProject = " + openProject);
+//
+//        projectForApplicationRepository.save(openProject);
+//
+//        Project foundProject = projectForApplicationRepository.findById(openProject.getProjectNo()).get();
+//
+//        return foundProject.getProjectNo();
+//    }
 
     /**
      * registProjectApplication: 프로젝트 신청 버튼 클릭 시 기본데이터를 인서트합니다.
@@ -105,6 +107,7 @@ public class ProjectApplicationService {
     private RewardRegistInfo registInfo(int farmerNo) {
 
         RewardRegistInfo reward = new RewardRegistInfo();
+        reward.setRewardAgreementDate(Date.valueOf(LocalDate.now()));
         System.out.println("reward = " + reward);
 
         return reward;
@@ -113,7 +116,6 @@ public class ProjectApplicationService {
     private ProjectBasicInfo basicInfo(int farmerNo) {
 
         ProjectBasicInfo projectBasicInfo = new ProjectBasicInfo();
-//        projectBasicInfo.setProjectNo(openProject(farmerNo));
         projectBasicInfo.setProjectBasicCategoryNo(1);
         System.out.println("projectBasicInfo = " + projectBasicInfo);
 
@@ -123,7 +125,6 @@ public class ProjectApplicationService {
     private ProjectShippingInfo shippingInfo(int farmerNo) {
 
         ProjectShippingInfo shippingInfo = new ProjectShippingInfo();
-//        shippingInfo.setProjectNo(openProject(farmerNo));
         System.out.println("shippingInfo = " + shippingInfo);
 
         return shippingInfo;
@@ -132,7 +133,6 @@ public class ProjectApplicationService {
     private RefundPolicy refundPolicy(int farmerNo) {
 
         RefundPolicy refundPolicy = new RefundPolicy();
-//        refundPolicy.setProjectNo(openProject(farmerNo));
         System.out.println("refundPolicy = " + refundPolicy);
 
         return refundPolicy;
@@ -152,7 +152,6 @@ public class ProjectApplicationService {
         farmerInfo.setRepresentativeName("대표자명");
         farmerInfo.setRepresentativeEmail("대표자이메일");
         farmerInfo.setRepresentativeSSN("주민등록번호");
-        System.out.println("farmerInfo = " + farmerInfo);
 
         return farmerInfo;
     }
@@ -187,7 +186,7 @@ public class ProjectApplicationService {
      */
     public RewardRegistInfoDTO findRewardRegistInfoByProjectNo(int projectNo) {
 
-        RewardRegistInfo basicReq = rewardRegistInfoRepository.findById(projectNo).get();
+        RewardRegistInfo basicReq = rewardRegistInfoRepository.findByProjectNo(projectNo);
 
         return modelMapper.map(basicReq, RewardRegistInfoDTO.class);
     }
@@ -200,9 +199,23 @@ public class ProjectApplicationService {
     @Transactional
     public void modifyBasicReq(RewardRegistInfoDTO basicreq) {
 
-        RewardRegistInfo updateBasicReq = rewardRegistInfoRepository.findById(basicreq.getProjectNo()).get();
+        RewardRegistInfo updateBasicReq = rewardRegistInfoRepository.findByProjectNo(basicreq.getProjectNo());
         updateBasicReq.setRewardPreparingStatus(basicreq.getRewardPreparingStatus());
         updateBasicReq.setRewardDeliveryPlan(basicreq.getRewardDeliveryPlan());
     }
 
+    /**
+     * modifyRewardAgreementStatus: 사용자가 리워드 관련 서류 제출에 동의 시 동의 여부와 날짜를 업데이트합니다.
+     * @param basicreq: 사용자가 입력한 기본 요건 정보를 담은 객체
+     * @author 박휘림
+     */
+    @Transactional
+    public void modifyRewardAgreementStatus(RewardRegistInfoDTO basicreq) {
+        System.out.println("basicreq 서비스!!!!= " + basicreq);
+        System.out.println("basicreq.getProjectNo() = " + basicreq.getProjectNo());
+        RewardRegistInfo updateBasicReq = rewardRegistInfoRepository.findByProjectNo(basicreq.getProjectNo());
+        System.out.println("updateBasicReq = " + updateBasicReq);
+        updateBasicReq.setRewardAgreementStatus("Y");
+        updateBasicReq.setRewardAgreementDate(Date.valueOf(LocalDate.now()));
+    }
 }

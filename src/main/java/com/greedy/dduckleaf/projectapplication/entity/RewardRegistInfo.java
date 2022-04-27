@@ -8,6 +8,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -50,6 +52,12 @@ public class RewardRegistInfo {
     @Column(name = "PROJECT_NO")
     private int projectNo;
 
+    @Column(name = "REWARD_AGREEMENT_STATUS")
+    private String rewardAgreementStatus;
+
+    @Column(name = "REWARD_AGREEMENT_DATE")
+    private java.sql.Date rewardAgreementDate;
+
     @Override
     public String toString() {
         return "RewardRegistInfo{" +
@@ -61,6 +69,8 @@ public class RewardRegistInfo {
                 ", rewardInfo='" + rewardInfo + '\'' +
                 ", rewardUnit='" + rewardUnit + '\'' +
                 ", projectNo=" + projectNo +
+                ", rewardAgreementStatus='" + rewardAgreementStatus + '\'' +
+                ", rewardAgreementDate=" + rewardAgreementDate +
                 '}';
     }
 
@@ -72,6 +82,7 @@ public class RewardRegistInfo {
         this.rewardName = this.rewardName  == null ? "리워드 명" : this.rewardName ;
         this.rewardInfo = this.rewardInfo  == null ? "리워드 소개를 간단히 적어주세요" : this.rewardInfo ;
         this.rewardUnit = this.rewardUnit  == null ? "리워드 단위" : this.rewardUnit ;
+        this.rewardAgreementDate = this.rewardAgreementDate  == null ? Date.valueOf(LocalDate.now()) : this.rewardAgreementDate ;
 
     }
 }
