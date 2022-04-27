@@ -56,4 +56,18 @@ public class ProjectReportControllerTests {
                 .andExpect(MockMvcResultMatchers.forwardedUrl("report/platformmanager/detail"))
                 .andDo(MockMvcResultHandlers.print());
     }
+
+    @Test
+    @DisplayName("프로젝트 신고번호로 프로젝트 상세내용 조회 테스트")
+    public void findProjectReportDetailForProjectManager_test() throws Exception {
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/report/projectmanager/detail/1/4"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.model().attributeExists("reportDetailInfo"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("projectNo"))
+                .andExpect(MockMvcResultMatchers.model().attributeExists("projectReportNo"))
+                .andExpect(MockMvcResultMatchers.forwardedUrl("report/projectmanager/detail"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
 }
