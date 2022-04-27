@@ -15,23 +15,24 @@
     <!-- Style CSS -->
     <link rel="stylesheet" th:href="@{ /css/mockfund.css }">
     <link rel="stylesheet" th:href="@{ /css/style.css }">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div th:replace="/common/userheader.html"></div>
 <div class="container">
     <div style="width: 1000px;">
         <div class="row1 reward">
-
-            <div class="col-md-2 fundmenu">
-                <button class="accordion">
-                    <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/mockfund/sidebararrow.png }"></p>
-                </button>
-                <div class="panel">
-                    <p onclick="location.href='../basicinfo/1'">기본정보</p>
-                    <p onclick="location.href='../story/1'">스토리 작성</p>
-                    <p onclick="location.href='../regist/reward/1'">리워드 설계</p>
+            <form name="saveForm">
+                <div class="col-md-2 fundmenu">
+                    <button class="accordion" type="button">
+                        <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/mockfund/sidebararrow.png }"></p>
+                    </button>
+                    <div class="panel">
+                        <p onclick="location.href='../basicinfo/1'">기본정보</p>
+                        <p onclick="location.href='../story/1'">스토리 작성</p>
+                        <p onclick="location.href='../reward/1'">리워드 설계</p>
+                    </div>
                 </div>
-            </div>
             <div class="col-md-7">
                 <div class="breadcrumb">
                     <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">모의펀딩 준비</span>&nbsp;
@@ -40,22 +41,25 @@
                 </div>
                 <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">리워드 설계</a><br><hr>
                 <a>서포터에게 제공할 리워드 내용을 입력하세요.</a>
-                <div class="basicmenu reward-area">
-                    <a class="basictitle">리워드 설계 조건</a><br>
-                    <div class="rewardtitle-section">
-                        <a class="rewardtitle">제한 수량</a>
-                        <a class="rewardtitle">발송시작일</a>
-                    </div>
-                    <div class="rewarddetail-section">
-                        <a class="rewarddetail">생산 및 제공할 수 있는 리워드의 총 수량으로<br>해당 수량이 모두 펀딩되면 더 이상 펀딩 불가합니다.</a>
-                        <a class="rewarddetail">프로젝트 종료일 이후부터 11개월 이내로 설계 가능합니다.</a>
-                    </div>
+                <div class="basicmenu">
+                    <a class="basictitle">금액</a><br>
+                    <input name="mockFundRewardNo" type="hidden" value="1">
+                    <input class="mockfundtitle1" id="mockFundName" name="mockFundName" type="number">
                 </div>
-                <button class="btn1 big-btn story-btn"><img th:src="@{/images/mockfund/plus.png}"> 추가하기</button>
+                <div class="basicmenu">
+                    <a class="basictitle">리워드명</a><br>
+                    <input name="mockFundInfoNo" type="hidden" value="1">
+                    <input class="mockfundtitle1" name="rewardName" type="text" th:value="${ reward.rewardName }">
+                </div>
+                <div class="basicmenu">
+                    <a class="basictitle">상세설명</a><br>
+                    <input class="mockfundtitle2" name="rewardDetail" type="text" th:value="${ reward.rewardDetail }"></input>
+                </div>
                 <div>
-                    <button class="btn1 big-btn reward">저장하기</button>
+                    <button type="button" class="btn1 big-btn reward" id="saveclick">저장하기</button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -110,6 +114,44 @@
 
         }
     }
+
+    $("#saveclick").click(function() {
+        Swal.fire({
+            title: '저장하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            allowEnterKey: false,
+            customClass: {
+                confirmButton: 'savesuccess',
+                cancelButton: 'savecancel',
+                popup: 'savepopup'
+            },
+            buttonsStyling: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: '저장되었습니다',
+                    confirmButtonText: "확인",
+                    allowEnterKey: false,
+                    customClass: {
+                        confirmButton: 'saveok',
+                        popup: 'savepopup'
+                    },
+                    buttonsStyling: false,
+                }).then(function(rewardName, rewardDetail) {
+                    let saveForm = document.saveForm;
+                    let url = '/mockfund/modify/reward';
+                    saveForm.rewardName = rewardName;
+                    saveForm.rewardDetail = rewardDetail;
+
+                    saveForm.action = url;
+                    saveForm.method = 'post';
+                    saveForm.submit();
+                });
+            }
+        })
+    });
 
     document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);;
 </script>
