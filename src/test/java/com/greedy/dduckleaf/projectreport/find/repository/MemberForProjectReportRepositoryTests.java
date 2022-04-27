@@ -19,18 +19,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-/**
- * <pre>
- * Class : MemberForProjectReportRepositoryTests
- * Comment : 회원정보로 접근하여 회원별 프로젝트신고내역 데이터를 조회하기 위한 메소드 테스트입니다.
- *
- * History
- * 2022-04-22 :
- * </pre>
- *
- * @author 장민주
- * @version 1.0.0
- */
 @SpringBootTest
 @ContextConfiguration(classes = {
         DduckleafApplication.class,

@@ -141,33 +141,46 @@ public class ProjectReportServiceTests {
     }
 
 
-//    @Test
-//    @DisplayName("프로젝트 신고 답변 등록 실패 테스트")
-//    @Transactional
-//    public void registReply_fail_test() {
-//
-//        //given
-//        ProjectReportDTO projectReport = new ProjectReportDTO();
-//        projectReport.setProjectReportNo(12);
-//
-//        long milliseconds = System.currentTimeMillis();
-//        Date date = new Date(milliseconds);
-//
-//        MemberDTO admin = new MemberDTO();
-//        admin.setMemberNo(1);
-//
-//        ProjectReportReplyDTO reply = new ProjectReportReplyDTO();
-//        reply.setProjectReportReplyNo(100);
-//        reply.setProjectReportNo(projectReport.getProjectReportNo());
-//        reply.setProjectReportReplyDate(date);
+    @Test
+    @DisplayName("프로젝트 신고 답변 등록 실패 테스트")
+    @Transactional
+    public void registReply_fail_test() {
+
+        //given
+        ProjectReportDTO projectReport = new ProjectReportDTO();
+        projectReport.setProjectReportNo(12);
+
+        long milliseconds = System.currentTimeMillis();
+        Date date = new Date(milliseconds);
+
+        MemberDTO admin = new MemberDTO();
+        admin.setMemberNo(1);
+
+        ProjectReportReplyDTO reply = new ProjectReportReplyDTO();
+        reply.setProjectReportReplyNo(2);
+        reply.setProjectReportNo(projectReport.getProjectReportNo());
+        reply.setProjectReportReplyDate(date);
 //        reply.setProjectReportReplyContent("content");
-//        reply.setAdminNo(admin.getMemberNo());
-//        reply.setDeleteYn("N");
-//
-//        //when
-//        service.registReply(reply);
-//
-//        //then
-//        assertThrows(Exception.class, () -> service.registReply(reply), "답변 등록에 실패했습니다.");  //():인자 ->이후:오버라이딩된 구현부
-//    }
+        reply.setAdminNo(admin.getMemberNo());
+        reply.setDeleteYn("N");
+
+        //when & then
+        assertThrows(Exception.class, () -> service.registReply(reply));  //():인자 ->이후:오버라이딩된 구현부
+    }
+
+    @Test
+    @DisplayName("프로젝트 번호로 해당 프로젝트 신고 목록 조회 테스트 ")
+    public void findProjectReportListOfOneProject_test () {
+        //given
+        int projectNo = 1;
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("projectReportNo").descending());
+
+        //when
+        Page<ProjectReportDTO> reportList = service.findProjectReportListOfOneProject(projectNo, pageable);
+
+        //then
+        assertNotNull(reportList);
+        reportList.forEach(System.out::println);
+    }
 }
