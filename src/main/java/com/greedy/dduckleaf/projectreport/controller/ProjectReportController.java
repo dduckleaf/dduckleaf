@@ -194,13 +194,22 @@ public class ProjectReportController {
     }
 
     /**
-     * findProjectReportDetailForProjectManager: 프로젝트관리 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다
-     * @param first: 설명
-     * @param second:
-     * @param third:
-     * @return
+     * findProjectReportDetailForProjectManager: 프로젝트관리 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
+     * @param projectReportNo 상세조회를 요청할 프로젝트신고번호
+     * @param projectNo: 신고 대상 프로젝트 번호
+     * @return mv: 프로젝트신고내역 상세정보, 상세정보를 출력할 브라우저 화면 경로
      * @author 장민주
      */
-    @GetMapping("/projectmanager/detail")
-    public void findProjectReportDetailForProjectManager() {}
+    @GetMapping("/projectmanager/detail/{projectNo}/{projectReportNo}")
+    public ModelAndView findProjectReportDetailForProjectManager(ModelAndView mv, @PathVariable int projectNo, @PathVariable int projectReportNo) {
+
+        ReportDetailInfo reportDetailInfo = service.findProjectReportAndReply(projectReportNo);
+
+        mv.addObject("reportDetailInfo", reportDetailInfo);
+        mv.addObject("projectReportNo", projectNo);
+        mv.addObject("projectReportNo", projectReportNo);
+        mv.setViewName("report/projectmanager/detail");
+
+        return mv;
+    }
 }
