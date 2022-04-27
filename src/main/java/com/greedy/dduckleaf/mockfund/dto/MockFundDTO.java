@@ -18,6 +18,6 @@ public class MockFundDTO {
     private int targetTicketAmount;
     private String mockFundProgressStatus;
     private String examineResult;
-    private int farmerNo;
+    private FarmerDTO farmerNo;
 
 }

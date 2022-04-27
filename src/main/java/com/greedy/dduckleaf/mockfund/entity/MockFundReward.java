@@ -16,16 +16,20 @@ public class MockFundReward {
     @Column(name = "REWARD_DETAIL")
     private String rewardDetail;
 
+    @Column(name = "REWARD_PRICE")
+    private int rewardPrice;
+
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "MOCK_FUND_NO")
     private MockFund mockFund;
 
     public MockFundReward() {}
 
-    public MockFundReward(int mockFundRewardNo, String rewardName, String rewardDetail, MockFund mockFund) {
+    public MockFundReward(int mockFundRewardNo, String rewardName, String rewardDetail, int rewardPrice, MockFund mockFund) {
         this.mockFundRewardNo = mockFundRewardNo;
         this.rewardName = rewardName;
         this.rewardDetail = rewardDetail;
+        this.rewardPrice = rewardPrice;
         this.mockFund = mockFund;
     }
 
@@ -53,6 +57,14 @@ public class MockFundReward {
         this.rewardDetail = rewardDetail;
     }
 
+    public int getRewardPrice() {
+        return rewardPrice;
+    }
+
+    public void setRewardPrice(int rewardPrice) {
+        this.rewardPrice = rewardPrice;
+    }
+
     public MockFund getMockFund() {
         return mockFund;
     }
@@ -67,6 +79,8 @@ public class MockFundReward {
                 "mockFundRewardNo=" + mockFundRewardNo +
                 ", rewardName='" + rewardName + '\'' +
                 ", rewardDetail='" + rewardDetail + '\'' +
+                ", rewardPrice=" + rewardPrice +
+                ", mockFund=" + mockFund +
                 '}';
     }
 }

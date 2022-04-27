@@ -12,6 +12,7 @@ public class MockFundRewardDTO {
     private int mockFundRewardNo;
     private String rewardName;
     private String rewardDetail;
+    private int rewardPrice;
     private MockFundDTO mockFund;
 
 }

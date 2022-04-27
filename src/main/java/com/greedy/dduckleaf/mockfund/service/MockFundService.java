@@ -1,9 +1,6 @@
 package com.greedy.dduckleaf.mockfund.service;
 
-import com.greedy.dduckleaf.mockfund.dto.MockFundDTO;
-import com.greedy.dduckleaf.mockfund.dto.MockFundInfoDTO;
-import com.greedy.dduckleaf.mockfund.dto.MockFundRewardDTO;
-import com.greedy.dduckleaf.mockfund.dto.RewardCategoryDTO;
+import com.greedy.dduckleaf.mockfund.dto.*;
 import com.greedy.dduckleaf.mockfund.entity.*;
 import com.greedy.dduckleaf.mockfund.repository.*;
 import org.modelmapper.ModelMapper;
@@ -15,6 +12,23 @@ import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * <pre>
+ * Class : MockFundService
+ * Comment : 모의펀딩 신청
+ * History
+ * 2022/04/20 (조남기) 모의펀딩 기본 정보 조회 관련 메소드 구현 시작
+ * 2022/04/21 (조남기) 모의펀딩 기본 정보, 스토리, 리워드 정보 조회 관련 메소드 구현 완료, 기본 정보 업데이트 관련 메소드 구현 시작
+ * 2022/04/22 (조남기) 모의펀딩 기본 정보 컬럼 1개 업데이트 완료
+ * 2022/04/23 (조남기) 모의펀딩 기본 정보 이미지 제외 업데이트 완료
+ * 2022/04/24 (조남기) 모의펀딩 기본 정보 업데이트 모달 추가 작업
+ * 2022/04/25 (조남기) 모의펀딩 스토리 업데이트 완료, 리워드 정보 업데이트 메소드 구현 시작
+ * 2022/04/26 (조남기) 모의펀딩 리워드 정보 업데이트 완료
+ * 2022/04/27 (조남기) 모의펀딩 리워드 정보 데이터 수정 및 업데이트 재작성 완료
+ * </pre>
+ * @version 1.0.7
+ * @author 조남기
+ */
 @Service
 public class MockFundService {
 
@@ -76,9 +90,11 @@ public class MockFundService {
     }
 
     @Transactional
-    public void modifyBasicInfo(MockFundInfoDTO mockFundInfo) {
+    public void modifyBasicInfo(MockFundInfoDTO mockFundInfo, int memberNo) {
 
-        MockFundInfo foundInfo = mockFundInfoRepository.findById(mockFundInfo.getMockFundInfoNo()).get();
+        Farmer farmer = farmerRepository.findById(memberNo).get();
+        MockFund fund = farmer.getMockFundList().get(0);
+        MockFundInfo foundInfo = fund.getMockFundInfoList().get(0);
         foundInfo.setMockFundName(mockFundInfo.getMockFundName());
         foundInfo.setTargetTicketAmount(mockFundInfo.getTargetTicketAmount());
         foundInfo.setEndDate(mockFundInfo.getEndDate());
@@ -103,17 +119,22 @@ public class MockFundService {
     }
 
     @Transactional
-    public void modifyStory(MockFundInfoDTO mockFundInfo) {
+    public void modifyStory(MockFundInfoDTO mockFundInfo, int memberNo) {
 
-        MockFundInfo foundInfo = mockFundInfoRepository.findById(mockFundInfo.getMockFundInfoNo()).get();
+        Farmer farmer = farmerRepository.findById(memberNo).get();
+        MockFund fund = farmer.getMockFundList().get(0);
+        MockFundInfo foundInfo = fund.getMockFundInfoList().get(0);
         foundInfo.setMockFundDetail(mockFundInfo.getMockFundDetail());
     }
 
     @Transactional
-    public void modifyReward(MockFundRewardDTO mockFundReward) {
+    public void modifyReward(MockFundRewardDTO mockFundReward, int memberNo) {
 
-        MockFundReward reward = mockFundRewardRepository.findById(mockFundReward.getMockFundRewardNo()).get();
+        Farmer farmer = farmerRepository.findById(memberNo).get();
+        MockFund fund = farmer.getMockFundList().get(0);
+        MockFundReward reward = fund.getMockFundRewardList().get(0);
         reward.setRewardName(mockFundReward.getRewardName());
         reward.setRewardDetail(mockFundReward.getRewardDetail());
+        reward.setRewardPrice(mockFundReward.getRewardPrice());
     }
 }
