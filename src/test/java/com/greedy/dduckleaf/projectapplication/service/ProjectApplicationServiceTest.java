@@ -4,6 +4,8 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.projectapplication.dto.*;
+import com.greedy.dduckleaf.projectapplication.entity.*;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,44 +34,15 @@ class ProjectApplicationServiceTest {
         assertNotNull(modelMapper);
     }
 
-//    @Test
-//    @DisplayName("회원이 프로젝트 신청을 누르면 펀딩 준비 관련 테이블에 기본 데이터를 삽입하는 테스트")
-//    public void registAllProjectInfo_test() {
-//
-//        int projectNo = 9;
-//
-////        FarmerInfoDTO farmerInfoDTO = new FarmerInfoDTO();
-//
-//        ProjectDTO openProject = new ProjectDTO();
-//        openProject.setProjectName("프로젝트 명");
-//        openProject.setOpenDate(Date.valueOf(LocalDate.now()));
-//        openProject.setEndDate(Date.valueOf(LocalDate.now().plusMonths(1)));
-//        openProject.setFarmerNo(68);
-//        openProject.setProgressStatus(1);
-//        openProject.setProjectStatus("Y");
-//        openProject.setProjectNo(10);
-//
-//        System.out.println("openProject = " + openProject);
-//
-//        RewardRegistInfoDTO reward = new RewardRegistInfoDTO();
-////        reward.setRewardPreparingStatus("리워드 준비상태를 작성해주세요");
-//        reward.setRewardPreparingStatus("준비상태");
-//        reward.setRewardDeliveryPlan("리워드 전달계획을 작성해주세요");
-//        reward.setRewardPrice(0);
-//        reward.setRewardName("리워드 명");
-//        reward.setRewardInfo("리워드 소개를 간단히 적어주세요");
-//        reward.setRewardUnit("리워드 단위");
-//        reward.setProjectNo(openProject.getProjectNo());
-//
-//        FarmerInfoDTO farmerInfo = new FarmerInfoDTO();
-//        FarmerFinancialInfoDTO farmerFinancialInfoDTO = new FarmerFinancialInfoDTO();
-//
-//
-//
-//
-//        projectApplicationService.openProject(openProject.getProjectNo());
-//
-//    }
+    @Test
+    @DisplayName("회원이 프로젝트 신청을 누르면 펀딩 준비 관련 테이블에 기본 데이터를 삽입하는 테스트")
+    public void registAllProjectInfo_test() {
+
+        int farmerNo = 68;
+
+        projectApplicationService.registProjectApplication(farmerNo);
+
+    }
 
     @Test
     public void findBasicReq_test() {

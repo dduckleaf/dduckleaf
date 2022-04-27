@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.print.attribute.standard.MediaSize;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,18 +16,27 @@ import javax.persistence.Table;
 @Getter
 @Entity(name = "refundPolicyForProjectApplication")
 @Table(name = "TBL_REFUND_POLICY")
+@DynamicInsert
 public class RefundPolicy {
 
     @Id
     @Column(name = "REFUND_POLICY_NO")
     private int refundPolicyNo;
 
-    @Column(name = "REFUND_POLICY_CATEGORY")
-    private String refundPolicyCategory;    //추후 삭제 예정 컬럼
-
     @Column(name = "REFUND_POLICY_CONTENT")
+    @ColumnDefault("반환 정책을 작성해주세요")
     private String refundPolicyContent;
 
     @Column(name = "PROJECT_NO")
     private int projectNo;
+
+    @Column(name = "REFUND_POLICY_AGREEMENT_STATUS")
+    private String refundPolicyAgreementStatus;
+
+    @PrePersist
+    public void prePersist() {
+
+        this.refundPolicyContent = this.refundPolicyContent  == null ? "반환 정책을 작성해주세요" : this.refundPolicyContent ;
+
+    }
 }

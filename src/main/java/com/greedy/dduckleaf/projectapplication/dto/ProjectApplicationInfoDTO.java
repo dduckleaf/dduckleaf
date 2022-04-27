@@ -15,7 +15,8 @@ public class ProjectApplicationInfoDTO {                        //프로젝트 �
     private ProjectShippingInfoDTO projectShippingInfoNo;       //발송 정보 번호
     private RewardRegistInfoDTO rewardRegistInfoNo;             //리워드 등록 정보 번호
     private RefundPolicyDTO refundPolicyNo;                     //환불 정책 번호
-    private int projectNo;
-    private MemberDTO memberNo;
+    private ProjectDTO projectNo;
+    private FarmerInfoDTO memberNo;
+    private FarmerFinancialInfoDTO farmerFinancialInfoDTO;
 
 }
