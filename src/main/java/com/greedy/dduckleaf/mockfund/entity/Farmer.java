@@ -131,9 +131,7 @@ public class Farmer {
                 ", memberPwd='" + memberPwd + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", memberRole=" + memberRole +
                 ", withdrawalStatus='" + withdrawalStatus + '\'' +
-                ", mockFundList=" + mockFundList +
                 '}';
     }
 }

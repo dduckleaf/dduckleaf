@@ -54,7 +54,6 @@ public class RewardCategory {
         return "RewardCategory{" +
                 "projectCategoryNo=" + projectCategoryNo +
                 ", projectCategoryName='" + projectCategoryName + '\'' +
-                ", mockFundInfoList=" + mockFundInfoList +
                 '}';
     }
 }

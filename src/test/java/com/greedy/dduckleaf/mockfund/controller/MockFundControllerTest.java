@@ -3,6 +3,9 @@ package com.greedy.dduckleaf.mockfund.controller;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
+import com.greedy.dduckleaf.mockfund.dto.MockFundInfoDTO;
+import com.greedy.dduckleaf.mockfund.dto.RewardCategoryDTO;
+import com.greedy.dduckleaf.mockfund.entity.RewardCategory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +17,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+
+import java.sql.Date;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -89,12 +96,11 @@ class MockFundControllerTest {
 
     @Test
     @DisplayName("모의펀딩 스토리 동의하기 url 매핑 테스트")
-    public void mockFundAgreement() throws Exception {
+    public void modifyMockFundAgreementStatus() throws Exception {
 
         mockMvc.perform(MockMvcRequestBuilders.post("/mockfund/agreement"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.forwardedUrl("/mockfund/story/1"))
-                .andExpect(MockMvcResultMatchers.model().attributeExists("mockFund"))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/mockfund/story/1"))
                 .andDo(MockMvcResultHandlers.print());
     }
 

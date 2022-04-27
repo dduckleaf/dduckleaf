@@ -131,8 +131,10 @@ public class MockFundInfo {
                 ", endDate=" + endDate +
                 ", mockFundDetail='" + mockFundDetail + '\'' +
                 ", targetTicketAmount=" + targetTicketAmount +
-                ", mockFundAgreementStatus=" + mockFundAgreementStatus + '\'' +
+                ", mockFundAgreementStatus='" + mockFundAgreementStatus + '\'' +
                 ", agreementDate=" + agreementDate +
+                ", mockFund=" + mockFund +
+                ", rewardCategory=" + rewardCategory +
                 '}';
     }
 }

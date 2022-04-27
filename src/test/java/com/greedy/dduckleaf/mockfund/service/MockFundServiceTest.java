@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -111,7 +112,53 @@ class MockFundServiceTest {
     }
 
     //assertDoesNotThrow(() ->이자리에 테스트하고싶은 메소드 호출 ));  update
-    
+
+    @Test
+    @DisplayName("모의펀딩 기본정보 업데이트 테스트")
+    @Transactional
+    public void modifyBasicInfo() {
+
+        //given
+        MockFundInfoDTO infoList = new MockFundInfoDTO();
+        RewardCategoryDTO reward = new RewardCategoryDTO();
+        infoList.setMockFundName("프로젝트");
+        infoList.setTargetTicketAmount(100);
+        reward.setProjectCategoryNo(1);
+        infoList.setRewardCategory(reward);
+
+        //when & then
+        assertDoesNotThrow(() -> mockFundService.modifyBasicInfo(infoList, 3));
+    }
+
+    @Test
+    @DisplayName("모의펀딩 스토리 업데이트 테스트")
+    @Transactional
+    public void modifyStory() {
+
+        //given
+        MockFundInfoDTO infoList = new MockFundInfoDTO();
+        infoList.setMockFundDetail("프로젝트 요약");
+        infoList.setMockFundAgreementStatus("Y");
+
+        //when & then
+        assertDoesNotThrow(() -> mockFundService.modifyStory(infoList, 3));
+    }
+
+    @Test
+    @DisplayName("모의펀딩 리워드 정보 업데이트 테스트")
+    @Transactional
+    public void modifyReward() {
+
+        //given
+        MockFundRewardDTO reward = new MockFundRewardDTO();
+        reward.setRewardName("리워드 이름");
+        reward.setRewardDetail("리워드 요약");
+        reward.setRewardPrice(10000);
+
+        //when & then
+        assertDoesNotThrow(() -> mockFundService.modifyReward(reward, 3));
+    }
+
     @Test
     @DisplayName("모의펀딩 스토리 동의 체크 테스트")
     public void modifyAgreementStatus() {
@@ -129,17 +176,6 @@ class MockFundServiceTest {
         System.out.println("info = " + info);
     }
 
-    @Test
-    public void modifyAgreementStatus_test() {
 
-        //given
-        int memberNo = 3;
-
-        //when
-        mockFundService.modifyAgreementStatus( memberNo);
-
-        //then
-
-    }
 
 }

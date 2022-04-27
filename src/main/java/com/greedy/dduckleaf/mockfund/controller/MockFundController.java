@@ -26,8 +26,10 @@ import java.util.List;
  * 2022/04/22 (조남기) 모의펀딩 기본 정보 컬럼 1개 업데이트 완료
  * 2022/04/23 (조남기) 모의펀딩 기본 정보 이미지 제외 업데이트 완료
  * 2022/04/24 (조남기) 모의펀딩 기본 정보 업데이트 모달 추가 작업
+ * 2022/04/25 (조남기) 모의펀딩 스토리 업데이트 완료, 리워드 정보 업데이트 메소드 구현 시작
+ * 2022/04/26 (조남기) 모의펀딩 리워드 정보 업데이트 완료
  * </pre>
- * @version 1.0.3
+ * @version 1.0.6
  * @author 조남기
  */
 @Controller
@@ -65,12 +67,12 @@ public class MockFundController {
         return mv;
     }
 
-    @GetMapping("/reward/{infoCode}")
-    public ModelAndView findRewardByCode(ModelAndView mv, @PathVariable int infoCode) {
+    @GetMapping("/reward/{rewardNo}")
+    public ModelAndView findRewardByCode(ModelAndView mv, @PathVariable int rewardNo) {
 
-        MockFundRewardDTO info = mockFundService.findRewardByCode(infoCode);
+        MockFundRewardDTO reward = mockFundService.findRewardByCode(rewardNo);
 
-        mv.addObject("info", info);
+        mv.addObject("reward", reward);
         mv.setViewName("/mockfund/regist/reward");
 
         return mv;
@@ -93,7 +95,8 @@ public class MockFundController {
     @PostMapping("/modify/basicinfo")
     public String modifyMockFundBasicInfo(RedirectAttributes rttr, MockFundInfoDTO mockFundInfo) {
 
-        mockFundService.modifyBasicInfo(mockFundInfo);
+        int memberNo = 3;
+        mockFundService.modifyBasicInfo(mockFundInfo, memberNo);
 
         rttr.addFlashAttribute("modifySuccessMessage", "기본정보 수정 성공");
 
@@ -121,11 +124,26 @@ public class MockFundController {
     @PostMapping("/modify/story")
     public String modifyMockFundStory(RedirectAttributes rttr, MockFundInfoDTO mockFundInfo) {
 
-        mockFundService.modifyStory(mockFundInfo);
+        int memberNo = 3;
+        mockFundService.modifyStory(mockFundInfo, memberNo);
 
-        rttr.addFlashAttribute("modifySuccessMessage", "기본정보 수정 성공");
+        rttr.addFlashAttribute("modifySuccessMessage", "스토리 수정 성공");
 
         return "redirect:/mockfund/" + mockFundInfo.getMockFundInfoNo();
+    }
+
+    @GetMapping("/modify/reward")
+    public void modifyReward() {}
+
+    @PostMapping("/modify/reward")
+    public String modifyMockFundReward(RedirectAttributes rttr, MockFundRewardDTO mockFundReward) {
+
+        int memberNo = 3;
+        mockFundService.modifyReward(mockFundReward, memberNo);
+
+        rttr.addFlashAttribute("modifySuccessMessage", "리워드 수정 성공");
+
+        return "redirect:/mockfund/" + mockFundReward.getMockFundRewardNo();
     }
 
 }

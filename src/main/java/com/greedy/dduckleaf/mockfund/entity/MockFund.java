@@ -48,7 +48,7 @@ public class MockFund {
 
     public MockFund() {}
 
-    public MockFund(int mockFundNo, Farmer farmer, String mockFundName, Date openDate, Date closeDate, String mockFundStatus, Date canceledDate, int targetTicketAmount, String mockFundProgressStatus, String examineResult, List<MockFundReward> mockFundRewardList) {
+    public MockFund(int mockFundNo, Farmer farmer, String mockFundName, Date openDate, Date closeDate, String mockFundStatus, Date canceledDate, int targetTicketAmount, String mockFundProgressStatus, String examineResult, List<MockFundInfo> mockFundInfoList, List<MockFundReward> mockFundRewardList) {
         this.mockFundNo = mockFundNo;
         this.farmer = farmer;
         this.mockFundName = mockFundName;
@@ -163,6 +163,7 @@ public class MockFund {
     public String toString() {
         return "MockFund{" +
                 "mockFundNo=" + mockFundNo +
+                ", farmer=" + farmer +
                 ", mockFundName='" + mockFundName + '\'' +
                 ", openDate=" + openDate +
                 ", closeDate=" + closeDate +
@@ -171,8 +172,6 @@ public class MockFund {
                 ", targetTicketAmount=" + targetTicketAmount +
                 ", mockFundProgressStatus='" + mockFundProgressStatus + '\'' +
                 ", examineResult='" + examineResult + '\'' +
-                ", mockFundInfoList=" + mockFundInfoList +
-                ", mockFundRewardList=" + mockFundRewardList +
                 '}';
     }
 }
