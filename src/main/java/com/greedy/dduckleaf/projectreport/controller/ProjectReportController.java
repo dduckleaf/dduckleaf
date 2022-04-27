@@ -10,6 +10,7 @@ import com.greedy.dduckleaf.projectreport.find.service.ProjectReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,7 @@ import java.util.List;
  * 2022/04/24 (장민주) findProjectReportDetail 메소드 작성.
  *                    findProjectReportListByMemberNo 메소드 작성.
  * 2022/04/25 (장민주) registProjectReportReply 메소드 작성.
- * 2022/04/27 (장민주) findProjectReportListByProjectNo 메소드 작성.
+ * 2022/04/27 (장민주) findProjectReportListOfOneProject 메소드 작성.
  *                    findProjectReportDetailForProjectManager 메소드 작성.
  * </pre>
  * @version 1.0.4
@@ -138,7 +139,7 @@ public class ProjectReportController {
 
     /**
     * registProjectReportReply: 프로젝트 신고내역에 대한 답변 등록 요청 메소드입니다.
-    *  @param projectReportReply: 첫 번째 파라미터에 대한 설명
+    *  @param projectReportReply: 등록해줄 프로젝트 신고 답변 정보
     * @param user: 로그인한 관리자 회원 정보
     * @return mv: 답변 등록 성공 메시지, redirect 할 화면경로
     */
@@ -169,14 +170,28 @@ public class ProjectReportController {
 
     /**
      * findProjectReportListByProjectNo: 프로젝트 번호로 해당 프로젝트의 신고내역 조회를 요청하는 메소드입니다.
-     * @param first: 설명
-     * @param second:
-     * @param third:
-     * @return
+     * @param projectNo: 프로젝트 번호
+     * @param pageable: 목록 조회시 페이징 처리를 위한 정보를 담는 객체
+     * @return mv: 프로젝트신고목록, 페이징정보, 프로젝트번호, 목록조회화면 경로
      * @author 장민주
      */
-    @GetMapping("/projectmanager/list")
-    public void findProjectReportListByProjectNo() {}
+    @GetMapping("/projectmanager/list/{projectNo}")
+    public ModelAndView findProjectReportListOfOneProject(@PathVariable int projectNo, ModelAndView mv,
+                                                          @PageableDefault(size=10, sort="projectReportNo", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<ProjectReportDTO> projectReportList = service.findProjectReportListOfOneProject(projectNo, pageable);
+        projectReportList.forEach(System.out::println);
+
+        PagingButtonInfo pagingInfo = Pagenation.getPagingButtonInfo(projectReportList);
+
+        mv.addObject("projectReportList", projectReportList);
+        mv.addObject("pagingInfo", pagingInfo);
+        mv.addObject("projectNo", projectNo);
+
+        mv.setViewName("report/projectmanager/list");
+
+        return mv;
+    }
 
     /**
      * findProjectReportDetailForProjectManager: 프로젝트관리 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다
