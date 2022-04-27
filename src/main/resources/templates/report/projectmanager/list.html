@@ -30,40 +30,49 @@
                             <th style="width: 8%;">신고자 아이디</th>
                             <th style="width: 9%;">신고일</th>
                         </tr>
-                        <tr>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                            <td>test</td>
-                        </tr>
+                        <th:block th:if="${ #strings.isEmpty(projectReportList) }">
+                            <tr>
+                                <td colspan="3" align="center">신고내역이 없습니다.</td>
+                            </tr>
+                        </th:block>
+                        <th:block th:if="${ !#strings.isEmpty(projectReportList) }">
+                            <tr th:each="report : ${ projectReportList }">
+                                <td th:text="${ report.getProjectReportNo() }"></td>
+                                <td th:text="${ report.getProjectReportStatus() }"></td>
+                                <td th:text="${ report.project.getProjectName() }"></td>
+                                <td th:text="${ report.reportCategory.getReportCategoryName() }"></td>
+                                <td th:text="${ report.member.getMemberId() }"></td>
+                                <td th:text="${ report.getProjectReportDate() }"></td>
+                            </tr>
+                        </th:block>
                     </table>
-                    <!-- paging -->
-<!--                    <div id="paging-area" align="center">-->
-<!--                        &lt;!&ndash; 맨 앞으로 이동 &ndash;&gt;-->
-<!--                        <button class="paging-btn first" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.startPage}}  + '\''"-->
-<!--                                th:disabled="${ menuList.first }"><<</button>-->
+                    <br>
+                    <!--paging-->
+                    <div id="paging-area" align="center">
+                        <!-- 맨 앞으로 이동 -->
+                        <button class="paging-btn first" th:onclick="'location.href=\'/report/projectmanager/list/' + @{${ projectNo }} + '?page=' + @{${pagingInfo.startPage}}  + '\''"
+                                th:disabled="${ projectReportList.first }"><<</button>
 
-<!--                        &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
-<!--                        <button class="paging-btn prev" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.currentPage - 1}}  + '\''"-->
-<!--                                th:disabled="${ menuList.first }"><</button>-->
+                        <!-- 이전 페이지로 이동 -->
+                        <button class="paging-btn prev" th:onclick="'location.href=\'/report/projectmanager/list/' + @{${ projectNo }} + '?page=' + @{${pagingInfo.currentPage - 1}}  + '\''"
+                                th:disabled="${ projectReportList.first }"><</button>
 
-<!--                        &lt;!&ndash; 숫자 버튼 &ndash;&gt;-->
-<!--                        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">-->
-<!--                            <button class="paging-btn" th:onclick="'location.href=\'/menu/list?page=' + @{${page}}  + '\''"-->
-<!--                                    th:text="${ page }"-->
-<!--                                    th:disabled="${ paging.currentPage eq page }"></button>-->
-<!--                        </th:block>-->
+                        <!-- 숫자 버튼 -->
+                        <th:block th:each="page : ${#numbers.sequence(pagingInfo.startPage, pagingInfo.endPage)}">
+                            <button class="paging-btn" th:onclick="'location.href=\'/report/projectmanager/list/' + @{${ projectNo }} + '?page=' + @{${page}}  + '\''"
+                                    th:text="${ page }"
+                                    th:disabled="${ pagingInfo.currentPage eq page }"></button>
+                        </th:block>
 
-<!--                        &lt;!&ndash; 다음 페이지로 이동 &ndash;&gt;-->
-<!--                        <button class="paging-btn next" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.currentPage + 1}}  + '\''"-->
-<!--                                th:disabled="${ menuList.last }">></button>-->
+                        <!-- 다음 페이지로 이동 -->
+                        <button class="paging-btn next" th:onclick="'location.href=\'/report/projectmanager/list/' + @{${ projectNo }} + '?page=' + @{${pagingInfo.currentPage + 1}}  + '\''"
+                                th:disabled="${ projectReportList.last }">></button>
 
-<!--                        &lt;!&ndash; 맨 마지막으로 이동 &ndash;&gt;-->
-<!--                        <button class="paging-btn last" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.endPage}}  + '\''"-->
-<!--                                th:disabled="${ menuList.last }">>></button>-->
-<!--                    </div>-->
+                        <!-- 맨 마지막으로 이동 -->
+                        <button class="paging-btn last" th:onclick="'location.href=\'/report/projectmanager/list/' + @{${ projectNo }} + '?page=' + @{${pagingInfo.endPage}}  + '\''"
+                                th:disabled="${ projectReportList.last }">>></button>
+                    </div>
+                    <!--paging end-->
                 </div>
             </div>
         </div>
@@ -86,7 +95,7 @@
 
             tds[i].onclick = function() {
                 const reportNo = this.parentNode.children[0].innerText;
-                location.href = "/report/projectmanager/detail/" + reportNo;
+                location.href = "/report/projectmanager/detail/[[${projectNo}]]/" + reportNo;
             }
         }
     }
