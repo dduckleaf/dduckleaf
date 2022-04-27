@@ -14,6 +14,7 @@ import java.util.List;
 @Getter
 @ToString
 public class ProjectDTO {
+
     private int projectNo;
     private String projectName;
     private int fundTargetAmount;
@@ -28,5 +29,4 @@ public class ProjectDTO {
     private RewardInfoDTO rewardInfo;
     private ProjectShippingFeeDTO projectShippingFee;
     private List<ProjectRegistInfoDTO> registInfo;
-
 }

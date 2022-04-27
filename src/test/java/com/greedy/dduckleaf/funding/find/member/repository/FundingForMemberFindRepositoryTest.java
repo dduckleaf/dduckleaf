@@ -14,18 +14,6 @@ import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * <pre>
- * Class : FundingForMemberFindRepositoryTest
- * Comment : 서포터의 펀딩 신청관련 정보를 조회하기 위한 FundingRepository를 테스트하는 클래스입니다.
- *
- * History
- * 2022-04-25 h99ww
- * </pre>
- *
- * @author h99ww
- * @version 1.0.0
- */
 @SpringBootTest
 @ContextConfiguration(classes = {
         BeanConfiguration.class,
@@ -34,11 +22,14 @@ import static org.junit.jupiter.api.Assertions.*;
         com.greedy.dduckleaf.config.ContextConfiguration.class
 })
 class FundingForMemberFindRepositoryTest {
+
     @Autowired
     private FundingForMemberFindRepository repo;
 
     @Test
+    @DisplayName("init 테스트")
     public void initTest() {
+
         assertNotNull(repo);
     }
 
@@ -51,28 +42,4 @@ class FundingForMemberFindRepositoryTest {
 
         System.out.println("funding = " + funding);
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

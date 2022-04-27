@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
 @SpringBootTest
 @ContextConfiguration(classes = {
         BeanConfiguration.class,
@@ -25,6 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
         JPAConfiguration.class
 })
 class FundingForMemberFindControllerTest {
+
     @Autowired
     private FundingForMemberFindController controller;
     private MockMvc mockMvc;
@@ -35,13 +36,15 @@ class FundingForMemberFindControllerTest {
     }
 
     @Test
+    @DisplayName("init 테스트")
     public void initTest() {
+
         assertNotNull(controller);
     }
 
-
     @Test
     public void findFundingListByMemberNo_test() throws Exception {
+
         mockMvc.perform(MockMvcRequestBuilders.get("/funding/find/list/member"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.forwardedUrl("/funding/find/supporter/fundinglist"))

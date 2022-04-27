@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ProjectForApplicationRepository extends JpaRepository<Project, Integer> {
 
-    com.greedy.dduckleaf.projectnotice.entity.Project findByFarmerNoAndAndProgressStatus(int farmerNo, int i);
+    Project findByFarmerNoAndAndProgressStatus(int farmerNo, int i);
 }

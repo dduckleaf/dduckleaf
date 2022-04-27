@@ -14,6 +14,7 @@ import javax.persistence.*;
 @Entity(name = "MemberForFunding")
 @Table(name = "TBL_MEMBER")
 public class Member {
+
     @Id
     @Column(name = "MEMBER_NO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
