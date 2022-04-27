@@ -1,67 +1,177 @@
 package com.greedy.dduckleaf.projectapplication.service;
 
-import com.greedy.dduckleaf.projectapplication.dto.ProjectDTO;
 import com.greedy.dduckleaf.projectapplication.dto.RewardRegistInfoDTO;
-import com.greedy.dduckleaf.projectapplication.entity.Project;
-import com.greedy.dduckleaf.projectapplication.entity.RewardRegistInfo;
-import com.greedy.dduckleaf.projectapplication.repository.ProjectForApplicationRepository;
-import com.greedy.dduckleaf.projectapplication.repository.RewardRegistInfoRepository;
+import com.greedy.dduckleaf.projectapplication.entity.*;
+import com.greedy.dduckleaf.projectapplication.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
-import java.time.LocalDate;
 
+/**
+ * <pre>
+ * Class: ProjectApplicationService
+ * Comment : 프로젝트 오픈 싱청
+ * History
+ * 2022/04/25 (박휘림) 처음 작성 / 프로젝트 오픈 신청 시 관련 테이블에 기본값 인서트 메소드 작성 시작 / 기본 요건 페이지 조회
+ * </pre>
+ * @version 1.0.1
+ * @author 박휘림
+ */
 @Service
 public class ProjectApplicationService {
 
     private final ModelMapper modelMapper;
     private final RewardRegistInfoRepository rewardRegistInfoRepository;
     private final ProjectForApplicationRepository projectForApplicationRepository;
+    private final ProjectApplicationInfoRepository projectApplicationInfoRepository;
+    private final ProjectShippingInfoRepository projectShippingInfoRepository;
+    private final ProjectBasicInfoRepository projectBasicInfoRepository;
+    private final FarmerInfoForProjectApplicationRepository farmerInfoForProjectApplicationRepository;
+    private final RefundPolicyForProjectApplicationRepository refundPolicyForProjectApplicationRepository;
+    private final FarmerFinancialInfoRepository farmerFinancialInfoRepository;
 
     @Autowired
-    public ProjectApplicationService(ModelMapper modelMapper, RewardRegistInfoRepository rewardRegistInfoRepository, ProjectForApplicationRepository projectForApplicationRepository) {
+    public ProjectApplicationService(ModelMapper modelMapper, RewardRegistInfoRepository rewardRegistInfoRepository, ProjectForApplicationRepository projectForApplicationRepository, ProjectApplicationInfoRepository projectApplicationInfoRepository, ProjectShippingInfoRepository projectShippingInfoRepository, ProjectBasicInfoRepository projectBasicInfoRepository, FarmerInfoForProjectApplicationRepository farmerInfoForProjectApplicationRepository, RefundPolicyForProjectApplicationRepository refundPolicyForProjectApplicationRepository, FarmerFinancialInfoRepository farmerFinancialInfoRepository) {
         this.modelMapper = modelMapper;
         this.rewardRegistInfoRepository = rewardRegistInfoRepository;
         this.projectForApplicationRepository = projectForApplicationRepository;
+        this.projectApplicationInfoRepository = projectApplicationInfoRepository;
+        this.projectShippingInfoRepository = projectShippingInfoRepository;
+        this.projectBasicInfoRepository = projectBasicInfoRepository;
+        this.farmerInfoForProjectApplicationRepository = farmerInfoForProjectApplicationRepository;
+        this.refundPolicyForProjectApplicationRepository = refundPolicyForProjectApplicationRepository;
+        this.farmerFinancialInfoRepository = farmerFinancialInfoRepository;
     }
 
+    /* 프로젝트 신청 시 프로젝트 기본데이터 등록하고 프로젝트 번호 리턴 */
+    private int openProject(int farmerNo) {
 
-    public RewardRegistInfoDTO findRewardRegistInfoByProjectNo(int projectNo) {
+        Project openProject = new Project();
+        openProject.setFarmerNo(farmerNo);
+        openProject.setProgressStatus(1);
+        System.out.println("openProject = " + openProject);
 
-        RewardRegistInfo basicReq = rewardRegistInfoRepository.findById(projectNo).get();
+        projectForApplicationRepository.save(openProject);
 
-        return modelMapper.map(basicReq, RewardRegistInfoDTO.class);
+        Project foundProject = projectForApplicationRepository.findById(openProject.getProjectNo()).get();
+
+        return foundProject.getProjectNo();
     }
 
+    /**
+     * registProjectApplication: 프로젝트 신청 버튼 클릭 시 기본데이터를 인서트합니다.
+     * @param farmerNo: 회원번호
+     * @author 박휘림
+     */
     @Transactional
-    public void openProject(int projectNo) {
+    public void registProjectApplication(int farmerNo) {
 
-        RewardRegistInfoDTO reward = new RewardRegistInfoDTO();
-//        reward.setRewardPreparingStatus("리워드 준비상태를 작성해주세요");
-        reward.setRewardPreparingStatus("준비상태");
-        reward.setRewardDeliveryPlan("리워드 전달계획을 작성해주세요");
-        reward.setRewardPrice(0);
-        reward.setRewardName("리워드 명");
-        reward.setRewardInfo("리워드 소개를 간단히 적어주세요");
-        reward.setRewardUnit("리워드 단위");
-        reward.setProjectNo(projectNo);
+        Project openProject = new Project();
+        openProject.setFarmerNo(farmerNo);
+        openProject.setProgressStatus(1);
 
-//        ProjectDTO openProject = new ProjectDTO();
-//        openProject.setProjectName("프로젝트 명");
-//        openProject.setOpenDate(Date.valueOf(LocalDate.now()));
-//        openProject.setEndDate(Date.valueOf(LocalDate.now().plusMonths(1)));
-//        openProject.setFarmerNo(68);
-//        openProject.setProgressStatus(1);
-//        openProject.setProjectStatus("Y");
-//        openProject.setProjectNo(10);
+        projectForApplicationRepository.save(openProject);
 
-        rewardRegistInfoRepository.save(modelMapper.map(reward, RewardRegistInfo.class));
-//        projectForApplicationRepository.save(modelMapper.map(openProject, Project.class));
+        Project foundProject = projectForApplicationRepository.findById(openProject.getProjectNo()).get();
+
+        RewardRegistInfo rewardRegistInfo = registInfo(farmerNo);
+        rewardRegistInfo.setProjectNo(foundProject.getProjectNo());
+
+        rewardRegistInfoRepository.save(rewardRegistInfo);
+
+        ProjectBasicInfo basicInfo = basicInfo(farmerNo);
+        basicInfo.setProjectNo(foundProject.getProjectNo());
+
+        projectBasicInfoRepository.save(basicInfo);
+
+        ProjectShippingInfo shippingInfo = shippingInfo(farmerNo);
+        shippingInfo.setProjectNo(foundProject.getProjectNo());
+
+        projectShippingInfoRepository.save(shippingInfo);
+
+        RefundPolicy refundPolicy = refundPolicy(farmerNo);
+        refundPolicy.setProjectNo(foundProject.getProjectNo());
+
+        refundPolicyForProjectApplicationRepository.save(refundPolicy);
+
+        farmerInfoForProjectApplicationRepository.save(farmerInfo(farmerNo));
+        farmerFinancialInfoRepository.save(farmerFinancialInfo(farmerNo));
+
     }
 
+    private RewardRegistInfo registInfo(int farmerNo) {
+
+        RewardRegistInfo reward = new RewardRegistInfo();
+        System.out.println("reward = " + reward);
+
+        return reward;
+    }
+
+    private ProjectBasicInfo basicInfo(int farmerNo) {
+
+        ProjectBasicInfo projectBasicInfo = new ProjectBasicInfo();
+//        projectBasicInfo.setProjectNo(openProject(farmerNo));
+        projectBasicInfo.setProjectBasicCategoryNo(1);
+        System.out.println("projectBasicInfo = " + projectBasicInfo);
+
+        return projectBasicInfo;
+    }
+
+    private ProjectShippingInfo shippingInfo(int farmerNo) {
+
+        ProjectShippingInfo shippingInfo = new ProjectShippingInfo();
+//        shippingInfo.setProjectNo(openProject(farmerNo));
+        System.out.println("shippingInfo = " + shippingInfo);
+
+        return shippingInfo;
+    }
+
+    private RefundPolicy refundPolicy(int farmerNo) {
+
+        RefundPolicy refundPolicy = new RefundPolicy();
+//        refundPolicy.setProjectNo(openProject(farmerNo));
+        System.out.println("refundPolicy = " + refundPolicy);
+
+        return refundPolicy;
+    }
+
+    private FarmerInfo farmerInfo(int farmerNo) {
+
+        FarmerInfo farmerInfo = new FarmerInfo();
+        farmerInfo.setMemberNo(farmerNo);
+        farmerInfo.setBusinessName("상호명");
+        farmerInfo.setBusinessOwnNo("사업자 등록번호");
+        farmerInfo.setBusinessOwnType("사업자 유형");
+        farmerInfo.setCorporateName("법인명");
+        farmerInfo.setFarmerName("파머 이름");
+        farmerInfo.setFarmerEmail("이메일");
+        farmerInfo.setFarmerPhone("전화번호");
+        farmerInfo.setRepresentativeName("대표자명");
+        farmerInfo.setRepresentativeEmail("대표자이메일");
+        farmerInfo.setRepresentativeSSN("주민등록번호");
+        System.out.println("farmerInfo = " + farmerInfo);
+
+        return farmerInfo;
+    }
+
+    private FarmerFinancialInfo farmerFinancialInfo(int farmerNo) {
+
+        FarmerFinancialInfo farmerFinancialInfo = new FarmerFinancialInfo();
+        farmerFinancialInfo.setFarmerNo(farmerNo);
+        farmerFinancialInfo.setBankNo(1);
+
+        return farmerFinancialInfo;
+    }
+
+    /**
+     * findProjectNoByFarmerId: 회원번호로 프로젝트 번호를 조회합니다.
+     * @param farmerNo: 회원번호
+     * @return projectNo 프로젝트 번호
+     * @author 박휘림
+     */
     public int findProjectNoByFarmerId(int farmerNo) {
 
         Project project = projectForApplicationRepository.findByFarmerNoAndAndProgressStatus(farmerNo, 1);
@@ -69,6 +179,24 @@ public class ProjectApplicationService {
         return project != null? project.getProjectNo() : 0;
     }
 
+    /**
+     * findRewardRegistInfoByProjectNo: 기본 요건 작성 페이지로 이동 시 기본 데이터를 조회합니다.
+     * @param projectNo: 로그인한 사용자의 정보를 받는 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     * @author 박휘림
+     */
+    public RewardRegistInfoDTO findRewardRegistInfoByProjectNo(int projectNo) {
+
+        RewardRegistInfo basicReq = rewardRegistInfoRepository.findById(projectNo).get();
+
+        return modelMapper.map(basicReq, RewardRegistInfoDTO.class);
+    }
+
+    /**
+     * modifyBasicReq: 기본 요건 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
+     * @param basicreq: 사용자가 입력한 기본 요건 정보를 담은 객체
+     * @author 박휘림
+     */
     @Transactional
     public void modifyBasicReq(RewardRegistInfoDTO basicreq) {
 
@@ -77,21 +205,4 @@ public class ProjectApplicationService {
         updateBasicReq.setRewardDeliveryPlan(basicreq.getRewardDeliveryPlan());
     }
 
-    public void registProjectApplication(int farmerNo) {
-
-        ProjectDTO openProject = new ProjectDTO();
-        openProject.setProjectName("프로젝트 명");
-        openProject.setOpenDate(Date.valueOf(LocalDate.now()));
-        openProject.setEndDate(Date.valueOf(LocalDate.now().plusMonths(1)));
-        openProject.setFarmerNo(farmerNo);
-        openProject.setProgressStatus(1);
-        openProject.setProjectStatus("Y");
-        openProject.setExamineStatus("1");
-        openProject.setAchievementRate(0.0);
-//        openProject.setProjectExamineStatus("");
-
-//        openProject.setProjectNo(10);
-
-        projectForApplicationRepository.save(modelMapper.map(openProject, Project.class));
-    }
 }
