@@ -33,4 +33,11 @@ public class ProjectRewardCategory {
                 ", projectCategoryName='" + projectCategoryName + '\'' +
                 '}';
     }
+
+    @PrePersist
+    public void prePersist() {
+
+        this.projectCategoryName = this.projectCategoryName  == null ? "카테고리" : this.projectCategoryName ;
+
+    }
 }
