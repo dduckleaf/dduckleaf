@@ -6,14 +6,13 @@ import com.greedy.dduckleaf.project.find.entity.Project;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.ContextConfiguration;
 
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @ContextConfiguration(classes = {
@@ -34,26 +33,20 @@ class ProjectForProjectListRepositoryTest {
     }
 
     @Test
-    @Transactional
-    public void findProjectList_test() {
-//        List<Project> projectList = repo.findByExamineStatusGreaterThanEqual(3);
-        List<String> statusList = new ArrayList<>();
-        statusList.add("3");
-        statusList.add("4");
+    public void findByProjectExamineStatusIsNotNullAndProjectNameContaining_test() {
 
-//        List<Project> projectList = repo.findByExamineStatusIn(statusList);
-        List<Project> projectList = repo.findByProgressStatusGreaterThanEqual(3);
+        //given
+        Pageable pageable = PageRequest.of(0,10);
+        String searchValue = "3";
 
+        //when
+        Page<Project> projects = repo.findByProjectExamineStatusIsNotNullAndProjectNameContaining(searchValue, pageable);
 
-        assertNotNull(projectList);
-
-        projectList.forEach(project -> {
-            System.out.println("project = " + project);
-//            System.out.println("project.getFarmer().getFarmer().getBusinessName() = " + project.getFarmer().getFarmerInfo().getBusinessName());
-            System.out.println();
-        });
-
+        //then
+        assertNotNull(projects);
+        projects.forEach(System.out::println);
     }
+
 }
 
 

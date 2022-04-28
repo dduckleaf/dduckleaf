@@ -34,7 +34,7 @@ class ProjectNoticeRepositoryTest {
     public void findAllByProjectNo_test() {
 
         int projectNo = 3;
-        Pageable pageable = PageRequest.of(10, 10);
+        Pageable pageable = PageRequest.of(1, 10);
         Page<ProjectNotice> noticeList = projectNoticeRepository.findAllByProjectNoticeStatusAndProjectNo("Y", projectNo, pageable);
 
         assertNotNull(noticeList);
