@@ -44,15 +44,15 @@
                                 <img src="/images/common/dduckleaf-logo.png" alt="Header Logo">
                             </a>
                             <div class="header-search-area d-lg-block">
-                                <form action="#" class="header-searchbox">
-                                    <input class="input-field" type="text" placeholder="Search Products">
+                                <form method="get" action="/project/find/list" class="header-searchbox">
+                                    <input id="=searchValue" class="input-field" type="text" placeholder="Search Products">
                                     <button class="btn btn-outline-whisper btn-primary-hover" type="submit"><img src="/images/common/search.png"></button>
                                 </form>
                             </div>
                             <div class="header-right">
                                 <ul>
                                     <li class="d-none d-lg-block">
-                                        <a href="#searchBar" class="search-btn toolbar-btn">
+                                        <a id="search-icon" class="search-btn toolbar-btn">
                                         </a>
                                     </li>
                                     <li class="d-none d-lg-block">
@@ -138,6 +138,7 @@
 
         <!-- JS Files
 ============================================ -->
+        
         <!-- Global Vendor, plugins JS -->
 
         <script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
