@@ -1,14 +1,15 @@
-package com.greedy.dduckleaf.mockfund.repository;
+package com.greedy.dduckleaf.mockfund.find.repository;
 
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
-import com.greedy.dduckleaf.mockfund.entity.Farmer;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.greedy.dduckleaf.mockfund.entity.MockFund;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,29 +20,31 @@ import static org.junit.jupiter.api.Assertions.*;
         DduckleafApplication.class,
         JPAConfiguration.class
 })
-class FarmerRepositoryTest {
+class MockFundForFundingRepositoryTest {
 
     @Autowired
-    private FarmerRepository farmerRepository;
+    private MockFundForFundingRepository fundingRepository;
 
     @Test
     public void initTest() {
-        assertNotNull(farmerRepository);
+        assertNotNull(fundingRepository);
     }
-    
+
     @Test
-    @DisplayName("파머 정보 조회")
-    public void findFarmerTest() {
-        
+    @DisplayName("모의펀딩 목록 조회")
+    public void findMockFundingListTest() {
+
         //given
-        int memberNo = 3;
-        
+        String status = "진행전";
+
         //when
-        Farmer farmer = farmerRepository.findById(memberNo).get();
-        
+        List<MockFund> mockFundList = fundingRepository.findByMockFundProgressStatus(status);
+
         //then
-        assertNotNull(farmer);
-        System.out.println("farmer = " + farmer);
+        assertNotNull(mockFundList);
+        mockFundList.forEach(mockFund -> {
+            System.out.println("mockFund = " + mockFund);
+        });
     }
 
 }
