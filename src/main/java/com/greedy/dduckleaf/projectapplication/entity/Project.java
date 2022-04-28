@@ -36,12 +36,12 @@ public class Project {
     @Column(name = "OPEN_DATE")
 //    @Temporal(value = TemporalType.TIMESTAMP)
     @ColumnDefault("")
-    private java.sql.Date openDate;
+    private String openDate;
 
     @Column(name = "END_DATE")
     //    @Temporal(value = TemporalType.TIMESTAMP)
     @ColumnDefault("NOW()")
-    private java.sql.Date endDate;
+    private String endDate;
 
     @Column(name = "PROJECT_STATUS")
     @ColumnDefault(value = "'N'")
@@ -92,8 +92,8 @@ public class Project {
     public void prePersist() {
 
         this.projectName = this.projectName  == null ? "프로젝트 명" : this.projectName ;
-        this.openDate = this.openDate  == null ? Date.valueOf(LocalDate.now()) : this.openDate ;
-        this.endDate = this.endDate  == null ? Date.valueOf(LocalDate.now().plusMonths(1)) : this.endDate ;
+        this.openDate = this.openDate  == null ? "0000-00-00" : this.openDate ;
+        this.endDate = this.endDate  == null ? "0000-00-00" : this.endDate ;
         this.examineStatus = this.examineStatus  == null ? "1" : this.examineStatus ;
         this.projectStatus = this.projectStatus  == null ? "Y" : this.projectStatus ;
 

@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,6 +22,9 @@ public class ProjectRewardCategory {
 
     @Column(name = "PROJECT_CATEGORY_NAME")
     private String projectCategoryName;
+
+    @OneToMany(mappedBy = "projectRewardCategory")
+    private List<ProjectBasicInfo> projectBasicInfoList;
 
     @Override
     public String toString() {

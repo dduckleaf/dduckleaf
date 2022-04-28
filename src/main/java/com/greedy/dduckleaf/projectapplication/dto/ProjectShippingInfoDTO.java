@@ -11,7 +11,7 @@ public class ProjectShippingInfoDTO {
 
     private int projectShippingInfoNo;
     private int shippingFee;
-    private java.sql.Date shippingDueDate;
+    private String shippingDueDate;
     private int projectNo;
     private int extraShippingFee;
 

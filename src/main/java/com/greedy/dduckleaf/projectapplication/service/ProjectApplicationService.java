@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.projectapplication.service;
 
+import com.greedy.dduckleaf.projectapplication.dto.ProjectBasicInfoDTO;
 import com.greedy.dduckleaf.projectapplication.dto.ProjectRewardCategoryDTO;
 import com.greedy.dduckleaf.projectapplication.dto.RewardRegistInfoDTO;
 import com.greedy.dduckleaf.projectapplication.entity.*;
@@ -99,7 +100,7 @@ public class ProjectApplicationService {
     private RewardRegistInfo registInfo(int farmerNo) {
 
         RewardRegistInfo reward = new RewardRegistInfo();
-        reward.setRewardAgreementDate(Date.valueOf(LocalDate.now()));
+        reward.setRewardAgreementDate("0000-00-00");
         System.out.println("reward = " + reward);
 
         return reward;
@@ -108,7 +109,8 @@ public class ProjectApplicationService {
     private ProjectBasicInfo basicInfo(int farmerNo) {
 
         ProjectBasicInfo projectBasicInfo = new ProjectBasicInfo();
-        projectBasicInfo.setProjectBasicCategoryNo(1);
+        ProjectRewardCategory category = new ProjectRewardCategory();
+        projectBasicInfo.setProjectRewardCategory(category);
         System.out.println("projectBasicInfo = " + projectBasicInfo);
 
         return projectBasicInfo;
@@ -206,7 +208,7 @@ public class ProjectApplicationService {
 
         RewardRegistInfo updateBasicReq = rewardRegistInfoRepository.findByProjectNo(basicreq.getProjectNo());
         updateBasicReq.setRewardAgreementStatus("Y");
-        updateBasicReq.setRewardAgreementDate(Date.valueOf(LocalDate.now()));
+//        updateBasicReq.setRewardAgreementDate("0000-00-00");
     }
 
     /**
@@ -215,11 +217,11 @@ public class ProjectApplicationService {
      * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
      * @author 박휘림
      */
-    public ProjectBasicInfo findProjectBasicInfoByProjectNo(int projectNo) {
+    public ProjectBasicInfoDTO findProjectBasicInfoByProjectNo(int projectNo) {
 
         ProjectBasicInfo basicInfo = projectBasicInfoRepository.findByProjectNo(projectNo);
 
-        return basicInfo;
+        return modelMapper.map(basicInfo, ProjectBasicInfoDTO.class);
     }
 
     /**
@@ -227,14 +229,18 @@ public class ProjectApplicationService {
      * @param basicInfo: 사용자가 입력한 기본 정보 데이터를 담은 객체
      * @author 박휘림
      */
-    public void modifyBasicInfo(ProjectBasicInfo basicInfo) {
-
+    @Transactional
+    public void modifyBasicInfo(ProjectBasicInfoDTO basicInfo) {
+        System.out.println("basicInfo 서비스!!! = " + basicInfo);
         ProjectBasicInfo updateBasicInfo = projectBasicInfoRepository.findByProjectNo(basicInfo.getProjectNo());
+        System.out.println("updateBasicInfo = " + updateBasicInfo);
         updateBasicInfo.setProjectName(basicInfo.getProjectName());
         updateBasicInfo.setProjectTargetFund(basicInfo.getProjectTargetFund());
         updateBasicInfo.setProjectEndDate(basicInfo.getProjectEndDate());
-        updateBasicInfo.setProjectBasicCategoryNo(basicInfo.getProjectBasicCategoryNo());
 
+        ProjectRewardCategory category = projectRewardCategoryRepository.findById(basicInfo.getProjectRewardCategory().getProjectCategoryNo()).get();
+        System.out.println("category = " + category);
+        updateBasicInfo.setProjectRewardCategory(category);
     }
 
     /**

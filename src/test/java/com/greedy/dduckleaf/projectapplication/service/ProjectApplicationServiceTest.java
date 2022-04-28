@@ -104,7 +104,7 @@ class ProjectApplicationServiceTest {
         //when
         RewardRegistInfoDTO basicreq = projectApplicationService.findRewardRegistInfoByProjectNo(projectNo);
         basicreq.setRewardAgreementStatus("Y");
-        basicreq.setRewardAgreementDate(Date.valueOf(LocalDate.now()));
+        basicreq.setRewardAgreementDate("0000-00-00");
 
         //then
         projectApplicationService.modifyRewardAgreementStatus(basicreq);
@@ -118,7 +118,7 @@ class ProjectApplicationServiceTest {
         int projectNo = 139;
 
         //when
-        ProjectBasicInfo basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+        ProjectBasicInfoDTO basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
 
         //then
         assertNotNull(basicInfo);
@@ -134,9 +134,10 @@ class ProjectApplicationServiceTest {
         int projectNo = 139;
 
         //when
-        ProjectBasicInfo basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+        ProjectBasicInfoDTO basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
         basicInfo.setProjectName("프로젝트 이름 수정");
         basicInfo.setProjectTargetFund(10000000);
+//        basicInfo.setProjectBasicCategoryNo(2);
 
         //then
         assertDoesNotThrow(() ->projectApplicationService.modifyBasicInfo(basicInfo));

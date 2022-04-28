@@ -56,7 +56,7 @@ public class RewardRegistInfo {
     private String rewardAgreementStatus;
 
     @Column(name = "REWARD_AGREEMENT_DATE")
-    private java.sql.Date rewardAgreementDate;
+    private String rewardAgreementDate;
 
     @Override
     public String toString() {
@@ -82,7 +82,7 @@ public class RewardRegistInfo {
         this.rewardName = this.rewardName  == null ? "리워드 명" : this.rewardName ;
         this.rewardInfo = this.rewardInfo  == null ? "리워드 소개를 간단히 적어주세요" : this.rewardInfo ;
         this.rewardUnit = this.rewardUnit  == null ? "리워드 단위" : this.rewardUnit ;
-        this.rewardAgreementDate = this.rewardAgreementDate  == null ? Date.valueOf(LocalDate.now()) : this.rewardAgreementDate ;
+        this.rewardAgreementDate = this.rewardAgreementDate  == null ? "0000-00-00" : this.rewardAgreementDate ;
 
     }
 }

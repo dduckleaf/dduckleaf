@@ -28,8 +28,9 @@ public class ProjectBasicInfo {
     @Column(name = "PROJECT_NO")
     private int projectNo;
 
-    @Column(name = "PROJECT_BASIC_CATEGORY_NO")
-    private int projectBasicCategoryNo;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "PROJECT_BASIC_CATEGORY_NO")
+    private ProjectRewardCategory projectRewardCategory;
 
     @Column(name = "PROJECT_NAME")
 //    @ColumnDefault("프로젝트 명")
@@ -38,7 +39,7 @@ public class ProjectBasicInfo {
     @Column(name = "PROJECT_END_DATE")
 //    @Temporal(value = TemporalType.TIMESTAMP)
 //    @ColumnDefault("")
-    private java.sql.Date projectEndDate;
+    private String projectEndDate;
 
     @Column(name = "PROJECT_INFO")
 //    @ColumnDefault("프로젝트에 대해 요약해주세요")
@@ -53,7 +54,7 @@ public class ProjectBasicInfo {
         return "ProjectBasicInfo{" +
                 "projectBasicInfoNo=" + projectBasicInfoNo +
                 ", projectNo=" + projectNo +
-                ", projectBasicCategoryNo=" + projectBasicCategoryNo +
+                ", projectRewardCategory=" + projectRewardCategory +
                 ", projectName='" + projectName + '\'' +
                 ", projectEndDate=" + projectEndDate +
                 ", projectInfo='" + projectInfo + '\'' +
@@ -65,7 +66,7 @@ public class ProjectBasicInfo {
     public void prePersist() {
 
         this.projectName = this.projectName  == null ? "프로젝트 명" : this.projectName ;
-        this.projectEndDate = this.projectEndDate  == null ? Date.valueOf(LocalDate.now().plusMonths(1)) : this.projectEndDate ;
+        this.projectEndDate = this.projectEndDate  == null ? "0000-00-00" : this.projectEndDate ;
         this.projectInfo = this.projectInfo  == null ? "프로젝트에 대해 요약해주세요" : this.projectInfo ;
 
     }

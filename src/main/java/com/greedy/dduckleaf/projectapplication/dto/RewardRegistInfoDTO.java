@@ -18,5 +18,5 @@ public class RewardRegistInfoDTO {          //리워드 등록 정보
     private String rewardUnit;              //리워드 단위
     private int projectNo;
     private String rewardAgreementStatus;
-    private java.sql.Date rewardAgreementDate;
+    private String rewardAgreementDate;
 }
