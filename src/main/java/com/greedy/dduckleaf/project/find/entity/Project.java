@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -54,4 +55,8 @@ public class Project {
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "PROGRESS_STATUS")
     private ProjectProgressStatus progressStatus;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "PROJECT_NO")
+    private List<ProjectRegistInfo> registInfo;
 }

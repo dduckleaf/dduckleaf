@@ -1,6 +1,8 @@
 package com.greedy.dduckleaf.project.find.repository;
 
+import com.greedy.dduckleaf.project.find.dto.ProjectDTO;
 import com.greedy.dduckleaf.project.find.entity.Project;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,4 +24,6 @@ import java.util.List;
 public interface ProjectForProjectListRepository extends JpaRepository<Project, Integer> {
 
     Page<Project> findByProjectExamineStatusIsNotNullAndProjectNameContaining(String searchValue, Pageable pageable);
+
+    Page<Project> findByProjectExamineStatusIsNotNullAndProgressStatus_projectProgressStuatusNo(int progressStatus,Pageable pageable);
 }
