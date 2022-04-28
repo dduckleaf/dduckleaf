@@ -49,6 +49,9 @@ public class ProjectBasicInfo {
 //    @ColumnDefault("0")
     private int projectTargetFund;
 
+    @Column(name = "PROJECT_PROMOTION_AGREEMENT_STATUS")
+    private String projectPromotionAgreementStatus;
+
     @Override
     public String toString() {
         return "ProjectBasicInfo{" +
@@ -56,9 +59,10 @@ public class ProjectBasicInfo {
                 ", projectNo=" + projectNo +
                 ", projectRewardCategory=" + projectRewardCategory +
                 ", projectName='" + projectName + '\'' +
-                ", projectEndDate=" + projectEndDate +
+                ", projectEndDate='" + projectEndDate + '\'' +
                 ", projectInfo='" + projectInfo + '\'' +
                 ", projectTargetFund=" + projectTargetFund +
+                ", projectPromotionAgreementStatus='" + projectPromotionAgreementStatus + '\'' +
                 '}';
     }
 

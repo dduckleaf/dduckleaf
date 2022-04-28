@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
  * 2022/04/27 (박휘림) 기본정보 등록 관련 메소드 registInfo, basicInfo, shippingInfo, refundPolicy, farmerInfo, farmerFinancialInfo /
  *                                         findProjectNoByFarmerId, findRewardRegistInfoByProjectNo 메소드 작성
  * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findProjectBasicInfoByProjectNo, modifyBasicInfo, findAllRewardCategory 메소드 작성
+ * 2022/04/29 (박휘림) modifyStory 메소드 작성
  * </pre>
  * @version 1.0.3
  * @author 박휘림
@@ -255,5 +256,27 @@ public class ProjectApplicationService {
         return categoryList.stream().map(projectRewardCategory -> modelMapper.map(projectRewardCategory, ProjectRewardCategoryDTO.class)).collect(Collectors.toList());
     }
 
+    /**
+     * modifyStory: 스토리 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
+     * @param story: 사용자가 입력한 스토리 데이터를 담은 객체
+     * @author 박휘림
+     */
+    public void modifyStory(ProjectBasicInfoDTO story) {
 
+        ProjectBasicInfo updateStory = projectBasicInfoRepository.findByProjectNo(story.getProjectNo());
+        updateStory.setProjectInfo(story.getProjectInfo());
+    }
+
+    /**
+     * modifyPromotionAgreementStatus: 사용자가 프로젝트 홍보 심의에 동의 시 동의 여부와 날짜를 업데이트합니다.
+     * @param story: 사용자가 입력한 스토리 정보를 담은 객체
+     * @author 박휘림
+     */
+    @Transactional
+    public void modifyPromotionAgreementStatus(ProjectBasicInfoDTO story) {
+
+        ProjectBasicInfo updateStory = projectBasicInfoRepository.findByProjectNo(story.getProjectNo());
+        updateStory.setProjectPromotionAgreementStatus("Y");
+//        updateBasicReq.setRewardAgreementDate("0000-00-00");
+    }
 }
