@@ -96,7 +96,8 @@
 
         <!-- 숨겨진 답변등록용 div -->
         <div id="registArea" style="display: none;">
-            <form th:action="@{/report/platformmanager/regist}" method="post">
+            <form th:action="@{/report/platformmanager/regist}" method="post"
+                  onsubmit="return confirm('답변이 등록되면 수정 또는 삭제할 수 없습니다. \n신고 답변을 등록하시겠습니까?');">
                 <table class="basic-table detail-view" align="center">
                     <tr>
                         <th>답변일</th>
