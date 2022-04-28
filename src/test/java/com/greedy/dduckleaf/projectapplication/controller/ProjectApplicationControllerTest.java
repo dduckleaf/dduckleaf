@@ -93,6 +93,22 @@ class ProjectApplicationControllerTest {
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/project/application/goMain"))
                 .andDo(MockMvcResultHandlers.print());
 
+    }
+
+    @Test
+    @DisplayName("스토리 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyStory_test() throws Exception {
+
+        //given
+        MultiValueMap<String, String> story = new LinkedMultiValueMap<>();
+        story.add("projectNo", "139");
+        story.add("projectInfo", "프로젝트 요약 수정");
+
+        //when & then
+        mockMvc.perform(MockMvcRequestBuilders.post("/project/application/modify/story").params(story))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/project/application/goMain"))
+                .andDo(MockMvcResultHandlers.print());
 
     }
 }
