@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<style>
+	.modal-dialog {
+		
+	}
+	.modal-content {
+	width: 137% !important;
+	height: 700px;
+	padding: 30px;
+
+    }
+	
+	</style>
+	<!-- CSS
+============================================ -->
+	
+	<!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+	<link rel="stylesheet" href="../../static/css/vendor/font-awesome.min.css" />
+	<link rel="stylesheet" href="../../static/css/vendor/Pe-icon-7-stroke.css" />
+	
+	<!-- Plugin CSS (Global Plugins Files) -->
+	<link rel="stylesheet" href="../../static/css/plugins/animate.min.css">
+	<link rel="stylesheet" href="../../static/css/plugins/jquery-ui.min.css">
+	<link rel="stylesheet" href="../../static/css/plugins/swiper-bundle.min.css">
+	<link rel="stylesheet" href="../../static/css/plugins/nice-select.css">
+	<link rel="stylesheet" href="../../static/css/plugins/magnific-popup.min.css" />
+	
+	<!-- Style CSS -->
+	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	<link rel="stylesheet" th:href="@{ /css/filter.css }">
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+
+<body>
+
+<!-- 게시판 등록용 모달 -->
+<div class="modal fade" id="writeModal" data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content" style="top: 112px">
+			<form action="/project/find/list" method="get">
+				<!-- Begin Main Content Area  -->
+				<div class="single-product-area">
+					<div class="container">
+						<div class="row">
+							<div class="col-lg-6">
+								<!-- 나중에 모달로 쓸 필터 코드 begin -->
+								<div class="filter rounded-1">
+									<div class="box-block">
+										<div class="title">필터</div>
+										<div class="title cancle"><img src="/images/filter/x.png" alt="Product Image"></div>
+									</div>
+									<div class="subtitle">펀딩단계</div>
+									<div class="box">
+										<input type="radio" id="progressStatus-1" value="2" name="progressStatus">
+										<label class="selectBox" for="progressStatus-1">
+											<p class="filter-button">오픈예정</p>
+										</label>
+										<input type="radio" id="progressStatus-2" value="3" name="progressStatus">
+										<label class="selectBox" for="progressStatus-2">
+											<p class="filter-button">진행 중</p>
+										</label>
+									</div>
+									<div class="box">
+										<input type="radio" id="progressStatus-3" value="4" name="progressStatus">
+										<label class="selectBox" for="progressStatus-3">
+											<p class="filter-button">펀딩완료</p>
+										</label>
+									</div>
+									<div class="subtitle">카테고리</div>
+									<div class="box">
+										<input type="radio" id="rewardCategory-1" value="1" name="rewardCategory">
+										<label class="selectBox" for="rewardCategory-1">
+											<p class="filter-button">곡류<img src="/images/filter/rice.png" alt="Product Image"></p>
+										</label>
+										<input type="radio" id="rewardCategory-2" value="2" name="rewardCategory">
+										<label class="selectBox" for="rewardCategory-2">
+											<p class="filter-button">서류<img src="/images/filter/potato.png" alt="Product Image"></p>
+										</label>
+									</div>
+									<div class="box">
+										<input type="radio" id="rewardCategory-3" value="3" name="rewardCategory">
+										<label class="selectBox" for="rewardCategory-3">
+											<p class="filter-button">두류<img src="/images/filter/bean.png" alt="Product Image"></p>
+										</label>
+										<input type="radio" id="rewardCategory-4" value="4" name="rewardCategory">
+										<label class="selectBox" for="rewardCategory-4">
+											<p class="filter-button">견과류<img src="/images/filter/peanut.png" alt="Product Image"></p>
+										</label>
+									</div>
+									<div class="box">
+										<input type="radio" id="rewardCategory-5" value="5" name="rewardCategory">
+										<label class="selectBox" for="rewardCategory-5">
+											<p class="filter-button">과일류<img src="/images/filter/strawberry.png" alt="Product Image"></p>
+										</label>
+										<input type="radio" id="rewardCategory-6" value="6" name="rewardCategory">
+										<label class="selectBox" for="rewardCategory-6">
+											<p class="filter-button">채소류<img src="/images/filter/garlic.png" alt="Product Image"></p>
+										</label>
+									</div>
+									<div class="box">
+										<input type="radio" id="rewardCategory-7" value="7" name="rewardCategory">
+										<label class="selectBox" for="rewardCategory-7">
+											<p class="filter-button">버섯류<img src="/images/filter/mushroom.png" alt="Product Image"></p>
+										</label>
+										<input type="radio" id="rewardCategory-8" value="8" name="rewardCategory">
+										<label class="selectBox" for="rewardCategory-8">
+											<p class="filter-button">향신식물<img src="/images/filter/herb.png" alt="Product Image"></p>
+										</label>
+									</div>
+									<div class="box">
+										<input type="radio" id="rewardCategory-9"value="9" name="rewardCategory">
+										<label class="selectBox" for="rewardCategory-9">
+											<p class="filter-button">약재<img src="/images/filter/insam.png" alt="Product Image"></p>
+										</label>
+										<input type="radio" id="rewardCategory-10" value="10" name="rewardCategory">
+										<label class="selectBox" for="rewardCategory-10">
+											<p class="filter-button">기타</p>
+										</label>
+									</div>
+									<br>
+									<div class="box">
+										<button type="reset" class="selectBox">
+											<p class="filter-button">초기화</p>
+										</button>
+										<button class="selectBox-submit">
+											<p class="filter-button">적용하기</p>
+										</button>
+									</div>
+								</div>
+								<!-- 필터 코드 end -->
+							</div>
+						</div>
+					</div>
+				
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
