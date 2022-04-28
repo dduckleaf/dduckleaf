@@ -18,6 +18,7 @@ import javax.persistence.PersistenceContext;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
@@ -56,7 +57,23 @@ public class ProjectReportRepositoryTests {
         //then
         assertNotNull(projectReportList);
         projectReportList.forEach(System.out::println);
+    }
 
+    @Test
+    @DisplayName("답변 대기 중인 프로젝트 신고내역 목록조회 테스트")
+    public void findByProjectReportStatus_test() {
+        //given
+        String projectReportStatus = "미답변";
+        Pageable pageable = PageRequest.of(0,
+                10,
+                Sort.by("projectReportNo").descending());
+
+        //when
+        Page<ProjectReport> projectReportList = repository.findByProjectReportStatus(projectReportStatus, pageable);
+
+        //then
+        assertNotNull(projectReportList);
+        projectReportList.forEach(System.out::println);
     }
 
     @Test
@@ -92,4 +109,5 @@ public class ProjectReportRepositoryTests {
         assertNotNull(reportList);
         reportList.forEach(System.out::println);
     }
+
 }

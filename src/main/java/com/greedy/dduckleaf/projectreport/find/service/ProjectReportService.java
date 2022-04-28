@@ -32,6 +32,7 @@ import java.util.stream.Collectors;
  * 2022-04-25 (장민주) registProjectReportReply 서비스메소드 작성
  *                    registReply 서비스메소드 작성
  * 2022-04-27 (장민주) findProjectReportListOfOneProject 서비스메소드 작성
+ * 2022-04-28 (장민주) findProjectReportWaitingList 서비스메소드 작성
  * </pre>
  *
  * @author 장민주
@@ -105,18 +106,39 @@ public class ProjectReportService {
     }
 
     /**
-    * findProjectReportList: 해당 페이지의 프로젝트신고내역 목록 조회를 요청하는 메소드입니다.
+    * findProjectReportList: 모든 프로젝트신고내역 목록 조회를 요청하는 메소드입니다.
     * @param pageable: 페이징에 필요한 정보를 담는 객체
-    * @return Page<ProjectReportDTO>
-     *        페이징 처리가 된 조회 결과를 DTO로 변환한 프로젝트신고목록
+    * @return Page<ProjectReportDTO> 페이징 처리가 된 조회 결과를 DTO로 변환한 프로젝트신고목록
+    * @author 장민주
     */
     public Page<ProjectReportDTO> findProjectReportList(Pageable pageable) {
-
+        /* 페이징 정보 */
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
                 Sort.by("projectReportNo").descending());
 
         return reportRepository.findAll(pageable).map(projectReport -> modelMapper.map(projectReport, ProjectReportDTO.class));
+    }
+
+    /**
+     * findProjectReportWaitingList: 신고 답변 대기 중인 프로젝트 신고내역 목록 조회를 요청하는 메소드입니다.
+     * @param pageable: 페이징에 필요한 정보를 담는 객체
+     * @return Page<ProjectReportDTO> 페이징 처리가 된 조회 결과를 DTO로 변환한 프로젝트신고목록
+     * @author 장민주
+     */
+    public Page<ProjectReportDTO> findProjectReportWaitingList(Pageable pageable) {
+        /* 페이징 정보 */
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(),
+                Sort.by("projectReportNo").descending());
+
+        /* 프로젝트신고 처리 상태 */
+        String projectReportStatus = "미답변";
+
+        return reportRepository.findByProjectReportStatus(projectReportStatus, pageable).map(
+                projectReport -> modelMapper.map(projectReport, ProjectReportDTO.class
+                )
+        );
     }
 
     /**

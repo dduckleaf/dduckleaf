@@ -37,7 +37,8 @@ import java.util.List;
  * 2022/04/27 (장민주) findProjectReportListOfOneProject 메소드 작성.
  *                    findProjectReportDetailForProjectManager 메소드 작성.
  * 2022/04/28 (장민주) registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 메소드 작성.
- *                    registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 리팩토링
+ *                    registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 리팩토링.
+ * 2022/04/28 (장민주) findProjectReportWaitingList 메소드 작성.
  * </pre>
  * @version 1.0.4
  * @author 장민주
@@ -101,17 +102,32 @@ public class ProjectReportController {
 
     /**
      * findAllProjectReportList: 프로젝트 신고내역 전체조회 요청 메소드입니다.
-     * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
-     *            projectReportSummaryInfo : 프로젝트신고내역 요약정보
-     *            "report/platformmanager/list" : 요약정보를 출력할 브라우저 화면 경로
+     * @return 프로젝트신고 목록, 프로젝트신고 목록이 출력될 화면 경로
      */
     @GetMapping("/platformmanager/listAll")
-    public ModelAndView findAllProjectReportList(ModelAndView mv, @PageableDefault Pageable pageable) {
+    public ModelAndView findAllProjectReportList(ModelAndView mv,
+        @PageableDefault(size=10, sort="projectReportNo", direction = Sort.Direction.DESC) Pageable pageable) {
 
         Page<ProjectReportDTO> projectReportList = service.findProjectReportList(pageable);
 
-        System.out.println("projectReportList = " + projectReportList);
-        projectReportList.forEach(System.out::println);
+        PagingButtonInfo pagingInfo = Pagenation.getPagingButtonInfo(projectReportList);
+
+        mv.addObject("projectReportList", projectReportList);
+        mv.addObject("pagingInfo", pagingInfo);
+        mv.setViewName("report/platformmanager/list");
+
+        return mv;
+    }
+
+    /**
+     * findAllProjectReportList: 답변 대기 중인 프로젝트 신고내역 조회 요청 메소드입니다.
+     * @return mv 프로젝트신고 목록, 프로젝트신고 목록이 출력될 화면 경로
+     */
+    @GetMapping("/platformmanager/waitingList")
+    public ModelAndView findProjectReportWaitingList(ModelAndView mv,
+        @PageableDefault(size=10, sort="projectReportNo", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<ProjectReportDTO> projectReportList = service.findProjectReportWaitingList(pageable);
 
         PagingButtonInfo pagingInfo = Pagenation.getPagingButtonInfo(projectReportList);
 
@@ -124,10 +140,8 @@ public class ProjectReportController {
 
     /**
     * findProjectReportDetail: 플랫폼관리 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
-    *  @param projectReportNo 상세조회를 요청할 프로젝트신고번호
-    * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
-    *            projectReportInfo : 프로젝트신고내역 상세정보
-    *            "report/platformmanager/detail" : 상세정보를 출력할 브라우저 화면 경로
+    * @param projectReportNo 상세조회를 요청할 프로젝트신고번호
+    * @return mv 프로젝트 상세조회 데이터, 상세조회가 출력될 화면 경로
     */
     @GetMapping("/platformmanager/detail/{projectReportNo}")
     public ModelAndView findProjectReportDetail(ModelAndView mv, @PathVariable int projectReportNo) {
