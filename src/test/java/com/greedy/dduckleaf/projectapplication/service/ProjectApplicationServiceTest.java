@@ -152,4 +152,37 @@ class ProjectApplicationServiceTest {
 
         category.forEach(System.out::println);
     }
+
+    @Test
+    @DisplayName("스토리 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyStory_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        ProjectBasicInfoDTO story = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+        story.setProjectInfo("프로젝트 요약 수정 테스트");
+
+        //then
+        assertDoesNotThrow(() ->projectApplicationService.modifyStory(story));
+
+    }
+
+    @Test
+    @DisplayName("스토리 작성 페이지에서 프로젝트 홍보 심의 동의 상태 변경 테스트")
+    public void modifyPromotionAgreementStatus_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        ProjectBasicInfoDTO updateStory = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+        updateStory.setProjectPromotionAgreementStatus("Y");
+//        updateStory.setRewardAgreementDate("0000-00-00");
+
+        //then
+        assertDoesNotThrow(() -> projectApplicationService.modifyPromotionAgreementStatus(updateStory));
+    }
+
 }

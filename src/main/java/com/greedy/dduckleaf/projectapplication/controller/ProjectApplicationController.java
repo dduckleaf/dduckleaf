@@ -26,8 +26,9 @@ import java.util.List;
  * 2022/04/25 (박휘림) 처음 작성 / registProjectApplication 메소드 작성 시작
  * 2022/04/27 (박휘림) projectApplicationMainPage, findProjectNoByFarmerNo, findBasicReqByProjectNo 메소드 작성
  * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findBasicInfoByProjectNo, modifyBasicInfo 메소드 작성
+ * 2022/04/29 (박휘림) findStoryByProjectNo, modifyStory 메소드 작성
  * </pre>
- * @version 1.0.3
+ * @version 1.0.4
  * @author 박휘림
  */
 @Controller
@@ -187,17 +188,42 @@ public class ProjectApplicationController {
     }
 
     /**
-     * findAllRewardCategory: 리워드 카테고리 목록을 조회합니다.
-     * @return 리워드 카테고리 목록
+     * findStoryByProjectNo: 스토리 작성 페이지로 이동 시 기본 데이터를 조회합니다.
+     * @param user: 로그인한 사용자의 정보를 받는 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            story 스토리 기본 데이터
+     *            "project/regist/story" 스토리를 작성하는 뷰 경로
      * @author 박휘림
      */
-//    @GetMapping(value = "/basicinfo")
-//    public ModelAndView findAllRewardCategory(ModelAndView mv) {
-//
-//
-//        mv.setViewName("project/regist/basicinfo");
-//
-//        return mv;
-//    }
+    @GetMapping("/story")
+    public ModelAndView findStoryByProjectNo(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+
+        int projectNo = findProjectNoByFarmerNo(user);
+
+        ProjectBasicInfoDTO story = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+
+        mv.addObject("story", story);
+        mv.setViewName("project/regist/story");
+
+        return mv;
+    }
+
+    /**
+     * modifyStory: 스토리 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
+     * @param story: 사용자가 입력한 스토리 데이터를 담은 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/project/regist/main" 프로젝트 신청 메인페이지 경로
+     * @author 박휘림
+     */
+    @PostMapping("/modify/story")
+    public ModelAndView modifyStory(ModelAndView mv, ProjectBasicInfoDTO story) {
+
+        projectApplicationService.modifyStory(story);
+
+        mv.setViewName("redirect:/project/application/goMain");
+
+        return mv;
+    }
+
 
 }
