@@ -3,6 +3,7 @@ package com.greedy.dduckleaf.projectreport.controller;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
+import com.greedy.dduckleaf.common.utility.DateFormatting;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportReplyDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ReportDetailInfo;
@@ -36,6 +37,7 @@ import java.util.List;
  * 2022/04/27 (장민주) findProjectReportListOfOneProject 메소드 작성.
  *                    findProjectReportDetailForProjectManager 메소드 작성.
  * 2022/04/28 (장민주) registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 메소드 작성.
+ *                    registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 리팩토링
  * </pre>
  * @version 1.0.4
  * @author 장민주
@@ -150,16 +152,11 @@ public class ProjectReportController {
 
         /* 세션에서 로그인한 관리자의 회원번호 추출 */
         int adminNo = user.getMemberNo();
-
         /* 데이터베이스에 삽입해줄 현재 날짜, 시간정보 생성 */
-        long miliseconds = System.currentTimeMillis();
-        Date date = new Date(miliseconds);
-        System.out.println(date);
+        String registDate = DateFormatting.getDateAndTime();
 
         projectReportReply.setAdminNo(adminNo);
-        projectReportReply.setProjectReportReplyDate(date);
-
-        System.out.println("projectReportReply = " + projectReportReply);
+        projectReportReply.setProjectReportReplyDate(registDate);
 
         service.registReply(projectReportReply);
 
@@ -183,16 +180,11 @@ public class ProjectReportController {
 
         /* 세션에서 로그인한 관리자의 회원번호 추출 */
         int adminNo = user.getMemberNo();
-
         /* 데이터베이스에 삽입해줄 현재 날짜, 시간정보 생성 */
-        long miliseconds = System.currentTimeMillis();
-        Date date = new Date(miliseconds);
-        System.out.println(date);
+        String registDate = DateFormatting.getDateAndTime();
 
         projectReportReply.setAdminNo(adminNo);
-        projectReportReply.setProjectReportReplyDate(date);
-
-        System.out.println("projectReportReply = " + projectReportReply);
+        projectReportReply.setProjectReportReplyDate(registDate);
 
         service.registReply(projectReportReply);
 

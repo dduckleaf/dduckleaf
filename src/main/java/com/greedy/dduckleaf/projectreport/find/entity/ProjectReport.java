@@ -18,7 +18,7 @@ public class ProjectReport {
     private int projectReportNo;
 
     @Column(name = "PROJECT_REPORT_DATE")
-    private Date projectReportDate;
+    private String projectReportDate;
 
     @Column(name = "PROJECT_REPORT_CONTENT")
     private String projectReportContent;

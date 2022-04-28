@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.projectreport.find.service;
 
+import com.greedy.dduckleaf.common.utility.DateFormatting;
 import com.greedy.dduckleaf.config.*;
 import com.greedy.dduckleaf.projectreport.find.dto.MemberDTO;
 import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
@@ -119,8 +120,7 @@ public class ProjectReportServiceTests {
         ProjectReportDTO projectReport = new ProjectReportDTO();
         projectReport.setProjectReportNo(12);
 
-        long milliseconds = System.currentTimeMillis();
-        Date date = new Date(milliseconds);
+        String registDate = DateFormatting.getDateAndTime();
 
         MemberDTO admin = new MemberDTO();
         admin.setMemberNo(1);
@@ -128,7 +128,7 @@ public class ProjectReportServiceTests {
         ProjectReportReplyDTO reply = new ProjectReportReplyDTO();
         reply.setProjectReportReplyNo(100);
         reply.setProjectReportNo(projectReport.getProjectReportNo());
-        reply.setProjectReportReplyDate(date);
+        reply.setProjectReportReplyDate(registDate);
         reply.setProjectReportReplyContent("content");
         reply.setAdminNo(admin.getMemberNo());
         reply.setDeleteYn("N");
@@ -150,8 +150,7 @@ public class ProjectReportServiceTests {
         ProjectReportDTO projectReport = new ProjectReportDTO();
         projectReport.setProjectReportNo(12);
 
-        long milliseconds = System.currentTimeMillis();
-        Date date = new Date(milliseconds);
+        String registDate = DateFormatting.getDateAndTime();
 
         MemberDTO admin = new MemberDTO();
         admin.setMemberNo(1);
@@ -159,7 +158,7 @@ public class ProjectReportServiceTests {
         ProjectReportReplyDTO reply = new ProjectReportReplyDTO();
         reply.setProjectReportReplyNo(2);
         reply.setProjectReportNo(projectReport.getProjectReportNo());
-        reply.setProjectReportReplyDate(date);
+        reply.setProjectReportReplyDate(registDate);
 //        reply.setProjectReportReplyContent("content");
         reply.setAdminNo(admin.getMemberNo());
         reply.setDeleteYn("N");

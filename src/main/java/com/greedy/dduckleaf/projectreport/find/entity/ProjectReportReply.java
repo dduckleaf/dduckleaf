@@ -26,7 +26,7 @@ public class ProjectReportReply {
     private String projectReportReplyContent;               //답변내용
 
     @Column(name = "PROJECT_REPORT_REPLY_DATE")
-    private Date projectReportReplyDate;                    //답변발신일
+    private String projectReportReplyDate;                    //답변발신일
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_REPORT_NO")
