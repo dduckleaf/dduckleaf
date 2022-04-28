@@ -20,4 +20,6 @@ import java.util.List;
 public interface ProjectForProjectListRepository extends JpaRepository<Project, Integer> {
 
     List<Project> findByProgressStatusGreaterThanEqual(int i);
+
+    List<Project> findByProjectExamineStatusIsNotNull();
 }

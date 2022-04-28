@@ -37,7 +37,7 @@ public class ProjectFindService {
 
     public List<ProjectDTO> findProjectList() {
 
-        List<Project> projectList = projectRepo.findByProgressStatusGreaterThanEqual(PROJECT_LIST_STATUS);
+        List<Project> projectList = projectRepo.findByProjectExamineStatusIsNotNull();
 
         return parsingfindProject(projectList);
     }
@@ -47,4 +47,3 @@ public class ProjectFindService {
         return projectList.stream().map(project -> mapper.map(project, ProjectDTO.class)).collect(Collectors.toList());
     }
 }
-

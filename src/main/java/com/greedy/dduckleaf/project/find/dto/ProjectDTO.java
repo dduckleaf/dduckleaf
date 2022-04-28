@@ -21,7 +21,7 @@ public class ProjectDTO {
     private double achievementRate;
     private String examineStatus;
     private String projectExamineStatus;
-    private int progressStatus;
+    private ProjectProgressStatusDTO progressStatus;
     private int maxTargetAmount;
     private MemberDTO farmer;
 }
