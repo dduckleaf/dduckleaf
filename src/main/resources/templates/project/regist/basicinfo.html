@@ -5,7 +5,7 @@
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>모의펀딩 신청</title>
+    <title>펀딩 신청</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,19 +27,19 @@
                     <p class="fundmenutitle">펀딩 준비<img class="arrow" th:src="@{ /images/common/vector.png }"></p>
                 </button>
                 <div class="panel">
-                    <p onclick="location.href='regist/basicinfo/1'">기본요건</p>
-                    <p onclick="location.href='regist/story/1'">기본정보</p>
-                    <p onclick="location.href='regist/reward/1'">스토리 작성</p>
-                    <p onclick="location.href='regist/reward/1'">리워드 설계</p>
-                    <p onclick="location.href='regist/reward/1'">위험요인 및 정책</p>
-                    <p onclick="location.href='regist/reward/1'">파머 정보</p>
-                    <p onclick="location.href='regist/reward/1'">대표자 및 정산 정보</p>
+                    <p onclick="location.href='/project/application/basicreq'">기본요건</p>
+                    <p onclick="location.href='/project/application/basicinfo'">기본정보</p>
+                    <p onclick="location.href='/project/application/story'">스토리 작성</p>
+                    <p onclick="location.href='/project/application/reward'">리워드 설계</p>
+                    <p onclick="location.href='/project/application/policy'">위험요인 및 정책</p>
+                    <p onclick="location.href='/project/application/farmer'">파머 정보</p>
+                    <p onclick="location.href='/project/application/representative'">대표자 및 정산 정보</p>
                 </div>
             </div>
             <form name="saveForm">
                 <div class="col-md-7">
                     <div class="breadcrumb">
-                        <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">펀딩 준비</span>&nbsp;
+                        <span class="breadcrumb home" onclick="location.href='/project/application/goMain'">펀딩 준비</span>&nbsp;
                         <span class="breadcrumb">></span>&nbsp;
                         <span class="breadcrumb">기본 정보</span>
                     </div>
@@ -47,12 +47,13 @@
                     <a>프로젝트의 추가 정보를 입력해주세요.</a>
                     <div class="basicmenu">
                         <a class="basictitle">프로젝트 제목</a><br>
-                        <input name="mockFundInfoNo" type="hidden" value="1">
-                        <input class="mockfundtitle1" id="mockFundName" name="mockFundName" type="text">
+                        <input name="projectNo" type="hidden" th:value="${ basicInfo.projectNo }">
+                        <input name="projectNo" type="hidden" th:value="${ basicInfo.projectBasicInfoNo }">
+                        <input class="mockfundtitle1" id="projectName" name="projectName" type="text" th:value="${ basicInfo.projectName }">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">목표 금액</a><br>
-                        <input class="mockfundtitle2" id="targetTicketAmount" name="targetTicketAmount" type="number"><a class="basictitle" style="margin-left: 15px;">원</a>
+                        <input class="mockfundtitle2" id="projectTargetFund" name="projectTargetFund" type="number" th:value="${ basicInfo.projectTargetFund }"><a class="basictitle" style="margin-left: 15px;">원</a>
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">대표 이미지</a><br>
@@ -62,14 +63,15 @@
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">카테고리</a><br>
-                        <select class="mockfundtitle1" id="category" name="rewardCategory.projectCategoryNo">
-<!--                            <option th:each="categoryList : ${ categoryList }" th:value="${ categoryList.projectCategoryNo }" th:utext="${ categoryList.projectCategoryName }" th:selected="${ info.rewardCategory.projectCategoryNo == categoryList.projectCategoryNo }"></option>-->
+                        <select class="mockfundtitle1" id="projectRewardCategory" name="projectRewardCategory.projectCategoryNo">
+                            <option th:each="categoryList : ${ categoryList }" th:value="${ categoryList.projectCategoryNo }" th:text="${ categoryList.projectCategoryName }"
+                                    th:selected="${ basicInfo.projectRewardCategory.projectCategoryNo == categoryList.projectCategoryNo }"></option>
                         </select>
                     </div>
                     <div class="basicmenu form-date">
                         <a class="basictitle">프로젝트 종료일</a><br>
                         <a class="basicsubtitle">요건·콘텐츠 확인 및 프로젝트 진행 일정과 리워드 발송을 함께 고려하여 종료일을 설정해 주세요.</a>
-                        <input class="mockfundtitle1" id="endDate" name="endDate">
+                        <input class="mockfundtitle1" id="projectEndDate" name="projectEndDate" th:value="${ basicInfo.projectEndDate }" type="date">
                     </div>
                     <div>
                         <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
@@ -135,28 +137,47 @@
     let endDate = today.setMonth(today.getMonth() + 1);
     let endDay = new Date(endDate).toISOString().slice(0, 10);
 
-    document.getElementById('endDate').setAttribute("min", endDay);
+    document.getElementById('projectEndDate').setAttribute("min", endDay);
 
     $("#saveclick").click(function() {
         Swal.fire({
-            title: 'Do you want to save the changes?',
+            title: '저장하시겠습니까?',
             showCancelButton: true,
-            confirmButtonText: 'Save',
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            allowEnterKey: false,
+            customClass: {
+                confirmButton: 'savesuccess',
+                cancelButton: 'savecancel',
+                popup: 'savepopup'
+            },
+            buttonsStyling: false,
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire('Saved!', '', 'success')
-                    .then(function(mockFundName, targetTicketAmount, category, endDate) {
-                        let saveForm = document.saveForm;
-                        let url = '/mockfund/modify';
-                        saveForm.mockFundName = mockFundName;
-                        saveForm.targetTicketAmount = targetTicketAmount;
-                        saveForm.projectCategoryNo = category;
-                        saveForm.endDate = endDate;
+                Swal.fire({
+                    title: '저장되었습니다',
+                    confirmButtonText: "확인",
+                    allowEnterKey: false,
+                    customClass: {
+                        confirmButton: 'saveok',
+                        popup: 'savepopup'
+                    },
+                    buttonsStyling: false,
+                }).then(function(projectName, projectTargetFund, category, projectEndDate, projectNo, projectBasicInfoNo) {
 
-                        saveForm.action = url;
-                        saveForm.method = 'post';
-                        saveForm.submit();
-                    });
+                    let saveForm = document.saveForm;
+                    let url = '/project/application/modify/basicinfo';
+                    saveForm.projectName = projectName;
+                    saveForm.projectTargetFund = projectTargetFund;
+                    saveForm.projectCategoryNo = category;
+                    saveForm.projectEndDate = projectEndDate;
+                    saveForm.projectNo = projectNo;
+                    saveForm.projectBasicInfoNo = projectBasicInfoNo;
+
+                    saveForm.action = url;
+                    saveForm.method = 'post';
+                    saveForm.submit();
+                });
             }
         })
     });

@@ -31,7 +31,7 @@ public class ProjectShippingInfo {
     @Column(name = "SHIPPING_DUE_DATE")
 //    @Temporal(value = TemporalType.TIMESTAMP)
 //    @ColumnDefault("")
-    private java.sql.Date shippingDueDate;
+    private String shippingDueDate;
 
     @Column(name = "PROJECT_NO")
     private int projectNo;
@@ -54,7 +54,7 @@ public class ProjectShippingInfo {
     @PrePersist
     public void prePersist() {
 
-        this.shippingDueDate = this.shippingDueDate  == null ? Date.valueOf(LocalDate.now()) : this.shippingDueDate ;
+        this.shippingDueDate = this.shippingDueDate  == null ? "0000-00-00" : this.shippingDueDate ;
 
     }
 }

@@ -62,7 +62,7 @@ class ProjectApplicationServiceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 번호로 기본 리워드 등록 정보 데이터 조회하는 테스트")
+    @DisplayName("프로젝트 번호로 기본 요건 데이터 조회하는 테스트")
     public void findBasicReq_test() {
 
         //given
@@ -104,9 +104,85 @@ class ProjectApplicationServiceTest {
         //when
         RewardRegistInfoDTO basicreq = projectApplicationService.findRewardRegistInfoByProjectNo(projectNo);
         basicreq.setRewardAgreementStatus("Y");
-        basicreq.setRewardAgreementDate(Date.valueOf(LocalDate.now()));
+        basicreq.setRewardAgreementDate("0000-00-00");
 
         //then
         projectApplicationService.modifyRewardAgreementStatus(basicreq);
     }
+
+    @Test
+    @DisplayName("프로젝트 번호로 기본 정보 데이터 조회하는 테스트")
+    public void findBasicInfo_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        ProjectBasicInfoDTO basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+
+        //then
+        assertNotNull(basicInfo);
+        System.out.println("basicInfo = " + basicInfo);
+
+    }
+
+    @Test
+    @DisplayName("기본 정보 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyBasicInfo_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        ProjectBasicInfoDTO basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+        basicInfo.setProjectName("프로젝트 이름 수정");
+        basicInfo.setProjectTargetFund(10000000);
+//        basicInfo.setProjectBasicCategoryNo(2);
+
+        //then
+        assertDoesNotThrow(() ->projectApplicationService.modifyBasicInfo(basicInfo));
+    }
+
+    @Test
+    @DisplayName("리워드 카테고리를 조회하는 테스트")
+    public void findAllRewardCategory_test() {
+
+        //when & then
+        List<ProjectRewardCategoryDTO> category = projectApplicationService.findAllRewardCategory();
+
+        category.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("스토리 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyStory_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        ProjectBasicInfoDTO story = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+        story.setProjectInfo("프로젝트 요약 수정 테스트");
+
+        //then
+        assertDoesNotThrow(() ->projectApplicationService.modifyStory(story));
+
+    }
+
+    @Test
+    @DisplayName("스토리 작성 페이지에서 프로젝트 홍보 심의 동의 상태 변경 테스트")
+    public void modifyPromotionAgreementStatus_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        ProjectBasicInfoDTO updateStory = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+        updateStory.setProjectPromotionAgreementStatus("Y");
+//        updateStory.setRewardAgreementDate("0000-00-00");
+
+        //then
+        assertDoesNotThrow(() -> projectApplicationService.modifyPromotionAgreementStatus(updateStory));
+    }
+
 }

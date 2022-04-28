@@ -7,9 +7,10 @@ import com.greedy.dduckleaf.project.find.dto.ProjectDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -32,10 +33,12 @@ class ProjectFindServiceTest {
     }
 
     @Test
-    public void findProjectList_test() {
+    public void findProjectLists_test() {
 
+        Pageable pageable = PageRequest.of(1, 10);
+        String searchValue = "3";
 
-        List<ProjectDTO> projectList = service.findProjectList();
+        Page<ProjectDTO> projectList = service.findProjectLists(searchValue, pageable);
 
         assertNotNull(projectList);
 
