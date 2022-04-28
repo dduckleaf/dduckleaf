@@ -201,7 +201,7 @@ public class ProjectApplicationController {
         int projectNo = findProjectNoByFarmerNo(user);
 
         ProjectBasicInfoDTO story = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
-
+        System.out.println("story = " + story);
         mv.addObject("story", story);
         mv.setViewName("project/regist/story");
 
@@ -217,7 +217,7 @@ public class ProjectApplicationController {
      */
     @PostMapping("/modify/story")
     public ModelAndView modifyStory(ModelAndView mv, ProjectBasicInfoDTO story) {
-
+        System.out.println("story = " + story);
         projectApplicationService.modifyStory(story);
 
         mv.setViewName("redirect:/project/application/goMain");
@@ -225,5 +225,14 @@ public class ProjectApplicationController {
         return mv;
     }
 
+    @PostMapping("/promotionagreement")
+    public ModelAndView modifyPromotionAgreementStatus(ModelAndView mv, ProjectBasicInfoDTO story) {
+
+        projectApplicationService.modifyPromotionAgreementStatus(story);
+
+        mv.setViewName("redirect:/project/application/story");
+
+        return mv;
+    }
 
 }
