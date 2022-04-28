@@ -11,7 +11,7 @@ import java.sql.Date;
 @ToString
 public class ProjectReportDTO {
     private int projectReportNo;
-    private Date projectReportDate;
+    private String projectReportDate;
     private String projectReportContent;
     private String reportRefUrl;
     private String reporterPhone;

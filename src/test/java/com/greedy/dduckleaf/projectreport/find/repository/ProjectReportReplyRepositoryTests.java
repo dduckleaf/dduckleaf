@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.projectreport.find.repository;
 
 
+import com.greedy.dduckleaf.common.utility.DateFormatting;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
@@ -78,13 +79,12 @@ public class ProjectReportReplyRepositoryTests {
         ProjectReport projectReport = new ProjectReport();
         projectReport.setProjectReportNo(12);
 
-        long milliseconds = System.currentTimeMillis();
-        Date date = new Date(milliseconds);
+        String registDate = DateFormatting.getDateAndTime();
 
         ProjectReportReply reply = new ProjectReportReply();
         reply.setProjectReportReplyNo(10);
         reply.setProjectReport(projectReport);
-        reply.setProjectReportReplyDate(date);
+        reply.setProjectReportReplyDate(registDate);
         reply.setProjectReportReplyContent("content");
         reply.setAdminNo(1);
         reply.setDeleteYn("N");
