@@ -62,7 +62,7 @@ class ProjectApplicationServiceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 번호로 기본 리워드 등록 정보 데이터 조회하는 테스트")
+    @DisplayName("프로젝트 번호로 기본 요건 데이터 조회하는 테스트")
     public void findBasicReq_test() {
 
         //given
@@ -108,5 +108,47 @@ class ProjectApplicationServiceTest {
 
         //then
         projectApplicationService.modifyRewardAgreementStatus(basicreq);
+    }
+
+    @Test
+    @DisplayName("프로젝트 번호로 기본 정보 데이터 조회하는 테스트")
+    public void findBasicInfo_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        ProjectBasicInfo basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+
+        //then
+        assertNotNull(basicInfo);
+        System.out.println("basicInfo = " + basicInfo);
+
+    }
+
+    @Test
+    @DisplayName("기본 정보 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyBasicInfo_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        ProjectBasicInfo basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+        basicInfo.setProjectName("프로젝트 이름 수정");
+        basicInfo.setProjectTargetFund(10000000);
+
+        //then
+        assertDoesNotThrow(() ->projectApplicationService.modifyBasicInfo(basicInfo));
+    }
+
+    @Test
+    @DisplayName("리워드 카테고리를 조회하는 테스트")
+    public void findAllRewardCategory_test() {
+
+        //when & then
+        List<ProjectRewardCategoryDTO> category = projectApplicationService.findAllRewardCategory();
+
+        category.forEach(System.out::println);
     }
 }

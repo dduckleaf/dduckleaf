@@ -1,24 +1,32 @@
 package com.greedy.dduckleaf.projectapplication.controller;
 
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
+import com.greedy.dduckleaf.projectapplication.dto.ProjectRewardCategoryDTO;
 import com.greedy.dduckleaf.projectapplication.dto.RewardRegistInfoDTO;
+import com.greedy.dduckleaf.projectapplication.entity.ProjectBasicInfo;
 import com.greedy.dduckleaf.projectapplication.service.ProjectApplicationService;
+import org.apache.maven.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * <pre>
  * Class: ProjectApplicationController
- * Comment : 프로젝트 오픈 싱청
+ * Comment : 프로젝트 오픈 신청
  * History
- * 2022/04/25 (박휘림) 처음 작성 / 프로젝트 오픈 신청 시 관련 테이블에 기본값 인서트 메소드 작성 시작 / 기본 요건 페이지 조회
+ * 2022/04/25 (박휘림) 처음 작성 / registProjectApplication 메소드 작성 시작
+ * 2022/04/27 (박휘림) projectApplicationMainPage, findProjectNoByFarmerNo, findBasicReqByProjectNo 메소드 작성
+ * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findBasicInfoByProjectNo, modifyBasicInfo, findAllRewardCategory 메소드 작성
  * </pre>
- * @version 1.0.1
+ * @version 1.0.3
  * @author 박휘림
  */
 @Controller
@@ -62,6 +70,7 @@ public class ProjectApplicationController {
     public ModelAndView projectApplicationMainPage(ModelAndView mv) {
 
         mv.setViewName("project/regist/main");
+
         return mv;
     }
 
@@ -94,7 +103,6 @@ public class ProjectApplicationController {
         int projectNo = findProjectNoByFarmerNo(user);
 
         RewardRegistInfoDTO basicReq = projectApplicationService.findRewardRegistInfoByProjectNo(projectNo);
-        System.out.println("basicReq = " + basicReq);
 
         mv.addObject("basicReq", basicReq);
         mv.setViewName("project/regist/basicreq");
@@ -111,7 +119,7 @@ public class ProjectApplicationController {
      */
     @PostMapping("/modify/basicreq")
     public ModelAndView modifyBasicReq(ModelAndView mv, RewardRegistInfoDTO basicreq) {
-        System.out.println("basicreq = " + basicreq);
+
         projectApplicationService.modifyBasicReq(basicreq);
 
         mv.setViewName("redirect:/project/application/goMain");
@@ -119,14 +127,71 @@ public class ProjectApplicationController {
         return mv;
     }
 
+    /**
+     * modifyRewardAgreementStatus: 사용자가 리워드 관련 서류 제출에 동의 시 동의 여부와 날짜를 업데이트합니다.
+     * @param basicreq: 사용자가 입력한 기본 요건 정보를 담은 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/project/application/basicreq" 기본 요건 작성 페이지 경로
+     * @author 박휘림
+     */
     @PostMapping("/rewardagreement")
     public ModelAndView modifyRewardAgreementStatus(ModelAndView mv, RewardRegistInfoDTO basicreq) {
 
         projectApplicationService.modifyRewardAgreementStatus(basicreq);
-        System.out.println("basicreq = " + basicreq);
 
         mv.setViewName("redirect:/project/application/basicreq");
 
         return mv;
     }
+
+    /**
+     * findBasicInfoByProjectNo: 기본 정보 작성 페이지로 이동 시 기본 데이터를 조회합니다.
+     * @param user: 로그인한 사용자의 정보를 받는 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            basicInfo 기본 정보 기본 데이터
+     *            "project/regist/basicinfo" 기본 정보를 작성하는 뷰 경로
+     * @author 박휘림
+     */
+    @GetMapping("/basicinfo")
+    public ModelAndView findBasicInfoByProjectNo(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+
+        int projectNo = findProjectNoByFarmerNo(user);
+
+        ProjectBasicInfo basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+
+        mv.addObject("basicInfo", basicInfo);
+        mv.setViewName("project/regist/basicinfo");
+
+        return mv;
+    }
+
+    /**
+     * modifyBasicInfo: 기본 정보 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
+     * @param basicInfo: 사용자가 입력한 기본 정보 데이터를 담은 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/project/regist/main" 프로젝트 신청 메인페이지 경로
+     * @author 박휘림
+     */
+    @PostMapping("/modify/basicinfo")
+    public ModelAndView modifyBasicInfo(ModelAndView mv, ProjectBasicInfo basicInfo) {
+
+        projectApplicationService.modifyBasicInfo(basicInfo);
+
+        mv.setViewName("redirect:/project/application/goMain");
+
+        return mv;
+    }
+
+    /**
+     * findAllRewardCategory: 리워드 카테고리 목록을 조회합니다.
+     * @return 리워드 카테고리 목록
+     * @author 박휘림
+     */
+    @GetMapping(value = "/category", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public List<ProjectRewardCategoryDTO> findAllRewardCategory() {
+
+        return projectApplicationService.findAllRewardCategory();
+    }
+
 }
