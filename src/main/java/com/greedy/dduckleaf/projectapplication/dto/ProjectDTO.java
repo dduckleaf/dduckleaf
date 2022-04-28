@@ -14,8 +14,8 @@ public class ProjectDTO {
     private int projectNo;
     private String projectName;
     private int fundTargetAmount;
-    private java.sql.Date openDate;
-    private java.sql.Date endDate;
+    private String openDate;
+    private String endDate;
     private String projectStatus;
     private double achievementRate;
     private int progressStatus;
