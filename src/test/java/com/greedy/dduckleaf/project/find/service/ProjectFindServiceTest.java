@@ -34,6 +34,7 @@ class ProjectFindServiceTest {
     @Test
     public void findProjectList_test() {
 
+
         List<ProjectDTO> projectList = service.findProjectList();
 
         assertNotNull(projectList);

@@ -1,9 +1,6 @@
 package com.greedy.dduckleaf.project.find.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -12,6 +9,7 @@ import java.sql.Date;
 @AllArgsConstructor
 @Setter
 @Getter
+@ToString
 @Entity(name = "ProjectForProjectList")
 @Table(name = "TBL_PROJECT")
 public class Project {
@@ -45,8 +43,6 @@ public class Project {
     @Column(name = "PROJECT_EXAMINE_STATUS")
     private String projectExamineStatus;
 
-    @Column(name = "PROGRESS_STATUS")
-    private int progressStatus;
 
     @Column(name = "MAX_TARGET_AMOUNT")
     private int maxTargetAmount;
@@ -55,21 +51,7 @@ public class Project {
     @JoinColumn(name = "FARMER_NO")
     private Member farmer;
 
-    @Override
-    public String toString() {
-        return "Project{" +
-                "projectNo=" + projectNo +
-                ", projectName='" + projectName + '\'' +
-                ", fundTargetAmount=" + fundTargetAmount +
-                ", openDate=" + openDate +
-                ", endDate=" + endDate +
-                ", projectStatus='" + projectStatus + '\'' +
-                ", achievementRate=" + achievementRate +
-                ", examineStatus='" + examineStatus + '\'' +
-                ", projectExamineStatus='" + projectExamineStatus + '\'' +
-                ", progressStatus='" + progressStatus + '\'' +
-                ", maxTargetAmount=" + maxTargetAmount +
-                ", farmer=" + farmer +
-                '}';
-    }
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "PROGRESS_STATUS")
+    private ProjectProgressStatus progressStatus;
 }
