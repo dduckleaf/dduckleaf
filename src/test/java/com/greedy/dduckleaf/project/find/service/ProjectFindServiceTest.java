@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.project.find.dto.ProjectDTO;
+import com.greedy.dduckleaf.project.find.dto.SearchDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,8 +38,24 @@ class ProjectFindServiceTest {
 
         Pageable pageable = PageRequest.of(1, 10);
         String searchValue = "3";
+        SearchDTO searchDTO = new SearchDTO();
+        searchDTO.setSearchValue(searchValue);
+        Page<ProjectDTO> projectList = service.findProjectLists(searchDTO, pageable);
 
-        Page<ProjectDTO> projectList = service.findProjectLists(searchValue, pageable);
+        assertNotNull(projectList);
+
+        projectList.forEach(System.out::println);
+    }
+
+    @Test
+    public void findProjectLists_npe_test() {
+
+        Pageable pageable = PageRequest.of(1, 10);
+        String searchValue = "3";
+        SearchDTO searchDTO = new SearchDTO(null, 1, 1);
+        searchDTO.setSearchValue(searchValue);
+
+        Page<ProjectDTO> projectList = service.findProjectLists(searchDTO, pageable);
 
         assertNotNull(projectList);
 
