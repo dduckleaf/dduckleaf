@@ -33,20 +33,6 @@ class FundingInfoForMyFundingRepositoryTest {
     }
 
     @Test
-    public void test() {
-
-        //given
-        int memberNo = 5;
-
-        //when
-        List<FundingInfo> fundingInfoList = fundingInfoForMyFundingRepository.findByMember_memberNo(memberNo);
-
-        //then
-        assertNotNull(fundingInfoList);
-        fundingInfoList.forEach(System.out::println);
-    }
-
-    @Test
     @DisplayName("회원번호로 진행중인 펀딩 내역 조회")
     public void findFundingByMemberNoAndProjectProgressStatusTest() {
 
