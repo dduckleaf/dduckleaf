@@ -30,11 +30,12 @@ import java.util.List;
  * 2022/04/22 (장민주) findProjectReportDetail 메소드 작성.
  * 2022/04/23 (장민주) platformManagerDefaultPage 메소드 작성.
  *                    findAllProjectReportList 메소드 작성.
- * 2022/04/24 (장민주) findProjectReportDetail 메소드 작성.
+ * 2022/04/24 (장민주) findProjectReportDetail(ModelAndView, int) 메소드 작성.
  *                    findProjectReportListByMemberNo 메소드 작성.
- * 2022/04/25 (장민주) registProjectReportReply 메소드 작성.
+ * 2022/04/25 (장민주) registProjectReportReply(ModelAndView, ProjectReportReplyDTO, CustomUser, RedirectAttributes) 메소드 작성.
  * 2022/04/27 (장민주) findProjectReportListOfOneProject 메소드 작성.
  *                    findProjectReportDetailForProjectManager 메소드 작성.
+ * 2022/04/28 (장민주) registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 메소드 작성.
  * </pre>
  * @version 1.0.4
  * @author 장민주
@@ -139,7 +140,7 @@ public class ProjectReportController {
 
     /**
     * registProjectReportReply: 프로젝트 신고내역에 대한 답변 등록 요청 메소드입니다.
-    *  @param projectReportReply: 등록해줄 프로젝트 신고 답변 정보
+    * @param projectReportReply: 등록해줄 프로젝트 신고 답변 정보
     * @param user: 로그인한 관리자 회원 정보
     * @return mv: 답변 등록 성공 메시지, redirect 할 화면경로
     */
@@ -169,6 +170,39 @@ public class ProjectReportController {
     }
 
     /**
+     * registProjectReportReply: 관리자 프로젝트관리 메뉴 하위 신고관리에서 프로젝트 신고내역에 대한 답변 등록 요청하는 메소드입니다.
+     * @param projectReportReply: 등록해줄 프로젝트 신고 답변 정보
+     * @param projectNo: 신고 대상 프로젝트 번호
+     * @param user: 로그인한 관리자 회원 정보
+     * @return mv: 답변 등록 성공 메시지, redirect 할 화면경로
+     */
+    @PostMapping("/projectmanager/regist/{projectNo}")
+    public ModelAndView registProjectReportReply(ModelAndView mv, @ModelAttribute ProjectReportReplyDTO projectReportReply,
+                                                 @PathVariable int projectNo, @AuthenticationPrincipal CustomUser user,
+                                                 RedirectAttributes rttr) {
+
+        /* 세션에서 로그인한 관리자의 회원번호 추출 */
+        int adminNo = user.getMemberNo();
+
+        /* 데이터베이스에 삽입해줄 현재 날짜, 시간정보 생성 */
+        long miliseconds = System.currentTimeMillis();
+        Date date = new Date(miliseconds);
+        System.out.println(date);
+
+        projectReportReply.setAdminNo(adminNo);
+        projectReportReply.setProjectReportReplyDate(date);
+
+        System.out.println("projectReportReply = " + projectReportReply);
+
+        service.registReply(projectReportReply);
+
+        rttr.addFlashAttribute("registSuccessMessage", "답변 등록에 성공하였습니다.");
+        mv.setViewName("redirect:/report/projectmanager/list/" + projectNo);
+
+        return mv;
+    }
+
+    /**
      * findProjectReportListByProjectNo: 프로젝트 번호로 해당 프로젝트의 신고내역 조회를 요청하는 메소드입니다.
      * @param projectNo: 프로젝트 번호
      * @param pageable: 목록 조회시 페이징 처리를 위한 정보를 담는 객체
@@ -177,7 +211,7 @@ public class ProjectReportController {
      */
     @GetMapping("/projectmanager/list/{projectNo}")
     public ModelAndView findProjectReportListOfOneProject(@PathVariable int projectNo, ModelAndView mv,
-                                                          @PageableDefault(size=10, sort="projectReportNo", direction = Sort.Direction.DESC) Pageable pageable) {
+           @PageableDefault(size=10, sort="projectReportNo", direction = Sort.Direction.DESC) Pageable pageable) {
 
         Page<ProjectReportDTO> projectReportList = service.findProjectReportListOfOneProject(projectNo, pageable);
         projectReportList.forEach(System.out::println);
@@ -206,7 +240,7 @@ public class ProjectReportController {
         ReportDetailInfo reportDetailInfo = service.findProjectReportAndReply(projectReportNo);
 
         mv.addObject("reportDetailInfo", reportDetailInfo);
-        mv.addObject("projectReportNo", projectNo);
+        mv.addObject("projectNo", projectNo);
         mv.addObject("projectReportNo", projectReportNo);
         mv.setViewName("report/projectmanager/detail");
 
