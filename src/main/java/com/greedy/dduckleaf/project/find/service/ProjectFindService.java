@@ -5,6 +5,10 @@ import com.greedy.dduckleaf.project.find.entity.Project;
 import com.greedy.dduckleaf.project.find.repository.ProjectForProjectListRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +29,7 @@ import java.util.stream.Collectors;
 @Service
 public class ProjectFindService {
 
+    static final int PAGE_SIZE = 5;
     private final static int PROJECT_LIST_STATUS = 2;
     private final ProjectForProjectListRepository projectRepo;
     private final ModelMapper mapper;
@@ -35,15 +40,11 @@ public class ProjectFindService {
         this.mapper = mapper;
     }
 
-    public List<ProjectDTO> findProjectList() {
+    public Page<ProjectDTO> findProjectLists(Pageable pageable) {
 
-        List<Project> projectList = projectRepo.findByProjectExamineStatusIsNotNull();
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() - 1, PAGE_SIZE,
+                Sort.by("projectNo").descending());
 
-        return parsingfindProject(projectList);
-    }
-
-    private List<ProjectDTO> parsingfindProject(List<Project> projectList) {
-
-        return projectList.stream().map(project -> mapper.map(project, ProjectDTO.class)).collect(Collectors.toList());
+        return projectRepo.findByProjectExamineStatusIsNotNull(pageable).map(project -> mapper.map(project, ProjectDTO.class));
     }
 }
