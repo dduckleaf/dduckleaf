@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -40,13 +41,12 @@ public class ProjectFindController {
         this.service = service;
     }
 
-
     @GetMapping("/list")
-    public ModelAndView projectFind(ModelAndView mv, @PageableDefault Pageable pageable) {
-
+    public ModelAndView projectFind(ModelAndView mv, @PageableDefault Pageable pageable, HttpServletRequest request) {
 
         int buttonAmount = 7;
-        Page<ProjectDTO> projectList = service.findProjectLists(pageable);
+        String searchValue = (String) request.getAttribute("searchValue");
+        Page<ProjectDTO> projectList = service.findProjectLists(searchValue, pageable);
 
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectList, buttonAmount);
 

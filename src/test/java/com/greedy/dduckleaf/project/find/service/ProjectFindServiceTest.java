@@ -12,8 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
@@ -38,8 +36,9 @@ class ProjectFindServiceTest {
     public void findProjectLists_test() {
 
         Pageable pageable = PageRequest.of(1, 10);
+        String searchValue = "3";
 
-        Page<ProjectDTO> projectList = service.findProjectLists(pageable);
+        Page<ProjectDTO> projectList = service.findProjectLists(searchValue, pageable);
 
         assertNotNull(projectList);
 
