@@ -15,6 +15,7 @@
     <!-- Style CSS -->
     <link rel="stylesheet" th:href="@{ /css/style.css }">
     <link rel="stylesheet" th:href="@{ /css/projectapplication.css }">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div th:replace="/common/userheader.html"></div>
@@ -26,52 +27,62 @@
                     <p class="fundmenutitle">펀딩 준비<img class="arrow" th:src="@{ /images/common/vector.png }"></p>
                 </button>
                 <div class="panel">
-                    <p onclick="location.href='regist/basicinfo/1'">기본요건</p>
-                    <p onclick="location.href='regist/story/1'">기본정보</p>
-                    <p onclick="location.href='regist/reward/1'">스토리 작성</p>
-                    <p onclick="location.href='regist/reward/1'">리워드 설계</p>
-                    <p onclick="location.href='regist/reward/1'">위험요인 및 정책</p>
-                    <p onclick="location.href='regist/reward/1'">파머 정보</p>
-                    <p onclick="location.href='regist/reward/1'">대표자 및 정산 정보</p>
+                    <p onclick="location.href='/project/application/basicreq'">기본요건</p>
+                    <p onclick="location.href='/project/application/basicinfo'">기본정보</p>
+                    <p onclick="location.href='/project/application/story'">스토리 작성</p>
+                    <p onclick="location.href='/project/application/reward'">리워드 설계</p>
+                    <p onclick="location.href='/project/application/policy'">위험요인 및 정책</p>
+                    <p onclick="location.href='/project/application/farmer'">파머 정보</p>
+                    <p onclick="location.href='/project/application/representative'">대표자 및 정산 정보</p>
                 </div>
             </div>
-            <div class="col-md-7">
-                <div class="breadcrumb">
-                    <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">펀딩 준비</span>&nbsp;
-                    <span class="breadcrumb">></span>&nbsp;
-                    <span class="breadcrumb">스토리 작성</span>
+            <form name="saveForm">
+                <div class="col-md-7">
+                    <div class="breadcrumb">
+                        <span class="breadcrumb home" onclick="location.href='/project/application/goMain'">펀딩 준비</span>&nbsp;
+                        <span class="breadcrumb">></span>&nbsp;
+                        <span class="breadcrumb">스토리 작성</span>
+                    </div>
+                    <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">스토리 작성</a><br><hr>
+                    <a>파머님의 프로젝트를 소개해주세요.</a>
+                    <div class="basicmenu">
+                        <a class="basictitle">소개 사진 등록</a><br>
+                        <a class="basicsubtitle">프로젝트 페이지 상단에 노출될 사진을 올려주세요.</a><br>
+                        <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
+                            해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">프로젝트 요약</a><br>
+                        <a class="basicsubtitle">프로젝트 페이지 상단에 노출됩니다.</a><br>
+                        <input class="projectsummary" id="projectInfo" name="projectInfo" type="text" th:value="${ story.projectInfo }">
+                        <input type="hidden" id="projectNo" name="projectNo" th:value="${ story.projectNo }">
+                    </div>
+                    <div>
+                        <a class="basictitle">스토리 광고 심의 동의</a><br>
+                        <a class="basicsubtitle">스토리 작성 전, 플랫폼에서 제공하는 광고 심의 가이드라인을 반드시 확인하세요.
+                            <br>동의를 진행해야 스토리 작성이 가능합니다.</a><br>
+                        <input type="hidden" th:value="${ story.projectPromotionAgreementStatus }">
+                        <th:block th:if="${ story.projectPromotionAgreementStatus == 'N'}">
+                            <button type="button" class="btn1 big-btn story-btn" id="agreement"><img class="check" th:src="@{ /images/common/check.png }"> 동의하기</button><a class="guideline">식품 표시 광고 준수사항을 위반하는 광고</a>
+                        </th:block>
+                        <th:block th:if="${ story.projectPromotionAgreementStatus == 'Y'}">
+                            <div class="agreementcheck">동의완료</div>
+<!--                            <div class="agreementDate" th:text="${ story.promotionAgreementDate }"></div>-->
+                        </th:block>
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">프로젝트 스토리</a><br>
+                        <a class="basicsubtitle">프로젝트 스토리로 사용할 사진을 등록해주세요.</a><br>
+                        <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
+                            해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
+                    </div>
+                    <div>
+                        <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
+                    </div>
                 </div>
-                <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">스토리 작성</a><br><hr>
-                <a>파머님의 프로젝트를 소개해주세요.</a>
-                <div class="basicmenu">
-                    <a class="basictitle">소개 사진 등록</a><br>
-                    <a class="basicsubtitle">프로젝트 페이지 상단에 노출될 사진을 올려주세요.</a><br>
-                    <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
-                    <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
-                        해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">프로젝트 요약</a><br>
-                    <a class="basicsubtitle">프로젝트 페이지 상단에 노출됩니다.</a><br>
-                    <input class="projectsummary" type="text">
-                </div>
-                <div>
-                    <a class="basictitle">스토리 광고 심의 동의</a><br>
-                    <a class="basicsubtitle">스토리 작성 전, 플랫폼에서 제공하는 광고 심의 가이드라인을 반드시 확인하세요.
-                        <br>동의를 진행해야 스토리 작성이 가능합니다.</a><br>
-                    <button class="btn1 big-btn story-btn"><img class="check" th:src="@{ /images/common/check.png }"> 동의하기</button><a class="guideline">식품 표시·광고 가이드라인</a>
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">프로젝트 스토리</a><br>
-                    <a class="basicsubtitle">프로젝트 스토리로 사용할 사진을 등록해주세요.</a><br>
-                    <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
-                    <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
-                        해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
-                </div>
-                <div>
-                    <button class="btn1 big-btn">저장하기</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -127,6 +138,107 @@
         }
     }
 
-    document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);;
+
+    $("#agreement").click(async function (agreement) {
+        const {value: formValues} = await Swal.fire({
+            title: '<img class="leaf" src="/images/common/Leaf.png" style="vertical-align: -20%; margin-right: 10px;">식품 표시 광고 준수사항을 위반하는 광고',
+            html:
+                '<br><div class="basicreqmodal">' +
+                '<p>●질병의 예방, 치료에 효능이 있는 것으로 인식할 우려가 있는 표시 또는 광고<br></p>' +
+                '<div>' +
+                '<p>●식품 등을 의약품으로 인식할 우려가 있는 표시 또는 광고<br></p>' +
+                '<p>●거짓 과장된 표시 또는 광고<br></p>' +
+                '<p>●소비자를 기만하는 표시 또는 광고<br></p>' +
+                '<p>●다른 제품을 비방하는 표시 또는 광고 또는 직간접적으로 비교하여 다른 업체의 제품보다 우수한 것으로 오인할 수 있는 표시 또는 광고<br></p>' +
+                '<p>●객관적 근거 없이 본인 또는 리워드를 다른 영업자나 식품 등과 부당하게 비교하는 표시 또는 광고<br></p>' +
+                '</div>' +
+                '<div>' +
+                '<p>●건강기능식품이 아닌 것을 이로 인식할 우려가 있는 표시 또는 광고<br></p>' +
+                '</div>' +
+                '<div class="confirmsub">' +
+                '<p><input type="checkbox" id="order2_chk">내용을 확인했습니다<label for="order2_chk"></label></p>' +
+                '</div>' +
+                '<div class="btnArea">' +
+                '<button class="confirmbtn" id="confirmbtn" disabled="disabled">확인</button>' +
+                '</div>' + '</div>',
+            focusConfirm: false,
+            showConfirmButton: false,
+            customClass: {
+                title: 'confirmtitle',
+                popup: 'confirmpopup',
+                htmlContainer: 'confirmcontainer',
+            },
+            buttonsStyling: false,
+        }).then($("#order2_chk").click(await function () {
+            var order2Chk = $("#order2_chk").prop("checked");
+
+            if (order2Chk) {
+                $(".order2_chks").prop("checked", true);
+                $(".btnArea button").css({
+                    "backgroundColor": "#BAC34E",
+                    "cursor": "pointer",
+                    "color": "#fff"
+                }).prop("disabled", false)
+            } else {
+                $(".order2_chks").prop("checked", false);
+                $(".btnArea button").css({
+                    "backgroundColor": "#cbcbcb",
+                    "cursor": "auto",
+                    "color": "#303033"
+                }).prop("disabled", true);
+            }
+        })).then($("#confirmbtn").click(await function() {
+            let saveForm = document.saveForm;
+            let url = '/project/application/promotionagreement';
+
+            saveForm.action = url;
+            saveForm.method = 'post';
+            saveForm.submit();
+            scroll()
+        }));
+    });
+
+
+    /* 저장하기 버튼 */
+    $("#saveclick").click(function() {
+        Swal.fire({
+            title: '저장하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            allowEnterKey: false,
+            confirmButtonWidth: '100px',
+            customClass: {
+                confirmButton: 'savesuccess',
+                cancelButton: 'savecancel',
+                popup: 'savepopup'
+            },
+            buttonsStyling: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: '저장되었습니다',
+                    confirmButtonText: "확인",
+                    allowEnterKey: false,
+                    customClass: {
+                        confirmButton: 'saveok',
+                        popup: 'savepopup'
+                    },
+                    buttonsStyling: false,
+                }).then(function(projectInfo, projectNo) {
+                    let saveForm = document.saveForm;
+                    let url = '/project/application/modify/story';
+                    saveForm.projectInfo = projectInfo;
+                    saveForm.projectNo = projectNo;
+
+                    saveForm.action = url;
+                    saveForm.method = 'post';
+                    saveForm.submit();
+                });
+            }
+        })
+    });
+
+
 </script>
 </html>
