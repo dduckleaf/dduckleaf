@@ -261,10 +261,12 @@ public class ProjectApplicationService {
      * @param story: 사용자가 입력한 스토리 데이터를 담은 객체
      * @author 박휘림
      */
+    @Transactional
     public void modifyStory(ProjectBasicInfoDTO story) {
-
+        System.out.println("story = " + story);
         ProjectBasicInfo updateStory = projectBasicInfoRepository.findByProjectNo(story.getProjectNo());
         updateStory.setProjectInfo(story.getProjectInfo());
+        System.out.println("updateStory = " + updateStory);
     }
 
     /**
