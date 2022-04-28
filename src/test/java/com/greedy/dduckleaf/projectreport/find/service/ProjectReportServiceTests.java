@@ -68,6 +68,26 @@ public class ProjectReportServiceTests {
 
         //then
         assertNotNull(projectReportList);
+        projectReportList.forEach(report -> {
+            assertEquals(report.getClass(), ProjectReportDTO.class);
+        });
+        projectReportList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("신고 답변 대기 중인 프로젝트 신고목록 조회")
+    public void findProjectReportWaitingList_test() {
+        //given
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("projectReportNo").descending());
+
+        //when
+        Page<ProjectReportDTO> projectReportList = service.findProjectReportWaitingList(pageable);
+
+        //then
+        assertNotNull(projectReportList);
+        projectReportList.forEach(report -> {
+            assertEquals(report.getClass(), ProjectReportDTO.class);
+        });
         projectReportList.forEach(System.out::println);
     }
 
