@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.projectapplication.controller;
 
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
+import com.greedy.dduckleaf.projectapplication.dto.ProjectBasicInfoDTO;
 import com.greedy.dduckleaf.projectapplication.dto.ProjectRewardCategoryDTO;
 import com.greedy.dduckleaf.projectapplication.dto.RewardRegistInfoDTO;
 import com.greedy.dduckleaf.projectapplication.entity.ProjectBasicInfo;
@@ -24,7 +25,7 @@ import java.util.List;
  * History
  * 2022/04/25 (박휘림) 처음 작성 / registProjectApplication 메소드 작성 시작
  * 2022/04/27 (박휘림) projectApplicationMainPage, findProjectNoByFarmerNo, findBasicReqByProjectNo 메소드 작성
- * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findBasicInfoByProjectNo, modifyBasicInfo, findAllRewardCategory 메소드 작성
+ * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findBasicInfoByProjectNo, modifyBasicInfo 메소드 작성
  * </pre>
  * @version 1.0.3
  * @author 박휘림
@@ -50,7 +51,7 @@ public class ProjectApplicationController {
      */
     @GetMapping("/regist")
     public ModelAndView registProjectApplication(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
-
+        System.out.println("여기 안옴?");
         int farmerNo = user.getMemberNo();
 
         projectApplicationService.registProjectApplication(farmerNo);
@@ -157,8 +158,11 @@ public class ProjectApplicationController {
 
         int projectNo = findProjectNoByFarmerNo(user);
 
-        ProjectBasicInfo basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
-
+        ProjectBasicInfoDTO basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+        System.out.println("basicInfo = " + basicInfo);
+        List<ProjectRewardCategoryDTO> categoryList = projectApplicationService.findAllRewardCategory();
+        categoryList.forEach(System.out::println);
+        mv.addObject("categoryList", categoryList);
         mv.addObject("basicInfo", basicInfo);
         mv.setViewName("project/regist/basicinfo");
 
@@ -173,8 +177,8 @@ public class ProjectApplicationController {
      * @author 박휘림
      */
     @PostMapping("/modify/basicinfo")
-    public ModelAndView modifyBasicInfo(ModelAndView mv, ProjectBasicInfo basicInfo) {
-
+    public ModelAndView modifyBasicInfo(ModelAndView mv, ProjectBasicInfoDTO basicInfo) {
+        System.out.println("basicInfo = " + basicInfo);
         projectApplicationService.modifyBasicInfo(basicInfo);
 
         mv.setViewName("redirect:/project/application/goMain");
@@ -187,11 +191,13 @@ public class ProjectApplicationController {
      * @return 리워드 카테고리 목록
      * @author 박휘림
      */
-    @GetMapping(value = "/category", produces = "application/json; charset=UTF-8")
-    @ResponseBody
-    public List<ProjectRewardCategoryDTO> findAllRewardCategory() {
-
-        return projectApplicationService.findAllRewardCategory();
-    }
+//    @GetMapping(value = "/basicinfo")
+//    public ModelAndView findAllRewardCategory(ModelAndView mv) {
+//
+//
+//        mv.setViewName("project/regist/basicinfo");
+//
+//        return mv;
+//    }
 
 }
