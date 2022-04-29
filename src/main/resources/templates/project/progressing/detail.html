@@ -59,7 +59,7 @@
                   <div class="title" th:text="${ project.projectName }"></div><progress th:value="${ project.achievementRate }" max="100"></progress>
                   <div class="infoBox2 rounded-1">
                     <div>
-                      <a></a><span class="short-desc">일 남음</span>
+                      <a th:text="${ day }"></a><span class="short-desc">일 남음</span>
                     </div>
                     <div class="farmerCorp">
                       <a th:text="${ project.achievementRate }"></a><span class="info">% 달성</span>
@@ -68,7 +68,7 @@
                       <a th:text="${ project.fundTargetAmount }"></a><span class="info">원 펀딩</span>
                     </div>
                     <div class="farmerCorp">
-                      <a></a><span class="info">명의 서포터</span>
+                      <a class="info" th:text="${ supporter.size() }"></a><span class="info">명의 서포터</span>
                     </div>
                   </div><br>
                   <div class="button-box">
