@@ -2,6 +2,7 @@ package com.greedy.dduckleaf.projectapplication.service;
 
 import com.greedy.dduckleaf.projectapplication.dto.ProjectBasicInfoDTO;
 import com.greedy.dduckleaf.projectapplication.dto.ProjectRewardCategoryDTO;
+import com.greedy.dduckleaf.projectapplication.dto.ProjectShippingInfoDTO;
 import com.greedy.dduckleaf.projectapplication.dto.RewardRegistInfoDTO;
 import com.greedy.dduckleaf.projectapplication.entity.*;
 import com.greedy.dduckleaf.projectapplication.repository.*;
@@ -281,4 +282,39 @@ public class ProjectApplicationService {
         updateStory.setProjectPromotionAgreementStatus("Y");
 //        updateBasicReq.setRewardAgreementDate("0000-00-00");
     }
+
+    /**
+     * findRewardByProjectNo: 리워드 정보를 조회합니다.
+     * @param projectNo :프로젝트 번호
+     * @return 리워드 정보
+     * @author 박휘림
+     */
+    public RewardRegistInfoDTO findRewardByProjectNo(int projectNo) {
+
+        RewardRegistInfo reward = rewardRegistInfoRepository.findByProjectNo(projectNo);
+
+        return modelMapper.map(reward, RewardRegistInfoDTO.class);
+    }
+
+    public ProjectShippingInfoDTO findShippingInfoByProjectNo(int projectNo) {
+
+        ProjectShippingInfo shippingInfo = projectShippingInfoRepository.findByProjectNo(projectNo);
+
+        return modelMapper.map(shippingInfo, ProjectShippingInfoDTO.class);
+    }
+
+    public void modifyReward(RewardRegistInfoDTO reward, ProjectShippingInfoDTO shippingInfo) {
+
+        RewardRegistInfo updateReward = rewardRegistInfoRepository.findByProjectNo(reward.getProjectNo());
+        updateReward.setRewardPrice(reward.getRewardPrice());
+        updateReward.setRewardName(reward.getRewardName());
+        updateReward.setRewardInfo(reward.getRewardInfo());
+
+        ProjectShippingInfo updateShippingInfo = projectShippingInfoRepository.findByProjectNo(shippingInfo.getProjectNo());
+        updateShippingInfo.setShippingFee(shippingInfo.getShippingFee());
+        updateShippingInfo.setExtraShippingFee(shippingInfo.getExtraShippingFee());
+        updateShippingInfo.setShippingDueDate(shippingInfo.getShippingDueDate());
+    }
+
+
 }

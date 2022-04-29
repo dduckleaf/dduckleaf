@@ -185,4 +185,43 @@ class ProjectApplicationServiceTest {
         assertDoesNotThrow(() -> projectApplicationService.modifyPromotionAgreementStatus(updateStory));
     }
 
+    @Test
+    @DisplayName("프로젝트 번호로 리워드 정보 데이터 조회하는 테스트")
+    public void findReward_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        RewardRegistInfoDTO reward = projectApplicationService.findRewardByProjectNo(projectNo);
+        ProjectShippingInfoDTO shippingInfo = projectApplicationService.findShippingInfoByProjectNo(projectNo);
+
+        //then
+        assertNotNull(reward);
+
+    }
+
+    @Test
+    @DisplayName("리워드 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyReward_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        RewardRegistInfoDTO reward = projectApplicationService.findRewardByProjectNo(projectNo);
+        reward.setRewardName("리워드 명");
+        reward.setRewardPrice(0);
+        reward.setRewardInfo("리워드 상세 설명");
+
+        ProjectShippingInfoDTO shippingInfo = projectApplicationService.findShippingInfoByProjectNo(projectNo);
+        shippingInfo.setShippingFee(0);
+        shippingInfo.setExtraShippingFee(0);
+        shippingInfo.setShippingDueDate(java.sql.Date.valueOf(LocalDate.now().plusMonths(11)).toString());
+
+        //then
+        assertDoesNotThrow(() ->projectApplicationService.modifyReward(reward, shippingInfo));
+
+    }
+
 }
