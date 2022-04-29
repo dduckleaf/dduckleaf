@@ -58,8 +58,12 @@ public class ProjectFindController {
 
         Page<ProjectDTO> projectList = service.findProjectLists(searchDTO, pageable);
 
+        System.out.println("ProjectList at controller");
+        projectList.forEach(System.out::println);
+
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectList, BUTTON_AMOUNT);
 
+        System.out.println("projectList = " + projectList);
         mv.addObject("projectList", projectList);
         mv.addObject("paging", paging);
         mv.addObject("searchValue", searchValue);

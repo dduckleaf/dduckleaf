@@ -58,5 +58,5 @@ public class Project {
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_NO")
-    private List<ProjectRegistInfo> registInfo;
+    private List<ProjectBasicInfo> basicInfo;
 }

@@ -3,7 +3,8 @@ package com.greedy.dduckleaf.project.find.service;
 import com.greedy.dduckleaf.project.find.dto.ProjectDTO;
 import com.greedy.dduckleaf.project.find.dto.ProjectRewardCategoryDTO;
 import com.greedy.dduckleaf.project.find.dto.SearchDTO;
-import com.greedy.dduckleaf.project.find.entity.ProjectRegistInfo;
+import com.greedy.dduckleaf.project.find.entity.Project;
+import com.greedy.dduckleaf.project.find.entity.ProjectBasicInfo;
 import com.greedy.dduckleaf.project.find.repository.ProjectForProjectListRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,24 +48,31 @@ public class ProjectFindService {
 
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() - 1, PAGE_SIZE,
                 Sort.by("projectNo").descending());
-        if(searchDTO.getSearchValue() != null) {
 
-            return projectRepo.findByProjectExamineStatusIsNotNullAndProjectNameContaining(searchValue, pageable).map(project -> mapper.map(project, ProjectDTO.class));
+        if(searchValue != null) {
+            Page<Project> pl = projectRepo.findByProjectExamineStatusIsNotNullAndProjectNameContaining(searchValue, pageable);
+            System.out.println("pl = ");
+            pl.forEach(System.out::println);
+            Page<ProjectDTO> pdl = pl.map(project -> mapper.map(project, ProjectDTO.class));
+            System.out.println("pdl = ");
+            pdl.forEach(System.out::println);
+            return pdl;
         }
+
         Page<ProjectDTO> projectList = projectRepo.findByProjectExamineStatusIsNotNullAndProgressStatus_projectProgressStuatusNo(searchDTO.getProgressStatus(), pageable)
                 .map(project -> {
+                    System.out.println("project at service method 2 = " + project);
+
                     ProjectDTO projectDTO = mapper.map(project, ProjectDTO.class);
-                    List<ProjectRegistInfo> infoList = project.getRegistInfo();
+                    List<ProjectBasicInfo> infoList = project.getBasicInfo();
                     infoList.forEach(info -> {
-                        if(info.getProjectRegistInfoCategory().equals("리워드") && info.getCategory().getProjectCategoryNo() == searchDTO.getRewardCategory()) {
                             projectDTO.setReward(mapper.map(info.getCategory(), ProjectRewardCategoryDTO.class));
-                        }
                     });
 
                     return projectDTO;
                 });
-
         projectList.forEach(System.out::println);
+
         return projectList;
     }
 }
