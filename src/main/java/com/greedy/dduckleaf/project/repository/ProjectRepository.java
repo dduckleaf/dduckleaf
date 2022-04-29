@@ -1,7 +1,10 @@
 package com.greedy.dduckleaf.project.repository;
 
+import com.greedy.dduckleaf.project.entity.FundingInfo;
 import com.greedy.dduckleaf.project.entity.Project;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
 
 /**
  * <pre>
