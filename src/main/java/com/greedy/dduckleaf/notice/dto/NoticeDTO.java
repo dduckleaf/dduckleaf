@@ -12,7 +12,7 @@ public class NoticeDTO {
     private int noticeNo;
     private String noticeName;
     private String noticeContent;
-    private java.sql.Date noticeRegistDate;
+    private String noticeRegistDate;
     private String noticeStatus;
     private int adminNo;
     private int noticeCount;
