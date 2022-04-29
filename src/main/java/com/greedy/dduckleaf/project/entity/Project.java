@@ -38,10 +38,10 @@ public class Project {
     private int fundTargetAmount;
 
     @Column(name = "OPEN_DATE")
-    private Date openDate;
+    private String openDate;
 
     @Column(name = "END_DATE")
-    private Date endDate;
+    private String endDate;
 
     @Column(name = "PROJECT_STATUS")
     private String projectStatus;
@@ -61,7 +61,7 @@ public class Project {
     @Column(name = "MAX_TARGET_AMOUNT")
     private int maxTargetAmount;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "FARMER_NO")
-    private Member farmer;
+//    @ManyToOne(cascade = {CascadeType.PERSIST})
+//    @JoinColumn(name = "FARMER_NO")
+//    private Member farmer;
 }
