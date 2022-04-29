@@ -52,6 +52,9 @@ public class ProjectBasicInfo {
     @Column(name = "PROJECT_PROMOTION_AGREEMENT_STATUS")
     private String projectPromotionAgreementStatus;
 
+    @Column(name = "PROMOTION_AGREEMENT_DATE")
+    private String promotionAgreementDate;
+
     @Override
     public String toString() {
         return "ProjectBasicInfo{" +
@@ -63,6 +66,7 @@ public class ProjectBasicInfo {
                 ", projectInfo='" + projectInfo + '\'' +
                 ", projectTargetFund=" + projectTargetFund +
                 ", projectPromotionAgreementStatus='" + projectPromotionAgreementStatus + '\'' +
+                ", promotionAgreementDate='" + promotionAgreementDate + '\'' +
                 '}';
     }
 
@@ -70,8 +74,9 @@ public class ProjectBasicInfo {
     public void prePersist() {
 
         this.projectName = this.projectName  == null ? "프로젝트 명" : this.projectName ;
-        this.projectEndDate = this.projectEndDate  == null ? "0000-00-00" : this.projectEndDate ;
+        this.projectEndDate = this.projectEndDate  == null ? java.sql.Date.valueOf(LocalDate.now().plusMonths(1)).toString() : this.projectEndDate ;
         this.projectInfo = this.projectInfo  == null ? "프로젝트에 대해 요약해주세요" : this.projectInfo ;
+        this.promotionAgreementDate = this.promotionAgreementDate  == null ? java.sql.Date.valueOf(LocalDate.now()).toString() : this.promotionAgreementDate ;
 
     }
 }
