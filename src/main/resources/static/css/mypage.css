@@ -106,10 +106,6 @@
     margin: 10px auto;
 }
 
-.supporter-tab aside li:last-child {
-    line-height: 30px;
-}
-
 .supporter-tab aside li a, .farmer-tab aside li a {
     color: #fff;
     /* text-shadow: -1px 0 #ada1a1, 0 1px #ada1a1, 1px 0 #ada1a1, 0 -1px #ada1a1; */
