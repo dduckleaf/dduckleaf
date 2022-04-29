@@ -5,30 +5,32 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Harmic - Contact</title>
+  <title>개별 프로젝트 상세조회 - 진행중</title>
   <meta name="robots" content="noindex, follow"/>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico" />
+
   <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
-  <link rel="stylesheet" th:href="@{css/vendor/font-awesome.min.css}"/>
-  <link rel="stylesheet" th:href="@{css/vendor/Pe-icon-7-stroke.css}" />
+  <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+  <link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}" />
 
   <!-- Plugin CSS (Global Plugins Files) -->
-  <link rel="stylesheet" th:href="@{css/plugins/animate.min.css}">
-  <link rel="stylesheet" th:href="@{css/plugins/jquery-ui.min.css}">
-  <link rel="stylesheet" th:href="@{css/plugins/swiper-bundle.min.css}">
-  <link rel="stylesheet" th:href="@{css/plugins/nice-select.css}">
-  <link rel="stylesheet" th:href="@{css/plugins/magnific-popup.min.css}"/>
+  <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
 
   <!-- Style CSS -->
-  <link rel="stylesheet" th:href="@{ css/style.css }">
-  <link rel="stylesheet" th:href="@{ css/project.css }">
+  <link rel="stylesheet" th:href="@{ /css/style.css }">
+  <link rel="stylesheet" th:href="@{ /css/project.css }">
 </head>
 
 <body>
 <div class="main-wrapper">
-<div th:replace="@{ /common/userheader.html }"></div>
+  <div th:replace="@{ /common/menubar.html }"></div>
   <!-- Begin Main Content Area  -->
   <main class="main-content">
     <div class="single-product-area section-space-top-100">
@@ -39,8 +41,8 @@
               <div class="swiper-container single-product-slider">
                 <div class="swiper-wrapper">
                   <div class="swiper-slide">
-                    <a href="assets/images/product/large-size/2-1-555x645.jpg" class="single-img gallery-popup">
-                      <img class="img-full" src="images/project/potato.png" alt="Product Image">
+                    <a href="/images/product/large-size/2-1-555x645.jpg" class="single-img gallery-popup">
+                      <img class="img-full" src="/images/project/potato.png" alt="Product Image">
                     </a>
                   </div>
                 </div>
@@ -53,29 +55,30 @@
             <div class="product-thumb-with-content row">
               <div class="col-12 order-lg-1 order-2 pt-10 pt-lg-0">
                 <div class="single-product-content">
-                  <div class="title">감자감자</div><progress value="43" max="100"></progress>
+                  <input type="hidden" th:value="${ project.projectNo }">
+                  <div class="title" th:text="${ project.projectName }"></div><progress th:value="${ project.achievementRate }" max="100"></progress>
                   <div class="infoBox2 rounded-1">
                     <div>
-                      <span class="short-desc">12일 남음</span>
+                      <a></a><span class="short-desc">일 남음</span>
                     </div>
                     <div class="farmerCorp">
-                      <a>100</a><span class="info">% 달성</span>
+                      <a th:text="${ project.achievementRate }"></a><span class="info">% 달성</span>
                     </div>
                     <div class="farmerCorp">
-                      <a>4,340,000</a><span class="info">원 펀딩</span>
+                      <a th:text="${ project.fundTargetAmount }"></a><span class="info">원 펀딩</span>
                     </div>
                     <div class="farmerCorp">
-                      <a>87</a><span class="info">명의 서포터</span>
+                      <a></a><span class="info">명의 서포터</span>
                     </div>
                   </div><br>
                   <div class="button-box">
                     <button class="basic-btn btn1 alittle-bigbig-btn">펀딩하기</button>
-                    <button class="basic-btn btn3 alittle-big-btn">관심<img src="images/common/heart.png" alt="Product Image"></button>
+                    <button class="basic-btn btn3 alittle-big-btn">관심<img src="/images/common/heart.png" alt="Product Image"></button>
                   </div><br>
                   <ul class="quantity-with-btn pb-7">
                     <li class="add-to-cart">
                       <button class="basic-btn btn3 btn-fill-white rounded-1">프로젝트에 문제를 발견하셨나요? 신고하기
-                        <img src="images/common/rightarrow.png" alt="Product Image">
+                        <img src="/images/common/rightarrow.png" alt="Product Image">
                       </button>
                     </li>
                   </ul>
@@ -128,11 +131,11 @@
               <div class="tab-pane fade show active" id="story" role="tabpanel" aria-labelledby="story-tab">
                 <br>
                 <div class="notice">
-                  <p class="noticeP"><img src="images/common/alert.png">
+                  <p class="noticeP"><img src="/images/common/alert.png">
                     도서산간에 해당하는 서포터님은 배송 가능 여부를 반드시 파머에게 문의 후 펀딩에 참여해주세요.</p>
                 </div>
                 <div class="product-description-body">
-                  <img class="img-full" src="images/project/story.png" alt="Product Image">
+                  <img class="img-full" src="/images/project/story.png" alt="Product Image">
                 </div>
               </div>
               <!-- 스토리 End Here -->
@@ -142,7 +145,7 @@
                 <div class="product-review-body">
                   <ul class="user-info-wrap">
                     <ul class="user-info">
-                      <img class="img-full" src="images/project/farmer.png" alt="Product Image">
+                      <img class="img-full" src="/images/project/farmer.png" alt="Product Image">
                       <div class="col-lg-1 order-2 pt-10 pt-lg-0"></div>
                       <div class="col-lg-2 order-2 pt-10 pt-lg-0">
                         <p>상호 명</p>
@@ -184,7 +187,7 @@
                     </tr>
                     <tr>
                       <td>답변완료</td>
-                      <td>비밀글입니다. <img src="images/board/lock-icon.png" style="width: 20px; height: 20px;"></td>
+                      <td>비밀글입니다. <img src="/images/board/lock-icon.png" style="width: 20px; height: 20px;"></td>
                       <td>mmmj*****</td>
                       <td>2022-02-20<br>07:15</td>
                     </tr>
@@ -225,7 +228,7 @@
                     </tr>
                     <tr>
                       <td>답변완료</td>
-                      <td>비밀글입니다. <img src="images/board/lock-icon.png" style="width: 20px; height: 20px;"></td>
+                      <td>비밀글입니다. <img src="/images/board/lock-icon.png" style="width: 20px; height: 20px;"></td>
                       <td>mmmj*****</td>
                       <td>2022-02-20<br>07:15</td>
                     </tr>
@@ -250,7 +253,7 @@
               <div class="tab-pane fade" id="refundpolicy" role="tabpanel" aria-labelledby="refundpolicy-tab">
                 <br>
                 <div class="notice">
-                  <p class="noticeP"><img src="images/common/alert.png">
+                  <p class="noticeP"><img src="/images/common/alert.png">
                     도서산간에 해당하는 서포터님은 배송 가능 여부를 반드시 파머에게 문의 후 펀딩에 참여해주세요.</p>
                 </div><br>
                 <div>
@@ -323,7 +326,7 @@
                     <div class="product-item">
                       <div class="product-img img-zoom-effect">
                         <a href="single-product.html">
-                          <img class="img-full mainimg" src="images/project/potato.png" alt="Product Images">
+                          <img class="img-full mainimg" src="/images/project/potato.png" alt="Product Images">
                         </a>
                       </div>
                       <div class="product-content">
@@ -367,22 +370,22 @@
 <!-- Global Vendor, plugins JS -->
 
 <!-- Vendor JS -->
-<script th:src="@{ js/vendor/bootstrap.bundle.min.js }"></script>
-<script th:src="@{ js/vendor/jquery-3.5.1.min.js }"></script>
-<script th:src="@{ js/vendor/jquery-migrate-3.3.0.min.js }"></script>
-<script th:src="@{ js/vendor/modernizr-3.11.2.min.js }"></script>
-<script th:src="@{ js/vendor/jquery.waypoints.js }"></script>
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
 
 <!--Plugins JS-->
-<script th:src="@{ js/plugins/wow.min.js }"></script>
-<script th:src="@{ js/plugins/jquery-ui.min.js }"></script>
-<script th:src="@{ js/plugins/swiper-bundle.min.js }"></script>
-<script th:src="@{ js/plugins/jquery.nice-select.js }"></script>
-<script th:src="@{ js/plugins/parallax.min.js }"></script>
-<script th:src="@{ js/plugins/jquery.magnific-popup.min.js }"></script>
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
 
 <!--Main JS (Common Activation Codes)-->
-<script th:src="@{ js/main.js }"></script>
+<script th:src="@{ /js/main.js }"></script>
 
 </body>
 
