@@ -50,9 +50,9 @@
                                     <div class="col-12">
                                         <div class="product-item-detail" style="border: solid #CCCCCC 1px; border-radius: 5px; padding: 10px;" >
                                             <div class="product-content-detail align-self-center">
-                                                <p class="product-name-detail">펀딩하는 법이 궁금하다면?<p>
-                                                <p class="product-subname-detail">펀딩 프로젝트에 참여하는 서포터 분들은 꼭 읽어보세요!</p>
-                                                <p class="faqcontent-detail">펀딩하기는 쇼핑하기가 아닙니다.
+                                                <p class="product-name-detail" th:text="${ faq.getFaqTitle()}"><p>
+                                                <p class="product-subname-detail" th:text="${ faq.getSubtitle()}"></p>
+                                                <p class="faqcontent-detail" th:text="${ faq.getFaqContent()}">
                                                     <br>
                                                     크라우드펀딩은 “대중을 뜻하는 크라우드(Crowd) 와 자금 조달을 뜻하는 펀딩(Funding) 을 조합한 것으로, 온라인 플랫폼을 이용해 대수의 대중으로부터 자금을 조달하는 방식”을 의미합니다.
                                                     <br><br>
