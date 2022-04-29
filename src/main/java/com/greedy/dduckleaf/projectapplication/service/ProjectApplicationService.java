@@ -1,9 +1,6 @@
 package com.greedy.dduckleaf.projectapplication.service;
 
-import com.greedy.dduckleaf.projectapplication.dto.ProjectBasicInfoDTO;
-import com.greedy.dduckleaf.projectapplication.dto.ProjectRewardCategoryDTO;
-import com.greedy.dduckleaf.projectapplication.dto.ProjectShippingInfoDTO;
-import com.greedy.dduckleaf.projectapplication.dto.RewardRegistInfoDTO;
+import com.greedy.dduckleaf.projectapplication.dto.*;
 import com.greedy.dduckleaf.projectapplication.entity.*;
 import com.greedy.dduckleaf.projectapplication.repository.*;
 import org.modelmapper.ModelMapper;
@@ -25,7 +22,8 @@ import java.util.stream.Collectors;
  * 2022/04/27 (박휘림) 기본정보 등록 관련 메소드 registInfo, basicInfo, shippingInfo, refundPolicy, farmerInfo, farmerFinancialInfo /
  *                                         findProjectNoByFarmerId, findRewardRegistInfoByProjectNo 메소드 작성
  * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findProjectBasicInfoByProjectNo, modifyBasicInfo, findAllRewardCategory 메소드 작성
- * 2022/04/29 (박휘림) modifyStory 메소드 작성
+ * 2022/04/29 (박휘림) modifyStory, modifyPromotionAgreementStatus, findRewardByProjectNo, findShippingInfoByProjectNo, modifyReward 메소드 작성
+ * 2022/04/30 (박휘림) findPolicyByProjectNo, modifyPolicy, modifyPolicyAgreementStatus 메소드 작성
  * </pre>
  * @version 1.0.3
  * @author 박휘림
@@ -211,7 +209,7 @@ public class ProjectApplicationService {
 
         RewardRegistInfo updateBasicReq = rewardRegistInfoRepository.findByProjectNo(basicreq.getProjectNo());
         updateBasicReq.setRewardAgreementStatus("Y");
-//        updateBasicReq.setRewardAgreementDate("0000-00-00");
+        updateBasicReq.setRewardAgreementDate(basicreq.getRewardAgreementDate());
     }
 
     /**
@@ -234,15 +232,13 @@ public class ProjectApplicationService {
      */
     @Transactional
     public void modifyBasicInfo(ProjectBasicInfoDTO basicInfo) {
-        System.out.println("basicInfo 서비스!!! = " + basicInfo);
+
         ProjectBasicInfo updateBasicInfo = projectBasicInfoRepository.findByProjectNo(basicInfo.getProjectNo());
-        System.out.println("updateBasicInfo = " + updateBasicInfo);
         updateBasicInfo.setProjectName(basicInfo.getProjectName());
         updateBasicInfo.setProjectTargetFund(basicInfo.getProjectTargetFund());
         updateBasicInfo.setProjectEndDate(basicInfo.getProjectEndDate());
 
         ProjectRewardCategory category = projectRewardCategoryRepository.findById(basicInfo.getProjectRewardCategory().getProjectCategoryNo()).get();
-        System.out.println("category = " + category);
         updateBasicInfo.setProjectRewardCategory(category);
     }
 
@@ -265,10 +261,9 @@ public class ProjectApplicationService {
      */
     @Transactional
     public void modifyStory(ProjectBasicInfoDTO story) {
-        System.out.println("story = " + story);
+
         ProjectBasicInfo updateStory = projectBasicInfoRepository.findByProjectNo(story.getProjectNo());
         updateStory.setProjectInfo(story.getProjectInfo());
-        System.out.println("updateStory = " + updateStory);
     }
 
     /**
@@ -281,7 +276,7 @@ public class ProjectApplicationService {
 
         ProjectBasicInfo updateStory = projectBasicInfoRepository.findByProjectNo(story.getProjectNo());
         updateStory.setProjectPromotionAgreementStatus("Y");
-//        updateBasicReq.setRewardAgreementDate("0000-00-00");
+        updateStory.setPromotionAgreementDate(story.getPromotionAgreementDate());
     }
 
     /**
@@ -328,6 +323,44 @@ public class ProjectApplicationService {
         updateShippingInfo.setShippingFee(shippingInfo.getShippingFee());
         updateShippingInfo.setExtraShippingFee(shippingInfo.getExtraShippingFee());
         updateShippingInfo.setShippingDueDate(shippingInfo.getShippingDueDate());
+    }
+
+    /**
+     * findPolicyByProjectNo: 정책 정보를 조회합니다.
+     * @param projectNo :프로젝트 번호
+     * @return 정책 정보
+     * @author 박휘림
+     */
+    public RefundPolicyDTO findPolicyByProjectNo(int projectNo) {
+
+        RefundPolicy policy = refundPolicyRepository.findByProjectNo(projectNo);
+
+        return modelMapper.map(policy, RefundPolicyDTO.class);
+    }
+
+    /**
+     * modifyStory: 정책 작성 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
+     * @param policy: 사용자가 입력한 정책정보 데이터를 담은 객체
+     * @author 박휘림
+     */
+    @Transactional
+    public void modifyPolicy(RefundPolicyDTO policy) {
+
+        RefundPolicy updatePolicy = refundPolicyRepository.findByProjectNo(policy.getProjectNo());
+        updatePolicy.setRefundPolicyContent(policy.getRefundPolicyContent());
+    }
+
+    /**
+     * modifyPolicyAgreementStatus: 사용자가 펀딩금 반화 정책 정보에 동의 시 동의 여부와 날짜를 업데이트합니다.
+     * @param policy: 사용자가 입력한 정책 정보를 담은 객체
+     * @author 박휘림
+     */
+    @Transactional
+    public void modifyPolicyAgreementStatus(RefundPolicyDTO policy) {
+
+        RefundPolicy updatePolicy = refundPolicyRepository.findByProjectNo(policy.getProjectNo());
+        updatePolicy.setRefundPolicyAgreementStatus("Y");
+//        updateBasicReq.setRewardAgreementDate("0000-00-00");
     }
 
 
