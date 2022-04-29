@@ -138,8 +138,6 @@ public class NoticeService {
     @Transactional
     public void registNewNotice(NoticeDTO newNotice) {
 
-//        newNotice.setNoticeRegistDate(new java.sql.Date(System.currentTimeMillis()));
-
         String registDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new java.sql.Date(System.currentTimeMillis()));
         newNotice.setNoticeRegistDate(registDate);
 
@@ -171,8 +169,5 @@ public class NoticeService {
     public void removeNotice(int noticeNo) {
 
         noticeRepository.deleteById(noticeNo);
-
-//        Notice notice = noticeRepository.findById(noticeNo).get();
-//        notice.setNoticeStatus("N");
     }
 }
