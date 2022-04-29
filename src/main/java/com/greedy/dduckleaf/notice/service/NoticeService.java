@@ -18,6 +18,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -137,7 +138,10 @@ public class NoticeService {
     @Transactional
     public void registNewNotice(NoticeDTO newNotice) {
 
-        newNotice.setNoticeRegistDate(new java.sql.Date(System.currentTimeMillis()));
+//        newNotice.setNoticeRegistDate(new java.sql.Date(System.currentTimeMillis()));
+
+        String registDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new java.sql.Date(System.currentTimeMillis()));
+        newNotice.setNoticeRegistDate(registDate);
 
         noticeRepository.save(modelMapper.map(newNotice, Notice.class));
     }
@@ -155,5 +159,20 @@ public class NoticeService {
         foundNotice.setNoticeCategoryNo(updateNotice.getNoticeCategoryNo());
         foundNotice.setNoticeName(updateNotice.getNoticeName());
         foundNotice.setNoticeContent(updateNotice.getNoticeContent());
+    }
+
+    /**
+     * removeNotice : 공지사항을 삭제합니다.
+     * @param noticeNo : 삭제할 공지사항 번호
+     *
+     * @author 차화응
+     */
+    @Transactional
+    public void removeNotice(int noticeNo) {
+
+        noticeRepository.deleteById(noticeNo);
+
+//        Notice notice = noticeRepository.findById(noticeNo).get();
+//        notice.setNoticeStatus("N");
     }
 }
