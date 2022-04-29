@@ -12,7 +12,7 @@ public class FaqDTO {
 
     private int faqNo;
     private String faqTitle;
-    private String faqComment;
+    private String faqContent;
     private String faqStatus;
     private MemberDTO member;
     private String subtitle;
