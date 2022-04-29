@@ -257,8 +257,10 @@ public class ProjectApplicationController {
         int projectNo = findProjectNoByFarmerNo(user);
 
         RewardRegistInfoDTO reward = projectApplicationService.findRewardByProjectNo(projectNo);
+        ProjectShippingInfoDTO shippingInfo = projectApplicationService.findShippingInfoByProjectNo(projectNo);
         System.out.println("reward 컨트롤러 = " + reward);
         mv.addObject("reward", reward);
+        mv.addObject("shippingInfo", shippingInfo);
         mv.setViewName("project/regist/reward");
 
         return mv;
@@ -274,7 +276,8 @@ public class ProjectApplicationController {
      */
     @PostMapping("/modify/reward")
     public ModelAndView modifyReward(ModelAndView mv, RewardRegistInfoDTO reward, ProjectShippingInfoDTO shippingInfo) {
-
+        System.out.println("reward = " + reward);
+        System.out.println("shippingInfo = " + shippingInfo);
         projectApplicationService.modifyReward(reward, shippingInfo);
 
         mv.setViewName("redirect:/project/application/goMain");
