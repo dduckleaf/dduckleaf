@@ -92,8 +92,8 @@ public class Project {
     public void prePersist() {
 
         this.projectName = this.projectName  == null ? "프로젝트 명" : this.projectName ;
-        this.openDate = this.openDate  == null ? "0000-00-00" : this.openDate ;
-        this.endDate = this.endDate  == null ? "0000-00-00" : this.endDate ;
+        this.openDate = this.openDate  == null ? java.sql.Date.valueOf(LocalDate.now()).toString() : this.openDate ;
+        this.endDate = this.endDate  == null ? java.sql.Date.valueOf(LocalDate.now().plusMonths(1)).toString() : this.endDate ;
         this.examineStatus = this.examineStatus  == null ? "1" : this.examineStatus ;
         this.projectStatus = this.projectStatus  == null ? "Y" : this.projectStatus ;
 

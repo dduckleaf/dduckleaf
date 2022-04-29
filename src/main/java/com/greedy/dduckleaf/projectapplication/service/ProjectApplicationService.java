@@ -81,8 +81,9 @@ public class ProjectApplicationService {
 
         ProjectBasicInfo basicInfo = basicInfo(farmerNo);
         basicInfo.setProjectNo(foundProject.getProjectNo());
-
+        System.out.println("basicInfo = " + basicInfo);
         projectBasicInfoRepository.save(basicInfo);
+        System.out.println("basicInfo = " + basicInfo);
 
         ProjectShippingInfo shippingInfo = shippingInfo(farmerNo);
         shippingInfo.setProjectNo(foundProject.getProjectNo());
@@ -110,8 +111,8 @@ public class ProjectApplicationService {
 
     private ProjectBasicInfo basicInfo(int farmerNo) {
 
+        ProjectRewardCategory category = projectRewardCategoryRepository.findById(1).get();
         ProjectBasicInfo projectBasicInfo = new ProjectBasicInfo();
-        ProjectRewardCategory category = new ProjectRewardCategory();
         projectBasicInfo.setProjectRewardCategory(category);
         System.out.println("projectBasicInfo = " + projectBasicInfo);
 
@@ -296,6 +297,12 @@ public class ProjectApplicationService {
         return modelMapper.map(reward, RewardRegistInfoDTO.class);
     }
 
+    /**
+     * findShippingInfoByProjectNo: 배송 정보를 조회합니다.
+     * @param projectNo :프로젝트 번호
+     * @return 배송 정보
+     * @author 박휘림
+     */
     public ProjectShippingInfoDTO findShippingInfoByProjectNo(int projectNo) {
 
         ProjectShippingInfo shippingInfo = projectShippingInfoRepository.findByProjectNo(projectNo);
@@ -303,6 +310,13 @@ public class ProjectApplicationService {
         return modelMapper.map(shippingInfo, ProjectShippingInfoDTO.class);
     }
 
+    /**
+     * modifyReward: 리워드 설계 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
+     * @param reward: 사용자가 입력한 리워드 정보를 담은 객체
+     * @param shippingInfo: 사용자가 입력한 배송 정보를 담은 객체
+     * @author 박휘림
+     */
+    @Transactional
     public void modifyReward(RewardRegistInfoDTO reward, ProjectShippingInfoDTO shippingInfo) {
 
         RewardRegistInfo updateReward = rewardRegistInfoRepository.findByProjectNo(reward.getProjectNo());
