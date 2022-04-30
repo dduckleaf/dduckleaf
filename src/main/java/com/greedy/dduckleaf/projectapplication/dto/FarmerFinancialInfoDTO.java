@@ -15,5 +15,7 @@ public class FarmerFinancialInfoDTO { //파머 금융정보
     private String taxReceiveEmail;     //세금계산서 발행 이메일
     private String farmerAccount;       //계좌번호
     private String farmerName;          //예금주
+    private String settlementPolicyCheckStatus;
+    private String settlementPolicyCheckDate;
 
 }
