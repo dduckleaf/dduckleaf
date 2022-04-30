@@ -27,7 +27,7 @@
 <div class="main-wrapper">
 
     <!-- Begin Main Header Area -->
-    <div th:replace="/common/adminheader.html"></div>
+    <div th:replace="/common/userheader.html"></div>
     <!-- Main Header Area End Here -->
 
     <!-- Begin Main Content Area -->
@@ -50,7 +50,7 @@
                                     <div class="col-12" th:each="faq : ${ faqList }">
                                         <div class="product-item" style="border: solid #CCCCCC 1px; border-radius: 5px; padding: 10px;" >
                                             <div class="product-content align-self-center">
-                                                <a class="product-name" th:href="@{/faq/detail}" th:text="${ faq.subtitle }"></a>
+                                                <p class="product-name" th:href="@{/faq/detail}" th:text="${ faq.subtitle }"></p>
                                                 <input type="hidden" class="faqNumber" th:value="${faq.faqNo}">
                                                 <p class="faqcontent" >[[${faq.subtitle}]]</p>
                                             </div>
@@ -59,8 +59,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div>
@@ -101,18 +99,22 @@
 
 </div>
 
-<script>
-   let $div = document.getElementsByClassName("product-item");
-   let $faqNumber = document.getElementsByClassName("faqNumber");
+<script >
+    window.onload = function () {
+        let div = document.getElementsByClassName("product-item");
+        // let $faqNumber = document.getElementsByClassName("faqNumber");
+        let faqNumber = document.querySelectorAll(".faqNumber");
 
-   console.log($div);
-   console.log($faqNumber);
+        console.table(div.value);
+        console.table(faqNumber.value);
 
-   for(let i=0; i<$div.length; i++){
-       $div[i].onclick = function (){
-           location.href="/faq/detail/"+ $faqNumber[i].value;
-       }
-   }
+        for (let i = 0; i < div.length; i++) {
+            div[i].onclick = function () {
+                // location.href = "/faq/detail/" + $faqNumber[i].value;
+                location.href = "/faq/detail/" + faqNumber[i].value;
+            }
+        }
+    }
 </script>
 
 <!-- Global Vendor, plugins JS -->

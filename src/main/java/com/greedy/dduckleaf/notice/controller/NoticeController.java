@@ -49,11 +49,12 @@ public class NoticeController {
      * @author 차화응
      */
     @GetMapping("/list")
-    public ModelAndView findNoticeList(ModelAndView mv, @PageableDefault Pageable pageable) {
+    public ModelAndView findNoticeList(ModelAndView mv, @PageableDefault(size = 20) Pageable pageable) {
 
         System.out.println("pageable = " + pageable);
 
         Page<NoticeForListDTO> noticeList = noticeService.findNoticeList(pageable);
+
         noticeList.forEach(System.out::println);
 
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(noticeList);
@@ -105,6 +106,7 @@ public class NoticeController {
     public ModelAndView registPage(ModelAndView mv) {
 
         List<NoticeCategoryDTO> categoryList = noticeService.findAllNoticeCategory();
+
         mv.addObject("categoryList", categoryList);
         mv.setViewName("notice/regist");
 
@@ -158,8 +160,10 @@ public class NoticeController {
     public ModelAndView modifyPage(ModelAndView mv, @PathVariable int noticeNo) {
 
         NoticeDTO noticeDetail = noticeService.findNoticeDetail(noticeNo);
+        List<NoticeCategoryDTO> categoryList = noticeService.findAllNoticeCategory();
 
         mv.addObject("noticeDetail", noticeDetail);
+        mv.addObject("categoryList", categoryList);
         mv.setViewName("notice/modify");
 
         return mv;
@@ -176,6 +180,24 @@ public class NoticeController {
     public ModelAndView modifyNotice(ModelAndView mv, NoticeDTO updateNotice) {
 
         noticeService.modifyNotice(updateNotice);
+
+        mv.setViewName("redirect:/notice/list");
+
+        return mv;
+    }
+
+    /**
+     * removeNotice : 공지사항을 삭제합니다.
+     * @param mv : 요청 경로를 담는 객체
+     * @param noticeNo : 삭제할 공지사항 번호
+     * @return mv : 뷰로 전달할 데이터와 경로를 담는 객체
+     *
+     * @author 차화응
+     */
+    @GetMapping("/remove/{noticeNo}")
+    public ModelAndView removeNotice(ModelAndView mv, @PathVariable int noticeNo) {
+
+        noticeService.removeNotice(noticeNo);
 
         mv.setViewName("redirect:/notice/list");
 

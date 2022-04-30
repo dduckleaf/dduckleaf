@@ -34,11 +34,11 @@
     border-bottom: 1px solid #ccc;
 }
 
-tr.title, td.title {
+tr.title, td.no, td.category, td.title {
     border-bottom: none !important;
 }
 
-.main-content div.cont-div td.title, .main-content div.cont-div td.author, .main-content div.cont-div td.date {
+td.no, td.category, td.title, td.author, td.date, td.count {
     background: #efefef;
 }
 

@@ -346,6 +346,20 @@ label {
     text-align: left;
 }
 
+/* 정책 모달 */
+.policypopup {
+    width: 1000px !important;
+    height: 600px !important;
+}
+
+.policyconfirm {
+    text-align: center;
+}
+
+#policyconfirm {
+    align-content: center;
+}
+
 /* 체크박스 포함 alert css */
 .confirmtitle {
     padding-top: 30px !important;

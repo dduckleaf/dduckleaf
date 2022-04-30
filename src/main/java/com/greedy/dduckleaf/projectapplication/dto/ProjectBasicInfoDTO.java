@@ -17,4 +17,5 @@ public class ProjectBasicInfoDTO {          //프로젝트 기본정보
     private String projectInfo;             //프로젝트 요약
     private int projectTargetFund;
     private String projectPromotionAgreementStatus;
+    private String promotionAgreementDate;
 }

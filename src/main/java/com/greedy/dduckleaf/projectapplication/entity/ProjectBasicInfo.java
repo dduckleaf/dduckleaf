@@ -29,28 +29,26 @@ public class ProjectBasicInfo {
     private int projectNo;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "PROJECT_BASIC_CATEGORY_NO")
+    @JoinColumn(name = "PROJECT_CATEGORY_NO")
     private ProjectRewardCategory projectRewardCategory;
 
     @Column(name = "PROJECT_NAME")
-//    @ColumnDefault("프로젝트 명")
     private String projectName;
 
     @Column(name = "PROJECT_END_DATE")
-//    @Temporal(value = TemporalType.TIMESTAMP)
-//    @ColumnDefault("")
     private String projectEndDate;
 
     @Column(name = "PROJECT_INFO")
-//    @ColumnDefault("프로젝트에 대해 요약해주세요")
     private String projectInfo;             //프로젝트 요약
 
     @Column(name = "PROJECT_TARGET_FUND")
-//    @ColumnDefault("0")
     private int projectTargetFund;
 
     @Column(name = "PROJECT_PROMOTION_AGREEMENT_STATUS")
     private String projectPromotionAgreementStatus;
+
+    @Column(name = "PROMOTION_AGREEMENT_DATE")
+    private String promotionAgreementDate;
 
     @Override
     public String toString() {
@@ -63,6 +61,7 @@ public class ProjectBasicInfo {
                 ", projectInfo='" + projectInfo + '\'' +
                 ", projectTargetFund=" + projectTargetFund +
                 ", projectPromotionAgreementStatus='" + projectPromotionAgreementStatus + '\'' +
+                ", promotionAgreementDate='" + promotionAgreementDate + '\'' +
                 '}';
     }
 
@@ -70,8 +69,9 @@ public class ProjectBasicInfo {
     public void prePersist() {
 
         this.projectName = this.projectName  == null ? "프로젝트 명" : this.projectName ;
-        this.projectEndDate = this.projectEndDate  == null ? "0000-00-00" : this.projectEndDate ;
+        this.projectEndDate = this.projectEndDate  == null ? java.sql.Date.valueOf(LocalDate.now().plusMonths(1)).toString() : this.projectEndDate ;
         this.projectInfo = this.projectInfo  == null ? "프로젝트에 대해 요약해주세요" : this.projectInfo ;
+        this.promotionAgreementDate = this.promotionAgreementDate  == null ? java.sql.Date.valueOf(LocalDate.now()).toString() : this.promotionAgreementDate ;
 
     }
 }

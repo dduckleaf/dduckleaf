@@ -26,4 +26,5 @@ public class ProjectDTO {
     private int maxTargetAmount;
     private MemberDTO farmer;
     private ProjectRewardCategoryDTO reward;
+    private String timeInfo;
 }

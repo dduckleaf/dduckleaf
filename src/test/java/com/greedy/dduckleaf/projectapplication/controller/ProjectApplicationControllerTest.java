@@ -111,4 +111,57 @@ class ProjectApplicationControllerTest {
                 .andDo(MockMvcResultHandlers.print());
 
     }
+
+    @Test
+    @DisplayName("리워드 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyReward_test() throws Exception {
+
+        //given
+        MultiValueMap<String, String> reward = new LinkedMultiValueMap<>();
+        reward.add("projectNo", "139");
+
+        MultiValueMap<String, String> shippingInfo = new LinkedMultiValueMap<>();
+        reward.add("projectNo", "139");
+
+        //when & then
+        mockMvc.perform(MockMvcRequestBuilders.post("/project/application/modify/reward").params(reward).params(shippingInfo))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/project/application/goMain"))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    @DisplayName("반환정책 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyPolicy_test() throws Exception {
+
+        //given
+        MultiValueMap<String, String> policy = new LinkedMultiValueMap<>();
+        policy.add("projectNo", "139");
+        policy.add("refundPolicyContent", "컨트롤러 수정 테스트");
+
+        //when & then
+        mockMvc.perform(MockMvcRequestBuilders.post("/project/application/modify/policy").params(policy))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/project/application/goMain"))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    @DisplayName("사용자가 펀딩금 반환 정책 정보 동의 시 동의 여부와 날짜 업데이트하는 테스트")
+    public void modifyPolicyAgreementStatus_test() throws Exception {
+
+        //given
+        MultiValueMap<String, String> policy = new LinkedMultiValueMap<>();
+        policy.add("projectNo", "140");
+        policy.add("refundPolicyAgreementStatus", "Y");
+
+        //when & then
+        mockMvc.perform(MockMvcRequestBuilders.post("/project/application/policyagreement").params(policy))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/project/application/policy"))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
 }

@@ -51,18 +51,37 @@
       </div>
       <div class="cont-div">
         <table>
+          <colgroup>
+            <col width="5%">
+            <col width="10%">
+            <col width="5%">
+            <col width="15%">
+            <col width="5%">
+            <col width="60%">
+          </colgroup>
           <tr class="title">
-            <td class="title" colspan="2" th:text="${ notice.noticeName }"></td>
+            <td>번호</td>
+            <td class="no" style="text-align: left; text-indent: 10px" th:text="${ notice.noticeNo }"></td>
+            <td>분류</td>
+            <td class="category" style="text-align: left; text-indent: 10px" th:text="${ notice.noticeCategoryNo }"></td>
+            <td>제목</td>
+            <td class="title" style="text-align: left; text-indent: 10px" th:text="${ notice.noticeName }"></td>
           </tr>
           <tr>
-            <td class="author" th:text="${ notice.adminNo }"></td>
-            <td class="date" th:text="${ notice.noticeRegistDate }"></td>
+            <td>작성자</td>
+            <td class="author" style="text-align: left; text-indent: 10px" th:text="${ notice.adminNo }"></td>
+            <td>등록일</td>
+            <td class="date" style="text-align: left; text-indent: 10px" th:text="${ notice.noticeRegistDate }"></td>
+            <td>조회수</td>
+            <td class="count" style="text-align: left; text-indent: 10px" th:text="${ notice.noticeCount }"></td>
           </tr>
           <tr>
-            <td class="content" colspan="2" th:text="${ notice.noticeContent }"></td>
+            <td class="content" colspan="6" style="text-align: justify; text-indent: 10px" th:text="${ notice.noticeContent }"></td>
           </tr>
         </table>
         <div style="text-align: right">
+          <button class="basic-btn medium-btn btn1" th:onclick="'window.location.href=\'' + @{/notice/modify/{no}(no=${ notice.noticeNo })} + '\''">수정</button>
+          <button class="basic-btn medium-btn btn4" th:onclick="'window.location.href=\'' + @{/notice/remove/{no}(no=${ notice.noticeNo })} + '\''">삭제</button>
           <button class="basic-btn medium-btn btn3">목록보기</button>
         </div>
       </div>
