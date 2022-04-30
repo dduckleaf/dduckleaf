@@ -129,7 +129,7 @@
     }
 
     let today = new Date();
-    let endDate = today.setMonth(today.getMonth() + 1);
+    let endDate = today.setMonth(today.getMonth() + 1, today.getDay() + 7);
     let endDay = new Date(endDate).toISOString().slice(0, 10);
 
     document.getElementById('endDate').setAttribute("min", endDay);

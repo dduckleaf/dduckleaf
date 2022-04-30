@@ -9,6 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -92,8 +96,26 @@ public class MockFundService {
     @Transactional
     public void modifyBasicInfo(MockFundInfoDTO mockFundInfo, int memberNo) {
 
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = mockFundInfo.getEndDate();
+        java.util.Date open = null;
+        String openDate = null;
+        try {
+            open = format.parse(strDate);
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(open);
+            cal.add(Calendar.MONTH, -1);
+
+            openDate = format.format(cal.getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         Farmer farmer = farmerRepository.findById(memberNo).get();
         MockFund fund = farmer.getMockFundList().get(0);
+        fund.setCloseDate(strDate);
+        fund.setOpenDate(openDate);
         MockFundInfo foundInfo = fund.getMockFundInfoList().get(0);
         foundInfo.setMockFundName(mockFundInfo.getMockFundName());
         foundInfo.setTargetTicketAmount(mockFundInfo.getTargetTicketAmount());
@@ -113,7 +135,7 @@ public class MockFundService {
         Long mills = System.currentTimeMillis();
         Date date = new Date(mills);
         info.setMockFundAgreementStatus("Y");
-        info.setAgreementDate(date);
+        info.setAgreementDate(String.valueOf(date));
 
         return info.getMockFundInfoNo();
     }

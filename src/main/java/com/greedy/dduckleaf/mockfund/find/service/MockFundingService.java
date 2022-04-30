@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.mockfund.find.service;
 
 import com.greedy.dduckleaf.mockfund.dto.MockFundDTO;
+import com.greedy.dduckleaf.mockfund.dto.RewardCategoryDTO;
 import com.greedy.dduckleaf.mockfund.entity.Farmer;
 import com.greedy.dduckleaf.mockfund.entity.MockFund;
 import com.greedy.dduckleaf.mockfund.find.repository.MockFundForFundingRepository;
@@ -9,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,7 +48,7 @@ public class MockFundingService {
      */
     public List<MockFundDTO> findByProgressStatus() {
 
-        List<MockFund> mockFundList = mockFundForFundingRepository.findByMockFundProgressStatus("진행전");
+        List<MockFund> mockFundList = mockFundForFundingRepository.findByMockFundProgressStatus("진행중");
 
         return mockFundList.stream().map(mockFund -> modelMapper.map(mockFund, MockFundDTO.class)).collect(Collectors.toList());
     }
@@ -57,9 +59,11 @@ public class MockFundingService {
      *
      * @author 조남기
      */
+    @Transactional
     public MockFundDTO findMockFundingInfo(int mockFundNo) {
 
         MockFund fund = mockFundForFundingRepository.findById(mockFundNo).get();
+        fund.getMockFundInfoList().get(0);
 
         return modelMapper.map(fund, MockFundDTO.class);
     }

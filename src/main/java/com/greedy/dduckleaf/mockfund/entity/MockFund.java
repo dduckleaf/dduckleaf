@@ -1,7 +1,7 @@
 package com.greedy.dduckleaf.mockfund.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.lang.String;
 import java.util.List;
 
 @Entity(name = "MockFund")
@@ -20,16 +20,16 @@ public class MockFund {
     private String mockFundName;
 
     @Column(name = "OPEN_DATE")
-    private java.sql.Date openDate;
+    private String openDate;
 
     @Column(name = "END_DATE")
-    private java.sql.Date closeDate;
+    private String closeDate;
 
     @Column(name = "MOCK_FUND_STATUS")
     private String mockFundStatus;
 
     @Column(name = "CANCELED_DATE")
-    private java.sql.Date canceledDate;
+    private String canceledDate;
 
     @Column(name = "TARGET_TICKET_AMOUNT")
     private int targetTicketAmount;
@@ -48,7 +48,7 @@ public class MockFund {
 
     public MockFund() {}
 
-    public MockFund(int mockFundNo, Farmer farmer, String mockFundName, Date openDate, Date closeDate, String mockFundStatus, Date canceledDate, int targetTicketAmount, String mockFundProgressStatus, String examineResult, List<MockFundInfo> mockFundInfoList, List<MockFundReward> mockFundRewardList) {
+    public MockFund(int mockFundNo, Farmer farmer, String mockFundName, String openDate, String closeDate, String mockFundStatus, String canceledDate, int targetTicketAmount, String mockFundProgressStatus, String examineResult, List<MockFundInfo> mockFundInfoList, List<MockFundReward> mockFundRewardList) {
         this.mockFundNo = mockFundNo;
         this.farmer = farmer;
         this.mockFundName = mockFundName;
@@ -87,19 +87,19 @@ public class MockFund {
         this.mockFundName = mockFundName;
     }
 
-    public Date getOpenDate() {
+    public String getOpenDate() {
         return openDate;
     }
 
-    public void setOpenDate(Date openDate) {
+    public void setOpenDate(String openDate) {
         this.openDate = openDate;
     }
 
-    public Date getCloseDate() {
+    public String getCloseDate() {
         return closeDate;
     }
 
-    public void setCloseDate(Date closeDate) {
+    public void setCloseDate(String closeDate) {
         this.closeDate = closeDate;
     }
 
@@ -111,11 +111,11 @@ public class MockFund {
         this.mockFundStatus = mockFundStatus;
     }
 
-    public Date getCanceledDate() {
+    public String getCanceledDate() {
         return canceledDate;
     }
 
-    public void setCanceledDate(Date canceledDate) {
+    public void setCanceledDate(String canceledDate) {
         this.canceledDate = canceledDate;
     }
 

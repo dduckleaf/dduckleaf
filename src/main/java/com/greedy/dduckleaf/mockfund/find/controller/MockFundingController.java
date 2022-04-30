@@ -1,9 +1,12 @@
 package com.greedy.dduckleaf.mockfund.find.controller;
 
+import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.mockfund.dto.MockFundDTO;
+import com.greedy.dduckleaf.mockfund.entity.MockFund;
 import com.greedy.dduckleaf.mockfund.find.service.MockFundingService;
 import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -55,4 +58,14 @@ public class MockFundingController {
 
         return mv;
     }
+
+//    @GetMapping("/regist/funding")
+//    public ModelAndView registMockFunding(ModelAndView mv, @PathVariable int mockFundNo, @AuthenticationPrincipal CustomUser user) {
+//
+//        int memberNo = user.getMemberNo();
+//        List<MockFund> mockFundList = mockFundingService.registMockFunding(memberNo);
+//
+//        mv.addObject("mockFundList", mockFundList);
+//        mv.setViewName();
+//    }
 }

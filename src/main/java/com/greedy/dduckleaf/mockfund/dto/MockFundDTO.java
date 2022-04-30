@@ -11,13 +11,14 @@ public class MockFundDTO {
 
     private int mockFundNo;
     private String mockFundName;
-    private java.sql.Date openDate;
-    private java.sql.Date endDate;
+    private String openDate;
+    private String endDate;
     private String mockFundStatus;
-    private java.sql.Date canceledDate;
+    private String canceledDate;
     private int targetTicketAmount;
     private String mockFundProgressStatus;
     private String examineResult;
     private FarmerDTO farmer;
+    private MockFundInfoDTO mockFundInfo;
 
 }

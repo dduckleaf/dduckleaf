@@ -53,10 +53,10 @@
                         <div class="product-thumb-with-content row">
                             <div class="col-12 order-lg-1 order-2 pt-10 pt-lg-0">
                                 <div class="single-product-content">
-                                    <div class="title">감자감자</div><progress value="43" max="100"></progress>
+                                    <div class="title" th:text="${mockFund.mockFundName}"></div><progress th:value="10" th:max="${mockFund.targetTicketAmount}"></progress>
                                     <div class="infoBox2 rounded-1">
                                         <div>
-                                            <span class="short-desc">12일 남음</span>
+                                            <span class="short-desc"></span>
                                         </div>
                                         <div class="farmerCorp">
                                             <a>100</a><span class="info">% 달성</span>
@@ -69,7 +69,7 @@
                                         </div>
                                     </div><br>
                                     <div class="button-box">
-                                        <button class="basic-btn btn1 alittle-bigbig-btn">펀딩하기</button>
+                                        <button class="basic-btn btn1 alittle-bigbig-btn fundingbtn">펀딩하기</button>
                                         <button class="basic-btn btn3 alittle-big-btn">관심<img src="/images/common/heart.png" alt="Product Image"></button>
                                     </div><br>
                                     <ul class="quantity-with-btn pb-7">
@@ -357,7 +357,12 @@
 <!-- Scroll To Top End Here -->
 
 <!-- Global Vendor, plugins JS -->
-
+<script>
+    let btn = document.getElementsByClassName("fundingbtn");
+    btn.onclick = function() {
+        location.href = "/mockfunding/regist/funding" +
+    }
+</script>
 <!-- JS Files
 ============================================ -->
 <!-- Global Vendor, plugins JS -->
