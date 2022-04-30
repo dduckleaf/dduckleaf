@@ -12,7 +12,7 @@ public class SearchDTO {
     private Integer progressStatus;
 
     public SearchDTO(String searchValue, Integer rewardCategory, Integer progressStatus) {
-        this.searchValue = searchValue;
+        this.searchValue = searchValue == null? "": searchValue;
         this.rewardCategory = rewardCategory;
         this.progressStatus = progressStatus;
     }
