@@ -5,7 +5,7 @@
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>모의펀딩 신청</title>
+    <title>펀딩 신청</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,50 +15,73 @@
     <!-- Style CSS -->
     <link rel="stylesheet" th:href="@{ /css/style.css }">
     <link rel="stylesheet" th:href="@{ /css/projectapplication.css }">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div th:replace="/common/menubar.html"></div>
 <div class="container">
     <div style="width: 1000px;">
-        <div class="row1 reward">
+        <div class="row1">
             <div th:fragment="mockfundsidebar" class="col-md-2">
                 <button class="accordion">
                     <p class="fundmenutitle">펀딩 준비<img class="arrow" th:src="@{ /images/common/vector.png }"></p>
                 </button>
                 <div class="panel">
-                    <p onclick="location.href='regist/basicinfo/1'">기본요건</p>
-                    <p onclick="location.href='regist/story/1'">기본정보</p>
-                    <p onclick="location.href='regist/reward/1'">스토리 작성</p>
-                    <p onclick="location.href='regist/reward/1'">리워드 설계</p>
-                    <p onclick="location.href='regist/reward/1'">위험요인 및 정책</p>
-                    <p onclick="location.href='regist/reward/1'">파머 정보</p>
-                    <p onclick="location.href='regist/reward/1'">대표자 및 정산 정보</p>
+                    <p onclick="location.href='/project/application/basicreq'">기본요건</p>
+                    <p onclick="location.href='/project/application/basicinfo'">기본정보</p>
+                    <p onclick="location.href='/project/application/story'">스토리 작성</p>
+                    <p onclick="location.href='/project/application/reward'">리워드 설계</p>
+                    <p onclick="location.href='/project/application/policy'">위험요인 및 정책</p>
+                    <p onclick="location.href='/project/application/farmer'">파머 정보</p>
+                    <p onclick="location.href='/project/application/representative'">대표자 및 정산 정보</p>
                 </div>
             </div>
-            <div class="col-md-7">
-                <div class="breadcrumb">
-                    <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">모의펀딩 준비</span>&nbsp;
-                    <span class="breadcrumb">></span>&nbsp;
-                    <span class="breadcrumb">리워드설계</span>
-                </div>
-                <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">리워드 설계</a><br><hr>
-                <a>서포터에게 제공할 리워드 내용을 입력하세요.</a>
-                <div class="basicmenu reward-area">
-                    <a class="basictitle">리워드 설계 조건</a><br>
-                    <div class="rewardtitle-section">
-                        <a class="rewardtitle">제한 수량</a>
-                        <a class="rewardtitle">발송시작일</a>
+            <form name="saveForm">
+                <div class="col-md-7">
+                    <div class="breadcrumb">
+                        <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">펀딩 준비</span>&nbsp;
+                        <span class="breadcrumb">></span>&nbsp;
+                        <span class="breadcrumb">리워드설계</span>
                     </div>
-                    <div class="rewarddetail-section">
-                        <a class="rewarddetail">생산 및 제공할 수 있는 리워드의 총 수량으로<br>해당 수량이 모두 펀딩되면 더 이상 펀딩 불가합니다.</a>
-                        <a class="rewarddetail">프로젝트 종료일 이후부터 11개월 이내로 설계 가능합니다.</a>
+                    <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">리워드 설계</a><br><hr>
+                    <a>서포터에게 제공할 리워드 내용을 입력하세요.</a>
+                    <div class="basicmenu">
+                        <a class="basictitle">금액</a><br>
+                        <input id="projectNo" name="projectNo" type="hidden" th:value="${ reward.projectNo }">
+                        <input class="mockfundtitle1" id="rewardPrice" name="rewardPrice" type="number" th:value="${ reward.rewardPrice}">
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">리워드명</a><br>
+                        <input class="mockfundtitle1" id="rewardName" name="rewardName" type="text" th:value="${ reward.rewardName }">
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">상세설명</a><br>
+                        <textarea id="rewardInfo" name="rewardInfo" type="text" th:text="${ reward.rewardInfo }" style="width: 100%; height: 150px;"></textarea>
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">단위</a><br>
+                        <input class="mockfundtitle1" id="rewardUnit" name="rewardUnit" type="text" th:value="${ reward.rewardUnit }">
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">배송비</a><br>
+                        <input type="hidden" th:value="${ shippingInfo.projectNo }">
+                        <input type="number" id="shippingFee" name="shippingFee" th:value="${ shippingInfo.shippingFee}" style="width: 250px; margin-right: 3%;">
+                        <input type="checkbox" id="extracharge"><a> 도서산간 지역 추가 배송비가 필요한 경우, 체크해주세요</a><br>
+                        <a class="basicsubtitle">배송비가 없는 경우, 0원 입력</a><br>
+                    </div>
+                    <div class="basicmenu" id="extraShippingFeeArea" style="display: none">
+                        <a class="basictitle">추가 배송비</a><br>
+                        <input type="number" id="extraShippingFee" name="extraShippingFee" th:value="${ shippingInfo.extraShippingFee }" style="width: 250px; margin-right: 3%;">
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">예상 발송 시작일</a><br>
+                        <input type="text" id="shippingDueDate" name="shippingDueDate" th:value="${ shippingInfo.shippingDueDate }">
+                    </div>
+                    <div>
+                        <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
                     </div>
                 </div>
-                <button class="btn1 big-btn story-btn"><img th:src="@{/images/mockfund/plus.png}"> 추가하기</button>
-                <div>
-                    <button class="btn1 big-btn reward">저장하기</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -66,7 +89,6 @@
 <!-- JS Files
 ============================================ -->
 <!-- Global Vendor, plugins JS -->
-
 <!-- Vendor JS -->
 <script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
 <script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
@@ -87,6 +109,20 @@
 
 </body>
 <script>
+
+    $("#extracharge").click(function () {
+        const extracharge1 = $("#extracharge").prop("checked");
+        const extraShippingFeeArea = document.getElementById('extraShippingFeeArea');
+
+        if(extracharge1) {
+            extraShippingFeeArea.style.display = 'block';
+        } else {
+            extraShippingFeeArea.style.display = 'none';
+            var extraShippingFee = document.getElementById('extraShippingFee');
+            extraShippingFee.value = 0;
+        }
+    });
+
     var acc = document.getElementsByClassName("accordion");
 
     for (var i = 0; i < acc.length; i++) {
@@ -114,6 +150,50 @@
         }
     }
 
-    document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);;
+    /* 저장하기 버튼 */
+    $("#saveclick").click(function() {
+        Swal.fire({
+            title: '저장하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            allowEnterKey: false,
+            confirmButtonWidth: '100px',
+            customClass: {
+                confirmButton: 'savesuccess',
+                cancelButton: 'savecancel',
+                popup: 'savepopup'
+            },
+            buttonsStyling: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: '저장되었습니다',
+                    confirmButtonText: "확인",
+                    allowEnterKey: false,
+                    customClass: {
+                        confirmButton: 'saveok',
+                        popup: 'savepopup'
+                    },
+                    buttonsStyling: false,
+                }).then(function(projectNo, rewardPrice, rewardName, rewardInfo, rewardUnit, shippingFee, extraShippingFee, shippingDueDate) {
+                    let saveForm = document.saveForm;
+                    let url = '/project/application/modify/reward';
+                    saveForm.projectNo = projectNo;
+                    saveForm.rewardPrice = rewardPrice;
+                    saveForm.rewardName = rewardName;
+                    saveForm.rewardInfo = rewardInfo;
+                    saveForm.rewardUnit = rewardUnit;
+                    saveForm.shippingFee = shippingFee;
+                    saveForm.extraShippingFee = extraShippingFee;
+                    saveForm.shippingDueDate = shippingDueDate;
+
+                    saveForm.action = url;
+                    saveForm.method = 'post';
+                    saveForm.submit();
+                });
+            }
+        })
+    });
 </script>
 </html>

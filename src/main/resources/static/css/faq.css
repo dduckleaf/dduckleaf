@@ -60,7 +60,9 @@
 p.faqcontent:hover {
     color: #bac34e;
 }
-
+p.product-name:hover {
+    color: #bac34e;
+}
 p.faqcontent-detail {
     color: black;
 }

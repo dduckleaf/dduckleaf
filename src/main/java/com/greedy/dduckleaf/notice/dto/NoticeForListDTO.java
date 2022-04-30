@@ -1,6 +1,5 @@
 package com.greedy.dduckleaf.notice.dto;
 
-import java.sql.Date;
 import lombok.*;
 
 @NoArgsConstructor
@@ -13,7 +12,7 @@ public class NoticeForListDTO {
     private int noticeNo;
     private String noticeName;
     private String noticeContent;
-    private Date noticeRegistDate;
+    private String noticeRegistDate;
     private String noticeStatus;
     private AdminDTO admin;
     private int noticeCount;

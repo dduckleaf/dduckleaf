@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -36,6 +37,12 @@ public class FarmerFinancialInfo {
     @Column(name = "FARMER_NAME")
     private String farmerName;          //예금주
 
+    @Column(name = "SETTLEMENT_POLICY_CHECK_STATUS")
+    private String settlementPolicyCheckStatus;
+
+    @Column(name = "SETTLEMENT_POLICY_CHECK_DATE")
+    private String settlementPolicyCheckDate;
+
     @Override
     public String toString() {
         return "FarmerFinancialInfo{" +
@@ -45,6 +52,8 @@ public class FarmerFinancialInfo {
                 ", taxReceiveEmail='" + taxReceiveEmail + '\'' +
                 ", farmerAccount='" + farmerAccount + '\'' +
                 ", farmerName='" + farmerName + '\'' +
+                ", settlementPolicyCheckStatus='" + settlementPolicyCheckStatus + '\'' +
+                ", settlementPolicyCheckDate='" + settlementPolicyCheckDate + '\'' +
                 '}';
     }
 
@@ -54,6 +63,7 @@ public class FarmerFinancialInfo {
         this.farmerName = this.farmerName  == null ? "예금주" : this.farmerName ;
         this.taxReceiveEmail = this.taxReceiveEmail  == null ? "세금계산서 발행 이메일" : this.taxReceiveEmail ;
         this.farmerAccount = this.farmerAccount  == null ? "계좌번호" : this.farmerAccount ;
+        this.settlementPolicyCheckDate = this.settlementPolicyCheckDate  == null ? java.sql.Date.valueOf(LocalDate.now()).toString() : this.settlementPolicyCheckDate ;
 
     }
 }

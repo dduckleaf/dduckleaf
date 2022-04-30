@@ -179,10 +179,94 @@ class ProjectApplicationServiceTest {
         //when
         ProjectBasicInfoDTO updateStory = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
         updateStory.setProjectPromotionAgreementStatus("Y");
-//        updateStory.setRewardAgreementDate("0000-00-00");
 
         //then
         assertDoesNotThrow(() -> projectApplicationService.modifyPromotionAgreementStatus(updateStory));
+    }
+
+    @Test
+    @DisplayName("프로젝트 번호로 리워드 정보 데이터 조회하는 테스트")
+    public void findReward_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        RewardRegistInfoDTO reward = projectApplicationService.findRewardByProjectNo(projectNo);
+        ProjectShippingInfoDTO shippingInfo = projectApplicationService.findShippingInfoByProjectNo(projectNo);
+
+        //then
+        assertNotNull(reward);
+
+    }
+
+    @Test
+    @DisplayName("리워드 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyReward_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        RewardRegistInfoDTO reward = projectApplicationService.findRewardByProjectNo(projectNo);
+        reward.setRewardName("리워드 명");
+        reward.setRewardPrice(0);
+        reward.setRewardInfo("리워드 상세 설명");
+
+        ProjectShippingInfoDTO shippingInfo = projectApplicationService.findShippingInfoByProjectNo(projectNo);
+        shippingInfo.setShippingFee(0);
+        shippingInfo.setExtraShippingFee(0);
+        shippingInfo.setShippingDueDate(java.sql.Date.valueOf(LocalDate.now().plusMonths(11)).toString());
+
+        //then
+        assertDoesNotThrow(() ->projectApplicationService.modifyReward(reward, shippingInfo));
+
+    }
+
+    @Test
+    @DisplayName("프로젝트 번호로 정책 정보 데이터 조회하는 테스트")
+    public void findPolicyByProjectNo_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        RefundPolicyDTO policy = projectApplicationService.findPolicyByProjectNo(projectNo);
+
+        //then
+        assertNotNull(policy);
+
+    }
+
+    @Test
+    @DisplayName("스토리 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyPolicy_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        RefundPolicyDTO policy = projectApplicationService.findPolicyByProjectNo(projectNo);
+        policy.setRefundPolicyContent("서비스 수정 테스트");
+
+        //then
+        assertDoesNotThrow(() ->projectApplicationService.modifyPolicy(policy));
+
+    }
+
+    @Test
+    @DisplayName("반환정책 작성 페이지에서 펀딩금 반환 정책 정보 동의 상태 변경 테스트")
+    public void modifyPolicyAgreementStatus_test() {
+
+        //given
+        int projectNo = 139;
+
+        //when
+        RefundPolicyDTO policy = projectApplicationService.findPolicyByProjectNo(projectNo);
+        policy.setRefundPolicyAgreementStatus("Y");
+
+        //then
+        assertDoesNotThrow(() -> projectApplicationService.modifyPolicyAgreementStatus(policy));
     }
 
 }

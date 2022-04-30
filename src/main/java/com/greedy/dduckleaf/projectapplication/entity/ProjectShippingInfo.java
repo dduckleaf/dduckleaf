@@ -25,19 +25,15 @@ public class ProjectShippingInfo {
     private int projectShippingInfoNo;
 
     @Column(name = "SHIPPING_FEE")
-//    @ColumnDefault("0")
     private int shippingFee;
 
     @Column(name = "SHIPPING_DUE_DATE")
-//    @Temporal(value = TemporalType.TIMESTAMP)
-//    @ColumnDefault("")
     private String shippingDueDate;
 
     @Column(name = "PROJECT_NO")
     private int projectNo;
 
     @Column(name = "EXTRA_SHIPPING_FEE")
-//    @ColumnDefault("0")
     private int extraShippingFee;
 
     @Override
@@ -54,7 +50,7 @@ public class ProjectShippingInfo {
     @PrePersist
     public void prePersist() {
 
-        this.shippingDueDate = this.shippingDueDate  == null ? "0000-00-00" : this.shippingDueDate ;
+        this.shippingDueDate = this.shippingDueDate  == null ? java.sql.Date.valueOf(LocalDate.now().plusMonths(3)).toString() : this.shippingDueDate ;
 
     }
 }
