@@ -51,6 +51,7 @@
             <aside>
               <div>
                 <div class="member-icon" id="profile">상범</div>
+                <img th:src="@{/images/profile/profilemodify.png}" id="profile-modify">
                 <div class="member-name"><span>박상범</span>님</div>
                 <div class="logout-btn"><a th:href="@{/member/logout}">로그아웃</a></div>
               </div>
@@ -108,6 +109,13 @@
   if(farmerpage) {
     farmerpage.onclick = function () {
       location.href = "/common/farmerpage";
+    }
+  }
+
+  const $profilemodify = document.getElementById("profile-modify");
+  if($profilemodify) {
+    $profilemodify.onclick = function () {
+      location.href = "/profile/modify";
     }
   }
 </script>
