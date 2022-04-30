@@ -2,13 +2,12 @@ package com.greedy.dduckleaf.project.find.controller;
 
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
+import com.greedy.dduckleaf.project.finalfield.CodeForProjet;
 import com.greedy.dduckleaf.project.find.dto.ProjectDTO;
 import com.greedy.dduckleaf.project.find.dto.SearchDTO;
 import com.greedy.dduckleaf.project.find.service.ProjectFindService;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * <pre>
@@ -33,8 +31,8 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/project/find")
-public class ProjectFindController {
-    private final static int BUTTON_AMOUNT = 7;
+public class ProjectFindController implements CodeForProjet {
+
     private final ProjectFindService service;
 
     @Autowired
@@ -69,6 +67,7 @@ public class ProjectFindController {
 
         /* request에서 추출한 검색에 필요한 정보를 SearchDTO에 담아 서비스의 프로젝트 조회메소드에 전달인자로 넣어 호출합니다. */
         SearchDTO searchDTO = new SearchDTO(searchValue, rewardCategory, progressStatus);
+        System.out.println("searchDTO = " + searchDTO);
         Page<ProjectDTO> projectList = service.findProjectLists(searchDTO, pageable);
 
         /* 한 페이지에 표시할 버튼의 개수를 설정합니다. */
@@ -77,31 +76,63 @@ public class ProjectFindController {
         /* 조회한 프로젝트목록과, 페이징 정보, 검색정보를 Model에 저장 후 반환합니다. */
         mv.addObject("projectList", projectList);
         mv.addObject("paging", paging);
-        mv.addObject("searchValue", searchValue);
+        mv.addObject("searchDTO", searchDTO);
+        mv.addObject("intent", "list");
         mv.setViewName("/project/list/projectlist");
 
         return mv;
     }
 
     @GetMapping("/end")
-    public ModelAndView sendEndProjectListPage(ModelAndView mv) {
+    public ModelAndView sendEndProjectListPage(ModelAndView mv, @PageableDefault Pageable pageable) {
 
+        /* 페이징 정보를 담아 프로젝트 목록을 조회합니다. */
+        Page<ProjectDTO> projectList = service.findProjectListsByProgressingNo(PROJECT_PROGRESS_STATUS_종료, pageable);
+
+        /* 한 페이지에 표시할 버튼의 개수를 설정합니다. */
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectList, BUTTON_AMOUNT);
+
+        /* 조회한 프로젝트목록과, 페이징 정보, 검색정보를 Model에 저장 후 반환합니다. */
+        mv.addObject("projectList", projectList);
+        mv.addObject("paging", paging);
+        mv.addObject("intent", "end");
         mv.setViewName("/project/list/endlist");
+
         return mv;
     }
 
     @GetMapping("/progressing")
-    public ModelAndView sendProgressingProjectListPage(ModelAndView mv) {
+    public ModelAndView sendProgressingProjectListPage(ModelAndView mv, @PageableDefault Pageable pageable, HttpServletRequest request) {
 
+        /* 페이징 정보를 담아 프로젝트 목록을 조회합니다. */
+        Page<ProjectDTO> projectList = service.findProjectListsByProgressingNo(PROJECT_PROGRESS_STATUS_진행중,pageable);
+
+        /* 한 페이지에 표시할 버튼의 개수를 설정합니다. */
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectList, BUTTON_AMOUNT);
+
+        /* 조회한 프로젝트목록과, 페이징 정보, 검색정보를 Model에 저장 후 반환합니다. */
+        mv.addObject("projectList", projectList);
+        mv.addObject("paging", paging);
+        mv.addObject("intent", "progressing");
         mv.setViewName("/project/list/progressinglist");
+
         return mv;
     }
 
     @GetMapping("/expected")
-    public ModelAndView sendExpectedProjectListPage(ModelAndView mv) {
+    public ModelAndView sendExpectedProjectListPage(ModelAndView mv, @PageableDefault Pageable pageable, HttpServletRequest request) {
 
+        /* 페이징 정보를 담아 프로젝트 목록을 조회합니다. */
+        Page<ProjectDTO> projectList = service.findProjectListsByProgressingNo(PROJECT_PROGRESS_STATUS_오픈예정, pageable);
+
+        /* 한 페이지에 표시할 버튼의 개수를 설정합니다. */
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectList, BUTTON_AMOUNT);
+
+        /* 조회한 프로젝트목록과, 페이징 정보, 검색정보를 Model에 저장 후 반환합니다. */
+        mv.addObject("projectList", projectList);
+        mv.addObject("paging", paging);
+        mv.addObject("intent", "expected");
         mv.setViewName("/project/list/expectedlist");
         return mv;
     }
-
 }

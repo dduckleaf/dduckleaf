@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.project.find.service;
 
+import com.greedy.dduckleaf.project.finalfield.CodeForProjet;
 import com.greedy.dduckleaf.project.find.dto.ProjectDTO;
 import com.greedy.dduckleaf.project.find.dto.ProjectRewardCategoryDTO;
 import com.greedy.dduckleaf.project.find.dto.SearchDTO;
@@ -28,14 +29,8 @@ import java.sql.Date;
  * @version 1.0.0
  */
 @Service
-public class ProjectFindService {
+public class ProjectFindService implements CodeForProjet {
 
-    /* 프로젝트조회에 필요한 정보를 상수필드로 선언합니다. */
-    private final int PROJECT_PROGRESS_STATUS_오픈예정 = 2;
-    private final int PROJECT_PROGRESS_STATUS_진행중 = 3;
-    private final int PROJECT_PROGRESS_STATUS_종료 = 4;
-    private final int PAGE_SIZE = 12;
-    private final static int PROJECT_LIST_STATUS = 2;
 
     /* 의존성주입 받을 빈을 final로 선언 후 생성자주입을 받습니다. */
     private final ProjectForProjectListRepository projectRepo;
@@ -154,6 +149,17 @@ public class ProjectFindService {
         return timeInfo;
     }
 
+    public Page<ProjectDTO> findProjectListsByProgressingNo(int progressingNo, Pageable pageable) {
+
+        /* 한 페이지에 출력될 정보를 설정해줍니다. */
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() - 1, PAGE_SIZE,
+                Sort.by("projectNo").descending());
+
+        /* 프로젝트 상태 코드로 프로젝트 목록을 조회합니다. */
+        Page<Project> projects = projectRepo.findByProgressStatus_projectProgressStuatusNo(progressingNo, pageable);
+
+        return parsingProjectList(projects);
+    }
 }
 
 
