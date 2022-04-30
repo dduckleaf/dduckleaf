@@ -38,7 +38,7 @@
 <div class="main-wrapper">
 
     <!-- Begin Main Header Area -->
-    <header th:replace="/common/userheader.html"></header>
+    <header th:replace="/common/menubar.html"></header>
     <!-- Main Header Area End Here -->
 
     <!-- 마이 페이지 -->
@@ -47,10 +47,33 @@
         <div class="notice-wrap">
             <div class="title-div">
                 <span class="text-title"><img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">공지사항</span>
-                <hr style="width: 840px">
+                <hr style="width: 100%">
             </div>
             <div class="cont-div">
-
+                <div class="regist-form">
+                    <form class="regist-wrap" action="/notice/modify" method="post">
+                        <div class="title-form" th:each="notice : ${ noticeDetail }">
+                            <label for="title">제목</label>
+                            <input type="text" id="title" name="noticeName" th:value="${ notice.noticeName }">
+                        </div>
+                        <div class="category-form">
+                            <label for="categoryNo">분류</label>
+                            <select name="noticeCategoryNo" id="categoryNo">
+                                <option disabled selected>분류명</option>
+                                <option th:each="category : ${ categoryList }" th:value="${category.noticeCategoryNo}" th:text="${category.noticeCategoryName}"></option>
+                            </select>
+                        </div>
+                        <div class="content-form" th:each="notice : ${ noticeDetail }">
+                            <label for="content">내용</label>
+                            <textarea id="content" name="noticeContent" th:text="${ notice.noticeContent }"></textarea>
+                            <input type="hidden" name="noticeNo" th:value = "${ notice.noticeNo }">
+                        </div>
+                        <div class="btn-area">
+                            <button class="basic-btn medium-btn btn1" type="submit">수정</button>
+                            <button class="basic-btn medium-btn btn3">취소</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </main>
@@ -80,22 +103,22 @@
 <!-- Global Vendor, plugins JS -->
 
 <!-- Vendor JS -->
-<script th:src="@{ js/vendor/bootstrap.bundle.min.js }"></script>
-<script th:src="@{ js/vendor/jquery-3.5.1.min.js }"></script>
-<script th:src="@{ js/vendor/jquery-migrate-3.3.0.min.js }"></script>
-<script th:src="@{ js/vendor/modernizr-3.11.2.min.js }"></script>
-<script th:src="@{ js/vendor/jquery.waypoints.js }"></script>
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
 
 <!--Plugins JS-->
-<script th:src="@{ js/plugins/wow.min.js }"></script>
-<script th:src="@{ js/plugins/jquery-ui.min.js }"></script>
-<script th:src="@{ js/plugins/swiper-bundle.min.js }"></script>
-<script th:src="@{ js/plugins/jquery.nice-select.js }"></script>
-<script th:src="@{ js/plugins/parallax.min.js }"></script>
-<script th:src="@{ js/plugins/jquery.magnific-popup.min.js }"></script>
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
 
 <!--Main JS (Common Activation Codes)-->
-<script th:src="@{ js/main.js }"></script>
+<script th:src="@{ /js/main.js }"></script>
 
 </body>
 

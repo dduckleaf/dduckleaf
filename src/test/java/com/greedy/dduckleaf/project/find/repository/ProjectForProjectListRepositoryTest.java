@@ -37,7 +37,7 @@ class ProjectForProjectListRepositoryTest {
 
         //given
         Pageable pageable = PageRequest.of(0,10);
-        String searchValue = "3";
+        String searchValue = "2";
 
         //when
         Page<Project> projects = repo.findByProjectExamineStatusIsNotNullAndProjectNameContaining(searchValue, pageable);
@@ -45,6 +45,38 @@ class ProjectForProjectListRepositoryTest {
         //then
         assertNotNull(projects);
         projects.forEach(System.out::println);
+    }
+
+    @Test
+    public void findByProjectExamineStatusIsNotNullAndProgressStatus_projectProgressStuatusNo_test() {
+
+        //given
+        Pageable pageable = PageRequest.of(0,10);
+        int progressStatus = 3;
+
+        //when
+        Page<Project> projects = repo.findByProjectExamineStatusIsNotNullAndProgressStatus_projectProgressStuatusNo(progressStatus, pageable);
+
+        //then
+        assertNotNull(projects);
+        projects.forEach(System.out::println);
+
+    }
+
+    @Test
+    public void findByProjectExamineStatusIsNotNullAndProgressStatus_projectProgressStuatusNoAndProjectBasicInfo_category_categoryNo() {
+
+        //given
+        Pageable pageable = PageRequest.of(0,10);
+        int progressStatus = 3;
+        int rewardCategory = 1;
+
+        //when
+        Page<Project> projects = repo.findByProjectExamineStatusIsNotNullAndProgressStatus_projectProgressStuatusNoAndBasicInfo_category_projectCategoryNo(progressStatus, rewardCategory, pageable);
+
+        assertNotNull(projects);
+        projects.forEach(System.out::println);
+
     }
 
 }

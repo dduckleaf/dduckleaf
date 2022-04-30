@@ -325,3 +325,12 @@ div.hidden {
     color: #BAC34E;
     font-weight: bold;
 }
+#profile-modify {
+    position: absolute;
+    top: 140px;
+    left: 170px;
+    width: 30px;
+    height: 30px;
+    box-shadow: 0px 1px 0px 0px #726b6b;
+    border-radius: 25px;
+}
