@@ -51,7 +51,7 @@
             </div>
             <div class="cont-div">
                 <div style="text-align: right">
-                    <button class="medium-btn btn1 basic-btn">작성하기</button>
+                    <button class="medium-btn btn1 basic-btn" onclick="location.href='/notice/regist'">작성하기</button>
                 </div>
                 <table>
                     <colgroup>
@@ -73,7 +73,7 @@
                     <tr th:each="notice : ${ noticeList }">
                         <td th:text="${ notice.noticeNo }"></td>
                         <td th:text="${ notice.noticeCategoryDTO.noticeCategoryName }"></td>
-                        <td th:text="${ notice.noticeName }"></td>
+                        <td th:text="${ notice.noticeName }" style="cursor: pointer" th:onclick="'window.location.href=\'' + @{/notice/detail/{bno}(bno=${ notice.noticeNo })} + '\''"></td>
                         <td th:text="${ notice.admin.memberName }"></td>
                         <td th:text="${ notice.noticeRegistDate }"></td>
                         <td th:text="${ notice.noticeCount }"></td>
