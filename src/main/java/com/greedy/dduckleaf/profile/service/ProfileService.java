@@ -18,8 +18,9 @@ import javax.transaction.Transactional;
  * Comment : 프로필
  * History
  * 2022/04/29 (박상범) 처음 작성 / 회원 번호를 통해 프로필 사진정보와, 회원정보 조회 관련 메소드 작성
+ * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
  * </pre>
- * @version 1.0.0
+ * @version 1.0.1
  * @author 박상범
  */
 @Service
@@ -52,5 +53,31 @@ public class ProfileService {
         profile.setProfileAttachment(profileAttachment);
 
         return profile;
+    }
+
+    /**
+     * modifyAttachment: 회원의 사진 정보를 변경합니다.
+     * @param attachment: 수정할 공지사항 정보를 담은 객체
+     * @return "true"
+     * @author 박상범
+     */
+    @Transactional
+    public String modifyAttachment(ProfileAttachmentDTO attachment) {
+
+        System.out.println(attachment);
+
+        ProfileAttachment profileAttachment = profileAttachmentForProfileRepository.findProfileAttachmentByMember_memberNo(attachment.getMemberNo());
+
+        if(profileAttachment == null) {
+            profileAttachmentForProfileRepository.save(modelMapper.map(attachment, ProfileAttachment.class));
+        }
+        if(profileAttachment != null) {
+            profileAttachment.setProfileOriginalName(attachment.getProfileOriginalName());
+            profileAttachment.setProfileSavedName(attachment.getProfileSavedName());
+            profileAttachment.setProfilePath(attachment.getProfilePath());
+            profileAttachment.setProfileThumbnailPath(attachment.getProfileThumbnailPath());
+        }
+
+        return "true";
     }
 }
