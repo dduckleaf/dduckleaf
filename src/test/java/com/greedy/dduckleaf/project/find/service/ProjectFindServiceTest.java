@@ -52,7 +52,7 @@ class ProjectFindServiceTest {
 
         Pageable pageable = PageRequest.of(1, 10);
         String searchValue = "3";
-        SearchDTO searchDTO = new SearchDTO(null, 1, 1);
+        SearchDTO searchDTO = new SearchDTO(null, 1, 3);
         searchDTO.setSearchValue(searchValue);
 
         Page<ProjectDTO> projectList = service.findProjectLists(searchDTO, pageable);

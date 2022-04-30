@@ -9,19 +9,16 @@ import javax.persistence.*;
 @Setter
 @Getter
 @ToString
-@Entity(name = "ProjectRegistInfoForProjectList")
-@Table(name = "TBL_PROJECT_REGIST_INFO")
-public class ProjectRegistInfo {
+@Entity(name = "ProjectBasicInfoForProjectList")
+@Table(name = "TBL_PROJECT_BASIC_INFO")
+public class ProjectBasicInfo {
 
-    @Column(name = "PROJECT_REGIST_INFO_NO")
+    @Column(name = "PROJECT_BASIC_INFO_NO")
     private int projectRegistInfoNo;
 
     @Id
     @Column(name = "PROJECT_NO")
     private int projectNo;
-
-    @Column(name = "PROJECT_REGIST_INFO_CATEGORY")
-    private String projectRegistInfoCategory;
 
     @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_CATEGORY_NO")

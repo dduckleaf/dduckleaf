@@ -104,7 +104,7 @@ public class ProjectApplicationController {
         int projectNo = findProjectNoByFarmerNo(user);
 
         RewardRegistInfoDTO basicReq = projectApplicationService.findRewardRegistInfoByProjectNo(projectNo);
-
+        System.out.println("basicReq = " + basicReq);
         mv.addObject("basicReq", basicReq);
         mv.setViewName("project/regist/basicreq");
 
@@ -291,7 +291,7 @@ public class ProjectApplicationController {
      *            "project/regist/policy" 반환정책을 작성하는 뷰 경로
      * @author 박휘림
      */
-    @GetMapping("/modify/policy")
+    @GetMapping("/policy")
     public ModelAndView findPolicyByProjectNo(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
 
         int projectNo = findProjectNoByFarmerNo(user);
@@ -313,7 +313,7 @@ public class ProjectApplicationController {
      */
     @PostMapping("/modify/policy")
     public ModelAndView modifyPolicy(ModelAndView mv, RefundPolicyDTO policy) {
-
+        System.out.println("policy = " + policy);
         projectApplicationService.modifyPolicy(policy);
 
         mv.setViewName("redirect:/project/application/goMain");

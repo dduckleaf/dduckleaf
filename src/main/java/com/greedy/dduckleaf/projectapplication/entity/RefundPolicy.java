@@ -9,6 +9,7 @@ import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import javax.print.attribute.standard.MediaSize;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,10 +34,14 @@ public class RefundPolicy {
     @Column(name = "REFUND_POLICY_AGREEMENT_STATUS")
     private String refundPolicyAgreementStatus;
 
+    @Column(name = "REFUND_POLICY_AGREEMENT_DATE")
+    private String refundPolicyAgreementDate;
+
     @PrePersist
     public void prePersist() {
 
         this.refundPolicyContent = this.refundPolicyContent  == null ? "반환 정책을 작성해주세요" : this.refundPolicyContent ;
+        this.refundPolicyAgreementDate = this.refundPolicyAgreementDate  == null ? java.sql.Date.valueOf(LocalDate.now()).toString() : this.refundPolicyAgreementDate ;
 
     }
 }

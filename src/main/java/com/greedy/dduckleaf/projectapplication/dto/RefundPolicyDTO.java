@@ -14,5 +14,6 @@ public class RefundPolicyDTO {
     private String refundPolicyContent;
     private int projectNo;
     private String refundPolicyAgreementStatus;
+    private String refundPolicyAgreementDate;
 
 }
