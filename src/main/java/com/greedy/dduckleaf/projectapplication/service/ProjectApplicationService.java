@@ -209,7 +209,7 @@ public class ProjectApplicationService {
 
         RewardRegistInfo updateBasicReq = rewardRegistInfoRepository.findByProjectNo(basicreq.getProjectNo());
         updateBasicReq.setRewardAgreementStatus("Y");
-        updateBasicReq.setRewardAgreementDate(basicreq.getRewardAgreementDate());
+        updateBasicReq.setRewardAgreementDate(java.sql.Date.valueOf(LocalDate.now()).toString());
     }
 
     /**
@@ -276,7 +276,7 @@ public class ProjectApplicationService {
 
         ProjectBasicInfo updateStory = projectBasicInfoRepository.findByProjectNo(story.getProjectNo());
         updateStory.setProjectPromotionAgreementStatus("Y");
-        updateStory.setPromotionAgreementDate(story.getPromotionAgreementDate());
+        updateStory.setPromotionAgreementDate(java.sql.Date.valueOf(LocalDate.now()).toString());
     }
 
     /**
@@ -360,7 +360,7 @@ public class ProjectApplicationService {
 
         RefundPolicy updatePolicy = refundPolicyRepository.findByProjectNo(policy.getProjectNo());
         updatePolicy.setRefundPolicyAgreementStatus("Y");
-//        updateBasicReq.setRewardAgreementDate("0000-00-00");
+        updatePolicy.setRefundPolicyAgreementDate(java.sql.Date.valueOf(LocalDate.now()).toString());
     }
 
 
