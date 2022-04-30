@@ -5,6 +5,7 @@ import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.project.find.dto.ProjectDTO;
 import com.greedy.dduckleaf.project.find.dto.SearchDTO;
 import com.greedy.dduckleaf.project.find.service.ProjectFindService;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -81,9 +82,26 @@ public class ProjectFindController {
 
         return mv;
     }
-    @GetMapping("/filter")
-    public String sendFilter() {
 
-        return "/common/filter";
+    @GetMapping("/end")
+    public ModelAndView sendEndProjectListPage(ModelAndView mv) {
+
+        mv.setViewName("/project/list/endlist");
+        return mv;
     }
+
+    @GetMapping("/progressing")
+    public ModelAndView sendProgressingProjectListPage(ModelAndView mv) {
+
+        mv.setViewName("/project/list/progressinglist");
+        return mv;
+    }
+
+    @GetMapping("/expected")
+    public ModelAndView sendExpectedProjectListPage(ModelAndView mv) {
+
+        mv.setViewName("/project/list/expectedlist");
+        return mv;
+    }
+
 }

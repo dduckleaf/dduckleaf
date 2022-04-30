@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,7 +22,7 @@ import java.util.stream.Collectors;
  *                                         findProjectNoByFarmerId, findRewardRegistInfoByProjectNo 메소드 작성
  * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findProjectBasicInfoByProjectNo, modifyBasicInfo, findAllRewardCategory 메소드 작성
  * 2022/04/29 (박휘림) modifyStory, modifyPromotionAgreementStatus, findRewardByProjectNo, findShippingInfoByProjectNo, modifyReward 메소드 작성
- * 2022/04/30 (박휘림) findPolicyByProjectNo, modifyPolicy, modifyPolicyAgreementStatus 메소드 작성
+ * 2022/04/30 (박휘림) findPolicyByProjectNo, modifyPolicy, modifyPolicyAgreementStatus, findFarmerInfoByMemberNo, findHomePageByFarmerNo 메소드 작성
  * </pre>
  * @version 1.0.3
  * @author 박휘림
@@ -79,9 +78,8 @@ public class ProjectApplicationService {
 
         ProjectBasicInfo basicInfo = basicInfo(farmerNo);
         basicInfo.setProjectNo(foundProject.getProjectNo());
-        System.out.println("basicInfo = " + basicInfo);
+
         projectBasicInfoRepository.save(basicInfo);
-        System.out.println("basicInfo = " + basicInfo);
 
         ProjectShippingInfo shippingInfo = shippingInfo(farmerNo);
         shippingInfo.setProjectNo(foundProject.getProjectNo());
@@ -94,6 +92,7 @@ public class ProjectApplicationService {
         refundPolicyRepository.save(refundPolicy);
 
         farmerInfoRepository.save(farmerInfo(farmerNo));
+
         farmerFinancialInfoRepository.save(farmerFinancialInfo(farmerNo));
 
     }
@@ -363,5 +362,32 @@ public class ProjectApplicationService {
         updatePolicy.setRefundPolicyAgreementDate(java.sql.Date.valueOf(LocalDate.now()).toString());
     }
 
+    /**
+     * findFarmerInfoByMemberNo: 파머 정보를 조회합니다.
+     * @param memberNo :회원 번호
+     * @return 파머 정보
+     * @author 박휘림
+     */
+    public FarmerInfoDTO findFarmerInfoByMemberNo(int memberNo) {
 
+        FarmerInfo farmerInfo = farmerInfoRepository.findByMemberNo(memberNo);
+
+        return modelMapper.map(farmerInfo, FarmerInfoDTO.class);
+    }
+
+    /**
+     * modifyFarmerInfo: 파머정보 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
+     * @param farmerInfo: 사용자가 입력한 파머 정보를 담은 객체
+     * @author 박휘림
+     */
+    @Transactional
+    public void modifyFarmerInfo(FarmerInfoDTO farmerInfo) {
+
+        FarmerInfo updateFarmerInfo = farmerInfoRepository.findByMemberNo(farmerInfo.getMemberNo());
+        updateFarmerInfo.setFarmerName(farmerInfo.getFarmerName());
+        updateFarmerInfo.setFarmerEmail(farmerInfo.getFarmerEmail());
+        updateFarmerInfo.setFarmerPhone(farmerInfo.getFarmerPhone());
+        updateFarmerInfo.setKakaotTalkChannel(farmerInfo.getKakaotTalkChannel());
+        updateFarmerInfo.setHomepageURL(farmerInfo.getHomepageURL());
+    }
 }

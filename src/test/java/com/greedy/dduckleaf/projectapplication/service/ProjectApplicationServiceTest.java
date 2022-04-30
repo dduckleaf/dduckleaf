@@ -269,4 +269,37 @@ class ProjectApplicationServiceTest {
         assertDoesNotThrow(() -> projectApplicationService.modifyPolicyAgreementStatus(policy));
     }
 
+    @Test
+    @DisplayName("프로젝트 번호로 파머 정보 데이터 조회하는 테스트")
+    public void findFarmerInfoByMemberNo_test() {
+
+        //given
+        int memberNo = 68;
+
+        //when
+        FarmerInfoDTO farmerInfo = projectApplicationService.findFarmerInfoByMemberNo(memberNo);
+
+        //then
+        assertNotNull(farmerInfo);
+
+    }
+
+    @Test
+    @DisplayName("파머정보 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyFarmerInfo_test() {
+
+        //given
+        int memberNo = 68;
+
+        //when
+        FarmerInfoDTO farmerInfo = projectApplicationService.findFarmerInfoByMemberNo(memberNo);
+        farmerInfo.setFarmerName("나문희");
+        farmerInfo.setFarmerEmail("munheejjang@gmail.com");
+        farmerInfo.setFarmerPhone("010-1234-5678 ");
+
+        //then
+        assertDoesNotThrow(() ->projectApplicationService.modifyFarmerInfo(farmerInfo));
+
+    }
+
 }

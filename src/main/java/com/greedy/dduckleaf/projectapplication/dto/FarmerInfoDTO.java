@@ -24,5 +24,7 @@ public class FarmerInfoDTO {
     private String taxType;                 //과세유형
     private String taxTypeCategory;         //구분
     private int corporateLicenseNo;         //법인등록번호
+    private String kakaotTalkChannel;
+    private String homepageURL;
 
 }

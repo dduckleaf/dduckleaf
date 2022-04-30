@@ -164,4 +164,23 @@ class ProjectApplicationControllerTest {
                 .andDo(MockMvcResultHandlers.print());
 
     }
+
+    @Test
+    @DisplayName("파머정보 작성 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyFarmerInfo_test() throws Exception {
+
+        //given
+        MultiValueMap<String, String> farmerInfo = new LinkedMultiValueMap<>();
+        farmerInfo.add("memberNo", "68");
+        farmerInfo.add("farmerName", "박휘림");
+        farmerInfo.add("farmerEmail", "hwirim797@gmail.com");
+        farmerInfo.add("farmerPhone", "010-6693-3114");
+
+        //when & then
+        mockMvc.perform(MockMvcRequestBuilders.post("/project/application/modify/farmer").params(farmerInfo))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/project/application/goMain"))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
 }

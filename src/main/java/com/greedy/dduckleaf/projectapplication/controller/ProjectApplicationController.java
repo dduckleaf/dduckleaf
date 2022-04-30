@@ -2,16 +2,13 @@ package com.greedy.dduckleaf.projectapplication.controller;
 
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.projectapplication.dto.*;
-import com.greedy.dduckleaf.projectapplication.entity.ProjectBasicInfo;
 import com.greedy.dduckleaf.projectapplication.service.ProjectApplicationService;
-import org.apache.maven.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -25,7 +22,7 @@ import java.util.List;
  * 2022/04/27 (박휘림) projectApplicationMainPage, findProjectNoByFarmerNo, findBasicReqByProjectNo 메소드 작성
  * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findBasicInfoByProjectNo, modifyBasicInfo 메소드 작성
  * 2022/04/29 (박휘림) findStoryByProjectNo, modifyStory, modifyPromotionAgreementStatus, findRewardByProjectNo, modifyReward 메소드 작성
- * 2022/04/30 (박휘림) findPolicyByProjectNo, modifyPolicy, modifyPolicyAgreementStatus 메소드 작성
+ * 2022/04/30 (박휘림) findPolicyByProjectNo, modifyPolicy, modifyPolicyAgreementStatus, findFarmerInfoByMemberNo, modifyFarmerInfo 메소드 작성
  * </pre>
  * @version 1.0.4
  * @author 박휘림
@@ -337,5 +334,45 @@ public class ProjectApplicationController {
 
         return mv;
     }
+
+    /**
+     * findFarmerInfoByMemberNo: 파머정보 작성 페이지로 이동 시 기본 데이터를 조회합니다.
+     * @param user: 로그인한 사용자의 정보를 받는 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            farmerInfo 파머 정보 기본 데이터
+     *            homePage 파머 홈페이지 기본 데이터
+     *            "project/regist/farmerinfo" 파머정보를 작성하는 뷰 경로
+     * @author 박휘림
+     */
+    @GetMapping("/farmer")
+    public ModelAndView findFarmerInfoByMemberNo(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+
+        int memberNo = user.getMemberNo();
+
+        FarmerInfoDTO farmerInfo = projectApplicationService.findFarmerInfoByMemberNo(memberNo);
+
+        mv.addObject("farmerInfo", farmerInfo);
+        mv.setViewName("project/regist/farmerinfo");
+
+        return mv;
+    }
+
+    /**
+     * modifyFarmerInfo: 파머정보 작성 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
+     * @param farmerInfo: 사용자가 입력한 파머정보 데이터를 담은 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/project/application/goMain" 프로젝트 신청 메인페이지 경로
+     * @author 박휘림
+     */
+    @PostMapping("/modify/farmer")
+    public ModelAndView modifyFarmerInfo(ModelAndView mv, FarmerInfoDTO farmerInfo) {
+
+        projectApplicationService.modifyFarmerInfo(farmerInfo);
+
+        mv.setViewName("redirect:/project/application/goMain");
+
+        return mv;
+    }
+
 
 }

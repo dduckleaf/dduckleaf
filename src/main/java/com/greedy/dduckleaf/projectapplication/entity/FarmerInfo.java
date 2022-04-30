@@ -25,42 +25,33 @@ public class FarmerInfo {
     private int memberNo;
 
     @Column(name = "FARMER_NAME")
-//    @ColumnDefault("파머 이름")
     private String farmerName;
 
     @Column(name = "FARMER_EMAIL")
-//    @ColumnDefault("이메일")
     private String farmerEmail;
 
     @Column(name = "FARMER_PHONE")
-//    @ColumnDefault("전화번호")
     private String farmerPhone;
 
     @Column(name = "BUSINESS_OWN_TYPE")
     private String businessOwnType;         //사업자 유형
 
     @Column(name = "BUSINESS_OWN_NO")
-//    @ColumnDefault("사업자 등록번호")
     private String businessOwnNo;           //사업자 등록번호
 
     @Column(name = "BUSINESS_NAME")
-//    @ColumnDefault("상호명")
     private String businessName;            //상호명
 
     @Column(name = "REPRESENTATIVE_NAME")
-//    @ColumnDefault("대표자명")
     private String representativeName;      //대표자명
 
     @Column(name = "REPRESENTATIVE_EMAIL")
-//    @ColumnDefault("대표자이메일")
     private String representativeEmail;     //대표자이메일
 
     @Column(name = "REPRESENTATIVE_SSN")
-//    @ColumnDefault("주민등록번호")
     private String representativeSSN;       //대표자 주민등록번호
 
     @Column(name = "CORPORATE_NAME")
-//    @ColumnDefault("법인명")
     private String corporateName;           //법인명
 
     @Column(name = "CORPORATION_TYPE")
@@ -73,8 +64,13 @@ public class FarmerInfo {
     private String taxTypeCategory;         //구분
 
     @Column(name = "CORPORATE_LICENSE_NO")
-//    @ColumnDefault("")
     private int corporateLicenseNo;         //법인등록번호
+
+    @Column(name = "KAKAOTALK_CHANNEL")
+    private String kakaotTalkChannel;
+
+    @Column(name = "HOMEPAGE_URL")
+    private String homepageURL;
 
     @Override
     public String toString() {
@@ -94,6 +90,8 @@ public class FarmerInfo {
                 ", taxType='" + taxType + '\'' +
                 ", taxTypeCategory='" + taxTypeCategory + '\'' +
                 ", corporateLicenseNo=" + corporateLicenseNo +
+                ", kakaotTalkChannel='" + kakaotTalkChannel + '\'' +
+                ", homepageURL='" + homepageURL + '\'' +
                 '}';
     }
 
