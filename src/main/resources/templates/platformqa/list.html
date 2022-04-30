@@ -41,6 +41,64 @@
     <header th:replace="/common/menubar.html"></header>
     <!-- Main Header Area End Here -->
 
+    <!-- Modal HTML -->
+    <form action="/qna/regist" method="post">
+        <div class="modal fade" id="writeModalToggle" data-bs-backdrop="static"
+             tabindex="-1" aria-labelledby="writeModalToggleLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="text-align: center;">
+                    <div class="modal-header" style="border-bottom: none;">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="padding: 0;">
+                        <div class="category-form">
+                            <label for="categoryNo" style="display: inline-block; width: 90%; text-align: left;">문의 유형</label>
+                            <select name="platformQaCategoryNo" id="categoryNo" style="width: 90%;">
+                                <option disabled selected>문의 유형</option>
+                                <!--                                <option th:each="category : ${ categoryList }" th:value="${category.platformQaCategoryNo}" th:text="${category.platformQaCategoryName}"></option>-->
+                            </select>
+                        </div>
+                        <div class="title-form" style="margin-top: 10px;">
+                            <label for="title" style="display: inline-block; width: 90%; text-align: left;">제목</label>
+                            <input type="text" id="title" name="platformQaTitle" style="width: 90%;">
+                        </div>
+                        <div class="content-form" style="margin-top: 10px;">
+                            <label for="content" style="display: inline-block; width: 90%; text-align: left;">문의 내용</label>
+                            <textarea id="content" name="platformQaContent" style="width: 90%; height: 300px;"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="border-top: none;">
+                        <div style="margin: 0 auto;">
+                            <button type="button" class="basic-btn small-btn btn1" data-bs-target="#subModalToggle"
+                                    data-bs-toggle="modal" data-bs-dismiss="modal">등록</button>
+                            <button type="button" class="basic-btn small-btn btn3"
+                                    data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="subModalToggle" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="subModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header" style="border-bottom: none;">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        등록하시겠습니까?
+                    </div>
+                    <div class="modal-footer" style="border-top: none;">
+                        <div style="margin: 0 auto;">
+                            <button type="submit" class="basic-btn small-btn btn1">확인</button>
+                            <button type="button" class="basic-btn small-btn btn3" data-bs-target="#writeModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Modal HTML  -->
+
     <!-- 마이 페이지 -->
     <!-- Begin Main Content Area -->
     <main class="main-content">
@@ -51,7 +109,8 @@
             </div>
             <div class="cont-div">
                 <div style="text-align: right">
-                    <button class="medium-btn btn1 basic-btn" onclick="location.href='/qna/regist'">작성하기</button>
+<!--                    <button class="medium-btn btn1 basic-btn" onclick="location.href='/qna/regist'">작성하기</button>-->
+                    <button class="medium-btn btn1 basic-btn" data-bs-toggle="modal" data-bs-target="#writeModalToggle">작성하기</button>
                 </div>
                 <table>
                     <colgroup>
@@ -82,36 +141,36 @@
 <!--                        <td th:text="${ platformqa.platformQaNo }"></td>-->
 <!--                        <td th:text="${ platformqa.platformQaCategoryDTO.platformQaCategoryName }"></td>-->
 <!--                        <td th:text="${ platformqa.platformQaAnswerStatus }"></td>-->
-<!--                        <td th:text="${ platformqa.platformQaTitle }" style="cursor: pointer" th:onclick="'window.location.href=\'' + @{/qna/detail/{bno}(bno=${ notice.noticeNo })} + '\''"></td>-->
+<!--                        <td th:text="${ platformqa.platformQaTitle }" style="cursor: pointer" th:onclick="'window.location.href=\'' + @{/qna/detail/{bno}(bno=${ platformqa.platformQaNo })} + '\''"></td>-->
 <!--                        <td th:text="${ platformqa.memberName }"></td>-->
 <!--                        <td th:text="${ platformqa.platformQaRegistDate }"></td>-->
 <!--                    </tr>-->
                 </table>
 <!--                <div id="paging" align="center">-->
 <!--                    &lt;!&ndash; 가장 처음 &ndash;&gt;-->
-<!--                    <button th:onclick="'location.href=\'/notice/list?page=' + @{${paging.startPage}}  + '\''"-->
+<!--                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.startPage}}  + '\''"-->
 <!--                            th:disabled="${ platformQaList.first }"><<</button>-->
 
 <!--                    &lt;!&ndash; 이전 페이지 &ndash;&gt;-->
-<!--                    <button th:onclick="'location.href=\'/notice/list?page=' + @{${paging.currentPage - 1}}  + '\''"-->
+<!--                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.currentPage - 1}}  + '\''"-->
 <!--                            th:disabled="${ platformQaList.first }"><</button>-->
 
 <!--                    &lt;!&ndash; 페이지 번호 &ndash;&gt;-->
 <!--                    <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">-->
-<!--                        <button th:onclick="'location.href=\'/notice/list?page=' + @{${page}}  + '\''"-->
+<!--                        <button th:onclick="'location.href=\'/qna/list?page=' + @{${page}}  + '\''"-->
 <!--                                th:text="${ page }"-->
 <!--                                th:disabled="${ paging.currentPage eq page }"></button>-->
 <!--                    </th:block>-->
 
 <!--                    &lt;!&ndash; 다음 페이지 &ndash;&gt;-->
-<!--                    <button th:onclick="'location.href=\'/notice/list?page=' + @{${paging.currentPage + 1}}  + '\''"-->
+<!--                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.currentPage + 1}}  + '\''"-->
 <!--                            th:disabled="${ platformQaList.last }">></button>-->
 
 <!--                    &lt;!&ndash; 가장 끝 &ndash;&gt;-->
-<!--                    <button th:onclick="'location.href=\'/notice/list?page=' + @{${paging.endPage}}  + '\''"-->
+<!--                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.endPage}}  + '\''"-->
 <!--                            th:disabled="${ platformQaList.last }">>></button>-->
 <!--                </div>-->
-                <form id="search-form" action="/notice/search" method="get">
+                <form id="search-form" action="/qna/search" method="get">
                     <fieldset>
                         <div class="search">
                             <select name="" id="question-category">

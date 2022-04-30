@@ -15,9 +15,10 @@
     <!-- Style CSS -->
     <link rel="stylesheet" th:href="@{ /css/projectapplication.css }">
     <link rel="stylesheet" th:href="@{ /css/style.css }">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-<div th:replace="/common/userheader.html"></div>
+<div th:replace="/common/menubar.html"></div>
 <div class="container">
     <div style="width: 1000px;">
         <div class="row1 story">
@@ -26,57 +27,58 @@
                     <p class="fundmenutitle">펀딩 준비<img class="arrow" th:src="@{ /images/common/vector.png }"></p>
                 </button>
                 <div class="panel">
-                    <p onclick="location.href='regist/basicinfo/1'">기본요건</p>
-                    <p onclick="location.href='regist/story/1'">기본정보</p>
-                    <p onclick="location.href='regist/reward/1'">스토리 작성</p>
-                    <p onclick="location.href='regist/reward/1'">리워드 설계</p>
-                    <p onclick="location.href='regist/reward/1'">위험요인 및 정책</p>
-                    <p onclick="location.href='regist/reward/1'">파머 정보</p>
-                    <p onclick="location.href='regist/reward/1'">대표자 및 정산 정보</p>
+                    <p onclick="location.href='/project/application/basicreq'">기본요건</p>
+                    <p onclick="location.href='/project/application/basicinfo'">기본정보</p>
+                    <p onclick="location.href='/project/application/story'">스토리 작성</p>
+                    <p onclick="location.href='/project/application/reward'">리워드 설계</p>
+                    <p onclick="location.href='/project/application/policy'">위험요인 및 정책</p>
+                    <p onclick="location.href='/project/application/farmer'">파머 정보</p>
+                    <p onclick="location.href='/project/application/representative'">대표자 및 정산 정보</p>
                 </div>
             </div>
-            <div class="col-md-7">
-                <div class="breadcrumb">
-                    <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">펀딩 준비</span>&nbsp;
-                    <span class="breadcrumb">></span>&nbsp;
-                    <span class="breadcrumb">파머 정보</span>
+            <form name="saveForm">
+                <div class="col-md-7">
+                    <div class="breadcrumb">
+                        <span class="breadcrumb home" onclick="location.href='/project/application/goMain'">펀딩 준비</span>&nbsp;
+                        <span class="breadcrumb">></span>&nbsp;
+                        <span class="breadcrumb">파머 정보</span>
+                    </div>
+                    <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">파머 정보</a><br><hr>
+                    <div class="basicmenu">
+                        <a class="basictitle">파머 이름</a><br>
+                        <a class="basicsubtitle">법인사업자는 법인등기부상 법인명 / 개인 사업자는 주민등록상 성명 또는 상호를 입력하세요.</a><br>
+                        <input type="hidden" id="memberNo" name="memberNo" th:value="${ farmerInfo.memberNo }">
+                        <input class="farmerinfo" id="farmerName" name="farmerName" type="text" th:value="${ farmerInfo.farmerName }">
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">파머 프로필 이미지</a><br>
+                        <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <a class="basicsubtitle">3MB 이하의 JPEG, PNG 파일
+                            <br>사이즈 300x300 픽셀 이상</a>
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">문의 이메일</a><br>
+                        <input class="farmerinfo" id="farmerEmail" name="farmerEmail" type="text" th:value="${ farmerInfo.farmerEmail }">
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">문의 전화번호</a><br>
+                        <input class="farmerinfo" id="farmerPhone" name="farmerPhone" type="text" th:value="${ farmerInfo.farmerPhone }">
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">카카오톡 채널</a>
+                        <a class="basicsubtitle">(선택 사항)</a><br>
+                        <input class="kakaotalk" id="kakaotTalkChannel" name="kakaotTalkChannel" type="text" th:value="${ farmerInfo.kakaotTalkChannel }">
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">홈페이지</a>
+                        <a class="basicsubtitle">(선택 사항)</a><br>
+                        <input class="kakaotalk" id="homepageURL" name="homepageURL" type="text" th:value="${ farmerInfo.homepageURL }">
+                    </div>
+                    <div>
+                        <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
+                    </div>
                 </div>
-                <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">파머 정보</a><br><hr>
-                <div class="basicmenu">
-                    <a class="basictitle">파머 이름</a><br>
-                    <a class="basicsubtitle">법인사업자는 법인등기부상 법인명 / 개인 사업자는 주민등록상 성명 또는 상호를 입력하세요.</a><br>
-                    <input class="farmerinfo" type="text">
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">파머 프로필 이미지</a><br>
-                    <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
-                    <a class="basicsubtitle">3MB 이하의 JPEG, PNG 파일
-                        <br>사이즈 300x300 픽셀 이상</a>
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">문의 이메일</a><br>
-                    <input class="farmerinfo" type="text">
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">문의 전화번호</a><br>
-                    <input class="farmerinfo" type="text">
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">카카오톡 채널</a>
-                    <a class="basicsubtitle">(선택 사항)</a><br>
-                    <input class="kakaotalk" type="text">
-                    <input class="kakaotalk" type="text">
-                </div>
-                <div class="basicmenu">
-                    <a class="basictitle">홈페이지</a>
-                    <a class="basicsubtitle">(선택 사항)</a><br>
-                    <input class="kakaotalk" type="text">
-                    <input class="kakaotalk" type="text">
-                </div>
-                <div>
-                    <button class="btn1 big-btn">저장하기</button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -132,6 +134,48 @@
         }
     }
 
-    document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);;
+    /* 저장하기 버튼 */
+    $("#saveclick").click(function() {
+        Swal.fire({
+            title: '저장하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            allowEnterKey: false,
+            confirmButtonWidth: '100px',
+            customClass: {
+                confirmButton: 'savesuccess',
+                cancelButton: 'savecancel',
+                popup: 'savepopup'
+            },
+            buttonsStyling: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: '저장되었습니다',
+                    confirmButtonText: "확인",
+                    allowEnterKey: false,
+                    customClass: {
+                        confirmButton: 'saveok',
+                        popup: 'savepopup'
+                    },
+                    buttonsStyling: false,
+                }).then(function(memberNo, farmerName, farmerEmail, farmerPhone, homepageURL, kakaotTalkChannel) {
+                    let saveForm = document.saveForm;
+                    let url = '/project/application/modify/farmer';
+                    saveForm.memberNo = memberNo;
+                    saveForm.farmerName = farmerName;
+                    saveForm.farmerEmail = farmerEmail;
+                    saveForm.farmerPhone = farmerPhone;
+                    saveForm.homepageURL = homepageURL;
+                    saveForm.kakaotTalkChannel = kakaotTalkChannel;
+
+                    saveForm.action = url;
+                    saveForm.method = 'post';
+                    saveForm.submit();
+                });
+            }
+        })
+    });
 </script>
 </html>
