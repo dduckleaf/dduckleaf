@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/settlement.css}">
+</head>
+<body>
+<main style="width: 1920px">
+    <div th:replace="/common/menubar.html"></div>
+    <div class="mypage" th:replace="/common/endproject.html"></div>
+    <div class="tab-body-area" style="border: 1px solid red !important;">
+        <div class="title-div">
+            <span class="text-title">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+                정산금 조회
+            </span>
+            <hr width="100%">
+        </div>
+        <div class="block">
+            <span class="text-subtitle">프로젝트명</span>
+        </div>
+        <p>
+            떡잎 펀드 수수료 10%(VAT별도)를 제외한 금액이<br>
+            1차 / 2차에 나누어 지급될 예정입니다.
+        </p>
+        <table class="mini-table">
+            <tr>
+                <th style="padding-left: 5px; width: 30%">달성률</th>
+                <td style="padding-right: 5px;" align="right">%</td>
+            </tr>
+            <tr>
+                <th style="padding-left: 5px; width: 30%">총 펀딩금</th>
+                <td style="padding-right: 5px;" align="right">원</td>
+            </tr>
+        </table>
+        <p>※ 예상 정산금은 VAT가 계산되지 않은 금액입니다.</p>
+        <br>
+        <button class=" basic-btn big-btn btn1" id="objection">이의신청내역</button>
+        <table class="settlement-table">
+            <tr>
+                <th style="width: 25%">1차 예상 정산금</th>
+                <th style="width: 25%">1차 정산금 지급예정일</th>
+                <th style="width: 25%">2차 예상 정산금</th>
+                <th style="width: 25%">2차 정산금 지급예정일</th>
+            </tr>
+            <tr>
+                <td>금액
+<!--                    <button class="basic-btn small-btn btn1">이의신청</button>-->
+                </td>
+                <td>날짜</td>
+                <td>금액
+<!--                    <button class="basic-btn small-btn btn1">이의신청</button>-->
+                </td>
+                <td>날짜</td>
+            </tr>
+            <tr>
+                <td> <button class="basic-btn small-btn btn1">이의신청</button></td>
+                <td></td>
+                <td> <button class="basic-btn small-btn btn1">이의신청</button></td>
+                <td></td>
+            </tr>
+        </table>
+        <table class="settlement-table">
+            <tr>
+                <th style="width: 25%">1차 확정 정산금</th>
+                <th style="width: 25%">1차 정산금 지급일</th>
+                <th style="width: 25%">2차 확정 정산금</th>
+                <th style="width: 25%">2차 정산금 지급일</th>
+            </tr>
+            <tr>
+<!--                <td>-->
+<!--                    금액<br>-->
+<!--                    <button class="basic-btn small-btn btn1">이의신청</button>-->
+<!--                </td>-->
+<!--                <td>날짜</td>-->
+<!--                <td>금액<br>-->
+<!--                    <button class="basic-btn small-btn btn1">이의신청</button>-->
+<!--                </td>-->
+<!--                <td>날짜</td>-->
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        </table>
+
+
+
+
+    </div>
+
+    <div th:replace="/common/footer.html"></div>
+
+
+
+</main>
+</body>
+</html>
