@@ -40,8 +40,7 @@
     left: 670px;
     width: 480px;
     height: 600px;
-    border: 1px solid blue;
-}
+ }
 #changeEmail-e {
     margin-left: 40px;
     border: 3px solid white;
@@ -145,4 +144,33 @@ label {
     position: relative;
     top: -52px;
     left: 354px;
+}
+#changeEmail-pw {
+    margin-left: 40px;
+    border: 3px solid white;
+    width: 120px;
+    text-align: center;
+    float: left;
+    font-family: inherit;
+    cursor: pointer;
+    height: 40px;
+}
+#changePhone-pw {
+    border: 3px solid white;
+    width: 120px;
+    text-align: center;
+    float: left;
+    font-family: inherit;
+    cursor: pointer;
+    height: 40px;
+}
+#changePwd-pw {
+    border: 3px solid white;
+    width: 120px;
+    text-align: center;
+    float: left;
+    font-family: inherit;
+    cursor: pointer;
+    height: 40px;
+    border-bottom-color: #BAC34E;
 }

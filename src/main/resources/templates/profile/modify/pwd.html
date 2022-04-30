@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
+</head>
+<body>
+<div th:replace="/profile/modify.html"></div>
+<div class="email-div">
+    <br clear="both">
+    <div id="changeEmail-pw">이메일 변경</div>
+    <div id="changePhone-pw">Phone 변경</div>
+    <div id="changePwd-pw">비밀번호 변경</div>
+    <hr style="width: 540px; margin-left: -30px" align="center">
+    <form action="" >
+        <label>비밀번호</label><br>
+        <input type="email" id="memberPwd" name="memberPwd" placeholder="비밀번호">
+        <br>
+        <br>
+        <input type="email" id="memberPwdCheck" placeholder="비밀번호 확인">
+        <br>
+    </form>
+
+</div>
+
+</body>
+</html>
