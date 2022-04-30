@@ -32,8 +32,8 @@
 			<div class="title-div" style="margin-top: 3%">
 				<span class="text-title">
 					<img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">
-					<th:block th:if="${ searchValue ne null }">
-						<label id="keyword">[[${searchValue}]]</label>
+					<th:block th:if="${ searchDTO.searchValue ne null }">
+						<label id="keyword">[[${searchDTO.searchValue}]]</label>
 					</th:block>
 					<label id="search-result">검색결과</label>
 				</span>
@@ -61,14 +61,14 @@
 							<a class="progressbar-list">[[${project.achievementRate}]]%</a><br>
 							
 							<a class="progressName">[[${project.progressStatus.projectProgressStuatusName}]]</a><br>
-							<a class="progressName">[[${project.timeInfo}]]</a> <a class="progressName">[[${project.timeInfo}]]</a>
+							<a class="progressName">[[${project.timeInfo}]]</a>
 						</div>
 					</div>
 				</th:block>
 			</th:block>
 		</div>
 		<div class="project-list-paging">
-			<div th:replace="/project/list/projectlistpaging.html"></div>
+			<div th:replace="/project/list/projectsearchlistpaging.html"></div>
 		</div>
 	</div>
 	<footer th:replace="/common/footer.html"></footer>
