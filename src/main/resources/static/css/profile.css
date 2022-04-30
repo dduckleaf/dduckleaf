@@ -93,7 +93,48 @@ label {
     top: -52px;
     left: 354px;
 }
-#check-email-verification {
+#check-email-verification, #check-phone-verification {
+    width: 90px;
+    height: 43px;
+    font-size: 12px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    background: #BAC34E;
+    position: relative;
+    top: -52px;
+    left: 354px;
+}
+#changeEmail-p {
+    margin-left: 40px;
+    border: 3px solid white;
+    width: 120px;
+    text-align: center;
+    float: left;
+    font-family: inherit;
+    cursor: pointer;
+    height: 40px;
+}
+#changePhone-p {
+    border: 3px solid white;
+    border-bottom-color: #BAC34E;
+    width: 120px;
+    text-align: center;
+    float: left;
+    font-family: inherit;
+    cursor: pointer;
+    height: 40px;
+}
+#changePwd-p {
+    border: 3px solid white;
+    width: 120px;
+    text-align: center;
+    float: left;
+    font-family: inherit;
+    cursor: pointer;
+    height: 40px;
+}
+#send-phone {
     width: 90px;
     height: 43px;
     font-size: 12px;
