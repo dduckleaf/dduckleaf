@@ -54,10 +54,10 @@ public class ProfileController {
 
         int memberNo = user.getMemberNo();
 
-        ProfileDTO profile = profileService.findProfileByMemberNo(memberNo);
+        ProfileAttachmentDTO profileAttachment = profileService.findProfileByMemberNo(memberNo);
 
-        mv.addObject("profile", profile);
-        mv.setViewName("/profile/modify/email");
+        mv.addObject("profileAttachment", profileAttachment);
+        mv.setViewName("/profile/thumbnail");
 
         return mv;
     }
