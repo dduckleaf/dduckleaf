@@ -53,4 +53,18 @@ public class ProjectForSettlementRepositoryTests {
         assertNotNull(projects);
         projects.forEach(System.out::println);
     }
+
+    @Test
+    @DisplayName("프로젝트 번호로 프로젝트 상세 조회")
+    public void findByProjectNo_test() {
+        //given
+        int projectNo = 1;
+        
+        //when
+        Project projectDetail = repository.findByProjectNo(projectNo);
+        
+        //then
+        assertNotNull(projectDetail);
+        System.out.println("projectDetail = " + projectDetail);
+    }
 }
