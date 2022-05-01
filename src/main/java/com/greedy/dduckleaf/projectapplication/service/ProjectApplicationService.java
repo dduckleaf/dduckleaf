@@ -258,6 +258,33 @@ public class ProjectApplicationService {
     }
 
     /**
+     * modifyBasicInfoAttachment: 기본 정보 페이지에서 사용자가 업로드한 이미지를 업로드합니다.
+     * @param attachment: 사용자가 업로드한 파일 정보 데이터를 담은 객체
+     * @author 박휘림
+     */
+    @Transactional
+    public void modifyBasicInfoAttachment(ProjectAttachmentDTO attachment) {
+
+        System.out.println("attachment 서비스 = " + attachment);
+
+        ProjectAttachment projectAttachment = projectAttachmentRepository.findBasicInfoAttachmentByProjectNo(attachment.getProjectNo());
+        System.out.println("projectAttachment 서비스! = " + projectAttachment);
+        if(projectAttachment == null) {
+            attachment.setProjectAttachmentCategory("대표이미지");
+//            attachment.setProjectBasicInfoNo(projectAttachment.getProjectBasicInfoNo());
+//            attachment.setFinancialInfoNo(projectAttachment.getFinancialInfoNo());
+            projectAttachmentRepository.save(modelMapper.map(attachment, ProjectAttachment.class));
+            System.out.println("projectAttachment 저장 성공 = " + projectAttachment);
+        } else {
+//            projectAttachment.setProjectBasicInfoNo(attachment.getProjectBasicInfoNo());
+            projectAttachment.setProjectAttachmentOriginalName(attachment.getProjectAttachmentOriginalName());
+            projectAttachment.setProjectAttachmentSaveName(attachment.getProjectAttachmentSaveName());
+            projectAttachment.setProjectAttachmentSavePath(attachment.getProjectAttachmentSavePath());
+            System.out.println("projectAttachment 수정 성공 = " + projectAttachment);
+        }
+    }
+
+    /**
      * findAllRewardCategory: 리워드 카테고리를 조회합니다.
      * @return 카테고리 목록
      * @author 박휘림
@@ -279,6 +306,32 @@ public class ProjectApplicationService {
 
         ProjectBasicInfo updateStory = projectBasicInfoRepository.findByProjectNo(story.getProjectNo());
         updateStory.setProjectInfo(story.getProjectInfo());
+    }
+
+    /**
+     * modifyStoryAttachment: 스토리 페이지에서 사용자가 업로드한 이미지를 업로드합니다.
+     * @param attachment: 사용자가 업로드한 파일 정보 데이터를 담은 객체
+     * @author 박휘림
+     */
+    @Transactional
+    public void modifyStoryAttachment(ProjectAttachmentDTO attachment) {
+
+//        ProjectAttachment introAttachment = projectAttachmentRepository.findIntroAttachmentByProjectNo(attachment.getProjectNo());
+        ProjectAttachment storyAttachment = projectAttachmentRepository.findStoryAttachmentByProjectNo(attachment.getProjectNo());
+        System.out.println("storyAttachment 서비스 = " + storyAttachment);
+
+        if(storyAttachment == null) {
+            attachment.setProjectAttachmentCategory("스토리사진");
+            projectAttachmentRepository.save(modelMapper.map(attachment, ProjectAttachment.class));
+            System.out.println("storyAttachment 저장 성공 = " + storyAttachment);
+        } else {
+//            storyAttachment.setProjectBasicInfoNo(attachment.getProjectBasicInfoNo());
+            storyAttachment.setProjectAttachmentOriginalName(attachment.getProjectAttachmentOriginalName());
+            storyAttachment.setProjectAttachmentSaveName(attachment.getProjectAttachmentSaveName());
+            storyAttachment.setProjectAttachmentSavePath(attachment.getProjectAttachmentSavePath());
+            System.out.println("storyAttachment 수정 성공 = " + storyAttachment);
+        }
+
     }
 
     /**
@@ -408,6 +461,31 @@ public class ProjectApplicationService {
     }
 
     /**
+     * modifyFarmerInfoAttachment: 스토리 페이지에서 사용자가 업로드한 이미지를 업로드합니다.
+     * @param attachment: 사용자가 업로드한 파일 정보 데이터를 담은 객체
+     * @author 박휘림
+     */
+    @Transactional
+    public void modifyFarmerInfoAttachment(ProjectAttachmentDTO attachment) {
+
+        ProjectAttachment projectAttachment = projectAttachmentRepository.findFarmerInfoAttachment(attachment.getProjectNo());
+
+        System.out.println("projectAttachment 파머사진 업데이트 서비스! = " + projectAttachment);
+        if(projectAttachment == null) {
+            attachment.setProjectAttachmentCategory("파머사진");
+            System.out.println("attachment = " + attachment);
+            projectAttachmentRepository.save(modelMapper.map(attachment, ProjectAttachment.class));
+            System.out.println("projectAttachment 저장 성공 = " + projectAttachment);
+        } else {
+            projectAttachment.setProjectAttachmentOriginalName(attachment.getProjectAttachmentOriginalName());
+            projectAttachment.setProjectAttachmentSaveName(attachment.getProjectAttachmentSaveName());
+            projectAttachment.setProjectAttachmentSavePath(attachment.getProjectAttachmentSavePath());
+            System.out.println("projectAttachment 수정 성공 = " + projectAttachment);
+        }
+
+    }
+
+    /**
      * findFarmerFinancialInfoByMemberNo: 대표자 정보를 조회합니다.
      * @param memberNo :회원 번호
      * @return 대표자 정보
@@ -524,23 +602,5 @@ public class ProjectApplicationService {
         return code;
     }
 
-    @Transactional
-    public void modifyBasicInfoAttachment(ProjectAttachmentDTO attachment, int projectNo) {
 
-        System.out.println("attachment 서비스 = " + attachment);
-
-        ProjectAttachment projectAttachment = projectAttachmentRepository.findByProjectNo(projectNo);
-        System.out.println("projectAttachment 서비스! = " + projectAttachment);
-        if(projectAttachment == null) {
-            attachment.setProjectAttachmentCategory("대표이미지");
-            projectAttachmentRepository.save(modelMapper.map(attachment, ProjectAttachment.class));
-
-        } else {
-            projectAttachment.setProjectBasicInfoNo(attachment.getProjectBasicInfoNo());
-            projectAttachment.setProjectAttachmentOriginalName(attachment.getProjectAttachmentOriginalName());
-            projectAttachment.setProjectAttachmentSaveName(attachment.getProjectAttachmentSaveName());
-            projectAttachment.setProjectAttachmentSavePath(attachment.getProjectAttachmentSavePath());
-
-        }
-    }
 }

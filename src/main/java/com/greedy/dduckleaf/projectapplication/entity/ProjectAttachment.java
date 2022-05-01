@@ -37,11 +37,14 @@ public class ProjectAttachment {
     @Column(name = "FARMER_NO")
     private int farmerNo;
 
-    @Column(name = "PROJECT_BASIC_INFO_NO")
-    private int projectBasicInfoNo;                 //기본정보번호
+//    @Column(name = "PROJECT_BASIC_INFO_NO")
+//    private int projectBasicInfoNo;                 //기본정보번호
 
     @Column(name = "PROJECT_NO")
     private int projectNo;
+
+//    @Column(name = "FINANCIAL_INFO_NO")
+//    private int financialInfoNo;
 
     @Override
     public String toString() {
@@ -52,8 +55,9 @@ public class ProjectAttachment {
                 ", projectAttachmentSaveName='" + projectAttachmentSaveName + '\'' +
                 ", projectAttachmentOriginalName='" + projectAttachmentOriginalName + '\'' +
                 ", farmerNo=" + farmerNo +
-                ", projectBasicInfoNo=" + projectBasicInfoNo +
+//                ", projectBasicInfoNo=" + projectBasicInfoNo +
                 ", projectNo=" + projectNo +
+//                ", financialInfoNo=" + financialInfoNo +
                 '}';
     }
 }
