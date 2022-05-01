@@ -25,8 +25,9 @@ public class FarmerFinancialInfo {
     @Column(name = "FARMER_NO")
     private int farmerNo;               //파머번호
 
-    @Column(name = "BANK_NO")
-    private int bankNo;                 //은행번호
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "BANK_NO")
+    private Bank bank;                 //은행번호
 
     @Column(name = "TAX_RECEIVE_EMAIL")
     private String taxReceiveEmail;     //세금계산서 발행 이메일
@@ -48,7 +49,7 @@ public class FarmerFinancialInfo {
         return "FarmerFinancialInfo{" +
                 "financialInfoNo=" + financialInfoNo +
                 ", farmerNo=" + farmerNo +
-                ", bankNo=" + bankNo +
+                ", bank=" + bank +
                 ", taxReceiveEmail='" + taxReceiveEmail + '\'' +
                 ", farmerAccount='" + farmerAccount + '\'' +
                 ", farmerName='" + farmerName + '\'' +

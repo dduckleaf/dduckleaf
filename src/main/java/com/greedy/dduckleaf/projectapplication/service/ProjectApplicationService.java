@@ -3,12 +3,16 @@ package com.greedy.dduckleaf.projectapplication.service;
 import com.greedy.dduckleaf.projectapplication.dto.*;
 import com.greedy.dduckleaf.projectapplication.entity.*;
 import com.greedy.dduckleaf.projectapplication.repository.*;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import org.json.simple.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +27,7 @@ import java.util.stream.Collectors;
  * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findProjectBasicInfoByProjectNo, modifyBasicInfo, findAllRewardCategory 메소드 작성
  * 2022/04/29 (박휘림) modifyStory, modifyPromotionAgreementStatus, findRewardByProjectNo, findShippingInfoByProjectNo, modifyReward 메소드 작성
  * 2022/04/30 (박휘림) findPolicyByProjectNo, modifyPolicy, modifyPolicyAgreementStatus, findFarmerInfoByMemberNo, findHomePageByFarmerNo 메소드 작성
+ * 2022/05/01 (박휘림) findFarmerFinancialInfoByMemberNo, findAllBank, modifyRepresentative, modifySettlementPolicyCheckStatus 메소드 작성
  * </pre>
  * @version 1.0.3
  * @author 박휘림
@@ -40,9 +45,11 @@ public class ProjectApplicationService {
     private final RefundPolicyForProjectApplicationRepository refundPolicyRepository;
     private final FarmerFinancialInfoRepository farmerFinancialInfoRepository;
     private final ProjectRewardCategoryForProjectApplicationRepository projectRewardCategoryRepository;
+    private final BankForProjectApplicationRepository bankRepository;
+    private final MemberForApplicationRepository memberRepository;
 
     @Autowired
-    public ProjectApplicationService(ModelMapper modelMapper, RewardRegistInfoRepository rewardRegistInfoRepository, ProjectForApplicationRepository projectRepository, ProjectApplicationInfoRepository projectApplicationInfoRepository, ProjectShippingInfoRepository projectShippingInfoRepository, ProjectBasicInfoRepository projectBasicInfoRepository, FarmerInfoForProjectApplicationRepository farmerInfoRepository, RefundPolicyForProjectApplicationRepository refundPolicyRepository, FarmerFinancialInfoRepository farmerFinancialInfoRepository, ProjectRewardCategoryForProjectApplicationRepository projectRewardCategoryRepository) {
+    public ProjectApplicationService(ModelMapper modelMapper, RewardRegistInfoRepository rewardRegistInfoRepository, ProjectForApplicationRepository projectRepository, ProjectApplicationInfoRepository projectApplicationInfoRepository, ProjectShippingInfoRepository projectShippingInfoRepository, ProjectBasicInfoRepository projectBasicInfoRepository, FarmerInfoForProjectApplicationRepository farmerInfoRepository, RefundPolicyForProjectApplicationRepository refundPolicyRepository, FarmerFinancialInfoRepository farmerFinancialInfoRepository, ProjectRewardCategoryForProjectApplicationRepository projectRewardCategoryRepository, BankForProjectApplicationRepository bankRepository, MemberForApplicationRepository memberRepository) {
         this.modelMapper = modelMapper;
         this.rewardRegistInfoRepository = rewardRegistInfoRepository;
         this.projectRepository = projectRepository;
@@ -53,6 +60,8 @@ public class ProjectApplicationService {
         this.refundPolicyRepository = refundPolicyRepository;
         this.farmerFinancialInfoRepository = farmerFinancialInfoRepository;
         this.projectRewardCategoryRepository = projectRewardCategoryRepository;
+        this.bankRepository = bankRepository;
+        this.memberRepository = memberRepository;
     }
 
     /**
@@ -95,12 +104,14 @@ public class ProjectApplicationService {
 
         farmerFinancialInfoRepository.save(farmerFinancialInfo(farmerNo));
 
+//        Bank bank =
+
     }
 
     private RewardRegistInfo registInfo(int farmerNo) {
 
         RewardRegistInfo reward = new RewardRegistInfo();
-        reward.setRewardAgreementDate("0000-00-00");
+        reward.setRewardAgreementDate(java.sql.Date.valueOf(LocalDate.now()).toString());
         System.out.println("reward = " + reward);
 
         return reward;
@@ -152,9 +163,12 @@ public class ProjectApplicationService {
 
     private FarmerFinancialInfo farmerFinancialInfo(int farmerNo) {
 
+        Bank bank = bankRepository.findById(1).get();
+
         FarmerFinancialInfo farmerFinancialInfo = new FarmerFinancialInfo();
         farmerFinancialInfo.setFarmerNo(farmerNo);
-        farmerFinancialInfo.setBankNo(1);
+        farmerFinancialInfo.setBank(bank);
+        System.out.println("farmerFinancialInfo = " + farmerFinancialInfo);
 
         return farmerFinancialInfo;
     }
@@ -389,5 +403,122 @@ public class ProjectApplicationService {
         updateFarmerInfo.setFarmerPhone(farmerInfo.getFarmerPhone());
         updateFarmerInfo.setKakaotTalkChannel(farmerInfo.getKakaotTalkChannel());
         updateFarmerInfo.setHomepageURL(farmerInfo.getHomepageURL());
+    }
+
+    /**
+     * findFarmerFinancialInfoByMemberNo: 대표자 정보를 조회합니다.
+     * @param memberNo :회원 번호
+     * @return 대표자 정보
+     * @author 박휘림
+     */
+    public FarmerFinancialInfoDTO findFarmerFinancialInfoByMemberNo(int memberNo) {
+
+        FarmerFinancialInfo financialInfo = farmerFinancialInfoRepository.findByMemberNo(memberNo);
+        System.out.println("financialInfo = " + financialInfo);
+        return modelMapper.map(financialInfo, FarmerFinancialInfoDTO.class);
+    }
+
+    /**
+     * findAllBank: 은행 리스트를 조회합니다.
+     * @return 은행 리스트
+     * @author 박휘림
+     */
+    public List<BankDTO> findAllBank() {
+
+        List<Bank> bankList = bankRepository.findAll();
+
+        return bankList.stream().map(bank -> modelMapper.map(bank, BankDTO.class)).collect(Collectors.toList());
+    }
+
+    /**
+     * modifyReward: 대표자 및 정산정보 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
+     * @param farmerInfo: 사용자가 입력한 파머 정보를 담은 객체
+     * @param financialInfo: 사용자가 입력한 대표자 정보를 담은 객체
+     * @author 박휘림
+     */
+    @Transactional
+    public void modifyRepresentative(FarmerInfoDTO farmerInfo, FarmerFinancialInfoDTO financialInfo) {
+
+        FarmerInfo updateFarmerInfo = farmerInfoRepository.findByMemberNo(farmerInfo.getMemberNo());
+        updateFarmerInfo.setBusinessOwnType(farmerInfo.getBusinessOwnType());
+        updateFarmerInfo.setBusinessOwnNo(farmerInfo.getBusinessOwnNo());
+        updateFarmerInfo.setBusinessName(farmerInfo.getBusinessName());
+        updateFarmerInfo.setBusinessName(farmerInfo.getBusinessName());
+        updateFarmerInfo.setRepresentativeName(farmerInfo.getRepresentativeName());
+        updateFarmerInfo.setRepresentativeEmail(farmerInfo.getRepresentativeEmail());
+        updateFarmerInfo.setRepresentativeSSN(farmerInfo.getRepresentativeSSN());
+
+        Bank bank = bankRepository.findById(financialInfo.getBank().getBankNo()).get();
+        System.out.println("bank = " + bank);
+        FarmerFinancialInfo updateFinancialInfo = farmerFinancialInfoRepository.findByMemberNo(financialInfo.getFarmerNo());
+        updateFinancialInfo.setTaxReceiveEmail(financialInfo.getTaxReceiveEmail());
+        updateFinancialInfo.setFarmerAccount(financialInfo.getFarmerAccount());
+        updateFinancialInfo.setFarmerName(financialInfo.getFarmerName());
+        updateFinancialInfo.setBank(bank);
+        System.out.println("updateFinancialInfo = " + updateFinancialInfo);
+    }
+
+    /**
+     * modifySettlementPolicyCheckStatus: 사용자가 정산 정책을 확인 시 확인 여부와 날짜를 업데이트합니다.
+     * @param financialInfo: 사용자가 입력한 대표자 정보를 담은 객체
+     * @author 박휘림
+     */
+    @Transactional
+    public void modifySettlementPolicyCheckStatus(FarmerFinancialInfoDTO financialInfo) {
+
+        FarmerFinancialInfo updateFinancialInfo = farmerFinancialInfoRepository.findByMemberNo(financialInfo.getFarmerNo());
+        updateFinancialInfo.setSettlementPolicyCheckStatus("Y");
+        updateFinancialInfo.setSettlementPolicyCheckDate(java.sql.Date.valueOf(LocalDate.now()).toString());
+    }
+
+    /**
+     * sendPhoneVerification: 입력받은 휴대폰 번호로 인증번호를 전송합니다.
+     * @param phone: 인증 번호를 받을 휴대폰 번호
+     * @return 결과에 따라 다른 메시지를 return합니다.
+     * @author 박휘림
+     */
+    public String sendPhoneVerification(String phone) {
+
+        Member member = memberRepository.findMemberByPhone(phone);
+        System.out.println("member = " + member);
+        if(phone.length() == 0){
+            return "휴대폰 번호를 입력해주세요.";
+        }
+
+        if(phone.length() > 0 && !(phone.length() == 11)) {
+            return "휴대폰 번호가 유효하지 않습니다.";
+        }
+
+        if(member != null) {
+            return "이미 사용중인 휴대전화 번호입니다.";
+        }
+
+        String code = (int) (Math.random() * 899999) + 100000 + "";
+        String api_key = "NCS2DRV64W2NLRRJ";
+        String api_secret = "KHIZVNRLB6BCFXT9OKV3EUHBGZNYXRMV";
+        Message coolsms = new Message(api_key, api_secret);
+        HashMap<String, String> params = new HashMap<String, String>();
+
+        params.put("to", phone);
+        params.put("from", "01062019811");
+        params.put("type", "SMS");
+        params.put("text", code);
+        params.put("app_version", "test app 1.2");
+
+        JSONObject obj = new JSONObject();
+
+        try {
+            obj = (JSONObject) coolsms.send(params);
+            System.out.println(obj.toString());
+        } catch(CoolsmsException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getCode());
+        }
+
+        if("".equals(obj)) {
+            return  "인증번호 전송 실패";
+        }
+
+        return code;
     }
 }
