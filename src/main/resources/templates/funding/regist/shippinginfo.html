@@ -18,6 +18,10 @@
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<!-- 다음 주소 API CDN -->
 	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<!-- jQuery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+	<!-- iamport.payment.js -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 </head>
 <body>
 <div th:replace="/common/menubar.html"></div>
@@ -35,7 +39,7 @@
 		<hr size="3px">
 		<div class="regist-reward-info">
 			<div class="label-tag">
-				<label>[향긋] 국내산 송이버섯</label>
+				<label>[[${project.farmer.farmer.businessName}]] &nbsp;&nbsp;[[${project.projectName}]]</label>
 			</div>
 			<div class="label-tag row">
 				<div class="row">
@@ -201,7 +205,7 @@
 		
 		<!-- 버튼 -->
 		<div style="text-align: center; width: 100%; margin: 5%">
-			<button id="funding-submit" class="basic-btn btn1 bigbig-btn">결제 예약하기</button>
+			<input type="button" id="funding-submit" onclick="requestPay()" class="basic-btn btn1 bigbig-btn" value="결제하기">
 		</div>
 	</div>
 	<script>
@@ -223,43 +227,52 @@
 	<script th:inline="javascript">
   
 		const $submit = document.getElementById("funding-submit");
+        let IMP = window.IMP;
+        IMP.init("imp38104797");
 
-		if($submit) {
-			$submit.onclick = function() {
-                const $sendform = document.getElementById("sendform")
+        function requestPay() {
 
-                const $totalFunding = document.getElementById("totalFunding");
-                const $rewardTotal = document.getElementById("rewardTotal");
-                const $rewardPrice = document.getElementById("rewardPrice");
-                const $rewardAmount = document.getElementById("rewardAmount");
-                const $donate = document.getElementById("donate");
-                const $shippingFee = document.getElementById("shippingFee");
-                const $extraShippingFee = document.getElementById("extraShippingFee");
-                const $projectNo = document.getElementById("projectNo");
+            const $sendform = document.getElementById("sendform")
 
-                // if(~~~ == 0) {
-                // 	Swal.fire({
-                // 		icon: 'warning',
-                // 		title: '리워드수량을 입력하세요!'
-                // 	})
-                // }
+            const $totalFunding = document.getElementById("totalFunding");
+            const $rewardTotal = document.getElementById("rewardTotal");
+            const $rewardPrice = document.getElementById("rewardPrice");
+            const $rewardAmount = document.getElementById("rewardAmount");
+            const $donate = document.getElementById("donate");
+            const $shippingFee = document.getElementById("shippingFee");
+            const $extraShippingFee = document.getElementById("extraShippingFee");
+            const $projectNo = document.getElementById("projectNo");
 
+            $totalFunding.value = "[[${ registInfo.totalFunding }]]";
+            $rewardTotal.value = "[[${ registInfo.rewardTotal }]]";
+            $rewardPrice.value = "[[${ registInfo.rewardPrice }]]";
+            $rewardAmount.value = "[[${ registInfo.rewardAmount }]]";
+            $donate.value = "[[${ registInfo.donate }]]";
+            $shippingFee.value = "[[${ registInfo.shippingFee }]]";
+            $extraShippingFee.value = "[[${ registInfo.extraShippingFee }]]";
+            $projectNo.value = "[[${ registInfo.projectNo }]]";
 
-                $totalFunding.value = "[[${ registInfo.totalFunding }]]";
-                $rewardTotal.value = "[[${ registInfo.rewardTotal }]]";
-                $rewardPrice.value = "[[${ registInfo.rewardPrice }]]";
-                $rewardAmount.value = "[[${ registInfo.rewardAmount }]]";
-                $donate.value = "[[${ registInfo.donate }]]";
-                $shippingFee.value = "[[${ registInfo.shippingFee }]]";
-                $extraShippingFee.value = "[[${ registInfo.extraShippingFee }]]";
-                $projectNo.value = "[[${ registInfo.projectNo }]]";
+            $sendform.method = "get";
+            $sendform.action = "/funding/regist/fundinginfo";
+            
+            IMP.request_pay({ // param
+                pg: "kakaopay",
+                pay_method: "kakaopay",
+                merchant_uid: "dduckleaf" + new Date().getTime(),
+                name: "상품명",
+                amount: 123213,
+                buyer_tel: "휴대폰번호",
+            },function (rsp) {
+                if (rsp.success) {
 
-                $sendform.method = "get";
-                $sendform.action = "/funding/regist/fundinginfo";
+                    $sendform.submit();
 
-                $sendform.submit();
-            }
-		}
+                }else{
+                    alert("실패");
+                }
+            });
+        }
+
 
 	</script>
 </div>
