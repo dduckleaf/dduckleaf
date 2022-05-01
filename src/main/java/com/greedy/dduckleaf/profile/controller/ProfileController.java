@@ -35,6 +35,7 @@ import java.util.UUID;
  * @version 1.0.4
  * @author 박상범
  */
+@Controller
 @RequestMapping("/profile")
 public class ProfileController {
 
@@ -54,7 +55,7 @@ public class ProfileController {
      * @return mv
      * @author 박상범
      */
-    @GetMapping("/modify")
+    @GetMapping("/thumbnail")
     public ModelAndView modifyProfile(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
 
         int memberNo = user.getMemberNo();
