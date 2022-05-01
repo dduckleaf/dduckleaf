@@ -54,42 +54,10 @@
         <button class="basic-btn small-btn btn3" id="back" onclick="location.href='/report/platformmanager/default'">이전</button>
         <br>
         <!-- paging -->
-        <div id="paging-area" align="center">
-            <!-- 맨 앞으로 이동 -->
-            <button class="paging-btn first" th:onclick="'location.href=\'/report/platformmanager/listAll?page=' + @{${pagingInfo.startPage}}  + '\''"
-                    th:disabled="${ projectReportList.first }"><<</button>
-
-            <!-- 이전 페이지로 이동 -->
-            <button class="paging-btn prev" th:onclick="'location.href=\'/report/platformmanager/listAll?page=' + @{${pagingInfo.currentPage - 1}}  + '\''"
-                    th:disabled="${ projectReportList.first }"><</button>
-
-            <!-- 숫자 버튼 -->
-            <th:block th:each="page : ${#numbers.sequence(pagingInfo.startPage, pagingInfo.endPage)}">
-                <button class="paging-btn" th:onclick="'location.href=\'/report/platformmanager/listAll?page=' + @{${page}}  + '\''"
-                        th:text="${ page }"
-                        th:disabled="${ pagingInfo.currentPage eq page }"></button>
-            </th:block>
-
-            <!-- 다음 페이지로 이동 -->
-            <button class="paging-btn next" th:onclick="'location.href=\'/report/platformmanager/listAll?page=' + @{${pagingInfo.currentPage + 1}}  + '\''"
-                    th:disabled="${ projectReportList.last }">></button>
-
-            <!-- 맨 마지막으로 이동 -->
-            <button class="paging-btn last" th:onclick="'location.href=\'/report/platformmanager/listAll?page=' + @{${pagingInfo.endPage}}  + '\''"
-                    th:disabled="${ projectReportList.last }">>></button>
+        <div style="text-align: center">
+            <div th:replace="/report/platformmanager/paging.html"></div>
         </div>
-        <!-- Begin 검색창 -->
-<!--        <div class="searchbar" th:align="center">-->
-<!--            <select id="category">-->
-<!--                <option disabled selected>선택</option>-->
-<!--                <option value="status">처리상태</option>-->
-<!--                <option value="name">프로젝트명</option>-->
-<!--                <option value="category">신고유형</option>-->
-<!--                &lt;!&ndash;            <option th:each="bank : ${ bankList }" th:value="${bank.bankNo}" th:text="${bank.bankName}"></option>&ndash;&gt;-->
-<!--            </select>-->
-<!--            <input type="text" id="searchValue"> <button class="basic-btn small-btn btn1" id="search" th:onclick="searchFor()">검색</button>-->
-<!--        </div>-->
-        <!-- 검색창 End here -->
+
 
         <!-- 게시판영역 End Here -->
     </div>
@@ -117,15 +85,15 @@
     }
 
     /* 검색 기능 */
-    let keyword = document.getElementById("searchValue").innerText;
-    let category = document.getElementById("category");
-
-    const search = document.getElementById("search");
-    if(search) {
-        search.onclick = function() {
-            location.href = "/report/platformmanager"/ + category + "/" + keyword;
-        }
-    }
+    // let keyword = document.getElementById("searchValue").innerText;
+    // let category = document.getElementById("category");
+    //
+    // const search = document.getElementById("search");
+    // if(search) {
+    //     search.onclick = function() {
+    //         location.href = "/report/platformmanager"/ + category + "/" + keyword;
+    //     }
+    // }
 </script>
 </body>
 </html>
