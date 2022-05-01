@@ -39,6 +39,8 @@ import java.util.List;
  * 2022/04/28 (장민주) registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 메소드 작성.
  *                    registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 리팩토링.
  * 2022/04/28 (장민주) findProjectReportWaitingList 메소드 작성.
+ * 2022/04/28 (장민주) findProjectReportWaitingList 메소드 리팩토링.
+ *                    -> findProjectsByProjectReportStatus 로 변경.
  * </pre>
  * @version 1.0.4
  * @author 장민주
@@ -114,25 +116,29 @@ public class ProjectReportController {
 
         mv.addObject("projectReportList", projectReportList);
         mv.addObject("pagingInfo", pagingInfo);
+        mv.addObject("intent", "listAll");
+
         mv.setViewName("report/platformmanager/list");
 
         return mv;
     }
 
     /**
-     * findAllProjectReportList: 답변 대기 중인 프로젝트 신고내역 조회 요청 메소드입니다.
+     * findProjectsByProjectReportStatus: 신고 처리 상태에 따른 프로젝트 신고내역 조회 요청 메소드입니다.
      * @return mv 프로젝트신고 목록, 프로젝트신고 목록이 출력될 화면 경로
      */
-    @GetMapping("/platformmanager/waitingList")
-    public ModelAndView findProjectReportWaitingList(ModelAndView mv,
+    @GetMapping("/platformmanager/{projectReportStatus}")
+    public ModelAndView findProjectsByProjectReportStatus(ModelAndView mv, @PathVariable String projectReportStatus,
         @PageableDefault(size=10, sort="projectReportNo", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        Page<ProjectReportDTO> projectReportList = service.findProjectReportWaitingList(pageable);
+        Page<ProjectReportDTO> projectReportList = service.findProjectsByProjectReportStatus(pageable, projectReportStatus);
 
         PagingButtonInfo pagingInfo = Pagenation.getPagingButtonInfo(projectReportList);
 
         mv.addObject("projectReportList", projectReportList);
         mv.addObject("pagingInfo", pagingInfo);
+        mv.addObject("intent", projectReportStatus);
+
         mv.setViewName("report/platformmanager/list");
 
         return mv;
