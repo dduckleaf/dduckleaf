@@ -36,7 +36,7 @@
                     <p onclick="location.href='/project/application/representative'">대표자 및 정산 정보</p>
                 </div>
             </div>
-            <form name="saveForm">
+            <form name="saveForm" enctype="multipart/form-data">
                 <div class="col-md-7">
                     <div class="breadcrumb">
                         <span class="breadcrumb home" onclick="location.href='/project/application/goMain'">펀딩 준비</span>&nbsp;
@@ -48,11 +48,13 @@
                         <a class="basictitle">파머 이름</a><br>
                         <a class="basicsubtitle">법인사업자는 법인등기부상 법인명 / 개인 사업자는 주민등록상 성명 또는 상호를 입력하세요.</a><br>
                         <input type="hidden" id="memberNo" name="memberNo" th:value="${ farmerInfo.memberNo }">
+<!--                        <input class="farmerinfo" name="farmerName" type="hidden" th:value="${ farmerInfo.farmerName }">-->
                         <input class="farmerinfo" id="farmerName" name="farmerName" type="text" th:value="${ farmerInfo.farmerName }">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">파머 프로필 이미지</a><br>
-                        <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <img class="basicimg1" id="changeImg" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <input type="file" style="display: block" id="file" name="file" accept=".gif, .jpg, .png" onchange="loadImg(this)">
                         <a class="basicsubtitle">3MB 이하의 JPEG, PNG 파일
                             <br>사이즈 300x300 픽셀 이상</a>
                     </div>
@@ -107,6 +109,26 @@
 
 </body>
 <script>
+
+
+    /* 이미지 등록 */
+    // const $basicimg = document.getElementById("changeImg");
+    //
+    // $basicimg.onclick = function() {
+    //     document.getElementById("imageFile").click();
+    // }
+    //
+    // function loadImg(value) {
+    //     if(value.files && value.files[0]) {
+    //         const reader = new FileReader();
+    //         reader.onload = function(e) {
+    //             document.getElementById("$basicimg").src = e.target.result;
+    //         }
+    //         reader.readAsDataURL(value.files[0]);
+    //     }
+    // }
+
+
     var acc = document.getElementsByClassName("accordion");
 
     for (var i = 0; i < acc.length; i++) {
@@ -160,7 +182,27 @@
                         popup: 'savepopup'
                     },
                     buttonsStyling: false,
-                }).then(function(memberNo, farmerName, farmerEmail, farmerPhone, homepageURL, kakaotTalkChannel) {
+                }).then(function(memberNo, farmerName, farmerEmail, farmerPhone, homepageURL, kakaotTalkChannel, file, projectNo) {
+
+
+                    /* 이미지 등록 */
+                    const $basicimg = document.getElementById("changeImg");
+
+                    $basicimg.onclick = function() {
+                        document.getElementById("file").click();
+                    }
+
+                    function loadImg(value) {
+                        if(value.files && value.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                document.getElementById("$basicimg").src = e.target.result;
+                            }
+                            reader.readAsDataURL(value.files[0]);
+                        }
+                    }
+
+
                     let saveForm = document.saveForm;
                     let url = '/project/application/modify/farmer';
                     saveForm.memberNo = memberNo;
@@ -168,7 +210,9 @@
                     saveForm.farmerEmail = farmerEmail;
                     saveForm.farmerPhone = farmerPhone;
                     saveForm.homepageURL = homepageURL;
+                    saveForm.projectNo = projectNo;
                     saveForm.kakaotTalkChannel = kakaotTalkChannel;
+                    saveForm.file = file;
 
                     saveForm.action = url;
                     saveForm.method = 'post';

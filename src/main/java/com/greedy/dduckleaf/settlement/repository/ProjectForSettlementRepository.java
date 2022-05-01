@@ -30,4 +30,6 @@ public interface ProjectForSettlementRepository extends JpaRepository<Project, I
      * @author 장민주
      */
     Page<Project> findAllByProgressStatusAndAchievementRateGreaterThan(int progressStatus, int achievementRate, Pageable pageable);
+
+    Project findByProjectNo(int projectNo);
 }
