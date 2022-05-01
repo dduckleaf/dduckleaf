@@ -9,14 +9,26 @@
     padding: 15px;
 }
 
+.block2 {
+    border: 1px solid #ababab;
+    border-radius: 0.5px;
+    margin-top: 30px;
+    padding: 17px;
+    height: 70px;
+    font-weight: bold;
+    font-size: 17pt;
+}
+
+.block2:hover {
+    cursor: pointer;
+    background-color: rgba(76, 23, 117, 0.7);
+    color: #fff;
+    border: none;
+}
+
 .text-subtitle {
     font-weight: bold;
     font-size: 20pt;
-}
-
-.text-list-name {
-    font-weight: bold;
-    font-size: 17pt;
 }
 
 .submenu {
