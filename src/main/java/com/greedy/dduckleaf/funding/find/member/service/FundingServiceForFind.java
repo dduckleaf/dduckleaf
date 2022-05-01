@@ -1,11 +1,15 @@
 package com.greedy.dduckleaf.funding.find.member.service;
 
 import com.greedy.dduckleaf.funding.dto.FundingDTO;
-import com.greedy.dduckleaf.funding.dto.ProjectRegistInfoDTO;
+import com.greedy.dduckleaf.funding.dto.ProjectBasicInfoDTO;
 import com.greedy.dduckleaf.funding.entity.Funding;
 import com.greedy.dduckleaf.funding.find.member.repository.FundingForMemberFindRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +30,8 @@ import java.util.stream.Collectors;
 @Service
 public class FundingServiceForFind {
 
+    private final int PAGE_SIZE = 5;
+
     /* 서비스에 필요한 JPARepository와 엔티티를 DTO를 변환해 줄 ModelMapper를 DI받습니다. */
     private final FundingForMemberFindRepository fundingRepo;
     private final ModelMapper mapper;
@@ -43,26 +49,26 @@ public class FundingServiceForFind {
      *
      * @author 홍성원
      */
-    public List<FundingDTO> findFundingByMemberNo(int memberNo) {
+    public Page<FundingDTO> findFundingByMemberNo(int memberNo, Pageable pageable) {
 
-        return parsingFundingList(fundingRepo.findByMemberNo(5));
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() - 1, PAGE_SIZE,
+                Sort.by("fundingInfoNo").descending());
+
+        return parsingFundingList(fundingRepo.findByMemberNo(5, pageable));
     }
 
-    private List<FundingDTO> parsingFundingList(List<Funding> fundingList) {
+    private Page<FundingDTO> parsingFundingList(Page<Funding> fundingList) {
 
-        List<FundingDTO> fundingDTOList = fundingList.stream().map(funding -> {
+        Page<FundingDTO> fundingDTOList = fundingList.map(funding -> {
             FundingDTO fundingDTO = mapper.map(funding, FundingDTO.class);
 
-            List<ProjectRegistInfoDTO> infoList = fundingDTO.getProject().getRegistInfo();
+            List<ProjectBasicInfoDTO> infoList = fundingDTO.getProject().getBasicInfo();
             infoList.forEach(info ->{
-
-                if(info.getProjectRegistInfoCategory().equals("리워드")) {
                     fundingDTO.setRewardCategoryName(info.getCategory().getProjectCategoryName());
-                }
             });
 
             return fundingDTO;
-        }).collect(Collectors.toList());
+        });
 
         return fundingDTOList;
     }

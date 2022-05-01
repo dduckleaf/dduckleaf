@@ -8,6 +8,7 @@ import com.greedy.dduckleaf.profile.service.ProfileService;
 import com.greedy.dduckleaf.projectnotice.dto.ProfileDTO;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -29,12 +30,17 @@ import java.util.UUID;
  * History
  * 2022/04/29 (박상범) 처음 작성 / 개인 정보 수정 페이지로 이동, 조회 관련 메소드 작성
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
+ * 2022/05/01 (박상범) 개인 정보 수정 페이지로 이동, 조회 관련 메소드 수정, 회원의 사진 정보 변경 관련 메소드 수정
  * </pre>
- * @version 1.0.1
+ * @version 1.0.4
  * @author 박상범
  */
+@Controller
 @RequestMapping("/profile")
 public class ProfileController {
+
+    @Value("${file.path}")
+    private String uploadPath;
 
     private final ProfileService profileService;
 
@@ -44,20 +50,20 @@ public class ProfileController {
     }
 
     /**
-     * modifyProfile: 회원 번호를 통해 프로필 사진, 이메일 변경을 할 수 있는 페이지로 포워딩합니다.
+     * modifyProfile: 회원 번호를 통해 프로필 사진 정보를 포워딩합니다.
      * @param user: 로그인된 회원의 정보
      * @return mv
      * @author 박상범
      */
-    @GetMapping("/modify")
+    @GetMapping("/thumbnail")
     public ModelAndView modifyProfile(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
 
         int memberNo = user.getMemberNo();
 
-        ProfileDTO profile = profileService.findProfileByMemberNo(memberNo);
+        ProfileAttachmentDTO profileAttachment = profileService.findProfileByMemberNo(memberNo);
 
-        mv.addObject("profile", profile);
-        mv.setViewName("/profile/modify/email");
+        mv.addObject("profileAttachment", profileAttachment);
+        mv.setViewName("/profile/thumbnail");
 
         return mv;
     }
@@ -70,12 +76,15 @@ public class ProfileController {
      * @author 박상범
      */
     @PostMapping("/uploadImg")
-    public String uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request, @AuthenticationPrincipal CustomUser user) {
+    @ResponseBody
+    public String uploadImg(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUser user) {
 
         ProfileAttachmentDTO attachment = new ProfileAttachmentDTO();
         String result = "";
 
-        String rootLocation = request.getSession().getServletContext().getRealPath("resources");
+        String rootLocation = uploadPath;
+
+        System.out.println(rootLocation);
 
         String fileUploadPath = rootLocation + "/upload/original";
         String thumbnailPath = rootLocation + "/upload/thumbnail";
@@ -104,7 +113,6 @@ public class ProfileController {
                     attachment.setProfileOriginalName(orgName);
                     attachment.setProfileSavedName(savedName);
                     attachment.setProfilePath(fileUploadPath);
-                    attachment.setMemberNo(user.getMemberNo());
 
                     int width = 50;
                     int height = 55;
@@ -112,7 +120,7 @@ public class ProfileController {
                     Thumbnails.of(uploadDirectory + "/" + savedName).forceSize(width, height)
                             .toFile(thumbnailDirectory + "/thumbnail_" + savedName);
 
-                    attachment.setProfileThumbnailPath("/resources/upload/thumbnail/thumbnail_" + savedName);
+                    attachment.setProfileThumbnailPath("/upload/thumbnail/thumbnail_" + savedName);
                 }
 
                 attachment.setMemberNo(user.getMemberNo());
@@ -130,7 +138,6 @@ public class ProfileController {
                 boolean isDeleted2 = deleteThumbnail.delete();
 
                 if(isDeleted1 && isDeleted2) {
-                    System.out.println("업로드 실패로 인한 사진 삭제 완료 !!!");
                     e.printStackTrace();
                 } else {
                     e.printStackTrace();

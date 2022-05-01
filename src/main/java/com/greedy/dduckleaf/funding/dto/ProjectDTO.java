@@ -1,9 +1,5 @@
 package com.greedy.dduckleaf.funding.dto;
 
-import com.greedy.dduckleaf.funding.entity.ProjectRegistInfo;
-import com.greedy.dduckleaf.funding.entity.ProjectShippingFee;
-import com.greedy.dduckleaf.funding.entity.RewardInfo;
-
 import lombok.*;
 
 import java.util.List;
@@ -18,8 +14,8 @@ public class ProjectDTO {
     private int projectNo;
     private String projectName;
     private int fundTargetAmount;
-    private java.sql.Date openDate;
-    private java.sql.Date endDate;
+    private String openDate;
+    private String endDate;
     private String projectStatus;
     private double achievementRate;
     private String examineStatus;
@@ -28,5 +24,6 @@ public class ProjectDTO {
     private int maxTargetAmount;
     private RewardInfoDTO rewardInfo;
     private ProjectShippingFeeDTO projectShippingFee;
-    private List<ProjectRegistInfoDTO> registInfo;
+    private MemberDTO farmer;
+    private List<ProjectBasicInfoDTO> basicInfo;
 }

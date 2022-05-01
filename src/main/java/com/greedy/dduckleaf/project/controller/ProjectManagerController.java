@@ -10,8 +10,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <pre>
@@ -43,11 +46,13 @@ public class ProjectManagerController {
      */
     @GetMapping("/end/endlist")
     public ModelAndView findEndProjectsAchievedSuccess(ModelAndView mv,
-    @PageableDefault(size = 10, sort = "projectNo", direction = Sort.Direction.DESC) Pageable pageable) {
+       @PageableDefault(size = 10, sort = "projectNo", direction = Sort.Direction.DESC) Pageable pageable,
+       HttpServletRequest request) {
 
         int progressStatus = 4;
         int achievementRate = 100;
-
+        request.getParameter("searchCondition");
+        request.getParameter("searchValue");
         Page<ProjectDTO> projects = settlementService.findAllEndProjectsAchievedSuccess(progressStatus, achievementRate, pageable);
         PagingButtonInfo pagingInfo = Pagenation.getPagingButtonInfo(projects);
 
@@ -55,6 +60,23 @@ public class ProjectManagerController {
         mv.addObject("pagingInfo", pagingInfo);
         mv.addObject("intent", "end/endlist");
         mv.setViewName("/project/manage/end/endlist");
+
+        return mv;
+    }
+
+    /**
+     * findProjectDetail: 프로젝트 번호로 프로젝트 상세 조회를 요청하는 메소드입니다.
+     * @param projectNo: 프로젝트 번호
+     * @return 프로젝트 상세정보, 프로젝트관리 상세조회 화면경로
+     * @author 장민주
+     */
+    @GetMapping("/end/detail/{projectNo}")
+    public ModelAndView findProjectDetail(ModelAndView mv, @PathVariable int projectNo) {
+
+        ProjectDTO project = settlementService.findProjectDetail(projectNo);
+
+        mv.addObject("project", project);
+        mv.setViewName("project/manage/end/detail");
 
         return mv;
     }

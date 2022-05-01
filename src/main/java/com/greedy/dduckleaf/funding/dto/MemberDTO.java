@@ -17,4 +17,5 @@ public class MemberDTO {
     private String phone;
     private int memberRole;
     private String whthdrawalStatus;
+    private FarmerInfoDTO farmer;
 }

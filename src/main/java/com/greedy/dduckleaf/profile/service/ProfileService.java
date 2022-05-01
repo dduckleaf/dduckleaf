@@ -20,7 +20,7 @@ import javax.transaction.Transactional;
  * 2022/04/29 (박상범) 처음 작성 / 회원 번호를 통해 프로필 사진정보와, 회원정보 조회 관련 메소드 작성
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
  * </pre>
- * @version 1.0.1
+ * @version 1.0.2
  * @author 박상범
  */
 @Service
@@ -43,21 +43,16 @@ public class ProfileService {
      * @return 펀딩 횟수, 모의펀딩 횟수, 티켓 갯수를 담은 MyFundingDTO 객체를 리턴합니다.
      * @author 박상범
      */
-    public ProfileDTO findProfileByMemberNo(int memberNo) {
+    public ProfileAttachmentDTO findProfileByMemberNo(int memberNo) {
 
-        ProfileDTO profile = new ProfileDTO();
-
-        MemberDTO member = modelMapper.map(memberForProfileRepository.findById(memberNo).get(), MemberDTO.class);
         ProfileAttachmentDTO profileAttachment = modelMapper.map(profileAttachmentForProfileRepository.findProfileAttachmentByMember_memberNo(memberNo), ProfileAttachmentDTO.class);
-        profile.setMember(member);
-        profile.setProfileAttachment(profileAttachment);
 
-        return profile;
+        return profileAttachment;
     }
 
     /**
      * modifyAttachment: 회원의 사진 정보를 변경합니다.
-     * @param attachment: 수정할 공지사항 정보를 담은 객체
+     * @param attachment: 변경할 사진 정보를 담은 ProfileAttachmentDTO 객체
      * @return "true"
      * @author 박상범
      */

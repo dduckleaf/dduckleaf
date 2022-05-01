@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.profile.dto.MemberDTO;
+import com.greedy.dduckleaf.profile.dto.ProfileAttachmentDTO;
 import com.greedy.dduckleaf.projectnotice.dto.ProfileDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,10 +39,10 @@ class ProfileServiceTest {
         int memberNo = 67;
 
         //when
-        ProfileDTO profile = profileService.findProfileByMemberNo(memberNo);
+        ProfileAttachmentDTO profileAttachment = profileService.findProfileByMemberNo(memberNo);
 
         //then
-        System.out.println(profile);
-        assertNotNull(profile);
+        System.out.println(profileAttachment);
+        assertNotNull(profileAttachment);
     }
 }

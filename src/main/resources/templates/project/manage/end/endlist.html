@@ -51,28 +51,7 @@
 						</table>
 						<br>
 						<div style="text-align: center">
-							<!--<div th:replace="/project/manage/end/projectlistpaging.html"></div>-->
-							<!-- 맨 앞으로 이동 -->
-							<button th:onclick="'location.href=\'/project/manage/end/endlist' + '?page=' + @{${pagingInfo.startPage}} + '\''"
-							        th:disabled="${ projects.first }" class="paging-btn first"><<</button>
-							
-							<!-- 이전 페이지로 이동 -->
-							<button th:onclick="'location.href=\'/project/manage/end/endlist' + '?page=' + @{${pagingInfo.currentPage - 1}} + '\''"
-							        th:disabled="${ projects.first }" class="paging-btn prev"><</button>
-							
-							<!--&lt;!&ndash; 숫자 버튼&ndash;&gt;-->
-							<th:block th:each="page : ${#numbers.sequence(pagingInfo.startPage, pagingInfo.endPage)}">
-								<button th:onclick="'location.href=\'/project/manage/end/endlist' + '?page=' + @{${page}} + '\''"
-								        th:text="${ page }" th:disabled="${ pagingInfo.currentPage eq page}" class="paging-btn"></button>
-							</th:block>
-							
-							<!-- 다음 페이지로 이동 -->
-							<button th:onclick="'location.href=\'/project/manage/end/endlist' + '?page=' + @{${pagingInfo.currentPage + 1}} + '\''"
-							        th:disabled="${ projects.last}" class="paging-btn next">></button>
-							
-							<!-- 맨 마지막으로 이동-->
-							<button th:onclick="'location.href=\'/project/manage/end/endlist' + '?page=' + @{${pagingInfo.endPage}} + '\''"
-							        th:disabled="${ projects.last }" class="paging-btn last">>></button>
+							<div th:replace="/project/manage/end/projectlistpaging.html"></div>
 						</div>
 						<br>
 						<form id="search-form" action="/notice/search" method="get">
@@ -82,7 +61,7 @@
 										<option value="projectName">프로젝트명</option>
 										<option value="farmerName">파머명</option>
 									</select>
-									<input type="text" name="searchValue" placeholder="검색어를 입력해주세요">
+ 									<input type="text" name="searchValue" placeholder="검색어를 입력해주세요">
 									<button type="submit" class="btn1 basic-btn small-btn">검색</button>
 								</div>
 							</fieldset>

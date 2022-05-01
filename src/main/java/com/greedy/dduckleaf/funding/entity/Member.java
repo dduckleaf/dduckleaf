@@ -41,6 +41,10 @@ public class Member {
     @Column(name = "WITHDRAWAL_STATUS")
     private String whthdrawalStatus;
 
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "MEMBER_NO")
+    private FarmerInfo farmer;
+
     @Override
     public String toString() {
         return "Member{" +
@@ -52,6 +56,7 @@ public class Member {
                 ", phone='" + phone + '\'' +
                 ", memberRole=" + memberRole +
                 ", whthdrawalStatus='" + whthdrawalStatus + '\'' +
+                ", farmer='" + farmer + '\'' +
                 '}';
     }
 }

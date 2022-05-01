@@ -3,7 +3,10 @@ package com.greedy.dduckleaf.funding.regist.service;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
-import com.greedy.dduckleaf.funding.dto.*;
+import com.greedy.dduckleaf.funding.dto.BankDTO;
+import com.greedy.dduckleaf.funding.dto.FundingRegistInfoDTO;
+import com.greedy.dduckleaf.funding.dto.MemberDTO;
+import com.greedy.dduckleaf.funding.dto.ProjectDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @ContextConfiguration(classes = {
@@ -47,13 +50,13 @@ class FundingRegistServiceTest {
     public void findBankAndUserInfo_test() {
         String memberId = "USER01";
 
-        BankListAndMemberDTO bankListAndMember = service.findBankAndUserInfo(memberId);
-        assertNotNull(bankListAndMember);
+        FundingRegistInfoDTO fundingRegistInfo = service.findBankAndUserInfo(memberId, 1);
+        assertNotNull(fundingRegistInfo);
 
-        List<BankDTO> bankList = bankListAndMember.getBankList();
+        List<BankDTO> bankList = fundingRegistInfo.getBankList();
         assertNotNull(bankList);
 
-        MemberDTO member = bankListAndMember.getMember();
+        MemberDTO member = fundingRegistInfo.getMember();
         assertNotNull(member);
 
         System.out.println("bankList ==========");

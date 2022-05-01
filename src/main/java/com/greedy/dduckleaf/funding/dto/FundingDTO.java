@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 public class FundingDTO {
     private int fundingInfoNo;
-    private java.sql.Date fundingDate;
+    private String fundingDate;
     private int fundingAmount;
     private int rewardAmount;
     private String fundingStatus;

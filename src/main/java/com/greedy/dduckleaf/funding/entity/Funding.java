@@ -18,7 +18,7 @@ public class Funding {
     private int fundingInfoNo;
 
     @Column(name = "FUNDING_DATE")
-    private java.sql.Date fundingDate;
+    private String fundingDate;
 
     @Column(name = "FUNDING_AMOUNT")
     private int fundingAmount;
