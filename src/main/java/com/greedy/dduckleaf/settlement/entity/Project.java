@@ -49,7 +49,7 @@ public class Project {
     @Column(name = "PROJECT_EXAMINE_STATUS")
     private String projectExamineStatus;                //심사결과
 
-    @Transient
+//    @Transient
     @Column(name = "MAX_TARGET_AMOUNT")
     private int maxTargetAmount;                        //목표최대금액
 

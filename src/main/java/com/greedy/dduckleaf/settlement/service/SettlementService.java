@@ -115,6 +115,14 @@ public class SettlementService {
         return ffff;
     }
 
+    /**
+     * findAllEndProjectsAchievedSuccess: 달성률 100% 이상인 종료된 프로젝트 목록 조회 요청 메소드입니다.
+     * @param progressStatus: 프로젝트 진행상태
+     * @param achievementRate: 달성률
+     * @param pageable: 페이징 정보
+     * @return 프로젝트 목록
+     * @author 장민주
+     */
     public Page<ProjectDTO> findAllEndProjectsAchievedSuccess(int progressStatus, int achievementRate, Pageable pageable) {
 
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
@@ -125,4 +133,14 @@ public class SettlementService {
                 .map(project -> modelMapper.map(project, ProjectDTO.class));
     }
 
+    /**
+     * findProjectDetail: 프로젝트 번호로 프로젝트 상세조회 요청 메소드입니다.
+     * @param projectNo: 프로젝트번호
+     * @return 프로젝트 정보
+     * @author 장민주
+     */
+    public ProjectDTO findProjectDetail(int projectNo) {
+
+        return modelMapper.map(projectRepository.findByProjectNo(projectNo), ProjectDTO.class);
+    }
 }

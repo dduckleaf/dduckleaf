@@ -105,4 +105,18 @@ public class SettlementServiceTests {
         projects.forEach(System.out::println);
     }
 
+    @Test
+    @DisplayName("프로젝트 번호로 프로젝트 상세 조회 테스트")
+    public void findProjectDetail_test() {
+        //given
+        int projectNo = 1;
+
+        //when
+        ProjectDTO projectDetail = service.findProjectDetail(projectNo);
+
+        //then
+        assertNotNull(projectDetail);
+        assertEquals(projectDetail.getClass(), ProjectDTO.class);
+    }
+
 }
