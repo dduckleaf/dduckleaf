@@ -43,16 +43,11 @@ public class ProfileService {
      * @return 펀딩 횟수, 모의펀딩 횟수, 티켓 갯수를 담은 MyFundingDTO 객체를 리턴합니다.
      * @author 박상범
      */
-    public ProfileDTO findProfileByMemberNo(int memberNo) {
+    public ProfileAttachmentDTO findProfileByMemberNo(int memberNo) {
 
-        ProfileDTO profile = new ProfileDTO();
-
-        MemberDTO member = modelMapper.map(memberForProfileRepository.findById(memberNo).get(), MemberDTO.class);
         ProfileAttachmentDTO profileAttachment = modelMapper.map(profileAttachmentForProfileRepository.findProfileAttachmentByMember_memberNo(memberNo), ProfileAttachmentDTO.class);
-        profile.setMember(member);
-        profile.setProfileAttachment(profileAttachment);
 
-        return profile;
+        return profileAttachment;
     }
 
     /**
