@@ -1,5 +1,8 @@
 package com.greedy.dduckleaf.projectapplication.controller;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.projectapplication.dto.*;
 import com.greedy.dduckleaf.projectapplication.service.ProjectApplicationService;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -23,6 +27,7 @@ import java.util.List;
  * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findBasicInfoByProjectNo, modifyBasicInfo 메소드 작성
  * 2022/04/29 (박휘림) findStoryByProjectNo, modifyStory, modifyPromotionAgreementStatus, findRewardByProjectNo, modifyReward 메소드 작성
  * 2022/04/30 (박휘림) findPolicyByProjectNo, modifyPolicy, modifyPolicyAgreementStatus, findFarmerInfoByMemberNo, modifyFarmerInfo 메소드 작성
+ * 2022/05/01 (박휘림)  메소드 작성
  * </pre>
  * @version 1.0.4
  * @author 박휘림
@@ -374,5 +379,89 @@ public class ProjectApplicationController {
         return mv;
     }
 
+    /**
+     * findRepresentative: 대표자 및 정산정보 작성 페이지로 이동 시 기본 데이터를 조회합니다.
+     * @param user: 로그인한 사용자의 정보를 받는 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            farmer 파머 정보 기본 데이터
+     *            financialInfo 대표자 정보 기본 데이터
+     *            "project/regist/representative" 대표자정보를 작성하는 뷰 경로
+     * @author 박휘림
+     */
+    @GetMapping("/representative")
+    public ModelAndView findRepresentative(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+
+        int memberNo = user.getMemberNo();
+
+        FarmerInfoDTO farmer = projectApplicationService.findFarmerInfoByMemberNo(memberNo);
+        FarmerFinancialInfoDTO financialInfo = projectApplicationService.findFarmerFinancialInfoByMemberNo(memberNo);
+        List<BankDTO> bankList = projectApplicationService.findAllBank();
+        System.out.println("financialInfo = " + financialInfo);
+        System.out.println("bankList = " + bankList);
+        mv.addObject("bankList", bankList);
+        mv.addObject("farmer", farmer);
+        mv.addObject("financialInfo", financialInfo);
+        mv.setViewName("project/regist/representative");
+
+        return mv;
+    }
+
+    /**
+     * modifyRepresentative: 대표자정보 작성 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
+     * @param farmer: 사용자가 입력한 파머정보 데이터를 담은 객체
+     * @param financialInfo: 사용자가 입력한 대표자정보 데이터를 담은 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/project/application/goMain" 프로젝트 신청 메인페이지 경로
+     * @author 박휘림
+     */
+    @PostMapping("/modify/representative")
+    public ModelAndView modifyRepresentative(ModelAndView mv, FarmerInfoDTO farmer, FarmerFinancialInfoDTO financialInfo) {
+        System.out.println("farmer = " + farmer);
+        projectApplicationService.modifyRepresentative(farmer, financialInfo);
+
+        mv.setViewName("redirect:/project/application/goMain");
+
+        return mv;
+    }
+
+    /**
+     * modifySettlementPolicyCheckStatus: 대표자 정보 페이지에서 사용자가 정산정책 정보 확인 시 확인 상태를 변경합니다.
+     * @param financialInfo: 사용자가 입력한 정산정책 데이터를 담은 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/project/application/policy" 프로젝트 신청 대표자 및 정산 정보 작성 페이지 경로
+     * @author 박휘림
+     */
+    @PostMapping("/settlementcheck")
+    public ModelAndView modifySettlementPolicyCheckStatus(ModelAndView mv, FarmerFinancialInfoDTO financialInfo) {
+
+        projectApplicationService.modifySettlementPolicyCheckStatus(financialInfo);
+
+        mv.setViewName("redirect:/project/application/representative");
+
+        return mv;
+    }
+
+    /**
+     * sendPhoneVerification: 회원 가입을 위해 휴대폰 번호로 인증번호를 전송합니다.
+     * @param phone: 휴대폰 인증 번호를 전송할 휴대폰 번호
+     * @return gson.toJson(phoneResult)
+     * @author 박휘림
+     */
+    @GetMapping(value = "/sendPhoneVerification", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String sendPhoneVerification(String phone){
+        System.out.println("phone = " + phone);
+        String phoneResult = projectApplicationService.sendPhoneVerification(phone);
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .setPrettyPrinting()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .create();
+
+        return gson.toJson(phoneResult);
+    }
 
 }
