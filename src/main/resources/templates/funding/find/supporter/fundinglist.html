@@ -33,33 +33,47 @@
 	<hr width="100%" >
 	<div style="margin-top: 7%" class=""></div>
 	<div>
-		<div class="funding-list-box">
-			<div style="margin: 2%">
-				<label class="category">버섯류</label><br>
-				<label class="projectStatus">진행중</label><br>
-				<label class="projectName">국내산 송이버섯</label><br>
-				<label class="farmerName">by향긋</label><br>
-				<br>
-				<label class="fundingStatus">결제 예약</label>
-				<button class="review-btn basic-btn btn1 medium-btn">평가하기</button>
-			</div>
-		</div>
 		<th:block th:each="funding : ${fundingList}">
 			<div class="funding-list-box">
 				<div style="margin: 2%">
+					<a th:href="'/funding/find/detail/member/' + ${funding.fundingInfoNo}">
 					<label class="category">[[${funding.rewardCategoryName}]]</label><br>
 					<label class="projectStatus">
-						<th:block th:if="${ funding.getProject.progressStatus eq '3'}">진행중</th:block>
-						<th:block th:if="${ funding.project.progressStatus eq '4'}">완료</th:block>
+						<th:block th:if="${ funding.project.progressStatus eq '3'}">진행중 프로젝트</th:block>
+						<th:block th:if="${ funding.project.progressStatus eq '4'}">완료 프로젝트</th:block>
 					</label><br>
 					<label class="projectName">[[${funding.project.projectName}]]</label><br>
-					<label class="farmerName">by향긋</label><br>
-					<br>
-					<label class="fundingStatus">결제 예약</label>
+					<label class="farmerName">[[${ funding.project.farmer.farmer.businessName}]]</label><br>
+					
+					<label class="fundingStatus">[[${ funding.fundingDate }]] 결제완료</label>
+					</a>
 					<button class="review-btn basic-btn btn1 medium-btn">평가하기</button>
 				</div>
 			</div>
 		</th:block>
+		<div style="text-align: center; margin-top: 10px">
+			<!-- 맨 앞으로 이동 -->
+			<button th:onclick="'location.href=\'/funding/find/list/member?page=' + @{${paging.startPage}} + '\''"
+			        th:disabled="${ fundingList.first }" class="paging-btn first"><<</button>
+			
+			<!-- 이전 페이지로 이동 -->
+			<button th:onclick="'location.href=\'/funding/find/list/member?page=' + @{${paging.currentPage - 1}} + '\''"
+			        th:disabled="${ fundingList.first }" class="paging-btn prev"><</button>
+			
+			<!-- 숫자 버튼-->
+			<th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+				<button th:onclick="'location.href=\'/funding/find/list/member?page=' + @{${page}} + '\''"
+				        th:text="${ page }" th:disabled="${ paging.currentPage eq page}" class="paging-btn"></button>
+			</th:block>
+			
+			<!-- 다음 페이지로 이동 -->
+			<button th:onclick="'location.href=\'/funding/find/list/member?page=' + @{${paging.currentPage + 1}} + '\''"
+			        th:disabled="${ fundingList.last}" class="paging-btn next">></button>
+			
+			<!-- 맨 마지막으로 이동-->
+			<button th:onclick="'location.href=\'/funding/find/list/member?page=' + @{${paging.endPage}} + '\''"
+			        th:disabled="${ fundingList.last }" class="paging-btn last">>></button>
+		</div>
 	</div>
 </div>
 
