@@ -10,19 +10,14 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
-@Entity(name = "ProjectRegistInfoForFunding")
-@Table(name = "TBL_PROJECT_REGIST_INFO")
-public class ProjectRegistInfo {
+@Entity(name = "ProjectBasicInfoForFunding")
+@Table(name = "TBL_PROJECT_BASIC_INFO")
+public class ProjectBasicInfo {
 
     @Id
-    @Column(name = "PROJECT_REGIST_INFO_NO")
+    @Column(name = "PROJECT_BASIC_INFO_NO")
     private int projectRegistInfoNo;
 
-    @Column(name = "PROJECT_NO")
-    private int projectNo;
-
-    @Column(name = "PROJECT_REGIST_INFO_CATEGORY")
-    private String projectRegistInfoCategory;
 
     @ManyToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_CATEGORY_NO")
