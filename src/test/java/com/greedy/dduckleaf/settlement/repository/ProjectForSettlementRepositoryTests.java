@@ -9,6 +9,10 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
 
 import java.util.List;
@@ -37,11 +41,13 @@ public class ProjectForSettlementRepositoryTests {
     @DisplayName("종료된 프로젝트 중 달성률이 100% 이상인 프로젝트 조회 테스트")
     public void findAllByProgressStatusAndAchievementRateGreaterThan_test() {
         //given
-        int progressStatus = 1;
+        int progressStatus = 4;
         int achievementRate = 100;
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("projectNo").descending());
 
         //when
-        List<Project> projects = repository.findAllByProgressStatusAndAchievementRateGreaterThan(progressStatus, achievementRate);
+        Page<Project> projects =
+                repository.findAllByProgressStatusAndAchievementRateGreaterThan(progressStatus, achievementRate, pageable);
 
         //then
         assertNotNull(projects);
