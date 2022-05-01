@@ -51,3 +51,17 @@
           auth: true
           starttls:
             enable: true
+# file upload
+  servlet:
+    multipart:
+      # 파일 업로드 가능 여부 선택
+      enabled: true
+      # 업로드된 파일의 임시 저장 경로
+      location: C:\dev
+      # 한 번에 최대 업로드 가능 용량
+      max-request-size: 100MB
+      # 파일 하나의 최대 크기
+      max-file-size: 20MB
+
+  file:
+    path: C:\final-project\dduckleaf\src\main\resources\static

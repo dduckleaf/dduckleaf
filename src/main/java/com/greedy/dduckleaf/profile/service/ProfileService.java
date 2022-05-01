@@ -20,7 +20,7 @@ import javax.transaction.Transactional;
  * 2022/04/29 (박상범) 처음 작성 / 회원 번호를 통해 프로필 사진정보와, 회원정보 조회 관련 메소드 작성
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
  * </pre>
- * @version 1.0.1
+ * @version 1.0.2
  * @author 박상범
  */
 @Service
@@ -52,7 +52,7 @@ public class ProfileService {
 
     /**
      * modifyAttachment: 회원의 사진 정보를 변경합니다.
-     * @param attachment: 수정할 공지사항 정보를 담은 객체
+     * @param attachment: 변경할 사진 정보를 담은 ProfileAttachmentDTO 객체
      * @return "true"
      * @author 박상범
      */
