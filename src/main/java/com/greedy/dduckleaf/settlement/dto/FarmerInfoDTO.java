@@ -9,8 +9,8 @@ import lombok.*;
 public class FarmerInfoDTO {
 
     private int memberNo;                               //회원번호
-    private int farmerName;                             //상호명
-    private int farmerEmail;                            //문의 이메일
+    private String farmerName;                             //상호명
+    private String farmerEmail;                            //문의 이메일
     private String farmerPhone;                         //문의 전화번호
     private String businessOwnType;                   //사업자유형
     private int businessOwnNo;                        //사업자 등록번호

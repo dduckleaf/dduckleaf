@@ -18,10 +18,10 @@ public class FarmerInfo {
     private int memberNo;                               //회원번호
 
     @Column(name = "FARMER_NAME")
-    private int farmerName;                             //상호명
+    private String farmerName;                             //상호명
 
     @Column(name = "FARMER_EMAIL")
-    private int farmerEmail;                            //문의 이메일
+    private String farmerEmail;                            //문의 이메일
 
     @Column(name = "FARMER_PHONE")
     private String farmerPhone;                         //문의 전화번호

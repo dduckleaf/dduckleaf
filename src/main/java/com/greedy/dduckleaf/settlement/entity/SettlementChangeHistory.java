@@ -16,7 +16,7 @@ public class SettlementChangeHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int settlementChangeHistoryNo;                          //정산히스토리
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "SETTLEMENT_INFO_NO")
     private SettlementInfo settlementInfo;                          //정산정보
 
@@ -24,11 +24,11 @@ public class SettlementChangeHistory {
     @JoinColumn(name = "SETTLEMENT_CHANGED_CATEGORY")
     private SettlementChangedCategory settlementChangedCategory;    //정산정보 변경대상 구분
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "SETTLEMENT_OBJECTION_HISTORY_NO", nullable = true)
     private SettlementObjectionHistory settlementObjectionHistory;        //이의신청처리이력
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER  )
     @JoinColumn(name = "REFUNDING_HISTORY_NO", nullable = true)
     private RefundingHistory refundingHistory;                      //환불히스토리
 

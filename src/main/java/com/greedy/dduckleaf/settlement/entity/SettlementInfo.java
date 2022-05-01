@@ -15,7 +15,7 @@ import java.util.List;
 public class SettlementInfo {
 
     @Id
-    @Column
+    @Column(name = "SETTLEMENT_INFO_NO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int settlementInfoNo;                       //정산정보번호
 
@@ -28,10 +28,10 @@ public class SettlementInfo {
     @Column(name = "SETTLEMENT_TOTAL_AMOUNT")
     private int settlementTotalAmount;                  //정산금총액
 
-    @Column(name = "TOTAL_COMMISSION")
+    @Column(name = "TOTAL_COMMISSION_AMOUNT")
     private int totalCommissionAmount;                  //수수료총액
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_NO")
     private Project project;                                    //프로젝트번호
 

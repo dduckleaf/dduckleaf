@@ -30,7 +30,7 @@ public class SettlementInfoDTO {
                 ", donateAmount=" + donateAmount +
                 ", settlementTotalAmount=" + settlementTotalAmount +
                 ", totalCommissionAmount=" + totalCommissionAmount +
-                ", project=" + project +
+//                ", project=" + project +
                 '}';
     }
 }

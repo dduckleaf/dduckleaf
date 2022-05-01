@@ -30,11 +30,11 @@ public class SettlementPaymentHistory {
     @JoinColumn(name = "SETTLEMENT_PAYMENT_INFO_NO")
     private SettlementPaymentInfo settlementPaymentInfo;                        //회차별정산금지급내역번호
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "REF_SETTLEMENT_OBJECTION_HISTORY_NO", nullable = true)
     private SettlementObjectionHistory settlementObjectionHistory;              //이의신청처리이력번호
 
-    @OneToMany(mappedBy = "settlementPaymentHistory")
+    @OneToMany(mappedBy = "settlementPaymentHistory", fetch = FetchType.EAGER)
     private List<SettlementObjectionInfo> settlementObjectionInfoList;
 
 

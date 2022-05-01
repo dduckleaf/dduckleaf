@@ -20,7 +20,7 @@ public class Project {
     private String projectName;                         //프로젝트명
 
     @Column(name = "PROGRESS_STATUS")
-    private String progressStatus;                      //진행상태
+    private int progressStatus;                      //진행상태
 
     @Column(name = "PROJECT_STATUS")
     private String projectStatus;                       //취소여부
@@ -32,8 +32,8 @@ public class Project {
     private int fundTargetAmount;                       //목표펀딩금액
 
     @OneToOne(cascade = CascadeType.ALL)
-    @Column(name = "FARMER_NO")
-    private FarmerInfo farmer;                                  //파머정보
+    @JoinColumn(name = "FARMER_NO")
+    private FarmerInfo farmer;                          //파머정보
 
     @Column(name = "OPEN_DATE")
     private String openDate;                            //오픈일
