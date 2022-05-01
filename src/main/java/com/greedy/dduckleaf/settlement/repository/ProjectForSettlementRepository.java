@@ -1,6 +1,8 @@
 package com.greedy.dduckleaf.settlement.repository;
 
 import com.greedy.dduckleaf.settlement.entity.Project;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -27,5 +29,5 @@ public interface ProjectForSettlementRepository extends JpaRepository<Project, I
      * @return 달성률 100%인 종료된 프로젝트 목록
      * @author 장민주
      */
-    List<Project> findAllByProgressStatusAndAchievementRateGreaterThan(int progressStatus, int achievementRate);
+    Page<Project> findAllByProgressStatusAndAchievementRateGreaterThan(int progressStatus, int achievementRate, Pageable pageable);
 }

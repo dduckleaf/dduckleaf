@@ -10,6 +10,10 @@ import com.greedy.dduckleaf.settlement.repository.SettlementInfoRepository;
 import com.greedy.dduckleaf.settlement.repository.SettlementPaymentInfoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -109,6 +113,16 @@ public class SettlementService {
         ffff.forEach(System.out::println);
 
         return ffff;
+    }
+
+    public Page<ProjectDTO> findAllEndProjectsAchievedSuccess(int progressStatus, int achievementRate, Pageable pageable) {
+
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(),
+                Sort.by("projectNo").descending());
+
+        return projectRepository.findAllByProgressStatusAndAchievementRateGreaterThan(progressStatus, achievementRate, pageable)
+                .map(project -> modelMapper.map(project, ProjectDTO.class));
     }
 
 }
