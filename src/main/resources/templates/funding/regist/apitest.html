@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<!-- jQuery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+	<!-- iamport.payment.js -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+</head>
+<body>
+<button id="test" onclick="requestPay()">teㄴㅇㅁㄹdddsdt</button>
+<script>
+    let IMP = window.IMP;
+    IMP.init("imp38104797");
+
+    function requestPay() {
+        alert(1);
+        IMP.request_pay({ // param
+            pg: "html5_inicis",
+            pay_method: "card",
+            merchant_uid: "주문번호",
+            name: "상품명",
+            amount: 1232132,
+            buyer_tel: "휴대폰번호",
+        },function (rsp) {
+            if (rsp.success) {
+                // 결제 성공 시 로직,
+                alert("성공");
+
+            }else{
+                // 결제 실패 시 로직,
+                alert("실패");
+            }
+        });
+	}
+</script>
+</body>
+</html>
