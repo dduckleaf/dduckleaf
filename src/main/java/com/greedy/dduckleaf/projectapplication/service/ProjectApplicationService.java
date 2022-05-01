@@ -47,9 +47,10 @@ public class ProjectApplicationService {
     private final ProjectRewardCategoryForProjectApplicationRepository projectRewardCategoryRepository;
     private final BankForProjectApplicationRepository bankRepository;
     private final MemberForApplicationRepository memberRepository;
+    private final ProjectAttachmentForProjectApplicationRepository projectAttachmentRepository;
 
     @Autowired
-    public ProjectApplicationService(ModelMapper modelMapper, RewardRegistInfoRepository rewardRegistInfoRepository, ProjectForApplicationRepository projectRepository, ProjectApplicationInfoRepository projectApplicationInfoRepository, ProjectShippingInfoRepository projectShippingInfoRepository, ProjectBasicInfoRepository projectBasicInfoRepository, FarmerInfoForProjectApplicationRepository farmerInfoRepository, RefundPolicyForProjectApplicationRepository refundPolicyRepository, FarmerFinancialInfoRepository farmerFinancialInfoRepository, ProjectRewardCategoryForProjectApplicationRepository projectRewardCategoryRepository, BankForProjectApplicationRepository bankRepository, MemberForApplicationRepository memberRepository) {
+    public ProjectApplicationService(ModelMapper modelMapper, RewardRegistInfoRepository rewardRegistInfoRepository, ProjectForApplicationRepository projectRepository, ProjectApplicationInfoRepository projectApplicationInfoRepository, ProjectShippingInfoRepository projectShippingInfoRepository, ProjectBasicInfoRepository projectBasicInfoRepository, FarmerInfoForProjectApplicationRepository farmerInfoRepository, RefundPolicyForProjectApplicationRepository refundPolicyRepository, FarmerFinancialInfoRepository farmerFinancialInfoRepository, ProjectRewardCategoryForProjectApplicationRepository projectRewardCategoryRepository, BankForProjectApplicationRepository bankRepository, MemberForApplicationRepository memberRepository, ProjectAttachmentForProjectApplicationRepository projectAttachmentRepository) {
         this.modelMapper = modelMapper;
         this.rewardRegistInfoRepository = rewardRegistInfoRepository;
         this.projectRepository = projectRepository;
@@ -62,6 +63,7 @@ public class ProjectApplicationService {
         this.projectRewardCategoryRepository = projectRewardCategoryRepository;
         this.bankRepository = bankRepository;
         this.memberRepository = memberRepository;
+        this.projectAttachmentRepository = projectAttachmentRepository;
     }
 
     /**
@@ -234,7 +236,7 @@ public class ProjectApplicationService {
     public ProjectBasicInfoDTO findProjectBasicInfoByProjectNo(int projectNo) {
 
         ProjectBasicInfo basicInfo = projectBasicInfoRepository.findByProjectNo(projectNo);
-
+        System.out.println("basicInfo = " + basicInfo);
         return modelMapper.map(basicInfo, ProjectBasicInfoDTO.class);
     }
 
@@ -494,13 +496,13 @@ public class ProjectApplicationService {
         }
 
         String code = (int) (Math.random() * 899999) + 100000 + "";
-        String api_key = "NCS2DRV64W2NLRRJ";
-        String api_secret = "KHIZVNRLB6BCFXT9OKV3EUHBGZNYXRMV";
+        String api_key = "NCSMW5CKIIGCIUO1";
+        String api_secret = "GTY9AORLARLD0KNOSO1AND3KFOREO9N9";
         Message coolsms = new Message(api_key, api_secret);
         HashMap<String, String> params = new HashMap<String, String>();
 
         params.put("to", phone);
-        params.put("from", "01062019811");
+        params.put("from", "01066933114");
         params.put("type", "SMS");
         params.put("text", code);
         params.put("app_version", "test app 1.2");
@@ -520,5 +522,25 @@ public class ProjectApplicationService {
         }
 
         return code;
+    }
+
+    @Transactional
+    public void modifyBasicInfoAttachment(ProjectAttachmentDTO attachment, int projectNo) {
+
+        System.out.println("attachment 서비스 = " + attachment);
+
+        ProjectAttachment projectAttachment = projectAttachmentRepository.findByProjectNo(projectNo);
+        System.out.println("projectAttachment 서비스! = " + projectAttachment);
+        if(projectAttachment == null) {
+            attachment.setProjectAttachmentCategory("대표이미지");
+            projectAttachmentRepository.save(modelMapper.map(attachment, ProjectAttachment.class));
+
+        } else {
+            projectAttachment.setProjectBasicInfoNo(attachment.getProjectBasicInfoNo());
+            projectAttachment.setProjectAttachmentOriginalName(attachment.getProjectAttachmentOriginalName());
+            projectAttachment.setProjectAttachmentSaveName(attachment.getProjectAttachmentSaveName());
+            projectAttachment.setProjectAttachmentSavePath(attachment.getProjectAttachmentSavePath());
+
+        }
     }
 }

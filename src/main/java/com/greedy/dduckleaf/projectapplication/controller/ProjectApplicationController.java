@@ -9,13 +9,15 @@ import com.greedy.dduckleaf.projectapplication.service.ProjectApplicationService
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * <pre>
@@ -179,11 +181,77 @@ public class ProjectApplicationController {
      * @author 박휘림
      */
     @PostMapping("/modify/basicinfo")
-    public ModelAndView modifyBasicInfo(ModelAndView mv, ProjectBasicInfoDTO basicInfo) {
+    public ModelAndView modifyBasicInfo(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request, ModelAndView mv, ProjectBasicInfoDTO basicInfo, @AuthenticationPrincipal CustomUser user) {
+        System.out.println("basicInfo = " + basicInfo);
+        System.out.println("file = " + file);
+        if(file != null) {
 
-        projectApplicationService.modifyBasicInfo(basicInfo);
+            int projectNo = findProjectNoByFarmerNo(user);
 
-        mv.setViewName("redirect:/project/application/goMain");
+            ProjectAttachmentDTO attachment = new ProjectAttachmentDTO();
+            attachment.setProjectNo(projectNo);
+            attachment.setProjectBasicInfoNo(basicInfo.getProjectBasicInfoNo());
+            String result = "";
+
+            String rootLocation = request.getSession().getServletContext().getRealPath("resources");
+
+            String fileUploadPath = rootLocation + "/upload/original";
+
+            File uploadDirectory = new File(fileUploadPath);
+
+            if(!file.isEmpty()) {
+
+                if(!uploadDirectory.exists()) {
+
+                    System.out.println("업로드 디렉토리 생성 : " + uploadDirectory.mkdirs());
+                }
+
+                try {
+
+                    if(file.getSize() > 0) {
+
+                        String orgName = file.getOriginalFilename();
+                        String ext = orgName.substring(orgName.lastIndexOf("."));
+                        String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
+
+                        file.transferTo(new File(uploadDirectory + "/" + savedName));
+
+                        attachment.setProjectAttachmentOriginalName(orgName);
+                        attachment.setProjectAttachmentSaveName(savedName);
+                        attachment.setProjectAttachmentSavePath(fileUploadPath);
+                        attachment.setFarmerNo(user.getMemberNo());
+
+                    }
+
+                    attachment.setFarmerNo(user.getMemberNo());
+
+                    projectApplicationService.modifyBasicInfoAttachment(attachment, projectNo);
+
+                    projectApplicationService.modifyBasicInfo(basicInfo);
+
+                    mv.setViewName("redirect:/project/application/goMain");
+
+                } catch (IllegalStateException | IOException e) {
+                    e.printStackTrace();
+
+                    File deleteFile = new File(uploadDirectory + "/" + attachment.getProjectAttachmentSaveName());
+                    boolean isDeleted1 = deleteFile.delete();
+
+                    if(isDeleted1) {
+                        System.out.println("업로드 실패로 인한 사진 삭제 완료 !!!");
+                        e.printStackTrace();
+                    } else {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        } else {
+
+            projectApplicationService.modifyBasicInfo(basicInfo);
+
+            mv.setViewName("redirect:/project/application/goMain");
+        }
 
         return mv;
     }
@@ -463,5 +531,7 @@ public class ProjectApplicationController {
 
         return gson.toJson(phoneResult);
     }
+
+
 
 }
