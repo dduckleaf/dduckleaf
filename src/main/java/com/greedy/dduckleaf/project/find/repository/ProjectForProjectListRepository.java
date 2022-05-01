@@ -29,5 +29,5 @@ public interface ProjectForProjectListRepository extends JpaRepository<Project, 
 
     Page<Project> findByProjectExamineStatusIsNotNullAndProgressStatus_projectProgressStuatusNoAndBasicInfo_category_projectCategoryNo(int progressStatus,int rewardCategoryNo, Pageable pageable);
 
-    Page<Project> findByProjectExamineStatusIsNotNull(Pageable pageable);
+    Page<Project> findByProgressStatus_projectProgressStuatusNo(int progressStatus, Pageable pageable);
 }

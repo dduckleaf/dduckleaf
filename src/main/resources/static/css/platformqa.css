@@ -59,6 +59,7 @@ td.no, td.category, td.title, td.author, td.date, td.count {
     text-align: center;
 }
 
+/*
 .regist-form {
     height: 550px;
     padding: 40px 80px 0;
@@ -69,7 +70,7 @@ td.no, td.category, td.title, td.author, td.date, td.count {
 .regist-wrap {
     width: 100%;
     text-align: right;
-    /*border: 1px solid red;*/
+    !*border: 1px solid red;*!
 }
 
 .regist-form label {
@@ -92,4 +93,4 @@ textarea#content {
 
 .content-form label {
     vertical-align: top;
-}
+}*/
