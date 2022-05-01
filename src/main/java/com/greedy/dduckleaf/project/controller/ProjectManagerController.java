@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.common.controller;
+package com.greedy.dduckleaf.project.controller;
 
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
@@ -53,6 +53,7 @@ public class ProjectManagerController {
 
         mv.addObject("projects", projects);
         mv.addObject("pagingInfo", pagingInfo);
+        mv.addObject("intent", "end/endlist");
         mv.setViewName("/project/manage/end/endlist");
 
         return mv;
