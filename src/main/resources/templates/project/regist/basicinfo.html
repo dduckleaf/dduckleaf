@@ -108,24 +108,6 @@
 </body>
 <script>
 
-    /* 이미지 등록 */
-    const $basicimg = document.getElementById("changeImg");
-
-    $basicimg.onclick = function() {
-        document.getElementById("imageFile").click();
-    }
-
-    function loadImg(value) {
-        if(value.files && value.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById("$basicimg").src = e.target.result;
-            }
-            reader.readAsDataURL(value.files[0]);
-        }
-    }
-
-
     var acc = document.getElementsByClassName("accordion");
 
     for (var i = 0; i < acc.length; i++) {
@@ -203,6 +185,9 @@
                         }
                     }
 
+                    let formData = new FormData();
+                    formData.append('file', file);
+                    console.log(formData);
 
                     let saveForm = document.saveForm;
                     let url = '/project/application/modify/basicinfo';
@@ -212,7 +197,7 @@
                     saveForm.projectEndDate = projectEndDate;
                     saveForm.projectNo = projectNo;
                     saveForm.projectBasicInfoNo = projectBasicInfoNo;
-                    saveForm.file = file;
+                    // saveForm.formData = formData;
 
                     saveForm.action = url;
                     saveForm.method = 'post';

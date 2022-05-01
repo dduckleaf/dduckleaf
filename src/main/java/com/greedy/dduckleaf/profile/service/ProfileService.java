@@ -2,6 +2,7 @@ package com.greedy.dduckleaf.profile.service;
 
 import com.greedy.dduckleaf.profile.dto.MemberDTO;
 import com.greedy.dduckleaf.profile.dto.ProfileAttachmentDTO;
+import com.greedy.dduckleaf.profile.entity.Member;
 import com.greedy.dduckleaf.profile.entity.ProfileAttachment;
 import com.greedy.dduckleaf.profile.repository.MemberForProfileRepository;
 import com.greedy.dduckleaf.profile.repository.ProfileAttachmentForProfileRepository;
@@ -19,8 +20,9 @@ import javax.transaction.Transactional;
  * History
  * 2022/04/29 (박상범) 처음 작성 / 회원 번호를 통해 프로필 사진정보와, 회원정보 조회 관련 메소드 작성
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
+ * 2022.05/01 (박상범) 회원의 프로필 사진정보 조회, 회원정보 조회 관련 메소드 수정
  * </pre>
- * @version 1.0.2
+ * @version 1.0.3
  * @author 박상범
  */
 @Service
@@ -43,11 +45,12 @@ public class ProfileService {
      * @return 펀딩 횟수, 모의펀딩 횟수, 티켓 갯수를 담은 MyFundingDTO 객체를 리턴합니다.
      * @author 박상범
      */
-    public ProfileAttachmentDTO findProfileByMemberNo(int memberNo) {
+    public ProfileDTO findProfileByMemberNo(int memberNo) {
 
         ProfileAttachmentDTO profileAttachment = modelMapper.map(profileAttachmentForProfileRepository.findProfileAttachmentByMember_memberNo(memberNo), ProfileAttachmentDTO.class);
+        MemberDTO member = modelMapper.map(memberForProfileRepository.findById(memberNo).get(), MemberDTO.class);
 
-        return profileAttachment;
+        return new ProfileDTO(member, profileAttachment);
     }
 
     /**
