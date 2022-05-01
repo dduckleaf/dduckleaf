@@ -9,13 +9,14 @@ import com.greedy.dduckleaf.projectnotice.dto.ProfileDTO;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -55,18 +56,29 @@ public class ProfileController {
      * @return mv
      * @author 박상범
      */
-    @GetMapping("/thumbnail")
-    public ModelAndView modifyProfile(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
-
-        int memberNo = user.getMemberNo();
-
-        ProfileAttachmentDTO profileAttachment = profileService.findProfileByMemberNo(memberNo);
-
-        mv.addObject("profileAttachment", profileAttachment);
-        mv.setViewName("/profile/thumbnail");
-
-        return mv;
-    }
+//    @GetMapping( "/thumbnail")
+//    public ModelAndView modifyProfile(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+//
+//        int memberNo = user.getMemberNo();
+//
+//        ProfileDTO profile = profileService.findProfileByMemberNo(memberNo);
+//
+//        mv.addObject("profileAttachment", profile.getProfileAttachment());
+////        mv.addObject("member", profile.getMember());
+//
+////        System.out.println(request.getRequestURI());
+//
+//        mv.setViewName("/profile/thumbnail");
+////        if("email".equals(path)){
+////        }
+////        if("phone".equals(path)){
+////            mv.setViewName("profile/modify/phone");
+////        }
+////        if("pwd".equals(path)){
+////            mv.setViewName("profile/modify/pwd");
+////        }
+//        return mv;
+//    }
 
     /**
      * uploadImg: 회원의 프로필 사진을 변경합니다.
@@ -146,5 +158,37 @@ public class ProfileController {
         }
 
         return result;
+    }
+
+    /**
+     * modifyEmail: 개인 정보 수정의 이메일 변경페이지로 포워딩합니다.
+     * @param user: 로그인된 회원의 정보
+     * @return mv
+     * @author 박상범
+     */
+    @GetMapping(value = {"/modify/email", "/modify/phone", "/modify/pwd"})
+    public ModelAndView modifyEmail(ModelAndView mv,HttpServletRequest request, @AuthenticationPrincipal CustomUser user) {
+
+        int memberNo = user.getMemberNo();
+        String uri = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
+
+        ProfileDTO profile = profileService.findProfileByMemberNo(memberNo);
+
+
+        mv.addObject("profileAttachment", profile.getProfileAttachment());
+        mv.addObject("member", profile.getMember());
+
+        if("email".equals(uri)) {
+            mv.setViewName("profile/modify/email");
+        }
+
+        if("phone".equals(uri)) {
+            mv.setViewName("profile/modify/phone");
+        }
+
+        if("pwd".equals(uri)){
+            mv.setViewName("profile/modify/pwd");
+        }
+        return mv;
     }
 }
