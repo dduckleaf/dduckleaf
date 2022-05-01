@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div class="vertical-menubar-area">
+    <span class="text-title">프로젝트명</span>
+    <div class="block">
+        <div class="col-8">
+            <p>파머정보</p>
+            <p class="text-subtitle">파머이름</p>
+        </div>
+        <div class="col-4">
+            펀딩 완료일<br>
+            2022-05-17<br><br>
+            달성률<br>
+            400%
+        </div>
+    </div>
+    <div class="block2" id="funding">
+        펀딩내역 관리<br>
+    </div>
+    <div class="block2" id="settlement">
+        정산금 관리<br>
+    </div>
+    <div class="block2" id="shipping">
+        리워드 발송 관리<br>
+    </div>
+    <div class="block2" id="refunding">
+        환불 관리<br>
+    </div>
+</div>
+</body>
+<script>
+    const funding = document.getElementById("funding");
+    const settlement = document.getElementById("settlement");
+    const shipping = document.getElementById("shipping");
+    const refunding = document.getElementById("refunding");
+
+    /* 펀딩내역 관리로 이동 */
+    if(funding) {
+        funding.onclick = function() {
+            location.href = "";
+        }
+    }
+
+    /* 정산금 관리로 이동 */
+    if(settlement) {
+        settlement.onclick = function() {
+            location.href = "/settlement/projectmanager/";
+        }
+    }
+
+    /* 리워드 발송 관리로 이동 */
+    if(shipping) {
+        shipping.onclick = function() {
+            location.href = "";
+        }
+    }
+
+    /* 환불 관리로 이동 */
+    if(refunding) {
+        refunding.onclick = function() {
+            location.href = "";
+        }
+    }
+</script>
+</html>
