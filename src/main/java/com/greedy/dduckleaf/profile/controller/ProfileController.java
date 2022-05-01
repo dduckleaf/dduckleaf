@@ -1,16 +1,12 @@
 package com.greedy.dduckleaf.profile.controller;
 
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
-import com.greedy.dduckleaf.profile.dto.MemberDTO;
 import com.greedy.dduckleaf.profile.dto.ProfileAttachmentDTO;
-import com.greedy.dduckleaf.profile.entity.ProfileAttachment;
 import com.greedy.dduckleaf.profile.service.ProfileService;
 import com.greedy.dduckleaf.projectnotice.dto.ProfileDTO;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +27,9 @@ import java.util.UUID;
  * History
  * 2022/04/29 (박상범) 처음 작성 / 개인 정보 수정 페이지로 이동, 조회 관련 메소드 작성
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
- * 2022/05/01 (박상범) 개인 정보 수정 페이지로 이동, 조회 관련 메소드 수정, 회원의 사진 정보 변경 관련 메소드 수정
+ * 2022/05/01 (박상범) 개인 정보 수정 페이지로 이동, 조회 관련 메소드 수정, 회원의 사진 정보 변경 관련 메소드 수정, 이메일 변경 페이지로 이동, 휴대전화 번호 변경 페이지로 이동, 비밀번호 변경 페이지로 이동 관련 메소드 수정
  * </pre>
- * @version 1.0.4
+ * @version 1.0.5
  * @author 박상범
  */
 @Controller
@@ -51,34 +47,35 @@ public class ProfileController {
     }
 
     /**
-     * modifyProfile: 회원 번호를 통해 프로필 사진 정보를 포워딩합니다.
+     * modifyEmail: 개인 정보 수정의 이메일 변경 페이지, 휴대전화 번호 변경 페이지, 비밀번호 변경 페이지로 포워딩합니다.
      * @param user: 로그인된 회원의 정보
      * @return mv
      * @author 박상범
      */
-//    @GetMapping( "/thumbnail")
-//    public ModelAndView modifyProfile(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
-//
-//        int memberNo = user.getMemberNo();
-//
-//        ProfileDTO profile = profileService.findProfileByMemberNo(memberNo);
-//
-//        mv.addObject("profileAttachment", profile.getProfileAttachment());
-////        mv.addObject("member", profile.getMember());
-//
-////        System.out.println(request.getRequestURI());
-//
-//        mv.setViewName("/profile/thumbnail");
-////        if("email".equals(path)){
-////        }
-////        if("phone".equals(path)){
-////            mv.setViewName("profile/modify/phone");
-////        }
-////        if("pwd".equals(path)){
-////            mv.setViewName("profile/modify/pwd");
-////        }
-//        return mv;
-//    }
+    @GetMapping(value = {"/modify/email", "/modify/phone", "/modify/pwd"})
+    public ModelAndView modifyEmail(ModelAndView mv, HttpServletRequest request, @AuthenticationPrincipal CustomUser user) {
+
+        int memberNo = user.getMemberNo();
+        String uri = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+
+        ProfileDTO profile = profileService.findProfileByMemberNo(memberNo);
+
+        mv.addObject("profileAttachment", profile.getProfileAttachment());
+        mv.addObject("member", profile.getMember());
+
+        if("email".equals(uri)) {
+            mv.setViewName("profile/modify/email");
+        }
+
+        if("phone".equals(uri)) {
+            mv.setViewName("profile/modify/phone");
+        }
+
+        if("pwd".equals(uri)){
+            mv.setViewName("profile/modify/pwd");
+        }
+        return mv;
+    }
 
     /**
      * uploadImg: 회원의 프로필 사진을 변경합니다.
@@ -158,37 +155,5 @@ public class ProfileController {
         }
 
         return result;
-    }
-
-    /**
-     * modifyEmail: 개인 정보 수정의 이메일 변경페이지로 포워딩합니다.
-     * @param user: 로그인된 회원의 정보
-     * @return mv
-     * @author 박상범
-     */
-    @GetMapping(value = {"/modify/email", "/modify/phone", "/modify/pwd"})
-    public ModelAndView modifyEmail(ModelAndView mv,HttpServletRequest request, @AuthenticationPrincipal CustomUser user) {
-
-        int memberNo = user.getMemberNo();
-        String uri = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/")+1);
-
-        ProfileDTO profile = profileService.findProfileByMemberNo(memberNo);
-
-
-        mv.addObject("profileAttachment", profile.getProfileAttachment());
-        mv.addObject("member", profile.getMember());
-
-        if("email".equals(uri)) {
-            mv.setViewName("profile/modify/email");
-        }
-
-        if("phone".equals(uri)) {
-            mv.setViewName("profile/modify/phone");
-        }
-
-        if("pwd".equals(uri)){
-            mv.setViewName("profile/modify/pwd");
-        }
-        return mv;
     }
 }
