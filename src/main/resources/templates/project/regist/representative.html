@@ -117,7 +117,7 @@
                     <div>
                         <input type="number" id="phone" name="phone" placeholder="휴대폰 번호 입력" style="width: 400px; height: 40px;">
                         <input type="button" class="btn1 big-btn story-btn" id="send-phone"  value="인증번호 전송">
-                        <div id="sendcomplete" style="display: none">본인인증이 완료되었습니다.</div>
+                        <div id="sendcomplete" style="display: none">인증번호가 전송되었습니다.</div>
                         <input type="hidden" id="verification-phone">
                         <!--phone 인증번호 전송 버튼-->
                         <br>
@@ -209,7 +209,7 @@
 
 
     let $verificationPhone = document.getElementById("verification-phone").value;
-
+    const $sendcomplete = document.getElementById("sendcomplete");
     /* 휴대폰 인증번호 전송 */
     if(document.getElementById("send-phone")) {
 
@@ -231,6 +231,7 @@
                     } else if(response == "휴대폰 번호가 유효하지 않습니다."){
                         alert(response);
                     } else {
+                        $sendcomplete.style.display = 'block';
                         $verificationPhone = response;
                         console.table($verificationPhone);
                         $phoneVerificationDiv.style.display = "block";
@@ -245,14 +246,16 @@
     const $phoneVerification = document.getElementById("phone-verification");
     let $checkPhoneResult = document.getElementById("checkPhoneResult").value;
     const $checkmention = document.getElementById("checkmention");
-    const $sendcomplete = document.getElementById("sendcomplete");
+
     /* 휴대폰 인증번호 확인 체크*/
     if(document.getElementById("check-phone-verification")) {
 
         const $checkPhoneVerification = document.getElementById("check-phone-verification");
-        $sendcomplete.style.display = 'block';
+
 
         $checkPhoneVerification.onclick = function() {
+
+
 
             if($phoneVerification.value === $verificationPhone) {
                 $checkPhoneResult = 'true';
