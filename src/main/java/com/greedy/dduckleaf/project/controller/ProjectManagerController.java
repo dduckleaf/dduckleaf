@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -59,6 +60,23 @@ public class ProjectManagerController {
         mv.addObject("pagingInfo", pagingInfo);
         mv.addObject("intent", "end/endlist");
         mv.setViewName("/project/manage/end/endlist");
+
+        return mv;
+    }
+
+    /**
+     * findProjectDetail: 프로젝트 번호로 프로젝트 상세 조회를 요청하는 메소드입니다.
+     * @param projectNo: 프로젝트 번호
+     * @return 프로젝트 상세정보, 프로젝트관리 상세조회 화면경로
+     * @author 장민주
+     */
+    @GetMapping("/end/detail/{projectNo}")
+    public ModelAndView findProjectDetail(ModelAndView mv, @PathVariable int projectNo) {
+
+        ProjectDTO project = settlementService.findProjectDetail(projectNo);
+
+        mv.addObject("project", project);
+        mv.setViewName("project/manage/end/detail");
 
         return mv;
     }
