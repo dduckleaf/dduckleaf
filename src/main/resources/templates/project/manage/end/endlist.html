@@ -23,25 +23,58 @@
 						<hr style="width: 100%">
 					</div>
 					<div class="cont-div" style="width: 100%; text-align: center; margin-top: 2%">
-						<table style="text-align: center;width: 100%;">
+						<table style="text-align: center;width: 100%;" class="basic-table">
 							<colgroup>
+								<col style="width: 0.1%">
 								<col style="width: 30%">
 								<col style="width: 20%">
 								<col style="width: 15%">
 								<col style="width: 15%">
-								<col style="width: 20%">
+								<col style="width: 19.9%">
 							</colgroup>
 							<tr style="border-top: #D9D9D9 solid 2px">
+								<th></th>
 								<th>프로젝트명</th>
 								<th>파머명</th>
-								<th>달성률</th>
-								<th>모금금액</th>
+								<th>달성률(%)</th>
+								<th>목표금액</th>
 								<th>마감일</th>
 							</tr>
+							<tr th:each="project : ${ projects }">
+								<td><input type="hidden" th:value="${project.projectNo}"></td>
+								<td th:text="${ project.projectName }"></td>
+								<td th:text="${ project.farmer.farmerName }"></td>
+								<td th:text="${ project.achievementRate}"></td>
+								<td th:text="${ project.fundTargetAmount }"></td>
+								<td th:text="${ project.endDate }"></td>
+							</tr>
 						</table>
+						<br>
 						<div style="text-align: center">
-						<< < 1  2  3 4 5 > >>
+							<!--<div th:replace="/project/manage/end/projectlistpaging.html"></div>-->
+							<!-- 맨 앞으로 이동 -->
+							<button th:onclick="'location.href=\'/project/manage/end/endlist' + '?page=' + @{${pagingInfo.startPage}} + '\''"
+							        th:disabled="${ projects.first }" class="paging-btn first"><<</button>
+							
+							<!-- 이전 페이지로 이동 -->
+							<button th:onclick="'location.href=\'/project/manage/end/endlist' + '?page=' + @{${pagingInfo.currentPage - 1}} + '\''"
+							        th:disabled="${ projects.first }" class="paging-btn prev"><</button>
+							
+							<!--&lt;!&ndash; 숫자 버튼&ndash;&gt;-->
+							<th:block th:each="page : ${#numbers.sequence(pagingInfo.startPage, pagingInfo.endPage)}">
+								<button th:onclick="'location.href=\'/project/manage/end/endlist' + '?page=' + @{${page}} + '\''"
+								        th:text="${ page }" th:disabled="${ pagingInfo.currentPage eq page}" class="paging-btn"></button>
+							</th:block>
+							
+							<!-- 다음 페이지로 이동 -->
+							<button th:onclick="'location.href=\'/project/manage/end/endlist' + '?page=' + @{${pagingInfo.currentPage + 1}} + '\''"
+							        th:disabled="${ projects.last}" class="paging-btn next">></button>
+							
+							<!-- 맨 마지막으로 이동-->
+							<button th:onclick="'location.href=\'/project/manage/end/endlist' + '?page=' + @{${pagingInfo.endPage}} + '\''"
+							        th:disabled="${ projects.last }" class="paging-btn last">>></button>
 						</div>
+						<br>
 						<form id="search-form" action="/notice/search" method="get">
 							<fieldset>
 								<div class="search">
@@ -59,38 +92,38 @@
 			</main>
 		</div>
 	</div>
-<script>
-    /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
-    const tds = document.getElementsByTagName("td");
-    if(tds) {
-        for(let i = 0; i < tds.length; i++) {
+	<script>
+        /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
+        const tds = document.getElementsByTagName("td");
+        if(tds) {
+            for(let i = 0; i < tds.length; i++) {
 
-            tds[i].onmouseenter = function() {
-                this.parentNode.style.backgroundColor = "#f0f0f0";
-                this.parentNode.style.cursor = "pointer";
-            }
+                tds[i].onmouseenter = function() {
+                    this.parentNode.style.backgroundColor = "#f0f0f0";
+                    this.parentNode.style.cursor = "pointer";
+                }
 
-            tds[i].onmouseout = function() {
-                this.parentNode.style.backgroundColor = "#fff";
-            }
+                tds[i].onmouseout = function() {
+                    this.parentNode.style.backgroundColor = "#fff";
+                }
 
-            tds[i].onclick = function() {
-                const reportNo = this.parentNode.children[0].innerText;
-                location.href = "/report/platformmanager/detail/" + reportNo;
+                tds[i].onclick = function() {
+                    const $projectNo = this.parentNode.children[0].children[0].value;
+                    location.href = "/project/manage/end/detail/" + $projectNo;
+                }
             }
         }
-    }
 
-    /* 검색 기능 */
-    let keyword = document.getElementById("searchValue").innerText;
-    let category = document.getElementById("category");
+        /* 검색 기능 */
+        let keyword = document.getElementById("searchValue").innerText;
+        let category = document.getElementById("category");
 
-    const search = document.getElementById("search");
-    if(search) {
-        search.onclick = function() {
-            location.href = "/report/platformmanager"/ + category + "/" + keyword;
+        const search = document.getElementById("search");
+        if(search) {
+            search.onclick = function() {
+                location.href = "/report/platformmanager"/ + category + "/" + keyword;
+            }
         }
-    }
-</script>
+	</script>
 </body>
 </html>

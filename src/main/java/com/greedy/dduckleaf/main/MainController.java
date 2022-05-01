@@ -33,7 +33,4 @@ public class MainController {
 
         return mv;
     }
-
-    @RequestMapping(value = "/project/manage/end/endlist")
-    public void sendTo(){}
 }
