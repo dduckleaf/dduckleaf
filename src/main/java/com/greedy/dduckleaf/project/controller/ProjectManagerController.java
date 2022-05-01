@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * <pre>
  * Class : ProjectManagerController
@@ -43,11 +45,13 @@ public class ProjectManagerController {
      */
     @GetMapping("/end/endlist")
     public ModelAndView findEndProjectsAchievedSuccess(ModelAndView mv,
-    @PageableDefault(size = 10, sort = "projectNo", direction = Sort.Direction.DESC) Pageable pageable) {
+       @PageableDefault(size = 10, sort = "projectNo", direction = Sort.Direction.DESC) Pageable pageable,
+       HttpServletRequest request) {
 
         int progressStatus = 4;
         int achievementRate = 100;
-
+        request.getParameter("searchCondition");
+        request.getParameter("searchValue");
         Page<ProjectDTO> projects = settlementService.findAllEndProjectsAchievedSuccess(progressStatus, achievementRate, pageable);
         PagingButtonInfo pagingInfo = Pagenation.getPagingButtonInfo(projects);
 
