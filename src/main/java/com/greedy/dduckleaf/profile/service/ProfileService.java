@@ -26,7 +26,7 @@ import java.util.HashMap;
  * 2022/04/29 (박상범) 처음 작성 / 회원 번호를 통해 프로필 사진정보와, 회원정보 조회 관련 메소드 작성
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
  * 2022/05/01 (박상범) 회원의 프로필 사진정보 조회, 회원정보 조회 관련 메소드 수정
- * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성, 회원의 이메일 변경 관련 메소드 작성, 휴대전화 번호로 인증번호 전송 관련 메소드 작성, 회원읜 휴대전화 번호 변경 관련 메소드 작성
+ * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성, 회원의 이메일 변경 관련 메소드 작성, 휴대전화 번호로 인증번호 전송 관련 메소드 작성, 회원의 휴대전화 번호 변경 관련 메소드 작성, 회원의 비밀번호 변경 관련 메소드 작성
  * </pre>
  * @version 1.0.3
  * @author 박상범
@@ -172,5 +172,17 @@ public class ProfileService {
 
         Member foundMember = memberForProfileRepository.findById(member.getMemberNo()).get();
         foundMember.setPhone(member.getPhone());
+    }
+
+    /**
+     * modifyMemberPwd: 회원의 비밀번호를 변경합니다.
+     * @param member:  회원 번호와 비밀번호를 담은 MemberDTO 객체
+     * @return 결과에 따라 다른 메시지를 return합니다.
+     * @author 박상범
+     */
+    public void modifyMemberPwd(MemberDTO member) {
+
+        Member foundMember = memberForProfileRepository.findById(member.getMemberNo()).get();
+        foundMember.setMemberPwd(member.getMemberPwd());
     }
 }
