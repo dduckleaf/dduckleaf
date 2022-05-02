@@ -260,7 +260,7 @@
                 pay_method: "kakaopay",
                 merchant_uid: "dduckleaf" + new Date().getTime(),
                 name: "상품명",
-                amount: 123213,
+                amount: $totalFunding.value,
                 buyer_tel: "휴대폰번호",
             },function (rsp) {
                 if (rsp.success) {
