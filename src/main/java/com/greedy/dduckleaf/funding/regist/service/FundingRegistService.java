@@ -124,7 +124,7 @@ public class FundingRegistService {
     private PaymentHistory parsingPaymentHistory(FundingRegistDTO registDTO) {
 
         PaymentHistory history = new PaymentHistory();
-        history.setPaymentResultDate(new java.sql.Date(System.currentTimeMillis()));
+        history.setPaymentResultDate(getDateAndTime());
         history.setMemberNo(registDTO.getMemberNo());
         history.setPaymentResultStauts("결제완료");
 
@@ -160,7 +160,7 @@ public class FundingRegistService {
             extraShippingFeeStatus = "N";
         }
         funding.setExtraShippingFeeStatus(extraShippingFeeStatus);
-        funding.setRefundBankCode(registDTO.getRefundAccountInfo().getBankCode());
+        funding.setRefundBankCode(bankRepository.findById(registDTO.getRefundAccountInfo().getBankCode()).get());
         funding.setRefundAccount(registDTO.getRefundAccountInfo().getAccountNo());
 
         return funding;

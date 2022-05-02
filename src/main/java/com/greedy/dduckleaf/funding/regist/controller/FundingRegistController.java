@@ -89,7 +89,6 @@ public class FundingRegistController {
     public String registByApi(FundingRegistDTO registDTO, @AuthenticationPrincipal CustomUser user) {
 
         registDTO.setMemberNo(user.getMemberNo());
-        System.out.println("registDTO at regist controller = " + registDTO);
 
         service.registFunding(registDTO);
 
