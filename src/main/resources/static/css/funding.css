@@ -179,7 +179,7 @@ input[type=checkbox]
     margin-top: 2%;
 }
 .review-btn{
-    margin-left: 65%;
+    margin-left: 85%;
 }
 .category{
     font-weight: 900;
@@ -212,7 +212,7 @@ input[type=checkbox]
 .funding-detail-info-box{
     margin: 2%;
     width: 96%;
-    height: 320px;
+    height: 350px;
 }
 .totallybig-btn{
     width: 100%;

@@ -15,6 +15,13 @@
     <!-- Style CSS -->
     <link rel="stylesheet" th:href="@{ /css/style.css }">
     <link rel="stylesheet" th:href="@{ /css/projectapplication.css }">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        const message = "[[${ message }]]";
+        if(message) {
+            alert(message);
+        }
+    </script>
 </head>
 <body>
 <div th:replace="/common/menubar.html"></div>
@@ -35,6 +42,7 @@
                     <p onclick="location.href='/project/application/representative'">대표자 및 정산 정보</p>
                 </div>
             </div>
+            <form name="saveForm">
             <div class="col-md-7">
                 <div class="fundtitle">
                     <img class="leaf" th:src="@{ /images/common/Leaf.png }">펀딩 준비
@@ -61,9 +69,10 @@
                     <a class="fundsubtitle">대표자 및 정산 정보</a><a class="fundstatus"></a><a class="fund-btn" onclick="location.href='/project/application/representative'">작성하기</a>
                 </div>
                 <div>
-                    <button type="button" class="btn1 big-btn" style="width: 100%;" onclick="location.href='project/application/start'">신청하기</button>
+                    <button type="button" class="btn1 big-btn" id="saveclick" style="width: 100%;">신청하기</button>
                 </div>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -95,6 +104,45 @@
 
         }
     }
+
+    /* 저장하기 버튼 */
+    $("#saveclick").click(function() {
+        Swal.fire({
+            title: '심사를 신청하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            allowEnterKey: false,
+            confirmButtonWidth: '100px',
+            customClass: {
+                confirmButton: 'savesuccess',
+                cancelButton: 'savecancel',
+                popup: 'savepopup'
+            },
+            buttonsStyling: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: '신청되었습니다',
+                    confirmButtonText: "확인",
+                    allowEnterKey: false,
+                    customClass: {
+                        confirmButton: 'saveok',
+                        popup: 'savepopup'
+                    },
+                    buttonsStyling: false,
+                }).then(function() {
+                    let saveForm = document.saveForm;
+                    let url = '/project/application/examination';
+
+                    saveForm.action = url;
+                    saveForm.method = 'post';
+                    saveForm.submit();
+                });
+            }
+        })
+    });
+
 </script>
 
 <!-- Global Vendor, plugins JS -->

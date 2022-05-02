@@ -15,6 +15,6 @@ public class PaymentHistoryDTO {
     private int paymentHistoryNo;
     private int memberNo;
     private String paymentResultStauts;
-    private java.sql.Date paymentResultDate;
+    private String paymentResultDate;
     private Funding funding;
 }

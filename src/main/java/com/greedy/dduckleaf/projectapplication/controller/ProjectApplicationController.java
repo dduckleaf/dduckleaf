@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -31,7 +32,7 @@ import java.util.UUID;
  * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findBasicInfoByProjectNo, modifyBasicInfo 메소드 작성
  * 2022/04/29 (박휘림) findStoryByProjectNo, modifyStory, modifyPromotionAgreementStatus, findRewardByProjectNo, modifyReward 메소드 작성
  * 2022/04/30 (박휘림) findPolicyByProjectNo, modifyPolicy, modifyPolicyAgreementStatus, findFarmerInfoByMemberNo, modifyFarmerInfo 메소드 작성
- * 2022/05/01 (박휘림)  메소드 작성
+ * 2022/05/01 (박휘림) sendPhoneVerification, registProjectApplicationInfo 메소드 작성
  * </pre>
  * @version 1.0.4
  * @author 박휘림
@@ -702,6 +703,26 @@ public class ProjectApplicationController {
         return gson.toJson(phoneResult);
     }
 
+    /**
+     * registProjectApplicationInfo: 프로젝트 심사를 신청합니다.
+     * @param user: 로그인한 사용자의 정보를 받는 객체
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "/main/mainPage" 메인 페이지 경로
+     * @author 박휘림
+     */
+    @PostMapping("/examination")
+    public ModelAndView registProjectApplicationInfo(ModelAndView mv, @AuthenticationPrincipal CustomUser user, RedirectAttributes rttr) {
+        System.out.println("여기왔늬?");
+        int projectNo = findProjectNoByFarmerNo(user);
+        int memberNo = user.getMemberNo();
 
+        projectApplicationService.registProjectApplicationInfo(projectNo, memberNo);
+
+//        rttr.addFlashAttribute("message", "프로젝트가 정상적으로 신청되었습니다.");
+
+        mv.setViewName("/main/mainPage");
+
+        return mv;
+    }
 
 }

@@ -46,8 +46,9 @@ public class Funding {
     @Column(name = "EXTRA_SHIPPING_FEE_STATUS")
     private String extraShippingFeeStatus;
 
-    @Column(name = "REFUND_BANK_CODE")
-    private int refundBankCode;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "REFUND_BANK_CODE")
+    private Bank refundBankCode;
 
     @Column(name = "REFUND_ACCOUNT")
     private int refundAccount;
