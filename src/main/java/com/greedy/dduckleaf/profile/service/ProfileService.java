@@ -8,11 +8,15 @@ import com.greedy.dduckleaf.profile.entity.ProfileAttachment;
 import com.greedy.dduckleaf.profile.repository.MemberForProfileRepository;
 import com.greedy.dduckleaf.profile.repository.ProfileAttachmentForProfileRepository;
 import com.greedy.dduckleaf.projectnotice.dto.ProfileDTO;
+import net.nurigo.java_sdk.api.Message;
+import net.nurigo.java_sdk.exceptions.CoolsmsException;
+import org.json.simple.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
 
 /**
  * <pre>
@@ -22,7 +26,7 @@ import javax.transaction.Transactional;
  * 2022/04/29 (박상범) 처음 작성 / 회원 번호를 통해 프로필 사진정보와, 회원정보 조회 관련 메소드 작성
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
  * 2022/05/01 (박상범) 회원의 프로필 사진정보 조회, 회원정보 조회 관련 메소드 수정
- * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성, 회원의 이메일 변경 관련 메소드 작성
+ * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성, 회원의 이메일 변경 관련 메소드 작성, 휴대전화 번호로 인증번호 전송 관련 메소드 작성, 회원읜 휴대전화 번호 변경 관련 메소드 작성
  * </pre>
  * @version 1.0.3
  * @author 박상범
@@ -110,5 +114,63 @@ public class ProfileService {
 
         Member foundMember = memberForProfileRepository.findById(member.getMemberNo()).get();
         foundMember.setEmail(member.getEmail());
+    }
+
+    /**
+     * sendPhoneVerification: 입력받은 휴대전화 번호로 인증번호를 전송한다.
+     * @param phone:  인증 번호를 받을 휴대폰 번호
+     * @return 결과에 따라 다른 메시지를 return합니다.
+     * @author 박상범
+     */
+    public String sendPhoneVerification(String phone) {
+
+        Member member = memberForProfileRepository.findMemberByPhone(phone);
+
+        if(phone.isEmpty()) {
+            return "휴대전화 번호를 입력해주세요.";
+        }
+        if(member != null) {
+            return "이미 사용중인 휴대전화 번호입니다.";
+        }
+
+        String code = (int) (Math.random() * 899999) + 100000 + "";
+        String api_key = "NCSMW5CKIIGCIUO1";
+        String api_secret = "GTY9AORLARLD0KNOSO1AND3KFOREO9N9";
+        Message coolsms = new Message(api_key, api_secret);
+        HashMap<String, String> params = new HashMap<String, String>();
+
+        params.put("to", phone);
+        params.put("from", "01066933114");
+        params.put("type", "SMS");
+        params.put("text", code);
+        params.put("app_version", "test app 1.2");
+
+        JSONObject obj = new JSONObject();
+
+        try {
+            obj = coolsms.send(params);
+            System.out.println(obj.toString());
+        } catch(CoolsmsException e) {
+            System.out.println(e.getMessage());
+            System.out.println(e.getCode());
+        }
+
+        if("".equals(obj)) {
+            return  "인증번호 전송 실패";
+        }
+
+        return code;
+    }
+
+    /**
+     * modifyPhone: 회원의 휴대전화 번호를 변경합니다.
+     * @param member:  회원 번호와 휴대전화 번호를 담은 MemberDTO 객체
+     * @return 결과에 따라 다른 메시지를 return합니다.
+     * @author 박상범
+     */
+    public void modifyPhone(MemberDTO member) {
+
+        Member foundMember = memberForProfileRepository.findMemberByPhone(member.getPhone());
+        foundMember.setPhone(member.getPhone());
     }
 }

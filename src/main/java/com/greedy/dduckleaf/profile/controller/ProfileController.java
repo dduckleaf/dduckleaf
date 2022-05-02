@@ -30,7 +30,7 @@ import java.util.UUID;
  * 2022/04/29 (박상범) 처음 작성 / 개인 정보 수정 페이지로 이동, 조회 관련 메소드 작성
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
  * 2022/05/01 (박상범) 개인 정보 수정 페이지로 이동, 조회 관련 메소드 수정, 회원의 사진 정보 변경 관련 메소드 수정, 이메일 변경 페이지로 이동, 휴대전화 번호 변경 페이지로 이동, 비밀번호 변경 페이지로 이동 관련 메소드 수정
- * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성
+ * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성, 회원의 이메일 주소 변경 관련 메소드 작성, 휴대전화 번호로 인증번호 전송 관련 메소드 작성, 회원의 휴대전화 번호 변경 관련 메소드 작성
  * </pre>
  * @version 1.0.6
  * @author 박상범
@@ -161,14 +161,14 @@ public class ProfileController {
     }
 
     /**
-     * sendVerification: 입력받은 이메일 주소로 인증번호를 전송한다.
+     * sendEmailVerification: 입력받은 이메일 주소로 인증번호를 전송한다.
      * @param email: 인증 번호를 받을 이메일 주소
      * @return mv
      * @author 박상범
      */
     @PostMapping(value = {"/send/email/verification"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public String sendVerification(@RequestBody String email) {
+    public String sendEmailVerification(@RequestBody String email) {
 
         return profileService.sendEmailVerification(email);
     }
@@ -188,6 +188,40 @@ public class ProfileController {
         member.setEmail(email);
 
         profileService.modifyEmail(member);
+
+        mv.setViewName("/myfunding/default");
+
+        return mv;
+    }
+
+    /**
+     * sendVerification: 입력받은 휴대전화 번호로 인증번호를 전송한다.
+     * @param phone: 인증 번호를 받을 이메일 주소
+     * @return mv
+     * @author 박상범
+     */
+    @PostMapping(value = {"/send/phone/verification"}, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String sendPhoneVerification(@RequestBody String phone) {
+
+        return profileService.sendPhoneVerification(phone);
+    }
+
+    /**
+     * modifyPhone: 회원의 이메일 주소를 변경합니다.
+     * @param phone: 변경할 휴대전화 번호
+     * @param user: 로그인된 회원 정보
+     * @return mv
+     * @author 박상범
+     */
+    @PostMapping("/modify/phone")
+    public ModelAndView modifyPhone(ModelAndView mv, String phone, @AuthenticationPrincipal CustomUser user) {
+
+        MemberDTO member = new MemberDTO();
+        member.setMemberNo(user.getMemberNo());
+        member.setPhone(phone);
+
+        profileService.modifyPhone(member);
 
         mv.setViewName("/myfunding/default");
 
