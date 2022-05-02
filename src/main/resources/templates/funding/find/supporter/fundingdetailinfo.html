@@ -89,7 +89,7 @@
 					</div>
 				</div>
 				<br>
-				<button class="basic-btn btn3 totallybig-btn">환불 신청</button>
+				<input type="button" class="basic-btn btn3 totallybig-btn" id="refund-button" value="환불 신청">
 				
 			</div>
 		</div>
@@ -121,8 +121,16 @@
 	</div>
 </div>
 <div th:replace="/common/footer.html"></div>
-<script>
-
+<script th:inline="javascript">
+ 
+    const $refundbtn = document.getElementById("refund-button");
+    if($refundbtn) {
+        $refundbtn.onclick = function() {
+	        const $url = "/refund/regist/refundregist/" + [[${funding.fundingInfoNo}]];
+	        location.href = $url;
+        }
+    }
+	
 
 </script>
 
