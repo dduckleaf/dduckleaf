@@ -4,6 +4,8 @@ import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.funding.dto.FundingDTO;
+import com.greedy.dduckleaf.funding.entity.Funding;
+import com.greedy.dduckleaf.funding.find.member.dto.FundingFindDetailInfoForMemberDTO;
 import com.greedy.dduckleaf.funding.find.member.service.FundingServiceForFind;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -12,6 +14,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -72,8 +75,16 @@ public class FundingForMemberFindController {
      * @author 홍성원
      */
     @GetMapping("/detail/member/{fundingNo}")
-    public ModelAndView sendMemberFundingListPage(ModelAndView mv) {
+    public ModelAndView sendMemberFundingListPage(ModelAndView mv, @PathVariable int fundingNo) {
 
+        FundingFindDetailInfoForMemberDTO fundingDetailInfo = service.findFundingInfo(fundingNo);
+
+        System.out.println("fundingDetailInfo.getFunding() = " + fundingDetailInfo.getFunding());
+        System.out.println("fundingDetailInfo.getPaymentHistory() = " + fundingDetailInfo.getPaymentHistory());
+        System.out.println("fundingDetailInfo.getShippingAddress() = " + fundingDetailInfo.getShippingAddress());
+        mv.addObject("history", fundingDetailInfo.getPaymentHistory());
+        mv.addObject("addressInfo", fundingDetailInfo.getShippingAddress());
+        mv.addObject("funding", fundingDetailInfo.getFunding());
         mv.setViewName("/funding/find/supporter/fundingdetailinfo");
 
         return mv;

@@ -1,9 +1,16 @@
 package com.greedy.dduckleaf.funding.find.member.service;
 
 import com.greedy.dduckleaf.funding.dto.FundingDTO;
+import com.greedy.dduckleaf.funding.dto.PaymentHistoryDTO;
 import com.greedy.dduckleaf.funding.dto.ProjectBasicInfoDTO;
+import com.greedy.dduckleaf.funding.dto.ShippingAddressDTO;
 import com.greedy.dduckleaf.funding.entity.Funding;
+import com.greedy.dduckleaf.funding.entity.PaymentHistory;
+import com.greedy.dduckleaf.funding.entity.ShippingAddress;
+import com.greedy.dduckleaf.funding.find.member.dto.FundingFindDetailInfoForMemberDTO;
 import com.greedy.dduckleaf.funding.find.member.repository.FundingForMemberFindRepository;
+import com.greedy.dduckleaf.funding.find.member.repository.PaymentHistoryForFundingFindMemberRepository;
+import com.greedy.dduckleaf.funding.find.member.repository.ShippingAddressForFundingFindRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,7 +20,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -34,11 +40,15 @@ public class FundingServiceForFind {
 
     /* 서비스에 필요한 JPARepository와 엔티티를 DTO를 변환해 줄 ModelMapper를 DI받습니다. */
     private final FundingForMemberFindRepository fundingRepo;
+    private final PaymentHistoryForFundingFindMemberRepository paymentRepo;
+    private final ShippingAddressForFundingFindRepository addressRepo;
     private final ModelMapper mapper;
 
     @Autowired
-    public FundingServiceForFind(FundingForMemberFindRepository fundingRepo, ModelMapper mapper) {
+    public FundingServiceForFind(FundingForMemberFindRepository fundingRepo, PaymentHistoryForFundingFindMemberRepository paymentRepo, ShippingAddressForFundingFindRepository addressRepo, ModelMapper mapper) {
         this.fundingRepo = fundingRepo;
+        this.paymentRepo = paymentRepo;
+        this.addressRepo = addressRepo;
         this.mapper = mapper;
     }
 
@@ -71,5 +81,26 @@ public class FundingServiceForFind {
         });
 
         return fundingDTOList;
+    }
+
+
+
+    /**
+     * findFundingInfo : 펀딩 상세정보를 조회합니다.
+     * @param fundingNo : 펀딩 번호를 전달합니다.
+     * @return funding : 펀딩 정보를 반환합니다.
+     *
+     * @author 홍성원
+     */
+    public FundingFindDetailInfoForMemberDTO findFundingInfo(int fundingNo) {
+
+        FundingFindDetailInfoForMemberDTO fundingInfo = new FundingFindDetailInfoForMemberDTO();
+        
+        fundingInfo.setFunding(mapper.map(fundingRepo.findById(fundingNo).get(), FundingDTO.class));
+        fundingInfo.getFunding().setRewardCategoryName(fundingInfo.getFunding().getProject().getBasicInfo().get(0).getCategory().getProjectCategoryName());
+        fundingInfo.setShippingAddress(mapper.map(addressRepo.findByFunding_fundingInfoNo(fundingNo), ShippingAddressDTO.class));
+        fundingInfo.setPaymentHistory(mapper.map(paymentRepo.findByFunding_fundingInfoNo(fundingNo), PaymentHistoryDTO.class));
+
+        return fundingInfo;
     }
 }

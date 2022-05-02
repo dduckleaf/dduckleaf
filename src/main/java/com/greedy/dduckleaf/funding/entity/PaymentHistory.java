@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity(name = "PaymentHistoryForFunding")
 @Table(name = "TBL_PAYMENT_HISTORY")
 public class PaymentHistory {
@@ -32,4 +31,13 @@ public class PaymentHistory {
     @JoinColumn(name = "FUNDING_INFO_NO")
     private Funding funding;
 
+    @Override
+    public String toString() {
+        return "PaymentHistory{" +
+                "paymentHistoryNo=" + paymentHistoryNo +
+                ", memberNo=" + memberNo +
+                ", paymentResultStauts='" + paymentResultStauts + '\'' +
+                ", paymentResultDate=" + paymentResultDate +
+                '}';
+    }
 }
