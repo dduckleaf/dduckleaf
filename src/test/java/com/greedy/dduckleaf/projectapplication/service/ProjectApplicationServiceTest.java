@@ -363,4 +363,18 @@ class ProjectApplicationServiceTest {
         assertDoesNotThrow(() -> projectApplicationService.modifySettlementPolicyCheckStatus(updateFinancialInfo));
     }
 
+    @Test
+    @DisplayName("심사 신청 버튼 클릭 시 신청 내역으로 인서트하는 테스트")
+    public void registProjectApplicationInfo_test() {
+
+        //given
+        int projectNo = 214;
+        int memberNo = 68;
+
+        //when
+        projectApplicationService.registProjectApplicationInfo(projectNo, memberNo);
+
+        //then
+        assertDoesNotThrow(() -> projectApplicationService.registProjectApplicationInfo(projectNo, memberNo));
+    }
 }
