@@ -170,7 +170,7 @@ public class ProfileService {
      */
     public void modifyPhone(MemberDTO member) {
 
-        Member foundMember = memberForProfileRepository.findMemberByPhone(member.getPhone());
+        Member foundMember = memberForProfileRepository.findById(member.getMemberNo()).get();
         foundMember.setPhone(member.getPhone());
     }
 }
