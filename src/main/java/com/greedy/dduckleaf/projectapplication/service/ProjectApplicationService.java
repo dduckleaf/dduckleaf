@@ -27,9 +27,11 @@ import java.util.stream.Collectors;
  * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findProjectBasicInfoByProjectNo, modifyBasicInfo, findAllRewardCategory 메소드 작성
  * 2022/04/29 (박휘림) modifyStory, modifyPromotionAgreementStatus, findRewardByProjectNo, findShippingInfoByProjectNo, modifyReward 메소드 작성
  * 2022/04/30 (박휘림) findPolicyByProjectNo, modifyPolicy, modifyPolicyAgreementStatus, findFarmerInfoByMemberNo, findHomePageByFarmerNo 메소드 작성
- * 2022/05/01 (박휘림) findFarmerFinancialInfoByMemberNo, findAllBank, modifyRepresentative, modifySettlementPolicyCheckStatus 메소드 작성
+ * 2022/05/01 (박휘림) findFarmerFinancialInfoByMemberNo, findAllBank, modifyRepresentative, modifySettlementPolicyCheckStatus, sendPhoneVerification,
+ *                      modifyBasicInfoAttachment, modifyFarmerInfoAttachment 메소드 작성
+ * 2022/05/02 (박휘림) registProjectApplicationInfo 메소드 작성
  * </pre>
- * @version 1.0.3
+ * @version 1.0.6
  * @author 박휘림
  */
 @Service
@@ -602,5 +604,30 @@ public class ProjectApplicationService {
         return code;
     }
 
+    /**
+     * registProjectApplicationInfo: 프로젝트 심사 신청 시 신청내역으로 인서트하는 메소드
+     * @param projectNo: 프로젝트 번호
+     * @param memberNo: 회원 번호
+     * @author 박휘림
+     */
+    @Transactional
+    public void registProjectApplicationInfo(int projectNo, int memberNo) {
 
+        ProjectBasicInfo basicInfo = projectBasicInfoRepository.findByProjectNo(projectNo);
+        ProjectShippingInfo shippingInfo = projectShippingInfoRepository.findByProjectNo(projectNo);
+        RewardRegistInfo rewardRegistInfo = rewardRegistInfoRepository.findByProjectNo(projectNo);
+        RefundPolicy refundPolicy = refundPolicyRepository.findByProjectNo(projectNo);
+
+        ProjectApplicationInfo projectApplicationInfo = new ProjectApplicationInfo();
+        projectApplicationInfo.setProjectNo(projectNo);
+        projectApplicationInfo.setProjectBasicInfoNo(basicInfo.getProjectBasicInfoNo());
+        projectApplicationInfo.setProjectShippingInfoNo(shippingInfo.getProjectShippingInfoNo());
+        projectApplicationInfo.setRewardRegistInfoNo(rewardRegistInfo.getRewardRegistInfoNo());
+        projectApplicationInfo.setRefundPolicyNo(refundPolicy.getRefundPolicyNo());
+        projectApplicationInfo.setProjectApplicationCategory(basicInfo.getProjectRewardCategory().getProjectCategoryName());
+        projectApplicationInfo.setMemberNo(memberNo);
+
+        projectApplicationInfoRepository.save(projectApplicationInfo);
+
+    }
 }
