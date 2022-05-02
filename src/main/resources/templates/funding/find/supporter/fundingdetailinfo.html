@@ -35,42 +35,57 @@
 			<div class="funding-detail-info-box">
 				<label class="category">[[${funding.rewardCategoryName}]]</label><br>
 				<label class="projectStatus">
-					진행중
+					<th:block th:if="${ funding.project.progressStatus eq '3'}">진행중</th:block>
+					<th:block th:if="${ funding.project.progressStatus eq '4'}">완료</th:block>
 				</label><br>
-				<label class="projectName">국내산 송이버섯</label><br>
-				<label class="farmerName">by 감자합니다</label><br>
+				<label class="projectName">[[${funding.project.projectName}]]</label><br>
+				<label class="farmerName">[[${funding.project.farmer.farmer.businessName}]]</label><br>
 				<br>
 				<br>
-				<div class="row">
-					<div class="col-10 ">
-						<label class="funding-order">주문번호</label><br>
-					</div>
-					<div class="col" style="text-align: right;">
-						<label class="funding-order">주문번호</label><br>
-					</div>
-				</div>
 				<div class="row">
 					<div class="col-10">
 						<label class="funding-order">주문일</label><br>
 					</div>
 					<div class="col " style="text-align: right;">
-						<label class="funding-order">주문일</label><br>
+						<label class="funding-order">[[${funding.fundingDate}]]</label><br>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-10 ">
-						<label class="funding-detail-info">펀딩 종료일</label><br>
+						<label class="funding-order">펀딩금 총액</label><br>
 					</div>
-					<div class="col " style="text-align: right;">
-						<label class="funding-detail-info">펀딩 종료일</label><br>
+					<div class="col" style="text-align: right;">
+						<label class="funding-order">[[${funding.fundingAmount}]] 원</label><br>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-10 ">
-						<label class="funding-detail-info">펀딩 상태</label>
+						<label class="funding-order">리워드 결제금액</label><br>
 					</div>
-					<div class="col " style="text-align: right;">
-						<label class="funding-detail-info">펀딩 상태</label>
+					<div class="col" style="text-align: right;">
+						<label class="funding-order" th:text="${ funding.rewardAmount * funding.project.rewardInfo.rewardPrice} + ' 원'"> </label><br>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-10 ">
+						<label class="funding-order">후원금</label><br>
+					</div>
+					<div class="col" style="text-align: right;">
+						<label class="funding-order">[[${funding.donateAmount}]] 원</label><br>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-10 ">
+						<label class="funding-order">배송비</label><br>
+					</div>
+					<div class="col" style="text-align: right;">
+						<th:block th:if="${ funding.extraShippingFeeStatus eq 'N'}">
+							<label class="funding-order">[[${funding.project.projectShippingFee.shippingFee}]] 원</label><br>
+						</th:block>
+						<th:block th:if="${ funding.extraShippingFeeStatus eq 'Y'}">
+							<label class="funding-order">[[${funding.project.projectShippingFee.extraShippingFee}]] 원</label><br>
+						</th:block>
+						
 					</div>
 				</div>
 				<br>
@@ -80,10 +95,9 @@
 		</div>
 		<div class="funding-detail-info-border">
 			<div class="funding-detail-reward-info-box">
-				<label class="funding-detail-reward-name">[향긋] 국내산 송이버섯</label><br><br>
-				<label class="funding-detail-reward-info">송이버섯 1box(500g)</label><br><br>
-				<label class="funding-detail-reward-info">20000원 / 1box</label>
-				<label class="funding-detail-reward-info">발송 시작일: 2022년 04월 말(21~말일) 예정</label><br><br>
+				<label class="funding-detail-reward-name">환불계좌 정보</label><br><br>
+				<label class="funding-detail-reward-info">은행 : [[${funding.refundBankCode.bankName}]]</label><br><br>
+				<label class="funding-detail-reward-info">환불계좌 : [[${funding.refundAccount}]]</label><br><br>
 				<label class="funding-detail-reward-info">* 프로젝트 교환/ 펀딩금반환/AS정책은 반환정책을 확인하세요</label><br><br>
 				<a class="funding-detail-reward-info" style="font-size: 1em;"><u>프로젝트 반환 정책 바로가기</u></a><br><br>
 				<button class="basic-btn btn3 totallybig-btn">환불 계좌 정보 변경하기</button>

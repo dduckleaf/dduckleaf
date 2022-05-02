@@ -64,7 +64,7 @@ public class FundingServiceForFind {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() - 1, PAGE_SIZE,
                 Sort.by("fundingInfoNo").descending());
 
-        return parsingFundingList(fundingRepo.findByMemberNo(5, pageable));
+        return parsingFundingList(fundingRepo.findByMemberNo(memberNo, pageable));
     }
 
     private Page<FundingDTO> parsingFundingList(Page<Funding> fundingList) {
@@ -99,7 +99,6 @@ public class FundingServiceForFind {
         fundingInfo.setFunding(mapper.map(fundingRepo.findById(fundingNo).get(), FundingDTO.class));
         fundingInfo.getFunding().setRewardCategoryName(fundingInfo.getFunding().getProject().getBasicInfo().get(0).getCategory().getProjectCategoryName());
         fundingInfo.setShippingAddress(mapper.map(addressRepo.findByFunding_fundingInfoNo(fundingNo), ShippingAddressDTO.class));
-        fundingInfo.setPaymentHistory(mapper.map(paymentRepo.findByFunding_fundingInfoNo(fundingNo), PaymentHistoryDTO.class));
 
         return fundingInfo;
     }

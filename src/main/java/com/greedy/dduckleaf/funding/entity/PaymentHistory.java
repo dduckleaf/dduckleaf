@@ -24,7 +24,7 @@ public class PaymentHistory {
 
 
     @Column(name = "PAYMENT_RESULT_DATE")
-    private java.sql.Date paymentResultDate;
+    private String paymentResultDate;
 
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
