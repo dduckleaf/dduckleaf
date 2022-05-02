@@ -31,7 +31,7 @@
 .main-content div.cont-div td {
     text-align: center;
     height: 30px;
-    border-bottom: 1px solid #ccc;
+    /*border-bottom: 1px solid #ccc;*/
 }
 
 tr.title, td.no, td.category, td.title {
@@ -94,3 +94,11 @@ textarea#content {
 .content-form label {
     vertical-align: top;
 }*/
+
+.align_l {
+    text-align: left !important;
+}
+
+.active {
+    border-bottom: none;
+}

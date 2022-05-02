@@ -1,8 +1,10 @@
 package com.greedy.dduckleaf.refund.regist.controller;
 
+import com.greedy.dduckleaf.refund.regist.dto.RefundingDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,11 +24,12 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/refund/regist")
 public class RefundingRegistController {
 
-    @GetMapping(value = "/refundregist/{fundingNo}")
-    public ModelAndView sendToRefundRegist(ModelAndView mv, @PathVariable int fundingNo) {
+    @PostMapping(value = "/refundregist")
+    public ModelAndView sendToRefundRegist(ModelAndView mv, RefundingDTO refundingInfo) {
 
-        mv.addObject("fundingNo", fundingNo);
-        mv.setViewName("/refund/regist/refundregist");
+        System.out.println("refundingInfo = " + refundingInfo);System.out.println("refundingInfo = " + refundingInfo);System.out.println("refundingInfo = " + refundingInfo);System.out.println("refundingInfo = " + refundingInfo);
+
+        mv.setViewName("redirect:/");
 
         return mv;
     }

@@ -55,7 +55,9 @@
                             <label for="categoryNo" style="display: inline-block; width: 90%; text-align: left;">문의 유형</label>
                             <select name="platformQaCategoryNo" id="categoryNo" style="width: 90%;">
                                 <option disabled selected>문의 유형</option>
-                                <!--                                <option th:each="category : ${ categoryList }" th:value="${category.platformQaCategoryNo}" th:text="${category.platformQaCategoryName}"></option>-->
+                                <th:block th:each="platformQaCategory : ${ platformQaCategoryList }">
+                                    <option th:value="${ platformQaCategory.platformQaCategoryNo }">[[${ platformQaCategory.platformQaCategoryName }]]</option>
+                                </th:block>
                             </select>
                         </div>
                         <div class="title-form" style="margin-top: 10px;">
@@ -121,55 +123,99 @@
                         <col style="width: 10%">
                         <col style="width: 15%">
                     </colgroup>
-                    <tr>
-                        <th>번호</th>
-                        <th>문의 유형</th>
-                        <th>답변 상태</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>작성일</th>
-                    </tr>
-                    <tr>
-                        <td>0000</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>2022-12-31 23:59</td>
-                    </tr>
-<!--                    <tr th:each="platformqa : ${ platformQaList }">-->
-<!--                        <td th:text="${ platformqa.platformQaNo }"></td>-->
-<!--                        <td th:text="${ platformqa.platformQaCategoryDTO.platformQaCategoryName }"></td>-->
-<!--                        <td th:text="${ platformqa.platformQaAnswerStatus }"></td>-->
-<!--                        <td th:text="${ platformqa.platformQaTitle }" style="cursor: pointer" th:onclick="'window.location.href=\'' + @{/qna/detail/{bno}(bno=${ platformqa.platformQaNo })} + '\''"></td>-->
-<!--                        <td th:text="${ platformqa.memberName }"></td>-->
-<!--                        <td th:text="${ platformqa.platformQaRegistDate }"></td>-->
-<!--                    </tr>-->
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>문의 유형</th>
+                            <th>답변 상태</th>
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                        </tr>
+                    </thead>
+                    <tbody th:each="platformQa : ${ platformQaList }">
+                        <tr>
+                            <td th:text="${ platformQa.platformQaNo }"></td>
+                            <td th:text="${ platformQa.qnaCategory.platformQaCategoryName }"></td>
+                            <td th:text="${ platformQa.platformQaAnswerStatus }"></td>
+                            <td th:text="${ platformQa.platformQaTitle }" class="align_l tit"></td>
+                            <td th:text="${ platformQa.member.memberId }"></td>
+                            <td th:text="${ platformQa.platformQaRegistDate }"></td>
+                        </tr>
+                        <tr class="qnaDetailTr qnaDetailTr_qnaNo on" style="display: none;">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td th:text="${ platformQa.platformQaContent }" class="align_l con"></td>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr th:each="platformQaReply : ${ platformQaReplyList }" class="qnaDetailTr qnaDetailTr_qnaNo on review_st" style="display: /*none;*/ background: #fafafa;">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td th:text="${ platformQaReply.platformQaReplyContent }" class="align_l con">
+                                <span class="re" style="position: unset; background: #BAC34E; color: #fff; border-radius: 5px;">답변</span>
+                            </td>
+                            <td th:text="${ platformQaReply.adminNo }"></td>
+                            <td th:text="${ platformQaReply.platformQaReplyRegistDate }"></td>
+                        </tr>
+
+<!--                        <tr>-->
+<!--                            <td>9999</td>-->
+<!--                            <td>기타</td>-->
+<!--                            <td>답변완료</td>-->
+<!--                            <td class="align_l tit">-->
+<!--                                <a style="cursor: pointer;" onclick="showQnaDetailLayer(qnaNo);">질문있습니다</a>-->
+<!--                            </td>-->
+<!--                            <td>member-id</td>-->
+<!--                            <td>2022-12-31 23:59</td>-->
+<!--                        </tr>-->
+<!--                        <tr class="qnaDetailTr qnaDetailTr_qnaNo on" style="display: none;">-->
+<!--                            &lt;!&ndash; 제목 누르면 내용 보이게 해주세요 &ndash;&gt;-->
+<!--                            <td></td>-->
+<!--                            <td></td>-->
+<!--                            <td></td>-->
+<!--                            <td class="align_l con">이럴 땐 어떡하나요?</td>-->
+<!--                            <td colspan="2"></td>-->
+<!--                        </tr>-->
+<!--                        <tr class="qnaDetailTr qnaDetailTr_qnaNo on review_st" style="display: none; background: #fafafa;">-->
+<!--                            &lt;!&ndash; 제목 누르면 내용 보이게 해주세요 &ndash;&gt;-->
+<!--                            <td></td>-->
+<!--                            <td></td>-->
+<!--                            <td></td>-->
+<!--                            <td class="align_l con">-->
+<!--                                <span class="re" style="position: unset; background: #BAC34E; color: #fff; border-radius: 5px;">답변</span>-->
+<!--                                답변입니다-->
+<!--                            </td>-->
+<!--                            <td>관리자</td>-->
+<!--                            <td>2023-01-01 00:01</td>-->
+<!--                        </tr>-->
+                    </tbody>
                 </table>
-<!--                <div id="paging" align="center">-->
-<!--                    &lt;!&ndash; 가장 처음 &ndash;&gt;-->
-<!--                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.startPage}}  + '\''"-->
-<!--                            th:disabled="${ platformQaList.first }"><<</button>-->
+                <div id="paging" align="center">
+                    <!-- 가장 처음 -->
+                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.startPage}}  + '\''"
+                            th:disabled="${ platformQaList.first }"><<</button>
 
-<!--                    &lt;!&ndash; 이전 페이지 &ndash;&gt;-->
-<!--                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.currentPage - 1}}  + '\''"-->
-<!--                            th:disabled="${ platformQaList.first }"><</button>-->
+                    <!-- 이전 페이지 -->
+                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.currentPage - 1}}  + '\''"
+                            th:disabled="${ platformQaList.first }"><</button>
 
-<!--                    &lt;!&ndash; 페이지 번호 &ndash;&gt;-->
-<!--                    <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">-->
-<!--                        <button th:onclick="'location.href=\'/qna/list?page=' + @{${page}}  + '\''"-->
-<!--                                th:text="${ page }"-->
-<!--                                th:disabled="${ paging.currentPage eq page }"></button>-->
-<!--                    </th:block>-->
+                    <!-- 페이지 번호 -->
+                    <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+                        <button th:onclick="'location.href=\'/qna/list?page=' + @{${page}}  + '\''"
+                                th:text="${ page }"
+                                th:disabled="${ paging.currentPage eq page }"></button>
+                    </th:block>
 
-<!--                    &lt;!&ndash; 다음 페이지 &ndash;&gt;-->
-<!--                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.currentPage + 1}}  + '\''"-->
-<!--                            th:disabled="${ platformQaList.last }">></button>-->
+                    <!-- 다음 페이지 -->
+                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.currentPage + 1}}  + '\''"
+                            th:disabled="${ platformQaList.last }">></button>
 
-<!--                    &lt;!&ndash; 가장 끝 &ndash;&gt;-->
-<!--                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.endPage}}  + '\''"-->
-<!--                            th:disabled="${ platformQaList.last }">>></button>-->
-<!--                </div>-->
+                    <!-- 가장 끝 -->
+                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.endPage}}  + '\''"
+                            th:disabled="${ platformQaList.last }">>></button>
+                </div>
                 <form id="search-form" action="/qna/search" method="get">
                     <fieldset>
                         <div class="search">
@@ -238,6 +284,29 @@
 
 <!--Main JS (Common Activation Codes)-->
 <script th:src="@{ js/main.js }"></script>
+
+<script>
+    /*Qna 제목 클릭 토글*/
+    var $qnaTit = $('td.tit');
+    $qnaTit.click(function(e) {
+        e.preventDefault();
+        var target = $(this);
+        var index = target.index();
+        target.parent().toggleClass('active');
+        target.parent().next().toggle();
+        target.parent().next().next().toggle();
+    });
+
+    /*Qna 자세히보기*/
+    function showQnaDetailLayer(qnaNo) {
+        if($(".qnaDetailTr_"+qnaNo).css('display') == 'none') {
+            $('.qnaDetailTr').css('display','none');
+            $(".qnaDetailTr_"+qnaNo).css('display','');
+        } else{
+            $(".qnaDetailTr_"+qnaNo).css('display','none');
+        }
+    }
+</script>
 
 </body>
 
