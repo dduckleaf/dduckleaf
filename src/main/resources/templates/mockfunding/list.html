@@ -41,7 +41,7 @@
             <input type="hidden" class="mockNo" th:value="${mockFundList.mockFundNo}">
             <div class="col-3 project-list-box">
                 <div class="product-img img-zoom-effect">
-                    <a class="mockdetail">
+                    <a class="mockdetail" th:href="'/mockfunding/detail/' + @{${mockFundList.mockFundNo}}">
                         <img class="img-full mainimg" src="/images/main/mushroom.png" alt="Product Images">
                     </a>
                 </div>
@@ -73,17 +73,5 @@
     </div>
 </div>
 <footer th:replace="/common/footer.html"></footer>
-
-<script>
-    let detail = document.getElementsByClassName("mockdetail");
-    let mockFundNo = document.getElementsByClassName("mockNo");
-
-    for(let i = 0; i < detail.length; i++) {
-        detail[i].onclick = function() {
-            location.href = "/mockfunding/detail/" + mockFundNo[i].value;
-        }
-    }
-
-</script>
 </body>
 </html>
