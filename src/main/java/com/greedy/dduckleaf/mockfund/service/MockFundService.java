@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,9 +57,9 @@ public class MockFundService {
         this.modelMapper = modelMapper;
     }
 
-    public MockFundInfoDTO findMockFundInfoByCode(int infoCode) {
+    public MockFundInfoDTO findMockFundInfoByMockFundNo(int mockFundNo) {
 
-        MockFundInfo info = mockFundInfoRepository.findById(infoCode).get();
+        MockFundInfo info = mockFundInfoRepository.findByMockFundMockFundNo(mockFundNo);
 
         return modelMapper.map(info, MockFundInfoDTO.class);
     }
@@ -68,6 +71,13 @@ public class MockFundService {
         return categoryList.stream().map(rewardCategory -> modelMapper.map(rewardCategory, RewardCategoryDTO.class)).collect(Collectors.toList());
     }
 
+    public List<MockFundDTO> findMockFundList() {
+
+        List<MockFund> mockFundList = mockFundRepository.findAll();
+
+        return mockFundList.stream().map(mockFund -> modelMapper.map(mockFund, MockFundDTO.class)).collect(Collectors.toList());
+    }
+
     public MockFundDTO findMockFundByCode(int mockFundCode) {
 
         MockFund mockFund = mockFundRepository.findById(mockFundCode).get();
@@ -75,66 +85,87 @@ public class MockFundService {
         return modelMapper.map(mockFund, MockFundDTO.class);
     }
 
-    public MockFundInfoDTO findStoryInfoByCode(int infoCode) {
+    public MockFundInfoDTO findStoryInfoByMockFundNo(int mockFundNo) {
 
-        MockFundInfo info = mockFundInfoRepository.findById(infoCode).get();
+        MockFundInfo info = mockFundInfoRepository.findByMockFundMockFundNo(mockFundNo);
 
         return modelMapper.map(info, MockFundInfoDTO.class);
     }
 
-    public MockFundRewardDTO findRewardByCode(int infoCode) {
+    public MockFundRewardDTO findRewardByMockFundNo(int mockFundNo) {
 
-        MockFundReward info = mockFundRewardRepository.findById(infoCode).get();
+        MockFundReward info = mockFundRewardRepository.findByMockFundMockFundNo(mockFundNo);
 
         return modelMapper.map(info, MockFundRewardDTO.class);
     }
 
     @Transactional
-    public void modifyBasicInfo(MockFundInfoDTO mockFundInfo, int memberNo) {
+    public void modifyBasicInfo(MockFundInfoDTO mockFundInfo) {
 
-        Farmer farmer = farmerRepository.findById(memberNo).get();
-        MockFund fund = farmer.getMockFundList().get(0);
-        MockFundInfo foundInfo = fund.getMockFundInfoList().get(0);
-        foundInfo.setMockFundName(mockFundInfo.getMockFundName());
-        foundInfo.setTargetTicketAmount(mockFundInfo.getTargetTicketAmount());
-        foundInfo.setEndDate(mockFundInfo.getEndDate());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = mockFundInfo.getEndDate();
+        java.util.Date open = null;
+        String openDate = null;
+        try {
+            open = format.parse(strDate);
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(open);
+            cal.add(Calendar.MONTH, -1);
+
+            openDate = format.format(cal.getTime());
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        System.out.println(mockFundInfo);
+        MockFundInfo basicInfo = mockFundInfoRepository.findByMockFundMockFundNo(mockFundInfo.getMockFundInfoNo());
+        MockFund fund = mockFundRepository.findById(basicInfo.getMockFund().getMockFundNo()).get();
+        System.out.println(fund);
+        System.out.println("basicInfo = " + basicInfo);
+        basicInfo.setMockFundName(mockFundInfo.getMockFundName());
+        basicInfo.setTargetTicketAmount(mockFundInfo.getTargetTicketAmount());
+        basicInfo.setEndDate(mockFundInfo.getEndDate());
+
+        fund.setCloseDate(basicInfo.getMockFund().getCloseDate());
+        fund.setOpenDate(basicInfo.getMockFund().getOpenDate());
 
         RewardCategory category = rewardCategoryRepository.findById(mockFundInfo.getRewardCategory().getProjectCategoryNo()).get();
-        foundInfo.setRewardCategory(category);
+        basicInfo.setRewardCategory(category);
     }
 
     @Transactional
-    public int modifyAgreementStatus(int memberNo) {
+    public void modifyAgreementStatus(MockFundInfoDTO mockFundInfo) {
 
-        Farmer farmer = farmerRepository.findById(memberNo).get();
-        MockFund fund = farmer.getMockFundList().get(0);
-        MockFundInfo info = fund.getMockFundInfoList().get(0);
+        MockFundInfo info = mockFundInfoRepository.findByMockFundMockFundNo(mockFundInfo.getMockFundInfoNo());
 
         Long mills = System.currentTimeMillis();
         Date date = new Date(mills);
         info.setMockFundAgreementStatus("Y");
-        info.setAgreementDate(date);
-
-        return info.getMockFundInfoNo();
+        info.setAgreementDate(String.valueOf(date));
     }
 
     @Transactional
-    public void modifyStory(MockFundInfoDTO mockFundInfo, int memberNo) {
+    public void modifyStory(MockFundInfoDTO mockFundInfo) {
 
-        Farmer farmer = farmerRepository.findById(memberNo).get();
-        MockFund fund = farmer.getMockFundList().get(0);
-        MockFundInfo foundInfo = fund.getMockFundInfoList().get(0);
-        foundInfo.setMockFundDetail(mockFundInfo.getMockFundDetail());
+        MockFundInfo info = mockFundInfoRepository.findByMockFundMockFundNo(mockFundInfo.getMockFundInfoNo());
+        info.setMockFundDetail(mockFundInfo.getMockFundDetail());
     }
 
     @Transactional
-    public void modifyReward(MockFundRewardDTO mockFundReward, int memberNo) {
+    public void modifyReward(MockFundRewardDTO mockFundReward) {
 
-        Farmer farmer = farmerRepository.findById(memberNo).get();
-        MockFund fund = farmer.getMockFundList().get(0);
-        MockFundReward reward = fund.getMockFundRewardList().get(0);
+        MockFundReward reward = mockFundRewardRepository.findByMockFundMockFundNo(mockFundReward.getMockFundRewardNo());
         reward.setRewardName(mockFundReward.getRewardName());
         reward.setRewardDetail(mockFundReward.getRewardDetail());
         reward.setRewardPrice(mockFundReward.getRewardPrice());
+    }
+
+
+    public int findMockFundNoByFarmerId(int farmerNo) {
+
+        MockFund mockFund = mockFundRepository.findByFarmerNoAndAndProgressStatus(farmerNo, "진행전");
+
+        return mockFund != null? mockFund.getMockFundNo() : 0;
     }
 }
