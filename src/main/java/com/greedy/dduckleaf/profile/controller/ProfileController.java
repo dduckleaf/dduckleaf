@@ -166,9 +166,9 @@ public class ProfileController {
      * @return mv
      * @author 박상범
      */
-    @PostMapping("/send/email/verification")
+    @PostMapping(value = {"/send/email/verification"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public String sendVerification(String email) {
+    public String sendVerification(@RequestBody String email) {
 
         return profileService.sendEmailVerification(email);
     }
@@ -181,7 +181,7 @@ public class ProfileController {
      * @author 박상범
      */
     @PostMapping("/modify/email")
-    public ModelAndView modifyEmail(ModelAndView mv, String email, RedirectAttributes rttr, @AuthenticationPrincipal CustomUser user) {
+    public ModelAndView modifyEmail(ModelAndView mv, String email, @AuthenticationPrincipal CustomUser user) {
 
         MemberDTO member = new MemberDTO();
         member.setMemberNo(user.getMemberNo());
@@ -189,8 +189,7 @@ public class ProfileController {
 
         profileService.modifyEmail(member);
 
-        rttr.addFlashAttribute("message", "이메일 주소가 변경되었습니다.");
-        mv.setViewName("/profile/modify/email");
+        mv.setViewName("/myfunding/default");
 
         return mv;
     }
