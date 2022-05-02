@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 
@@ -26,6 +27,8 @@
   <!-- Style CSS -->
   <link rel="stylesheet" th:href="@{ /css/style.css }">
   <link rel="stylesheet" th:href="@{ /css/project.css }">
+  <!-- 신기한 모달 -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -72,7 +75,12 @@
                     </div>
                   </div><br>
                   <div class="button-box">
-                    <button class="basic-btn btn1 alittle-bigbig-btn">펀딩하기</button>
+                    <th:block sec:authorize="isAnonymous()">
+                      <button id="cannot-funding" class="basic-btn btn1 alittle-bigbig-btn">펀딩하기</button>
+                    </th:block>
+                    <th:block sec:authorize="isAuthenticated()">
+                      <button id="funding" class="basic-btn btn1 alittle-bigbig-btn">펀딩하기</button>
+                    </th:block>
                     <button class="basic-btn btn3 alittle-big-btn">관심<img src="/images/common/heart.png" alt="Product Image"></button>
                   </div><br>
                   <ul class="quantity-with-btn pb-7">
@@ -370,6 +378,28 @@
 <!-- Global Vendor, plugins JS -->
 
 <!-- Vendor JS -->
+<script>
+  
+  const $cannot = document.getElementById("cannot-funding");
+  if($cannot) {
+    $cannot.onclick = async function() {
+       Swal.fire('로그인이 필요한 서비스입니다.')
+      $cannot.location.href = "/member/login";
+      alert(1);
+    }
+    
+    
+  }
+  
+  
+  const $funding = document.getElementById("funding");
+  if($funding) {
+    $funding.onclick = function() {
+      const url = "/funding/regist/reward/" + [[${ project.projectNo }]];
+      location.href = url;
+    }
+  }
+</script>
 <script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
 <script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
 <script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>

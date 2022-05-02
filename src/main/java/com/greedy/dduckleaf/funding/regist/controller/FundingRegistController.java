@@ -1,12 +1,16 @@
 package com.greedy.dduckleaf.funding.regist.controller;
 
-import com.greedy.dduckleaf.funding.dto.BankListAndMemberDTO;
+import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.funding.dto.FundingRegistDTO;
+import com.greedy.dduckleaf.funding.dto.FundingRegistInfoDTO;
 import com.greedy.dduckleaf.funding.dto.ProjectDTO;
 import com.greedy.dduckleaf.funding.regist.service.FundingRegistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -60,20 +64,19 @@ public class FundingRegistController {
      * @author 홍성원
      */
     @GetMapping("/shipping")
-    public ModelAndView registFundingConfirmPage(ModelAndView mv, FundingRegistDTO registInfo) {
+    public ModelAndView registFundingConfirmPage(ModelAndView mv, FundingRegistDTO registInfo, @AuthenticationPrincipal CustomUser user) {
 
-        String memberId = "USER01";
-        BankListAndMemberDTO bankListAndMember = service.findBankAndUserInfo(memberId);
+        FundingRegistInfoDTO fundingRegistInfoDTO = service.findBankAndUserInfo(user.getMemberId(), registInfo.getProjectNo());
 
-        mv.addObject("bankList", bankListAndMember.getBankList());
-        mv.addObject("member", bankListAndMember.getMember());
+        mv.addObject("bankList", fundingRegistInfoDTO.getBankList());
+        mv.addObject("member", fundingRegistInfoDTO.getMember());
+        mv.addObject("project", fundingRegistInfoDTO.getProject());
         mv.addObject("registInfo", registInfo);
+
         mv.setViewName("/funding/regist/shippinginfo");
 
         return mv;
     }
-
-
 
     /**
      * registByApi : 결제 된 펀딩결과를 저장 후 펀딩결과화면으로 리다이렉트하는 핸들러메소드입니다.
@@ -83,26 +86,28 @@ public class FundingRegistController {
      * @author 홍성원
      */
     @GetMapping("/fundinginfo")
-    public String registByApi(FundingRegistDTO registDTO) {
+    public String registByApi(FundingRegistDTO registDTO, @AuthenticationPrincipal CustomUser user) {
 
-        registDTO.setProjectNo(1);
-        registDTO.setMemberNo(5);
+        registDTO.setMemberNo(user.getMemberNo());
 
         service.registFunding(registDTO);
 
-        return "redirect:/funding/regist/result/14";
+        return "redirect:/funding/regist/result/" + registDTO.getProjectNo();
     }
 
     /**
      * sendToFundingResultDetailInfo : 펀딩결제 후 리다이렉트 받는 핸들러메소드입니다.
-     * @param fundingNo : 결제성공한 해당 펀딩의 번호를 전달받습니다.
+     * @param projectNo : 결제성공한 해당 펀딩의 번호를 전달받습니다.
      * @return
      *
      * @author 홍성원
      */
-    @GetMapping("/result/{fundingNo}")
-    public ModelAndView sendToFundingResultDetailInfo(ModelAndView mv, @PathVariable int fundingNo){
+    @GetMapping("/result/{projectNo}")
+    public ModelAndView sendToFundingResultDetailInfo(ModelAndView mv, @PathVariable int projectNo){
 
+        String endDate = service.findProjetEndDate(projectNo);
+        System.out.println("endDate = " + endDate);
+        mv.addObject("endDate", endDate);
         mv.setViewName("/funding/regist/fundingresult");
 
         return mv;

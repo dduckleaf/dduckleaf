@@ -270,7 +270,7 @@ class ProjectApplicationServiceTest {
     }
 
     @Test
-    @DisplayName("프로젝트 번호로 파머 정보 데이터 조회하는 테스트")
+    @DisplayName("회원 번호로 파머 정보 데이터 조회하는 테스트")
     public void findFarmerInfoByMemberNo_test() {
 
         //given
@@ -302,4 +302,79 @@ class ProjectApplicationServiceTest {
 
     }
 
+    @Test
+    @DisplayName("회원번호로 대표자 정보 조회해오는 테스트")
+    public void findRepresentativeInfo_test() {
+
+        //given
+        int memberNo = 68;
+
+        //when
+        FarmerFinancialInfoDTO financialInfo = projectApplicationService.findFarmerFinancialInfoByMemberNo(memberNo);
+
+        //then
+        assertNotNull(financialInfo);
+    }
+
+    @Test
+    @DisplayName("은행 리스트 조회해오는 테스트")
+    public void findAllBank_test() {
+
+        //when
+        List<BankDTO> bankList = projectApplicationService.findAllBank();
+
+        //then
+        assertNotNull(bankList);
+        bankList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("대표자 및 정산정보 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyRepresentative_test() {
+
+        //given
+        int memberNo = 68;
+
+        //when
+        FarmerInfoDTO farmerInfo = projectApplicationService.findFarmerInfoByMemberNo(memberNo);
+        farmerInfo.setFarmerName("수정수정");
+        farmerInfo.setFarmerEmail("djhsk3434@gmail.com");
+
+        FarmerFinancialInfoDTO financialInfo = projectApplicationService.findFarmerFinancialInfoByMemberNo(memberNo);
+        financialInfo.setTaxReceiveEmail("hwirim7907@gmail.com");
+
+        //then
+        assertDoesNotThrow(() ->projectApplicationService.modifyRepresentative(farmerInfo, financialInfo));
+    }
+
+    @Test
+    @DisplayName("대표자 및 정산정보 작성 페이지에서 정산 정책 확인 상태 변경 테스트")
+    public void modifySettlementPolicyCheckStatus_test() {
+
+        //given
+        int memberNo = 68;
+
+        //when
+        FarmerFinancialInfoDTO updateFinancialInfo = projectApplicationService.findFarmerFinancialInfoByMemberNo(memberNo);
+        updateFinancialInfo.setSettlementPolicyCheckStatus("Y");
+        updateFinancialInfo.setSettlementPolicyCheckDate(java.sql.Date.valueOf(LocalDate.now()).toString());
+
+        //then
+        assertDoesNotThrow(() -> projectApplicationService.modifySettlementPolicyCheckStatus(updateFinancialInfo));
+    }
+
+    @Test
+    @DisplayName("심사 신청 버튼 클릭 시 신청 내역으로 인서트하는 테스트")
+    public void registProjectApplicationInfo_test() {
+
+        //given
+        int projectNo = 214;
+        int memberNo = 68;
+
+        //when
+        projectApplicationService.registProjectApplicationInfo(projectNo, memberNo);
+
+        //then
+        assertDoesNotThrow(() -> projectApplicationService.registProjectApplicationInfo(projectNo, memberNo));
+    }
 }

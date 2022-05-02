@@ -79,9 +79,28 @@ public class ProjectReportServiceTests {
     public void findProjectReportWaitingList_test() {
         //given
         Pageable pageable = PageRequest.of(0, 10, Sort.by("projectReportNo").descending());
+        String projectReportStatus = "미답변";
 
         //when
-        Page<ProjectReportDTO> projectReportList = service.findProjectReportWaitingList(pageable);
+        Page<ProjectReportDTO> projectReportList = service.findProjectsByProjectReportStatus(pageable, projectReportStatus);
+
+        //then
+        assertNotNull(projectReportList);
+        projectReportList.forEach(report -> {
+            assertEquals(report.getClass(), ProjectReportDTO.class);
+        });
+        projectReportList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("신고 답변 완료 프로젝트 신고목록 조회")
+    public void findProjectReportRepliedList_test() {
+        //given
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("projectReportNo").descending());
+        String projectReportStatus = "답변완료";
+
+        //when
+        Page<ProjectReportDTO> projectReportList = service.findProjectsByProjectReportStatus(pageable, projectReportStatus);
 
         //then
         assertNotNull(projectReportList);

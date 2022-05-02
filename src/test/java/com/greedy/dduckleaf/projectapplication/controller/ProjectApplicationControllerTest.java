@@ -183,4 +183,46 @@ class ProjectApplicationControllerTest {
                 .andDo(MockMvcResultHandlers.print());
 
     }
+
+    @Test
+    @DisplayName("대표자정보 작성 페이지에서 사용자가 입력한 값으로 기본데이터를 수정하는 테스트")
+    public void modifyRepresentative_test() throws Exception {
+
+        //given
+        MultiValueMap<String, String> farmer = new LinkedMultiValueMap<>();
+        farmer.add("memberNo", "68");
+        farmer.add("farmerName", "박휘림");
+        farmer.add("farmerEmail", "hwirim797@gmail.com");
+        farmer.add("farmerPhone", "010-6693-3114");
+
+        MultiValueMap<String, String> financialInfo = new LinkedMultiValueMap<>();
+        financialInfo.add("farmerNo", "68");
+        financialInfo.add("farmerName", "박휘림");
+
+        //when & then
+        mockMvc.perform(MockMvcRequestBuilders.post("/project/application/modify/representative").params(farmer).params(financialInfo))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/project/application/goMain"))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+    @Test
+    @DisplayName("대표자 정보 페이지에서 사용자가 정산정책 정보 확인 시 확인 상태를 변경하는 테스트")
+    public void modifySettlementPolicyCheckStatus_test() throws Exception {
+
+        //given
+        MultiValueMap<String, String> financialInfo = new LinkedMultiValueMap<>();
+        financialInfo.add("farmerNo", "68");
+        financialInfo.add("settlementPolicyCheckStatus", "Y");
+
+        //when & then
+        mockMvc.perform(MockMvcRequestBuilders.post("/project/application/settlementcheck").params(financialInfo))
+                .andExpect(MockMvcResultMatchers.status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.redirectedUrl("/project/application/representative"))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
+
+
 }

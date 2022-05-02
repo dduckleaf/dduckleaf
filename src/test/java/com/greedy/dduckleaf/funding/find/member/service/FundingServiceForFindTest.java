@@ -3,10 +3,14 @@ package com.greedy.dduckleaf.funding.find.member.service;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.funding.dto.FundingDTO;
+import com.greedy.dduckleaf.funding.find.member.dto.FundingFindDetailInfoForMemberDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -50,12 +54,26 @@ class FundingServiceForFindTest {
     public void findFundingByMemberNo_test() {
         //given
         int memberNo = 5;
-
+        Pageable pageable = PageRequest.of(1, 10);
         //when
-        List<FundingDTO> fundingList =  service.findFundingByMemberNo(memberNo);
+        Page<FundingDTO> fundingList =  service.findFundingByMemberNo(memberNo, pageable);
 
         //then
         assertNotNull(fundingList);
         fundingList.forEach(System.out::println);
+    }
+
+    @Test
+    public void findFundingInfo_test() {
+
+        //given
+        int fundingInfoNo = 106;
+
+        //when
+        FundingFindDetailInfoForMemberDTO fundingDTO = service.findFundingInfo(fundingInfoNo);
+
+        //then
+        assertNotNull(fundingDTO);
+        System.out.println("fundingDTO = " + fundingDTO);
     }
 }

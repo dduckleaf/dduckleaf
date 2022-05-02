@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.profile.dto.MemberDTO;
+import com.greedy.dduckleaf.profile.dto.ProfileAttachmentDTO;
 import com.greedy.dduckleaf.projectnotice.dto.ProfileDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,7 +32,7 @@ class ProfileServiceTest {
     }
 
     @Test
-    @DisplayName("회원 번호로 프로필 정보를 조회")
+    @DisplayName("회원 번호로 프로필 정보와 회원 정보를 조회")
     public void findMemberTest() {
 
         //given
@@ -44,4 +45,35 @@ class ProfileServiceTest {
         System.out.println(profile);
         assertNotNull(profile);
     }
+
+    @Test
+    @DisplayName("이메일 변경 인증번호 전송 - 사용중인 이메일인 경우 테스트")
+    public void sendEmailVerificationUsingTest() {
+
+        //given
+        String email = "sangbum@naver.com";
+
+        //when
+        String result = profileService.sendEmailVerification(email);
+
+        //then
+        System.out.println(result);
+        assertEquals(result,"이미 사용중인 이메일 입니다.");
+    }
+
+    @Test
+    @DisplayName("이메일 변경 인증번호 전송 테스트")
+    public void sendEmailverificationTest() {
+
+        //given
+        String email = "sangbum0497@naver.com";
+
+        //when
+        String result = profileService.sendEmailVerification(email);
+
+        //then
+        System.out.println(result);
+        assertNotEquals(result, "이미 사용중인 이메일 입니다.");
+    }
+
 }

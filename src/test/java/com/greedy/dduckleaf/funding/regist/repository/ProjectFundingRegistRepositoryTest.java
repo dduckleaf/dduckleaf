@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
         DduckleafApplication.class,
         JPAConfiguration.class
 })
-class ProjectFundingRegistTest {
+class ProjectFundingRegistRepositoryTest {
 
     @Autowired
     private ProjectFundingRegistRepository repo;
@@ -48,7 +48,18 @@ class ProjectFundingRegistTest {
     @DisplayName("프로젝트 번호로 특정 프로젝트의 배송비, 리워드정보 조회")
     public void findById_test() {
 
-        Optional<Project> projectInfo = repo.findById(1);
+        Project projectInfo = repo.findById(1).get();
         assertNotNull(projectInfo);
     }
+
+    @Test
+    public void findProjectListTest() {
+
+        Project project = repo.findById(1).get();
+
+        assertNotNull(project);
+        System.out.println("project = " + project);
+
+    }
+
 }

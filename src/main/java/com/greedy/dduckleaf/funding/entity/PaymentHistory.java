@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
-@ToString
 @Entity(name = "PaymentHistoryForFunding")
 @Table(name = "TBL_PAYMENT_HISTORY")
 public class PaymentHistory {
@@ -25,11 +24,20 @@ public class PaymentHistory {
 
 
     @Column(name = "PAYMENT_RESULT_DATE")
-    private java.sql.Date paymentResultDate;
+    private String paymentResultDate;
 
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "FUNDING_INFO_NO")
     private Funding funding;
 
+    @Override
+    public String toString() {
+        return "PaymentHistory{" +
+                "paymentHistoryNo=" + paymentHistoryNo +
+                ", memberNo=" + memberNo +
+                ", paymentResultStauts='" + paymentResultStauts + '\'' +
+                ", paymentResultDate=" + paymentResultDate +
+                '}';
+    }
 }

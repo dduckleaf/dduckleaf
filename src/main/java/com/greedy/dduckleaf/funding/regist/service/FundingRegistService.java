@@ -12,6 +12,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
+
 /**
  * <pre>
  * Class : FundingRegistService
@@ -73,21 +75,25 @@ public class FundingRegistService {
      *
      * @author 홍성원
      */
-    public BankListAndMemberDTO findBankAndUserInfo(String memberId) {
+    public FundingRegistInfoDTO findBankAndUserInfo(String memberId, int projectNo) {
 
-        BankListAndMemberDTO bankListAndMember = new BankListAndMemberDTO();
+        FundingRegistInfoDTO fundingRegistInfoDTO = new FundingRegistInfoDTO();
 
         Member member = memberRepo.findByMemberId(memberId);
         List<Bank> bankList = bankRepository.findAll();
+        Project project = projectRepository.findById(projectNo).get();
 
-        bankListAndMember.setMember(modelMapper.map(member, MemberDTO.class));
-        bankListAndMember.setBankList(bankList.stream().map(bank->modelMapper.map(bank,BankDTO.class)).collect(Collectors.toList()));
-        return  bankListAndMember;
+        fundingRegistInfoDTO.setMember(modelMapper.map(member, MemberDTO.class));
+        fundingRegistInfoDTO.setBankList(bankList.stream().map(bank->modelMapper.map(bank,BankDTO.class)).collect(Collectors.toList()));
+        fundingRegistInfoDTO.setProject(modelMapper.map(project, ProjectDTO.class));
+
+        return  fundingRegistInfoDTO;
     }
 
     /* 펀딩신청내역 저장 메소드 */
     @Transactional
     public void registFunding(FundingRegistDTO registDTO) {
+
 
         /* 펀딩정보 삽입 */
         Funding funding = parsingFundingEntity(registDTO);
@@ -95,27 +101,30 @@ public class FundingRegistService {
         ProjectShippingFee shippingFee = shippingRepo.findProjectShippingFeeForFundingRegistByProjectNo(registDTO.getProjectNo());
         System.out.println("shippingFee = " + shippingFee);
         funding.setProjectShippingFee(shippingFee);
+        System.out.println("/* 펀딩정보 삽입 */");
 
         /* 배송지 삽입 */
         ShippingAddress shippingAddress = parsingShippingAddress(registDTO);
         shippingAddress.setFunding(funding);
-
+        System.out.println("/* 배송지 삽입 */");
 
         /* 결제내역 삽입 */
         PaymentHistory history = parsingPaymentHistory(registDTO);
         history.setFunding(funding);
+        System.out.println("/* 결제내역 삽입 */");
 
         /* 엔티티에 삽입한 행을 DB에 저장 */
         fundingRepo.save(funding);
         payHistoryRepo.save(history);
         shippingAddressRepo.save(shippingAddress);
+        System.out.println("/* 엔티티에 삽입한 행을 DB에 저장 */");
     }
 
 
     private PaymentHistory parsingPaymentHistory(FundingRegistDTO registDTO) {
 
         PaymentHistory history = new PaymentHistory();
-        history.setPaymentResultDate(new java.sql.Date(System.currentTimeMillis()));
+        history.setPaymentResultDate(getDateAndTime());
         history.setMemberNo(registDTO.getMemberNo());
         history.setPaymentResultStauts("결제완료");
 
@@ -141,7 +150,7 @@ public class FundingRegistService {
 
         Funding funding = new Funding();
         String extraShippingFeeStatus = "Y";
-        funding.setFundingDate(new java.sql.Date(System.currentTimeMillis()));
+        funding.setFundingDate(getDateAndTime());
         funding.setFundingAmount(registDTO.getTotalFunding());
         funding.setRewardAmount(registDTO.getRewardAmount());
         funding.setFundingStatus("Y");
@@ -151,9 +160,25 @@ public class FundingRegistService {
             extraShippingFeeStatus = "N";
         }
         funding.setExtraShippingFeeStatus(extraShippingFeeStatus);
-        funding.setRefundBankCode(registDTO.getRefundAccountInfo().getBankCode());
+        funding.setRefundBankCode(bankRepository.findById(registDTO.getRefundAccountInfo().getBankCode()).get());
         funding.setRefundAccount(registDTO.getRefundAccountInfo().getAccountNo());
 
         return funding;
+    }
+
+
+
+    /**
+     * findProjetEndDate : 프로젝트의 종료일을 반환합니다.
+     * @param projectNo : 프로젝트번호를 전달받습니다.
+     * @return endDate : 프로젝ㅌ의 종료일을 반환합니다.
+     *
+     * @author 홍성원
+     */
+    public String findProjetEndDate(int projectNo) {
+
+        String endDate = projectRepository.findById(projectNo).get().getEndDate();
+
+        return endDate;
     }
 }

@@ -69,7 +69,7 @@ public class ProjectBasicInfo {
     public void prePersist() {
 
         this.projectName = this.projectName  == null ? "프로젝트 명" : this.projectName ;
-        this.projectEndDate = this.projectEndDate  == null ? java.sql.Date.valueOf(LocalDate.now().plusMonths(1)).toString() : this.projectEndDate ;
+        this.projectEndDate = this.projectEndDate  == null ? java.sql.Date.valueOf(LocalDate.now().plusMonths(3)).toString() : this.projectEndDate ;
         this.projectInfo = this.projectInfo  == null ? "프로젝트에 대해 요약해주세요" : this.projectInfo ;
         this.promotionAgreementDate = this.promotionAgreementDate  == null ? java.sql.Date.valueOf(LocalDate.now()).toString() : this.promotionAgreementDate ;
 

@@ -12,6 +12,8 @@ import org.springframework.test.context.ContextConfiguration;
 
 import javax.transaction.Transactional;
 
+import java.sql.SQLOutput;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -65,5 +67,35 @@ class MemberForProfileRepositoryTest {
         Member foundMember = memberForProfileRepository.findById(67).get();
         System.out.println(foundMember.getPhone());
         assertEquals(foundMember.getPhone(), "01012345678");
+    }
+
+    @Test
+    @DisplayName("이메일을 가진 회원 조회 실패 테스트")
+    public void findMemberByEmailSuccessTest() {
+
+        //given
+        String email = "오늘 점싱은 냉모밀~";
+
+        //when
+        Member member = memberForProfileRepository.findMemberByEmail(email);
+
+        //then
+        System.out.println(member);
+        assertNull(member);
+    }
+
+    @Test
+    @DisplayName("이메일을 자니 회원 조회 성공 테스트")
+    public void findMemberByEmailFailedTest(){
+
+        //given
+        String email = "tkdjawlwhs@naver.com";
+
+        //when
+        Member member = memberForProfileRepository.findMemberByEmail(email);
+
+        //then
+        System.out.println(member);
+        assertNotNull(member);
     }
 }

@@ -328,7 +328,7 @@ label {
 }
 
 .representativeinfo {
-    height: 2300px !important;
+    height: 2400px !important;
 }
 
 .colorbox {
@@ -350,6 +350,12 @@ label {
 .policypopup {
     width: 1000px !important;
     height: 600px !important;
+}
+
+/* 정산 정책 확인 모달 */
+.fundingpopup {
+    width: 900px !important;
+    height: 450px !important;
 }
 
 .policyconfirm {
@@ -493,3 +499,5 @@ input[id="applicationStatus2"] {
     padding-top: 80px !important;
     font-size: 15pt !important;
 }
+
+/* 핸드폰 인증 */

@@ -3,18 +3,18 @@ package com.greedy.dduckleaf.profile.controller;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.profile.dto.MemberDTO;
 import com.greedy.dduckleaf.profile.dto.ProfileAttachmentDTO;
-import com.greedy.dduckleaf.profile.entity.ProfileAttachment;
 import com.greedy.dduckleaf.profile.service.ProfileService;
 import com.greedy.dduckleaf.projectnotice.dto.ProfileDTO;
 import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -29,12 +29,18 @@ import java.util.UUID;
  * History
  * 2022/04/29 (박상범) 처음 작성 / 개인 정보 수정 페이지로 이동, 조회 관련 메소드 작성
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
+ * 2022/05/01 (박상범) 개인 정보 수정 페이지로 이동, 조회 관련 메소드 수정, 회원의 사진 정보 변경 관련 메소드 수정, 이메일 변경 페이지로 이동, 휴대전화 번호 변경 페이지로 이동, 비밀번호 변경 페이지로 이동 관련 메소드 수정
+ * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성
  * </pre>
- * @version 1.0.1
+ * @version 1.0.6
  * @author 박상범
  */
+@Controller
 @RequestMapping("/profile")
 public class ProfileController {
+
+    @Value("${file.path}")
+    private String uploadPath;
 
     private final ProfileService profileService;
 
@@ -44,21 +50,33 @@ public class ProfileController {
     }
 
     /**
-     * modifyProfile: 회원 번호를 통해 프로필 사진, 이메일 변경을 할 수 있는 페이지로 포워딩합니다.
+     * modifyEmail: 개인 정보 수정의 이메일 변경 페이지, 휴대전화 번호 변경 페이지, 비밀번호 변경 페이지로 포워딩합니다.
      * @param user: 로그인된 회원의 정보
      * @return mv
      * @author 박상범
      */
-    @GetMapping("/modify")
-    public ModelAndView modifyProfile(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+    @GetMapping(value = {"/modify/email", "/modify/phone", "/modify/pwd"})
+    public ModelAndView modifyEmail(ModelAndView mv, HttpServletRequest request, @AuthenticationPrincipal CustomUser user) {
 
         int memberNo = user.getMemberNo();
+        String uri = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
 
         ProfileDTO profile = profileService.findProfileByMemberNo(memberNo);
 
-        mv.addObject("profile", profile);
-        mv.setViewName("/profile/modify/email");
+        mv.addObject("profileAttachment", profile.getProfileAttachment());
+        mv.addObject("member", profile.getMember());
 
+        if("email".equals(uri)) {
+            mv.setViewName("profile/modify/email");
+        }
+
+        if("phone".equals(uri)) {
+            mv.setViewName("profile/modify/phone");
+        }
+
+        if("pwd".equals(uri)){
+            mv.setViewName("profile/modify/pwd");
+        }
         return mv;
     }
 
@@ -70,12 +88,15 @@ public class ProfileController {
      * @author 박상범
      */
     @PostMapping("/uploadImg")
-    public String uploadImg(@RequestParam("file") MultipartFile file, HttpServletRequest request, @AuthenticationPrincipal CustomUser user) {
+    @ResponseBody
+    public String uploadImg(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUser user) {
 
         ProfileAttachmentDTO attachment = new ProfileAttachmentDTO();
         String result = "";
 
-        String rootLocation = request.getSession().getServletContext().getRealPath("resources");
+        String rootLocation = uploadPath;
+
+        System.out.println(rootLocation);
 
         String fileUploadPath = rootLocation + "/upload/original";
         String thumbnailPath = rootLocation + "/upload/thumbnail";
@@ -104,7 +125,6 @@ public class ProfileController {
                     attachment.setProfileOriginalName(orgName);
                     attachment.setProfileSavedName(savedName);
                     attachment.setProfilePath(fileUploadPath);
-                    attachment.setMemberNo(user.getMemberNo());
 
                     int width = 50;
                     int height = 55;
@@ -112,7 +132,7 @@ public class ProfileController {
                     Thumbnails.of(uploadDirectory + "/" + savedName).forceSize(width, height)
                             .toFile(thumbnailDirectory + "/thumbnail_" + savedName);
 
-                    attachment.setProfileThumbnailPath("/resources/upload/thumbnail/thumbnail_" + savedName);
+                    attachment.setProfileThumbnailPath("/upload/thumbnail/thumbnail_" + savedName);
                 }
 
                 attachment.setMemberNo(user.getMemberNo());
@@ -130,7 +150,6 @@ public class ProfileController {
                 boolean isDeleted2 = deleteThumbnail.delete();
 
                 if(isDeleted1 && isDeleted2) {
-                    System.out.println("업로드 실패로 인한 사진 삭제 완료 !!!");
                     e.printStackTrace();
                 } else {
                     e.printStackTrace();
@@ -139,5 +158,39 @@ public class ProfileController {
         }
 
         return result;
+    }
+
+    /**
+     * sendVerification: 입력받은 이메일 주소로 인증번호를 전송한다.
+     * @param email: 인증 번호를 받을 이메일 주소
+     * @return mv
+     * @author 박상범
+     */
+    @PostMapping(value = {"/send/email/verification"}, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String sendVerification(@RequestBody String email) {
+
+        return profileService.sendEmailVerification(email);
+    }
+
+    /**
+     * modifyEmail: 회원의 이메일 주소를 변경합니다.
+     * @param email: 변경할 이메일 주소
+     * @param user: 로그인된 회원 정보
+     * @return mv
+     * @author 박상범
+     */
+    @PostMapping("/modify/email")
+    public ModelAndView modifyEmail(ModelAndView mv, String email, @AuthenticationPrincipal CustomUser user) {
+
+        MemberDTO member = new MemberDTO();
+        member.setMemberNo(user.getMemberNo());
+        member.setEmail(email);
+
+        profileService.modifyEmail(member);
+
+        mv.setViewName("/myfunding/default");
+
+        return mv;
     }
 }

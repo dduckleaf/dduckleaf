@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div class="title-div">
+    <span class="text-title"><img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">프로필 정보 설정</span>
+</div>
+<div class="profile-div">
+    <form method="post" id="profile-form" enctype="multipart/form-data">
+        <div class="profile-img-div">
+            <h5 style="font-family: inherit">프로필 사진</h5><br>
+            <img id="titleImg" th:src="@{ ${ profileAttachment.profileThumbnailPath } }"><br>
+            <input type="file" style="display: none" id="imageFile" name="uploadedImg" accept=".gif, .jpg, .png" onchange="loadImg(this)">
+            <div id="changeImg">바꾸기</div><div id="deleteImg">삭제</div>
+        </div>
+    </form>
+</div>
+</body>
+<script>
+
+    const $titleImgDiv = document.getElementById("changeImg");
+
+    $titleImgDiv.onclick = function() {
+        document.getElementById("imageFile").click();
+    }
+
+    async function loadImg(value) {
+        if (value.files && value.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("titleImg").src = e.target.result;
+            }
+            reader.readAsDataURL(value.files[0]);
+        }
+
+        let formData = new FormData();
+        formData.append("file", value.files[0]);
+        let response = await fetch('/profile/uploadImg', {
+            method: "POST",
+            body: formData
+        });
+        if (response.status == 200) {
+            alert("프로필 사진이 변경되었습니다.");
+        }
+    }
+</script>
+</html>

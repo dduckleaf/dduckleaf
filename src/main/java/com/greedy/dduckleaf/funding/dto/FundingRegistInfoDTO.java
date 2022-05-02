@@ -9,8 +9,9 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class BankListAndMemberDTO {
+public class FundingRegistInfoDTO {
 
     private List<BankDTO> bankList;
     private MemberDTO member;
+    private ProjectDTO project;
 }

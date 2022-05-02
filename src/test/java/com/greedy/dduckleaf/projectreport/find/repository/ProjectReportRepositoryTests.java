@@ -61,9 +61,26 @@ public class ProjectReportRepositoryTests {
 
     @Test
     @DisplayName("답변 대기 중인 프로젝트 신고내역 목록조회 테스트")
-    public void findByProjectReportStatus_test() {
+    public void findWaitingListByProjectReportStatus_test() {
         //given
         String projectReportStatus = "미답변";
+        Pageable pageable = PageRequest.of(0,
+                10,
+                Sort.by("projectReportNo").descending());
+
+        //when
+        Page<ProjectReport> projectReportList = repository.findByProjectReportStatus(projectReportStatus, pageable);
+
+        //then
+        assertNotNull(projectReportList);
+        projectReportList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("답변 완료 프로젝트 신고내역 목록조회 테스트")
+    public void findRepliedListByProjectReportStatus_test() {
+        //given
+        String projectReportStatus = "답변완료";
         Pageable pageable = PageRequest.of(0,
                 10,
                 Sort.by("projectReportNo").descending());

@@ -36,7 +36,7 @@
                     <p onclick="location.href='/project/application/representative'">대표자 및 정산 정보</p>
                 </div>
             </div>
-            <form name="saveForm">
+            <form name="saveForm" enctype="multipart/form-data">
                 <div class="col-md-7">
                     <div class="breadcrumb">
                         <span class="breadcrumb home" onclick="location.href='/project/application/goMain'">펀딩 준비</span>&nbsp;
@@ -45,18 +45,24 @@
                     </div>
                     <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">스토리 작성</a><br><hr>
                     <a>파머님의 프로젝트를 소개해주세요.</a>
-                    <div class="basicmenu">
-                        <a class="basictitle">소개 사진 등록</a><br>
-                        <a class="basicsubtitle">프로젝트 페이지 상단에 노출될 사진을 올려주세요.</a><br>
-                        <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
-                        <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
-                            해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
-                    </div>
+<!--                    <form enctype="multipart/form-data" method="post">-->
+                        <div class="basicmenu">
+                            <a class="basictitle">소개 사진 등록</a><br>
+                            <a class="basicsubtitle">프로젝트 페이지 상단에 노출될 사진을 올려주세요.</a><br>
+                            <img class="introductionIMG" id="changeImg1" th:src="@{ /images/mockfund/basicimg.png}" ><br>
+                            <input type="file" style="display: block" id="introduction" name="introduction" accept=".gif, .jpg, .png" onchange="loadImg(this)">
+                            <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
+                                해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
+<!--                            <button type="submit" onclick="location.href='project/application/modify/story'">저장</button>-->
+                        </div>
+<!--                    </form>-->
                     <div class="basicmenu">
                         <a class="basictitle">프로젝트 요약</a><br>
                         <a class="basicsubtitle">프로젝트 페이지 상단에 노출됩니다.</a><br>
-                        <input class="projectsummary" id="projectInfo" name="projectInfo" type="text" th:value="${ story.projectInfo }">
+                        <input class="projectsummary" type="hidden" th:value="${ story.projectInfo }">
+                        <input class="projectsummary" id="projectInfo" name="projectInfo" type="text" th:placeholder="${ story.projectInfo }">
                         <input type="hidden" id="projectNo" name="projectNo" th:value="${ story.projectNo }">
+                        <input type="hidden" id="projectBasicInfoNo" name="projectBasicInfoNo" th:value="${ story.projectBasicInfoNo }">
                     </div>
                     <div>
                         <a class="basictitle">스토리 광고 심의 동의</a><br>
@@ -74,7 +80,8 @@
                     <div class="basicmenu">
                         <a class="basictitle">프로젝트 스토리</a><br>
                         <a class="basicsubtitle">프로젝트 스토리로 사용할 사진을 등록해주세요.</a><br>
-                        <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <img class="storyIMG" id="changeImg2" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <input type="file" style="display: block" id="story" name="story" accept=".gif, .jpg, .png" onchange="loadImg(this)">
                         <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
                             해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
                     </div>
@@ -225,11 +232,51 @@
                         popup: 'savepopup'
                     },
                     buttonsStyling: false,
-                }).then(function(projectInfo, projectNo) {
+                }).then(function(projectInfo, projectNo, projectBasicInfoNo, introduction, story) {
+
+
+                    /* 이미지 등록 */
+                    const $introductionIMG = document.getElementById("changeImg1");
+
+                    $introductionIMG.onclick = function() {
+                        document.getElementById("introduction").click();
+                    }
+
+                    function loadImg(value) {
+                        if(value.files && value.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                document.getElementById("$introductionIMG").src = e.target.result;
+                            }
+                            reader.readAsDataURL(value.files[0]);
+                        }
+                    }
+
+                    /* 이미지 등록 */
+                    const $storyIMG = document.getElementById("changeImg2");
+
+                    $storyIMG.onclick = function() {
+                        document.getElementById("story").click();
+                    }
+
+                    function loadImg(value) {
+                        if(value.files && value.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                document.getElementById("$storyIMG").src = e.target.result;
+                            }
+                            reader.readAsDataURL(value.files[0]);
+                        }
+                    }
+
+
                     let saveForm = document.saveForm;
                     let url = '/project/application/modify/story';
                     saveForm.projectInfo = projectInfo;
                     saveForm.projectNo = projectNo;
+                    saveForm.projectBasicInfoNo = projectBasicInfoNo;
+                    saveForm.introduction = introduction;
+                    saveForm.story = story;
 
                     saveForm.action = url;
                     saveForm.method = 'post';
