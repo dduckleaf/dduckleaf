@@ -32,17 +32,17 @@ class ProfileServiceTest {
     }
 
     @Test
-    @DisplayName("회원 번호로 프로필 정보를 조회")
+    @DisplayName("회원 번호로 프로필 정보와 회원 정보를 조회")
     public void findMemberTest() {
 
         //given
         int memberNo = 67;
 
         //when
-        ProfileAttachmentDTO profileAttachment = profileService.findProfileByMemberNo(memberNo);
+        ProfileDTO profile = profileService.findProfileByMemberNo(memberNo);
 
         //then
-        System.out.println(profileAttachment);
-        assertNotNull(profileAttachment);
+        System.out.println(profile);
+        assertNotNull(profile);
     }
 }

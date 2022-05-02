@@ -121,19 +121,17 @@ public class ProjectReportService {
     }
 
     /**
-     * findProjectReportWaitingList: 신고 답변 대기 중인 프로젝트 신고내역 목록 조회를 요청하는 메소드입니다.
+     * findProjectReportWaitingList: 신고 처리 상태에 따라 프로젝트 신고내역 목록 조회를 요청하는 메소드입니다.
      * @param pageable: 페이징에 필요한 정보를 담는 객체
+     * @param projectReportStatus: 프로젝트 신고 처리 상태
      * @return Page<ProjectReportDTO> 페이징 처리가 된 조회 결과를 DTO로 변환한 프로젝트신고목록
      * @author 장민주
      */
-    public Page<ProjectReportDTO> findProjectReportWaitingList(Pageable pageable) {
+    public Page<ProjectReportDTO> findProjectsByProjectReportStatus(Pageable pageable, String projectReportStatus) {
         /* 페이징 정보 */
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
                 Sort.by("projectReportNo").descending());
-
-        /* 프로젝트신고 처리 상태 */
-        String projectReportStatus = "미답변";
 
         return reportRepository.findByProjectReportStatus(projectReportStatus, pageable).map(
                 projectReport -> modelMapper.map(projectReport, ProjectReportDTO.class

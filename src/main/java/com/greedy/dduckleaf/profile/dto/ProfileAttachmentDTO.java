@@ -16,5 +16,4 @@ public class ProfileAttachmentDTO {
     private String profilePath;
     private String profileThumbnailPath;
     private int memberNo;
-
 }

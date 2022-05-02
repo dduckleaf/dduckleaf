@@ -33,8 +33,10 @@
 		
 		<div class="funding-detail-info-border">
 			<div class="funding-detail-info-box">
-				<label class="category">곡류</label><br>
-				<label class="projectStatus">진행중</label><br>
+				<label class="category">[[${funding.rewardCategoryName}]]</label><br>
+				<label class="projectStatus">
+					진행중
+				</label><br>
 				<label class="projectName">국내산 송이버섯</label><br>
 				<label class="farmerName">by 감자합니다</label><br>
 				<br>
@@ -84,25 +86,26 @@
 				<label class="funding-detail-reward-info">발송 시작일: 2022년 04월 말(21~말일) 예정</label><br><br>
 				<label class="funding-detail-reward-info">* 프로젝트 교환/ 펀딩금반환/AS정책은 반환정책을 확인하세요</label><br><br>
 				<a class="funding-detail-reward-info" style="font-size: 1em;"><u>프로젝트 반환 정책 바로가기</u></a><br><br>
-				<button class="basic-btn btn3 totallybig-btn">환불 신청</button>
+				<button class="basic-btn btn3 totallybig-btn">환불 계좌 정보 변경하기</button>
 			</div>
 		</div>
 		<div class="funding-detail-info-border">
 			<div class="funding-detail-shipping-info-box">
 				<label>배송지 정보</label><br><br>
-				<label>박상범</label><br>
-				<label>010-1234-1234</label><br><br>
-				<label>[12321]우리집 주소~</label><br>
-				<label>14층</label><br><br>
-				<button class="basic-btn btn3 totallybig-btn">환불 신청</button>
+				<label>[[${addressInfo.shippingMemberName}]]</label><br>
+				<label>[[${addressInfo.shippingMemberPhone}]]</label><br><br>
+				<label>[ [[${addressInfo.zipCode}]] ] [[${addressInfo.address1}]] [[${addressInfo.address2}]]</label><br>
+				<label>[[${addressInfo.shippingRequire}]]</label><br><br>
+				<button class="basic-btn btn3 totallybig-btn">배송지 정보 변경하기</button>
 			</div>
 		</div>
 		
 		
 		<div style="; text-align: right;margin: 3%">
-			<button class="basic-btn btn3 medium-btn">뒤로가기</button>
+			<button class="basic-btn btn3 medium-btn" onclick="location.href='/funding/find/list/member'">뒤로가기</button>
 		</div>
-
+	</div>
+</div>
 <div th:replace="/common/footer.html"></div>
 <script>
 
