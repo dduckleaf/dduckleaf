@@ -101,6 +101,7 @@ public class FundingRegistService {
         ProjectShippingFee shippingFee = shippingRepo.findProjectShippingFeeForFundingRegistByProjectNo(registDTO.getProjectNo());
         System.out.println("shippingFee = " + shippingFee);
         funding.setProjectShippingFee(shippingFee);
+
         System.out.println("/* 펀딩정보 삽입 */");
 
         /* 배송지 삽입 */
@@ -156,6 +157,7 @@ public class FundingRegistService {
         funding.setFundingStatus("Y");
         funding.setDonateAmount(registDTO.getDonate());
         funding.setMemberNo(registDTO.getMemberNo());
+        funding.setRefundName(registDTO.getRefundName());
         if(registDTO.getShippingFee() > 0) {
             extraShippingFeeStatus = "N";
         }
@@ -180,5 +182,43 @@ public class FundingRegistService {
         String endDate = projectRepository.findById(projectNo).get().getEndDate();
 
         return endDate;
+    }
+
+
+
+    /**
+     * modifyShippingAddress : 배송지 정보를 변경합니다.
+     * @param
+     * @return
+     *
+     * @author 홍성원
+     */
+    @Transactional
+    public void modifyShippingAddress(ShippingAddressDTO address) {
+
+        ShippingAddress shippingAddress = shippingAddressRepo.findByFunding_fundingInfoNo(address.getFundingInfoNo());
+        System.out.println("shippingAddress = " + shippingAddress);
+        shippingAddress.setMemberName(address.getShippingMemberName());
+        shippingAddress.setShippingRequire(address.getShippingRequire());
+        shippingAddress.setMemberPhone(address.getShippingMemberPhone());
+        String memberAddress = address.getZipCode() + "$" + address.getAddress1() + "$" + address.getAddress2();
+        shippingAddress.setShippingAddress(memberAddress);
+
+        System.out.println("shippingAddress = " + shippingAddress);
+        shippingAddressRepo.save(shippingAddress);
+        System.out.println("shippingAddress = " + shippingAddress);
+    }
+
+    @Transactional
+    public void modifyRefundAccount(FundingDTO accountInfo) {
+        System.out.println("accountInfo = " + accountInfo);
+        Funding funding = fundingRepo.findById(accountInfo.getFundingInfoNo()).get();
+        System.out.println("funding = " + funding);
+        funding.setRefundAccount(accountInfo.getRefundAccount());
+        funding.setRefundName(accountInfo.getRefundName());
+        funding.setRefundBankCode(bankRepository.findById(accountInfo.getRefundAccountInfo().getBankCode()).get());
+
+        fundingRepo.save(funding);
+        System.out.println("funding = " + funding);
     }
 }

@@ -1,16 +1,13 @@
 package com.greedy.dduckleaf.funding.find.member.service;
 
-import com.greedy.dduckleaf.funding.dto.FundingDTO;
-import com.greedy.dduckleaf.funding.dto.PaymentHistoryDTO;
-import com.greedy.dduckleaf.funding.dto.ProjectBasicInfoDTO;
-import com.greedy.dduckleaf.funding.dto.ShippingAddressDTO;
+import com.greedy.dduckleaf.funding.dto.*;
 import com.greedy.dduckleaf.funding.entity.Funding;
-import com.greedy.dduckleaf.funding.entity.PaymentHistory;
 import com.greedy.dduckleaf.funding.entity.ShippingAddress;
 import com.greedy.dduckleaf.funding.find.member.dto.FundingFindDetailInfoForMemberDTO;
 import com.greedy.dduckleaf.funding.find.member.repository.FundingForMemberFindRepository;
 import com.greedy.dduckleaf.funding.find.member.repository.PaymentHistoryForFundingFindMemberRepository;
 import com.greedy.dduckleaf.funding.find.member.repository.ShippingAddressForFundingFindRepository;
+import com.greedy.dduckleaf.funding.regist.repository.BankRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +17,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -42,13 +40,15 @@ public class FundingServiceForFind {
     private final FundingForMemberFindRepository fundingRepo;
     private final PaymentHistoryForFundingFindMemberRepository paymentRepo;
     private final ShippingAddressForFundingFindRepository addressRepo;
+    private final BankRepository bankRepo;
     private final ModelMapper mapper;
 
     @Autowired
-    public FundingServiceForFind(FundingForMemberFindRepository fundingRepo, PaymentHistoryForFundingFindMemberRepository paymentRepo, ShippingAddressForFundingFindRepository addressRepo, ModelMapper mapper) {
+    public FundingServiceForFind(FundingForMemberFindRepository fundingRepo, PaymentHistoryForFundingFindMemberRepository paymentRepo, ShippingAddressForFundingFindRepository addressRepo, BankRepository bankRepo, ModelMapper mapper) {
         this.fundingRepo = fundingRepo;
         this.paymentRepo = paymentRepo;
         this.addressRepo = addressRepo;
+        this.bankRepo = bankRepo;
         this.mapper = mapper;
     }
 
@@ -98,8 +98,27 @@ public class FundingServiceForFind {
         
         fundingInfo.setFunding(mapper.map(fundingRepo.findById(fundingNo).get(), FundingDTO.class));
         fundingInfo.getFunding().setRewardCategoryName(fundingInfo.getFunding().getProject().getBasicInfo().get(0).getCategory().getProjectCategoryName());
-        fundingInfo.setShippingAddress(mapper.map(addressRepo.findByFunding_fundingInfoNo(fundingNo), ShippingAddressDTO.class));
+
+        ShippingAddress address = addressRepo.findByFunding_fundingInfoNo(fundingNo);
+        fundingInfo.setShippingAddress(parsingAddress(address));
+
+        List<BankDTO> bankList = bankRepo.findAll().stream().map(bank -> mapper.map(bank, BankDTO.class)).collect(Collectors.toList());
+        fundingInfo.setBankList(bankList);
 
         return fundingInfo;
+    }
+
+    private ShippingAddressDTO parsingAddress(ShippingAddress address) {
+
+        ShippingAddressDTO addressDTO = mapper.map(address, ShippingAddressDTO.class);
+        String addressInfo[] = address.getShippingAddress().split("\\$");
+        for(int i = 0; i < addressInfo.length; i++) {
+            System.out.println("addressInfo = " + addressInfo[i]);
+        }
+        addressDTO.setZipCode(addressInfo[0]);
+        addressDTO.setAddress1(addressInfo[1]);
+        addressDTO.setAddress2(addressInfo[2]);
+
+        return addressDTO;
     }
 }

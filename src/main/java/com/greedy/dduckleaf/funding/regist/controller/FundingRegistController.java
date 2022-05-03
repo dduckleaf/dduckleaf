@@ -1,15 +1,14 @@
 package com.greedy.dduckleaf.funding.regist.controller;
 
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
-import com.greedy.dduckleaf.funding.dto.FundingRegistDTO;
-import com.greedy.dduckleaf.funding.dto.FundingRegistInfoDTO;
-import com.greedy.dduckleaf.funding.dto.ProjectDTO;
+import com.greedy.dduckleaf.funding.dto.*;
 import com.greedy.dduckleaf.funding.regist.service.FundingRegistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -112,4 +111,55 @@ public class FundingRegistController {
 
         return mv;
     }
+
+    @PostMapping("/shippingaddress")
+    public ModelAndView modifyShippingAddress(ModelAndView mv, ShippingAddressDTO address) {
+
+        service.modifyShippingAddress(address);
+        String url = "redirect:/funding/find/detail/member/" + address.getFundingInfoNo();
+        mv.setViewName(url);
+
+        return mv;
+    }
+    @PostMapping("/refundAccount")
+    public ModelAndView modifyRefundAccount(ModelAndView mv, FundingDTO accountInfo) {
+
+        service.modifyRefundAccount(accountInfo);
+
+        mv.setViewName("redirect:/funding/find/detail/member/" + accountInfo.getFundingInfoNo());
+
+        return mv;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
