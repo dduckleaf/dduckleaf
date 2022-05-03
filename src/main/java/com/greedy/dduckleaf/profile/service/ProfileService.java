@@ -3,8 +3,10 @@ package com.greedy.dduckleaf.profile.service;
 import com.greedy.dduckleaf.email.EmailSender;
 import com.greedy.dduckleaf.profile.dto.MemberDTO;
 import com.greedy.dduckleaf.profile.dto.ProfileAttachmentDTO;
+import com.greedy.dduckleaf.profile.entity.BasicProfileAttachment;
 import com.greedy.dduckleaf.profile.entity.Member;
 import com.greedy.dduckleaf.profile.entity.ProfileAttachment;
+import com.greedy.dduckleaf.profile.repository.BasicProfileAttachmentForProfileRepository;
 import com.greedy.dduckleaf.profile.repository.MemberForProfileRepository;
 import com.greedy.dduckleaf.profile.repository.ProfileAttachmentForProfileRepository;
 import com.greedy.dduckleaf.projectnotice.dto.ProfileDTO;
@@ -36,13 +38,15 @@ public class ProfileService {
 
     private final MemberForProfileRepository memberForProfileRepository;
     private final ProfileAttachmentForProfileRepository profileAttachmentForProfileRepository;
+    private final BasicProfileAttachmentForProfileRepository basicProfileAttachmentForProfileRepository;
     private final ModelMapper modelMapper;
     private final EmailSender emailSender;
 
     @Autowired
-    public ProfileService(MemberForProfileRepository memberForProfileRepository, ProfileAttachmentForProfileRepository profileAttachmentForProfileRepository, ModelMapper modelMapper, EmailSender emailSender) {
+    public ProfileService(MemberForProfileRepository memberForProfileRepository, ProfileAttachmentForProfileRepository profileAttachmentForProfileRepository, BasicProfileAttachmentForProfileRepository basicProfileAttachmentForProfileRepository, ModelMapper modelMapper, EmailSender emailSender) {
         this.memberForProfileRepository = memberForProfileRepository;
         this.profileAttachmentForProfileRepository = profileAttachmentForProfileRepository;
+        this.basicProfileAttachmentForProfileRepository = basicProfileAttachmentForProfileRepository;
         this.modelMapper = modelMapper;
         this.emailSender = emailSender;
     }
@@ -184,5 +188,29 @@ public class ProfileService {
 
         Member foundMember = memberForProfileRepository.findById(member.getMemberNo()).get();
         foundMember.setMemberPwd(member.getMemberPwd());
+    }
+
+
+    public String removeProfileAttachment(int memberNo) {
+
+        ProfileAttachment profileAttachment = profileAttachmentForProfileRepository.findProfileAttachmentByMember_memberNo(memberNo);
+
+        if(profileAttachment == null) {
+            return "프로필 사진 삭제 실패";
+        }
+
+        int basicProfileAttachmentNo = (int) ((Math.random() * 6) + 1);
+
+        BasicProfileAttachment basicProfileAttachment = basicProfileAttachmentForProfileRepository.findById(basicProfileAttachmentNo).get();
+
+        System.out.println(profileAttachment);
+        System.out.println(basicProfileAttachment);
+
+        profileAttachment.setProfileSavedName(basicProfileAttachment.getProfileSavedName());
+        profileAttachment.setProfileOriginalName(basicProfileAttachment.getProfileOriginalName());
+        profileAttachment.setProfilePath(basicProfileAttachment.getProfilePath());
+        profileAttachment.setProfileThumbnailPath(basicProfileAttachment.getProfileThumbnailPath());
+
+        return profileAttachment.getProfileThumbnailPath();
     }
 }

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -128,8 +129,8 @@ public class ProfileController {
                     attachment.setProfileSavedName(savedName);
                     attachment.setProfilePath(fileUploadPath);
 
-                    int width = 50;
-                    int height = 55;
+                    int width = 400;
+                    int height = 400;
 
                     Thumbnails.of(uploadDirectory + "/" + savedName).forceSize(width, height)
                             .toFile(thumbnailDirectory + "/thumbnail_" + savedName);
@@ -251,5 +252,12 @@ public class ProfileController {
         mv.setViewName("redirect:/myfunding/default");
 
         return mv;
+    }
+
+    @PostMapping("/remove/thumbnail")
+    @ResponseBody
+    public String removeImage(@AuthenticationPrincipal CustomUser user) {
+
+        return profileService.removeProfileAttachment(user.getMemberNo());
     }
 }
