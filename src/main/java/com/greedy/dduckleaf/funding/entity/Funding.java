@@ -32,6 +32,9 @@ public class Funding {
     @Column(name = "DONATE_AMOUNT")
     private int donateAmount;
 
+    @Column(name = "REFUND_NAME")
+    private String refundName;
+
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "PROJECT_NO")
     private Project project;
