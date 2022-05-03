@@ -9,16 +9,17 @@ import net.coobird.thumbnailator.Thumbnails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -30,7 +31,8 @@ import java.util.UUID;
  * 2022/04/29 (박상범) 처음 작성 / 개인 정보 수정 페이지로 이동, 조회 관련 메소드 작성
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
  * 2022/05/01 (박상범) 개인 정보 수정 페이지로 이동, 조회 관련 메소드 수정, 회원의 사진 정보 변경 관련 메소드 수정, 이메일 변경 페이지로 이동, 휴대전화 번호 변경 페이지로 이동, 비밀번호 변경 페이지로 이동 관련 메소드 수정
- * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성
+ * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성, 회원의 이메일 주소 변경 관련 메소드 작성, 휴대전화 번호로 인증번호 전송 관련 메소드 작성, 회원의 휴대전화 번호 변경 관련 메소드 작성, 회원의 비밀번호 변경 관련 메소드 작성
+ * 2022/05/03 (박상범) 회원의 프로필 이미지를 기본 프로필 이미지로 변경 관련 메소드 작성
  * </pre>
  * @version 1.0.6
  * @author 박상범
@@ -43,10 +45,12 @@ public class ProfileController {
     private String uploadPath;
 
     private final ProfileService profileService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public ProfileController(ProfileService profileService) {
+    public ProfileController(ProfileService profileService, PasswordEncoder passwordEncoder) {
         this.profileService = profileService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -126,8 +130,8 @@ public class ProfileController {
                     attachment.setProfileSavedName(savedName);
                     attachment.setProfilePath(fileUploadPath);
 
-                    int width = 50;
-                    int height = 55;
+                    int width = 400;
+                    int height = 400;
 
                     Thumbnails.of(uploadDirectory + "/" + savedName).forceSize(width, height)
                             .toFile(thumbnailDirectory + "/thumbnail_" + savedName);
@@ -161,14 +165,14 @@ public class ProfileController {
     }
 
     /**
-     * sendVerification: 입력받은 이메일 주소로 인증번호를 전송한다.
+     * sendEmailVerification: 입력받은 이메일 주소로 인증번호를 전송한다.
      * @param email: 인증 번호를 받을 이메일 주소
      * @return mv
      * @author 박상범
      */
-    @PostMapping("/send/email/verification")
+    @PostMapping(value = {"/send/email/verification"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public String sendVerification(String email) {
+    public String sendEmailVerification(@RequestBody String email) {
 
         return profileService.sendEmailVerification(email);
     }
@@ -181,7 +185,7 @@ public class ProfileController {
      * @author 박상범
      */
     @PostMapping("/modify/email")
-    public ModelAndView modifyEmail(ModelAndView mv, String email, RedirectAttributes rttr, @AuthenticationPrincipal CustomUser user) {
+    public ModelAndView modifyEmail(ModelAndView mv, String email, @AuthenticationPrincipal CustomUser user) {
 
         MemberDTO member = new MemberDTO();
         member.setMemberNo(user.getMemberNo());
@@ -189,9 +193,78 @@ public class ProfileController {
 
         profileService.modifyEmail(member);
 
-        rttr.addFlashAttribute("message", "이메일 주소가 변경되었습니다.");
-        mv.setViewName("/profile/modify/email");
+        mv.setViewName("redirect:/myfunding/default");
 
         return mv;
+    }
+
+    /**
+     * sendVerification: 입력받은 휴대전화 번호로 인증번호를 전송한다.
+     * @param phone: 인증 번호를 받을 이메일 주소
+     * @return mv
+     * @author 박상범
+     */
+    @PostMapping(value = {"/send/phone/verification"}, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String sendPhoneVerification(@RequestBody String phone) {
+
+        return profileService.sendPhoneVerification(phone);
+    }
+
+    /**
+     * modifyPhone: 회원의 이메일 주소를 변경합니다.
+     * @param phone: 변경할 휴대전화 번호
+     * @param user: 로그인된 회원 정보
+     * @return mv
+     * @author 박상범
+     */
+    @PostMapping("/modify/phone")
+    public ModelAndView modifyPhone(ModelAndView mv, String phone, @AuthenticationPrincipal CustomUser user) {
+
+        System.out.println(phone);
+
+        MemberDTO member = new MemberDTO();
+        member.setMemberNo(user.getMemberNo());
+        member.setPhone(phone);
+
+        profileService.modifyPhone(member);
+
+        mv.setViewName("redirect:/myfunding/default");
+
+        return mv;
+    }
+
+    /**
+     * modifyMemberPwd: 회원의 비밀번호를 변경합니다.
+     * @param memberPwd: 변경할 비밀번호
+     * @param user: 로그인된 회원 정보
+     * @return mv
+     * @author 박상범
+     */
+    @PostMapping("/modify/pwd")
+    public ModelAndView modifyMemberPwd(ModelAndView mv, String memberPwd, @AuthenticationPrincipal CustomUser user) {
+
+        MemberDTO member = new MemberDTO();
+        member.setMemberNo(user.getMemberNo());
+        member.setMemberPwd(passwordEncoder.encode(memberPwd));
+
+        profileService.modifyMemberPwd(member);
+
+        mv.setViewName("redirect:/myfunding/default");
+
+        return mv;
+    }
+
+    /**
+     * modifyMemberPwd: 회원의 비밀번호를 변경합니다.
+     * @param user: 로그인된 회원 정보
+     * @return mv
+     * @author 박상범
+     */
+    @PostMapping("/remove/thumbnail")
+    @ResponseBody
+    public String removeImage(@AuthenticationPrincipal CustomUser user) {
+
+        return profileService.removeProfileAttachment(user.getMemberNo());
     }
 }

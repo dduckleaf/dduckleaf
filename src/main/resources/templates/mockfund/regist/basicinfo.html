@@ -28,15 +28,15 @@
                     <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/mockfund/sidebararrow.png }"></p>
                 </button>
                 <div class="panel">
-                    <p onclick="location.href='../basicinfo/1'">기본정보</p>
-                    <p onclick="location.href='../story/1'">스토리 작성</p>
-                    <p onclick="location.href='../reward/1'">리워드 설계</p>
+                    <p onclick="location.href='../basicinfo'">기본정보</p>
+                    <p onclick="location.href='../story'">스토리 작성</p>
+                    <p onclick="location.href='../reward'">리워드 설계</p>
                 </div>
             </div>
             <form name="saveForm">
                 <div class="col-md-7">
                     <div class="breadcrumb">
-                        <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">모의펀딩 준비</span>&nbsp;
+                        <span class="breadcrumb home" onclick="location.href='../../mockfund/mockfundmain'">모의펀딩 준비</span>&nbsp;
                         <span class="breadcrumb">></span>&nbsp;
                         <span class="breadcrumb">기본 정보</span>
                     </div>
@@ -44,7 +44,7 @@
                     <a>프로젝트의 추가 정보를 입력해주세요.</a>
                     <div class="basicmenu">
                         <a class="basictitle">프로젝트 제목</a><br>
-                        <input name="mockFundInfoNo" type="hidden" value="1">
+                        <input name="mockFundInfoNo" type="hidden" th:value="${ info.mockFundInfoNo }">
                         <input class="mockfundtitle1" id="mockFundName" name="mockFundName" type="text" th:value="${ info.mockFundName }">
                     </div>
                     <div class="basicmenu">

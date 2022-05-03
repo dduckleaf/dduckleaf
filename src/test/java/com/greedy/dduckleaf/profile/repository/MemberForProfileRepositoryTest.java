@@ -12,8 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 
 import javax.transaction.Transactional;
 
-import java.sql.SQLOutput;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -97,5 +95,35 @@ class MemberForProfileRepositoryTest {
         //then
         System.out.println(member);
         assertNotNull(member);
+    }
+
+    @Test
+    @DisplayName("해당 전화 번호를 가진 회원 찾기 테스트")
+    public void findMemberByPhoneSuccessTest() {
+
+        //given
+        String phone = "01062019811";
+
+        //when
+        Member member = memberForProfileRepository.findMemberByPhone(phone);
+
+        //then
+        System.out.println(member);
+        assertNotNull(member);
+    }
+
+    @Test
+    @DisplayName("해당 전화 번호를 가진 회원 찾기 실패 테스트")
+    public void findMemberByPhoneFailedTest() {
+
+        //given
+        String phone = "01099999999";
+
+        //when
+        Member member = memberForProfileRepository.findMemberByPhone(phone);
+
+        //then
+        System.out.println(member);
+        assertNull(member);
     }
 }

@@ -45,7 +45,7 @@ class MockFundServiceTest {
         int infoCode = 1;
 
         //when
-        MockFundInfoDTO info = mockFundService.findMockFundInfoByCode(infoCode);
+        MockFundInfoDTO info = mockFundService.findMockFundInfoByMockFundNo(infoCode);
 
         //then
         System.out.println(info);
@@ -89,7 +89,7 @@ class MockFundServiceTest {
         int infoCode = 1;
 
         //when
-        MockFundInfoDTO info = mockFundService.findMockFundInfoByCode(infoCode);
+        MockFundInfoDTO info = mockFundService.findMockFundInfoByMockFundNo(infoCode);
 
         //then
         System.out.println(info);
@@ -104,7 +104,7 @@ class MockFundServiceTest {
         int rewardCode = 1;
 
         //when
-        MockFundRewardDTO info = mockFundService.findRewardByCode(rewardCode);
+        MockFundRewardDTO info = mockFundService.findRewardByMockFundNo(rewardCode);
 
         //then
         assertNotNull(info);
@@ -127,7 +127,7 @@ class MockFundServiceTest {
         infoList.setRewardCategory(reward);
 
         //when & then
-        assertDoesNotThrow(() -> mockFundService.modifyBasicInfo(infoList, 3));
+        assertDoesNotThrow(() -> mockFundService.modifyBasicInfo(infoList));
     }
 
     @Test
@@ -141,7 +141,7 @@ class MockFundServiceTest {
         infoList.setMockFundAgreementStatus("Y");
 
         //when & then
-        assertDoesNotThrow(() -> mockFundService.modifyStory(infoList, 3));
+        assertDoesNotThrow(() -> mockFundService.modifyStory(infoList));
     }
 
     @Test
@@ -156,7 +156,7 @@ class MockFundServiceTest {
         reward.setRewardPrice(10000);
 
         //when & then
-        assertDoesNotThrow(() -> mockFundService.modifyReward(reward, 3));
+        assertDoesNotThrow(() -> mockFundService.modifyReward(reward));
     }
 
     @Test
@@ -168,7 +168,7 @@ class MockFundServiceTest {
         String status = "Y";
         
         //when
-        MockFundInfoDTO info = mockFundService.findMockFundInfoByCode(infoCode);
+        MockFundInfoDTO info = mockFundService.findMockFundInfoByMockFundNo(infoCode);
         
         //then
         assertNotNull(info);

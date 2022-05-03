@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>펀딩 상세 정보</title>
+	<meta name="robots" content="noindex, follow" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+	<script src="https://kit.fontawesome.com/c24bc5c6f2.js" crossorigin="anonymous"></script>
+	<!-- Style CSS -->
+	<link rel="stylesheet" th:href="@{ /css/funding.css }">
+	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	
+	<!-- JQuery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div class="container" style="height: 70%">
+	<div class="" style="width: 1200px;">
+		<div style="margin-top:5%;"></div>
+		<span class="text-title">
+	        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+			 환불 신청
+		</span>
+		<hr width="100%" >
+		
+		<div>
+			<label>환부 </label>
+		</div>
+		
+		
+		
+		<div style="; text-align: right;margin: 3%">
+			<button class="basic-btn btn3 medium-btn" th:onclick="'location.href=\'' + '/funding/find/detail/member/' + @{${fundingNo}}  + '\''">뒤로가기</button>
+		</div>
+	</div>
+</div>
+<div th:replace="/common/footer.html"></div>
+<script>
+
+
+</script>
+
+
+
+</body>
+</html>
