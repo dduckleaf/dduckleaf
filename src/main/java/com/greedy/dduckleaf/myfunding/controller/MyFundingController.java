@@ -39,6 +39,7 @@ public class MyFundingController {
      * @author 박상범
      */
     @GetMapping("/default")
+
     public ModelAndView myfundingDefaultPage(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
 
         int memberNo = user.getMemberNo();

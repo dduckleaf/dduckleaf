@@ -1,9 +1,9 @@
 package com.greedy.dduckleaf.refund.regist.controller;
 
 import com.greedy.dduckleaf.refund.regist.dto.RefundingDTO;
+import com.greedy.dduckleaf.refund.regist.service.RefundingRegistService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,12 +24,18 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/refund/regist")
 public class RefundingRegistController {
 
+    private final RefundingRegistService service;
+
+    @Autowired
+    public RefundingRegistController(RefundingRegistService service) {
+        this.service = service;
+    }
     @PostMapping(value = "/refundregist")
     public ModelAndView sendToRefundRegist(ModelAndView mv, RefundingDTO refundingInfo) {
 
-        System.out.println("refundingInfo = " + refundingInfo);System.out.println("refundingInfo = " + refundingInfo);System.out.println("refundingInfo = " + refundingInfo);System.out.println("refundingInfo = " + refundingInfo);
+        service.registRefunding(refundingInfo);
 
-        mv.setViewName("redirect:/");
+        mv.setViewName("redirect:/myfunding/default");
 
         return mv;
     }

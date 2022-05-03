@@ -1,20 +1,19 @@
 package com.greedy.dduckleaf.refund.regist.entity;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-/**
- * <pre>
- * Class : Refunding
- * Comment :
- *
- * History
- * 2022-05-03 홍성원
- * </pre>
- *
- * @author 홍성원
- * @version 1.0.0
- */
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString
+@Entity(name = "RefundingForRegist")
+@Table(name = "TBL_REFUNDING")
 public class Refunding {
 
     @Id
@@ -48,7 +47,9 @@ public class Refunding {
     @Column(name = "MEMBER_NO")
     private int memberNo;
 
-    @Column(name = "PAYMENT_HISTORY_NO")
-    private int paymentHistoryNo;
+    @Column(name = "FUNDING_INFO_NO")
+    private int fundingInfoNo;
+
+
 
 }
