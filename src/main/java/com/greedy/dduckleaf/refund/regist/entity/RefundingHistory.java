@@ -37,7 +37,7 @@ public class RefundingHistory {
 
     @Column(name = "REFUNDING_REFUSE_REASON")
     private String refundingRefuseReason;
-    .8
+
     @Column(name = "REFUNDING_HISTORY_CATEGORY")
     private String refundingHistoryCategory;
 
