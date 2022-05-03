@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.projectapplication.repository;
+package com.greedy.dduckleaf.projectapplication.projectapplication.repository;
 
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.projectapplication.entity.ProjectBasicInfo;

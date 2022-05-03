@@ -25,7 +25,6 @@ public class RefundPolicy {
     private int refundPolicyNo;
 
     @Column(name = "REFUND_POLICY_CONTENT")
-    @ColumnDefault("반환 정책을 작성해주세요")
     private String refundPolicyContent;
 
     @Column(name = "PROJECT_NO")

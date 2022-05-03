@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -24,6 +22,9 @@ public class ProjectProgressStatus {
 
     @Column(name = "PROJECT_PROGRESS_STATUS_NAME")
     private String projectProgressStatusName;
+
+    @OneToMany(mappedBy = "progressStatus")
+    private List<Project> projectList;
 
     @Override
     public String toString() {

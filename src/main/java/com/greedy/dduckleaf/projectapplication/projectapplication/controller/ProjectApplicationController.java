@@ -1,12 +1,11 @@
-package com.greedy.dduckleaf.projectapplication.controller;
+package com.greedy.dduckleaf.projectapplication.projectapplication.controller;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.projectapplication.dto.*;
-import com.greedy.dduckleaf.projectapplication.service.ProjectApplicationService;
-import org.apache.tomcat.util.http.fileupload.FileItem;
+import com.greedy.dduckleaf.projectapplication.projectapplication.service.ProjectApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -32,9 +31,10 @@ import java.util.UUID;
  * 2022/04/28 (박휘림) modifyBasicReq, modifyRewardAgreementStatus, findBasicInfoByProjectNo, modifyBasicInfo 메소드 작성
  * 2022/04/29 (박휘림) findStoryByProjectNo, modifyStory, modifyPromotionAgreementStatus, findRewardByProjectNo, modifyReward 메소드 작성
  * 2022/04/30 (박휘림) findPolicyByProjectNo, modifyPolicy, modifyPolicyAgreementStatus, findFarmerInfoByMemberNo, modifyFarmerInfo 메소드 작성
- * 2022/05/01 (박휘림) sendPhoneVerification, registProjectApplicationInfo 메소드 작성
+ * 2022/05/01 (박휘림) sendPhoneVerification 메소드 작성
+ * 2022/05/02 (박휘림) registProjectApplicationInfo 메소드 작성
  * </pre>
- * @version 1.0.4
+ * @version 1.0.6
  * @author 박휘림
  */
 @Controller
@@ -169,9 +169,11 @@ public class ProjectApplicationController {
         int projectNo = findProjectNoByFarmerNo(user);
 
         ProjectBasicInfoDTO basicInfo = projectApplicationService.findProjectBasicInfoByProjectNo(projectNo);
+        ProjectDTO project = projectApplicationService.findProjectByProjectNo(projectNo);
 
         List<ProjectRewardCategoryDTO> categoryList = projectApplicationService.findAllRewardCategory();
 
+        mv.addObject("project", project);
         mv.addObject("categoryList", categoryList);
         mv.addObject("basicInfo", basicInfo);
         mv.setViewName("project/regist/basicinfo");
@@ -189,9 +191,8 @@ public class ProjectApplicationController {
      */
     @PostMapping("/modify/basicinfo")
     public ModelAndView modifyBasicInfo(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
-                                        ModelAndView mv, ProjectBasicInfoDTO basicInfo, @AuthenticationPrincipal CustomUser user) {
-        System.out.println("basicInfo = " + basicInfo);
-        System.out.println("file = " + file);
+                                        ModelAndView mv, ProjectBasicInfoDTO basicInfo, ProjectDTO project, @AuthenticationPrincipal CustomUser user) {
+
         if(file != null) {
 
             int projectNo = findProjectNoByFarmerNo(user);
@@ -234,8 +235,10 @@ public class ProjectApplicationController {
                     attachment.setFarmerNo(user.getMemberNo());
 
                     projectApplicationService.modifyBasicInfoAttachment(attachment);
+                    System.out.println("project에 목표최대금액넘어오냐.. = " + project);
+                    projectApplicationService.modifyBasicInfo(basicInfo, project);
 
-                    projectApplicationService.modifyBasicInfo(basicInfo);
+//                    projectApplicationService.modifyProject(project, basicInfo);
 
                     mv.setViewName("redirect:/project/application/goMain");
 
@@ -256,7 +259,9 @@ public class ProjectApplicationController {
 
         } else {
 
-            projectApplicationService.modifyBasicInfo(basicInfo);
+            projectApplicationService.modifyBasicInfo(basicInfo, project);
+
+//            projectApplicationService.modifyProject(project, basicInfo);
 
             mv.setViewName("redirect:/project/application/goMain");
         }
