@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -31,6 +32,7 @@ import java.util.UUID;
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
  * 2022/05/01 (박상범) 개인 정보 수정 페이지로 이동, 조회 관련 메소드 수정, 회원의 사진 정보 변경 관련 메소드 수정, 이메일 변경 페이지로 이동, 휴대전화 번호 변경 페이지로 이동, 비밀번호 변경 페이지로 이동 관련 메소드 수정
  * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성, 회원의 이메일 주소 변경 관련 메소드 작성, 휴대전화 번호로 인증번호 전송 관련 메소드 작성, 회원의 휴대전화 번호 변경 관련 메소드 작성, 회원의 비밀번호 변경 관련 메소드 작성
+ * 2022/05/03 (박상범) 회원의 프로필 이미지를 기본 프로필 이미지로 변경 관련 메소드 작성
  * </pre>
  * @version 1.0.6
  * @author 박상범
@@ -128,8 +130,8 @@ public class ProfileController {
                     attachment.setProfileSavedName(savedName);
                     attachment.setProfilePath(fileUploadPath);
 
-                    int width = 50;
-                    int height = 55;
+                    int width = 400;
+                    int height = 400;
 
                     Thumbnails.of(uploadDirectory + "/" + savedName).forceSize(width, height)
                             .toFile(thumbnailDirectory + "/thumbnail_" + savedName);
@@ -251,5 +253,18 @@ public class ProfileController {
         mv.setViewName("redirect:/myfunding/default");
 
         return mv;
+    }
+
+    /**
+     * modifyMemberPwd: 회원의 비밀번호를 변경합니다.
+     * @param user: 로그인된 회원 정보
+     * @return mv
+     * @author 박상범
+     */
+    @PostMapping("/remove/thumbnail")
+    @ResponseBody
+    public String removeImage(@AuthenticationPrincipal CustomUser user) {
+
+        return profileService.removeProfileAttachment(user.getMemberNo());
     }
 }

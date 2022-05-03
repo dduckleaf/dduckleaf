@@ -12,8 +12,6 @@ import org.springframework.test.context.ContextConfiguration;
 
 import javax.transaction.Transactional;
 
-import java.sql.SQLOutput;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest

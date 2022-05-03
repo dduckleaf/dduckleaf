@@ -3,8 +3,10 @@ package com.greedy.dduckleaf.profile.service;
 import com.greedy.dduckleaf.email.EmailSender;
 import com.greedy.dduckleaf.profile.dto.MemberDTO;
 import com.greedy.dduckleaf.profile.dto.ProfileAttachmentDTO;
+import com.greedy.dduckleaf.profile.entity.BasicProfileAttachment;
 import com.greedy.dduckleaf.profile.entity.Member;
 import com.greedy.dduckleaf.profile.entity.ProfileAttachment;
+import com.greedy.dduckleaf.profile.repository.BasicProfileAttachmentForProfileRepository;
 import com.greedy.dduckleaf.profile.repository.MemberForProfileRepository;
 import com.greedy.dduckleaf.profile.repository.ProfileAttachmentForProfileRepository;
 import com.greedy.dduckleaf.projectnotice.dto.ProfileDTO;
@@ -27,8 +29,9 @@ import java.util.HashMap;
  * 2022/04/30 (박상범) 회원의 사진 정보 변경 관련 메소드 작성
  * 2022/05/01 (박상범) 회원의 프로필 사진정보 조회, 회원정보 조회 관련 메소드 수정
  * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성, 회원의 이메일 변경 관련 메소드 작성, 휴대전화 번호로 인증번호 전송 관련 메소드 작성, 회원의 휴대전화 번호 변경 관련 메소드 작성, 회원의 비밀번호 변경 관련 메소드 작성
+ * 2022/05/03 (박상범) 프로필 이미지 사진 기본 이미지로 변경 관련 메소드 작성
  * </pre>
- * @version 1.0.3
+ * @version 1.0.5
  * @author 박상범
  */
 @Service
@@ -36,13 +39,15 @@ public class ProfileService {
 
     private final MemberForProfileRepository memberForProfileRepository;
     private final ProfileAttachmentForProfileRepository profileAttachmentForProfileRepository;
+    private final BasicProfileAttachmentForProfileRepository basicProfileAttachmentForProfileRepository;
     private final ModelMapper modelMapper;
     private final EmailSender emailSender;
 
     @Autowired
-    public ProfileService(MemberForProfileRepository memberForProfileRepository, ProfileAttachmentForProfileRepository profileAttachmentForProfileRepository, ModelMapper modelMapper, EmailSender emailSender) {
+    public ProfileService(MemberForProfileRepository memberForProfileRepository, ProfileAttachmentForProfileRepository profileAttachmentForProfileRepository, BasicProfileAttachmentForProfileRepository basicProfileAttachmentForProfileRepository, ModelMapper modelMapper, EmailSender emailSender) {
         this.memberForProfileRepository = memberForProfileRepository;
         this.profileAttachmentForProfileRepository = profileAttachmentForProfileRepository;
+        this.basicProfileAttachmentForProfileRepository = basicProfileAttachmentForProfileRepository;
         this.modelMapper = modelMapper;
         this.emailSender = emailSender;
     }
@@ -69,8 +74,6 @@ public class ProfileService {
      */
     @Transactional
     public String modifyAttachment(ProfileAttachmentDTO attachment) {
-
-        System.out.println(attachment);
 
         ProfileAttachment profileAttachment = profileAttachmentForProfileRepository.findProfileAttachmentByMember_memberNo(attachment.getMemberNo());
 
@@ -184,5 +187,34 @@ public class ProfileService {
 
         Member foundMember = memberForProfileRepository.findById(member.getMemberNo()).get();
         foundMember.setMemberPwd(member.getMemberPwd());
+    }
+
+    /**
+     * removeProfileAttachment: 회원의 프로필 이미지를 기본이미지로 변경합니다.
+     * @param memberNo:  회원 번호
+     * @return 결과에 따라 다른 메시지를 return합니다.
+     * @author 박상범
+     */
+    public String removeProfileAttachment(int memberNo) {
+
+        ProfileAttachment profileAttachment = profileAttachmentForProfileRepository.findProfileAttachmentByMember_memberNo(memberNo);
+
+        if(profileAttachment == null) {
+            return "프로필 사진 삭제 실패";
+        }
+
+        int basicProfileAttachmentNo = (int) ((Math.random() * 6) + 1);
+
+        BasicProfileAttachment basicProfileAttachment = basicProfileAttachmentForProfileRepository.findById(basicProfileAttachmentNo).get();
+
+        System.out.println(profileAttachment);
+        System.out.println(basicProfileAttachment);
+
+        profileAttachment.setProfileSavedName(basicProfileAttachment.getProfileSavedName());
+        profileAttachment.setProfileOriginalName(basicProfileAttachment.getProfileOriginalName());
+        profileAttachment.setProfilePath(basicProfileAttachment.getProfilePath());
+        profileAttachment.setProfileThumbnailPath(basicProfileAttachment.getProfileThumbnailPath());
+
+        return profileAttachment.getProfileThumbnailPath();
     }
 }

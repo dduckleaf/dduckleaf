@@ -123,4 +123,32 @@ class ProfileServiceTest {
         System.out.println(result);
         assertEquals(result, "이미 사용중인 휴대전화 번호입니다.");
     }
+
+    @Test
+    @DisplayName("프로필 이미지 삭제 실패 테스트")
+    public void removeProfileAttachmentTest() {
+
+        //given
+        int memberNo = 67;
+
+        //when
+        String result = profileService.removeProfileAttachment(memberNo);
+
+        //then
+        assertEquals(result, "프로필 사진 삭제 실패");
+    }
+
+    @Test
+    @DisplayName("프로필 이미지 삭제 - 기본 이미지로 변경 테스트")
+    public void removeProfileAttachmentBasicTest() {
+
+        //given
+        int memberNo = 5;
+
+        //when
+        String result = profileService.removeProfileAttachment(memberNo);
+
+        //then
+        assertEquals(result, "기본 이미지로 변경되었습니다.");
+    }
 }
