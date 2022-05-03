@@ -14,14 +14,13 @@
     position: relative;
     left: 29%;
     border-radius: 100px;
-    border: 1px solid red;
     width: 200px;
     height: 200px;
     margin-top: 10px;
     margin-bottom: 20px;
 }
 #changeImg {
-    margin-left: 168px;
+    margin-left: 120px;
     text-decoration: underline;
     cursor: pointer;
     float: left;

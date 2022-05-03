@@ -17,7 +17,7 @@
             <h5 style="font-family: inherit">프로필 사진</h5><br>
             <img id="titleImg" th:src="@{ ${ profileAttachment.profileThumbnailPath } }"><br>
             <input type="file" style="display: none" id="imageFile" name="uploadedImg" accept=".gif, .jpg, .png" onchange="loadImg(this)">
-            <div id="changeImg">바꾸기</div><div id="deleteImg">삭제</div>
+            <div id="changeImg">바꾸기</div><div id="deleteImg">기본 이미지로 변경</div>
         </div>
     </form>
 </div>
@@ -47,6 +47,23 @@
         });
         if (response.status == 200) {
             alert("프로필 사진이 변경되었습니다.");
+        }
+    }
+
+    if(document.getElementById("deleteImg")) {
+
+        document.getElementById("deleteImg").onclick = function() {
+
+            fetch("/profile/remove/thumbnail")
+                .then(response => response.json())
+                .then(response => {
+                    console.table(response);
+                    document.getElementById("titleImg").src = response;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         }
     }
 </script>
