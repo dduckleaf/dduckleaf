@@ -2,9 +2,7 @@ package com.greedy.dduckleaf.projectreport.find.service;
 
 import com.greedy.dduckleaf.projectreport.find.dto.*;
 import com.greedy.dduckleaf.projectreport.find.entity.*;
-import com.greedy.dduckleaf.projectreport.find.repository.MemberForProjectReportRepository;
-import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportReplyRepository;
-import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportMainRepository;
+import com.greedy.dduckleaf.projectreport.find.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,10 +31,12 @@ import java.util.stream.Collectors;
  *                    registReply 서비스메소드 작성
  * 2022-04-27 (장민주) findProjectReportListOfOneProject 서비스메소드 작성
  * 2022-04-28 (장민주) findProjectReportWaitingList 서비스메소드 작성
+ * 2022-05-02 (장민주) findAllReportCategories 서비스메소드 작성
+ * 2022-05-03 (장민주) findPolicyContents 서비스메소드 작성
  * </pre>
  *
  * @author 장민주
- * @version 1.0.4
+ * @version 1.0.7
  */
 @Service
 public class ProjectReportService {
@@ -44,13 +44,24 @@ public class ProjectReportService {
     private final MemberForProjectReportRepository memberRepository;
     private final ProjectReportMainRepository reportRepository;
     private final ProjectReportReplyRepository replyRepository;
+    private final ReportCategoryRepository reportCategoryRepository;
+    private final PolicyContentForProjectReportRepository policyContentRepository;
+    private final PolicyForProjectReportRepository policyRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ProjectReportService(MemberForProjectReportRepository memberRepository, ProjectReportMainRepository reportRepository, ProjectReportReplyRepository replyRepository, ModelMapper modelMapper) {
+    public ProjectReportService(MemberForProjectReportRepository memberRepository,
+                                ProjectReportMainRepository reportRepository,
+                                ProjectReportReplyRepository replyRepository,
+                                ReportCategoryRepository reportCategoryRepository,
+                                PolicyContentForProjectReportRepository policyContentRepository,
+                                PolicyForProjectReportRepository policyRepository, ModelMapper modelMapper) {
         this.memberRepository = memberRepository;
         this.reportRepository = reportRepository;
         this.replyRepository = replyRepository;
+        this.reportCategoryRepository = reportCategoryRepository;
+        this.policyContentRepository = policyContentRepository;
+        this.policyRepository = policyRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -216,4 +227,41 @@ public class ProjectReportService {
         return reportRepository.findByProject_ProjectNo(projectNo, pageable).map(projectReport ->
                 modelMapper.map(projectReport, ProjectReportDTO.class));
     }
+
+    /**
+     * findAllReportCategories: 모든 프로젝트 신고유형 목록 조회를 요청하는 메소드입니다.
+     * @return 프로젝트 신고유형 목록
+     * @author 장민주
+     */
+    public List<ReportCategoryDTO> findAllReportCategories() {
+
+        return reportCategoryRepository.findAll().stream().map(reportCategory ->
+                modelMapper.map(reportCategory, ReportCategoryDTO.class)).collect(Collectors.toList());
+    }
+
+    /**
+     * findPolicyContents: 약관 및 규정정책 번호로 약관 상세내용 조회 요청 메소드입니다.
+     * @param policyName: 약관 및 규정정책명
+     * @return 약관 상세내용
+     * @author 장민주
+     */
+    public List<PolicyContentDTO> findPolicyContents(String policyName) {
+        /* 조회하려는 약관의 식별번호 조회 */
+        int policyNo = findPolicyNo(policyName);
+
+        return policyContentRepository.findAllByPolicy_PolicyNo(policyNo).stream().map(policyContent ->
+                modelMapper.map(policyContent, PolicyContentDTO.class)).collect(Collectors.toList());
+    }
+
+    /**
+     * findPolicyNo: (내부연산 메소드) 약관 및 규정정책 식별번호 조회 요청 메소드입니다.
+     * @param policyName: 정책명
+     * @return 약관 및 규정정책 식별번호
+     * @author 장민주
+     */
+    private int findPolicyNo(String policyName) {
+
+        return policyRepository.findPolicyNo(policyName);
+    }
+
 }
