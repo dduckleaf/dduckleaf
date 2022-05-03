@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+    .modal-dialog {
+    
+    }
+    .modal-content {
+      width: 115% !important;
+      height: 668px;
+      padding: 20px;
+    }
+    .refund-title {
+      font-size: 2em;
+      font-weight: 1000;
+    }
+    .refund-guide {
+      font-size: 0.8em;
+      color: #ababab;
+      margin-top: 3%;
+    }
+    .submitgoback {
+      text-align: right;
+      width: 95%;
+      margin-top: 5%
+    }
+    #refund-category1 {
+      
+      width: 100%;
+      height: 35px;
+    }
+    
+    #refund-content1 {
+      
+      width: 100%;
+      height: 300px;
+    }
+  
+  </style>
+  <!-- CSS
+============================================ -->
+  
+  <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+  <link rel="stylesheet" href="../../static/css/vendor/font-awesome.min.css" />
+  <link rel="stylesheet" href="../../static/css/vendor/Pe-icon-7-stroke.css" />
+  
+  <!-- Plugin CSS (Global Plugins Files) -->
+  <link rel="stylesheet" href="../../static/css/plugins/animate.min.css">
+  <link rel="stylesheet" href="../../static/css/plugins/jquery-ui.min.css">
+  <link rel="stylesheet" href="../../static/css/plugins/swiper-bundle.min.css">
+  <link rel="stylesheet" href="../../static/css/plugins/nice-select.css">
+  <link rel="stylesheet" href="../../static/css/plugins/magnific-popup.min.css" />
+  
+  <!-- Style CSS -->
+  <link rel="stylesheet" th:href="@{ /css/style.css }">
+  <link rel="stylesheet" th:href="@{ /css/filter.css }">
+  <meta charset="UTF-8">
+  <title>Title</title>
+  
+  <!-- 다음 주소 API CDN -->
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+
+<body>
+
+<!-- 게시판 등록용 모달 -->
+<div class="modal fade" id="shipping-modify"
+     data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="top: 112px">
+      <form action="/funding/regist/shippingaddress" method="post">
+        <div style="width: 90%;margin-left: 5%">
+          <label class="refund-title">리워드 배송지 수정</label><br>
+          <hr>
+          <div class="funding-regist-shipping-area-info">
+            <label>이름</label><br>
+            <input name="shippingMemberName" type="text" th:value="${addressInfo.shippingMemberName}"><br>
+            <label>휴대폰 번호</label><span>('-' 없이 숫자만 입력해주세요.)</span><br>
+            <input name="shippingMemberPhone" type="text" th:value="${addressInfo.shippingMemberPhone}"><br>
+            <label>주소</label><br>
+            <input type="text" name="zipCode" id="zipCode-modal" th:value="${addressInfo.zipCode}" readonly><input type="button" value="검색" class="basic-btn btn1 small-btn" id="searchZipCode-modal" style="margin-left: 1%;"><br>
+            <input type="text" name="address1" id="address1-modal" th:value="${addressInfo.address1}"><br>
+            <input type="text" name="address2" id="address2-modal" th:value="${addressInfo.address2}"><br>
+    
+            <label>배송 요청사항 (선택)</label><br>
+            <input name="shippingRequire" type="text" th:value="${addressInfo.shippingRequire}"><br><br>
+          </div>
+        </div>
+        <div class="submitgoback">
+          <button class="basic-btn btn1 medium-btn">저장</button>
+          <input id="test" type="" class="basic-btn btn3 medium-btn" style="text-align: center" value="취소"
+                 data-bs-target="shipping-modify" data-bs-toggle="modal" data-bs-dismiss="modal">
+        </div>
+        <input type="hidden" name="fundingInfoNo" th:value="${ funding.fundingInfoNo }">
+      </form>
+      
+    </div>
+  </div>
+</div>
+<script>
+  const $searchZipCode = document.getElementById("searchZipCode-modal");
+  
+  $searchZipCode.onclick = function() {
+    
+    new daum.Postcode({
+      oncomplete: function(data){
+        
+        document.getElementById("zipCode-modal").value = data.zonecode;
+        document.getElementById("address1-modal").value = data.address;
+        document.getElementById("address2-modal").focus();
+      }
+    }).open();
+  }
+
+
+</script>
+</body>
+</html>
