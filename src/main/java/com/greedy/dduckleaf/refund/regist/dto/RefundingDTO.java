@@ -19,6 +19,5 @@ public class RefundingDTO {
     private int bankNo;
     private String refundingMemberName;
     private int memberNo;
-    private int paymentHistoryNo;
     private int fundingInfoNo;
 }
