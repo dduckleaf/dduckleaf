@@ -22,6 +22,7 @@
         <!-- Begin 게시판영역 -->
         <table class="basic-table" align="center" style="width: 100%">
             <tr>
+                <th style="width: 5%;">번호</th>
                 <th style="width: 40%;">프로젝트 명</th>
                 <th style="width: 15%;">파머 명</th>
                 <th style="width: 5%;">목표 금액</th>
@@ -29,50 +30,46 @@
                 <th style="width: 10%;">희망 오픈 예정일</th>
                 <th style="width: 8%;">상태</th>
             </tr>
-<!--            <th:block th:if="${ #strings.isEmpty(projectReportList) }">-->
+<!--            <th:block th:if="${ #strings.isEmpty(projectApplicationInfoList) }">-->
 <!--                <tr>-->
 <!--                    <td colspan="6" align="center">신고내역이 없습니다.</td>-->
 <!--                </tr>-->
 <!--            </th:block>-->
-<!--            <th:block th:if="${ !#strings.isEmpty(projectReportList) }">-->
-<!--                <tr th:each="report : ${ projectReportList }">-->
-<!--                    <td th:text="${ report.projectReportNo }">1</td>-->
-<!--                    <td th:text="${ report.projectReportStatus }">test</td>-->
-<!--                    <td th:text="${ report.project.projectName }">test</td>-->
-<!--                    <td th:text="${ report.reportCategory.reportCategoryName }">test</td>-->
-<!--                    <td th:text="${ report.member.memberId }">test</td>-->
-<!--                    <td th:text="${ report.projectReportDate }">test</td>-->
-<!--                </tr>-->
-<!--            </th:block>-->
-        </table>
-        <br>
-        <button class="basic-btn small-btn btn3" id="back" onclick="location.href='/report/platformmanager/default'">이전</button>
-        <br>
-        <!-- paging -->
-<!--        <div id="paging-area" align="center">-->
-<!--            &lt;!&ndash; 맨 앞으로 이동 &ndash;&gt;-->
-<!--            <button class="paging-btn first" th:onclick="'location.href=\'/report/platformmanager/listAll?page=' + @{${pagingInfo.startPage}}  + '\''"-->
-<!--                    th:disabled="${ projectReportList.first }"><<</button>-->
+            <th:block th:if="${ !#strings.isEmpty(projectApplicationInfoList) }">
+                <tr th:each="list : ${ projectApplicationInfoList }">
+                    <td th:text="${ list.projectApplicationNo }"></td>
+                    <td th:text="${ list.project.projectName }"></td>
+                    <td th:text="${ list.farmer.farmerName }"></td>
+                    <td th:text="${ list.project.fundTargetAmount }"></td>
+                    <td th:text="${ list.project.maxTargetAmount }"></td>
+                    <td th:text="${ list.project.openDate }"></td>
+                    <td th:text="${ list.projectApplicationCategory }"></td>
+                </tr>
+            </th:block>
+        </table><br><br>
+        <div id="paging-area" align="center">
+            <!-- 맨 앞으로 이동 -->
+            <button class="paging-btn first" th:onclick="'location.href=\'/project/examination/list?page=' + @{${paging.startPage}}  + '\''"
+                    th:disabled="${ projectApplicationInfoList.first }"><<</button>
 
-<!--            &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
-<!--            <button class="paging-btn prev" th:onclick="'location.href=\'/report/platformmanager/listAll?page=' + @{${pagingInfo.currentPage - 1}}  + '\''"-->
-<!--                    th:disabled="${ projectReportList.first }"><</button>-->
+            <!-- 이전 페이지로 이동 -->
+            <button class="paging-btn prev" th:onclick="'location.href=\'/project/examination/list?page=' + @{${paging.currentPage - 1}}  + '\''"
+                    th:disabled="${ projectApplicationInfoList.first }"><</button>
 
-<!--            &lt;!&ndash; 숫자 버튼 &ndash;&gt;-->
-<!--            <th:block th:each="page : ${#numbers.sequence(pagingInfo.startPage, pagingInfo.endPage)}">-->
-<!--                <button class="paging-btn" th:onclick="'location.href=\'/report/platformmanager/listAll?page=' + @{${page}}  + '\''"-->
-<!--                        th:text="${ page }"-->
-<!--                        th:disabled="${ pagingInfo.currentPage eq page }"></button>-->
-<!--            </th:block>-->
+            <!-- 숫자 버튼 -->
+            <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+                <button class="paging-btn" th:onclick="'location.href=\'/project/examination/list?page=' + @{${page}}  + '\''"
+                        th:text="${ page }" th:disabled="${ paging.currentPage eq page }"></button>
+            </th:block>
 
-<!--            &lt;!&ndash; 다음 페이지로 이동 &ndash;&gt;-->
-<!--            <button class="paging-btn next" th:onclick="'location.href=\'/report/platformmanager/listAll?page=' + @{${pagingInfo.currentPage + 1}}  + '\''"-->
-<!--                    th:disabled="${ projectReportList.last }">></button>-->
+            <!-- 다음 페이지로 이동 -->
+            <button class="paging-btn next" th:onclick="'location.href=\'/project/examination/list?page=' + @{${paging.currentPage + 1}}  + '\''"
+                    th:disabled="${ projectApplicationInfoList.last }">></button>
 
-<!--            &lt;!&ndash; 맨 마지막으로 이동 &ndash;&gt;-->
-<!--            <button class="paging-btn last" th:onclick="'location.href=\'/report/platformmanager/listAll?page=' + @{${pagingInfo.endPage}}  + '\''"-->
-<!--                    th:disabled="${ projectReportList.last }">>></button>-->
-<!--        </div>-->
+            <!-- 맨 마지막으로 이동 -->
+            <button class="paging-btn last" th:onclick="'location.href=\'/project/examination/list?page=' + @{${paging.endPage}}  + '\''"
+                    th:disabled="${ projectApplicationInfoList.last }">>></button>
+        </div>
         <!-- Begin 검색창 -->
         <!--        <div class="searchbar" th:align="center">-->
         <!--            <select id="category">-->
@@ -105,8 +102,9 @@
             }
 
             tds[i].onclick = function() {
-                const reportNo = this.parentNode.children[0].innerText;
-                location.href = "/report/platformmanager/detail/" + reportNo;
+                const projectApplicationNo = this.parentNode.children[0].innerText;
+                console.log(projectApplicationNo);
+                location.href = "/project/examination/review/" + projectApplicationNo;
             }
         }
     }
