@@ -4,7 +4,7 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.projectapplication.dto.*;
-import com.greedy.dduckleaf.projectapplication.entity.*;
+import com.greedy.dduckleaf.projectapplication.projectapplication.service.ProjectApplicationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -13,7 +13,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -139,8 +138,10 @@ class ProjectApplicationServiceTest {
         basicInfo.setProjectTargetFund(10000000);
 //        basicInfo.setProjectBasicCategoryNo(2);
 
+        ProjectDTO project = projectApplicationService.findProjectByProjectNo(projectNo);
+
         //then
-        assertDoesNotThrow(() ->projectApplicationService.modifyBasicInfo(basicInfo));
+        assertDoesNotThrow(() ->projectApplicationService.modifyBasicInfo(basicInfo, project));
     }
 
     @Test

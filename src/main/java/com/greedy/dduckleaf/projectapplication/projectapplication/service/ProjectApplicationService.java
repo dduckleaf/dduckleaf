@@ -1,8 +1,8 @@
-package com.greedy.dduckleaf.projectapplication.service;
+package com.greedy.dduckleaf.projectapplication.projectapplication.service;
 
 import com.greedy.dduckleaf.projectapplication.dto.*;
 import com.greedy.dduckleaf.projectapplication.entity.*;
-import com.greedy.dduckleaf.projectapplication.repository.*;
+import com.greedy.dduckleaf.projectapplication.projectapplication.repository.*;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -244,19 +247,48 @@ public class ProjectApplicationService {
 
     /**
      * modifyBasicInfo: 기본 정보 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
-     * @param basicInfo: 사용자가 입력한 기본 정보 데이터를 담은 객체
+     * @param basicInfo : 사용자가 입력한 기본 정보 데이터를 담은 객체
+     * @param project
      * @author 박휘림
      */
     @Transactional
-    public void modifyBasicInfo(ProjectBasicInfoDTO basicInfo) {
+    public void modifyBasicInfo(ProjectBasicInfoDTO basicInfo, ProjectDTO project) {
 
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = basicInfo.getProjectEndDate();
+        java.util.Date open = null;
+        String openDate = null;
+        try {
+            open = format.parse(strDate);
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(open);
+            cal.add(Calendar.MONTH, -1);
+
+            openDate = format.format(cal.getTime());
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("project = " + project);
         ProjectBasicInfo updateBasicInfo = projectBasicInfoRepository.findByProjectNo(basicInfo.getProjectNo());
         updateBasicInfo.setProjectName(basicInfo.getProjectName());
         updateBasicInfo.setProjectTargetFund(basicInfo.getProjectTargetFund());
         updateBasicInfo.setProjectEndDate(basicInfo.getProjectEndDate());
+        updateBasicInfo.setProjectOpenDate(openDate);
+        updateBasicInfo.setProjectMaxTarget(project.getMaxTargetAmount());
 
         ProjectRewardCategory category = projectRewardCategoryRepository.findById(basicInfo.getProjectRewardCategory().getProjectCategoryNo()).get();
         updateBasicInfo.setProjectRewardCategory(category);
+
+        Project updateProject = projectRepository.findById(project.getProjectNo()).get();
+        updateProject.setProjectName(basicInfo.getProjectName());
+        updateProject.setEndDate(basicInfo.getProjectEndDate());
+        updateProject.setOpenDate(openDate);
+        updateProject.setFundTargetAmount(basicInfo.getProjectTargetFund());
+        updateProject.setMaxTargetAmount(project.getMaxTargetAmount());
+        System.out.println("updateProject = " + updateProject);
     }
 
     /**
@@ -617,17 +649,29 @@ public class ProjectApplicationService {
         ProjectShippingInfo shippingInfo = projectShippingInfoRepository.findByProjectNo(projectNo);
         RewardRegistInfo rewardRegistInfo = rewardRegistInfoRepository.findByProjectNo(projectNo);
         RefundPolicy refundPolicy = refundPolicyRepository.findByProjectNo(projectNo);
-
+        Project project = projectRepository.findByProjectNo(projectNo);
+        project.setExamineStatus("승인요청");
+        System.out.println("신청하는 project 정보 = " + project);
+        FarmerInfo farmer = farmerInfoRepository.findByFarmerNo(memberNo);
+        System.out.println("신청하는 farmer 정보 = " + farmer);
         ProjectApplicationInfo projectApplicationInfo = new ProjectApplicationInfo();
-        projectApplicationInfo.setProjectNo(projectNo);
-        projectApplicationInfo.setProjectBasicInfoNo(basicInfo.getProjectBasicInfoNo());
-        projectApplicationInfo.setProjectShippingInfoNo(shippingInfo.getProjectShippingInfoNo());
-        projectApplicationInfo.setRewardRegistInfoNo(rewardRegistInfo.getRewardRegistInfoNo());
-        projectApplicationInfo.setRefundPolicyNo(refundPolicy.getRefundPolicyNo());
-        projectApplicationInfo.setProjectApplicationCategory(basicInfo.getProjectRewardCategory().getProjectCategoryName());
-        projectApplicationInfo.setMemberNo(memberNo);
+        projectApplicationInfo.setProject(project);
+        projectApplicationInfo.setProjectBasicInfo(basicInfo);
+        projectApplicationInfo.setProjectShippingInfo(shippingInfo);
+        projectApplicationInfo.setRewardRegistInfo(rewardRegistInfo);
+        projectApplicationInfo.setRefundPolicy(refundPolicy);
+        projectApplicationInfo.setFarmer(farmer);
 
+        System.out.println("projectApplicationInfo 신청정보보기 = " + projectApplicationInfo);
         projectApplicationInfoRepository.save(projectApplicationInfo);
 
     }
+
+    public ProjectDTO findProjectByProjectNo(int projectNo) {
+
+        Project project = projectRepository.findById(projectNo).get();
+
+        return modelMapper.map(project, ProjectDTO.class);
+    }
+
 }

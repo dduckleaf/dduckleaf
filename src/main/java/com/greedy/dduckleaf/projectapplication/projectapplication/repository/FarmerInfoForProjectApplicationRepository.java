@@ -1,7 +1,10 @@
-package com.greedy.dduckleaf.projectapplication.repository;
+package com.greedy.dduckleaf.projectapplication.projectapplication.repository;
 
 import com.greedy.dduckleaf.projectapplication.entity.FarmerInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -17,4 +20,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface FarmerInfoForProjectApplicationRepository extends JpaRepository<FarmerInfo, Integer> {
 
     FarmerInfo findByMemberNo(int projectNo);
+
+    @Query(value = "SELECT * FROM TBL_FARMER_INFO A WHERE A.MEMBER_NO =:memberNo", nativeQuery = true)
+    FarmerInfo findByFarmerNo(int memberNo);
 }
