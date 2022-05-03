@@ -1,5 +1,8 @@
 package com.greedy.dduckleaf.profile.controller;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.profile.dto.MemberDTO;
 import com.greedy.dduckleaf.profile.dto.ProfileAttachmentDTO;
@@ -204,7 +207,7 @@ public class ProfileController {
      * @return mv
      * @author 박상범
      */
-    @PostMapping(value = {"/send/phone/verification"}, produces = "application/json; charset=UTF-8")
+    @GetMapping(value = {"/send/phone/verification"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public String sendPhoneVerification(@RequestBody String phone) {
 
@@ -261,10 +264,18 @@ public class ProfileController {
      * @return mv
      * @author 박상범
      */
-    @PostMapping("/remove/thumbnail")
+    @GetMapping(value = {"/remove/thumbnail"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public String removeImage(@AuthenticationPrincipal CustomUser user) {
 
-        return profileService.removeProfileAttachment(user.getMemberNo());
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .setPrettyPrinting()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .create();
+
+        return gson.toJson(profileService.removeProfileAttachment(user.getMemberNo()));
     }
 }
