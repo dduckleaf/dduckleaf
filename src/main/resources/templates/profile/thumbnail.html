@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -15,7 +16,8 @@
     <form method="post" id="profile-form" enctype="multipart/form-data">
         <div class="profile-img-div">
             <h5 style="font-family: inherit">프로필 사진</h5><br>
-            <img id="titleImg" th:src="@{ ${ profileAttachment.profileThumbnailPath } }"><br>
+            <span style="display: none" id="profile-attachment" sec:authentication="principal.profileThumbnailPath"></span>
+            <img id="titleImg"><br>
             <input type="file" style="display: none" id="imageFile" name="uploadedImg" accept=".gif, .jpg, .png" onchange="loadImg(this)">
             <div id="changeImg">바꾸기</div><div id="deleteImg">기본 이미지로 변경</div>
         </div>
@@ -23,6 +25,10 @@
 </div>
 </body>
 <script>
+
+    window.onload = function() {
+        document.getElementById("titleImg").src = document.getElementById("profile-attachment").innerText;
+    }
 
     const $titleImgDiv = document.getElementById("changeImg");
 
