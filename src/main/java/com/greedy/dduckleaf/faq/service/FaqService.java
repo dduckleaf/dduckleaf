@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -41,12 +42,12 @@ public class FaqService {
     }
 
     /**
-    * findFaqList : FAQ 목록을 조회합니다.
-    * @param pageable : 페이징 정보를 받는 객체입니다.
-    * @return faqDTO : faq 목록 정보를 반환합니다.
+     * findFaqList : FAQ 목록을 조회합니다.
+     * @param pageable : 페이징 정보를 받는 객체입니다.
+     * @return faqDTO : faq 목록 정보를 반환합니다.
      *
-    * @author 이용선
-    */
+     * @author 이용선
+     */
     public Page<FaqDTO> findFaqList(Pageable pageable){
 
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() -1,
@@ -55,7 +56,7 @@ public class FaqService {
 
         Page<FaqDTO> fq = faqRepository.findAll(pageable).map(faq -> {
             FaqDTO faqDTO= modelMapper.map(faq, FaqDTO.class);
-            faqDTO.setMember(modelMapper.map(faq.getMember(), MemberDTO.class));
+//            faqDTO.setMember(modelMapper.map(faq.getMember(), MemberDTO.class));
 
             return faqDTO;
         });
@@ -67,18 +68,25 @@ public class FaqService {
     }
 
     /**
-    * findFaqDetail : FAQ 상세정보를 조회합니다.
-    * @param faqNo : FAQ 번호를 전달받습니다.
-    * @return FaqDTO : 자주묻는 질문들의 정보를 반환합니다.
+     * findFaqDetail : FAQ 상세정보를 조회합니다.
+     * @param faqNo : FAQ 번호를 전달받습니다.
+     * @return FaqDTO : 자주묻는 질문들의 정보를 반환합니다.
      *
-    * @author 이용선
-    */
+     * @author 이용선
+     */
 
     public FaqDTO findFaqDetail(int faqNo) {
 
         Faq faq = faqRepository.findById(faqNo).get();
 
         return modelMapper.map(faq, FaqDTO.class);
+    }
+
+    @Transactional
+    public void faqnewRegist(FaqDTO faqWrite){
+
+        faqRepository.save(modelMapper.map(faqWrite, Faq.class));
+
     }
 
 
