@@ -1,8 +1,11 @@
 package com.greedy.dduckleaf.projectreport.find.repository;
 
+import com.greedy.dduckleaf.common.utility.DateFormatting;
 import com.greedy.dduckleaf.config.*;
+import com.greedy.dduckleaf.projectreport.find.entity.Member;
 import com.greedy.dduckleaf.projectreport.find.entity.Project;
 import com.greedy.dduckleaf.projectreport.find.entity.ProjectReport;
+import com.greedy.dduckleaf.projectreport.find.entity.ReportCategory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +18,11 @@ import org.springframework.test.context.ContextConfiguration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ContextConfiguration(classes = {
@@ -125,6 +128,31 @@ public class ProjectReportRepositoryTests {
         //then
         assertNotNull(reportList);
         reportList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("프로젝트 신고 등록 테스트")
+    @Transactional
+    public void saveProjectReport_test() {
+
+        //given
+        Project project = entityManager.find(Project.class, 1);
+        ReportCategory category = entityManager.find(ReportCategory.class, 1);
+        Member member = entityManager.find(Member.class, 3);
+
+        ProjectReport report = new ProjectReport();
+        report.setMember(member);
+        report.setProject(project);
+        report.setReportCategory(category);
+        report.setProjectReportDate(DateFormatting.getDateAndTime());
+        report.setProjectReportContent("content");
+        report.setReportRefUrl("url");
+        report.setReporterName("name");
+        report.setReporterEmail("email");
+        report.setReporterPhone("phone");
+
+        //when & then
+        assertDoesNotThrow(() -> repository.save(report));
     }
 
 }
