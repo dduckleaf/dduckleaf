@@ -2,6 +2,9 @@ package com.greedy.dduckleaf.projectapplication.projectapplication.repository;
 
 import com.greedy.dduckleaf.projectapplication.entity.ProjectApplicationInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -15,5 +18,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ProjectApplicationInfoRepository extends JpaRepository<ProjectApplicationInfo, Integer> {
 
-
+    @Query(value = "SELECT * FROM TBL_PROJECT_APPLICATION_INFO A WHERE A.PROJECT_NO = :projectNo", nativeQuery = true)
+    ProjectApplicationInfo findByProjectNo(int projectNo);
 }
