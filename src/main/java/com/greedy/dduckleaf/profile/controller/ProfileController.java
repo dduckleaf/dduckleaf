@@ -36,8 +36,9 @@ import java.util.UUID;
  * 2022/05/01 (박상범) 개인 정보 수정 페이지로 이동, 조회 관련 메소드 수정, 회원의 사진 정보 변경 관련 메소드 수정, 이메일 변경 페이지로 이동, 휴대전화 번호 변경 페이지로 이동, 비밀번호 변경 페이지로 이동 관련 메소드 수정
  * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성, 회원의 이메일 주소 변경 관련 메소드 작성, 휴대전화 번호로 인증번호 전송 관련 메소드 작성, 회원의 휴대전화 번호 변경 관련 메소드 작성, 회원의 비밀번호 변경 관련 메소드 작성
  * 2022/05/03 (박상범) 회원의 프로필 이미지를 기본 프로필 이미지로 변경 관련 메소드 작성
+ * 2022/05/04 (박상범) 회원의 사진 정보 변경 관련 메소드 수정
  * </pre>
- * @version 1.0.6
+ * @version 1.0.7
  * @author 박상범
  */
 @Controller
@@ -96,9 +97,9 @@ public class ProfileController {
      */
     @PostMapping("/uploadImg")
     @ResponseBody
-    public String uploadImg(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUser user) {
+    public String uploadImg(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUser user, HttpServletRequest request) {
 
-        ProfileAttachmentDTO attachment = new ProfileAttachmentDTO();
+        ProfileAttachmentDTO profileAttachment = new ProfileAttachmentDTO();
         String result = "";
 
         String rootLocation = uploadPath;
@@ -129,9 +130,9 @@ public class ProfileController {
 
                     file.transferTo(new File(uploadDirectory + "/" + savedName));
 
-                    attachment.setProfileOriginalName(orgName);
-                    attachment.setProfileSavedName(savedName);
-                    attachment.setProfilePath(fileUploadPath);
+                    profileAttachment.setProfileOriginalName(orgName);
+                    profileAttachment.setProfileSavedName(savedName);
+                    profileAttachment.setProfilePath(fileUploadPath);
 
                     int width = 400;
                     int height = 400;
@@ -139,21 +140,21 @@ public class ProfileController {
                     Thumbnails.of(uploadDirectory + "/" + savedName).forceSize(width, height)
                             .toFile(thumbnailDirectory + "/thumbnail_" + savedName);
 
-                    attachment.setProfileThumbnailPath("/upload/thumbnail/thumbnail_" + savedName);
+                    profileAttachment.setProfileThumbnailPath("/upload/thumbnail/thumbnail_" + savedName);
                 }
 
-                attachment.setMemberNo(user.getMemberNo());
+                profileAttachment.setMemberNo(user.getMemberNo());
 
-                result = profileService.modifyAttachment(attachment);
-
+                result = profileService.modifyAttachment(profileAttachment);
+                request.getSession().setAttribute("profileAttachment", profileAttachment);
 
             } catch (IllegalStateException | IOException e) {
                 e.printStackTrace();
 
-                File deleteFile = new File(uploadDirectory + "/" + attachment.getProfileSavedName());
+                File deleteFile = new File(uploadDirectory + "/" + profileAttachment.getProfileSavedName());
                 boolean isDeleted1 = deleteFile.delete();
 
-                File deleteThumbnail = new File(thumbnailDirectory + "/thumbnail_" + attachment.getProfileSavedName());
+                File deleteThumbnail = new File(thumbnailDirectory + "/thumbnail_" + profileAttachment.getProfileSavedName());
                 boolean isDeleted2 = deleteThumbnail.delete();
 
                 if(isDeleted1 && isDeleted2) {
