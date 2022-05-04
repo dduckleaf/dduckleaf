@@ -1,9 +1,6 @@
 package com.greedy.dduckleaf.funding.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.*;
 
@@ -25,14 +22,12 @@ public class RewardShipping {
     @Column(name = "PROJECT_NO")
     private int projectNo;
 
-    @Column(name = "FUNDING_INFO_NO")
-    private int fundingInfoNo;
-
-    @Column(name = "COMPLETE_PAYMENT_NO")
-    private int completePaymentNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FUNDING_INFO_NO")
+    private Funding funding;
 
     @Column(name = "SHIPPING_DUE_DATE")
-    private java.sql.Date shippingDueDate;
+    private String shippingDueDate;
 }
 
 

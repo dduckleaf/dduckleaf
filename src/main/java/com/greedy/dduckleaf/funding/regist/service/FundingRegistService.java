@@ -37,9 +37,10 @@ public class FundingRegistService {
     private final FundingRepository fundingRepo;
     private final PaymentHistoryForFundingRepository payHistoryRepo;
     private final ShippingAddressForFundingRepository shippingAddressRepo;
+    private final RewardShippingForFundingRegistRepository rewardShippingRepo;
 
     @Autowired
-    public FundingRegistService(ProjectFundingRegistRepository repository, ModelMapper modelMapper, BankRepository bankRepository, MemberForFundingRegistRepository memberRepo, ShippingFeeForFundingRepository shippingRepo, FundingRepository fundingRepo, PaymentHistoryForFundingRepository payHistoryRepo, ShippingAddressForFundingRepository shippingAddressRepo) {
+    public FundingRegistService(ProjectFundingRegistRepository repository, ModelMapper modelMapper, BankRepository bankRepository, MemberForFundingRegistRepository memberRepo, ShippingFeeForFundingRepository shippingRepo, FundingRepository fundingRepo, PaymentHistoryForFundingRepository payHistoryRepo, ShippingAddressForFundingRepository shippingAddressRepo, RewardShippingForFundingRegistRepository rewardShippingRepo) {
         this.projectRepository = repository;
         this.modelMapper = modelMapper;
         this.bankRepository = bankRepository;
@@ -48,6 +49,7 @@ public class FundingRegistService {
         this.fundingRepo = fundingRepo;
         this.payHistoryRepo = payHistoryRepo;
         this.shippingAddressRepo = shippingAddressRepo;
+        this.rewardShippingRepo = rewardShippingRepo;
     }
 
 
@@ -114,11 +116,25 @@ public class FundingRegistService {
         history.setFunding(funding);
         System.out.println("/* 결제내역 삽입 */");
 
+        /* 발송정보 삽입 */
+        RewardShipping rewardShipping = parsingRewardShipping(registDTO);
+        rewardShipping.setFunding(funding);
+
         /* 엔티티에 삽입한 행을 DB에 저장 */
         fundingRepo.save(funding);
         payHistoryRepo.save(history);
         shippingAddressRepo.save(shippingAddress);
-        System.out.println("/* 엔티티에 삽입한 행을 DB에 저장 */");
+        rewardShippingRepo.save(rewardShipping);
+    }
+
+    private RewardShipping parsingRewardShipping(FundingRegistDTO registDTO) {
+
+        RewardShipping rewardShipping = new RewardShipping();
+        Project project = projectRepository.findById(registDTO.getProjectNo()).get();
+        rewardShipping.setShippingDueDate(project.getProjectShippingInfo().getShippingDueDate());
+        rewardShipping.setMemberNo(registDTO.getMemberNo());
+        rewardShipping.setProjectNo(registDTO.getProjectNo());
+        return null;
     }
 
 
