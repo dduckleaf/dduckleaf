@@ -134,7 +134,8 @@ public class FundingRegistService {
         rewardShipping.setShippingDueDate(project.getProjectShippingInfo().getShippingDueDate());
         rewardShipping.setMemberNo(registDTO.getMemberNo());
         rewardShipping.setProjectNo(registDTO.getProjectNo());
-        return null;
+
+        return rewardShipping;
     }
 
 
