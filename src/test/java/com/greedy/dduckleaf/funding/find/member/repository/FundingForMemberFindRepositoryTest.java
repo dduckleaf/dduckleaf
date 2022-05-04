@@ -8,9 +8,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 
 import javax.transaction.Transactional;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,5 +46,24 @@ class FundingForMemberFindRepositoryTest {
         assertNotNull(funding);
 
         System.out.println("funding = " + funding);
+    }
+
+    @Test
+    @DisplayName("memberNo로 펀딩내역 조회 테스트")
+    public void findByMemberNo_test() {
+
+        //given
+        int memberNo = 5;
+        Pageable pageable = PageRequest.of(0, 10);
+
+        //when
+        Page<Funding> fundings = repo.findByMemberNo(memberNo, pageable);
+
+        //then
+        assertNotNull(fundings);
+        fundings.forEach(funding -> {
+            System.out.println("funding.getMemberNo() = " + funding.getMemberNo());
+        });
+
     }
 }
