@@ -58,7 +58,6 @@ public class FundingForMemberFindController {
         int memberNo = user.getMemberNo();
         Page<FundingDTO> fundingList = service.findFundingByMemberNo(memberNo, pageable);
 
-        fundingList.forEach(System.out::println);
         /* 한 페이지에 표시할 버튼의 개수를 설정합니다. */
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(fundingList, BUTTON_AMOUNT);
 
@@ -80,10 +79,9 @@ public class FundingForMemberFindController {
 
         FundingFindDetailInfoForMemberDTO fundingDetailInfo = service.findFundingInfo(fundingNo);
 
-        System.out.println("fundingDetailInfo.getFunding() = " + fundingDetailInfo.getFunding());
-        System.out.println("fundingDetailInfo.getShippingAddress() = " + fundingDetailInfo.getShippingAddress());
         mv.addObject("addressInfo", fundingDetailInfo.getShippingAddress());
         mv.addObject("funding", fundingDetailInfo.getFunding());
+        mv.addObject("bankList", fundingDetailInfo.getBankList());
         mv.setViewName("/funding/find/supporter/fundingdetailinfo");
 
         return mv;

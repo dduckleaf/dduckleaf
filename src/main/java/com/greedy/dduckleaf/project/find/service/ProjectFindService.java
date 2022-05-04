@@ -1,6 +1,6 @@
 package com.greedy.dduckleaf.project.find.service;
 
-import com.greedy.dduckleaf.project.finalfield.CodeForProjet;
+import com.greedy.dduckleaf.project.finalfield.CodeForProject;
 import com.greedy.dduckleaf.project.find.dto.ProjectDTO;
 import com.greedy.dduckleaf.project.find.dto.ProjectRewardCategoryDTO;
 import com.greedy.dduckleaf.project.find.dto.SearchDTO;
@@ -29,7 +29,7 @@ import java.sql.Date;
  * @version 1.0.0
  */
 @Service
-public class ProjectFindService implements CodeForProjet {
+public class ProjectFindService implements CodeForProject {
 
 
     /* 의존성주입 받을 빈을 final로 선언 후 생성자주입을 받습니다. */

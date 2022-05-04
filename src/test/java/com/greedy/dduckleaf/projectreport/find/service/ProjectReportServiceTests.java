@@ -2,10 +2,7 @@ package com.greedy.dduckleaf.projectreport.find.service;
 
 import com.greedy.dduckleaf.common.utility.DateFormatting;
 import com.greedy.dduckleaf.config.*;
-import com.greedy.dduckleaf.projectreport.find.dto.MemberDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportReplyDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ReportDetailInfo;
+import com.greedy.dduckleaf.projectreport.find.dto.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -221,4 +218,50 @@ public class ProjectReportServiceTests {
         assertNotNull(reportList);
         reportList.forEach(System.out::println);
     }
+
+    @Test
+    @DisplayName("모든 프로젝트 신고유형 조회 테스트")
+    public void findAllReportCategories_test() {
+        //when
+        List<ReportCategoryDTO> categories = service.findAllReportCategories();
+
+        //then
+        assertNotNull(categories);
+        for(ReportCategoryDTO category : categories) {
+            assertEquals(category.getClass(), ReportCategoryDTO.class);
+        }
+        categories.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("개인정보 수집 및 이용동의 약관 조회 요청 테스트")
+    public void findPolicyContents_test() {
+        //given
+        String policyName = "개인정보 수집 및 이용";
+
+        //when
+        List<PolicyContentDTO> policyContents = service.findPolicyContents(policyName);
+
+        //then
+        assertNotNull(policyContents);
+        policyContents.forEach(policyContent -> {
+            assertEquals(policyContent.getClass(), PolicyContentDTO.class);
+        });
+        policyContents.forEach(System.out::println);
+    }
+    
+//    @Test
+//    @DisplayName("내부연산 : 약관 및 규정정책 식별번호 조회 테스트")
+//    public void findPolicyNo_test() {
+//        //given
+//        String policyName = "개인정보 수집 및 이용";
+//
+//        //when
+//        int policyNo = service.findPolicyNo(policyName);
+//
+//        //then
+//        assertNotNull(policyNo);
+//        System.out.println("policyNo = " + policyNo);
+//    }
+    
 }

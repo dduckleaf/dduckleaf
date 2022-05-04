@@ -77,5 +77,150 @@
 
 #not-exist {
     text-align: center;
-    height: 60px;"
+    height: 60px;
+}
+
+.focusout {
+    display: none;
+    top: 0;
+    left: 0;
+    position: absolute;
+    content: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.swal-content {
+    padding-top: 80px;
+    font-family: "Poppins", sans-serif;
+    font-weight: normal;
+    font-size: 15pt;
+    color: #000;
+}
+
+.swal-btn {
+    border: none !important;
+    cursor: pointer !important;
+    width: 120px !important;
+    height: 35px !important;
+    border-radius: 5px !important;
+    font-size: 16px !important;
+    color: #FFF !important;
+    background: #BAC34E !important;
+    text-align: center !important;
+    padding: 0px !important;
+}
+
+.swal-area {
+    height: 250px;
+}
+
+.modalWrap {
+    position: fixed;
+    position: absolute;
+    top: 0;
+    left: 30%;
+    right: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    z-index: 2;
+    background-color: #fff;;
+    width: 600px;
+    /*height: 1000px;*/
+    margin-top: 20%;
+    margin-bottom: 20%;
+}
+
+.report-modal-footer {
+    width: 100%;
+    height: 150px;
+    background-color: rgba(250, 125, 125, 0.2);
+    color: red;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    font-size: 5pt;
+}
+
+.popup-content {
+    width: 90%;
+    margin-top: 5%;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#popup-submit, #popup-cancel {
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+textarea {
+    width: 100%;
+}
+
+.block {
+    border: 1px solid #ababab;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.modal-title {
+    font-weight: bold;
+    font-size: 20pt;
+}
+
+.modal-subtitle {
+    font-weight: bold;
+    font-size: 15pt;
+}
+
+.popup-btn {
+    position: relative;
+    left: 440px;
+    bottom: 0px;
+}
+
+.modal-top {
+    width: 100%;
+    height: 25px;
+    background-color: #BAC34E;
+}
+
+[name=projectReportContent], [name=reportRefUrl], [name=reportCategoryName],
+[name=reporterName], [name=reporterPhone], [name=reporterEmail] {
+    border: 1px solid #ababab;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.policyArea {
+    background-color: rgba(196, 196, 196, 0.3);
+    margin-bottom: 40px;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.registArea {
+    display: none;
+}
+
+.policyContent {
+    font-size: 8pt;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: -10px !important;
+}
+
+.popup-notice {
+    font-size: 8pt;
+    color: red;
+    margin: 5px;
+    visibility: hidden;
 }

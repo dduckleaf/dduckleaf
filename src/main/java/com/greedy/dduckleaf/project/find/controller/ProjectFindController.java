@@ -2,7 +2,7 @@ package com.greedy.dduckleaf.project.find.controller;
 
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
-import com.greedy.dduckleaf.project.finalfield.CodeForProjet;
+import com.greedy.dduckleaf.project.finalfield.CodeForProject;
 import com.greedy.dduckleaf.project.find.dto.ProjectDTO;
 import com.greedy.dduckleaf.project.find.dto.SearchDTO;
 import com.greedy.dduckleaf.project.find.service.ProjectFindService;
@@ -31,7 +31,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/project/find")
-public class ProjectFindController implements CodeForProjet {
+public class ProjectFindController implements CodeForProject {
 
     private final ProjectFindService service;
 

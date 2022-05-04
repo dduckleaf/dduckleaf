@@ -1,12 +1,13 @@
 package com.greedy.dduckleaf.projectreport.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.common.utility.DateFormatting;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportReplyDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ReportDetailInfo;
+import com.greedy.dduckleaf.common.utility.PolicyName;
+import com.greedy.dduckleaf.projectreport.find.dto.*;
 import com.greedy.dduckleaf.projectreport.find.service.ProjectReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.sql.Date;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -51,9 +52,11 @@ public class ProjectReportController {
 
     @Autowired
     private final ProjectReportService service;
+    private final ObjectMapper mapper;
 
-    public ProjectReportController(ProjectReportService service) {
+    public ProjectReportController(ProjectReportService service, ObjectMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     /**
@@ -258,4 +261,43 @@ public class ProjectReportController {
 
         return mv;
     }
+
+    /**
+     * findAllReportCategories: 프로젝트 신고유형 조회를 요청하는 메소드입니다.
+     * @return 모든 신고유형 목록
+     * @author 장민주
+     */
+    @GetMapping(value = "/categories", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String findAllReportCategories() throws JsonProcessingException {
+
+        List<ReportCategoryDTO> reportCategories = service.findAllReportCategories();
+
+        /* json 문자열로 parsing 하여 반환 */
+        return mapper.writeValueAsString(reportCategories);
+    }
+
+    /**
+     * findPolicyContents: 약관 상세내용 조회를 요청하는 메소드입니다.
+     * @return 약관 상세내용
+     * @author 장민주
+     */
+    @GetMapping(value = "/policies", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String findPolicyContents() throws JsonProcessingException {
+        /* 정책명 호출 */
+        String policyName = PolicyName.POLICY_NAME_개인정보_수집_및_이용;
+
+        List<PolicyContentDTO> policyContents = service.findPolicyContents(policyName);
+
+        /* json 문자열로 parsing 하여 반환 */
+        return mapper.writeValueAsString(policyContents);
+    }
+    
+    @PostMapping("/regist")
+    public void registProjectReport(HttpServletRequest request) {
+        System.out.println( request.getParameter("projectNo"));
+    }
+
+
 }

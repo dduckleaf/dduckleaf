@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>펀딩 목록 조회</title>
+	<meta name="robots" content="noindex, follow" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+	<script src="https://kit.fontawesome.com/c24bc5c6f2.js" crossorigin="anonymous"></script>
+	<!-- Style CSS -->
+	<link rel="stylesheet" th:href="@{ /css/refund.css }">
+	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	
+	<!-- JQuery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<style>
+        .tab-body-area {
+            border: 1px solid red;
+            position: absolute;
+            z-index: 1;
+            left: 33%;
+            right: 25%;
+            top: 18%;
+            width: 50%;
+            height: 1220px;
+        }
+        .refund-detail-area {
+            width: 84%;
+            height: 800px;
+            margin-left: 8%;
+            background-color: rgb(224, 222, 221);
+            margin-top: 8%;
+            border: 1px solid greenyellow;
+        }
+        .refund-detail-area-box {
+	        border: 1px solid blue;
+	        margin: 7%;
+	        width: 80%;
+	        height: 90%;
+        }
+        .refund-detail-title {
+	        font-size: 1.2em;
+	        font-weight: 1000;
+	        margin-bottom: 10px;
+	        width: 35%;
+	        border: solid bisque;
+        }
+        .refund-detail-content {
+            width: 60%;
+            border: solid darkcyan;
+        }
+        /* Round Corners */
+        .round-corners {
+            display: inline-block;
+            transition-duration: 0.3s;
+            /*transition-property: border-radius;*/
+            transition-property: transform;
+            -webkit-tap-highlight-color: transparent;
+            transform: translateZ(0);
+            box-shadow: 0 0 1px transparent;
+
+            color: #BAC34E;
+            background: #FFF;
+            border: 1px solid #BAC34E;
+            width: 250px;
+            height: 40px;
+            font-size: 20px;
+
+            cursor: pointer;
+        }
+        .round-corners:hover {
+            border-radius: 1em;
+            transform: translateY(-5px);
+        }
+	</style>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div th:replace="/common/supporterpage.html"></div>
+
+<div class="tab-body-area" style="width: 47%">
+	<span class="text-title">
+        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+		 환불 내역
+	</span>
+	<hr>
+	<div class="refund-detail-area">
+		<div class="refund-detail-area-box">
+			<label class="refund-detail-title">주문일</label>
+			<label class="refund-detail-content">2022-03-03</label><br>
+			<label class="refund-detail-title">펀딩 금액</label>
+			<label class="refund-detail-content">24500원</label><br>
+			<label class="refund-detail-title">리워드 금액</label>
+			<label class="refund-detail-content">20000원</label><br>
+			<label class="refund-detail-title">리워드 수량</label>
+			<label class="refund-detail-content">한 박스 (3kg) X 3EA</label><br>
+			<label class="refund-detail-title">프로젝트상태</label>
+			<label class="refund-detail-content">진행중</label><br>
+			<label class="refund-detail-title">배송상태</label>
+			<label class="refund-detail-content">미발송</label><br>
+			<label class="refund-detail-title">환불 신청일</label>
+			<label class="refund-detail-content">2022-05-03</label><br>
+			<br>
+			
+			<label class="refund-detail-title">신청 사유</label>
+			<label class="refund-detail-content">2022-05-03</label><br><br>
+			<label class="refund-detail-title">상세 이유</label>
+			<label class="refund-detail-content">2022-05-03</label><br><br>
+			<br>
+		</div>
+		<div style="text-align: right">
+			<button class="round-corners" onclick="location.href='/refund/find/member/list'">뒤로가기</button>
+			
+		</div>
+	</div>
+</div>
+
+
+
+<div th:replace="/common/footer.html"></div>
+
+</body>
+</html>

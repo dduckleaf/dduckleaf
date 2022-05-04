@@ -2,6 +2,8 @@ package com.greedy.dduckleaf.funding.dto;
 
 import lombok.*;
 
+import javax.persistence.Column;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -21,7 +23,7 @@ public class FundingDTO {
     private String extraShippingFeeStatus;
     private BankDTO refundBankCode;
     private int refundAccount;
-
+    private String refundName;
     private ProjectDTO project;
 
     private RefundAccountDTO refundAccountInfo;
