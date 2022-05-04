@@ -3,6 +3,7 @@ package com.greedy.dduckleaf.projectreport.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
+import com.greedy.dduckleaf.common.exception.ProjectReport.ReportRegistException;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.common.utility.DateFormatting;
@@ -42,8 +43,9 @@ import java.util.List;
  * 2022/04/28 (장민주) findProjectReportWaitingList 메소드 작성.
  * 2022/04/28 (장민주) findProjectReportWaitingList 메소드 리팩토링.
  *                    -> findProjectsByProjectReportStatus 로 변경.
+ * 2022/05/04 (장민주) registProjectReport 메소드 작성.
  * </pre>
- * @version 1.0.4
+ * @version 1.0.8
  * @author 장민주
  */
 @Controller
@@ -293,10 +295,48 @@ public class ProjectReportController {
         /* json 문자열로 parsing 하여 반환 */
         return mapper.writeValueAsString(policyContents);
     }
-    
-    @PostMapping("/regist")
-    public void registProjectReport(HttpServletRequest request) {
-        System.out.println( request.getParameter("projectNo"));
+
+    /**
+     * registProjectReport: 프로젝트 신고 등록을 요청하는 메소드입니다.
+     * @param projectReport: 프로젝트 신고 상세내용
+     * @param projectNo: 프로젝트 번호
+     * @param reportCategoryNo: 프로젝트 신고유형 번호
+     * @param user: 로그인한 사용자 정보
+     * @param rttr: 등록 성공 시 전송할 일회성 메시지 data를 담은 객체
+     * @return
+     * @author 장민주
+     */
+    @PostMapping("/regist/{projectNo}/{reportCategoryNo}")
+    public ModelAndView registProjectReport(ModelAndView mv, @ModelAttribute ProjectReportDTO projectReport,
+                                    @PathVariable int projectNo, @PathVariable int reportCategoryNo,
+                                    @AuthenticationPrincipal CustomUser user, RedirectAttributes rttr) throws ReportRegistException {
+
+        /* 신고자 정보를 담을 MemberDTO 객체 생성 후 로그인 정보에서 회원번호를 호출하여 set */
+        MemberDTO member = new MemberDTO();
+        member.setMemberNo(user.getMemberNo());
+
+        /* 프로젝트 정보를 담을 ProjectDTO 객체 생성 후 파라미터로 받은 프로젝트번호를 set */
+        ProjectDTO project = new ProjectDTO();
+        project.setProjectNo(projectNo);
+
+        /* 신고유형 정보를 담을 ReportCategoryDTO 객체 생성 후 파라미터로 받은 신고유형번호를 set */
+        ReportCategoryDTO category = new ReportCategoryDTO();
+        category.setReportCategoryNo(reportCategoryNo);
+
+        /* 등록일 데이터를 생성 후 set */
+        projectReport.setProjectReportDate(DateFormatting.getDateAndTime());
+
+        /* projectReport에 필요한 나머지 데이터를 차례로 set */
+        projectReport.setProject(project);
+        projectReport.setReportCategory(category);
+        projectReport.setMember(member);
+
+        service.registProjectReport(projectReport);
+
+        rttr.addFlashAttribute("registSuccessMessage", "신고 등록이 완료되었습니다.");
+        mv.setViewName("redirect:/project/projectdetail/" + projectNo);
+
+        return mv;
     }
 
 
