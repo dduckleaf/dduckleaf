@@ -32,7 +32,11 @@
   <!-- 신기한 모달 -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
+<script>
+  /* 신고 등록 성공 메시지 */
+  const registSuccessMessage = "[[${ registSuccessMessage }]]";
+  registSuccessMessage && alert(registSuccessMessage);
+</script>
 <body>
 <div class="main-wrapper">
   <div th:replace="@{ /common/menubar.html }"></div>
