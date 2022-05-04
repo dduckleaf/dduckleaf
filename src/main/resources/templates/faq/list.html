@@ -47,12 +47,15 @@
 
                             <div class="tab-pane fade show active" id="list-view" role="tabpanel" aria-labelledby="list-view-tab">
                                 <div class="product-list-view row">
+                                    <div style="text-align: right">
+                                        <button class="basic-btn small-btn btn1" id="faqRegist">등록</button>
+                                    </div>
                                     <div class="col-12" th:each="faq : ${ faqList }">
                                         <div class="product-item" style="border: solid #CCCCCC 1px; border-radius: 5px; padding: 10px;" >
                                             <div class="product-content align-self-center">
-                                                <p class="product-name" th:href="@{/faq/detail}" th:text="${ faq.subtitle }"></p>
+                                                <p class="product-name" th:href="@{/faq/detail}" th:text="${ faq.faqSubTitle }"></p>
                                                 <input type="hidden" class="faqNumber" th:value="${faq.faqNo}">
-                                                <p class="faqcontent" >[[${faq.subtitle}]]</p>
+                                                <p class="faqcontent" >[[${faq.faqSubTitle}]]</p>
                                             </div>
                                             <div style="width: 250px;" class="author" >
                                                 작성자 : [[${faq.member.memberName}]]
@@ -115,6 +118,11 @@
             }
         }
     }
+</script>
+<script>
+    $("#faqRegist").click(function () {
+        location.href='/faq/regist';
+    });
 </script>
 
 <!-- Global Vendor, plugins JS -->

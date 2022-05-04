@@ -25,7 +25,7 @@
                 <!--  비동기 append 영역 -->
             </div>
             <div class="registArea">
-                <form action="/report/regist" method="post" onsubmit="return agreementCheck();">
+                <form id="registForm" action="/report/regist" method="post" onsubmit="return agreementCheck();">
                     <input type="hidden" name="projectNo">
                     <input type="hidden" name="projectReportCategoryNo">
                     <span style="font-weight: bold">신고 유형</span><br>
@@ -43,9 +43,9 @@
                     <span>이름</span><br>
                     <input type="text" name="reporterName" placeholder="이름 입력"><br>
                     <span>휴대폰 번호</span><br>
-                    <input type="text" name="reporterPhone" placeholder="휴대폰 번호 입력"><br>
+                    <input type="text" name="reporterPhone" placeholder="'-' 제외 휴대폰 번호 입력"><br>
                     <span>이메일</span><br>
-                    <input type="text" name="reporterEmail" placeholder="이메일 입력"><br>
+                    <input type="email" name="reporterEmail" placeholder="이메일 입력"><br>
                     <br>
                     <input type="checkbox" value="" id="agreement"> <span>개인정보 수집 및 이용동의 (필수)</span>
                     <div class="policyArea">
@@ -89,6 +89,12 @@
         /* 동의 여부를 체크한 경우 신고 등록 요청 전송 */
         if($agreement.is(":checked")) {
             $(".popup-notice").css("visibility", "hidden");
+
+            const projectNo = $("[name=projectNo]").val();
+            const reportCategoryNo = $("[name=projectReportCategoryNo]").val();
+
+            /* 쿼리스트링으로 projectNo 파라미터를 전달할 수 있도록 요청 URL 변경 */
+            $("#registForm").attr("action", "/report/regist/" + projectNo + "/" + reportCategoryNo);
 
             return true;
         }

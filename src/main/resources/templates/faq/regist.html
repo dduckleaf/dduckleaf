@@ -15,8 +15,8 @@
 
 
     <!-- Style CSS -->
-    <!--<link rel="stylesheet" href="../../static/css/style.css">
-    <link rel="stylesheet" href="../../static/css/faq.css">-->
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/faq.css">
 
     <link rel="stylesheet" type="text/css" th:href="@{ /css/style.css }">
     <link rel="stylesheet" type="text/css" th:href="@{ /css/faq.css }">
@@ -42,50 +42,33 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-12">
-
                         <div class="tab-content text-charcoal pt-8">
-
                             <div class="tab-pane fade show active" id="list-view" role="tabpanel" aria-labelledby="list-view-tab">
                                 <div class="product-list-view row">
                                     <div class="col-12">
-                                        <div class="product-item-detail" style="border: solid #CCCCCC 1px; border-radius: 5px; padding: 10px;" >
-                                            <div class="product-content-detail align-self-center">
-                                                <p class="product-name-detail" th:text="${ faq.getFaqTitle()}"><p>
-                                                <p class="product-subname-detail" th:text="${ faq.getFaqSubTitle()}"></p>
-                                                <p class="faqcontent-detail" th:text="${ faq.getFaqContent()}">
-                                                <input type="hidden" id="faqNo">
-                                            </div>
-                                            <div style="width: 250px;">
-                                                <p class="author">작성자 : 관리자</p>
+                                        <div class="product-item-regist" style="border: solid #CCCCCC 1px; border-radius: 5px; padding: 10px;" >
+                                            <div class="product-content-regist align-self-center">
+                                                <form action="/faq/regist" style="margin-left: 150px;" method="post">
+                                                    <p class="faq-detail-text">제목 <input class="insert-text" id="title" name="faqTitle" placeholder="제목을입력하세요"></p>
+                                                    <br>
+                                                    <p class="faq-detail-text">설명<input class="insert-text" id="subTitle" name="faqSubTitle" placeholder="설명을 입력하세요"></p>
+                                                    <br>
+                                                    <div style="display: flex">
+                                                        <p class="faq-detail-text" style=" top: auto;">내용</p>
+
+                                                        <textarea class="insert-text2" name="faqContent" id="content" placeholder="자주 묻는 질문 답변을 입력하세요"></textarea>
+                                                    </div>
+                                                    <br>
+                                                    <div class="btn-area">
+                                                        <button class="small-btn btn1 faq-btn" type="submit" >확인</button>
+                                                        <button class="small-btn btn2 basic-btn" style="margin-left: 20px">취소</button>
+                                                    </div>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <br>
-                            <div style="text-align: right">
-                            <button class="basic-btn medium-btn btn1" id="faqModify">수정</button>
-                            <button class="basic-btn medium-btn btn2" id="faqDelete" style="margin-left: 20px;">삭제</button>
-                            <button class="basic-btn medium-btn btn3" id="back" style="margin-left: 20px;">목록</button>
-                            </div>
-                        </div>
-                        <div class="pagination-area pt-10">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span class="fa fa-chevron-left"></span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span class="fa fa-chevron-right"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                 </div>
@@ -105,18 +88,6 @@
     <!-- Scroll To Top End Here -->
 
 </div>
-
-<script>
-    $("#back").click(function () {
-        location.href='/faq/list';
-    });
-
-    $("#faqModify").click(function () {
-
-        const faqNo
-        location.href = $("faq")
-    })
-</script>
 
 <!-- Global Vendor, plugins JS -->
 

@@ -56,27 +56,27 @@
                         <div class="product-thumb-with-content row">
                             <div class="col-12 order-lg-1 order-2 pt-10 pt-lg-0">
                                 <div class="single-product-content">
-<!--                                    <input type="hidden" th:value="${ project.projectNo }">-->
-<!--                                    <div class="title" th:text="${ project.projectName }"></div><progress th:value="${ project.achievementRate }" max="100"></progress>-->
-                                    <div class="title"> 호박고구마</div>
+                                    <input type="hidden" id="projectApplicationNo" name="projectApplicationNo" th:value="${ detail.projectApplicationNo }">
+                                    <input type="hidden" th:value="${ detail.project.projectNo }">
+                                    <div class="title" th:text="${ detail.projectBasicInfo.projectName }"></div>
                                     <div class="infoBox2 rounded-1">
                                         <div>
                                             <a></a><span class="short-desc">파머 정보</span>
                                         </div>
                                         <div class="farmerCorp">
-<!--                                            <a th:text="${ project.achievementRate }"></a><span class="info">% 달성</span>-->
+                                            <a th:text="${ detail.farmer.farmerName }"></a>
                                         </div>
                                         <div class="farmerCorp">
                                             <a></a><span class="info">희망 오픈 예정일</span>
                                         </div>
                                         <div class="farmerCorp">
-<!--                                            <a class="info" th:text="${ supporter.size() }"></a><span class="info">명의 서포터</span>-->
+                                            <a class="info" th:text="${ detail.project.openDate }">
                                         </div>
                                     </div>
                                     <ul class="quantity-with-btn pb-7">
-                                            <button class="basic-btn btn1 btn-fill-green rounded-1" style="height: 60px; font-size: 15pt;">신청 정보 열람
-                                                <img src="/images/common/rightarrow.png" alt="Product Image">
-                                            </button>
+                                        <button class="basic-btn btn1 btn-fill-green rounded-1 detail" id="detail" style="height: 60px; font-size: 15pt;">신청 정보 열람
+                                            <img src="/images/common/rightarrow.png" alt="Product Image">
+                                        </button>
                                     </ul>
                                 </div>
                             </div>
@@ -85,31 +85,39 @@
                 </div>
             </div>
         </div><br><br><br>
-        <div>
+        <th:block th:if="${ detail.projectApplicationCategory == '심사대기중' }">
             <div style="width: 300px; margin: auto !important;">
-                <button class="basic-btn medium-btn" style= "color: #FFF; background: #BAC34E;">심사하기</button>
-                <button class="basic-btn btn3 medium-btn">목록으로</button>
+                <button class="basic-btn medium-btn examination" style= "color: #FFF; background: #BAC34E;">심사하기</button>
+                <button class="basic-btn btn3 medium-btn" onclick="location.href='/project/examination/list'">목록으로</button>
             </div><br><br>
-        </div>
-        <div>
+        </th:block>
+        <th:block th:if="${ detail.projectApplicationCategory == '심사중' }">
             <div style="width: 500px; margin: auto !important; align-content: center">
                 <button class="basic-btn medium-btn" style= "color: #FFF; background: #BAC34E;">승인</button>
                 <button class="basic-btn medium-btn" style= "color: #FFF; background: #BAC34E;">반려</button>
-                <button class="basic-btn btn3 medium-btn">목록으로</button>
+                <button class="basic-btn btn3 medium-btn" onclick="location.href='/project/examination/list'">목록으로</button>
             </div><br><br>
-        </div>
+        </th:block>
     </main>
-
 </div>
-
-<!-- Global Vendor, plugins JS -->
-
-<!-- JS Files
-============================================ -->
-<!-- Global Vendor, plugins JS -->
-
-<!-- Vendor JS -->
 <script>
+
+    $(".detail").click(function () {
+
+        const projectApplicationNo = $("#projectApplicationNo").val();
+        console.log(projectApplicationNo);
+
+       location.href='/project/examination/detail/' + projectApplicationNo;
+    });
+
+    $(".examination").click(function () {
+
+        const projectApplicationNo = $("#projectApplicationNo").val();
+        console.log(projectApplicationNo);
+
+        location.href='/project/examination/modify/' + projectApplicationNo;
+
+    });
 
 </script>
 <script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>

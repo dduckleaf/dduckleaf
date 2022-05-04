@@ -17,17 +17,17 @@
     <div class="block">
         <input type="hidden">
         <p>파머정보</p>
-        <p class="text-subtitle" >나문희</p>
+        <p class="text-subtitle" th:text="${ detail.farmer.farmerName }"></p>
         <br><br>
         <p>희망 오픈 예정일</p>
-        <p style="font-size: 15pt;" >3.30(수)</p>
+        <p style="font-size: 15pt;" th:text="${ detail.project.openDate }"></p>
         <br>
     </div>
     <div >
         <button class="basic-btn btn3 medium-btn" style="width: 100%; margin-top: 2%;">프로젝트 수정</button>
     </div>
     <div class="block">
-        <p style="font-size: 15pt;">감자나라 등록정보</p><br>
+        <p style="font-size: 15pt;" th:text="${ detail.farmer.businessName }"></p><br>
         <a>기본요건 확인</a><br>
         <a>기본정보 확인</a><br>
         <a>스토리 확인</a><br>

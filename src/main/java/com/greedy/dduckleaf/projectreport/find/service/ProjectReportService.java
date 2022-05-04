@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.projectreport.find.service;
 
+import com.greedy.dduckleaf.common.exception.ProjectReport.ReportRegistException;
 import com.greedy.dduckleaf.projectreport.find.dto.*;
 import com.greedy.dduckleaf.projectreport.find.entity.*;
 import com.greedy.dduckleaf.projectreport.find.repository.*;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +35,11 @@ import java.util.stream.Collectors;
  * 2022-04-28 (장민주) findProjectReportWaitingList 서비스메소드 작성
  * 2022-05-02 (장민주) findAllReportCategories 서비스메소드 작성
  * 2022-05-03 (장민주) findPolicyContents 서비스메소드 작성
+ * 2022-05-04 (장민주) registProjectReport 서비스메소드 작성
  * </pre>
  *
  * @author 장민주
- * @version 1.0.7
+ * @version 1.0.8
  */
 @Service
 public class ProjectReportService {
@@ -49,13 +52,15 @@ public class ProjectReportService {
     private final PolicyForProjectReportRepository policyRepository;
     private final ModelMapper modelMapper;
 
+    private final EntityManager entityManager;
+
     @Autowired
     public ProjectReportService(MemberForProjectReportRepository memberRepository,
                                 ProjectReportMainRepository reportRepository,
                                 ProjectReportReplyRepository replyRepository,
                                 ReportCategoryRepository reportCategoryRepository,
                                 PolicyContentForProjectReportRepository policyContentRepository,
-                                PolicyForProjectReportRepository policyRepository, ModelMapper modelMapper) {
+                                PolicyForProjectReportRepository policyRepository, ModelMapper modelMapper, EntityManager entityManager) {
         this.memberRepository = memberRepository;
         this.reportRepository = reportRepository;
         this.replyRepository = replyRepository;
@@ -63,6 +68,7 @@ public class ProjectReportService {
         this.policyContentRepository = policyContentRepository;
         this.policyRepository = policyRepository;
         this.modelMapper = modelMapper;
+        this.entityManager = entityManager;
     }
 
     /**
@@ -263,5 +269,38 @@ public class ProjectReportService {
 
         return policyRepository.findPolicyNo(policyName);
     }
+
+    /**
+     * registProjectReport: 프로젝트 신고 등록 요청 메소드입니다.
+     * @param projectReport: 프로젝트 신고 상세내용
+     * @return 등록 성공 여부
+     * @author 장민주
+     */
+    @Transactional
+    public void registProjectReport(ProjectReportDTO projectReport) throws ReportRegistException {
+
+        /* 프로젝트번호로 영속성 컨텍스트에서 신고 대상 프로젝트 엔티티객체 찾기 */
+        Project project = entityManager.find(Project.class, projectReport.getProject().getProjectNo());
+
+        System.out.println("project = " + project);
+
+        /* 회원번호로 영속성 컨텍스트에서 신고 회원 엔티티객체 찾기 */
+        Member member = entityManager.find(Member.class, projectReport.getMember().getMemberNo());
+
+        System.out.println("member = " + member);
+
+        /* 신고유형번호로 영속성 컨텍스트에서 신고 유형 엔티티객체 찾기 */
+        ReportCategory category = entityManager.find(ReportCategory.class, projectReport.getReportCategory().getReportCategoryNo());
+
+        System.out.println("category = " + category);
+
+        ProjectReport newReport = modelMapper.map(projectReport, ProjectReport.class);
+        newReport.setProject(project);
+        newReport.setMember(member);
+        newReport.setReportCategory(category);
+
+        reportRepository.save(newReport);
+    }
+
 
 }
