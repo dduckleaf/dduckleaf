@@ -36,9 +36,9 @@ import java.util.UUID;
  * 2022/05/01 (박상범) 개인 정보 수정 페이지로 이동, 조회 관련 메소드 수정, 회원의 사진 정보 변경 관련 메소드 수정, 이메일 변경 페이지로 이동, 휴대전화 번호 변경 페이지로 이동, 비밀번호 변경 페이지로 이동 관련 메소드 수정
  * 2022/05/02 (박상범) 이메일 인증번호 전송 관련 메소드 작성, 회원의 이메일 주소 변경 관련 메소드 작성, 휴대전화 번호로 인증번호 전송 관련 메소드 작성, 회원의 휴대전화 번호 변경 관련 메소드 작성, 회원의 비밀번호 변경 관련 메소드 작성
  * 2022/05/03 (박상범) 회원의 프로필 이미지를 기본 프로필 이미지로 변경 관련 메소드 작성
- * 2022/05/04 (박상범) 회원의 사진 정보 변경 관련 메소드 수정
+ * 2022/05/04 (박상범) 회원의 사진 정보 변경 관련 메소드 수정, 회원의 프로필 이미지를 기본 프로필 이미지로 변경 관련 메소드 수정
  * </pre>
- * @version 1.0.7
+ * @version 1.0.8
  * @author 박상범
  */
 @Controller
@@ -97,10 +97,10 @@ public class ProfileController {
      */
     @PostMapping("/uploadImg")
     @ResponseBody
-    public String uploadImg(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUser user, HttpServletRequest request) {
+    public String uploadImg(@RequestParam("file") MultipartFile file, @AuthenticationPrincipal CustomUser user) {
 
-        ProfileAttachmentDTO profileAttachment = new ProfileAttachmentDTO();
         String result = "";
+        ProfileAttachmentDTO profileAttachment = new ProfileAttachmentDTO();
 
         String rootLocation = uploadPath;
 
@@ -146,7 +146,7 @@ public class ProfileController {
                 profileAttachment.setMemberNo(user.getMemberNo());
 
                 result = profileService.modifyAttachment(profileAttachment);
-                request.getSession().setAttribute("profileAttachment", profileAttachment);
+                user.setProfileThumbnailPath(profileAttachment.getProfileThumbnailPath());
 
             } catch (IllegalStateException | IOException e) {
                 e.printStackTrace();
@@ -260,7 +260,7 @@ public class ProfileController {
     }
 
     /**
-     * modifyMemberPwd: 회원의 비밀번호를 변경합니다.
+     * removeImage: 회원의 프로필 이미지를 기본 이미지로 변경합니다.
      * @param user: 로그인된 회원 정보
      * @return mv
      * @author 박상범
@@ -268,6 +268,9 @@ public class ProfileController {
     @GetMapping(value = {"/remove/thumbnail"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public String removeImage(@AuthenticationPrincipal CustomUser user) {
+
+        String profileAttachmentPath = profileService.removeProfileAttachment(user.getMemberNo());
+        user.setProfileThumbnailPath(profileAttachmentPath);
 
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd")
@@ -277,6 +280,6 @@ public class ProfileController {
                 .disableHtmlEscaping()
                 .create();
 
-        return gson.toJson(profileService.removeProfileAttachment(user.getMemberNo()));
+        return gson.toJson(profileAttachmentPath);
     }
 }
