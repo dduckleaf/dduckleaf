@@ -104,6 +104,7 @@
             tds[i].onclick = function() {
                 const projectApplicationNo = this.parentNode.children[0].innerText;
                 console.log(projectApplicationNo);
+                alert(projectApplicationNo);
                 location.href = "/project/examination/review/" + projectApplicationNo;
             }
         }
