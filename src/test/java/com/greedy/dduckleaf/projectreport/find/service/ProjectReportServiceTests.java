@@ -3,6 +3,9 @@ package com.greedy.dduckleaf.projectreport.find.service;
 import com.greedy.dduckleaf.common.utility.DateFormatting;
 import com.greedy.dduckleaf.config.*;
 import com.greedy.dduckleaf.projectreport.find.dto.*;
+import com.greedy.dduckleaf.projectreport.find.entity.Member;
+import com.greedy.dduckleaf.projectreport.find.entity.Project;
+import com.greedy.dduckleaf.projectreport.find.entity.ReportCategory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -13,8 +16,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.sql.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -31,12 +35,17 @@ public class ProjectReportServiceTests {
     @Autowired
     private ProjectReportService service;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
+
     @Autowired
     private ModelMapper modelMapper;
 
     @Test
     public void initTest() {
         assertNotNull(service);
+        assertNotNull(entityManager);
         assertNotNull(modelMapper);
     }
 
@@ -263,5 +272,63 @@ public class ProjectReportServiceTests {
 //        assertNotNull(policyNo);
 //        System.out.println("policyNo = " + policyNo);
 //    }
+
+    @Test
+    @DisplayName("프로젝트 신고 등록 성공 테스트")
+    public void registProjectReport_success_test() {
+
+        //given
+        MemberDTO member = new MemberDTO();
+        member.setMemberNo(3);
+
+        ProjectDTO project = new ProjectDTO();
+        project.setProjectNo(7);
+
+        ReportCategoryDTO category = new ReportCategoryDTO();
+        category.setReportCategoryNo(1);
+
+        ProjectReportDTO report = new ProjectReportDTO();
+        report.setMember(member);
+        report.setProject(project);
+        report.setReportCategory(category);
+        report.setProjectReportDate(DateFormatting.getDateAndTime());
+        report.setProjectReportContent("content");
+        report.setReportRefUrl("url");
+        report.setReporterName("name");
+        report.setReporterEmail("email");
+        report.setReporterPhone("phone");
+
+        //when & then
+        assertDoesNotThrow(() -> service.registProjectReport(report));
+    }
+
+    @Test
+    @DisplayName("프로젝트 신고 등록 실패 테스트")
+    public void registProjectReport_fail_test() {
+
+        //given
+        MemberDTO member = new MemberDTO();
+        member.setMemberNo(3);
+
+        ProjectDTO project = new ProjectDTO();
+        project.setProjectNo(7);
+
+        ReportCategoryDTO category = new ReportCategoryDTO();
+        category.setReportCategoryNo(1);
+
+        ProjectReportDTO report = new ProjectReportDTO();
+        report.setMember(member);
+        report.setProject(project);
+        report.setReportCategory(category);
+        report.setProjectReportDate(DateFormatting.getDateAndTime());
+//        report.setProjectReportContent("content");
+        report.setReportRefUrl("url");
+        report.setReporterName("name");
+        report.setReporterEmail("email");
+        report.setReporterPhone("phone");
+
+        //when & then
+        assertThrows(Exception.class, () -> service.registProjectReport(report));
+    }
     
 }
