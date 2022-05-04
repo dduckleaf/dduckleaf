@@ -12,11 +12,11 @@ import lombok.*;
 public class PolicyCategory {
 
     @Id
-    @Column(name = "POLICY_CATEOGY_NO")
+    @Column(name = "POLICY_CATEGORY_NO")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int policyCategoryNo;                       //구분번호
 
-    @Column(name = "POLICY_CATEOGY_NAME")
+    @Column(name = "POLICY_CATEGORY_NAME")
     private String policyCategoryName;                  //구분명
 
     @Override
