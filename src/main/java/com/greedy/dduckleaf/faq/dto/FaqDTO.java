@@ -15,5 +15,5 @@ public class FaqDTO {
     private String faqContent;
     private String faqStatus;
     private MemberDTO member;
-    private String subtitle;
+    private String faqSubTitle;
 }
