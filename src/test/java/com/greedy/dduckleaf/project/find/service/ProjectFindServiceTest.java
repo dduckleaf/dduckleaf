@@ -36,7 +36,7 @@ class ProjectFindServiceTest {
     @Test
     public void findProjectLists_test() {
 
-        Pageable pageable = PageRequest.of(1, 10);
+        Pageable pageable = PageRequest.of(0, 10);
         String searchValue = "3";
         SearchDTO searchDTO = new SearchDTO();
         searchDTO.setSearchValue(searchValue);
