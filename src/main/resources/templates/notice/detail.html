@@ -80,9 +80,9 @@
           </tr>
         </table>
         <div style="text-align: right">
-          <button class="basic-btn medium-btn btn1" th:onclick="'window.location.href=\'' + @{/notice/modify/{no}(no=${ notice.noticeNo })} + '\''">수정</button>
-          <button class="basic-btn medium-btn btn4" th:onclick="'window.location.href=\'' + @{/notice/remove/{no}(no=${ notice.noticeNo })} + '\''">삭제</button>
-          <button class="basic-btn medium-btn btn3">목록보기</button>
+          <button class="basic-btn medium-btn btn1" th:onclick="'window.location.href=\'' + @{/notice/modify/{bno}(bno=${ notice.noticeNo })} + '\''">수정</button>
+          <button class="basic-btn medium-btn btn4" th:onclick="'window.location.href=\'' + @{/notice/remove/{bno}(bno=${ notice.noticeNo })} + '\''">삭제</button>
+          <button class="basic-btn medium-btn btn3" th:onclick="window.location.href='/notice/list'">목록보기</button>
         </div>
       </div>
     </div>
