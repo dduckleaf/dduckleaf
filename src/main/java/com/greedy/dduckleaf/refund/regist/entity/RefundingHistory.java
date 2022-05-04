@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Getter
 @ToString
 @Entity(name = "RefundingHistoryForRefundingRegist")
-@Table(name = "TBL_REFUNDG_HISTORY")
+@Table(name = "TBL_REFUNDING_HISTORY")
 public class RefundingHistory {
 
     @Id
