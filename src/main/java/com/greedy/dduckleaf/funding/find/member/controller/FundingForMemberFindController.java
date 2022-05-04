@@ -77,15 +77,12 @@ public class FundingForMemberFindController {
     @GetMapping("/detail/member/{fundingNo}")
     public ModelAndView sendMemberFundingListPage(ModelAndView mv, @PathVariable int fundingNo) {
 
-        System.out.println("asdfasdf");
         FundingFindDetailInfoForMemberDTO fundingDetailInfo = service.findFundingInfo(fundingNo);
-        System.out.println("fundingDetailInfo = " + fundingDetailInfo);
+
         mv.addObject("addressInfo", fundingDetailInfo.getShippingAddress());
         mv.addObject("funding", fundingDetailInfo.getFunding());
         mv.addObject("bankList", fundingDetailInfo.getBankList());
         mv.setViewName("/funding/find/supporter/fundingdetailinfo");
-
-        System.out.println("asdfasdf");
 
         return mv;
     }

@@ -67,4 +67,12 @@ public class RefundForFindController {
 
         return mv;
     }
+
+    @GetMapping("/list/farmer")
+    public ModelAndView sendFarmerRefundList(ModelAndView mv) {
+
+        mv.setViewName("/refund/find/farmer/refundlist");
+
+        return mv;
+    }
 }
