@@ -3,6 +3,7 @@ package com.greedy.dduckleaf.projectreport.find.entity;
 import javax.persistence.*;
 import java.sql.Date;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -10,6 +11,7 @@ import lombok.*;
 @Getter
 @Entity(name = "ProjectReport")
 @Table(name = "TBL_PROJECT_REPORT")
+@DynamicInsert
 public class ProjectReport {
 
     @Id
@@ -35,20 +37,20 @@ public class ProjectReport {
     @Column(name = "REPORTER_NAME")
     private String reporterName;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "MEMBER_NO")
     private Member member;
 
-    @Transient
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "FARMER_NO")
-    private FarmerInfo farmer;
+//    @Transient
+//    @OneToOne(cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "FARMER_NO")
+//    private FarmerInfo farmer;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_REPORT_CATEGORY_NO")
     private ReportCategory reportCategory;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_NO")
     private Project project;
 
@@ -69,7 +71,7 @@ public class ProjectReport {
                 ", reporterEmail='" + reporterEmail + '\'' +
                 ", reporterName='" + reporterName + '\'' +
                 ", member=" + member +
-                ", farmer=" + farmer +
+//                ", farmer=" + farmer +
                 ", reportCategory=" + reportCategory +
                 ", project=" + project +
                 ", projectReportStatus='" + projectReportStatus + '\'' +
