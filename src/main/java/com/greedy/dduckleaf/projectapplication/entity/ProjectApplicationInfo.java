@@ -26,26 +26,27 @@ public class ProjectApplicationInfo {
 
     @JoinColumn(name = "PROJECT_BASIC_INFO_NO")
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private ProjectBasicInfo projectBasicInfoNo;             //기본 정보 번호
+    private ProjectBasicInfo projectBasicInfo;             //기본 정보 번호
 
     @JoinColumn(name = "PROJECT_SHIPPING_INFO_NO")
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private ProjectShippingInfo projectShippingInfoNo;          //발송 정보 번호
+    private ProjectShippingInfo projectShippingInfo;          //발송 정보 번호
 
     @JoinColumn(name = "REWARD_REGIST_INFO_NO")
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private RewardRegistInfo rewardRegistInfoNo;             //리워드 등록 정보 번호
+    private RewardRegistInfo rewardRegistInfo;             //리워드 등록 정보 번호
 
     @JoinColumn(name = "REFUND_POLICY_NO")
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private RefundPolicy refundPolicyNo;                 //환불 정책 번호
+    private RefundPolicy refundPolicy;                 //환불 정책 번호
 
     @JoinColumn(name = "PROJECT_NO")
     @ManyToOne(cascade = CascadeType.PERSIST)
-    private Project projectNo;
+    private Project project;
 
-    @Column(name = "MEMBER_NO")
-    private int memberNo;
+    @JoinColumn(name = "MEMBER_NO")
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private FarmerInfo farmer;
 
 //    @ManyToOne(cascade = CascadeType.PERSIST)
 //    private FarmerFinancialInfo farmer;
@@ -55,19 +56,19 @@ public class ProjectApplicationInfo {
         return "ProjectApplicationInfo{" +
                 "projectApplicationNo=" + projectApplicationNo +
                 ", projectApplicationCategory='" + projectApplicationCategory + '\'' +
-                ", projectBasicInfoNo=" + projectBasicInfoNo +
-                ", projectShippingInfoNo=" + projectShippingInfoNo +
-                ", rewardRegistInfoNo=" + rewardRegistInfoNo +
-                ", refundPolicyNo=" + refundPolicyNo +
-                ", projectNo=" + projectNo +
-                ", memberNo=" + memberNo +
+                ", projectBasicInfo=" + projectBasicInfo +
+                ", projectShippingInfo=" + projectShippingInfo +
+                ", rewardRegistInfo=" + rewardRegistInfo +
+                ", refundPolicy=" + refundPolicy +
+                ", project=" + project +
+                ", farmer=" + farmer +
                 '}';
     }
 
     @PrePersist
     public void prePersist() {
 
-        this.projectApplicationCategory = this.projectApplicationCategory  == null ? "구분" : this.projectApplicationCategory ;
+        this.projectApplicationCategory = this.projectApplicationCategory  == null ? "심사대기중" : this.projectApplicationCategory ;
 
     }
 }

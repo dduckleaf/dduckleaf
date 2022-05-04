@@ -38,13 +38,14 @@
     </div>
     <div class="row" style="margin-top: 70px">
         <th:block th:each="mockFundList : ${mockFundList}">
+            <input type="hidden" class="mockNo" th:value="${mockFundList.mockFundNo}">
             <div class="col-3 project-list-box">
                 <div class="product-img img-zoom-effect">
-                    <a href="single-product.html">
+                    <a class="mockdetail" th:href="'/mockfunding/detail/' + @{${mockFundList.mockFundNo}}">
                         <img class="img-full mainimg" src="/images/main/mushroom.png" alt="Product Images">
                     </a>
                 </div>
-                <div class="product-content" th:onclick="location.href=@{/mockfunding/detail/}|">
+                <div class="product-content">
                     <a class="product-name" href="single-product.html" th:text="${ mockFundList.mockFundName }"></a>
                     <div class="price-box pb-1">
                         <span class="new-price">[[${mockFundList.farmer.memberName}]]</span>

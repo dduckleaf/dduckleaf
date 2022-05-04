@@ -1,12 +1,14 @@
 package com.greedy.dduckleaf.projectreport.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
+import com.greedy.dduckleaf.common.exception.ProjectReport.ReportRegistException;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.common.utility.DateFormatting;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportReplyDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ReportDetailInfo;
+import com.greedy.dduckleaf.common.utility.PolicyName;
+import com.greedy.dduckleaf.projectreport.find.dto.*;
 import com.greedy.dduckleaf.projectreport.find.service.ProjectReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.sql.Date;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -39,8 +41,11 @@ import java.util.List;
  * 2022/04/28 (장민주) registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 메소드 작성.
  *                    registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 리팩토링.
  * 2022/04/28 (장민주) findProjectReportWaitingList 메소드 작성.
+ * 2022/04/28 (장민주) findProjectReportWaitingList 메소드 리팩토링.
+ *                    -> findProjectsByProjectReportStatus 로 변경.
+ * 2022/05/04 (장민주) registProjectReport 메소드 작성.
  * </pre>
- * @version 1.0.4
+ * @version 1.0.8
  * @author 장민주
  */
 @Controller
@@ -49,9 +54,11 @@ public class ProjectReportController {
 
     @Autowired
     private final ProjectReportService service;
+    private final ObjectMapper mapper;
 
-    public ProjectReportController(ProjectReportService service) {
+    public ProjectReportController(ProjectReportService service, ObjectMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     /**
@@ -114,25 +121,29 @@ public class ProjectReportController {
 
         mv.addObject("projectReportList", projectReportList);
         mv.addObject("pagingInfo", pagingInfo);
+        mv.addObject("intent", "listAll");
+
         mv.setViewName("report/platformmanager/list");
 
         return mv;
     }
 
     /**
-     * findAllProjectReportList: 답변 대기 중인 프로젝트 신고내역 조회 요청 메소드입니다.
+     * findProjectsByProjectReportStatus: 신고 처리 상태에 따른 프로젝트 신고내역 조회 요청 메소드입니다.
      * @return mv 프로젝트신고 목록, 프로젝트신고 목록이 출력될 화면 경로
      */
-    @GetMapping("/platformmanager/waitingList")
-    public ModelAndView findProjectReportWaitingList(ModelAndView mv,
+    @GetMapping("/platformmanager/{projectReportStatus}")
+    public ModelAndView findProjectsByProjectReportStatus(ModelAndView mv, @PathVariable String projectReportStatus,
         @PageableDefault(size=10, sort="projectReportNo", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        Page<ProjectReportDTO> projectReportList = service.findProjectReportWaitingList(pageable);
+        Page<ProjectReportDTO> projectReportList = service.findProjectsByProjectReportStatus(pageable, projectReportStatus);
 
         PagingButtonInfo pagingInfo = Pagenation.getPagingButtonInfo(projectReportList);
 
         mv.addObject("projectReportList", projectReportList);
         mv.addObject("pagingInfo", pagingInfo);
+        mv.addObject("intent", projectReportStatus);
+
         mv.setViewName("report/platformmanager/list");
 
         return mv;
@@ -252,4 +263,81 @@ public class ProjectReportController {
 
         return mv;
     }
+
+    /**
+     * findAllReportCategories: 프로젝트 신고유형 조회를 요청하는 메소드입니다.
+     * @return 모든 신고유형 목록
+     * @author 장민주
+     */
+    @GetMapping(value = "/categories", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String findAllReportCategories() throws JsonProcessingException {
+
+        List<ReportCategoryDTO> reportCategories = service.findAllReportCategories();
+
+        /* json 문자열로 parsing 하여 반환 */
+        return mapper.writeValueAsString(reportCategories);
+    }
+
+    /**
+     * findPolicyContents: 약관 상세내용 조회를 요청하는 메소드입니다.
+     * @return 약관 상세내용
+     * @author 장민주
+     */
+    @GetMapping(value = "/policies", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String findPolicyContents() throws JsonProcessingException {
+        /* 정책명 호출 */
+        String policyName = PolicyName.POLICY_NAME_개인정보_수집_및_이용;
+
+        List<PolicyContentDTO> policyContents = service.findPolicyContents(policyName);
+
+        /* json 문자열로 parsing 하여 반환 */
+        return mapper.writeValueAsString(policyContents);
+    }
+
+    /**
+     * registProjectReport: 프로젝트 신고 등록을 요청하는 메소드입니다.
+     * @param projectReport: 프로젝트 신고 상세내용
+     * @param projectNo: 프로젝트 번호
+     * @param reportCategoryNo: 프로젝트 신고유형 번호
+     * @param user: 로그인한 사용자 정보
+     * @param rttr: 등록 성공 시 전송할 일회성 메시지 data를 담은 객체
+     * @return
+     * @author 장민주
+     */
+    @PostMapping("/regist/{projectNo}/{reportCategoryNo}")
+    public ModelAndView registProjectReport(ModelAndView mv, @ModelAttribute ProjectReportDTO projectReport,
+                                    @PathVariable int projectNo, @PathVariable int reportCategoryNo,
+                                    @AuthenticationPrincipal CustomUser user, RedirectAttributes rttr) throws ReportRegistException {
+
+        /* 신고자 정보를 담을 MemberDTO 객체 생성 후 로그인 정보에서 회원번호를 호출하여 set */
+        MemberDTO member = new MemberDTO();
+        member.setMemberNo(user.getMemberNo());
+
+        /* 프로젝트 정보를 담을 ProjectDTO 객체 생성 후 파라미터로 받은 프로젝트번호를 set */
+        ProjectDTO project = new ProjectDTO();
+        project.setProjectNo(projectNo);
+
+        /* 신고유형 정보를 담을 ReportCategoryDTO 객체 생성 후 파라미터로 받은 신고유형번호를 set */
+        ReportCategoryDTO category = new ReportCategoryDTO();
+        category.setReportCategoryNo(reportCategoryNo);
+
+        /* 등록일 데이터를 생성 후 set */
+        projectReport.setProjectReportDate(DateFormatting.getDateAndTime());
+
+        /* projectReport에 필요한 나머지 데이터를 차례로 set */
+        projectReport.setProject(project);
+        projectReport.setReportCategory(category);
+        projectReport.setMember(member);
+
+        service.registProjectReport(projectReport);
+
+        rttr.addFlashAttribute("registSuccessMessage", "신고 등록이 완료되었습니다.");
+        mv.setViewName("redirect:/project/projectdetail/" + projectNo);
+
+        return mv;
+    }
+
+
 }

@@ -27,10 +27,16 @@
   <!-- Style CSS -->
   <link rel="stylesheet" th:href="@{ /css/style.css }">
   <link rel="stylesheet" th:href="@{ /css/project.css }">
+  <link rel="stylesheet" th:href="@{ /css/report.css }">
+
   <!-- 신기한 모달 -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-
+<script>
+  /* 신고 등록 성공 메시지 */
+  const registSuccessMessage = "[[${ registSuccessMessage }]]";
+  registSuccessMessage && alert(registSuccessMessage);
+</script>
 <body>
 <div class="main-wrapper">
   <div th:replace="@{ /common/menubar.html }"></div>
@@ -85,11 +91,15 @@
                   </div><br>
                   <ul class="quantity-with-btn pb-7">
                     <li class="add-to-cart">
-                      <button class="basic-btn btn3 btn-fill-white rounded-1">프로젝트에 문제를 발견하셨나요? 신고하기
+                      <button class="basic-btn btn3 btn-fill-white rounded-1" id="registReport">프로젝트에 문제를 발견하셨나요? 신고하기
                         <img src="/images/common/rightarrow.png" alt="Product Image">
                       </button>
                     </li>
                   </ul>
+                </div>
+                <!-- 프로젝트 신고 등록 modal -->
+                <div class="focusout" style="display: none;">
+                  <div th:replace="/report/regist.html"></div>
                 </div>
               </div>
             </div>
@@ -362,7 +372,9 @@
 </div>
 </main>
 <!-- Main Content Area End Here  -->
-
+<th:block sec:authorize="isAuthenticated()">
+  <input type="hidden" sec:authentication="principal.memberName" id="loginMember">
+</th:block>
 <!-- Begin Scroll To Top -->
 <a class="scroll-to-top" href="">
   <i class="fa fa-chevron-up"></i>
@@ -379,7 +391,7 @@
 
 <!-- Vendor JS -->
 <script>
-  
+  /* 비회원 상태의 사용자가 펀딩하기를 시도할 경우 */
   const $cannot = document.getElementById("cannot-funding");
   if($cannot) {
     $cannot.onclick = async function() {
@@ -387,11 +399,9 @@
       $cannot.location.href = "/member/login";
       alert(1);
     }
-    
-    
   }
   
-  
+  /* 프로젝트 번호로 펀딩 요청 */
   const $funding = document.getElementById("funding");
   if($funding) {
     $funding.onclick = function() {
@@ -399,6 +409,118 @@
       location.href = url;
     }
   }
+
+  /* 프로젝트 신고 등록용 모달 */
+  const $registReport = document.getElementById("registReport");
+  if($registReport) {
+    $registReport.onclick = function () {
+      /* 비회원 상태로 신고하기를 클릭하는 경우, 로그인이 필요한 서비스임을 안내 */
+      const $loginMember = $("#loginMember").val();
+
+      if($loginMember == null) {
+        Swal.fire({
+          title: "로그인이 필요한 서비스입니다.",
+          confirmButtonText: "확인",
+          allowEnterKey: false,
+          customClass: {
+            title: "swal-content",
+            confirmButton: "swal-btn",
+            popup: "swal-area"
+          }
+        })
+      }
+
+      /* 로그인한 회원의 접근 */
+      if($loginMember != null) {
+        fetch("/report/categories")
+        .then(response => response.json())
+        .then(response => {
+          const $category = $(".appendArea");
+          $category.html("");
+
+          for (let i in response) {
+            /* element 생성하여 모달 영역 안에 append */
+            const $div = $("<div class='block'>");
+            const $span = $("<span style='font-weight: bold'>");
+            const $p = $("<p>");
+            const $hidden = $("<input type='hidden' name='reportCategoryNo'>");
+            const $button = $("<input name='selectCategory' type='button' class='basic-btn small-btn btn3 popup-btn' value='선택'>");
+
+            $span.text(response[i].reportCategoryName);
+            $p.text(response[i].reportCategoryContent);
+            $hidden.val(response[i].reportCategoryNo);
+
+            $div.append($span);
+            $div.append($p);
+            $div.append($hidden);
+            $div.append($button);
+
+            $category.append($div);
+          }
+          document.querySelector('.focusout').style.display = 'block';
+
+        /* 신고유형 선택 시 신고서 작성화면 표시 */
+        var selectCategory = document.getElementsByName("selectCategory");
+
+        for(let i = 0; i < selectCategory.length; i++) {
+          if(selectCategory[i]) {
+
+            selectCategory[i].onclick = function() {
+              document.querySelector('.appendArea').style.display = 'none';
+              document.querySelector('.registArea').style.display = 'block';
+
+              $("[name=projectReportCategoryNo]").val(response[i].reportCategoryNo);
+              $("[name=projectNo]").val('[[${ project.projectNo }]]');
+              $("[name=reportCategoryName]").val(response[i].reportCategoryName);
+
+              fetch("/report/policies")
+              .then(response => response.json())
+              .then(response => {
+                const $policyArea = $(".policyArea");
+                $policyArea.html("");
+
+                const $policyName = $("<p class='policyContent'>");
+                $policyName.text(response[0].policy.policyName);
+
+                for (let i in response) {
+                  /* element 생성하여 모달 영역 안에 append */
+                  const $title = $("<span class='policyContent'>");
+                  const $detail = $("<span class='policyContent'>");
+                  const colon = $("<span class='policyContent'>");
+                  const nextLine = $("<br>");
+
+                  $title.text(response[i].policyContentTitle);
+                  $detail.text(response[i].policyContentDetailContent);
+                  colon.text(": ");
+
+                  $policyArea.append($title);
+                  $policyArea.append(colon);
+                  $policyArea.append($detail);
+                  $policyArea.append(nextLine);
+                }
+              })
+              .catch(err => {
+                console.log(err);
+              });
+              }
+            }
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      }
+    }
+  }
+
+  /* 모달창 닫기 */
+  function offclick() {
+    document.querySelector('.focusout').style.display = 'none';
+    document.querySelector('.appendArea').style.display = 'block';
+    document.querySelector('.registArea').style.display = 'none';
+  }
+  document.getElementById('exit').addEventListener('click', offclick);
+  document.getElementById('popup-cancel').addEventListener('click', offclick);
 </script>
 <script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
 <script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>

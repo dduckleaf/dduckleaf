@@ -28,14 +28,14 @@
                     <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/mockfund/sidebararrow.png }"></p>
                 </button>
                 <div class="panel">
-                    <p onclick="location.href='../basicinfo/1'">기본정보</p>
-                    <p onclick="location.href='../story/1'">스토리 작성</p>
-                    <p onclick="location.href='../reward/1'">리워드 설계</p>
+                    <p onclick="location.href='../basicinfo'">기본정보</p>
+                    <p onclick="location.href='../story'">스토리 작성</p>
+                    <p onclick="location.href='../reward'">리워드 설계</p>
                 </div>
             </div>
             <div class="col-md-7">
                 <div class="breadcrumb">
-                    <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">모의펀딩 준비</span>&nbsp;
+                    <span class="breadcrumb home" onclick="location.href='../../mockfund/mockfundmain'">모의펀딩 준비</span>&nbsp;
                     <span class="breadcrumb">></span>&nbsp;
                     <span class="breadcrumb">스토리 작성</span>
                 </div>
@@ -47,7 +47,7 @@
                     <img class="basicimg" th:src="@{/images/mockfund/basicimg.png}"><br>
                     <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
                         해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
-                    <input name="mockFundInfoNo" type="hidden" value="1">
+                    <input name="mockFundInfoNo" type="hidden" th:value="${ info.mockFundInfoNo }">
                 </div>
                 <div class="basicmenu">
                     <a class="basictitle">프로젝트 요약</a><br>

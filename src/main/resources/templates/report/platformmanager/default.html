@@ -15,10 +15,31 @@
             </div>
             <div class="box">
                 <button class="basic-btn btn1" id="find-all" onclick="location.href='/report/platformmanager/listAll'">전체 신고목록</button>
-                <button class="basic-btn btn1" id="reply-waiting" onclick="location.href='/report/platformmanager/waitingList'">처리 대기중</button>
-                <button class="basic-btn btn1" id="reply-complete" onclick="location.href='/report/platformmanager/repliedList'">처리 완료</button>
+                <button class="basic-btn btn1" id="reply-waiting">처리 대기중</button>
+                <button class="basic-btn btn1" id="reply-complete">처리 완료</button>
             </div>
         </div>
     </main>
 </body>
+<script>
+    const waiting = document.getElementById("reply-waiting");
+    const complete = document.getElementById("reply-complete");
+
+    /* 신고 답변 대기 중인 프로젝트 목록 조회 요청 */
+    if(waiting) {
+        waiting.onclick = function() {
+            const projectReportStatus = "미답변";
+            location.href = "/report/platformmanager/" + projectReportStatus;
+        }
+    }
+
+    /* 신고 답변 완료 프로젝트 목록 조회 요청 */
+    if(complete) {
+        complete.onclick = function() {
+            const projectReportStatus = "답변완료";
+            location.href = "/report/platformmanager/" + projectReportStatus;
+        }
+    }
+</script>
+
 </html>

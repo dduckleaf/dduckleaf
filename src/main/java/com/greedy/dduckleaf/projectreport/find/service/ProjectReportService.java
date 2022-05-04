@@ -1,10 +1,9 @@
 package com.greedy.dduckleaf.projectreport.find.service;
 
+import com.greedy.dduckleaf.common.exception.ProjectReport.ReportRegistException;
 import com.greedy.dduckleaf.projectreport.find.dto.*;
 import com.greedy.dduckleaf.projectreport.find.entity.*;
-import com.greedy.dduckleaf.projectreport.find.repository.MemberForProjectReportRepository;
-import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportReplyRepository;
-import com.greedy.dduckleaf.projectreport.find.repository.ProjectReportMainRepository;
+import com.greedy.dduckleaf.projectreport.find.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,10 +33,13 @@ import java.util.stream.Collectors;
  *                    registReply 서비스메소드 작성
  * 2022-04-27 (장민주) findProjectReportListOfOneProject 서비스메소드 작성
  * 2022-04-28 (장민주) findProjectReportWaitingList 서비스메소드 작성
+ * 2022-05-02 (장민주) findAllReportCategories 서비스메소드 작성
+ * 2022-05-03 (장민주) findPolicyContents 서비스메소드 작성
+ * 2022-05-04 (장민주) registProjectReport 서비스메소드 작성
  * </pre>
  *
  * @author 장민주
- * @version 1.0.4
+ * @version 1.0.8
  */
 @Service
 public class ProjectReportService {
@@ -44,14 +47,28 @@ public class ProjectReportService {
     private final MemberForProjectReportRepository memberRepository;
     private final ProjectReportMainRepository reportRepository;
     private final ProjectReportReplyRepository replyRepository;
+    private final ReportCategoryRepository reportCategoryRepository;
+    private final PolicyContentForProjectReportRepository policyContentRepository;
+    private final PolicyForProjectReportRepository policyRepository;
     private final ModelMapper modelMapper;
 
+    private final EntityManager entityManager;
+
     @Autowired
-    public ProjectReportService(MemberForProjectReportRepository memberRepository, ProjectReportMainRepository reportRepository, ProjectReportReplyRepository replyRepository, ModelMapper modelMapper) {
+    public ProjectReportService(MemberForProjectReportRepository memberRepository,
+                                ProjectReportMainRepository reportRepository,
+                                ProjectReportReplyRepository replyRepository,
+                                ReportCategoryRepository reportCategoryRepository,
+                                PolicyContentForProjectReportRepository policyContentRepository,
+                                PolicyForProjectReportRepository policyRepository, ModelMapper modelMapper, EntityManager entityManager) {
         this.memberRepository = memberRepository;
         this.reportRepository = reportRepository;
         this.replyRepository = replyRepository;
+        this.reportCategoryRepository = reportCategoryRepository;
+        this.policyContentRepository = policyContentRepository;
+        this.policyRepository = policyRepository;
         this.modelMapper = modelMapper;
+        this.entityManager = entityManager;
     }
 
     /**
@@ -121,19 +138,17 @@ public class ProjectReportService {
     }
 
     /**
-     * findProjectReportWaitingList: 신고 답변 대기 중인 프로젝트 신고내역 목록 조회를 요청하는 메소드입니다.
+     * findProjectReportWaitingList: 신고 처리 상태에 따라 프로젝트 신고내역 목록 조회를 요청하는 메소드입니다.
      * @param pageable: 페이징에 필요한 정보를 담는 객체
+     * @param projectReportStatus: 프로젝트 신고 처리 상태
      * @return Page<ProjectReportDTO> 페이징 처리가 된 조회 결과를 DTO로 변환한 프로젝트신고목록
      * @author 장민주
      */
-    public Page<ProjectReportDTO> findProjectReportWaitingList(Pageable pageable) {
+    public Page<ProjectReportDTO> findProjectsByProjectReportStatus(Pageable pageable, String projectReportStatus) {
         /* 페이징 정보 */
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
                 Sort.by("projectReportNo").descending());
-
-        /* 프로젝트신고 처리 상태 */
-        String projectReportStatus = "미답변";
 
         return reportRepository.findByProjectReportStatus(projectReportStatus, pageable).map(
                 projectReport -> modelMapper.map(projectReport, ProjectReportDTO.class
@@ -218,4 +233,74 @@ public class ProjectReportService {
         return reportRepository.findByProject_ProjectNo(projectNo, pageable).map(projectReport ->
                 modelMapper.map(projectReport, ProjectReportDTO.class));
     }
+
+    /**
+     * findAllReportCategories: 모든 프로젝트 신고유형 목록 조회를 요청하는 메소드입니다.
+     * @return 프로젝트 신고유형 목록
+     * @author 장민주
+     */
+    public List<ReportCategoryDTO> findAllReportCategories() {
+
+        return reportCategoryRepository.findAll().stream().map(reportCategory ->
+                modelMapper.map(reportCategory, ReportCategoryDTO.class)).collect(Collectors.toList());
+    }
+
+    /**
+     * findPolicyContents: 약관 및 규정정책 번호로 약관 상세내용 조회 요청 메소드입니다.
+     * @param policyName: 약관 및 규정정책명
+     * @return 약관 상세내용
+     * @author 장민주
+     */
+    public List<PolicyContentDTO> findPolicyContents(String policyName) {
+        /* 조회하려는 약관의 식별번호 조회 */
+        int policyNo = findPolicyNo(policyName);
+
+        return policyContentRepository.findAllByPolicy_PolicyNo(policyNo).stream().map(policyContent ->
+                modelMapper.map(policyContent, PolicyContentDTO.class)).collect(Collectors.toList());
+    }
+
+    /**
+     * findPolicyNo: (내부연산 메소드) 약관 및 규정정책 식별번호 조회 요청 메소드입니다.
+     * @param policyName: 정책명
+     * @return 약관 및 규정정책 식별번호
+     * @author 장민주
+     */
+    private int findPolicyNo(String policyName) {
+
+        return policyRepository.findPolicyNo(policyName);
+    }
+
+    /**
+     * registProjectReport: 프로젝트 신고 등록 요청 메소드입니다.
+     * @param projectReport: 프로젝트 신고 상세내용
+     * @return 등록 성공 여부
+     * @author 장민주
+     */
+    @Transactional
+    public void registProjectReport(ProjectReportDTO projectReport) throws ReportRegistException {
+
+        /* 프로젝트번호로 영속성 컨텍스트에서 신고 대상 프로젝트 엔티티객체 찾기 */
+        Project project = entityManager.find(Project.class, projectReport.getProject().getProjectNo());
+
+        System.out.println("project = " + project);
+
+        /* 회원번호로 영속성 컨텍스트에서 신고 회원 엔티티객체 찾기 */
+        Member member = entityManager.find(Member.class, projectReport.getMember().getMemberNo());
+
+        System.out.println("member = " + member);
+
+        /* 신고유형번호로 영속성 컨텍스트에서 신고 유형 엔티티객체 찾기 */
+        ReportCategory category = entityManager.find(ReportCategory.class, projectReport.getReportCategory().getReportCategoryNo());
+
+        System.out.println("category = " + category);
+
+        ProjectReport newReport = modelMapper.map(projectReport, ProjectReport.class);
+        newReport.setProject(project);
+        newReport.setMember(member);
+        newReport.setReportCategory(category);
+
+        reportRepository.save(newReport);
+    }
+
+
 }

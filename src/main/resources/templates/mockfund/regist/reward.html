@@ -28,14 +28,14 @@
                         <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/mockfund/sidebararrow.png }"></p>
                     </button>
                     <div class="panel">
-                        <p onclick="location.href='../basicinfo/1'">기본정보</p>
-                        <p onclick="location.href='../story/1'">스토리 작성</p>
-                        <p onclick="location.href='../reward/1'">리워드 설계</p>
+                        <p onclick="location.href='../basicinfo'">기본정보</p>
+                        <p onclick="location.href='../story'">스토리 작성</p>
+                        <p onclick="location.href='../reward'">리워드 설계</p>
                     </div>
                 </div>
             <div class="col-md-7">
                 <div class="breadcrumb">
-                    <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">모의펀딩 준비</span>&nbsp;
+                    <span class="breadcrumb home" onclick="location.href='../../mockfund/mockfundmain'">모의펀딩 준비</span>&nbsp;
                     <span class="breadcrumb">></span>&nbsp;
                     <span class="breadcrumb">리워드설계</span>
                 </div>
@@ -43,12 +43,11 @@
                 <a>서포터에게 제공할 리워드 내용을 입력하세요.</a>
                 <div class="basicmenu">
                     <a class="basictitle">금액</a><br>
-                    <input name="mockFundRewardNo" type="hidden" value="1">
+                    <input name="mockFundRewardNo" type="hidden" th:value="${ reward.mockFundRewardNo }">
                     <input class="mockfundtitle1" id="rewardPrice" name="rewardPrice" type="number" th:value="${ reward.rewardPrice }">
                 </div>
                 <div class="basicmenu">
                     <a class="basictitle">리워드명</a><br>
-                    <input name="mockFundInfoNo" type="hidden" value="1">
                     <input class="mockfundtitle1" name="rewardName" type="text" th:value="${ reward.rewardName }">
                 </div>
                 <div class="basicmenu">

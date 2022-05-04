@@ -35,7 +35,7 @@ public class Faq {
     @Column(name = "FAQ_SUBTITLE")
     private String faqSubTitle;
 
-    @ManyToOne(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ADMIN_NO")
     private Member member;
 

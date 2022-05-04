@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MockFundRewardRepository extends JpaRepository<MockFundReward, Integer> {
+    MockFundReward findByMockFundMockFundNo(int mockFundNo);
 }

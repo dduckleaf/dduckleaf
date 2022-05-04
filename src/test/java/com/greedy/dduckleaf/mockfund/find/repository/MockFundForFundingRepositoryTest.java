@@ -46,5 +46,20 @@ class MockFundForFundingRepositoryTest {
             System.out.println("mockFund = " + mockFund);
         });
     }
+    
+    @Test
+    @DisplayName("모의펀딩 상세 조회")
+    public void findMockFundingDetailTest() {
+        
+        //given
+        int mockFundNo = 1;
+        
+        //when
+        MockFund mockFund = fundingRepository.findById(mockFundNo).get();
+        
+        //then
+        assertNotNull(mockFund);
+        System.out.println("mockFund = " + mockFund);
+    }
 
 }

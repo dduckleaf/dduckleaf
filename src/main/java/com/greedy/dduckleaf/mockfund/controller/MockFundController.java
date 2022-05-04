@@ -1,11 +1,13 @@
 package com.greedy.dduckleaf.mockfund.controller;
 
+import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.mockfund.dto.MockFundDTO;
 import com.greedy.dduckleaf.mockfund.dto.MockFundInfoDTO;
 import com.greedy.dduckleaf.mockfund.dto.MockFundRewardDTO;
 import com.greedy.dduckleaf.mockfund.dto.RewardCategoryDTO;
 import com.greedy.dduckleaf.mockfund.service.MockFundService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,23 +45,46 @@ public class MockFundController {
         this.mockFundService = mockFundService;
     }
 
-    @GetMapping("/basicinfo/{infoCode}")
-    public ModelAndView findMockFundInfoByCode(ModelAndView mv, @PathVariable int infoCode) {
+    @GetMapping("/mockfundmain")
+    public ModelAndView mockFundMainPage(ModelAndView mv) {
 
-        MockFundInfoDTO info = mockFundService.findMockFundInfoByCode(infoCode);
+        mv.setViewName("/mockfund/mockfundmain");
+
+        return mv;
+    }
+
+    public int findMockFundNoByFarmerNo(@AuthenticationPrincipal CustomUser user) {
+
+        int farmerNo = user.getMemberNo();
+
+        int mockFundNo = mockFundService.findMockFundNoByFarmerId(farmerNo);
+
+        return mockFundNo;
+    }
+
+    @GetMapping("/basicinfo")
+    public ModelAndView findMockFundInfoByCode(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+
+        int mockFundNo = findMockFundNoByFarmerNo(user);
+
+        MockFundInfoDTO info = mockFundService.findMockFundInfoByMockFundNo(mockFundNo);
         List<RewardCategoryDTO> categoryList = mockFundService.findRewardCategoryList();
+        List<MockFundDTO> mockFundList = mockFundService.findMockFundList();
 
         mv.addObject("info", info);
         mv.addObject("categoryList", categoryList);
+        mv.addObject("mockFundList", mockFundList);
         mv.setViewName("/mockfund/regist/basicinfo");
 
         return mv;
     }
 
-    @GetMapping("/story/{infoCode}")
-    public ModelAndView findStoryInfoByCode(ModelAndView mv, @PathVariable int infoCode) {
+    @GetMapping("/story")
+    public ModelAndView findStoryInfoByCode(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
 
-        MockFundInfoDTO info = mockFundService.findStoryInfoByCode(infoCode);
+        int mockFundNo = findMockFundNoByFarmerNo(user);
+
+        MockFundInfoDTO info = mockFundService.findStoryInfoByMockFundNo(mockFundNo);
 
         mv.addObject("info", info);
         mv.setViewName("/mockfund/regist/story");
@@ -67,10 +92,12 @@ public class MockFundController {
         return mv;
     }
 
-    @GetMapping("/reward/{rewardNo}")
-    public ModelAndView findRewardByCode(ModelAndView mv, @PathVariable int rewardNo) {
+    @GetMapping("/reward")
+    public ModelAndView findRewardByCode(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
 
-        MockFundRewardDTO reward = mockFundService.findRewardByCode(rewardNo);
+        int mockFundNo = findMockFundNoByFarmerNo(user);
+
+        MockFundRewardDTO reward = mockFundService.findRewardByMockFundNo(mockFundNo);
 
         mv.addObject("reward", reward);
         mv.setViewName("/mockfund/regist/reward");
@@ -93,57 +120,52 @@ public class MockFundController {
     public void modifyMockFundInfo() {}
 
     @PostMapping("/modify/basicinfo")
-    public String modifyMockFundBasicInfo(RedirectAttributes rttr, MockFundInfoDTO mockFundInfo) {
+    public ModelAndView modifyMockFundBasicInfo(ModelAndView mv, MockFundInfoDTO mockFundInfo) {
 
-        int memberNo = 3;
-        mockFundService.modifyBasicInfo(mockFundInfo, memberNo);
+        mockFundService.modifyBasicInfo(mockFundInfo);
 
-        rttr.addFlashAttribute("modifySuccessMessage", "기본정보 수정 성공");
+        mv.setViewName("redirect:/mockfund/mockfundmain");
 
-        return "redirect:/mockfund/" + mockFundInfo.getMockFundInfoNo();
+        return mv;
     }
 
     @GetMapping("/agreement")
     public void modifyAgreement() {}
 
     @PostMapping("/agreement")
-    public String modifyMockFundAgreementStatus(RedirectAttributes rttr) {
-        System.out.println("=============");
-        /* session에 있는 memberNo 받아와서 넘겨줘야함 */
-        int memberNo = 3;
-        int infoNo = mockFundService.modifyAgreementStatus(memberNo);
+    public ModelAndView modifyMockFundAgreementStatus(ModelAndView mv, MockFundInfoDTO mockFundInfo) {
 
-        rttr.addFlashAttribute("modifySuccessMessage", "동의 성공");
+        mockFundService.modifyAgreementStatus(mockFundInfo);
 
-        return "redirect:/mockfund/story/" + infoNo;
+        mv.setViewName("redirect:/mockfund/story");
+
+        return mv;
     }
 
     @GetMapping("/modify/story")
     public void modifyStory() {}
 
     @PostMapping("/modify/story")
-    public String modifyMockFundStory(RedirectAttributes rttr, MockFundInfoDTO mockFundInfo) {
+    public ModelAndView modifyMockFundStory(ModelAndView mv, MockFundInfoDTO mockFundInfo) {
 
-        int memberNo = 3;
-        mockFundService.modifyStory(mockFundInfo, memberNo);
+        mockFundService.modifyStory(mockFundInfo);
 
-        rttr.addFlashAttribute("modifySuccessMessage", "스토리 수정 성공");
+        mv.setViewName("redirect:/mockfund/mockfundmain");
 
-        return "redirect:/mockfund/" + mockFundInfo.getMockFundInfoNo();
+        return mv;
     }
 
     @GetMapping("/modify/reward")
     public void modifyReward() {}
 
     @PostMapping("/modify/reward")
-    public String modifyMockFundReward(RedirectAttributes rttr, MockFundRewardDTO mockFundReward) {
+    public ModelAndView modifyMockFundReward(ModelAndView mv, MockFundRewardDTO mockFundReward) {
 
-        int memberNo = 3;
-        mockFundService.modifyReward(mockFundReward, memberNo);
+        mockFundService.modifyReward(mockFundReward);
 
-        rttr.addFlashAttribute("modifySuccessMessage", "리워드 수정 성공");
+        mv.setViewName("redirect:/mockfund/mockfundmain");
 
-        return "redirect:/mockfund/" + mockFundReward.getMockFundRewardNo();
+        return mv;
     }
 
 }

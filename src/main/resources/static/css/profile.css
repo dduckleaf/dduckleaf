@@ -14,14 +14,13 @@
     position: relative;
     left: 29%;
     border-radius: 100px;
-    border: 1px solid red;
     width: 200px;
     height: 200px;
     margin-top: 10px;
     margin-bottom: 20px;
 }
 #changeImg {
-    margin-left: 168px;
+    margin-left: 120px;
     text-decoration: underline;
     cursor: pointer;
     float: left;
@@ -174,3 +173,40 @@ label {
     height: 40px;
     border-bottom-color: #BAC34E;
 }
+.swal2-title {
+    font-family: inherit !important;
+    font-weight: normal;
+    padding-top: 30px !important;
+    font-size: 15pt !important;
+}
+.savecancel {
+    background-color: #BAC34E !important;
+    color: #ffffff !important;
+    border: 1px solid #BAC34E !important;
+    width: 100px !important;
+    height: 40px;
+    margin-right: 3px;
+    border-radius: 5px;
+}
+#save {
+    width: 220px;
+    height: 50px;
+    background: #BAC34E;
+    color: white;
+    float: left;
+    border-radius: 5px;
+    border: none;
+    margin-top: 20px;
+}
+#cancel {
+    width: 220px;
+    height: 50px;
+    background: white;
+    color: #BAC34E;
+    border-radius: 5px;
+    border: 1px solid #BAC34E;
+    float: left;
+    margin-top: 20px;
+}
+
+

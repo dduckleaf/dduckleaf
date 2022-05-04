@@ -34,4 +34,16 @@ public class ShippingAddress {
 
     @Column(name = "SHIPPING_REQUIRE")
     private String shippingRequire;
+
+    @Override
+    public String toString() {
+        return "ShippingAddress{" +
+                "shippingAddresNo=" + shippingAddresNo +
+                ", memberNo=" + memberNo +
+                ", shippingAddress='" + shippingAddress + '\'' +
+                ", memberName='" + memberName + '\'' +
+                ", memberPhone='" + memberPhone + '\'' +
+                ", shippingRequire='" + shippingRequire + '\'' +
+                '}';
+    }
 }

@@ -2,10 +2,10 @@ package com.greedy.dduckleaf.projectreport.find.service;
 
 import com.greedy.dduckleaf.common.utility.DateFormatting;
 import com.greedy.dduckleaf.config.*;
-import com.greedy.dduckleaf.projectreport.find.dto.MemberDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportReplyDTO;
-import com.greedy.dduckleaf.projectreport.find.dto.ReportDetailInfo;
+import com.greedy.dduckleaf.projectreport.find.dto.*;
+import com.greedy.dduckleaf.projectreport.find.entity.Member;
+import com.greedy.dduckleaf.projectreport.find.entity.Project;
+import com.greedy.dduckleaf.projectreport.find.entity.ReportCategory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -16,8 +16,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import java.sql.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,12 +35,17 @@ public class ProjectReportServiceTests {
     @Autowired
     private ProjectReportService service;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
+
     @Autowired
     private ModelMapper modelMapper;
 
     @Test
     public void initTest() {
         assertNotNull(service);
+        assertNotNull(entityManager);
         assertNotNull(modelMapper);
     }
 
@@ -79,9 +85,28 @@ public class ProjectReportServiceTests {
     public void findProjectReportWaitingList_test() {
         //given
         Pageable pageable = PageRequest.of(0, 10, Sort.by("projectReportNo").descending());
+        String projectReportStatus = "미답변";
 
         //when
-        Page<ProjectReportDTO> projectReportList = service.findProjectReportWaitingList(pageable);
+        Page<ProjectReportDTO> projectReportList = service.findProjectsByProjectReportStatus(pageable, projectReportStatus);
+
+        //then
+        assertNotNull(projectReportList);
+        projectReportList.forEach(report -> {
+            assertEquals(report.getClass(), ProjectReportDTO.class);
+        });
+        projectReportList.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("신고 답변 완료 프로젝트 신고목록 조회")
+    public void findProjectReportRepliedList_test() {
+        //given
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("projectReportNo").descending());
+        String projectReportStatus = "답변완료";
+
+        //when
+        Page<ProjectReportDTO> projectReportList = service.findProjectsByProjectReportStatus(pageable, projectReportStatus);
 
         //then
         assertNotNull(projectReportList);
@@ -202,4 +227,108 @@ public class ProjectReportServiceTests {
         assertNotNull(reportList);
         reportList.forEach(System.out::println);
     }
+
+    @Test
+    @DisplayName("모든 프로젝트 신고유형 조회 테스트")
+    public void findAllReportCategories_test() {
+        //when
+        List<ReportCategoryDTO> categories = service.findAllReportCategories();
+
+        //then
+        assertNotNull(categories);
+        for(ReportCategoryDTO category : categories) {
+            assertEquals(category.getClass(), ReportCategoryDTO.class);
+        }
+        categories.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("개인정보 수집 및 이용동의 약관 조회 요청 테스트")
+    public void findPolicyContents_test() {
+        //given
+        String policyName = "개인정보 수집 및 이용";
+
+        //when
+        List<PolicyContentDTO> policyContents = service.findPolicyContents(policyName);
+
+        //then
+        assertNotNull(policyContents);
+        policyContents.forEach(policyContent -> {
+            assertEquals(policyContent.getClass(), PolicyContentDTO.class);
+        });
+        policyContents.forEach(System.out::println);
+    }
+    
+//    @Test
+//    @DisplayName("내부연산 : 약관 및 규정정책 식별번호 조회 테스트")
+//    public void findPolicyNo_test() {
+//        //given
+//        String policyName = "개인정보 수집 및 이용";
+//
+//        //when
+//        int policyNo = service.findPolicyNo(policyName);
+//
+//        //then
+//        assertNotNull(policyNo);
+//        System.out.println("policyNo = " + policyNo);
+//    }
+
+    @Test
+    @DisplayName("프로젝트 신고 등록 성공 테스트")
+    public void registProjectReport_success_test() {
+
+        //given
+        MemberDTO member = new MemberDTO();
+        member.setMemberNo(3);
+
+        ProjectDTO project = new ProjectDTO();
+        project.setProjectNo(7);
+
+        ReportCategoryDTO category = new ReportCategoryDTO();
+        category.setReportCategoryNo(1);
+
+        ProjectReportDTO report = new ProjectReportDTO();
+        report.setMember(member);
+        report.setProject(project);
+        report.setReportCategory(category);
+        report.setProjectReportDate(DateFormatting.getDateAndTime());
+        report.setProjectReportContent("content");
+        report.setReportRefUrl("url");
+        report.setReporterName("name");
+        report.setReporterEmail("email");
+        report.setReporterPhone("phone");
+
+        //when & then
+        assertDoesNotThrow(() -> service.registProjectReport(report));
+    }
+
+    @Test
+    @DisplayName("프로젝트 신고 등록 실패 테스트")
+    public void registProjectReport_fail_test() {
+
+        //given
+        MemberDTO member = new MemberDTO();
+        member.setMemberNo(3);
+
+        ProjectDTO project = new ProjectDTO();
+        project.setProjectNo(7);
+
+        ReportCategoryDTO category = new ReportCategoryDTO();
+        category.setReportCategoryNo(1);
+
+        ProjectReportDTO report = new ProjectReportDTO();
+        report.setMember(member);
+        report.setProject(project);
+        report.setReportCategory(category);
+        report.setProjectReportDate(DateFormatting.getDateAndTime());
+//        report.setProjectReportContent("content");
+        report.setReportRefUrl("url");
+        report.setReporterName("name");
+        report.setReporterEmail("email");
+        report.setReporterPhone("phone");
+
+        //when & then
+        assertThrows(Exception.class, () -> service.registProjectReport(report));
+    }
+    
 }

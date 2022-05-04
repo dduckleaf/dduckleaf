@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface MockFundInfoRepository extends JpaRepository<MockFundInfo, Integer> {
 
+    MockFundInfo findByMockFundMockFundNo(int mockFundNo);
 }

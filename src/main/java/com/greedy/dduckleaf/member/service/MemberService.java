@@ -2,8 +2,13 @@ package com.greedy.dduckleaf.member.service;
 
 import com.greedy.dduckleaf.email.EmailSender;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
+import com.greedy.dduckleaf.member.dto.ProfileAttachmentDTO;
+import com.greedy.dduckleaf.member.entity.BasicProfileAttachment;
 import com.greedy.dduckleaf.member.entity.Member;
+import com.greedy.dduckleaf.member.entity.ProfileAttachment;
+import com.greedy.dduckleaf.member.repository.BasicProfileAttachmentForMemberRepository;
 import com.greedy.dduckleaf.member.repository.MemberRepository;
+import com.greedy.dduckleaf.member.repository.ProfileAttachmentForMemberRepository;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
@@ -14,7 +19,6 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * <pre>
@@ -27,8 +31,9 @@ import java.util.List;
  * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료, 회원 가입 관련 메소드 구현 완료
  * 2022/04/23 (박상범) 아이디 찾기 관련 메소드 구현 완료
  * 2022/04/24 (박상범) 비밀번호 찾기 관련 메소드 구현 완료
+ * 2022/05/04 (박상범) 회원 가입 관련 메소드 수정
  * </pre>
- * @version 1.0.7
+ * @version 1.0.8
  * @author 박상범
  * @see EmailSender
  * @see ModelMapper
@@ -38,12 +43,16 @@ public class MemberService{
 
     private final ModelMapper modelMapper;
     private final MemberRepository memberRepository;
+    private final BasicProfileAttachmentForMemberRepository basicProfileAttachmentForMemberRepository;
+    private final ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository;
     private final EmailSender emailSender;
 
     @Autowired
-    public MemberService(ModelMapper modelMapper, MemberRepository memberRepository, EmailSender emailSender) {
+    public MemberService(ModelMapper modelMapper, MemberRepository memberRepository, BasicProfileAttachmentForMemberRepository basicProfileAttachmentForMemberRepository, ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository, EmailSender emailSender) {
         this.modelMapper = modelMapper;
         this.memberRepository = memberRepository;
+        this.basicProfileAttachmentForMemberRepository = basicProfileAttachmentForMemberRepository;
+        this.profileAttachmentForMemberRepository = profileAttachmentForMemberRepository;
         this.emailSender = emailSender;
     }
  
@@ -142,6 +151,19 @@ public class MemberService{
      */
     @Transactional
     public void registMember(MemberDTO member) {
+
+        int basicProfileAttachmentNo = (int) ((Math.random() * 6) + 1);
+
+        BasicProfileAttachment basicProfileAttachment = basicProfileAttachmentForMemberRepository.findById(basicProfileAttachmentNo).get();
+
+        ProfileAttachmentDTO profileAttachment = new ProfileAttachmentDTO();
+        profileAttachment.setProfileSavedName(basicProfileAttachment.getProfileSavedName());
+        profileAttachment.setProfileOriginalName(basicProfileAttachment.getProfileOriginalName());
+        profileAttachment.setProfilePath(basicProfileAttachment.getProfilePath());
+        profileAttachment.setProfileThumbnailPath(basicProfileAttachment.getProfileThumbnailPath());
+        profileAttachment.setMemberNo(member.getMemberNo());
+
+        profileAttachmentForMemberRepository.save(modelMapper.map(profileAttachment, ProfileAttachment.class));
         memberRepository.save(modelMapper.map(member, Member.class));
     }
  

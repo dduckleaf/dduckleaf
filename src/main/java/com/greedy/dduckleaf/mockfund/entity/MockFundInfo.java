@@ -1,7 +1,6 @@
 package com.greedy.dduckleaf.mockfund.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 @Entity(name = "MockFundInfo")
 @Table(name = "TBL_MOCK_FUND_INFO")
@@ -15,7 +14,7 @@ public class MockFundInfo {
     private String mockFundName;
 
     @Column(name = "END_DATE")
-    private java.sql.Date endDate;
+    private String endDate;
 
     @Column(name = "MOCK_FUND_DETAIL")
     private String mockFundDetail;
@@ -27,7 +26,7 @@ public class MockFundInfo {
     private String mockFundAgreementStatus;
 
     @Column(name = "AGREEMENT_DATE")
-    private java.sql.Date agreementDate;
+    private String agreementDate;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "MOCK_FUND_NO")
@@ -39,7 +38,7 @@ public class MockFundInfo {
 
     public MockFundInfo() {}
 
-    public MockFundInfo(int mockFundInfoNo, String mockFundName, Date endDate, String mockFundDetail, int targetTicketAmount, String mockFundAgreementStatus, java.sql.Date agreementDate, MockFund mockFund, RewardCategory rewardCategory) {
+    public MockFundInfo(int mockFundInfoNo, String mockFundName, String endDate, String mockFundDetail, int targetTicketAmount, String mockFundAgreementStatus, String agreementDate, MockFund mockFund, RewardCategory rewardCategory) {
         this.mockFundInfoNo = mockFundInfoNo;
         this.mockFundName = mockFundName;
         this.endDate = endDate;
@@ -67,11 +66,11 @@ public class MockFundInfo {
         this.mockFundName = mockFundName;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
@@ -99,11 +98,11 @@ public class MockFundInfo {
         this.mockFundAgreementStatus = mockFundAgreementStatus;
     }
 
-    public Date getAgreementDate() {
+    public String getAgreementDate() {
         return agreementDate;
     }
 
-    public void setAgreementDate(Date agreementDate) {
+    public void setAgreementDate(String agreementDate) {
         this.agreementDate = agreementDate;
     }
 
