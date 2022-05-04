@@ -12,4 +12,5 @@ public class MemberDTO {
     private int memberNo;
     private String memberName;
     private String memberId;
+    private int memberRole;
 }

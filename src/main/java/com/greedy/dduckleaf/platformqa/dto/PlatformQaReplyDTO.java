@@ -1,6 +1,5 @@
 package com.greedy.dduckleaf.platformqa.dto;
 
-import com.greedy.dduckleaf.platformqa.entity.PlatformQa;
 import lombok.*;
 
 @NoArgsConstructor
@@ -12,9 +11,10 @@ public class PlatformQaReplyDTO {
 
     private int platformQaReplyNo;
     private String platformQaReplyContent;
-    private String platformQaRegistDate;
+    private String platformQaReplyRegistDate;
     private String platformQaReplyStatus;
     private int platformQaNo;
     private int adminNo;
     private PlatformQaDTO platformQa;
+    private MemberDTO member;
 }
