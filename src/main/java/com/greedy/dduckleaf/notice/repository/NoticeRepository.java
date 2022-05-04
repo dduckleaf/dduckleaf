@@ -2,6 +2,8 @@ package com.greedy.dduckleaf.notice.repository;
 
 import com.greedy.dduckleaf.notice.entity.Notice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
@@ -18,4 +20,9 @@ import java.util.List;
  * @author 차화응
  */
 public interface NoticeRepository extends JpaRepository<Notice, Integer> {
+
+    /* 조회수 갱신 */
+    @Modifying
+    @Query("update Notice notice set notice.noticeCount = notice.noticeCount + 1 where notice.noticeNo = :noticeNo")
+    int updateNoticeCount(int noticeNo);
 }

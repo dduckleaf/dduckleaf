@@ -105,6 +105,17 @@ public class NoticeService {
 //    }
 
     /**
+     * updateNoticeCount : 공지사항 조회수를 갱신합니다.
+     * @param noticeNo : 조회할 공지사항 번호
+     *
+     * @author 차화응
+     */
+    @Transactional
+    public int updateNoticeCount(int noticeNo) {
+        return noticeRepository.updateNoticeCount(noticeNo);
+    }
+
+    /**
      * findNoticeDetail : 공지사항 상세정보를 조회합니다.
      * @param noticeNo : 조회할 공지사항 번호
      *
