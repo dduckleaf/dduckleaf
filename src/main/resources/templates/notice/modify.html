@@ -69,8 +69,8 @@
                             <input type="hidden" name="noticeNo" th:value = "${ notice.noticeNo }">
                         </div>
                         <div class="btn-area">
-                            <button class="basic-btn medium-btn btn1" type="submit">수정</button>
-                            <button class="basic-btn medium-btn btn3">취소</button>
+                            <button class="basic-btn medium-btn btn1" type="submit">등록</button>
+                            <button class="basic-btn medium-btn btn3" type="button" th:onclick="window.history.back()">취소</button>
                         </div>
                     </form>
                 </div>
