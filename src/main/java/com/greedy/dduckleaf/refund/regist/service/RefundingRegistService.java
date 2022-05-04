@@ -8,6 +8,7 @@ import com.greedy.dduckleaf.refund.regist.entity.RefundingHistory;
 import com.greedy.dduckleaf.refund.regist.repository.FundingForRefundingRegistRepository;
 import com.greedy.dduckleaf.refund.regist.repository.ProjectForRefundingRegistRepository;
 import com.greedy.dduckleaf.refund.regist.repository.RefundingForRegistRepository;
+import com.greedy.dduckleaf.refund.regist.repository.RefundingHistoryForRefundRegistRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -31,25 +32,27 @@ public class RefundingRegistService {
     private final FundingForRefundingRegistRepository fundingRepo;
     private final RefundingForRegistRepository refundingRepo;
     private final ProjectForRefundingRegistRepository projectRepo;
+    private final RefundingHistoryForRefundRegistRepository historyRepo;
 
-    public RefundingRegistService(FundingForRefundingRegistRepository fundingRepo, RefundingForRegistRepository refundingRepo, ProjectForRefundingRegistRepository projectRepo) {
+    public RefundingRegistService(FundingForRefundingRegistRepository fundingRepo, RefundingForRegistRepository refundingRepo, ProjectForRefundingRegistRepository projectRepo, RefundingHistoryForRefundRegistRepository historyRepo) {
         this.fundingRepo = fundingRepo;
         this.refundingRepo = refundingRepo;
         this.projectRepo = projectRepo;
+        this.historyRepo = historyRepo;
+
     }
 
     @Transactional
     public void registRefunding(RefundingDTO refundingInfo) {
-        System.out.println("service print >>>>>>");
-        System.out.println("refundingInfo = " + refundingInfo);
         Refunding refunding = new Refunding();
         Funding fundingInfo = fundingRepo.findById(refundingInfo.getFundingInfoNo()).get();
         String date = getDateAndTime();
         refunding.setRefundingDate(date);
-        refunding.setRefundingCategoryNo(refunding.getRefundingCategoryNo());
+        refunding.setRefundingCategoryNo(refundingInfo.getRefundingCategoryNo());
         refunding.setRefundingReason(refundingInfo.getRefundingReason());
-        refunding.setRefundingStatus("신청");
+        refunding.setRefundingStatus("환불신청");
         refunding.setProjectNo(fundingInfo.getProjectNo());
+        refunding.setBankNo(refundingInfo.getBankNo());
         refunding.setRefundingAccount(fundingInfo.getRefundAccount());
         refunding.setRefundingMemberName(fundingInfo.getRefundName());
         refunding.setMemberNo(fundingInfo.getMemberNo());
@@ -63,12 +66,14 @@ public class RefundingRegistService {
 
         RefundingHistory history = new RefundingHistory();
         history.setRefundingHistoryDate(date);
-        history.setRefundingStatus("환불요청");
+        history.setRefundingStatus("환불신청");
         history.setHistoryCategory("신청");
         history.setRefundingAmount(fundingInfo.getFundingAmount());
         history.setRefundingHistoryCategory("환불신청");
         history.setRefundingInfoNo(refunding.getRefundingInfoNo());
         history.setRefundingMemberNo(project.getFarmer().getMemberNo());
+
+        historyRepo.save(history);
     }
 }
 

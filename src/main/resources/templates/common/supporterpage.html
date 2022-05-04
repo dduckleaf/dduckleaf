@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 
@@ -50,7 +51,8 @@
             <!-- 사이드바 -->
             <aside>
               <div>
-                <div class="member-icon" id="profile">상범</div>
+                <span style="display: none" id="profile-attachment" sec:authentication="principal.profileThumbnailPath"></span>
+                <img class="member-icon" id="profile">
                 <img th:src="@{/images/profile/profilemodify.png}" id="profile-modify">
                 <div class="member-name"><span>박상범</span>님</div>
                 <div class="logout-btn"><a th:href="@{/member/logout}">로그아웃</a></div>
@@ -91,11 +93,8 @@
 <!-- Global Vendor, plugins JS -->
 
 <script>
-  const profile = document.getElementById("profile")
-    if(profile) {
-      profile.onclick = function () {
-      location.href = "/thumbnail/regist";
-    }
+  window.onload = function() {
+      document.getElementById("profile").src = document.getElementById("profile-attachment").innerText;
   }
 
   const supporterpage = document.getElementById("supporterTab");

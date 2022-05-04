@@ -53,65 +53,40 @@
 							<th>환불상태</th>
 							<th>신청일</th>
 						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>1232</td>
-							<td>1232</td>
-							<td>1232</td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>1232</td>
-							<td>1232</td>
-							<td>1232</td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>1232</td>
-							<td>1232</td>
-							<td>1232</td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>1232</td>
-							<td>1232</td>
-							<td>1232</td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>1232</td>
-							<td>1232</td>
-							<td>1232</td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>1232</td>
-							<td>1232</td>
-							<td>1232</td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>1232</td>
-							<td>1232</td>
-							<td>1232</td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>1232</td>
-							<td>1232</td>
-							<td>1232</td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>1232</td>
-							<td>1232</td>
-							<td>1232</td>
+						<tr th:each="refunding : ${ refundings }" >
+							<td><input type="hidden" th:value="${refunding.refundingInfoNo}"></td>
+							<td th:text="${refunding.project.projectName}"></td>
+							<td th:text="${refunding.refundingStatus}"></td>
+							<td th:text="${refunding.refundingDate}"></td>
+							
 						</tr>
 					</table>
 				</div><br>
 			</div>
 			<div style="text-align: center; color:#ababab; font-size: 1.1em; font-weight: " >
-				<< < 1 2 3 4 5 > >>
+				<div id="pagination" class="pagenumbers" align="center">
+					<!-- 맨 앞으로 이동 -->
+					<button th:onclick="'location.href=\'/refund/find/member/list'+ '?page=' + @{${pagingInfo.startPage}} + '\''"
+					        th:disabled="${ refundings.first }" class="paging-btn first"><<</button>
+					
+					<!-- 이전 페이지로 이동 -->
+					<button th:onclick="'location.href=\'/refund/find/member/list' +'?page=' + @{${pagingInfo.currentPage - 1}} + '\''"
+					        th:disabled="${ refundings.first }" class="paging-btn prev"><</button>
+					
+					<!-- 숫자 버튼-->
+					<th:block th:each="page : ${#numbers.sequence(pagingInfo.startPage, pagingInfo.endPage)}">
+						<button th:onclick="'location.href=\'/refund/find/member/list' +'?page=' + @{${page}} + '\''"
+						        th:text="${ page }" th:disabled="${ pagingInfo.currentPage eq page}" class="paging-btn"></button>
+					</th:block>
+					
+					<!-- 다음 페이지로 이동 -->
+					<button th:onclick="'location.href=\'/refund/find/member/list' +'?page=' + @{${pagingInfo.currentPage + 1}} + '\''"
+					        th:disabled="${ refundings.last}" class="paging-btn next">></button>
+					
+					<!-- 맨 마지막으로 이동-->
+					<button th:onclick="'location.href=\'/refund/find/member/list' +'?page=' + @{${pagingInfo.endPage}} + '\''"
+					        th:disabled="${ refundings.last }" class="paging-btn last">>></button>
+				</div>
 			</div>
 		</div>
 	</div>
