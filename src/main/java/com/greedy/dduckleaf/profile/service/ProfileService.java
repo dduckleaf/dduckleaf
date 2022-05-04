@@ -171,6 +171,7 @@ public class ProfileService {
      * @return 결과에 따라 다른 메시지를 return합니다.
      * @author 박상범
      */
+    @Transactional
     public void modifyPhone(MemberDTO member) {
 
         Member foundMember = memberForProfileRepository.findById(member.getMemberNo()).get();
@@ -183,6 +184,7 @@ public class ProfileService {
      * @return 결과에 따라 다른 메시지를 return합니다.
      * @author 박상범
      */
+    @Transactional
     public void modifyMemberPwd(MemberDTO member) {
 
         Member foundMember = memberForProfileRepository.findById(member.getMemberNo()).get();
@@ -195,6 +197,7 @@ public class ProfileService {
      * @return 결과에 따라 다른 메시지를 return합니다.
      * @author 박상범
      */
+    @Transactional
     public String removeProfileAttachment(int memberNo) {
 
         ProfileAttachment profileAttachment = profileAttachmentForProfileRepository.findProfileAttachmentByMember_memberNo(memberNo);
