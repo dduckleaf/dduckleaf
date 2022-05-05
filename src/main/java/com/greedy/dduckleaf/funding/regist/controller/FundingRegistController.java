@@ -89,6 +89,7 @@ public class FundingRegistController {
 
         registDTO.setMemberNo(user.getMemberNo());
 
+        System.out.println("registDTO.getShippingAddress() = " + registDTO.getShippingAddress());
         service.registFunding(registDTO);
 
         return "redirect:/funding/regist/result/" + registDTO.getProjectNo();
