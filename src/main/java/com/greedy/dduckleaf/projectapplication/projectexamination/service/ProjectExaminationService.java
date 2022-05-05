@@ -3,9 +3,8 @@ package com.greedy.dduckleaf.projectapplication.projectexamination.service;
 import com.greedy.dduckleaf.projectapplication.dto.FarmerFinancialInfoDTO;
 import com.greedy.dduckleaf.projectapplication.dto.ProjectApplicationInfoDTO;
 import com.greedy.dduckleaf.projectapplication.dto.ProjectAttachmentDTO;
-import com.greedy.dduckleaf.projectapplication.entity.FarmerFinancialInfo;
-import com.greedy.dduckleaf.projectapplication.entity.ProjectApplicationInfo;
-import com.greedy.dduckleaf.projectapplication.entity.ProjectAttachment;
+import com.greedy.dduckleaf.projectapplication.dto.ProjectExamineHistoryDTO;
+import com.greedy.dduckleaf.projectapplication.entity.*;
 import com.greedy.dduckleaf.projectapplication.projectapplication.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 
 /**
  * <pre>
@@ -36,13 +36,17 @@ public class ProjectExaminationService {
     private final ProjectApplicationInfoRepository projectApplicationInfoRepository;
     private final ProjectAttachmentForProjectApplicationRepository attachmentRepository;
     private final FarmerFinancialInfoRepository farmerFinancialInfoRepository;
+    private final ProjectForApplicationRepository projectRepository;
+    private final ProjectExamineHistoryForProjectExaminationRepository projectExamineHistoryRepository;
 
     @Autowired
-    public ProjectExaminationService(ModelMapper modelMapper, ProjectApplicationInfoRepository projectApplicationInfoRepository, ProjectAttachmentForProjectApplicationRepository attachmentRepository, FarmerFinancialInfoRepository farmerFinancialInfoRepository) {
+    public ProjectExaminationService(ModelMapper modelMapper, ProjectApplicationInfoRepository projectApplicationInfoRepository, ProjectAttachmentForProjectApplicationRepository attachmentRepository, FarmerFinancialInfoRepository farmerFinancialInfoRepository, ProjectForApplicationRepository projectRepository, ProjectExamineHistoryForProjectExaminationRepository projectExamineHistoryRepository) {
         this.modelMapper = modelMapper;
         this.projectApplicationInfoRepository = projectApplicationInfoRepository;
         this.attachmentRepository = attachmentRepository;
         this.farmerFinancialInfoRepository = farmerFinancialInfoRepository;
+        this.projectRepository = projectRepository;
+        this.projectExamineHistoryRepository = projectExamineHistoryRepository;
     }
 
     /**
@@ -57,10 +61,7 @@ public class ProjectExaminationService {
                 pageable.getPageSize(),
                 Sort.by("projectApplicationNo").descending());
 
-        Page<ProjectApplicationInfo> applicationInfoList = projectApplicationInfoRepository.findAll(pageable);
-        applicationInfoList.forEach(System.out::println);
-
-        return projectApplicationInfoRepository.findAll(pageable).map(projectApplicationInfo -> modelMapper.map(projectApplicationInfo, ProjectApplicationInfoDTO.class));
+        return projectApplicationInfoRepository.findAllByProjectApplicationCategoryOrProjectApplicationCategory(pageable, "심사중", "심사대기중").map(projectApplicationInfo -> modelMapper.map(projectApplicationInfo, ProjectApplicationInfoDTO.class));
     }
 
     /**
@@ -140,6 +141,52 @@ public class ProjectExaminationService {
         FarmerFinancialInfo farmer = farmerFinancialInfoRepository.findByMemberNo(memberNo);
 
         return  modelMapper.map(farmer, FarmerFinancialInfoDTO.class);
+    }
+
+    @Transactional
+    public void approveProject(int projectApplicationNo, int adminNo) {
+
+
+        ProjectApplicationInfo projectApplicationInfo = projectApplicationInfoRepository.findByProjectApplicationNo(projectApplicationNo);
+        projectApplicationInfo.setProjectApplicationCategory("승인");
+
+        Project project = projectRepository.findByProjectNo(projectApplicationInfo.getProject().getProjectNo());
+        project.setProgressStatus(2);
+        project.setExamineStatus("승인");
+        project.setProjectExamineStatus("승인");
+
+        ProjectExamineHistory projectExamineHistory = new ProjectExamineHistory();
+        projectExamineHistory.setExamineHistoryCategory(4);
+        projectExamineHistory.setProjectExamineRegistDate(java.sql.Date.valueOf(LocalDate.now()).toString());
+        projectExamineHistory.setExamineProjectStatus(3);
+        projectExamineHistory.setFarmerNo(project.getFarmerNo());
+        projectExamineHistory.setProjectNo(project.getProjectNo());
+        projectExamineHistory.setAdminNo(adminNo);
+
+        projectExamineHistoryRepository.save(projectExamineHistory);
+    }
+
+    @Transactional
+    public void rejectProject(int projectApplicationNo, int adminNo, ProjectExamineHistoryDTO history) {
+
+        ProjectApplicationInfo projectApplicationInfo = projectApplicationInfoRepository.findByProjectApplicationNo(projectApplicationNo);
+        projectApplicationInfo.setProjectApplicationCategory("반려");
+
+        Project project = projectRepository.findByProjectNo(projectApplicationInfo.getProject().getProjectNo());
+        project.setProgressStatus(2);
+        project.setExamineStatus("반려");
+        project.setProjectExamineStatus("반려");
+
+        ProjectExamineHistory projectExamineHistory = new ProjectExamineHistory();
+        projectExamineHistory.setExamineHistoryCategory(5);
+        projectExamineHistory.setProjectExamineDetailContent(history.getProjectExamineDetailContent());
+        projectExamineHistory.setProjectExamineRegistDate(java.sql.Date.valueOf(LocalDate.now()).toString());
+        projectExamineHistory.setExamineProjectStatus(3);
+        projectExamineHistory.setFarmerNo(project.getFarmerNo());
+        projectExamineHistory.setProjectNo(project.getProjectNo());
+        projectExamineHistory.setAdminNo(adminNo);
+
+        projectExamineHistoryRepository.save(projectExamineHistory);
     }
 
 }
