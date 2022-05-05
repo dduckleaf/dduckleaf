@@ -1,5 +1,7 @@
-package com.greedy.dduckleaf.main;
+package com.greedy.dduckleaf.main.controller;
 
+import com.greedy.dduckleaf.main.dto.MainPageDTO;
+import com.greedy.dduckleaf.main.service.MainService;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,17 +13,23 @@ import org.springframework.web.servlet.ModelAndView;
 public class MainController {
 
     private final MessageSource messageSource;
+    private final MainService mainService;
 
-    public MainController(MessageSource messageSource) {
+    public MainController(MessageSource messageSource, MainService mainService) {
         this.messageSource = messageSource;
+        this.mainService = mainService;
     }
 
     @GetMapping(value = {"/", "/main"})
-    public String mainM() {
+    public ModelAndView mainM(ModelAndView mv) {
 
-        System.out.println("여기오낭");
+        MainPageDTO mainPage = mainService.findMainPage();
 
-        return "main/mainPage";
+        mv.addObject("dduckleafRecommendList", mainPage.getDduckleafRecommendList());
+        mv.addObject("rankingList", mainPage.getRankingList());
+        mv.setViewName("main/mainPage");
+
+        return mv;
     }
 
     @PostMapping(value = "/")
