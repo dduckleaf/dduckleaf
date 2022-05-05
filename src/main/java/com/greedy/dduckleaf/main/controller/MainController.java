@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.ParseException;
+
 /**
  * <pre>
  * Class : MainController
@@ -36,7 +38,7 @@ public class MainController {
      * @author 박상범
      */
     @GetMapping(value = {"/", "/main"})
-    public ModelAndView main(ModelAndView mv) {
+    public ModelAndView main(ModelAndView mv) throws ParseException {
 
         MainPageDTO mainPage = mainService.findMainPage();
 

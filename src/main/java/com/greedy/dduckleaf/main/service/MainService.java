@@ -8,7 +8,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -38,15 +45,36 @@ public class MainService {
      * @return new MainPageDTO(dduckleafRecommendList, rankingList) : 떡잎추천 리스트, 실시간 랭킹 리스트를 담은 MainPageDTO 객체입니다.
      * @author 박상범
      */
-    public MainPageDTO findMainPage() {
+    public MainPageDTO findMainPage() throws ParseException {
 
-        List<Project> foundDduckleafRecommendList = projectForMainRepository.findDduckleafRecommendList();
         List<Project> foundRankingList = projectForMainRepository.findRankingList();
+        List<Project> foundDduckleafRecommendList = projectForMainRepository.findDduckleafRecommendList();
 
-        List<ProjectDTO> dduckleafRecommendList = foundDduckleafRecommendList.stream().map(project ->
-                modelMapper.map(project, ProjectDTO.class)).collect(Collectors.toList());
         List<ProjectDTO> rankingList = foundRankingList.stream().map(project ->
                 modelMapper.map(project, ProjectDTO.class)).collect(Collectors.toList());
+
+        List<ProjectDTO> dduckleafRecommendList = new ArrayList<>();
+
+        for(int i = 0; i < foundDduckleafRecommendList.size(); i++) {
+
+            ProjectDTO project = modelMapper.map(foundDduckleafRecommendList.get(i), ProjectDTO.class);
+
+            String endDate = foundDduckleafRecommendList.get(i).getEndDate().replace("-","");
+            String nowDate = java.sql.Date.valueOf(LocalDate.now()).toString().replace("-","");
+
+            String format = "yyyyMMdd";
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.KOREA);
+            Date end = simpleDateFormat.parse(endDate);
+            Date now = simpleDateFormat.parse(nowDate);
+
+            long diffSec = Math.abs(end.getTime() - now.getTime());
+            long diffDay = TimeUnit.DAYS.convert(diffSec, TimeUnit.MILLISECONDS);
+
+            project.setDeadLine(diffDay);
+
+            dduckleafRecommendList.add(project);
+        }
 
         return new MainPageDTO(dduckleafRecommendList, rankingList);
     }

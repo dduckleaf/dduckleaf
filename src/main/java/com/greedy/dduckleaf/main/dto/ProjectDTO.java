@@ -18,8 +18,8 @@ public class ProjectDTO {
     private java.sql.Date openDate;
     private java.sql.Date endDate;
     private String projectStatus;
-    private double achievementRate;
+    private int achievementRate;
     private ProjectProgressStatusDTO projectProgressStatus;
-    private int farmerNo;
-    private List<ProjectNoticeDTO> projectNoticeList;
+    private FarmerDTO farmer;
+    private long deadLine;
 }
