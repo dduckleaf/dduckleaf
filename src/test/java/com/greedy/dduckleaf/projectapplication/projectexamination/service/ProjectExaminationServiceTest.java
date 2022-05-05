@@ -4,8 +4,6 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.projectapplication.dto.*;
-import com.greedy.dduckleaf.projectapplication.entity.FarmerFinancialInfo;
-import com.greedy.dduckleaf.projectapplication.entity.ProjectApplicationInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -15,8 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -134,5 +130,36 @@ class ProjectExaminationServiceTest {
 
         //then
         assertNotNull(farmer);
+    }
+
+    @Test
+    @DisplayName("신청 프로젝트를 승인하는 메소드 테스트")
+    public void approveProject_test() {
+
+        //given
+        int projectApplicationNo = 21;
+        int adminNo = 1;
+
+        //when
+        projectExaminationService.approveProject(projectApplicationNo, adminNo);
+
+        //then
+        assertDoesNotThrow(() -> projectExaminationService.approveProject(projectApplicationNo, adminNo));
+    }
+
+    @Test
+    @DisplayName("신청 프로젝트를 반려하는 메소드 테스트")
+    public void rejectProject_test() {
+
+        //given
+        int projectApplicationNo = 21;
+        int adminNo = 1;
+        ProjectExamineHistoryDTO history = new ProjectExamineHistoryDTO();
+
+        //when
+        projectExaminationService.rejectProject(projectApplicationNo, adminNo, history);
+
+        //then
+        assertDoesNotThrow(() -> projectExaminationService.rejectProject(projectApplicationNo, adminNo, history));
     }
 }
