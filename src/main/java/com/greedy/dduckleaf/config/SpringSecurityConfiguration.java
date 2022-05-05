@@ -48,8 +48,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeHttpRequests()
                 .antMatchers("/member/login").permitAll()
 
-//                .antMatchers(memberPermitList.toArray(new String[memberPermitList.size()])).hasAnyRole("MEMBER", "ADMIN")
-//                .antMatchers(adminPermitList.toArray(new String[adminPermitList.size()])).hasRole("ADMIN")
+                .antMatchers(memberPermitList.toArray(new String[memberPermitList.size()])).hasAnyRole("MEMBER", "ADMIN")
+                .antMatchers(adminPermitList.toArray(new String[adminPermitList.size()])).hasRole("ADMIN")
                 .anyRequest().permitAll()
             .and()
                 .formLogin()
