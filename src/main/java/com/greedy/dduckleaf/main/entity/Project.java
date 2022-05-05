@@ -48,6 +48,7 @@ public class Project {
     @Column(name = "MAX_TARGET_AMOUNT")
     private int maxTargetAmount;
 
-    @Column(name = "FARMER_NO")
-    private int farmerNo;
+    @OneToOne
+    @JoinColumn(name = "FARMER_NO")
+    private Farmer farmer;
 }

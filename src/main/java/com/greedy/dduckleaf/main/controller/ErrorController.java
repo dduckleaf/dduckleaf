@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.main;
+package com.greedy.dduckleaf.main.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
