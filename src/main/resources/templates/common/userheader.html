@@ -40,6 +40,9 @@
                     <div class="col-7" style="float: left">
                         <a style="color: #BAC34E;"><span sec:authentication="principal.memberName"></span>님 환영합니다.</a>
                         <a style="margin-left: 50px;" href="/member/logout">로그아웃</a>
+                        <th:block sec:authorize="hasRole('ADMIN')">
+                            <button class="small-btn" style="margin-left:30px; margin-bottom: 10px!important; color: white; background: #BAC34E; border: none; width: 140px;" onclick="location.href='/dashboard'">Admin DashBoard</button>
+                        </th:block>
                     </div>
                     <div class="col-2" style="margin-bottom: 10px; margin-left: 20px">
                         <a href="/myfunding/default"><img src="/images/common/vector.png">My Page</a>
