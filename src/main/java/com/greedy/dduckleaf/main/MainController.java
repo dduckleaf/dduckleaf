@@ -33,8 +33,10 @@ public class MainController {
 
         return mv;
     }
-    @RequestMapping(value = "/test")
-    public String send123() {
-        return "/funding/regist/apitest";
+
+    @RequestMapping(value = "/dashboard")
+    public String sendDB() {
+
+        return "/admin/dashboard";
     }
 }

@@ -158,12 +158,13 @@
 	
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Harmic - Contact</title>
+	<title>Harmic - My account</title>
 	<meta name="robots" content="noindex, follow" />
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Favicon -->
-	<link rel="shortcut icon" type="image/x-icon" href="../../static/images/favicon.ico" />
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+
 	
 	<!-- CSS
 	============================================ -->
@@ -180,14 +181,15 @@
 	<link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
 	
 	<!-- Style CSS -->
-	<link rel="stylesheet" th:href="@{ css/style.css }">
+	<!--  <link rel="stylesheet" href="assets/css/style.css">-->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/mypage.css}">
 
 </head>
 <body>
 
 <div class="main-wrapper">
-	
-	<div th:replace="/common/userheader.html"></div>
+	<div th:replace="/common/adminheader.html"></div>
 
 	<div class="bl row" style="height:200px">
         <div class="bl col-2" style="height: 100%"></div>
@@ -223,6 +225,7 @@
 		<div class="col-1 bl"></div>
 		<div class="col-2 bl"><h3>관리자 메뉴 바로가기</h3></div>
 	</div>
+</div>
 	
  
 <script>
