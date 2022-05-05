@@ -7,6 +7,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * <pre>
+ * Class : ProjectForMainRepository
+ * Comment : 실시간 랭킹, 떡잎추천
+ * History
+ * 2022-05-06 (박상범) 처음 작성 / 떡잎 추천 조회 관련 메소드 작성성 실시간 랭킹 조회 관련 메소드 작성
+ * </pre>
+ * @version 1.0.1
+ * @author 박상범
+ */
 @Repository
 public interface ProjectForMainRepository extends JpaRepository<Project, Integer> {
 

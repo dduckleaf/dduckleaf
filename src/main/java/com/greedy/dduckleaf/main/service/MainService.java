@@ -11,6 +11,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * <pre>
+ * Class : MainService
+ * Comment : 실시간 랭킹, 떡잎추천
+ * History
+ * 2022-05-06 (박상범) 처음 작성 / 떡잎 추천 조회, 실시간 랭킹 조회 관련 메소드 작성
+ * </pre>
+ * @version 1.0.1
+ * @author 박상범
+ */
 @Service
 public class MainService {
 
@@ -23,6 +33,11 @@ public class MainService {
         this.modelMapper = modelMapper;
     }
 
+    /**
+     * findMainPage : 실시간 랭킹 리스트, 떡잎 추천 리스트를 조회합니다.
+     * @return new MainPageDTO(dduckleafRecommendList, rankingList) : 떡잎추천 리스트, 실시간 랭킹 리스트를 담은 MainPageDTO 객체입니다.
+     * @author 박상범
+     */
     public MainPageDTO findMainPage() {
 
         List<Project> foundDduckleafRecommendList = projectForMainRepository.findDduckleafRecommendList();
