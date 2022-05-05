@@ -15591,7 +15591,7 @@ img {
 }
 
 .section-space-y-axis-100 {
-    padding-top: 100px;
+    padding-top: 50px;
     padding-bottom: 100px;
 }
 
@@ -17946,7 +17946,7 @@ blockquote .inner-content .user-name:before {
     border-bottom: 1px solid #f1f1f1;
     border-left: 1px solid #f1f1f1;
     border-right: 1px solid #f1f1f1;
-    padding: 25px 30px;
+    /*padding: 25px 30px;*/
     text-align: center;
 }
 
@@ -20735,7 +20735,7 @@ body {
 /* =========== 프로젝트 상세조회 페이지 펀딩현황 ============ */
 .progress {
     -webkit-appearance: none;
-    width: 500px;
+    /*width: 500px;*/
     height: 5px;
     margin-bottom: -2%;
 }
