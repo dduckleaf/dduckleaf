@@ -7,13 +7,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * <pre>
  * Class : ShippingService
- * Comment : 발송관리
+ * Comment : 발송관리 업무에 사용되는 메소드를 작성하였습니다.
  * History
  * 2022/05/06 (조남기) 마이페이지 파머 탭 파머 프로젝트 조회 관련 메소드 구현 완료, 발송 리워드 정보 조회 구현 시작
  * </pre>

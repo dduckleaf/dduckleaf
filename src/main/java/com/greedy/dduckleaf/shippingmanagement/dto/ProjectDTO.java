@@ -2,18 +2,6 @@ package com.greedy.dduckleaf.shippingmanagement.dto;
 
 import lombok.*;
 
-/**
- * <pre>
- * Class : ProjectDTO
- * Comment :
- *
- * History
- * 2022-04-27 username
- * </pre>
- *
- * @author username
- * @version 1.0.0
- */
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter

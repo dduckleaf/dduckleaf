@@ -11,6 +11,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
+/**
+ * <pre>
+ * Class : ShippingController
+ * Comment : 발송관리 업무에 사용되는 메소드를 작성하였습니다.
+ * History
+ * 2022/05/06 (조남기) 발송 리워드 정보 조회 구현 시작
+ * </pre>
+ * @version 1.0.0
+ * @author 조남기
+ */
 @Controller
 @RequestMapping("/shipping/management")
 public class ShippingController {
@@ -22,6 +32,12 @@ public class ShippingController {
         this.shippingService = shippingService;
     }
 
+    /**
+     * endProject : 로그인한 회원의 종료된 프로젝트 정보를 조회합니다.
+     * @param projectNo : 프로젝트 번호를 담는 객체
+     * @return mv : 브라우저로 전달할 데이터와 브루엊 경로 정보를 저장한 객체
+     * @author 조남기
+     */
     @GetMapping("/default/{projectNo}")
     public ModelAndView endProject(ModelAndView mv, @PathVariable int projectNo) {
 

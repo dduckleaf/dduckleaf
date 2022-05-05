@@ -27,13 +27,19 @@ public class CommonController {
     @GetMapping("/supporterpage")
     public void goToSupporterPage() {}
 
+    /**
+     * goToFarmerPage : 로그인 한 파머의 프로젝트 목록 조회 요청 메소드입니다.
+     *  @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
+     *           "/common/farmerpage" : 요약정보를 출력할 브라우저 화면 경로
+     */
     @GetMapping("/farmerpage")
     public ModelAndView goToFarmerPage(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
 
         int memberNo = user.getMemberNo();
 
         List<ProjectDTO> projectList = shippingService.findProjectListByMemberNo(memberNo);
-        System.out.println("projectList = " + projectList);
+
         mv.addObject("projectList", projectList);
         mv.setViewName("/common/farmerpage");
 
