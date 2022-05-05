@@ -50,7 +50,7 @@ public class RefundingRegistService {
         refunding.setRefundingDate(date);
         refunding.setRefundingCategoryNo(refundingInfo.getRefundingCategoryNo());
         refunding.setRefundingReason(refundingInfo.getRefundingReason());
-        refunding.setRefundingStatus("환불신청");
+        refunding.setRefundingStatusNo(1);
         refunding.setProjectNo(fundingInfo.getProjectNo());
         refunding.setBankNo(refundingInfo.getBankNo());
         refunding.setRefundingAccount(fundingInfo.getRefundAccount());

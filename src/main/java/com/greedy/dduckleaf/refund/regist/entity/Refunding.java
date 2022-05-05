@@ -29,8 +29,8 @@ public class Refunding {
     @Column(name = "REFUNDING_REASON")
     private String refundingReason;
 
-    @Column(name = "REFUNDING_STATUS")
-    private String refundingStatus;
+    @Column(name = "REFUNDING_STATUS_NO")
+    private int refundingStatusNo;
 
     @Column(name = "PROJECT_NO")
     private int projectNo;
