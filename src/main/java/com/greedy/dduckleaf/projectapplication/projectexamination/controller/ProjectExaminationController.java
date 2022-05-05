@@ -277,7 +277,7 @@ public class ProjectExaminationController {
 
         projectExaminationService.approveProject(projectApplicaionNo, adminNo);
 
-        mv.setViewName("redirect:project/examination/list");
+        mv.setViewName("redirect:/project/examination/list");
 
         return mv;
     }

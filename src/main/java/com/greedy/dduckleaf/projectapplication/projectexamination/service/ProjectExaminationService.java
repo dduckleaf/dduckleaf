@@ -152,14 +152,14 @@ public class ProjectExaminationService {
 
         Project project = projectRepository.findByProjectNo(projectApplicationInfo.getProject().getProjectNo());
         project.setProgressStatus(2);
-        project.setExamineStatus("승인");
+        project.setExamineStatus("심사완료");
         project.setProjectExamineStatus("승인");
 
         ProjectExamineHistory projectExamineHistory = new ProjectExamineHistory();
         projectExamineHistory.setExamineHistoryCategory(4);
         projectExamineHistory.setProjectExamineRegistDate(java.sql.Date.valueOf(LocalDate.now()).toString());
         projectExamineHistory.setExamineProjectStatus(3);
-        projectExamineHistory.setFarmerNo(project.getFarmerNo());
+        projectExamineHistory.setFarmerNo(project.getFarmer().getMemberNo());
         projectExamineHistory.setProjectNo(project.getProjectNo());
         projectExamineHistory.setAdminNo(adminNo);
 
@@ -174,15 +174,16 @@ public class ProjectExaminationService {
 
         Project project = projectRepository.findByProjectNo(projectApplicationInfo.getProject().getProjectNo());
         project.setProgressStatus(2);
-        project.setExamineStatus("반려");
+        project.setExamineStatus("심사완료");
         project.setProjectExamineStatus("반려");
+        project.setProjectStatus("N");
 
         ProjectExamineHistory projectExamineHistory = new ProjectExamineHistory();
         projectExamineHistory.setExamineHistoryCategory(5);
         projectExamineHistory.setProjectExamineDetailContent(history.getProjectExamineDetailContent());
         projectExamineHistory.setProjectExamineRegistDate(java.sql.Date.valueOf(LocalDate.now()).toString());
         projectExamineHistory.setExamineProjectStatus(3);
-        projectExamineHistory.setFarmerNo(project.getFarmerNo());
+        projectExamineHistory.setFarmerNo(project.getFarmer().getMemberNo());
         projectExamineHistory.setProjectNo(project.getProjectNo());
         projectExamineHistory.setAdminNo(adminNo);
 
