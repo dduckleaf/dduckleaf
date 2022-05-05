@@ -47,6 +47,9 @@ public class Refunding {
     @Column(name = "MEMBER_NO")
     private int memberNo;
 
+    @Column(name = "REFUNDING_END_DATE")
+    private String refundingEndDate;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FUNDING_INFO_NO")
     private Funding funding;
