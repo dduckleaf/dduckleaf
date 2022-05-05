@@ -72,16 +72,7 @@ class RefundingForFindServiceTest {
 
         //then
         assertNotNull(refundings);
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
         refundings.forEach(System.out::println);
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
     }
 }
 
