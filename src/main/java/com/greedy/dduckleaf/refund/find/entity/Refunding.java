@@ -27,8 +27,9 @@ public class Refunding {
     @Column(name = "REFUNDING_REASON")
     private String refundingReason;
 
-    @Column(name = "REFUNDING_STATUS_NO")
-    private int refundingStatusNo;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "REFUNDING_STATUS_NO")
+    private RefundingStatus refundingStatus;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PROJECT_NO")

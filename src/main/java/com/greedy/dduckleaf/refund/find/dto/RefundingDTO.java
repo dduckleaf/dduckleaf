@@ -18,7 +18,7 @@ public class RefundingDTO {
     private String refundingDate;
     private RefundingCategoryDTO refundingCategory;
     private String refundingReason;
-    private int refundingStatusNo;
+    private RefundingStatusDTO refundingStatus;
     private ProjectDTO project;
     private String refundingAccount;
     private int bankNo;
