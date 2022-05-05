@@ -66,9 +66,9 @@ public class Project {
     @ColumnDefault(value = "0")
     private int maxTargetAmount;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-    @Column(name = "FARMER_NO")
-    private int farmerNo;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "FARMER_NO")
+    private FarmerInfo farmer;
 
     @Override
     public String toString() {
@@ -84,7 +84,7 @@ public class Project {
                 ", projectExamineStatus='" + projectExamineStatus + '\'' +
                 ", progressStatus=" + progressStatus +
                 ", maxTargetAmount=" + maxTargetAmount +
-                ", farmerNo=" + farmerNo +
+                ", farmer=" + farmer +
                 '}';
     }
 
