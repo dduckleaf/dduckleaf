@@ -50,9 +50,9 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         String memberRole = "";
 
         if(member.getMemberRole() == 1) {
-            memberRole = "ADMIN";
+            memberRole = "ROLE_ADMIN";
         } else {
-            memberRole = "MEMBER";
+            memberRole = "ROLE_MEMBER";
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();
