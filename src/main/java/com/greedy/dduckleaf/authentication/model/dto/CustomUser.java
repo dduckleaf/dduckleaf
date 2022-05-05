@@ -4,7 +4,6 @@ import com.greedy.dduckleaf.member.dto.MemberDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
-import java.sql.Date;
 import java.util.Collection;
 
 public class CustomUser extends User {
@@ -15,8 +14,17 @@ public class CustomUser extends User {
     private String memberPwd;
     private String email;
     private String phone;
-    private String memberRole;
+    private int memberRole;
     private String withdrawalStatus;
+    private String profileThumbnailPath;
+
+    public String getProfileThumbnailPath() {
+        return profileThumbnailPath;
+    }
+
+    public void setProfileThumbnailPath(String profileThumbnailPath) {
+        this.profileThumbnailPath = profileThumbnailPath;
+    }
 
     public int getMemberNo() {
         return memberNo;
@@ -66,11 +74,11 @@ public class CustomUser extends User {
         this.phone = phone;
     }
 
-    public String getMemberRole() {
+    public int getMemberRole() {
         return memberRole;
     }
 
-    public void setMemberRole(String memberRole) {
+    public void setMemberRole(int memberRole) {
         this.memberRole = memberRole;
     }
 
@@ -108,8 +116,9 @@ public class CustomUser extends User {
                 ", memberPwd='" + memberPwd + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", memberRole='" + memberRole + '\'' +
+                ", memberRole=" + memberRole +
                 ", withdrawalStatus='" + withdrawalStatus + '\'' +
+                ", profileThumbnailPath='" + profileThumbnailPath + '\'' +
                 '}';
     }
 }

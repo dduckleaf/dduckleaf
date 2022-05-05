@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Harmic - Blog Detail Left Sidebar</title>
+  <meta name="robots" content="noindex, follow" />
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="../../static/images/favicon.ico" />
+
+  <!-- CSS
+  ============================================ -->
+
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="../../static/css/style.css">
+  <link rel="stylesheet" href="../../static/css/fee.css">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/fee.css}">
+</head>
+
+<body>
+
+<div class="main-wrapper">
+
+  <!-- Begin Main Header Area -->
+
+  <!-- Main Header Area End Here -->
+
+  <!-- Begin Main Content Area -->
+  <main class="main-content">
+
+    <div class="blog-area section-space-y-axis-100">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3 order-lg-1 order-2 pt-10 pt-lg-0">
+            <!-- <div class="sidebar-area"> -->
+            <p style="font-size: 20pt; font-weight: bold; margin-bottom: 25pt;">수수료 변경 내역</p>
+            <hr>
+            <table>
+              <ul>
+                <button class="button-margin">2021.12.14</button><button class="small-btn btn1 basic-btn" disabled>활성화</button>
+                <button class="button-margin">2021.12.14</button><button class="small-btn btn5 basic-btn" disabled>비활성화</button></li>
+                <button class="button-margin">2021.12.14</button><button class="small-btn btn5 basic-btn" disabled>비활성화</button></li>
+                <button class="button-margin">2021.12.14</button><button class="small-btn btn5 basic-btn" disabled>비활성화</button></li>
+                <button class="button-margin">2021.12.14</button><button class="small-btn btn5 basic-btn" disabled>비활성화</button></li>
+                <button class="button-margin">2021.12.14</button><button class="small-btn btn5 basic-btn" disabled>비활성화</button></li>
+              </ul>
+            </table>
+            <button class="big-btn btn1 basic-btn">수수료 정책 추가</button>
+            <!-- </div> -->
+          </div>
+
+          <!-- 오른쪽 절반 화면-->
+
+          <div class="col-lg-9 order-lg-2 order-1">
+            <div class="blog-detail-item">
+              <div class="title-div">
+                <span class="text-title"><img style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;" th:src="@{/images/common/Leaf.png}">수수료율 조회</span>
+                <hr width="840px">
+              </div>
+              <div class="content-context">
+                <table style="margin-top: 50px;">
+                  <tr>
+                    <td ><span class="front-fee">기본수수료</span><br><span class="back-fee1">10%</span></td>
+                    <td ><span class="front-fee">할인수수료</span><br><span class="back-fee2">7%</span></td>
+                    <td class="inmargin"><span class="front-fee2">적용일</span><br><span class="back-fee3">2022.04.16</span></td>
+                    <td class="inmargin"><span class="front-fee2">만료일</span><br><span class="back-fee3">2022.11.26</span></td>
+                    <td class="inmargin"><span class="front-fee2">등록일</span><br><span class="back-fee3">2022.04.16</span></td>
+                  </tr>
+                </table>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Main Content Area End Here -->
+
+  <!-- Begin Footer Area -->
+
+  <!-- Footer Area End Here -->
+
+  <!-- Begin Scroll To Top -->
+  <a class="scroll-to-top" href="">
+    <i class="fa fa-chevron-up"></i>
+  </a>
+  <!-- Scroll To Top End Here -->
+
+</div>
+
+<!-- Global Vendor, plugins JS -->
+
+<!-- JS Files
+============================================ -->
+<!-- Global Vendor, plugins JS -->
+
+<!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+<link rel="stylesheet" th:href="@{css/vendor/font-awesome.min.css}"/>
+<link rel="stylesheet" th:href="@{css/vendor/Pe-icon-7-stroke.css}" />
+
+<!-- Plugin CSS (Global Plugins Files) -->
+<link rel="stylesheet" th:href="@{css/plugins/animate.min.css}">
+<link rel="stylesheet" th:href="@{css/plugins/jquery-ui.min.css}">
+<link rel="stylesheet" th:href="@{css/plugins/swiper-bundle.min.css}">
+<link rel="stylesheet" th:href="@{css/plugins/nice-select.css}">
+<link rel="stylesheet" th:href="@{css/plugins/magnific-popup.min.css}"/>
+
+<!--Main JS (Common Activation Codes)-->
+<script src="js/main.js"></script>
+
+<!-- 수수료율 값 변경 -->
+<script type="text/javascript">
+  function innerfee1() {
+    document.getElementById("test[i]").innerHTML = "";
+  }
+</script>
+<form>
+  <table id="test1" style="margin-top: 50px;" hidden>
+    <tr>
+      <td ><span class="front-fee">기본수수료</span><br><span class="back-fee1">10%</span></td>
+      <td ><span class="front-fee">할인수수료</span><br><span class="back-fee2">7%</span></td>
+      <td class="inmargin"><span class="front-fee2">적용일</span><br><span class="back-fee3">2022.04.16</span></td>
+      <td class="inmargin"><span class="front-fee2">만료일</span><br><span class="back-fee3">2022.11.26</span></td>
+      <td class="inmargin"><span class="front-fee2">등록일</span><br><span class="back-fee3">2022.04.16</span></td>
+    </tr>
+  </table>
+  <table id="test2"style="margin-top: 50px;" hidden>
+    <tr>
+      <td ><span class="front-fee">기본수수료</span><br><span class="back-fee1">10%</span></td>
+      <td ><span class="front-fee">할인수수료</span><br><span class="back-fee2">7%</span></td>
+      <td class="inmargin"><span class="front-fee2">적용일</span><br><span class="back-fee3">2022.04.16</span></td>
+      <td class="inmargin"><span class="front-fee2">만료일</span><br><span class="back-fee3">2022.11.26</span></td>
+      <td class="inmargin"><span class="front-fee2">등록일</span><br><span class="back-fee3">2022.04.26</span></td>
+    </tr>
+  </table>
+</form>
+</body>
+
+</html>

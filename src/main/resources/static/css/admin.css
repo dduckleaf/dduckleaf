@@ -1,0 +1,62 @@
+.vertical-menubar-area {
+    margin-top: 30px;
+    margin-left: 30px;
+}
+
+.block {
+    border: 1px solid #ababab;
+    margin-top: 15px;
+    padding: 15px;
+}
+
+.block2 {
+    border: 1px solid #ababab;
+    border-radius: 0.5px;
+    margin-top: 30px;
+    padding: 17px;
+    height: 70px;
+    font-weight: bold;
+    font-size: 17pt;
+}
+
+.block2:hover {
+    cursor: pointer;
+    background-color: rgba(76, 23, 117, 0.7);
+    color: #fff;
+    border: none;
+}
+
+.text-subtitle {
+    font-weight: bold;
+    font-size: 18pt;
+}
+
+.submenu {
+    margin-left: 5px;
+}
+
+.submenu:hover {
+    cursor: pointer;
+}
+
+.list-icon {
+    font-size: 1pt;
+    vertical-align: 25%;
+    margin-left: 10px;
+    color: #BAC34E;
+}
+
+.custom-btn {
+    width: 100%;
+    height: 40px;
+    font-size: 14pt;
+    margin-top: 7px;
+    border-radius: 5px;
+}
+
+.body-area {
+    width: 80%;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}

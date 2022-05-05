@@ -1,32 +1,39 @@
 @charset "UTF-8";
-
+html {
+    overflow: hidden;
+}
 body {
     width: 100%;
 }
 .login-title {
-    font-size: 37px;
+    font-size: 40px !important;
+    font-family: inherit;
 }
 .login-form {
     position: relative;
-    top: 30%;
-    left: 37%;
+    top: 14%;
+    left: 35%;
     align: center;
-    width: 25%;
+    width: 27%;
+    box-shadow: none !important;
 }
-.login-form input {
-    width: 90%;
-    height: 17px;
+.login-form form input {
+    width: 100%;
+    height: 60px;
     padding: 16px;
     margin-top: 10px;
+    margin-bottom: 0px;
     border: 1px solid #C8B5B5;
     font-size: 17px;
 }
 .logo {
-    background: url("../images/logo.png") no-repeat;
-    width: 300px;
-    height: 100px;
+    background: url("../images/common/logo.png") no-repeat;
+    background-size: 100% 100%;
+    width: 350px;
+    height: 110px;
     border: white;
-    left: 15%;
+    left: 10%;
+    top: -70px !important;
     position: relative;
 }
 .small-btn {
@@ -38,7 +45,7 @@ body {
     border: none;
     height: 35px;
 }
-.medium-btn {
+.small-btn {
     width: 100px;
     height: 35px;
     border-radius: 5px;
@@ -56,11 +63,11 @@ body {
     border-radius: 5px;
     font-size: 24px;
 }
-.bigbigbig-btn {
+.lgoin-btn {
     width: 100%;
-    height: 45px;
+    height: 60px;
     border-radius: 3px;
-    font-size: 20px;
+    font-size: 23px;
     color: white;
     background: #BAC34E;
     border: 1px solid white;
@@ -69,9 +76,12 @@ body {
 .login-find {
     float: right;
     margin-top: 18px;
-    margin-bottom: 18px;
-    border: none;
+    margin-bottom: 20px !important;
+    border: none !important;
     background: white;
+    width: 190px !important;
+    height: 50px !important;
+    color: #999A99;
 }
 .login-regist {
     text-decoration: underline;
@@ -79,52 +89,323 @@ body {
     color: #BAC34E;
     position: relative;
     left: 42%;
+    cursor: pointer;
 }
 .regist-title {
     font-size: 37px;
     margin-bottom: 10px;
+    font-family: inherit;
 }
 .regist-form {
     position: relative;
-    top: 30%;
+    top: 15px;
     left: 37%;
     align: center;
     width: 400px;
-    /*border: 1px solid red;*/
 }
-.regist-form input {
-    width: 360px;
-    height: 17px;
+.regist-form form input {
+    width: 100%;
+    height: 53px;
     padding: 16px;
     margin-top: 5px;
     border: 1px solid #C8B5B5;
     font-size: 17px;
 }
-.email-verification-div, .phone-verification-div {
-    display: block;
-}
 #send-email {
     position: relative;
-    top: -44px;
-    left: 295px;
+    top: -48px;
+    left: 305px;
+    width: 90px;
+    height: 43px;
+    font-size: 12px;
+    margin-top: 0px;
+    text-align: center;
+    padding: 0px;
 }
-#check-email {
+#check-email-verification {
     position: relative;
-    top: -44px;
-    left: 295px;
+    top: -48px;
+    left: 305px;
+    width: 43px;
+    height: 35px;
+    font-size: 12px;
+    margin-top: 0px;
+    text-align: center;
+    padding: 0px;
 }
 #send-phone {
     position: relative;
-    top: -44px;
-    left: 295px;
+    top: -48px;
+    left: 305px;
+    width: 90px;
+    height: 43px;
+    font-size: 12px;
+    margin-top: 0px;
+    text-align: center;
+    padding: 0px;
 }
-#check-phone {
+#check-phone-verification {
     position: relative;
-    top: -44px;
-    left: 295px;
+    top: -48px;
+    left: 305px;
+    width: 90px;
+    height: 43px;
+    font-size: 12px;
+    margin-top: 0px;
+    text-align: center;
+    padding: 0px;
 }
-#id-dupleication {
+#check-id-duplication {
     position: relative;
-    top: -44px;
-    left: 295px;
+    top: -48px;
+    left: 305px;
+    width: 90px;
+    height: 43px;
+    font-size: 12px;
+    margin-top: 0px;
+    text-align: center;
+    padding: 0px;
+}
+#email-verification-div{
+    display: none;
+}
+#phone-verification-div {
+    display: none;
+}
+#regist-finish {
+    width: 100%;
+    height: 55px;
+    border-radius: 3px;
+    font-size: 23px;
+    color: white;
+    background: #BAC34E;
+    border: 1px solid white;
+    margin-bottom: 25px;
+}
+.top-area {
+    width: 100%;
+    height: 204px;
+}
+.bottom-area {
+    width: 100%;
+    height: 900px;
+    border-top: 1px solid #A99999;
+    background: #F5F7FA;
+}
+.top-area h1 {
+    font-size: 28px;
+    font-weight: 700;
+    position: relative;
+    top: 80px;
+    left: 450px;
+    font-family: inherit;
+}
+#find-id-id {
+    cursor: pointer;
+    position: relative;
+    top: 115px;
+    left: 450px;
+    width: 90px;
+    height: 47px;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    background: none;
+    border-bottom: 6px solid #bac34e;
+    color: #bac34e;
+}
+#find-id-pwd {
+    position: relative;
+    top: 116px;
+    left: 455px;
+    font-size: 15px;
+    font-weight: 700;
+    background: none;
+    width: 105px;
+    height: 47px;
+    cursor: pointer;
+    border: none;
+    border-bottom: 6px solid transparent;
+}
+.find-id-div {
+    position: relative;
+    top: 100px;
+    left: 200px;
+    width: 400px;
+}
+.find-id-div p {
+    position: relative;
+    top: 0px;
+    left: 520px;
+    font-size: 20px;
+    font-weight: 700;
+}
+#findMemberIdByEmail {
+    position: relative;
+    top: 60px;
+    left: 520px;
+    width: 100%;
+    height: 53px;
+    padding: 16px;
+    margin-top: 10px;
+    border: 1px solid #C8B5B5;
+    font-size: 17px;
+}
+#send-email-id {
+    position: relative;
+    top: 120px;
+    left: 520px;
+    width: 100%;
+    height: 53px;
+    color: white;
+    background: #bac34e;
+    border: none;
+}
+.bottom-area h4 {
+    position: relative;
+    top: 30px;
+    left: 520px;
+    font-size: 24px;
+}
+#goMain {
+    width: 100%;
+    position: relative;
+    top: 35px;
+    left: 520px;
+    cursor: pointer;
+    color: white;
+    background: #bac34e;
+    border: none;
+    height: 53px;
+}
+.success-div {
+    position: relative;
+    top: 100px;
+    left: 200px;
+    width: 400px;
+}
+.success-div p {
+    position: relative;
+    top: 0px;
+    left: 520px;
+    font-size: 35px !important;
+    font-weight: 700;
+}
+.success-div h4 {
+    font-family: inherit;
+    font-size: 20px;
+    position: relative;
+    top: -10px;
+    left: 520px;
+}
+#find-pwd-id {
+    cursor: pointer;
+    position: relative;
+    top: 115px;
+    left: 450px;
+    width: 90px;
+    height: 47px;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    background: none;
+    border-bottom: 6px solid transparent;
+}
+#find-pwd-pwd {
+    position: relative;
+    top: 116px;
+    left: 455px;
+    font-size: 15px;
+    font-weight: 700;
+    background: none;
+    width: 105px;
+    height: 47px;
+    cursor: pointer;
+    border: none;
+    border-bottom: 6px solid #bac34e;
+    color: #bac34e;
+}
+.find-pwd-form {
+    position: relative;
+    top: 40px;
+    left: 750px;
+    width: 400px;
+}
+.find-pwd-form input {
+    width: 100%;
+    height: 60px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #C8B5B5;
+}
+.find-pwd-form p {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    font-size: 20px;
+    font-weight: 700;
+}
+#email-verification {
+    position: relative;
+    top: -71px;
+    left: 303px;
+    width: 90px;
+    height: 43px;
+}
+#check-verification {
+    position: relative;
+    top: -129px;
+    left: 303px;
+    width: 90px;
+    height: 43px;
+}
+#verification {
+    position: relative;
+    top: -57px;
+}
+.find-pwd-form button {
+    width: 100%;
+    height: 55px ;
+    border-radius: 3px;
+    font-size: 23px;
+    color: white;
+    background: #BAC34E;
+    border: 1px solid white;
+    margin-bottom: 25px;
+}
+.find-modify-title {
+    font-family: inherit;
+    font-size: 45px;
+    position: relative;
+    top: 100px;
+    left: 200px;
+}
+.find-modify-pwd-form {
+    width: 400px;
+    position: relative;
+    top: 200px;
+    left: 750px;
+}
+.find-modify-subtitle {
+    width: 700px;
+    font-family: inherit;
+    font-size: 20px;
+    position: relative;
+}
+.find-modify-pwd-form input {
+    width: 100%;
+    height: 60px;
+    border: 1px solid #C8B5B5;
+    margin-bottom: 8px;
+    margin-top: 3px;
+    font-size: 17px;
+}
+.find-modify-pwd-form button{
+    width: 100%;
+    height: 55px ;
+    border-radius: 3px;
+    font-size: 23px;
+    color: white;
+    background: #BAC34E;
+    border: 1px solid white;
 }

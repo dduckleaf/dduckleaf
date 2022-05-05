@@ -21,35 +21,35 @@
         <div class="container" style="height: 70%">
             <div style="width: 1000px;">
                 <div class="row1">
-                    <div class="col-md-2">
+                    <div th:fragment="mockfundsidebar" class="col-md-2">
                         <button class="accordion">
-                            <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/common/vector.png }"></p>
+                            <p class="fundmenutitle">모의펀딩 준비<img class="arrow" th:src="@{ /images/mockfund/sidebararrow.png }"></p>
                         </button>
                         <div class="panel">
-                            <p>기본정보</p>
-                            <p>스토리 작성</p>
-                            <p>리워드 설계</p>
+                            <p onclick="location.href='/mockfund/basicinfo'">기본정보</p>
+                            <p onclick="location.href='/mockfund/story'">스토리 작성</p>
+                            <p onclick="location.href='/mockfund/reward'">리워드 설계</p>
                         </div>
                     </div>
                     <div class="col-md-7">
                         <div class="fundtitle">
-                            <img class="leaf" th:src="@{ /images/common/Leaf.png}"> 모의펀딩 준비
+                            <img class="leaf" th:src="@{ /images/common/Leaf.png }"> 모의펀딩 준비
                         </div><hr>
                         <div class="funddata">
-                            <a class="fundsubtitle">기본정보</a><a class="fundstatus">작성 전</a><label class="fund-btn">작성하기</label>
+                            <a class="fundsubtitle">기본정보</a><a class="fund-btn" onclick="location.href='/mockfund/basicinfo'">작성하기</a>
                         </div>
                         <div class="funddata">
-                            <a class="fundsubtitle">스토리 작성</a><a class="fundstatus">작성 전</a><label class="fund-btn">작성하기</label>
+                            <a class="fundsubtitle">스토리 작성</a><a class="fund-btn" onclick="location.href='/mockfund/story'">작성하기</a>
                         </div>
                         <div class="funddata">
-                            <a class="fundsubtitle">리워드 설계</a><a class="fundstatus">작성 전</a><label class="fund-btn">작성하기</label>
+                            <a class="fundsubtitle">리워드 설계</a><a class="fund-btn" onclick="location.href='/mockfund/reward'">작성하기</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     <footer class="footer" th:replace="/common/footer.html"></footer>
-<script>
+    <script>
     var acc = document.getElementsByClassName("accordion");
 
     for (var i = 0; i < acc.length; i++) {

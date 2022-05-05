@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Harmic - My account</title>
+  <meta name="robots" content="noindex, follow" />
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+
+  <!-- CSS
+  ============================================ -->
+
+  <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+  <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+  <link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}" />
+
+  <!-- Plugin CSS (Global Plugins Files) -->
+  <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
+
+  <!-- Style CSS -->
+<!--  <link rel="stylesheet" href="assets/css/style.css">-->
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/mypage.css}">
+  <style>
+    .tab-body-area {
+      border: 1px solid red;
+      position: absolute;
+      z-index: 1;
+      left: 33%;
+      right: 25%;
+      top: 18%;
+      width: 50%;
+      height: 1220px;
+    }
+  </style>
+
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div th:replace="/common/farmerheader.html"></div>
+<div class="title-div">
+                <span class="text-title">
+                  <img style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;" th:src="@{/images/common/Leaf.png}">프로젝트</span>
+  <hr width="100%">
+</div>
+<div class="tab-body-area">
+  <div class="row">
+    <div class="col">
+      <h3 class="future-project">진행 예정 프로젝트</h3>
+      <div>
+        <img th:src="@{/images/main/potato.png}" style="width: 250px; height: 170px;">
+        <br>
+        <span>천혜의 섬 안면도 호박고구마</span>
+      </div>
+      
+      <h3 class="present-project">진행 중인 프로젝트</h3>
+      <div>
+        <img th:src="@{/images/main/potato.png}" style="width: 250px; height: 170px;">
+        <br>
+        <span>천혜의 섬 안면도 호박고구마</span>
+      </div>
+      
+      <h3 class="past-project">종료된 프로젝트</h3>
+      <div>
+        <img th:src="@{/images/main/potato.png}" style="width: 250px; height: 170px;">
+        <br>
+        <span class="winlose">실패</span>
+        <br>
+        <span>천혜의 섬 안면도 호박고구마</span>
+      </div>
+      <div class="success-project">
+        <img th:src="@{/images/main/potato.png}" style="width: 250px; height: 170px;">
+        <br>
+        <span class="winlose">성공</span>
+        <br>
+        <span>천혜의 섬 안면도 호박고구마</span>
+      </div>
+    </div>
+    <div class="col">
+      <h3 class="present-simul">진행 중인 모의펀딩</h3>
+      <div>
+        <img th:src="@{/images/main/potato.png}" style="width: 250px; height: 170px;">
+        <br>
+        <span>안면도 호박고구마</span>
+      </div>
+      <h3 class="past-simul">종료된 모의펀딩</h3>
+      <div>
+        <img th:src="@{/images/main/potato.png}" style="width: 250px; height: 170px;">
+        <br>
+        <span>안면도 호박고구마</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div th:replace="/common/footer.html"></div>
+</body>
+</html>

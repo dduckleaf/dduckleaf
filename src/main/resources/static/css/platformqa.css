@@ -1,0 +1,104 @@
+@charset "UTF-8";
+
+.main-content div.qna-wrap {
+    height: 1400px;
+}
+
+.main-content div.title-div, .main-content div.cont-div {
+    width: 70%;
+    margin: 30px auto 0;
+}
+
+.main-content div.cont-div .basic-btn {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+}
+
+.main-content div.cont-div table {
+    width: 100%;
+    border-top: 1px solid black;
+    margin-bottom: 20px;
+}
+
+.main-content div.cont-div th {
+    text-align: center;
+    height: 50px;
+    background: #efefef;
+    border-bottom: 1px solid #ababab;
+}
+
+.main-content div.cont-div td {
+    text-align: center;
+    height: 30px;
+    /*border-bottom: 1px solid #ccc;*/
+}
+
+tr.title, td.no, td.category, td.title {
+    border-bottom: none !important;
+}
+
+td.no, td.category, td.title, td.author, td.date, td.count {
+    background: #efefef;
+}
+
+.main-content div.cont-div table, .main-content div.cont-div th, .main-content div.cont-div td {
+    /*border: 1px solid red;*/
+}
+
+#paging {
+    margin-bottom: 20px;
+}
+
+#paging button {
+    border: none;
+    background: none;
+}
+
+#search-form {
+    text-align: center;
+}
+
+/*
+.regist-form {
+    height: 550px;
+    padding: 40px 80px 0;
+    border-radius: 10px;
+    border: 1px solid #ababab;
+}
+
+.regist-wrap {
+    width: 100%;
+    text-align: right;
+    !*border: 1px solid red;*!
+}
+
+.regist-form label {
+    float: left;
+}
+
+.regist-form input, select#categoryNo, textarea#content {
+    width: 95%;
+    border-radius: 5px;
+    border: 1px solid #ababab;
+}
+
+textarea#content {
+    height: 300px;
+}
+
+.category-form, .content-form {
+    margin-top: 25px;
+}
+
+.content-form label {
+    vertical-align: top;
+}*/
+
+.align_l {
+    text-align: left !important;
+}
+
+.active {
+    border-bottom: none;
+}

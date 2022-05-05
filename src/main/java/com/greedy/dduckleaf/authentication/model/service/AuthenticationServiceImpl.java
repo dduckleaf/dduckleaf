@@ -3,7 +3,9 @@ package com.greedy.dduckleaf.authentication.model.service;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
 import com.greedy.dduckleaf.member.entity.Member;
+import com.greedy.dduckleaf.member.entity.ProfileAttachment;
 import com.greedy.dduckleaf.member.repository.MemberRepository;
+import com.greedy.dduckleaf.member.repository.ProfileAttachmentForMemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,30 +23,45 @@ import java.util.Map;
 public class AuthenticationServiceImpl implements AuthenticationService{
 
     private final MemberRepository memberRepository;
+    private final ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public AuthenticationServiceImpl(MemberRepository memberRepository, ModelMapper modelMapper) {
+    public AuthenticationServiceImpl(MemberRepository memberRepository, ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository, ModelMapper modelMapper) {
         this.memberRepository = memberRepository;
+        this.profileAttachmentForMemberRepository = profileAttachmentForMemberRepository;
         this.modelMapper = modelMapper;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        MemberDTO loginMember = new MemberDTO();
 
         Member member = memberRepository.findMemberByMemberId(username);
 
         if(member == null) {
             throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
         }
-        loginMember = modelMapper.map(member, MemberDTO.class);
+
+        ProfileAttachment profileAttachment = profileAttachmentForMemberRepository.findProfileAttachmentByMember_memberNo(member.getMemberNo());
+
+        MemberDTO loginMember = modelMapper.map(member, MemberDTO.class);
+
+        String memberRole = "";
+
+        if(member.getMemberRole() == 1) {
+            memberRole = "ADMIN";
+        } else {
+            memberRole = "MEMBER";
+        }
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(member.getMemberRole()));
+        authorities.add(new SimpleGrantedAuthority(memberRole));
 
-        return new CustomUser(loginMember, authorities);
+        CustomUser user = new CustomUser(loginMember, authorities);
+        user.setProfileThumbnailPath(profileAttachment.getProfileThumbnailPath());
+
+        return user;
     }
 
     @Override
@@ -61,6 +78,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         memberPermitList.add("/member/update");
         memberPermitList.add("/member/logout");
         memberPermitList.add("/member/delete");
+        memberPermitList.add("/main/main");
 
         /* 관리자 권한 */
         /* 관리자만 할 수 있는 url 예)관리자페이지*/

@@ -2,7 +2,13 @@ package com.greedy.dduckleaf.funding.entity;
 
 import javax.persistence.*;
 
-@Entity(name = "ProjectShippingFeeForFunding")
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@Entity(name = "ProjectShippingFeeForFundingRegist")
 @Table(name = "TBL_PROJECT_SHIPPING_FEE")
 public class ProjectShippingFee {
 
@@ -26,4 +32,14 @@ public class ProjectShippingFee {
     @Column(name = "PROJECT_NO")
     private int projectNo;
 
+    @Override
+    public String toString() {
+        return "ProjectShippingFee{" +
+                "shppingFeeNo=" + shppingFeeNo +
+                ", shippingFee=" + shippingFee +
+                ", extraShippingFee=" + extraShippingFee +
+                ", extraShippingFeeInfo='" + extraShippingFeeInfo + '\'' +
+                ", projectNo=" + projectNo +
+                '}';
+    }
 }

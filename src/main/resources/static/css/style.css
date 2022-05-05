@@ -20709,7 +20709,7 @@ progress {
 /* ================== 본문영역지정 ==================== */
 .main-content {
     /* border: 1px solid red; */
-    width:70%;
+    width:100%;
     margin-left: auto;
     margin-right: auto;
 }

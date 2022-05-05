@@ -1,0 +1,61 @@
+ #keyword{
+    font-weight: 1000;
+     font-size: 28px;
+}
+  #search-result{
+      color: #ababab;
+      font-weight: 600;
+      font-size: 25px;
+  }
+ .bl{
+     border: 1px solid red;
+ }
+ .project-list-box{
+     height: 400px;
+ }
+ .project-progress {
+     -webkit-appearance: none;
+     width: 200px;
+     height: 5px;
+     margin-bottom: -2%;
+ }
+ .product-img {
+     position: relative;
+     overflow: hidden;
+ }
+ .img-zoom-effect {
+     position: relative;
+     overflow: hidden;
+ }
+ .img-full {
+     width: 100%;
+     overflow: hidden;
+     -o-object-fit: cover;
+     object-fit: cover;
+     -o-object-position: center center;
+     object-position: center center;
+ }
+ .project-list-paging{
+     font-size: 1em;
+     text-align: center;
+ }
+ #paging {
+     margin-bottom: 20px;
+ }
+
+ #paging button {
+     border: none;
+     background: none;
+ }
+
+ /* 진행률 바  */
+ /* progress bar 하단 텍스트 */
+ .progressbar-list {
+     float: left;
+     color: #BAC34E;
+ }
+ .progressName {
+     float: right;
+     font-size: 10pt;
+     color: #ABAEAB;
+ }

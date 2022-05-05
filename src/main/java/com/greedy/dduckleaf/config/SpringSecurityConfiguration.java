@@ -34,7 +34,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**", "/js/**", "images/**");
+        web.ignoring().antMatchers("/css/**", "/js/**", "/images/**", "/upload/**");
     }
 
     @Override
@@ -46,6 +46,8 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable()
                 .authorizeHttpRequests()
+                .antMatchers("/member/login").permitAll()
+
 //                .antMatchers(memberPermitList.toArray(new String[memberPermitList.size()])).hasAnyRole("MEMBER", "ADMIN")
 //                .antMatchers(adminPermitList.toArray(new String[adminPermitList.size()])).hasRole("ADMIN")
                 .anyRequest().permitAll()

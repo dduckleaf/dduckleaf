@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>개별 프로젝트 상세조회 - 진행중</title>
+    <meta name="robots" content="noindex, follow"/>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico" />
+
+    <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+    <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}" />
+
+    <!-- Plugin CSS (Global Plugins Files) -->
+    <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+    <link rel="stylesheet" th:href="@{ /css/project.css }">
+    <link rel="stylesheet" th:href="@{ /css/projectapplication.css }">
+    <!-- 신기한 모달 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div class="main-wrapper">
+    <div th:replace="/common/adminheader.html"></div>
+    <!-- Begin Main Content Area  -->
+    <main class="main-content">
+        <div class="single-product-area section-space-top-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="single-product-img h-100">
+                            <div class="swiper-container single-product-slider">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <a href="/images/product/large-size/2-1-555x645.jpg" class="single-img gallery-popup">
+                                            <img class="img-full" src="/images/project/potato.png" alt="Product Image">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="product-thumb-with-content row">
+                            <div class="col-12 order-lg-1 order-2 pt-10 pt-lg-0">
+                                <div class="single-product-content">
+                                    <input type="hidden" id="projectApplicationNo" name="projectApplicationNo" th:value="${ detail.projectApplicationNo }">
+                                    <input type="hidden" th:value="${ detail.project.projectNo }">
+                                    <div class="title" th:text="${ detail.projectBasicInfo.projectName }"></div>
+                                    <div class="infoBox2 rounded-1">
+                                        <div>
+                                            <a></a><span class="short-desc">파머 정보</span>
+                                        </div>
+                                        <div class="farmerCorp">
+                                            <a th:text="${ detail.farmer.farmerName }"></a>
+                                        </div>
+                                        <div class="farmerCorp">
+                                            <a></a><span class="info">희망 오픈 예정일</span>
+                                        </div>
+                                        <div class="farmerCorp">
+                                            <a class="info" th:text="${ detail.project.openDate }">
+                                        </div>
+                                    </div>
+                                    <ul class="quantity-with-btn pb-7">
+                                        <button class="basic-btn btn1 btn-fill-green rounded-1 detail" id="detail" style="height: 60px; font-size: 15pt;">신청 정보 열람
+                                            <img src="/images/common/rightarrow.png" alt="Product Image">
+                                        </button>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><br><br><br>
+        <th:block th:if="${ detail.projectApplicationCategory == '심사대기중' }">
+            <div style="width: 300px; margin: auto !important;">
+                <button class="basic-btn medium-btn examination" style= "color: #FFF; background: #BAC34E;">심사하기</button>
+                <button class="basic-btn btn3 medium-btn" onclick="location.href='/project/examination/list'">목록으로</button>
+            </div><br><br>
+        </th:block>
+        <th:block th:if="${ detail.projectApplicationCategory == '심사중' }">
+            <div style="width: 500px; margin: auto !important; align-content: center">
+                <button class="basic-btn medium-btn" style= "color: #FFF; background: #BAC34E;">승인</button>
+                <button class="basic-btn medium-btn" style= "color: #FFF; background: #BAC34E;">반려</button>
+                <button class="basic-btn btn3 medium-btn" onclick="location.href='/project/examination/list'">목록으로</button>
+            </div><br><br>
+        </th:block>
+    </main>
+</div>
+<script>
+
+    $(".detail").click(function () {
+
+        const projectApplicationNo = $("#projectApplicationNo").val();
+        console.log(projectApplicationNo);
+
+       location.href='/project/examination/detail/' + projectApplicationNo;
+    });
+
+    $(".examination").click(function () {
+
+        const projectApplicationNo = $("#projectApplicationNo").val();
+        console.log(projectApplicationNo);
+
+        location.href='/project/examination/modify/' + projectApplicationNo;
+
+    });
+
+</script>
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
+
+<!--Plugins JS-->
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
+
+<!--Main JS (Common Activation Codes)-->
+<script th:src="@{ /js/main.js }"></script>
+
+</body>
+
+</html>

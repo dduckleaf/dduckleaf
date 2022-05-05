@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}" />
+
+    <!-- Plugin CSS (Global Plugins Files) -->
+    <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css }">
+    <link rel="stylesheet" th:href="@{/css/projectnotice.css }">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div class="main-wrapper">
+<div th:include="/common/menubar.html"></div>
+
+<div class="mypage" th:replace="/common/project.html"></div>
+
+<!-- Begin 게시판영역 -->
+    <div class="tab-body-area">
+        <div class="title-div">
+            <span class="text-title">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">공지사항</span>
+                <hr width="100%">
+                <div class="notice-wrap">
+                    <div class="cont-div">
+                        <div id="projectNoticeList">
+                            <table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
+                                <tr>
+                                    <th>번호</th>
+                                    <th>제목</th>
+                                    <th>작성일</th>
+                                    <th>조회수</th>
+                                </tr>
+                                <tr th:each="project : ${ projectNoticeList }" class="noticeList" id="noticeList">
+                            <!--                    <input type="hidden" th:text="${ project.projectNoticeNo }">-->
+                                    <td th:text="${ project.projectNoticeNo }"></td>
+                                    <td th:text="${ project.projectNoticeTitle }"></td>
+                                    <td th:text="${ project.registDate }"></td><!--이름을 넣어야하는데..어떻게 들고오나....수바-->
+                                    <td th:text="${ project.projectNoticeCount }"></td>
+                                </tr>
+                            </table>
+                        </div><br>
+                        <button class="basic-btn small-btn btn1 registProjectNotice" type="button">작성하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<td th:te></td>-->
+    <div id="pagination" class="pagenumbers" align="center">
+        <!-- 맨 앞으로 이동 -->
+        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.startPage}} + '\''"
+                th:disabled="${ projectNoticeList.first }" class="paging-btn first"><<</button>
+
+        <!-- 이전 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.currentPage - 1}} + '\''"
+                th:disabled="${ projectNoticeList.first }" class="paging-btn prev"><</button>
+
+        <!-- 숫자 버튼-->
+        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+            <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${page}} + '\''"
+                    th:text="${ page }" th:disabled="${ paging.currentPage eq page}" class="paging-btn"></button>
+        </th:block>
+
+        <!-- 다음 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.currentPage + 1}} + '\''"
+                th:disabled="${ projectNoticeList.last}" class="paging-btn next">></button>
+
+        <!-- 맨 마지막으로 이동-->
+        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.endPage}} + '\''"
+                th:disabled="${ projectNoticeList.last }" class="paging-btn last">>></button>
+    </div>
+</div>
+
+<div th:replace="/common/footer.html"></div>
+<script>
+
+    $(".registProjectNotice").click(function() {
+
+        location.href='/project/notice/regist';
+    });
+
+    $("#back").click(function() {
+        // const projectNo =
+        location.href='/project/notice/list';
+    });
+    //요 친구가 조회해와야하는 필드명을 적는 곳
+    function projectNoticeData(projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate, projectNo) {
+
+        return {projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate, projectNo};
+    }
+    //컨틀롤러 메소드
+    function findProjectNoticeList() {
+        //컨트롤러 주소
+        fetch('/project/notice/list/{projectNo}').then(resonse => {
+            if (resonse.ok) {
+                return resonse.json();
+            }
+        }).then(json => {
+            let html = '';
+
+            if (!json.length) {
+                alert("암것도 없음");
+                console.log("암것도 없음");
+                html = '<td colspan="5">등록된 게시글이 없습니다.</td>';
+            } else {
+                json.forEach((projectNoticeData, idx) => {
+                    console.log("게시글있음");
+
+                });
+            }
+        });
+    }
+
+    /* 목록 눌러서 상세조회로 이동 */
+    /* 게시글을 클릭하면 해당 게시글 번호로 이동한다. */
+    if(document.querySelectorAll("#noticeList td")) {
+        const $tds = document.querySelectorAll("#noticeList td");
+        for( let i = 0; i < $tds.length; i++) {
+
+            $tds[i].onclick = function() {
+                const projectNoticeNo = this.parentNode.children[0].innerText;
+                console.log(projectNoticeNo);
+
+                // document.getElementById("projectNoticeList").style.display = "none";
+                // document.getElementById("pagination").style.display = "none";
+                // document.getElementById("projectNoticeDetail").style.display = "block";
+
+                location.href = '/project/notice/detail/' + projectNoticeNo;
+
+            }
+        }
+    }
+
+
+</script>
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
+
+<!--Plugins JS-->
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
+</body>
+</html>

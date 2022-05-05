@@ -26,6 +26,8 @@
     <link rel="stylesheet" th:href="@{css/plugins/magnific-popup.min.css}"/>
 
     <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{css/style.css}"/>
+    <link rel="stylesheet" th:href="@{css/mainpage.css}"/>
     <link rel="stylesheet" href="../../static/css/style.css">
     <link rel="stylesheet" href="../../static/css/mainpage.css">
 
@@ -33,7 +35,7 @@
 
 <body>
 
-<div th:replace="/common/userheader.html"></div>
+<div th:replace="/common/menubar.html"></div>
 
 <!-- Begin Slider Area -->
 <div class="slider-area">
@@ -43,12 +45,12 @@
         <div class="swiper-wrapper">
             <div class="swiper-slide animation-style-01">
                 <div class="slide-inner bg-height">
-                    <img src="/images/main/banner.png">
+                    <img class="banner-img" src="/images/main/banner.png">
 
                 </div>
             </div>
             <div class="swiper-slide animation-style-01">
-                <div class="slide-inner bg-height">
+                <div class="slide-inner bg-height" >
                     <img src="/images/main/bean.png">
                 </div>
             </div>
@@ -333,22 +335,23 @@
 <!-- Global Vendor, plugins JS -->
 
 <!-- Vendor JS -->
-<script src="../../static/js/vendor/bootstrap.bundle.min.js"></script>
-<script src="../../static/js/vendor/jquery-3.5.1.min.js"></script>
-<script src="../../static/js/vendor/jquery-migrate-3.3.0.min.js"></script>
-<script src="../../static/js/vendor/modernizr-3.11.2.min.js"></script>
-<script src="../../static/js/vendor/jquery.waypoints.js"></script>
+<script th:src="@{/js/vendor/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/vendor/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/js/vendor/jquery-migrate-3.3.0.min.js}"></script>
+<script th:src="@{/js/vendor/modernizr-3.11.2.min.js}"></script>
+<script th:src="@{/js/vendor/jquery.waypoints.js}"></script>
+
 
 <!--Plugins JS-->
-<script src="../../static/js/plugins/wow.min.js"></script>
-<script src="../../static/js/plugins/jquery-ui.min.js"></script>
-<script src="../../static/js/plugins/swiper-bundle.min.js"></script>
-<script src="../../static/js/plugins/jquery.nice-select.js"></script>
-<script src="../../static/js/plugins/parallax.min.js"></script>
-<script src="../../static/js/plugins/jquery.magnific-popup.min.js"></script>
+<script th:src="@{/js/plugins/wow.min.js}"></script>
+<script th:src="@{/js/plugins/jquery-ui.min.js}"></script>
+<script th:src="@{/js/plugins/swiper-bundle.min.js}"></script>
+<script th:src="@{/js/plugins/jquery.nice-select.js}"></script>
+<script th:src="@{/js/plugins/parallax.min.js}"></script>
+<script th:src="@{/js/plugins/jquery.magnific-popup.min.js}"></script>
 
 <!--Main JS (Common Activation Codes)-->
-<script src="../../static/js/main.js"></script>
+<script th:src="@{/js/main.js}"></script>
 
 </body>
 

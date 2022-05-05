@@ -2,29 +2,34 @@ package com.greedy.dduckleaf.funding.entity;
 
 import javax.persistence.*;
 
-@Entity(name = "RewardShippingForFunding")
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@Entity(name = "RewardShippingForFundingInfo")
 @Table(name = "TBL_REWARD_SHIPPING")
 public class RewardShipping {
 
     @Id
     @Column(name = "REWARD_SHIPPING_NO")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int rewardShippingNo;
 
     @Column(name = "MEMBER_NO")
     private int memberNo;
 
-    @Column(name = "SHIPPING_DUE_DATE")
-    private java.sql.Date shippingDueDate;
-
     @Column(name = "PROJECT_NO")
     private int projectNo;
 
-    @Column(name = "FUNDING_INFO_NO")
-    private int fundingInfoNo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FUNDING_INFO_NO")
+    private Funding funding;
 
-    @Column(name = "COMPLETE_PAYMENT_NO")
-    private int completePaymentNo;
-
-
+    @Column(name = "SHIPPING_DUE_DATE")
+    private String shippingDueDate;
 }
+
+
+
+
