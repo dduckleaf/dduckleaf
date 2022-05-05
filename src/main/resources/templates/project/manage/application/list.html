@@ -70,19 +70,6 @@
             <button class="paging-btn last" th:onclick="'location.href=\'/project/examination/list?page=' + @{${paging.endPage}}  + '\''"
                     th:disabled="${ projectApplicationInfoList.last }">>></button>
         </div>
-        <!-- Begin 검색창 -->
-        <!--        <div class="searchbar" th:align="center">-->
-        <!--            <select id="category">-->
-        <!--                <option disabled selected>선택</option>-->
-        <!--                <option value="status">처리상태</option>-->
-        <!--                <option value="name">프로젝트명</option>-->
-        <!--                <option value="category">신고유형</option>-->
-        <!--                &lt;!&ndash;            <option th:each="bank : ${ bankList }" th:value="${bank.bankNo}" th:text="${bank.bankName}"></option>&ndash;&gt;-->
-        <!--            </select>-->
-        <!--            <input type="text" id="searchValue"> <button class="basic-btn small-btn btn1" id="search" th:onclick="searchFor()">검색</button>-->
-        <!--        </div>-->
-        <!-- 검색창 End here -->
-
         <!-- 게시판영역 End Here -->
     </div>
 </main>
@@ -103,8 +90,7 @@
 
             tds[i].onclick = function() {
                 const projectApplicationNo = this.parentNode.children[0].innerText;
-                console.log(projectApplicationNo);
-                alert(projectApplicationNo);
+
                 location.href = "/project/examination/review/" + projectApplicationNo;
             }
         }
