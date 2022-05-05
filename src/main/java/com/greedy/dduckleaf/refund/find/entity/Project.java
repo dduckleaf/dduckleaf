@@ -28,4 +28,7 @@ public class Project {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_NO")
     private RewardInfo rewardInfo;
+
+    @Column(name = "FARMER_NO")
+    private int farmerNo;
 }

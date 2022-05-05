@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 /**
  * <pre>
  * Class : RefundForFindController
@@ -69,8 +71,14 @@ public class RefundForFindController {
     }
 
     @GetMapping("/list/farmer")
-    public ModelAndView sendFarmerRefundList(ModelAndView mv) {
+    public ModelAndView sendFarmerRefundList(ModelAndView mv ,@AuthenticationPrincipal CustomUser user) {
 
+//        int memberNo = user.getMemberNo();
+        int memberNo = 8;
+
+        List<RefundingDTO> refundings = service.findFarmerRefundingList(memberNo);
+
+        mv.addObject("refundings", refundings);
         mv.setViewName("/refund/find/farmer/refundlist");
 
         return mv;
