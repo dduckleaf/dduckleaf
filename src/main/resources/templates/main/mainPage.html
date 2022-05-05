@@ -99,99 +99,25 @@
                                 <div class="widgets-item">
                                     <div class="swiper-container">
                                         <div class="swiper-wrapper" id="productrank">
-                                            <div th:each="project : ${ rankingList }">
-                                                <div class="swiper-slide">
+                                            <div class="swiper-slide">
+                                                <th:block th:each="project : ${ rankingList }">
                                                     <div class="product-list-item">
                                                         <div>
-                                                            <h2 class="ranking">1</h2>
+                                                            <h2 class="ranking">[[${ projectStat.count }]]</h2>
                                                         </div>
                                                         <div class="rank-content">
-                                                            <a class="rank-name" href="single-product.html" th:text="${ project.projectName }"></a>
+                                                            <a class="rank-name" href="single-product.html">[[${ project.projectName }]]</a>
                                                             <div class="price-box pb-1">
-                                                                <span class="rank-percent" th:text="${ project.achievementRate + '%' }"></span><span class="rank-compony" th:text="${ project.projectName }"></span>
+                                                                <span class="rank-percent">[[${ project.achievementRate }]]</span>%<span class="rank-compony">블랙푸드</span>
                                                             </div>
                                                         </div>
                                                         <div class="product-img img-zoom-effect">
                                                             <a href="single-product.html">
-                                                                <img class="img-full" id="rankingimg" th:src="@{images/main/grape.png}" alt="Product Images">
+                                                                <img class="img-full" id="rankingimg" th:src="@{images/main/bean.png}" alt="Product Images">
                                                             </a>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </div>
-
-
-                                            <div class="swiper-slide">
-                                                <div class="product-list-item">
-                                                    <div>
-                                                        <h2 class="ranking">2</h2>
-                                                    </div>
-                                                    <div class="rank-content">
-                                                        <a class="rank-name" href="single-product.html">콩먹으면 머리나요</a>
-                                                        <div class="price-box pb-1">
-                                                            <span class="rank-percent">800%</span><span class="rank-compony">블랙푸드</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-img img-zoom-effect">
-                                                        <a href="single-product.html">
-                                                            <img class="img-full" id="rankingimg" th:src="@{images/main/bean.png}" alt="Product Images">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="product-list-item">
-                                                    <div>
-                                                        <h2 class="ranking">3</h2>
-                                                    </div>
-                                                    <div class="rank-content">
-                                                        <a class="rank-name" href="single-product.html">면역력 강화에 탁월!</a>
-                                                        <div class="price-box pb-1">
-                                                            <span class="rank-percent">400%</span><span class="rank-compony">풍기인삼</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-img img-zoom-effect">
-                                                        <a href="single-product.html">
-                                                            <img class="img-full" id="rankingimg" th:src="@{images/main/ginseng.png}" alt="Product Images">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="product-list-item">
-                                                    <div>
-                                                        <h2 class="ranking">4</h2>
-                                                    </div>
-                                                    <div class="rank-content">
-                                                        <a class="rank-name" href="single-product.html">감자 사세요~</a>
-                                                        <div class="price-box pb-1">
-                                                            <span class="rank-percent">280%</span><span class="rank-compony">감자쿤</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-img img-zoom-effect">
-                                                        <a href="single-product.html">
-                                                            <img class="img-full" id="rankingimg" th:src="@{images/main/potato.png}" alt="Product Images">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="swiper-slide">
-                                                <div class="product-list-item">
-                                                    <div>
-                                                        <h2 class="ranking">5</h2>
-                                                    </div>
-                                                    <div class="rank-content">
-                                                        <a class="rank-name" href="single-product.html">홍시 드세요~</a>
-                                                        <div class="price-box pb-1">
-                                                            <span class="rank-percent">220%</span><span class="rank-compony">곶감말고홍시</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="product-img img-zoom-effect">
-                                                        <a href="single-product.html">
-                                                            <img class="img-full" id="rankingimg" th:src="@{images/main/persimmon.png}" alt="Product Images">
-                                                        </a>
-                                                    </div>
-                                                </div>
+                                                </th:block>
                                             </div>
                                         </div>
                                     </div>
@@ -200,112 +126,32 @@
                         </div>
                     </div>
                     <div class="col-lg-9 order-1">
-                        <div class="tab-content text-charcoal pt-8">
+                        <div class="tab-content text-charcoal pt-8" id="dduckleaf-recommend" align="left">
                             <div class="tab-pane fade show active" id="grid-view" role="tabpanel" aria-labelledby="grid-view-tab">
                                 <div class="product-grid-view row related">
                                     <h2 class="widgets-title mb-5"><a style="font-size: 20pt; font-weight: bold;">떡잎추천</a></h2>
-                                    <div class="col-lg-4 col-sm-6 mainproduct">
-                                        <div class="product-item">
-                                            <div class="product-img img-zoom-effect">
-                                                <a href="single-product.html">
-                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
-                                                </a>
-                                            </div>
-                                            <div class="product-content">
-                                                <a class="product-name" href="single-product.html">산지직송 짭짤이 토마토</a><br><br>
-                                                <div class="price-box pb-1">
-                                                    <span class="new-price">짭짤 토메이로</span>
+                                    <th:block th:each="project : ${ dduckleafRecommendList }">
+                                        <div class="col-lg-4 col-sm-6 mainproduct" style="margin-right: 30px; width: 300px;">
+                                            <div class="product-item">
+                                                <div class="product-img img-zoom-effect">
+                                                    <a href="single-product.html">
+                                                        <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
+                                                    </a>
                                                 </div>
-                                                <progress class="progress" value="55" max="100"></progress>
-                                                <a class="progressbar">55%</a><a class="progressbar1">22일 남음</a>
+                                                <div class="product-content">
+                                                    <a class="product-name" href="single-product.html" style="margin-left: 20px;">[[${ project.projectName }]]</a><br><br>
+                                                    <div class="price-box pb-1" style="margin-left: 20px;">
+                                                        <span class="new-price">짭짤 토메이로</span>
+                                                    </div>
+                                                    <progress class="progress" th:value="${ project.achievementRate }" max="100"></progress>
+                                                    <a class="progressbar">[[${ project.achievementRate }]]%</a><a class="progressbar1">22일 남음</a>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="product-item">
-                                            <div class="product-img img-zoom-effect">
-                                                <a href="single-product.html">
-                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
-                                                </a>
-                                            </div>
-                                            <div class="product-content">
-                                                <a class="product-name" href="single-product.html">복숭복숭아</a><br><br>
-                                                <div class="price-box pb-1">
-                                                    <span class="new-price">과즙상</span>
-                                                </div>
-                                                <progress class="progress" value="84" max="100"></progress>
-                                                <a class="progressbar">84%</a><a class="progressbar1">19일 남음</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="product-item">
-                                            <div class="product-img img-zoom-effect">
-                                                <a href="single-product.html">
-                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
-                                                </a>
-                                            </div>
-                                            <div class="product-content">
-                                                <a class="product-name" href="single-product.html">국내산 송이버섯</a><br><br>
-                                                <div class="price-box pb-1">
-                                                    <span class="new-price">향긋</span>
-                                                </div>
-                                                <progress class="progress" value="100" max="100"></progress>
-                                                <a class="progressbar">100%</a><a class="progressbar1">15일 남음</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="product-item">
-                                            <div class="product-img img-zoom-effect">
-                                                <a href="single-product.html">
-                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
-                                                </a>
-                                            </div>
-                                            <div class="product-content">
-                                                <a class="product-name" href="single-product.html">대파김치 담가 드세요~</a><br><br>
-                                                <div class="price-box pb-1">
-                                                    <span class="new-price">쪽파보다대파</span>
-                                                </div>
-                                                <progress class="progress" value="78" max="100"></progress>
-                                                <a class="progressbar">78%</a><a class="progressbar1">18일 남음</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="product-item">
-                                            <div class="product-img img-zoom-effect">
-                                                <a href="single-product.html">
-                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
-                                                </a>
-                                            </div>
-                                            <div class="product-content">
-                                                <a class="product-name" href="single-product.html">비타민 충전!</a><br><br>
-                                                <div class="price-box pb-1">
-                                                    <span class="new-price">아이셔라</span>
-                                                </div>
-                                                <progress class="progress" value="43" max="100"></progress>
-                                                <a class="progressbar">43%</a><a class="progressbar1">23일 남음</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="product-item">
-                                            <div class="product-img img-zoom-effect">
-                                                <a href="single-product.html">
-                                                    <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
-                                                </a>
-                                            </div>
-                                            <div class="product-content">
-                                                <a class="product-name" href="single-product.html">건강챙기려면 현미</a><br><br>
-                                                <div class="price-box pb-1">
-                                                    <span class="new-price">잡곡이 좋아</span>
-                                                </div>
-                                                <progress class="progress" value="91" max="100"></progress>
-                                                <a class="progressbar">91%</a><a class="progressbar1">6일 남음</a>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </th:block>
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -315,6 +161,7 @@
         </div>
     </main>
     <!-- Main Content Area End Here -->
+    <footer th:replace="/common/footer.html"></footer>
 </div>
 <!-- Product Area End Here -->
 
