@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -58,6 +60,28 @@ class RefundingForFindServiceTest {
         //then
         assertNotNull(refundingDTO);
         System.out.println("refundingDTO = " + refundingDTO);
+    }
+    @Test
+    public void findFarmerRefundingList_test() {
+
+        //given
+        int memberNo = 8;
+
+        //when
+        List<RefundingDTO> refundings = service.findFarmerRefundingList(memberNo);
+
+        //then
+        assertNotNull(refundings);
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        refundings.forEach(System.out::println);
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
     }
 }
 

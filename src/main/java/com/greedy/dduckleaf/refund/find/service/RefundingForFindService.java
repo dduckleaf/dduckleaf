@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * <pre>
  * Class : RefundingService
@@ -52,6 +55,10 @@ public class RefundingForFindService {
         return mapper.map(refunding, RefundingDTO.class);
     }
 
+    public List<RefundingDTO> findFarmerRefundingList(int memberNo) {
+
+        return refundingRepo.findByProject_farmerNo(memberNo).stream().map(refunding -> mapper.map(refunding, RefundingDTO.class)).collect(Collectors.toList());
+    }
 }
 
 

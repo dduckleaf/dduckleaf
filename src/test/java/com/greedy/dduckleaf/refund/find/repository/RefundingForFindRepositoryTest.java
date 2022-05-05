@@ -62,6 +62,27 @@ class RefundingForFindRepositoryTest {
         assertNotNull(refunding);
         System.out.println("refunding = " + refunding);
     }
+
+    @Test
+    public void test1() {
+
+        //given
+        int farmerNo = 8;
+
+        //when
+        List<Refunding> refundings = repo.findByProject_farmerNo(farmerNo);
+
+        //then
+        assertNotNull(refundings);
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        refundings.forEach(System.out::println);
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+    }
 }
 
 
