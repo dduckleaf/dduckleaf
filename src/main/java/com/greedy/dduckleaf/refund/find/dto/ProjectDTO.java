@@ -13,4 +13,5 @@ public class ProjectDTO {
     private String projectName;
     private RewardInfoDTO rewardInfo;
     private ProjectProgressStatusDTO progressStatus;
+    private int farmerNo;
 }
