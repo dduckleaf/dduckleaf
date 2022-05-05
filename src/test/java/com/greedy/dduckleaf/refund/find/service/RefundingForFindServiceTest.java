@@ -50,7 +50,7 @@ class RefundingForFindServiceTest {
     public void findRefundingInfo_test() {
 
         //given
-        int refundNo = 31;
+        int refundNo = 33;
 
         //when
         RefundingDTO refundingDTO = service.findRefundingInfo(refundNo);
