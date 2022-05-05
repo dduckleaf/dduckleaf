@@ -1,7 +1,10 @@
 package com.greedy.dduckleaf.refund.examine.controller;
 
+import com.greedy.dduckleaf.refund.examine.service.RefundingForFarmerExamineService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -21,9 +24,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/refund/examine")
 public class RefundingExamineController {
 
+    @Autowired
+    private RefundingForFarmerExamineService service;
 
-    @GetMapping("/farmer/confirm")
-    public String farmerConfirmRefunding() {
+    @GetMapping("/farmer/confirm/{refundNo}")
+    public String farmerConfirmRefunding(@PathVariable int refundNo) {
+
+        service.confirmRefunding(refundNo);
 
         return "redirect:/refund/find/list/farmer";
     }

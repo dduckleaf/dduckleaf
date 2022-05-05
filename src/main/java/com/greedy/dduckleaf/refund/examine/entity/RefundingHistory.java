@@ -30,7 +30,7 @@ public class RefundingHistory {
     private int refundingStatusNo;
 
     @Column(name = "HISTORY_CATEGORY")
-    private String hitoryCategory;
+    private String historyCategory;
 
     @Column(name = "REFUNDING_AMOUNT")
     private int refundingAmount;
