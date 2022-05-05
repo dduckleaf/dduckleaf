@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.refund.regist.entity;
+package com.greedy.dduckleaf.refund.examine.entity;
 
 import lombok.*;
 
@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Setter
 @Getter
 @ToString
-@Entity(name = "RefundingHistoryForRefundingRegist")
+@Entity(name = "RefundingHistoryForFarmerExamine")
 @Table(name = "TBL_REFUNDING_HISTORY")
 public class RefundingHistory {
 
@@ -21,16 +21,16 @@ public class RefundingHistory {
     private int refundingHisotryNo;
 
     @Column(name = "MANAGER_TYPE")
-    private String magagerType;
+    private String managerType;
 
     @Column(name = "REFUNDING_HISTORY_DATE")
     private String refundingHistoryDate;
 
     @Column(name = "REFUNDING_STATUS_NO")
-    private int refundingStatus;
+    private int refundingStatusNo;
 
     @Column(name = "HISTORY_CATEGORY")
-    private String historyCategory;
+    private String hitoryCategory;
 
     @Column(name = "REFUNDING_AMOUNT")
     private int refundingAmount;
@@ -45,21 +45,8 @@ public class RefundingHistory {
     private int refundingInfoNo;
 
     @Column(name = "REFUND_OBJECTION_NO")
-    private int refundObjectionNo;
+    private int refundingObjectionNo;
 
     @Column(name = "REFUNDING_MEMBER_NO")
     private int refundingMemberNo;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

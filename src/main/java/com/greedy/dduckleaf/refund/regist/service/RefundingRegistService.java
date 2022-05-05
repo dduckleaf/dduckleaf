@@ -66,7 +66,7 @@ public class RefundingRegistService {
 
         RefundingHistory history = new RefundingHistory();
         history.setRefundingHistoryDate(date);
-        history.setRefundingStatus("환불신청");
+        history.setRefundingStatus(1);
         history.setHistoryCategory("신청");
         history.setRefundingAmount(fundingInfo.getFundingAmount());
         history.setRefundingHistoryCategory("환불신청");
