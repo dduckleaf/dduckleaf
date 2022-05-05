@@ -63,7 +63,7 @@ public class RefundForFindController {
     public ModelAndView refundDetailPage(ModelAndView mv, @PathVariable int refundNo) {
 
         RefundingDTO refunding = service.findRefundingInfo(refundNo);
-        System.out.println("refunding = " + refunding);
+
         mv.addObject("refunding", refunding);
         mv.setViewName("/refund/find/member/refunddetail");
 
@@ -81,6 +81,16 @@ public class RefundForFindController {
         mv.addObject("refundings", refundings);
         mv.setViewName("/refund/find/farmer/refundlist");
 
+        return mv;
+    }
+
+    @GetMapping("/detail/farmer/{refundNo}")
+    public ModelAndView refundDetailFarmerPage(ModelAndView mv, @PathVariable int refundNo) {
+
+        RefundingDTO refunding = service.findRefundingInfo(refundNo);
+
+        mv.addObject("refunding", refunding);
+        mv.setViewName("/refund/find/farmer/refunddetail");
         return mv;
     }
 }

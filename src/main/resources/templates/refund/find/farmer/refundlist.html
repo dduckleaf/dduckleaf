@@ -63,108 +63,19 @@
 							<th>주문일</th>
 							<th>서포터</th>
 							<th>펀딩 금액</th>
+							<th>리워드단위</th>
 							<th>수량</th>
 							<th></th>
 						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>환불요청</td>
-							<td>2022-03-03</td>
-							<td>h99w**</td>
-							<td>100000원</td>
-							<td>호박고구마 x 4박스</td>
-							<td>123421321</td>
-							<td><button class="basic-btn btn1 small-btn">확인하기</button></td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>환불요청</td>
-							<td>2022-03-03</td>
-							<td>h99w**</td>
-							<td>100000원</td>
-							<td>호박고구마 x 4박스</td>
-							<td>123421321</td>
-							<td><button class="basic-btn btn1 small-btn">확인하기</button></td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>환불요청</td>
-							<td>2022-03-03</td>
-							<td>h99w**</td>
-							<td>100000원</td>
-							<td>호박고구마 x 4박스</td>
-							<td>123421321</td>
-							<td><button class="basic-btn btn1 small-btn">확인하기</button></td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>환불완료</td>
-							<td>2022-03-03</td>
-							<td>h99w**</td>
-							<td>100000원</td>
-							<td>호박고구마 x 4박스</td>
-							<td>123421321</td>
-							<td><button class="basic-btn btn1 small-btn">확인하기</button></td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>환불거절</td>
-							<td>2022-03-03</td>
-							<td>h99w**</td>
-							<td>100000원</td>
-							<td>호박고구마 x 4박스</td>
-							<td>123421321</td>
-							<td><button class="basic-btn btn1 small-btn">확인하기</button></td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>환불요청</td>
-							<td>2022-03-03</td>
-							<td>h99w**</td>
-							<td>100000원</td>
-							<td>호박고구마 x 4박스</td>
-							<td>123421321</td>
-							<td><button class="basic-btn btn1 small-btn">확인하기</button></td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>환불요청</td>
-							<td>2022-03-03</td>
-							<td>h99w**</td>
-							<td>100000원</td>
-							<td>호박고구마 x 4박스</td>
-							<td>123421321</td>
-							<td><button class="basic-btn btn1 small-btn">확인하기</button></td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>환불완료</td>
-							<td>2022-03-03</td>
-							<td>h99w**</td>
-							<td>100000원</td>
-							<td>호박고구마 x 4박스</td>
-							<td>123421321</td>
-							<td><button class="basic-btn btn1 small-btn">확인하기</button></td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>환불거절</td>
-							<td>2022-03-03</td>
-							<td>h99w**</td>
-							<td>100000원</td>
-							<td>호박고구마 x 4박스</td>
-							<td>123421321</td>
-							<td><button class="basic-btn btn1 small-btn">확인하기</button></td>
-						</tr>
-						<tr>
-							<td><input type="hidden" value="1"></td>
-							<td>환불요청</td>
-							<td>2022-03-03</td>
-							<td>h99w**</td>
-							<td>100000원</td>
-							<td>호박고구마 x 4박스</td>
-							<td>123421321</td>
-							<td><button class="basic-btn btn1 small-btn">확인하기</button></td>
+						<tr th:each="refunding : ${refundings}">
+							<td><input type="hidden" th:value="${refunding.refundingInfoNo}"></td>
+							<td th:text="${refunding.refundingStatus.refundingStatusName}"></td>
+							<td th:text="${refunding.funding.fundingDate}"></td>
+							<td th:text="${refunding.refundingMemberName}"></td>
+							<td th:text="${refunding.funding.fundingAmount}"></td>
+							<td th:text="${refunding.project.rewardInfo.rewardUnit}"></td>
+							<td th:text="${refunding.funding.rewardAmount}">EA</td>
+							<td><button class="basic-btn btn1 small-btn" th:onclick="'location.href=\'/refund/find/detail/farmer/' + @{${refunding.refundingInfoNo}} + '\''">확인하기</button></td>
 						</tr>
 					</table>
 				</div><br>
@@ -207,11 +118,6 @@
 
             tds[i].onmouseout = function () {
                 this.parentNode.style.backgroundColor = "#fff";
-            }
-
-            tds[i].onclick = function () {
-                const refundNo = this.parentNode.children[0].children[0].value;
-                location.href = "/refund/find/farmer/detail/" + refundNo;
             }
         }
     }
