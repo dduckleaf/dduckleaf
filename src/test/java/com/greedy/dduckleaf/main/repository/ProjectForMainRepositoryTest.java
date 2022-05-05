@@ -10,7 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -71,5 +77,30 @@ class ProjectForMainRepositoryTest {
         //then
         rankingList.forEach(System.out::println);
         assertNotNull(rankingList);
+    }
+
+    @Test
+    @DisplayName("남은 일수 구하기 테스트")
+    public void diffDayTest() throws ParseException {
+
+        //given
+        int projectNo = 5;
+
+        //when
+        Project project = projectForMainRepository.findById(projectNo).get();
+        String endDate = project.getEndDate().replace("-","");
+        String nowDate = java.sql.Date.valueOf(LocalDate.now()).toString().replace("-","");
+
+        String format = "yyyyMMdd";
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.KOREA);
+        Date end = simpleDateFormat.parse(endDate);
+        Date now = simpleDateFormat.parse(nowDate);
+
+        long diffSec = Math.abs(end.getTime() - now.getTime());
+        long diffDay = TimeUnit.DAYS.convert(diffSec, TimeUnit.MILLISECONDS);
+
+        //then
+        System.out.println("day = " + diffDay);
     }
 }

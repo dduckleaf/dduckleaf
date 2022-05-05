@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.text.ParseException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -31,7 +33,7 @@ class MainServiceTest {
 
     @Test
     @DisplayName("메인 페이지에 보여줄 리스트 조회")
-    public void findMainPageListTest() {
+    public void findMainPageListTest() throws ParseException {
 
         //given
 
