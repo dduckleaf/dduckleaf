@@ -108,7 +108,7 @@
                                                         <div class="rank-content">
                                                             <a class="rank-name" href="single-product.html">[[${ project.projectName }]]</a>
                                                             <div class="price-box pb-1">
-                                                                <span class="rank-percent">[[${ project.achievementRate }]]</span>%<span class="rank-compony">블랙푸드</span>
+                                                                <span class="rank-percent">[[${ project.achievementRate }]]%</span><span class="rank-compony" style="margin-left: 10px;">[[${ project.farmer.businessName }]]</span>
                                                             </div>
                                                         </div>
                                                         <div class="product-img img-zoom-effect">
@@ -141,10 +141,10 @@
                                                 <div class="product-content">
                                                     <a class="product-name" href="single-product.html" style="margin-left: 20px;">[[${ project.projectName }]]</a><br><br>
                                                     <div class="price-box pb-1" style="margin-left: 20px;">
-                                                        <span class="new-price">짭짤 토메이로</span>
+                                                        <span class="new-price">[[${ project.farmer.businessName }]]</span>
                                                     </div>
                                                     <progress class="progress" th:value="${ project.achievementRate }" max="100"></progress>
-                                                    <a class="progressbar">[[${ project.achievementRate }]]%</a><a class="progressbar1">22일 남음</a>
+                                                    <a class="progressbar">[[${ project.achievementRate }]]%</a><a class="progressbar1">[[${ project.deadLine }]]일 남음</a>
                                                 </div>
                                             </div>
                                         </div>
