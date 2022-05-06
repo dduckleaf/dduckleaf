@@ -10,5 +10,5 @@ import lombok.*;
 public class RefundAccountDTO {
 
     private int bankCode;
-    private int accountNo;
+    private String accountNo;
 }
