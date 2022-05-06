@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/settlement.css}">
+</head>
+<body>
+<main style="width: 1920px">
+    <div class="row">
+        <div th:replace="/common/adminheader.html"></div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <div th:replace="/project/manage/end/submenu.html"></div>
+        </div>
+        <div class="col-10">
+            <div class="body-area">
+                <div class="title-div">
+                        <span class="text-title">
+                            <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">정산금 관리</span>
+                    <hr width="100%">
+                </div>
+                <div>
+                    <div class="step-block" align="center">
+                        정산금계산
+                        <br>
+                        <button class="basic-btn small-btn btn5">정산금 계산</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+</html>
