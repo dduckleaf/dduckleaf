@@ -116,14 +116,34 @@
 		</div>
 		<div style="text-align: right">
 			<button class="round-corners" onclick="location.href='/refund/find/member/list'">뒤로가기</button>
-			
 		</div>
+<!--		<th:block th:if="${refunding.refundingStatus.refundingStatusNo eq '3'}">-->
+			<button id="refunding-refuse-objection">이의신청</button>
+<!--		</th:block>-->
 	</div>
 </div>
-
-
-
 <div th:replace="/common/footer.html"></div>
+<script>
 
+	const $objection = document.getElementById("refunding-refuse-objection");
+	if($objection) {
+		$objection.onclick = function () {
+			Swal.fire({
+				title: '플랫폼에 심사요청을 보내시겠습니까?',
+				text: "무분별한 심사요청은 제재의 원인이 될 수 있습니다.",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#BAC34E',
+				cancelButtonColor: '#d33',
+				confirmButtonText: '확인',
+				cancelButtonText: '취소'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					location.href="/refund/examine/platform/objection" + [[${refunding.refundingInfoNo}]];
+				}
+			})
+		}
+	}
+</script>
 </body>
 </html>
