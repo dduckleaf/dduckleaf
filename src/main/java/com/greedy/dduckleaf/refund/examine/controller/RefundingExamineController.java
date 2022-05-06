@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.refund.examine.controller;
 
+import com.greedy.dduckleaf.refund.examine.dto.RefundingDTO;
 import com.greedy.dduckleaf.refund.examine.service.RefundingForFarmerExamineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,14 +36,12 @@ public class RefundingExamineController {
         return "redirect:/refund/find/list/farmer";
     }
 
-    @GetMapping("/farmer/refuse")
-    public String farmerRefuseRefunding() {
+    @PostMapping("/farmer/refuse")
+    public String farmerRefuseRefunding(RefundingDTO refundingDTO) {
 
+        service.refuseRefunding(refundingDTO);
         return "redirect:/refund/find/list/farmer";
     }
-
-
-
 }
 
 

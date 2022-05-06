@@ -80,6 +80,10 @@ public class RefundingForFarmerExamineService {
         refundingRepo.save(refunding);
         refundHistoryRepo.save(refundingHistory);
     }
+
+    public void refuseRefunding(RefundingDTO refundingDTO) {
+
+    }
 }
 
 
