@@ -49,4 +49,7 @@ public class RefundingHistory {
 
     @Column(name = "REFUNDING_MEMBER_NO")
     private int refundingMemberNo;
+
+    @Column(name = "MANAGER_NO")
+    private int managerNo;
 }

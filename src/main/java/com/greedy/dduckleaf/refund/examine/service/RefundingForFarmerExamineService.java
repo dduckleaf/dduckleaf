@@ -49,7 +49,7 @@ public class RefundingForFarmerExamineService {
      * @author 홍성원
      */
     @Transactional
-    public void confirmRefunding(int refundiNo) {
+    public void confirmRefunding(int refundiNo, int memberNo) {
 
         /* 환불내역에 상태를 환불 승인으로 변경 후 환불 종료일을 현재시간으로 수정한다. */
         Refunding refunding = refundingRepo.findById(refundiNo).get();
@@ -71,6 +71,7 @@ public class RefundingForFarmerExamineService {
         refundingHistory.setRefundingAmount(funding.getFundingAmount());
         refundingHistory.setRefundingHistoryCategory("환불신청");
         refundingHistory.setRefundingMemberNo(refunding.getMemberNo());
+        refundingHistory.setManagerNo(memberNo);
 
         /* 발송내역에 해당 펀딩 정보를 삭제한다. */
         shippingRepo.deleteById(shippingRepo.findByFunding_fundingInfoNo(funding.getFundingInfoNo()).getRewardShippingNo());
@@ -81,7 +82,46 @@ public class RefundingForFarmerExamineService {
         refundHistoryRepo.save(refundingHistory);
     }
 
+    /**
+     * refuseRefunding : 파머가 환불 거절 시 필요한 데이터를 삽입 또는 수정합니다.
+     * @param refundingDTO : 파머가 거절한 환불 정보를 전달받습니다.
+     *
+     * @author 홍성원
+     */
+    @Transactional
     public void refuseRefunding(RefundingDTO refundingDTO) {
+
+        /* 환불내역에 상태를 환불 거절로 수정한다. */
+        Refunding refunding = refundingRepo.findById(refundingDTO.getRefundingInfoNo()).get();
+        refunding.setRefundingStatus(refundingStatusRepo.findById(3).get());
+
+        Funding funding = fundingRepo.findById(refunding.getFunding().getFundingInfoNo()).get();
+
+        /* 환불이력에 승인 내역을 추가한다. */
+        RefundingHistory refundingHistory = new RefundingHistory();
+        refundingHistory.setManagerType("파머");
+        refundingHistory.setRefundingHistoryDate(getDateAndTime());
+        refundingHistory.setRefundingStatusNo(3);
+        refundingHistory.setHistoryCategory("거절");
+        refundingHistory.setRefundingInfoNo(refundingDTO.getRefundingInfoNo());
+        refundingHistory.setRefundingAmount(funding.getFundingAmount());
+        refundingHistory.setRefundingHistoryCategory("환불신청");
+        refundingHistory.setRefundingMemberNo(refunding.getMemberNo());
+        refundingHistory.setManagerNo(refundingDTO.getMemberNo());
+        refundingHistory.setRefundingRefuseReason(refundingDTO.getRefundingReason());
+
+        refundingRepo.save(refunding);
+        refundHistoryRepo.save(refundingHistory);
+    }
+
+    /**
+     * registObjection : 서포터가 파머에게 거절 된 환불 내역을 플랫폼에 이의신청 등록합니다.
+     * @param refundingNo : 서포터가 이의신청한 환불 번호를 전달받습니다.
+     *
+     * @author 홍성원
+     */
+    public void registObjection(int refundingNo) {
+
 
     }
 }
