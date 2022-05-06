@@ -79,8 +79,11 @@ public class ProjectApplicationService {
     @Transactional
     public void registProjectApplication(int farmerNo) {
 
+        FarmerInfo farmer = new FarmerInfo();
+        farmer.setMemberNo(farmerNo);
+
         Project openProject = new Project();
-        openProject.setFarmerNo(farmerNo);
+        openProject.setFarmer(farmer);
         openProject.setProgressStatus(1);
 
         projectRepository.save(openProject);

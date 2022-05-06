@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.projectapplication.projectexamination.controller;
 
+import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.projectapplication.dto.*;
@@ -8,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -71,6 +74,9 @@ public class ProjectExaminationController {
 
         ProjectApplicationInfoDTO detail = projectExaminationService.findProjectApplicationDetail(projectApplicationNo);
 
+        ProjectExamineHistoryDTO history = new ProjectExamineHistoryDTO();
+
+        mv.addObject("history", history);
         mv.addObject("detail", detail);
         mv.setViewName("project/manage/application/review");
 
@@ -263,4 +269,43 @@ public class ProjectExaminationController {
 
         return mv;
     }
+
+    @GetMapping("/approval/{projectApplicaionNo}")
+    public ModelAndView approveProject(ModelAndView mv, @PathVariable int projectApplicaionNo, @AuthenticationPrincipal CustomUser user) {
+
+        int adminNo = user.getMemberNo();
+
+        projectExaminationService.approveProject(projectApplicaionNo, adminNo);
+
+        mv.setViewName("redirect:/project/examination/list");
+
+        return mv;
+    }
+
+    @PostMapping("/reject")
+    public ModelAndView rejectProject(ModelAndView mv, ProjectApplicationInfoDTO projectApplicaion, ProjectExamineHistoryDTO history, @AuthenticationPrincipal CustomUser user) {
+
+        int adminNo = user.getMemberNo();
+
+        projectExaminationService.rejectProject(projectApplicaion.getProjectApplicationNo(), adminNo, history);
+
+        mv.setViewName("redirect:/project/examination/list");
+
+        return mv;
+    }
+
+//    @GetMapping("/reject/{projectApplicaionNo}")
+//    public ModelAndView rejectProject(ModelAndView mv, @PathVariable int projectApplicaionNo, String projectExamineDetailContent, @AuthenticationPrincipal CustomUser user) {
+//
+//        int adminNo = user.getMemberNo();
+//        System.out.println("projectApplicaionNo = " + projectApplicaionNo);
+//        projectExaminationService.rejectProject(projectApplicaionNo, adminNo, projectExamineDetailContent);
+//
+//        ProjectApplicationInfoDTO detail = projectExaminationService.findProjectApplicationDetail(projectApplicaionNo);
+//
+//        mv.addObject("detail", detail);
+//        mv.setViewName("redirect:project/manage/application/detail");
+//
+//        return mv;
+//    }
 }

@@ -168,7 +168,7 @@ public class MemberController {
         member.setMemberPwd(passwordEncoder.encode(member.getMemberPwd()));
         member.setPhone(phone);
         member.setEmail(email);
-        member.setMemberRole(1);
+        member.setMemberRole(2);
         member.setWithdrawalStatus("N");
 
         memberService.registMember(member);

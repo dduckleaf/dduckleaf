@@ -1,7 +1,5 @@
 package com.greedy.dduckleaf.platformqa.dto;
 
-import com.greedy.dduckleaf.platformqa.entity.Member;
-import com.greedy.dduckleaf.platformqa.entity.PlatformQaCategory;
 import lombok.*;
 
 @NoArgsConstructor

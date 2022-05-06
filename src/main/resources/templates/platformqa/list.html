@@ -53,7 +53,7 @@
                     <div class="modal-body" style="padding: 0;">
                         <div class="category-form">
                             <label for="categoryNo" style="display: inline-block; width: 90%; text-align: left;">문의 유형</label>
-                            <select name="platformQaCategoryNo" id="categoryNo" style="width: 90%;">
+                            <select name="qnaCategory.platformQaCategoryNo" id="categoryNo" style="width: 90%;">
                                 <option disabled selected>문의 유형</option>
                                 <th:block th:each="platformQaCategory : ${ platformQaCategoryList }">
                                     <option th:value="${ platformQaCategory.platformQaCategoryNo }">[[${ platformQaCategory.platformQaCategoryName }]]</option>
@@ -91,8 +91,25 @@
                     </div>
                     <div class="modal-footer" style="border-top: none;">
                         <div style="margin: 0 auto;">
-                            <button type="submit" class="basic-btn small-btn btn1">확인</button>
+                            <button type="button" class="basic-btn small-btn btn1" data-bs-target="#confirmModal" data-bs-toggle="modal" data-bs-dismiss="modal">확인</button>
                             <button type="button" class="basic-btn small-btn btn3" data-bs-target="#writeModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="confirmModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="subModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header" style="border-bottom: none;">
+                        <button type="submit" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        등록되었습니다!
+                    </div>
+                    <div class="modal-footer" style="border-top: none;">
+                        <div style="margin: 0 auto;">
+                            <button type="submit" class="basic-btn small-btn btn1" data-bs-target="#confirmModal">확인</button>
                         </div>
                     </div>
                 </div>
@@ -138,7 +155,7 @@
                             <td th:text="${ platformQa.platformQaNo }"></td>
                             <td th:text="${ platformQa.qnaCategory.platformQaCategoryName }"></td>
                             <td th:text="${ platformQa.platformQaAnswerStatus }"></td>
-                            <td th:text="${ platformQa.platformQaTitle }" class="align_l tit"></td>
+                            <td th:text="${ platformQa.platformQaTitle }" class="align_l tit" style="cursor: pointer;"></td>
                             <td th:text="${ platformQa.member.memberId }"></td>
                             <td th:text="${ platformQa.platformQaRegistDate }"></td>
                         </tr>
@@ -149,17 +166,16 @@
                             <td th:text="${ platformQa.platformQaContent }" class="align_l con"></td>
                             <td colspan="2"></td>
                         </tr>
-                        <tr th:each="platformQaReply : ${ platformQaReplyList }" class="qnaDetailTr qnaDetailTr_qnaNo on review_st" style="display: /*none;*/ background: #fafafa;">
+                        <tr th:each="platformQaReply : ${ platformQaReplyList }" class="qnaDetailTr qnaDetailTr_qnaNo on review_st" style="display: none; background: #fafafa;">
                             <td></td>
                             <td></td>
                             <td></td>
                             <td th:text="${ platformQaReply.platformQaReplyContent }" class="align_l con">
                                 <span class="re" style="position: unset; background: #BAC34E; color: #fff; border-radius: 5px;">답변</span>
                             </td>
-                            <td th:text="${ platformQaReply.adminNo }"></td>
+                            <td th:text="${ platformQaReply.member.memberNo }"></td>
                             <td th:text="${ platformQaReply.platformQaReplyRegistDate }"></td>
                         </tr>
-
 <!--                        <tr>-->
 <!--                            <td>9999</td>-->
 <!--                            <td>기타</td>-->

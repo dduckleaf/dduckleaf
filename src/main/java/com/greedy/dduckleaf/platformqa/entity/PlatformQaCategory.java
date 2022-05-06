@@ -4,17 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 
-/**
- * <pre>
- * Class : Category
- * Comment : 1:1 문의 카테고리
- * History
- * 2022-05-01 (차화응)
- * </pre>
- * @version 1.0.0
- * @author 차화응
- */
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter

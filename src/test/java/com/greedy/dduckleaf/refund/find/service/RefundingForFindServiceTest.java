@@ -12,6 +12,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -50,7 +52,7 @@ class RefundingForFindServiceTest {
     public void findRefundingInfo_test() {
 
         //given
-        int refundNo = 31;
+        int refundNo = 33;
 
         //when
         RefundingDTO refundingDTO = service.findRefundingInfo(refundNo);
@@ -58,6 +60,19 @@ class RefundingForFindServiceTest {
         //then
         assertNotNull(refundingDTO);
         System.out.println("refundingDTO = " + refundingDTO);
+    }
+    @Test
+    public void findFarmerRefundingList_test() {
+
+        //given
+        int memberNo = 8;
+
+        //when
+        List<RefundingDTO> refundings = service.findFarmerRefundingList(memberNo);
+
+        //then
+        assertNotNull(refundings);
+        refundings.forEach(System.out::println);
     }
 }
 

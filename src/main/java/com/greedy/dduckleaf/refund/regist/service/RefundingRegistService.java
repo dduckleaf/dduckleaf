@@ -50,7 +50,7 @@ public class RefundingRegistService {
         refunding.setRefundingDate(date);
         refunding.setRefundingCategoryNo(refundingInfo.getRefundingCategoryNo());
         refunding.setRefundingReason(refundingInfo.getRefundingReason());
-        refunding.setRefundingStatus("환불신청");
+        refunding.setRefundingStatusNo(1);
         refunding.setProjectNo(fundingInfo.getProjectNo());
         refunding.setBankNo(refundingInfo.getBankNo());
         refunding.setRefundingAccount(fundingInfo.getRefundAccount());
@@ -66,7 +66,7 @@ public class RefundingRegistService {
 
         RefundingHistory history = new RefundingHistory();
         history.setRefundingHistoryDate(date);
-        history.setRefundingStatus("환불신청");
+        history.setRefundingStatus(1);
         history.setHistoryCategory("신청");
         history.setRefundingAmount(fundingInfo.getFundingAmount());
         history.setRefundingHistoryCategory("환불신청");

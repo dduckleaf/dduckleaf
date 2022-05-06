@@ -56,7 +56,7 @@
 						<tr th:each="refunding : ${ refundings }" >
 							<td><input type="hidden" th:value="${refunding.refundingInfoNo}"></td>
 							<td th:text="${refunding.project.projectName}"></td>
-							<td th:text="${refunding.refundingStatus}"></td>
+							<td th:text="${refunding.refundingStatus.refundingStatusName}"></td>
 							<td th:text="${refunding.refundingDate}"></td>
 							
 						</tr>
@@ -110,8 +110,8 @@
             }
 
             tds[i].onclick = function () {
-                const reportNo = this.parentNode.children[0].children[0].value;
-                location.href = "/refund/find/member/detail/" + reportNo;
+                const refundNo = this.parentNode.children[0].children[0].value;
+                location.href = "/refund/find/member/detail/" + refundNo;
             }
         }
     }

@@ -25,8 +25,8 @@ public class ProjectExamineHistoryCategory {
     @Column(name = "PROJECT_EXAMINE_HISTORY_CATEGORY_NAME")
     private String projectExamineHistoryCategoryName;
 
-//    @OneToMany(mappedBy = "progressStatus")
-//    private List<Project> projectList;
+//    @OneToMany(mappedBy = "examineProjectStatus")
+//    private List<ProjectExamineHistory> projectExamineHistoryList;
 
     @Override
     public String toString() {

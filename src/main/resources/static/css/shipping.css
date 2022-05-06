@@ -1,0 +1,24 @@
+.tab-body-area{
+    position: absolute;
+    z-index: 1;
+    left: 33%;
+    right: 25%;
+    top: 18%;
+    width: 50%;
+    height: 1220px;
+}
+
+table {
+    width: 600px;
+    height: 150px;
+    border: 1px solid #bac34e;
+    text-align: center;
+}
+
+th, tr {
+    border-bottom: none !important;
+}
+
+td {
+    font-size: 14pt;
+}

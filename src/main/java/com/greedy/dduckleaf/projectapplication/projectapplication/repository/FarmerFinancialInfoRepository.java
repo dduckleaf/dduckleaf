@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
  * <pre>
  * Interface : FarmerFinancialInfoRepository
  * Comment : 프로젝트 신청
- * History
+ * HistoryEXAMINE_STATUS
  * 2022/04/25 (박휘림) 처음 작성
  * 2022/04/30 (박휘림) findByMemberNo 메소드 작성
  * </pre>

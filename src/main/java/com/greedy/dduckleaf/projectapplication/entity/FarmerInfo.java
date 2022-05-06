@@ -22,6 +22,7 @@ public class FarmerInfo {
 
     @Id
     @Column(name = "MEMBER_NO")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int memberNo;
 
     @Column(name = "FARMER_NAME")

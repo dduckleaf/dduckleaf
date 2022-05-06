@@ -57,6 +57,33 @@ public class Project {
     @JoinColumn(name = "PROJECT_NO")
     private ProjectShippingFee projectShippingFee;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PROJECT_NO")
+    private ProjectShippingInfo projectShippingInfo;
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectNo=" + projectNo +
+                ", projectName='" + projectName + '\'' +
+                ", fundTargetAmount=" + fundTargetAmount +
+                ", openDate='" + openDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", projectStatus='" + projectStatus + '\'' +
+                ", achievementRate=" + achievementRate +
+                ", examineStatus='" + examineStatus + '\'' +
+                ", projectExamineStatus='" + projectExamineStatus + '\'' +
+                ", progressStatus='" + progressStatus + '\'' +
+                ", maxTargetAmount=" + maxTargetAmount +
+                ", rewardInfo=" + rewardInfo +
+                ", projectShippingFee=" + projectShippingFee +
+                ", projectShippingInfo=" + projectShippingInfo +
+                ", basicInfo=" + basicInfo +
+                ", farmer=" + farmer +
+                ", fundingList=" + fundingList +
+                '}';
+    }
+
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_NO")
     private List<ProjectBasicInfo> basicInfo;
@@ -68,24 +95,4 @@ public class Project {
     @OneToMany(mappedBy = "project")
     private List<Funding> fundingList;
 
-    @Override
-    public String toString() {
-        return "Project{" +
-                "projectNo=" + projectNo +
-                ", projectName='" + projectName + '\'' +
-                ", fundTargetAmount=" + fundTargetAmount +
-                ", openDate=" + openDate +
-                ", endDate=" + endDate +
-                ", projectStatus='" + projectStatus + '\'' +
-                ", achievementRate=" + achievementRate +
-                ", examineStatus='" + examineStatus + '\'' +
-                ", projectExamineStatus='" + projectExamineStatus + '\'' +
-                ", progressStatus='" + progressStatus + '\'' +
-                ", maxTargetAmount=" + maxTargetAmount +
-                ", rewardInfo=" + rewardInfo +
-                ", projectShippingFee=" + projectShippingFee +
-                ", basicInfo=" + basicInfo +
-                ", farmer=" + farmer +
-                '}';
-    }
 }

@@ -26,8 +26,8 @@ public class RefundingHistory {
     @Column(name = "REFUNDING_HISTORY_DATE")
     private String refundingHistoryDate;
 
-    @Column(name = "REFUNDING_STATUS")
-    private String refundingStatus;
+    @Column(name = "REFUNDING_STATUS_NO")
+    private int refundingStatus;
 
     @Column(name = "HISTORY_CATEGORY")
     private String historyCategory;
