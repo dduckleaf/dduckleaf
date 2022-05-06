@@ -35,8 +35,9 @@ class RefundingForFarmerExamineServiceTest {
 
         //given
         int refundNo = 33;
+        int memberNo = 5;
 
         //when & then
-        assertDoesNotThrow(() -> service.confirmRefunding(refundNo));
+        assertDoesNotThrow(() -> service.confirmRefunding(refundNo, memberNo));
     }
 }
