@@ -9,8 +9,11 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
 
 /**
  * <pre>
@@ -71,6 +74,7 @@ public class SettlementCalculateService {
      * @param projectNo: 프로젝트번호
      * @author 장민주
      */
+    @Transactional
     public void registSettlementInfo(int projectNo) {
 
         /* 해당프로젝트에 대한 정산정보가 존재하는지 확인 */
@@ -89,8 +93,7 @@ public class SettlementCalculateService {
             foundSettlementInfo.setDonateAmount(newSettlementInfo.getDonateAmount());
             foundSettlementInfo.setSettlementTotalAmount(newSettlementInfo.getSettlementTotalAmount());
             foundSettlementInfo.setTotalCommissionAmount(newSettlementInfo.getTotalCommissionAmount());
-
-            settlementInfoRepository.flush();
+            foundSettlementInfo.setCalculateDate(getDateAndTime());
         }
     }
 
@@ -143,6 +146,7 @@ public class SettlementCalculateService {
         settlementInfo.setFundingTotalAmount(fundingTotalAmount);
         settlementInfo.setDonateAmount(donateAmount);
         settlementInfo.setTotalCommissionAmount(totalCommissionAmount);
+        settlementInfo.setCalculateDate(getDateAndTime());
 
         return settlementInfo;
     }
