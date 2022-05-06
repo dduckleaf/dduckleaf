@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.settlement.calculate.repository;
 
+import com.greedy.dduckleaf.common.utility.DateFormatting;
 import com.greedy.dduckleaf.config.*;
 import com.greedy.dduckleaf.settlement.calculate.entity.Project;
 import com.greedy.dduckleaf.settlement.calculate.entity.SettlementInfo;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = {
@@ -43,6 +45,7 @@ public class SettlementInfoForSettlementCalculateRepositoryTests {
         settlementInfo.setFundingTotalAmount(10000);
         settlementInfo.setDonateAmount(10000);
         settlementInfo.setTotalCommissionAmount(10000);
+        settlementInfo.setCalculateDate(getDateAndTime());
 
         //when
         settlementInfoRepository.save(settlementInfo);
