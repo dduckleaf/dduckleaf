@@ -9,7 +9,7 @@
     height: 1220px;
 }
 
-.block {
+.farmer-tab-area-block {
     width: 100%;
     background-color: rgba(229, 221, 204, 0.5);
     padding-left: 10px;
@@ -70,4 +70,18 @@
 .settlement-table td {
     padding: 10px;
     border: none !important;
+}
+
+.step-block {
+    width: 200px;
+    height: 80px;
+    background-color: #BAC34E;
+    font-size: 15pt;
+    color: #fff;
+}
+
+.btn5 {
+    background-color: #fff;
+    color: #44240E;
+    font-size: 10pt;
 }
