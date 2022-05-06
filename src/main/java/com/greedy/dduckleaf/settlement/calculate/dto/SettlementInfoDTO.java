@@ -19,16 +19,18 @@ public class SettlementInfoDTO {
     private int donateAmount;                           //후원금총액
     private int settlementTotalAmount;                  //정산금총액
     private int totalCommissionAmount;                  //수수료총액
-    private ProjectDTO project;                            //프로젝트 번호
+    private String calculateDate;                       //정산금 계산일
+    private ProjectDTO project;                         //프로젝트 번호
 
     @Override
     public String toString() {
-        return "SettlementInfo{" +
+        return "SettlementInfoDTO{" +
                 "settlementInfoNo=" + settlementInfoNo +
                 ", fundingTotalAmount=" + fundingTotalAmount +
                 ", donateAmount=" + donateAmount +
                 ", settlementTotalAmount=" + settlementTotalAmount +
                 ", totalCommissionAmount=" + totalCommissionAmount +
+                ", calculateDate='" + calculateDate + '\'' +
                 ", project=" + project +
                 '}';
     }

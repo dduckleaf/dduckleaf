@@ -32,6 +32,9 @@ public class SettlementInfo {
     @Column(name = "TOTAL_COMMISSION_AMOUNT")
     private int totalCommissionAmount;                  //수수료총액
 
+    @Column(name = "CALCULATE_DATE")
+    private String calculateDate;                       //정산금 계산일
+
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_NO", unique = true)
     private Project project;                            //프로젝트 번호
@@ -44,6 +47,7 @@ public class SettlementInfo {
                 ", donateAmount=" + donateAmount +
                 ", settlementTotalAmount=" + settlementTotalAmount +
                 ", totalCommissionAmount=" + totalCommissionAmount +
+                ", calculateDate='" + calculateDate + '\'' +
                 ", project=" + project +
                 '}';
     }
