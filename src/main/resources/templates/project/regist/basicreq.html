@@ -20,7 +20,7 @@
 <body>
 <div th:replace="/common/menubar.html"></div>
 <div class="container">
-    <div style="width: 1000px;">
+    <div style="width: 1000px; height: 1400px;">
         <div class="row1">
             <div th:fragment="mockfundsidebar" class="col-md-2">
                 <button class="accordion">
@@ -36,7 +36,7 @@
                     <p onclick="location.href='/project/application/representative'">대표자 및 정산 정보</p>
                 </div>
             </div>
-            <form name="saveForm">
+            <form name="saveForm" enctype="multipart/form-data">
                 <div class="col-md-7">
                     <div class="breadcrumb">
                         <span class="breadcrumb home" onclick="location.href='/project/application/goMain'">펀딩 준비</span>&nbsp;
@@ -55,14 +55,22 @@
                     <div class="basicmenu">
                         <a class="basictitle">2. 리워드의 준비 상태 및 앞으로의 계획이 어떻게 되나요?</a><br>
 <!--                        <input type="hidden" th:value="${ basicReq.rewardPreparingStatus }">-->
-                        <textarea class="mockfundtitle1" id="rewardPreparingStatus" name="rewardPreparingStatus" type="text" th:text="${ basicReq.rewardPreparingStatus }"></textarea>
+                        <textarea class="mockfundtitle1" id="rewardPreparingStatus" name="rewardPreparingStatus" type="text" th:placeholder="${ basicReq.rewardPreparingStatus }"></textarea>
                         <input id="projectNo" name="projectNo" type="hidden" th:value="${ basicReq.projectNo }">
                     </div>
                     <div class="basicmenu form-date">
                         <a class="basictitle">3. 리워드 전달 계획을 적어주세요.</a><br>
 <!--                        <input type="hidden" th:value="${ basicReq.rewardDeliveryPlan }">-->
-                        <textarea class="mockfundtitle1" id="rewardDeliveryPlan" name="rewardDeliveryPlan" type="text" th:text="${ basicReq.rewardDeliveryPlan }"></textarea>
+                        <textarea class="mockfundtitle1" id="rewardDeliveryPlan" name="rewardDeliveryPlan" type="text" th:placeholder="${ basicReq.rewardDeliveryPlan }"></textarea>
                     </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">4. 소개 사진 등록</a><br>
+                        <a class="basicsubtitle">프로젝트 페이지 상단에 노출될 사진을 올려주세요.</a><br>
+                        <img class="basicimg1" id="changeImg" th:src="@{ /images/mockfund/basicimg.png}" ><br>
+                        <input type="file" style="display: block" id="file" name="file" accept=".gif, .jpg, .png" onchange="loadImg(this)">
+                        <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
+                            해상도 630x400 픽셀 이상<br></a>
+                    </div><br>
                     <div class="checkdiv">
                         <a class="basictitle">리워드 서류 제출 동의</a><br>
                         <a class="policyinfo">리워드 종류 및 생산 형태 선택 전, 반드시 관련 서류 제출에 대한 사항을 확인해주세요. 동의를 진행해야 리워드 등록이 가능합니다.</a><br>
@@ -260,11 +268,35 @@
                         popup: 'savepopup'
                     },
                     buttonsStyling: false,
-                }).then(function(rewardPreparingStatus, rewardDeliveryPlan) {
+                }).then(function(rewardPreparingStatus, rewardDeliveryPlan, file, projectNo) {
+
+                    /* 이미지 등록 */
+                    const $basicimg = document.getElementById("changeImg");
+
+                    $basicimg.onclick = function() {
+                        document.getElementById("file").click();
+                    }
+
+                    function loadImg(value) {
+                        if(value.files && value.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                document.getElementById("$basicimg").src = e.target.result;
+                            }
+                            reader.readAsDataURL(value.files[0]);
+                        }
+                    }
+
+                    let formData = new FormData();
+                    formData.append('file', file);
+                    console.log(formData);
+
                     let saveForm = document.saveForm;
                     let url = '/project/application/modify/basicreq';
                     saveForm.rewardPreparingStatus = rewardPreparingStatus;
                     saveForm.rewardDeliveryPlan = rewardDeliveryPlan;
+                    saveForm.projectNo = projectNo;
+                    // saveForm.file = file;
 
                     saveForm.action = url;
                     saveForm.method = 'post';

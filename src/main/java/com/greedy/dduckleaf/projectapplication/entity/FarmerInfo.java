@@ -65,7 +65,7 @@ public class FarmerInfo {
     private String taxTypeCategory;         //구분
 
     @Column(name = "CORPORATE_LICENSE_NO")
-    private int corporateLicenseNo;         //법인등록번호
+    private Integer corporateLicenseNo;         //법인등록번호
 
     @Column(name = "KAKAOTALK_CHANNEL")
     private String kakaotTalkChannel;

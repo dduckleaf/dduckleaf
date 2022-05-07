@@ -32,6 +32,7 @@ public class SettlementInfo {
     @JoinColumn(name = "PROJECT_NO")
     private Project project;                            //프로젝트 번호
 
+
     @Override
     public String toString() {
         return "SettlementInfo{" +

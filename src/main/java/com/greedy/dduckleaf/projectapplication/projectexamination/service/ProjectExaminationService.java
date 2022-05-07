@@ -85,10 +85,13 @@ public class ProjectExaminationService {
     @Transactional
     public ProjectApplicationInfoDTO modifyProjectProgressStatus(int projectApplicationNo) {
 
-        ProjectApplicationInfo project = projectApplicationInfoRepository.findById(projectApplicationNo).get();
-        project.setProjectApplicationCategory("심사중");
+        ProjectApplicationInfo projectApplication = projectApplicationInfoRepository.findById(projectApplicationNo).get();
+        projectApplication.setProjectApplicationCategory("심사중");
 
-        return modelMapper.map(project, ProjectApplicationInfoDTO.class);
+        Project project = projectRepository.findByProjectNo(projectApplication.getProject().getProjectNo());
+        project.setProgressStatus(1);
+
+        return modelMapper.map(projectApplication, ProjectApplicationInfoDTO.class);
     }
 
     /**
@@ -152,7 +155,8 @@ public class ProjectExaminationService {
 
         Project project = projectRepository.findByProjectNo(projectApplicationInfo.getProject().getProjectNo());
         project.setProgressStatus(2);
-        project.setExamineStatus("심사완료");
+        project.setExamineStatus("3");
+//        project.setExamineStatus("심사완료");
         project.setProjectExamineStatus("승인");
 
         ProjectExamineHistory projectExamineHistory = new ProjectExamineHistory();
@@ -174,7 +178,8 @@ public class ProjectExaminationService {
 
         Project project = projectRepository.findByProjectNo(projectApplicationInfo.getProject().getProjectNo());
         project.setProgressStatus(2);
-        project.setExamineStatus("심사완료");
+//        project.setExamineStatus("심사완료");
+        project.setExamineStatus("3");
         project.setProjectExamineStatus("반려");
         project.setProjectStatus("N");
 

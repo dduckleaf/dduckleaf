@@ -48,34 +48,34 @@
                     <div class="basicmenu">
                         <a class="basictitle">금액</a><br>
                         <input id="projectNo" name="projectNo" type="hidden" th:value="${ reward.projectNo }">
-                        <input class="mockfundtitle1" id="rewardPrice" name="rewardPrice" type="number" th:value="${ reward.rewardPrice}">
+                        <input class="mockfundtitle1" id="rewardPrice" name="rewardPrice" type="number" th:placeholder="${ reward.rewardPrice}">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">리워드명</a><br>
-                        <input class="mockfundtitle1" id="rewardName" name="rewardName" type="text" th:value="${ reward.rewardName }">
+                        <input class="mockfundtitle1" id="rewardName" name="rewardName" type="text" th:placeholder="${ reward.rewardName }">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">상세설명</a><br>
-                        <textarea id="rewardInfo" name="rewardInfo" type="text" th:text="${ reward.rewardInfo }" style="width: 100%; height: 150px;"></textarea>
+                        <textarea id="rewardInfo" name="rewardInfo" type="text" th:placeholder="${ reward.rewardInfo }" style="width: 100%; height: 150px;"></textarea>
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">단위</a><br>
-                        <input class="mockfundtitle1" id="rewardUnit" name="rewardUnit" type="text" th:value="${ reward.rewardUnit }">
+                        <input class="mockfundtitle1" id="rewardUnit" name="rewardUnit" type="text" th:placeholder="${ reward.rewardUnit }">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">배송비</a><br>
-                        <input type="hidden" th:value="${ shippingInfo.projectNo }">
-                        <input type="number" id="shippingFee" name="shippingFee" th:value="${ shippingInfo.shippingFee}" style="width: 250px; margin-right: 3%;">
+                        <input type="hidden" th:placeholder="${ shippingInfo.projectNo }">
+                        <input type="number" id="shippingFee" name="shippingFee" th:placeholder="${ shippingInfo.shippingFee}" style="width: 250px; margin-right: 3%;">
                         <input type="checkbox" id="extracharge"><a> 도서산간 지역 추가 배송비가 필요한 경우, 체크해주세요</a><br>
                         <a class="basicsubtitle">배송비가 없는 경우, 0원 입력</a><br>
                     </div>
                     <div class="basicmenu" id="extraShippingFeeArea" style="display: none">
                         <a class="basictitle">추가 배송비</a><br>
-                        <input type="number" id="extraShippingFee" name="extraShippingFee" th:value="${ shippingInfo.extraShippingFee }" style="width: 250px; margin-right: 3%;">
+                        <input type="number" id="extraShippingFee" name="extraShippingFee" th:placeholder="${ shippingInfo.extraShippingFee }" style="width: 250px; margin-right: 3%;">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">예상 발송 시작일</a><br>
-                        <input type="text" id="shippingDueDate" name="shippingDueDate" th:value="${ shippingInfo.shippingDueDate }">
+                        <input  class="mockfundtitle1" type="date" id="shippingDueDate" name="shippingDueDate" th:value="${ shippingInfo.shippingDueDate }">
                     </div>
                     <div>
                         <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
