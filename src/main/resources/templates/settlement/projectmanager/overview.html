@@ -6,31 +6,120 @@
     <link rel="stylesheet" th:href="@{/css/settlement.css}">
 </head>
 <body>
-<main style="width: 1920px">
-    <div class="row">
-        <div th:replace="/common/adminheader.html"></div>
-    </div>
-    <div class="row">
-        <div class="col-2">
-            <div th:replace="/project/manage/end/submenu.html"></div>
+    <main style="width: 1920px">
+        <div class="row">
+            <div th:replace="/common/adminheader.html"></div>
         </div>
-        <div class="col-10">
-            <div class="body-area">
-                <div class="title-div">
-                        <span class="text-title">
-                            <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">정산금 관리</span>
-                    <hr width="100%">
-                </div>
-                <div>
-                    <div class="step-block" align="center">
-                        정산금계산
-                        <br>
-                        <button class="basic-btn small-btn btn5">정산금 계산</button>
+        <div class="row">
+            <div class="col-2">
+                <div th:replace="/project/manage/end/submenu.html"></div>
+            </div>
+            <div class="col-10">
+                <div class="body-area2">
+                    <br>
+                    <div class="title-div">
+                            <span class="text-title">
+                                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">정산금 관리</span>
+                        <hr width="100%">
+                    </div>
+                    <div>
+                        <div align="center">
+                            <div class="step-block" align="center">
+                                정산금계산
+                                <br>
+                                <button class="basic-btn small-btn btn5" id="calculate">정산금 계산</button>
+                            </div>
+                            <div class="step-block" align="center">
+                                1차 정산금 확인요청
+                                <br>
+                                <button class="basic-btn small-btn btn5">확인요청</button>
+                            </div>
+                            <div class="step-block" align="center">
+                                1차 정산금 지급
+                                <br>
+                                <button class="basic-btn small-btn btn5">정산금 지급</button>
+                            </div>
+                            <div class="step-block" align="center">
+                                2차 정산금 확인요청
+                                <br>
+                                <button class="basic-btn small-btn btn5">확인요청</button>
+                            </div>
+                                <div class="step-block" align="center">
+                                    2차 정산금 지급
+                                <br>
+                                <button class="basic-btn small-btn btn5">정산금 지급</button>
+                            </div>
+                        </div>
+                        <br><br><br>
+                        <div class="title-div">
+                            <span class="text-title">
+                                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">정산정보 이력 관리</span>
+    <!--                        <hr width="100%">-->
+                        </div>
+                        <!-- 정산정보 이력 테이블 -->
+                        <table class="basic-table" style="width: 100%">
+                            <tr>
+                                <th>정산 변동 카테고리</th>
+                                <th>처리 상태</th>
+                                <th>일시</th>
+                                <th>상세 보기</th>
+                            </tr>
+    <!--                        <th:block th:if="${}">-->
+                                <tr>
+                                    <td colspan="3" align="center">이력이 존재하지 않습니다.</td>
+                                </tr>
+    <!--                        </th:block>-->
+    <!--                        <th:block th:if="">-->
+                                <tr>
+                                    <td>1차 정산금</td>
+                                    <td>이의신청 접수</td>
+                                    <td>2020-01-01 00:00</td>
+                                    <td><button class="basic-btn small-btn btn3">상세보기</button></td>
+                                </tr>
+                                <tr>
+                                    <td>1차 정산금</td>
+                                    <td>이의신청 승인</td>
+                                    <td>2020-01-01 00:00</td>
+                                    <td><button class="basic-btn small-btn btn3">상세보기</button></td>
+                                </tr>
+    <!--                        </th:block>-->
+                        </table>
+    <!--                    <div id="paging-area" align="center">-->
+    <!--                        &lt;!&ndash; 맨 앞으로 이동 &ndash;&gt;-->
+    <!--                        <button class="paging-btn first" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.startPage}}  + '\''"-->
+    <!--                                th:disabled="${ menuList.first }"><<</button>-->
+
+    <!--                        &lt;!&ndash; 이전 페이지로 이동 &ndash;&gt;-->
+    <!--                        <button class="paging-btn prev" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.currentPage - 1}}  + '\''"-->
+    <!--                                th:disabled="${ menuList.first }"><</button>-->
+
+    <!--                        &lt;!&ndash; 숫자 버튼 &ndash;&gt;-->
+    <!--                        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">-->
+    <!--                            <button class="paging-btn" th:onclick="'location.href=\'/menu/list?page=' + @{${page}}  + '\''"-->
+    <!--                                    th:text="${ page }"-->
+    <!--                                    th:disabled="${ paging.currentPage eq page }"></button>-->
+    <!--                        </th:block>-->
+
+    <!--                        &lt;!&ndash; 다음 페이지로 이동 &ndash;&gt;-->
+    <!--                        <button class="paging-btn next" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.currentPage + 1}}  + '\''"-->
+    <!--                                th:disabled="${ menuList.last }">></button>-->
+
+    <!--                        &lt;!&ndash; 맨 마지막으로 이동 &ndash;&gt;-->
+    <!--                        <button class="paging-btn last" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.endPage}}  + '\''"-->
+    <!--                                th:disabled="${ menuList.last }">>></button>-->
+    <!--                    </div>-->
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 </body>
+<script>
+    const calculate = document.getElementById("calculate");
+    if(calculate) {
+        calculate.onclick = function() {
+            location.href = "/settlement/settlementInfo/[[${project.projectNo}]]";
+        }
+    }
+</script>
 </html>

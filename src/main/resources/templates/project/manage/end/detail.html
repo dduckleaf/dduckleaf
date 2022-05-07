@@ -6,12 +6,16 @@
 </head>
 <body>
     <main style="width: 1920px">
-        <div th:replace="/common/adminheader.html"></div>
-        <div class="col-2">
-            <div th:replace="/project/manage/end/submenu.html"></div>
+        <div class="row">
+            <div th:replace="/common/adminheader.html"></div>
         </div>
-        <div cols="col-9">
-            <!-- 각 submenu에 맞게 이 영역을 수정하시면 됩니다~! -->
+        <div class="row">
+            <div class="col-2">
+                <div th:replace="/project/manage/end/submenu.html"></div>
+            </div>
+            <div cols="col-9">
+                <!-- 각 submenu에 맞게 이 영역을 수정하시면 됩니다~! -->
+            </div>
         </div>
     </main>
 </body>
