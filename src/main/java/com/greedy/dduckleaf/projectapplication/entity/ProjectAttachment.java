@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,6 +16,7 @@ import javax.persistence.Table;
 public class ProjectAttachment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PROJECT_ATTACHMENT_NO")
     private int projectAttachmentNo;
 
@@ -40,8 +38,9 @@ public class ProjectAttachment {
 //    @Column(name = "PROJECT_BASIC_INFO_NO")
 //    private int projectBasicInfoNo;                 //기본정보번호
 
-    @Column(name = "PROJECT_NO")
-    private int projectNo;
+    @ManyToOne
+    @JoinColumn(name = "PROJECT_NO")
+    private Project project;
 
 //    @Column(name = "FINANCIAL_INFO_NO")
 //    private int financialInfoNo;
@@ -56,7 +55,7 @@ public class ProjectAttachment {
                 ", projectAttachmentOriginalName='" + projectAttachmentOriginalName + '\'' +
                 ", farmerNo=" + farmerNo +
 //                ", projectBasicInfoNo=" + projectBasicInfoNo +
-                ", projectNo=" + projectNo +
+                ", project=" + project +
 //                ", financialInfoNo=" + financialInfoNo +
                 '}';
     }

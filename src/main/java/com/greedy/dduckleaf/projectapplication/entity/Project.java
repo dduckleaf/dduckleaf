@@ -10,6 +10,7 @@ import org.hibernate.annotations.DynamicInsert;
 import javax.persistence.*;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -66,9 +67,13 @@ public class Project {
     @ColumnDefault(value = "0")
     private int maxTargetAmount;
 
-    @OneToOne(cascade = CascadeType.ALL)
+//    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "FARMER_NO")
     private FarmerInfo farmer;
+
+//    @OneToMany(mappedBy = "project")
+//    private List<ProjectAttachment> attachment;
 
     @Override
     public String toString() {
