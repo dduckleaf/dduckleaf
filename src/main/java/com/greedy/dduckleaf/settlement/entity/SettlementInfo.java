@@ -35,11 +35,11 @@ public class SettlementInfo {
     @JoinColumn(name = "PROJECT_NO")
     private Project project;                                    //프로젝트번호
 
-    @OneToMany(mappedBy = "settlementInfo")
-    private List<SettlementPaymentInfo> settlementPaymentInfoList;
-
-    @OneToMany(mappedBy = "settlementInfo")
-    private List<SettlementChangeHistory> settlementChangeHistoryList;
+//    @OneToMany(mappedBy = "settlementInfo")
+//    private List<SettlementPaymentInfo> settlementPaymentInfoList;
+//
+//    @OneToMany(mappedBy = "settlementInfo")
+//    private List<SettlementChangeHistory> settlementChangeHistoryList;
 
     @Override
     public String toString() {
