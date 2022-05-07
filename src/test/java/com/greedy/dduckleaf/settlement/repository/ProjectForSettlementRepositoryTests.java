@@ -15,8 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest

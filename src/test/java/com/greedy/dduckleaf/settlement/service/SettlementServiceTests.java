@@ -49,42 +49,42 @@ public class SettlementServiceTests {
         assertNotNull(modelMapper);
     }
 
-    @Test
-    @DisplayName("파머의 정산정보 조회 요청 테스트")
-    @Transactional
-    public void findSettlementPaymentInfo_test() {
-        //given
-        int projectNo = 1;
-
-        //when
-        SettlementOverview settlementOverview = service.findSettlementPaymentInfo(projectNo);
-
-        //then
-        assertNotNull(settlementOverview);
-        assertNotNull(settlementOverview.getSettlementInfo());
-        assertNotNull(settlementOverview.getSettlementPaymentInfos());
-
-//        assertEquals(settlementOverview.getSettlementInfo().getClass(), SettlementInfoDTO.class);
-//        settlementOverview.getSettlementPaymentInfos().forEach(settlementPaymentInfo -> {
-//            assertEquals(settlementPaymentInfo.getClass(), SettlementPaymentInfoDTO.class);
-//        });
-
-        System.out.println("settlementOverview = " + settlementOverview);
-    }
+//    @Test
+//    @DisplayName("파머의 정산정보 조회 요청 테스트")
+//    @Transactional
+//    public void findSettlementPaymentInfo_test() {
+//        //given
+//        int projectNo = 1;
+//
+//        //when
+//        SettlementOverview settlementOverview = service.findSettlementPaymentInfo(projectNo);
+//
+//        //then
+//        assertNotNull(settlementOverview);
+//        assertNotNull(settlementOverview.getSettlementInfo());
+//        assertNotNull(settlementOverview.getSettlementPaymentInfos());
+//
+////        assertEquals(settlementOverview.getSettlementInfo().getClass(), SettlementInfoDTO.class);
+////        settlementOverview.getSettlementPaymentInfos().forEach(settlementPaymentInfo -> {
+////            assertEquals(settlementPaymentInfo.getClass(), SettlementPaymentInfoDTO.class);
+////        });
+//
+//        System.out.println("settlementOverview = " + settlementOverview);
+//    }
     
-    @Test
-    public void findSettlementInfoForEndProject_test() {
-        //given
-        int projectNo = 1;
-        
-        //when
-        SettlementInfoDTO settlementInfoDTO = service.findSettlementInfoForEndProject(projectNo);
-        
-        //then
-        assertNotNull(settlementInfoDTO);
-        System.out.println("settlementInfoDTO = " + settlementInfoDTO);
-        
-    }
+//    @Test
+//    public void findSettlementInfoForEndProject_test() {
+//        //given
+//        int projectNo = 1;
+//
+//        //when
+//        SettlementInfoDTO settlementInfoDTO = service.findSettlementInfoForEndProject(projectNo);
+//
+//        //then
+//        assertNotNull(settlementInfoDTO);
+//        System.out.println("settlementInfoDTO = " + settlementInfoDTO);
+//
+//    }
 
     @Test
     @DisplayName("달성률이 100% 이상인 종료된 프로젝트 목록 조회 테스트")
