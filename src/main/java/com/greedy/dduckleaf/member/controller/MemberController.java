@@ -1,11 +1,14 @@
 package com.greedy.dduckleaf.member.controller;
 
 import com.google.gson.*;
+import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.authentication.model.service.AuthenticationService;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
+import com.greedy.dduckleaf.member.dto.MemberWithdrawDTO;
 import com.greedy.dduckleaf.member.service.MemberService;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -291,6 +294,19 @@ public class MemberController {
 
         rttr.addFlashAttribute("successMessage", result);
         mv.setViewName("redirect:/member/login");
+
+        return mv;
+    }
+
+    @PostMapping("/remove")
+    public ModelAndView removeMember(ModelAndView mv, String withdrawReason, @AuthenticationPrincipal CustomUser user, RedirectAttributes rttr) {
+
+        MemberWithdrawDTO memberWithdraw = new MemberWithdrawDTO();
+        memberWithdraw.setMemberNo(user.getMemberNo());
+        memberWithdraw.setWithdrawReason(withdrawReason);
+
+        String result = memberService.removeMember(memberWithdraw);
+
 
         return mv;
     }

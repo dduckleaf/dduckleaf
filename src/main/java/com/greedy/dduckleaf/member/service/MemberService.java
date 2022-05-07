@@ -2,6 +2,7 @@ package com.greedy.dduckleaf.member.service;
 
 import com.greedy.dduckleaf.email.EmailSender;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
+import com.greedy.dduckleaf.member.dto.MemberWithdrawDTO;
 import com.greedy.dduckleaf.member.dto.ProfileAttachmentDTO;
 import com.greedy.dduckleaf.member.entity.BasicProfileAttachment;
 import com.greedy.dduckleaf.member.entity.Member;
@@ -32,8 +33,9 @@ import java.util.HashMap;
  * 2022/04/23 (박상범) 아이디 찾기 관련 메소드 구현 완료
  * 2022/04/24 (박상범) 비밀번호 찾기 관련 메소드 구현 완료
  * 2022/05/04 (박상범) 회원 가입 관련 메소드 수정
+ * 2022/05/07 (박상범) 회원 탈퇴 관련 메소드 작성
  * </pre>
- * @version 1.0.8
+ * @version 1.0.9
  * @author 박상범
  * @see EmailSender
  * @see ModelMapper
@@ -57,8 +59,8 @@ public class MemberService{
     }
  
     /**
-     * sendEmailVerification: 입력받은 이메일 주소로 인증번호를 전송한다.
-     * @param email: 인증 번호를 받을 이메일 주소
+     * sendEmailVerification: 입력받은 이메일 주소로 인증번호를 전송합니다.
+     * @param email: 인증 번호를 받을 이메일 주소입니다.
      * @return 결과에 따라 다른 메시지를 return한다.
      * @author 박상범
      */
@@ -76,7 +78,7 @@ public class MemberService{
 
     /**
      * sendPhoneVerification: 입력받은 휴대폰 번호로 인증번호를 전송합니다.
-     * @param phone: 인증 번호를 받을 휴대폰 번호
+     * @param phone: 인증 번호를 받을 휴대폰 번호입니다.
      * @return 결과에 따라 다른 메시지를 return합니다.
      * @author 박상범
      */
@@ -127,7 +129,7 @@ public class MemberService{
 
     /**
      * checkDuplicationMemberId: 아이디 중복 확인을 합니다.
-     * @param memberId: 중복 확인할 아이디
+     * @param memberId: 중복 확인할 아이디입니다.
      * @return 결과에 따라 다른 메시지를 return합니다.
      * @author 박상범
      */
@@ -146,7 +148,7 @@ public class MemberService{
 
     /**
      * registMember : 입력받은 회원 정보로 회원 가입을 합니다.
-     * @param member: 회원 가입할 회원 정보
+     * @param member: 회원 가입할 회원 정보입니다.
      * @author 박상범
      */
     @Transactional
@@ -169,7 +171,7 @@ public class MemberService{
  
     /**
      * sendEmailMemberId: 입력한 이메일이 등록되어있는지 확인합니다.
-     * @param email: 중복 확인할 아이디
+     * @param email: 중복 확인할 아이디입니다.
      * @return 결과에 따라 다른 메시지를 return합니다.
      * @author 박상범
      */
@@ -187,7 +189,7 @@ public class MemberService{
 
     /**
      * findMember: 입력한 이메일이 등록되어있는지 확인합니다.
-     * @param member: 중복 확인할 아이디와 이메일을 담은 객체
+     * @param member: 중복 확인할 아이디와 이메일을 담은 객체입니다.
      * @return 결과에 따라 다른 메시지를 return합니다.
      * @author 박상범
      */
@@ -204,7 +206,7 @@ public class MemberService{
 
     /**
      * findMemberNo: 입력한 이메일이 등록되어있는지 확인합니다.
-     * @param member: 중복 확인할 아이디와 이메일을 담은 객체
+     * @param member: 중복 확인할 아이디와 이메일을 담은 객체입니다.
      * @return 회원번호를 return합니다.
      * @author 박상범
      */
@@ -217,7 +219,7 @@ public class MemberService{
 
     /**
      * modifyMemberPwd: 회원의 비밀번호를 변경합니다.
-     * @param member: 회원번호와 변경할 비밀번호를 담은 MemberDTO 객체
+     * @param member: 회원번호와 변경할 비밀번호를 담은 MemberDTO 객체입니다.
      * @return 결과에 따라 다른 메시지를 return합니다.
      * @author 박상범
      */
@@ -235,4 +237,17 @@ public class MemberService{
         return "비밀번호 변경 실패";
     }
 
+    /**
+     * removeMember: 회원 탈퇴를 합니다.
+     * @param memberWithdraw: 회원번호와 회원탈퇴 사유를 담은 MemberWithdrawDTO 객체입니다.
+     * @return 결과에 따라 다른 메시지를 return합니다.
+     * @author 박상범
+     */
+    @Transactional
+    public String removeMember(MemberWithdrawDTO memberWithdraw) {
+
+
+
+        return null;
+    }
 }
