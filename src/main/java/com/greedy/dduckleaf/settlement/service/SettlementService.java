@@ -7,7 +7,6 @@ import com.greedy.dduckleaf.settlement.dto.SettlementPaymentInfoDTO;
 import com.greedy.dduckleaf.settlement.entity.SettlementInfo;
 import com.greedy.dduckleaf.settlement.repository.ProjectForSettlementRepository;
 import com.greedy.dduckleaf.settlement.repository.SettlementInfoRepository;
-import com.greedy.dduckleaf.settlement.repository.SettlementPaymentInfoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -42,78 +41,75 @@ public class SettlementService {
     @Autowired
     private final SettlementInfoRepository settlementInfoRepository;
     @Autowired
-    private final SettlementPaymentInfoRepository settlementPaymentInfoRepository;
-    @Autowired
     private final ProjectForSettlementRepository projectRepository;
     @Autowired
     private final ModelMapper modelMapper;
 
     public SettlementService(SettlementInfoRepository settlementInfoRepository,
-                             SettlementPaymentInfoRepository settlementPaymentInfoRepository, ProjectForSettlementRepository projectRepository, ModelMapper modelMapper) {
+                            ProjectForSettlementRepository projectRepository, ModelMapper modelMapper) {
         this.settlementInfoRepository = settlementInfoRepository;
-        this.settlementPaymentInfoRepository = settlementPaymentInfoRepository;
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
     }
 
-    /**
-     * findSettlementPaymentInfo: 종료된 프로젝트의 정산정보와 회차 별 정산금 지급내역 조회를 요청하는 메소드입니다.
-     * @param projectNo: 프로젝트 번호
-     * @return 프로젝트 정산정보와 회차 별 프로젝트 정산금 지급내역정보
-     * @author 장민주
-     */
-    public SettlementOverview findSettlementPaymentInfo(int projectNo) {
+//    /**
+//     * findSettlementPaymentInfo: 종료된 프로젝트의 정산정보와 회차 별 정산금 지급내역 조회를 요청하는 메소드입니다.
+//     * @param projectNo: 프로젝트 번호
+//     * @return 프로젝트 정산정보와 회차 별 프로젝트 정산금 지급내역정보
+//     * @author 장민주
+//     */
+//    public SettlementOverview findSettlementPaymentInfo(int projectNo) {
+//
+//        /* 프로젝트의 정산정보 조회 */
+//        SettlementInfoDTO settlementInfo = findSettlementInfoForEndProject(projectNo);
+//
+//        /* 조회한 정산정보의 식별번호로 프로젝트의 회차 별 정산금 지급내역 조회 */
+//        List<SettlementPaymentInfoDTO> settlementPaymentInfos =
+//                findSettlementPaymentInfoForEndProject(settlementInfo.getSettlementInfoNo());
+//
+//        /* 조회된 값들을 하나의 DTO에 담아 반환 */
+//        SettlementOverview settlementOverview = new SettlementOverview();
+//        settlementOverview.setSettlementInfo(settlementInfo);
+//        settlementOverview.setSettlementPaymentInfos(settlementPaymentInfos);
+//
+//        return settlementOverview;
+//    }
 
-        /* 프로젝트의 정산정보 조회 */
-        SettlementInfoDTO settlementInfo = findSettlementInfoForEndProject(projectNo);
+//    /**
+//     * 메소드명: (내부연산 메소드) 종료된 프로젝트의 정산정보 조회를 요청하는 메소드입니다.
+//     * @param projectNo: 프로젝트 번호
+//     * @return DTO 타입으로 형변환하여 영속성을 해제한 정산정보 조회결과
+//     * @author 장민주
+//     */
+//    @Transactional
+//    public SettlementInfoDTO findSettlementInfoForEndProject(int projectNo) {
+//
+//        SettlementInfo settlementInfo = settlementInfoRepository.findByProject_ProjectNo(projectNo);
+//        System.out.println("settlementInfo = " + settlementInfo);
+//
+//         SettlementInfoDTO s = modelMapper.map(settlementInfo, SettlementInfoDTO.class);
+//        System.out.println("s = " + s);
+//
+//         return s;
+//    }
 
-        /* 조회한 정산정보의 식별번호로 프로젝트의 회차 별 정산금 지급내역 조회 */
-        List<SettlementPaymentInfoDTO> settlementPaymentInfos =
-                findSettlementPaymentInfoForEndProject(settlementInfo.getSettlementInfoNo());
-
-        /* 조회된 값들을 하나의 DTO에 담아 반환 */
-        SettlementOverview settlementOverview = new SettlementOverview();
-        settlementOverview.setSettlementInfo(settlementInfo);
-        settlementOverview.setSettlementPaymentInfos(settlementPaymentInfos);
-
-        return settlementOverview;
-    }
-
-    /**
-     * 메소드명: (내부연산 메소드) 종료된 프로젝트의 정산정보 조회를 요청하는 메소드입니다.
-     * @param projectNo: 프로젝트 번호
-     * @return DTO 타입으로 형변환하여 영속성을 해제한 정산정보 조회결과
-     * @author 장민주
-     */
-    @Transactional
-    public SettlementInfoDTO findSettlementInfoForEndProject(int projectNo) {
-
-        SettlementInfo settlementInfo = settlementInfoRepository.findByProject_ProjectNo(projectNo);
-        System.out.println("settlementInfo = " + settlementInfo);
-
-         SettlementInfoDTO s = modelMapper.map(settlementInfo, SettlementInfoDTO.class);
-        System.out.println("s = " + s);
-
-         return s;
-    }
-
-    /**
-     * findSettlementPaymentInfoForEndProject: (내부연산 메소드) 종료된 프로젝트의 정산금 지급내역 조회를 요청하는 메소드입니다.
-     * @param settlementInfoNo: 정산정보 번호
-     * @return DTO 타입으로 형변환하여 영속성을 해제한 정산금 지급내역 조회결과
-     * @author 장민주
-     */
-    @Transactional
-    public List<SettlementPaymentInfoDTO> findSettlementPaymentInfoForEndProject(int settlementInfoNo) {
-
-        List<SettlementPaymentInfoDTO> ffff = (settlementPaymentInfoRepository.findBySettlementInfo_SettlementInfoNo(settlementInfoNo).stream()
-                .map(settlementPaymentInfo -> modelMapper.map(settlementPaymentInfo, SettlementPaymentInfoDTO.class))
-                .collect(Collectors.toList()));
-
-        ffff.forEach(System.out::println);
-
-        return ffff;
-    }
+//    /**
+//     * findSettlementPaymentInfoForEndProject: (내부연산 메소드) 종료된 프로젝트의 정산금 지급내역 조회를 요청하는 메소드입니다.
+//     * @param settlementInfoNo: 정산정보 번호
+//     * @return DTO 타입으로 형변환하여 영속성을 해제한 정산금 지급내역 조회결과
+//     * @author 장민주
+//     */
+//    @Transactional
+//    public List<SettlementPaymentInfoDTO> findSettlementPaymentInfoForEndProject(int settlementInfoNo) {
+//
+//        List<SettlementPaymentInfoDTO> ffff = (settlementPaymentInfoRepository.findBySettlementInfo_SettlementInfoNo(settlementInfoNo).stream()
+//                .map(settlementPaymentInfo -> modelMapper.map(settlementPaymentInfo, SettlementPaymentInfoDTO.class))
+//                .collect(Collectors.toList()));
+//
+//        ffff.forEach(System.out::println);
+//
+//        return ffff;
+//    }
 
     /**
      * findAllEndProjectsAchievedSuccess: 달성률 100% 이상인 종료된 프로젝트 목록 조회 요청 메소드입니다.
