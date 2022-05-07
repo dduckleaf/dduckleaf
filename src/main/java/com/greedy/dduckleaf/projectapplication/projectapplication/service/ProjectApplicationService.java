@@ -167,6 +167,7 @@ public class ProjectApplicationService {
         farmerInfo.setRepresentativeName("대표자명");
         farmerInfo.setRepresentativeEmail("대표자이메일");
         farmerInfo.setRepresentativeSSN("주민등록번호");
+//        farmerInfo.setCorporateLicenseNo(0);
 
         return farmerInfo;
     }
@@ -304,12 +305,10 @@ public class ProjectApplicationService {
 
         System.out.println("attachment 서비스 = " + attachment);
 
-        ProjectAttachment projectAttachment = projectAttachmentRepository.findBasicInfoAttachmentByProjectNo(attachment.getProjectNo());
+        ProjectAttachment projectAttachment = projectAttachmentRepository.findBasicInfoAttachmentByProjectNo(attachment.getProject().getProjectNo());
         System.out.println("projectAttachment 서비스! = " + projectAttachment);
         if(projectAttachment == null) {
             attachment.setProjectAttachmentCategory("대표이미지");
-//            attachment.setProjectBasicInfoNo(projectAttachment.getProjectBasicInfoNo());
-//            attachment.setFinancialInfoNo(projectAttachment.getFinancialInfoNo());
             projectAttachmentRepository.save(modelMapper.map(attachment, ProjectAttachment.class));
             System.out.println("projectAttachment 저장 성공 = " + projectAttachment);
         } else {
@@ -353,8 +352,7 @@ public class ProjectApplicationService {
     @Transactional
     public void modifyStoryAttachment(ProjectAttachmentDTO attachment) {
 
-//        ProjectAttachment introAttachment = projectAttachmentRepository.findIntroAttachmentByProjectNo(attachment.getProjectNo());
-        ProjectAttachment storyAttachment = projectAttachmentRepository.findStoryAttachmentByProjectNo(attachment.getProjectNo());
+        ProjectAttachment storyAttachment = projectAttachmentRepository.findStoryAttachmentByProjectNo(attachment.getProject().getProjectNo());
         System.out.println("storyAttachment 서비스 = " + storyAttachment);
 
         if(storyAttachment == null) {
@@ -362,7 +360,6 @@ public class ProjectApplicationService {
             projectAttachmentRepository.save(modelMapper.map(attachment, ProjectAttachment.class));
             System.out.println("storyAttachment 저장 성공 = " + storyAttachment);
         } else {
-//            storyAttachment.setProjectBasicInfoNo(attachment.getProjectBasicInfoNo());
             storyAttachment.setProjectAttachmentOriginalName(attachment.getProjectAttachmentOriginalName());
             storyAttachment.setProjectAttachmentSaveName(attachment.getProjectAttachmentSaveName());
             storyAttachment.setProjectAttachmentSavePath(attachment.getProjectAttachmentSavePath());
@@ -505,7 +502,7 @@ public class ProjectApplicationService {
     @Transactional
     public void modifyFarmerInfoAttachment(ProjectAttachmentDTO attachment) {
 
-        ProjectAttachment projectAttachment = projectAttachmentRepository.findFarmerInfoAttachment(attachment.getProjectNo());
+        ProjectAttachment projectAttachment = projectAttachmentRepository.findFarmerInfoAttachment(attachment.getProject().getProjectNo());
 
         System.out.println("projectAttachment 파머사진 업데이트 서비스! = " + projectAttachment);
         if(projectAttachment == null) {
@@ -653,7 +650,8 @@ public class ProjectApplicationService {
         RewardRegistInfo rewardRegistInfo = rewardRegistInfoRepository.findByProjectNo(projectNo);
         RefundPolicy refundPolicy = refundPolicyRepository.findByProjectNo(projectNo);
         Project project = projectRepository.findByProjectNo(projectNo);
-        project.setExamineStatus("승인요청");
+        project.setProgressStatus(5);
+        project.setExamineStatus("1"); //심사대기중
         System.out.println("신청하는 project 정보 = " + project);
         FarmerInfo farmer = farmerInfoRepository.findByFarmerNo(memberNo);
         System.out.println("신청하는 farmer 정보 = " + farmer);
@@ -677,4 +675,55 @@ public class ProjectApplicationService {
         return modelMapper.map(project, ProjectDTO.class);
     }
 
+    @Transactional
+    public void modifyBasicReqAttachment(ProjectAttachmentDTO attachment) {
+
+        ProjectAttachment projectAttachment = projectAttachmentRepository.findIntroAttachmentByProjectNo(attachment.getProject().getProjectNo());
+
+        if(projectAttachment == null) {
+            attachment.setProjectAttachmentCategory("소개사진");
+            projectAttachmentRepository.save(modelMapper.map(attachment, ProjectAttachment.class));
+        } else {
+            projectAttachment.setProjectAttachmentOriginalName(attachment.getProjectAttachmentOriginalName());
+            projectAttachment.setProjectAttachmentSaveName(attachment.getProjectAttachmentSaveName());
+            projectAttachment.setProjectAttachmentSavePath(attachment.getProjectAttachmentSavePath());
+        }
+    }
+
+    @Transactional
+    public void modifyBusinessLicenseAttachment(ProjectAttachmentDTO attachment) {
+
+        ProjectAttachment projectAttachment = projectAttachmentRepository.findBusinessLicenseAttachment(attachment.getProject().getProjectNo());
+
+        if(projectAttachment == null) {
+            attachment.setProjectAttachmentCategory("사업자등록증");
+            projectAttachmentRepository.save(modelMapper.map(attachment, ProjectAttachment.class));
+        } else {
+            projectAttachment.setProjectAttachmentOriginalName(attachment.getProjectAttachmentOriginalName());
+            projectAttachment.setProjectAttachmentSaveName(attachment.getProjectAttachmentSaveName());
+            projectAttachment.setProjectAttachmentSavePath(attachment.getProjectAttachmentSavePath());
+        }
+    }
+
+
+    public void modifyFarmerFinancialInfoAttachment(List<ProjectAttachmentDTO> attachmentList) {
+        System.out.println("서비스다~");
+        attachmentList.forEach(System.out::println);
+        System.out.println("왔니왔니????????????");
+//        System.out.println("attachmentList = " + attachmentList);
+
+        System.out.println("attachmentList.get(0) = " + attachmentList.get(0));
+        System.out.println("attachmentList.get(1) = " + attachmentList.get(1));
+        System.out.println("attachmentList.get(2) = " + attachmentList.get(2));
+        System.out.println("attachmentList.get(3) = " + attachmentList.get(3));
+        for(int i = 0; i < attachmentList.size(); i++) {
+            System.out.println("attachmentListfkfkfkfkfk11111111111111111111111111 = " + attachmentList.get(i));
+            ProjectAttachment attachment = modelMapper.map(attachmentList.get(i), ProjectAttachment.class);
+            System.out.println("attachment = " + attachment);
+            projectAttachmentRepository.save(attachment);
+//            projectAttachmentRepository.save(modelMapper.map(attachmentList.get(2), ProjectAttachment.class));
+//            projectAttachmentRepository.save(modelMapper.map(attachmentList.get(3), ProjectAttachment.class));
+//        projectAttachmentRepository.saveAll(modelMapper.map(attachmentList, List<ProjectAttachment.class>));
+        }
+    }
 }

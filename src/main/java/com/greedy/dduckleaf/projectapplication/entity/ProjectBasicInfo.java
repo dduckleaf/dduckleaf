@@ -22,6 +22,7 @@ import java.util.List;
 public class ProjectBasicInfo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PROJECT_BASIC_INFO_NO")
     private int projectBasicInfoNo;
 
