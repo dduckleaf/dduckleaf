@@ -18,7 +18,7 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-<div th:replace="/common/userheader.html"></div>
+<div th:replace="/common/menubar.html"></div>
 <div class="container">
     <div style="width: 1000px;">
         <div class="row1 story">
@@ -45,17 +45,6 @@
                     </div>
                     <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">스토리 작성</a><br><hr>
                     <a>파머님의 프로젝트를 소개해주세요.</a>
-<!--                    <form enctype="multipart/form-data" method="post">-->
-                        <div class="basicmenu">
-                            <a class="basictitle">소개 사진 등록</a><br>
-                            <a class="basicsubtitle">프로젝트 페이지 상단에 노출될 사진을 올려주세요.</a><br>
-                            <img class="introductionIMG" id="changeImg1" th:src="@{ /images/mockfund/basicimg.png}" ><br>
-                            <input type="file" style="display: block" id="introduction" name="introduction" accept=".gif, .jpg, .png" onchange="loadImg(this)">
-                            <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
-                                해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
-<!--                            <button type="submit" onclick="location.href='project/application/modify/story'">저장</button>-->
-                        </div>
-<!--                    </form>-->
                     <div class="basicmenu">
                         <a class="basictitle">프로젝트 요약</a><br>
                         <a class="basicsubtitle">프로젝트 페이지 상단에 노출됩니다.</a><br>
@@ -80,8 +69,8 @@
                     <div class="basicmenu">
                         <a class="basictitle">프로젝트 스토리</a><br>
                         <a class="basicsubtitle">프로젝트 스토리로 사용할 사진을 등록해주세요.</a><br>
-                        <img class="storyIMG" id="changeImg2" th:src="@{/images/mockfund/basicimg.png}"><br>
-                        <input type="file" style="display: block" id="story" name="story" accept=".gif, .jpg, .png" onchange="loadImg(this)">
+                        <img class="basicimg1" id="changeImg" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <input type="file" style="display: block" id="file" name="file" accept=".gif, .jpg, .png" onchange="loadImg(this)">
                         <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
                             해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
                     </div>
@@ -232,43 +221,28 @@
                         popup: 'savepopup'
                     },
                     buttonsStyling: false,
-                }).then(function(projectInfo, projectNo, projectBasicInfoNo, introduction, story) {
-
+                }).then(function(projectInfo, projectNo, projectBasicInfoNo, introduction, file) {
 
                     /* 이미지 등록 */
-                    const $introductionIMG = document.getElementById("changeImg1");
+                    const $basicimg = document.getElementById("changeImg");
 
-                    $introductionIMG.onclick = function() {
-                        document.getElementById("introduction").click();
+                    $basicimg.onclick = function() {
+                        document.getElementById("file").click();
                     }
 
                     function loadImg(value) {
                         if(value.files && value.files[0]) {
                             const reader = new FileReader();
                             reader.onload = function(e) {
-                                document.getElementById("$introductionIMG").src = e.target.result;
+                                document.getElementById("$basicimg").src = e.target.result;
                             }
                             reader.readAsDataURL(value.files[0]);
                         }
                     }
 
-                    /* 이미지 등록 */
-                    const $storyIMG = document.getElementById("changeImg2");
-
-                    $storyIMG.onclick = function() {
-                        document.getElementById("story").click();
-                    }
-
-                    function loadImg(value) {
-                        if(value.files && value.files[0]) {
-                            const reader = new FileReader();
-                            reader.onload = function(e) {
-                                document.getElementById("$storyIMG").src = e.target.result;
-                            }
-                            reader.readAsDataURL(value.files[0]);
-                        }
-                    }
-
+                    let formData = new FormData();
+                    formData.append('file', file);
+                    console.log(formData);
 
                     let saveForm = document.saveForm;
                     let url = '/project/application/modify/story';
@@ -276,7 +250,7 @@
                     saveForm.projectNo = projectNo;
                     saveForm.projectBasicInfoNo = projectBasicInfoNo;
                     saveForm.introduction = introduction;
-                    saveForm.story = story;
+                    // saveForm.story = story;
 
                     saveForm.action = url;
                     saveForm.method = 'post';
