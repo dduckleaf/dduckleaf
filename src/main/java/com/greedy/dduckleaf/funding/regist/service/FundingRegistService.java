@@ -38,9 +38,9 @@ public class FundingRegistService {
     private final PaymentHistoryForFundingRepository payHistoryRepo;
     private final ShippingAddressForFundingRepository shippingAddressRepo;
     private final RewardShippingForFundingRegistRepository rewardShippingRepo;
-
+    private final RewardShippingHistoryForRegistFundingRepository rewardShippingHistoryRepo;
     @Autowired
-    public FundingRegistService(ProjectFundingRegistRepository repository, ModelMapper modelMapper, BankRepository bankRepository, MemberForFundingRegistRepository memberRepo, ShippingFeeForFundingRepository shippingRepo, FundingRepository fundingRepo, PaymentHistoryForFundingRepository payHistoryRepo, ShippingAddressForFundingRepository shippingAddressRepo, RewardShippingForFundingRegistRepository rewardShippingRepo) {
+    public FundingRegistService(ProjectFundingRegistRepository repository, ModelMapper modelMapper, BankRepository bankRepository, MemberForFundingRegistRepository memberRepo, ShippingFeeForFundingRepository shippingRepo, FundingRepository fundingRepo, PaymentHistoryForFundingRepository payHistoryRepo, ShippingAddressForFundingRepository shippingAddressRepo, RewardShippingForFundingRegistRepository rewardShippingRepo, RewardShippingHistoryForRegistFundingRepository rewardShippingHistoryRepo) {
         this.projectRepository = repository;
         this.modelMapper = modelMapper;
         this.bankRepository = bankRepository;
@@ -50,6 +50,7 @@ public class FundingRegistService {
         this.payHistoryRepo = payHistoryRepo;
         this.shippingAddressRepo = shippingAddressRepo;
         this.rewardShippingRepo = rewardShippingRepo;
+        this.rewardShippingHistoryRepo = rewardShippingHistoryRepo;
     }
 
 
@@ -120,11 +121,25 @@ public class FundingRegistService {
         RewardShipping rewardShipping = parsingRewardShipping(registDTO);
         rewardShipping.setFunding(funding);
 
+        rewardShippingRepo.save(rewardShipping);
+        rewardShipping = rewardShippingRepo.findLatest();
+
+        System.out.println("rewardShipping = " + rewardShipping);
+        /* 발송 내역 삽입*/
+
+        System.out.println("/* 발송 내역 삽입*/");
+        RewardShippingHistory shippingHistory = new RewardShippingHistory();
+        shippingHistory.setRecordDate(getDateAndTime());
+        shippingHistory.setRewardShippingNo(rewardShipping.getRewardShippingNo());
+        shippingHistory.setShippingStatus(1);
+
+
         /* 엔티티에 삽입한 행을 DB에 저장 */
         fundingRepo.save(funding);
         payHistoryRepo.save(history);
         shippingAddressRepo.save(shippingAddress);
-        rewardShippingRepo.save(rewardShipping);
+        rewardShippingHistoryRepo.save(shippingHistory);
+        System.out.println("/* 엔티티에 삽입한 행을 DB에 저장 */");
     }
 
     private RewardShipping parsingRewardShipping(FundingRegistDTO registDTO) {
@@ -180,7 +195,9 @@ public class FundingRegistService {
         }
         funding.setExtraShippingFeeStatus(extraShippingFeeStatus);
         funding.setRefundBankCode(bankRepository.findById(registDTO.getRefundAccountInfo().getBankCode()).get());
-        funding.setRefundAccount(registDTO.getRefundAccountInfo().getAccountNo());
+        System.out.println("registDTO = " + registDTO);
+        System.out.println("registDTO.getRefundAccountInfo().getAccountNo() = " + registDTO.getRefundAccountInfo().getAccountNo());
+        funding.setRefundAccount(Integer.parseInt(registDTO.getRefundAccountInfo().getAccountNo().replace("\"", "")));
 
         return funding;
     }

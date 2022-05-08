@@ -22,7 +22,7 @@ public class RewardShipping {
     @Column(name = "PROJECT_NO")
     private int projectNo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "FUNDING_INFO_NO")
     private Funding funding;
 
