@@ -31,17 +31,5 @@
 //        assertNotNull(repository);
 //    }
 //
-//    @Test
-//    @DisplayName("정산정보로 회차별 정산금 지급내역 조회")
-//    public void findBySettlementInfo_SettlementInfoNo_test() {
-//        //given
-//        int settlementInfoNo = 1;
-//
-//        //when
-//        List<SettlementPaymentInfo> settlementPaymentInfos = repository.findBySettlementInfo_SettlementInfoNo(settlementInfoNo);
-//
-//        //then
-//        assertNotNull(settlementPaymentInfos);
-//        settlementPaymentInfos.forEach(System.out::println);
-//    }
+
 //}
