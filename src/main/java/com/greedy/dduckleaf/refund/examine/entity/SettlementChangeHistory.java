@@ -7,16 +7,20 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import javax.persistence.*;
+
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Setter
+@Getter
 @ToString
-@Entity(name = "SettlementChangeHistoryForRefundingFarmerExamine")
+@Entity(name = "SettlementChangeHistory")
+>>>>>>> origin/feature/refundingexamine/confirmregist
 @Table(name = "TBL_SETTLEMENT_CHANGE_HISTORY")
 public class SettlementChangeHistory {
     @Id
     @Column(name = "SETTLEMENT_CHANGE_HISTORY_NO")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int settlementChangeHistoryNo;
 
     @Column(name = "CHANGED_AMOUNT")
@@ -28,14 +32,11 @@ public class SettlementChangeHistory {
     @Column(name = "CHANGED_DATE")
     private String changedDate;
 
-    @Column(name = "SETTLEMENT_INFO_NO")
+    @Column(name ="SETTLEMENT_INFO_NO")
     private int settlementInfoNo;
 
     @Column(name = "SETTLEMENT_CHANGED_CATEGORY")
     private int settlementChangedCategory;
-
-    @Column(name = "SETTLEMENT_OBJECTION_HISTORY_NO")
-    private int settlementObjectionHistoryNo;
 
     @Column(name = "REFUNDING_HISTORY_NO")
     private int refundingHistoryNo;

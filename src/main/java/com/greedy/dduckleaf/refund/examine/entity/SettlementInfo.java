@@ -1,9 +1,6 @@
 package com.greedy.dduckleaf.refund.examine.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,6 +8,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Setter
 @Getter
+@toString
 @Entity(name = "SettlementInfoForRefundingExamine")
 @Table(name = "TBL_SETTLEMENT_INFO")
 public class SettlementInfo {
@@ -32,15 +30,7 @@ public class SettlementInfo {
     @Column(name = "TOTAL_COMMISSION_AMOUNT")
     private int totalCommissionAmount;                  //수수료총액
 
-    @Override
-    public String toString() {
-        return "SettlementInfo{" +
-                "settlementInfoNo=" + settlementInfoNo +
-                ", fundingTotalAmount=" + fundingTotalAmount +
-                ", donateAmount=" + donateAmount +
-                ", settlementTotalAmount=" + settlementTotalAmount +
-                ", totalCommissionAmount=" + totalCommissionAmount +
-                '}';
-    }
+    @Column(name = "PROJECT_NO")
+    private int projectNo;                            //프로젝트 번호
 
 }
