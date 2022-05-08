@@ -12,6 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- Favicon -->
   <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico" />
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
   <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
@@ -87,14 +88,16 @@
                     <th:block sec:authorize="isAuthenticated()">
                       <button id="funding" class="basic-btn btn1 alittle-bigbig-btn">펀딩하기</button>
                     </th:block>
-                      <button class="basic-btn btn3 alittle-big-btn">관심
+
+                      <button class="basic-btn btn3 alittle-big-btn" id="following-project" th:value="${ followingStatus }">관심
                         <th:block th:if="${ followingStatus == 'Y' }">
-                            <img src="/images/common/fullheart.png" id="regist-following" alt="Product Image">
+                            <img src="/images/common/fullheart.png" id="following-img" alt="Product Image">
                         </th:block>
                         <th:block th:if="${ followingStatus == 'N' }">
-                            <img src="/images/common/heart.png" id="cancel-following" alt="Product Image">
+                            <img src="/images/common/heart.png" id="following-img" alt="Product Image">
                         </th:block>
                       </button>
+
                   </div><br>
                   <ul class="quantity-with-btn pb-7">
                     <li class="add-to-cart">
@@ -516,6 +519,63 @@
         .catch(err => {
           console.log(err);
         });
+      }
+    }
+  }
+
+  /*관심 프로젝트 등록, 취소*/
+  if(document.getElementById("following-project")){
+
+    document.getElementById("following-project").onclick = function() {
+
+      if(!document.getElementById("loginMember")) {
+
+        location.href="/member/login";
+      }
+
+      let $followingStatus = document.getElementById("following-project").value;
+      const $projectNo = [[${ project.projectNo }]];
+
+      if($followingStatus == "N") {
+
+        let data = {
+          method: 'POST',
+          body: $projectNo,
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+
+        fetch("/following/regist", data)
+          .then(response => response.json())
+          .then(response => {
+            console.table(response);
+            if(response == "관심프로젝트로 등록되었습니다."){
+
+              document.getElementById("following-img").src = "/images/common/fullheart.png";
+              document.getElementById("following-project").value = "Y";
+              Swal.fire({
+                title: response,
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonText: '확인',
+                allowEnterKey: false,
+                confirmButtonWidth: '100px',
+                customClass: {
+                  cancelButton: 'savecancel',
+                  popup: 'savepopup'
+                },
+                buttonsStyling: false,
+              });
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      }
+      if($followingStatus == "Y") {
+
+        /* 관심프로젝트 등록 취소*/
       }
     }
   }
