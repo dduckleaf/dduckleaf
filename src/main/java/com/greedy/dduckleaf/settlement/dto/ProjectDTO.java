@@ -15,7 +15,7 @@ public class ProjectDTO {
 
     private int projectNo;                              //프로젝트번호
     private String projectName;                         //프로젝트명
-    private int progressStatus;                      //진행상태
+    private int progressStatus;                         //진행상태
     private String projectStatus;                       //취소여부
     private int achievementRate;                        //달성률
     private int fundTargetAmount;                       //목표펀딩금액

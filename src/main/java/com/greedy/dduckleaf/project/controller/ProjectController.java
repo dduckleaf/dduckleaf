@@ -1,9 +1,12 @@
 package com.greedy.dduckleaf.project.controller;
 
+import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.project.dto.FundingInfoDTO;
 import com.greedy.dduckleaf.project.dto.ProjectDTO;
+import com.greedy.dduckleaf.project.dto.ProjectDetailDTO;
 import com.greedy.dduckleaf.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,9 +28,11 @@ import java.util.concurrent.TimeUnit;
  * Comment : 프로젝트
  * History
  * 2022-04-27 (차화응) 처음 작성 / 개별 프로젝트 상세조회 메소드 작성
+ * 2022-05-08 (박상범) 개별 프로젝트 상세 조회 메소드 수정
  * </pre>
  * @version 1.0.0
  * @author 차화응
+ * @author 박상범
  */
 @Controller
 @RequestMapping("/project")
@@ -44,17 +49,17 @@ public class ProjectController {
      * findProjectDetail : 개별 프로젝트 상세정보를 조회합니다.
      * @param mv : 요청 경로를 담는 객체
      * @param projectNo : 조회할 개별 프로젝트 번호
+     * @param user : 로그인된 회원 정보
      * @return mv : 뷰로 전달할 데이터와 경로를 담는 객체
      *
      * @author 차화응
      */
     @GetMapping("/projectdetail/{projectNo}")
-    public ModelAndView findProjectDetail(ModelAndView mv, @PathVariable int projectNo) throws ParseException {
+    public ModelAndView findProjectDetail(ModelAndView mv, @PathVariable int projectNo, @AuthenticationPrincipal CustomUser user) throws ParseException {
 
-//        projectNo = 2;
-        ProjectDTO project = projectService.findProjectDetail(projectNo);
+        ProjectDetailDTO projectDetail = projectService.findProjectDetail(projectNo, user);
 
-        String endDate = project.getEndDate().replace("-","");
+        String endDate = projectDetail.getProject().getEndDate().replace("-","");
         String nowDate = java.sql.Date.valueOf(LocalDate.now()).toString().replace("-","");
 
         String format = "yyyyMMdd";
@@ -66,28 +71,23 @@ public class ProjectController {
         long diffSec = Math.abs(end.getTime() - now.getTime());
         long diffDay = TimeUnit.DAYS.convert(diffSec, TimeUnit.MILLISECONDS);
 
-        System.out.println("day = " + diffDay);
-        System.out.println("컨트롤러" + project);
+        mv.addObject("project", projectDetail.getProject());
 
-        List<FundingInfoDTO> supporter = projectService.countSupporter(projectNo);
+        if(projectDetail.getProject().getProgressStatus() == 2) {
 
-        if(project.getProgressStatus() == 2) {
-
-            mv.addObject("project", project);
             mv.setViewName("project/scheduled/detail");
+        }
 
-        } else if(project.getProgressStatus() == 3) {
+        if(projectDetail.getProject().getProgressStatus() == 3) {
 
-            mv.addObject("supporter", supporter);
+            mv.addObject("supporter", projectDetail.getFundingInfoList());
             mv.addObject("day", diffDay);
-            mv.addObject("project", project);
             mv.setViewName("project/progressing/detail");
+        }
 
-        } else if(project.getProgressStatus() == 4) {
+        if(projectDetail.getProject().getProgressStatus() == 4) {
 
-            mv.addObject("project", project);
             mv.setViewName("project/end/detail");
-
         }
 
         return mv;
