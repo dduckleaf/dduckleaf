@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.projectapplication.dto.*;
+import com.greedy.dduckleaf.projectapplication.entity.Project;
 import com.greedy.dduckleaf.projectapplication.projectapplication.service.ProjectApplicationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -377,5 +378,16 @@ class ProjectApplicationServiceTest {
 
         //then
         assertDoesNotThrow(() -> projectApplicationService.registProjectApplicationInfo(projectNo, memberNo));
+    }
+
+    @Test
+    @DisplayName("심사 대기중인 프로젝트 신청 취소하는 테스트")
+    public void cancelProjectApplication_test() {
+
+        //given
+        int projectNo = 319;
+
+        //when & then
+        assertDoesNotThrow(() -> projectApplicationService.cancelProjectApplication(projectNo));
     }
 }
