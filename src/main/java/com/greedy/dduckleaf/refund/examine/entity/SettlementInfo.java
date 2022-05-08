@@ -1,0 +1,46 @@
+package com.greedy.dduckleaf.refund.examine.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@Entity(name = "SettlementInfoForRefundingExamine")
+@Table(name = "TBL_SETTLEMENT_INFO")
+public class SettlementInfo {
+
+    @Id
+    @Column(name = "SETTLEMENT_INFO_NO")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int settlementInfoNo;                       //정산정보번호
+
+    @Column(name = "FUNDING_TOTAL_AMOUNT")
+    private int fundingTotalAmount;                     //펀딩금총액
+
+    @Column(name = "DONATE_AMOUNT")
+    private int donateAmount;                           //후원금총액
+
+    @Column(name = "SETTLEMENT_TOTAL_AMOUNT")
+    private int settlementTotalAmount;                  //정산금총액
+
+    @Column(name = "TOTAL_COMMISSION_AMOUNT")
+    private int totalCommissionAmount;                  //수수료총액
+
+    @Override
+    public String toString() {
+        return "SettlementInfo{" +
+                "settlementInfoNo=" + settlementInfoNo +
+                ", fundingTotalAmount=" + fundingTotalAmount +
+                ", donateAmount=" + donateAmount +
+                ", settlementTotalAmount=" + settlementTotalAmount +
+                ", totalCommissionAmount=" + totalCommissionAmount +
+                '}';
+    }
+
+}

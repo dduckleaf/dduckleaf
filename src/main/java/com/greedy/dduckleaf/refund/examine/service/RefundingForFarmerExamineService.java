@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.refund.examine.dto.RefundingDTO;
 import com.greedy.dduckleaf.refund.examine.entity.Funding;
 import com.greedy.dduckleaf.refund.examine.entity.Refunding;
 import com.greedy.dduckleaf.refund.examine.entity.RefundingHistory;
+import com.greedy.dduckleaf.refund.examine.entity.SettlementChangeHistory;
 import com.greedy.dduckleaf.refund.examine.repository.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -74,7 +75,17 @@ public class RefundingForFarmerExamineService {
         refundingHistory.setManagerNo(memberNo);
 
         /* 발송내역에 해당 펀딩 정보를 삭제한다. */
-        shippingRepo.deleteById(shippingRepo.findByFunding_fundingInfoNo(funding.getFundingInfoNo()).getRewardShippingNo());
+        /* 남기랑 의견조율 해서 반영하자 */
+//        shippingRepo.deleteById(shippingRepo.findByFunding_fundingInfoNo(funding.getFundingInfoNo()).getRewardShippingNo());
+
+        /* 정산금 변동 이력 테이블에 금액, 사유 입력 */
+        SettlementChangeHistory settlement = new SettlementChangeHistory();
+        settlement.setChangedAmount(funding.getDonateAmount());
+        settlement.setChangedReason("환불");
+        settlement.setChangedDate(getDateAndTime());
+
+
+
 
         /* 수정된 데이터 변동사항을 DB에 저장한다. */
         fundingRepo.save(funding);

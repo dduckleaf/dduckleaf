@@ -16,4 +16,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @version 1.0.0
  */
 public interface FundingForRefundingFarmerExamineRepository extends JpaRepository<Funding, Integer> {
+
 }
