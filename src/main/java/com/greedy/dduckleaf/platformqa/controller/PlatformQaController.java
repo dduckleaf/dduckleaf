@@ -145,7 +145,7 @@ public class PlatformQaController {
     /**
      * modifyPlatformQaReply : 1:1문의 답변을 수정합니다.
      * @param mv : 요청 경로를 담는 객체
-     * @param updatePlatformQaReply : 수정할 공지사항 정보를 담는 객체
+     * @param updatePlatformQaReply : 수정할 1:1문의 답변 정보를 담는 객체
      * @return mv : 뷰로 전달할 데이터와 경로를 담는 객체
      *
      * @author 차화응
