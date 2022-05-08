@@ -21,6 +21,7 @@ public class FollowingProject {
     @Column(name = "MEMBER_NO")
     private int memberNo;
 
-    @Column(name = "PROJECT_NO")
-    private int projectNo;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "PROJECT_NO")
+    private Project project;
 }

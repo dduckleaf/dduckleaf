@@ -19,5 +19,5 @@ import java.util.List;
 @Repository
 public interface FollowingProjectRepository extends JpaRepository<FollowingProject, Integer> {
 
-    FollowingProject findByProjectNoAndMemberNo(int projectNo, int memberNo);
+    FollowingProject findByProjectProjectNoAndMemberNo(int projectNo, int memberNo);
 }

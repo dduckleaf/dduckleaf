@@ -1,8 +1,9 @@
 package com.greedy.dduckleaf.followingproject.service;
 
-import com.greedy.dduckleaf.followingproject.dto.FollowingProjectDTO;
 import com.greedy.dduckleaf.followingproject.entity.FollowingProject;
+import com.greedy.dduckleaf.followingproject.entity.Project;
 import com.greedy.dduckleaf.followingproject.repository.FollowingProjectRepository;
+import com.greedy.dduckleaf.followingproject.repository.ProjectForFollowingProjectRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,26 +24,37 @@ import javax.transaction.Transactional;
 public class FollowingProjectService {
 
     private final FollowingProjectRepository followingProjectRepository;
+    private final ProjectForFollowingProjectRepository projectForFollowingProjectRepository;
     private final ModelMapper modelMapper;
+    private final String FOLLOWING_PROJECT_REGIST_MESSAGE = "관심 프로젝트로 등록되었습니다.";
+    private final String FOLLOWING_PROJECT_REMOVE_MESSAGE = "관심 프로젝트에서 제외되었습니다.";
 
     @Autowired
-    public FollowingProjectService(FollowingProjectRepository followingProjectRepository, ModelMapper modelMapper) {
+    public FollowingProjectService(FollowingProjectRepository followingProjectRepository, ProjectForFollowingProjectRepository projectForFollowingProjectRepository, ModelMapper modelMapper) {
         this.followingProjectRepository = followingProjectRepository;
+        this.projectForFollowingProjectRepository = projectForFollowingProjectRepository;
         this.modelMapper = modelMapper;
     }
 
     /**
      * registFollowingProject: 관심 프로젝트로 등록합니다.
-     * @param followingProject:  회원 번호와 프로젝트 번호를 담은 FollowingProjectDTO 객체입니다.
+     * @param projectNo:  관심 프로젝트로 등록할 프로젝트 번호
+     * @param memberNo:  로그인된 회원의 회원 번호
      * @return "관심 프로젝트로 등록되었습니다."를 리턴합니다.
      * @author 박상범
      */
     @Transactional
-    public String registFollowingProject(FollowingProjectDTO followingProject) {
+    public String registFollowingProject(int projectNo, int memberNo) {
 
-        followingProjectRepository.save(modelMapper.map(followingProject, FollowingProject.class));
+        FollowingProject followingProject = new FollowingProject();
+        Project project = projectForFollowingProjectRepository.findById(projectNo).get();
 
-        return "관심 프로젝트로 등록되었습니다.";
+        followingProject.setProject(project);
+        followingProject.setMemberNo(memberNo);
+
+        followingProjectRepository.save(followingProject);
+
+        return FOLLOWING_PROJECT_REGIST_MESSAGE;
     }
 
     /**
@@ -55,10 +67,10 @@ public class FollowingProjectService {
     @Transactional
     public String removeFollowingProject(int projectNo, int memberNo) {
 
-        FollowingProject followingProject = followingProjectRepository.findByProjectNoAndMemberNo(projectNo, memberNo);
+        FollowingProject followingProject = followingProjectRepository.findByProjectProjectNoAndMemberNo(projectNo, memberNo);
 
         followingProjectRepository.deleteById(followingProject.getFollowingProjectNo());
 
-        return "관심 프로젝트에서 제외되었습니다.";
+        return FOLLOWING_PROJECT_REMOVE_MESSAGE;
     }
 }

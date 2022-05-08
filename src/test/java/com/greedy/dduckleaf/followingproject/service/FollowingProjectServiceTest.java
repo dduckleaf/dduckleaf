@@ -39,12 +39,11 @@ class FollowingProjectServiceTest {
     public void registFollowingProjectTest() {
 
         //given
-        FollowingProjectDTO followingProject = new FollowingProjectDTO();
-        followingProject.setProjectNo(7);
-        followingProject.setMemberNo(67);
+        int projectNo = 7;
+        int memberNo = 5;
 
         //when
-        String result = followingProjectService.registFollowingProject(followingProject);
+        String result = followingProjectService.registFollowingProject(projectNo, memberNo);
 
         //then
         System.out.println(result);

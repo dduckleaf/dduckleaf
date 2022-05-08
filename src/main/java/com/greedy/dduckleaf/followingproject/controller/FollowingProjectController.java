@@ -9,6 +9,7 @@ import com.greedy.dduckleaf.followingproject.service.FollowingProjectService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * <pre>
@@ -41,11 +42,7 @@ public class FollowingProjectController {
     @ResponseBody
     public String registFollowingProject(@RequestBody int projectNo, @AuthenticationPrincipal CustomUser user) {
 
-        FollowingProjectDTO followingProject = new FollowingProjectDTO();
-        followingProject.setProjectNo(projectNo);
-        followingProject.setMemberNo(user.getMemberNo());
-
-        String result = followingProjectService.registFollowingProject(followingProject);
+        String result = followingProjectService.registFollowingProject(projectNo, user.getMemberNo());
 
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd")
@@ -80,5 +77,13 @@ public class FollowingProjectController {
                 .create();
 
         return gson.toJson(result);
+    }
+
+    @GetMapping("/list")
+    public ModelAndView followingProjectList(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+
+
+
+        return mv;
     }
 }
