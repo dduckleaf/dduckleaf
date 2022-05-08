@@ -30,6 +30,13 @@ public class FollowingProjectController {
         this.followingProjectService = followingProjectService;
     }
 
+    /**
+     * registFollowingProject: 관심 프로젝트로 등록합니다.
+     * @param data:  프로젝트 번호
+     * @param user:  로그인된 회원의 정보
+     * @return gson.toJson(result): "관심 프로젝트로 등록되었습니다."를 리턴합니다.
+     * @author 박상범
+     */
     @PostMapping(value = {"/regist"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public String registFollowingProject(@RequestBody int data, @AuthenticationPrincipal CustomUser user) {
@@ -39,6 +46,30 @@ public class FollowingProjectController {
         followingProject.setMemberNo(user.getMemberNo());
 
         String result = followingProjectService.registFollowingProject(followingProject);
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .setPrettyPrinting()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .create();
+
+        return gson.toJson(result);
+    }
+
+    /**
+     * removeFollowingProject: 관심 프로젝트에서 제외합니다.
+     * @param data:  프로젝트 번호
+     * @param user:  로그인된 회원의 정보
+     * @return gson.toJson(result): "관심 프로젝트에서 제외되었습니다."를 리턴합니다.
+     * @author 박상범
+     */
+    @PostMapping(value = {"/remove"}, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String removeFollowingProject(@RequestBody int data, @AuthenticationPrincipal CustomUser user) {
+
+        String result = followingProjectService.removeFollowingProject(data, user.getMemberNo());
 
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd")
