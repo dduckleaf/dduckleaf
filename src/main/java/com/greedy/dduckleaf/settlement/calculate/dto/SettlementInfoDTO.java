@@ -20,7 +20,7 @@ public class SettlementInfoDTO {
     private int settlementTotalAmount;                  //정산금총액
     private int totalCommissionAmount;                  //수수료총액
     private String calculateDate;                       //정산금 계산일
-    private ProjectDTO project;                         //프로젝트 번호
+    private ProjectDTOForJson project;                         //프로젝트 번호
 
     @Override
     public String toString() {
