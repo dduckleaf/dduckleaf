@@ -47,30 +47,6 @@
                     <a>펀딩 진행을 위한 기본요건을 확인하고자 합니다.</a><br>
                     <a>심사 시 확인하는 중요한 정보이므로 반드시 정확한 정보를 입력하세요.</a><br>
                     <a>답변 내용이 사실과 다른 경우, 약정 위반에 따른 불이익이 발생할 수 있습니다.</a>
-                    <div class="basicmenu">
-                        <a class="basictitle">1. 신청하고자 하는 프로젝트가 타 플랫폼에 신청을 했거나, 진행 중인 프로젝트인가요?</a><br>
-                        <input id="applicationStatus1" name="chk" type="checkbox" value="1"> 아니요, 떡잎펀드에서만 신청을 했고, 진행 중인 내용도 없습니다.<br>
-                        <input id="applicationStatus2" name="chk" type="checkbox" value="2"> 예, 현재 타 플랫폼에서 진행 중입니다. 또는 신청을 해 둔 상태입니다.
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">2. 리워드의 준비 상태 및 앞으로의 계획이 어떻게 되나요?</a><br>
-<!--                        <input type="hidden" th:value="${ basicReq.rewardPreparingStatus }">-->
-                        <textarea class="mockfundtitle1" id="rewardPreparingStatus" name="rewardPreparingStatus" type="text" th:placeholder="${ basicReq.rewardPreparingStatus }"></textarea>
-                        <input id="projectNo" name="projectNo" type="hidden" th:value="${ basicReq.projectNo }">
-                    </div>
-                    <div class="basicmenu form-date">
-                        <a class="basictitle">3. 리워드 전달 계획을 적어주세요.</a><br>
-<!--                        <input type="hidden" th:value="${ basicReq.rewardDeliveryPlan }">-->
-                        <textarea class="mockfundtitle1" id="rewardDeliveryPlan" name="rewardDeliveryPlan" type="text" th:placeholder="${ basicReq.rewardDeliveryPlan }"></textarea>
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">4. 소개 사진 등록</a><br>
-                        <a class="basicsubtitle">프로젝트 페이지 상단에 노출될 사진을 올려주세요.</a><br>
-                        <img class="basicimg1" id="changeImg" th:src="@{ /images/mockfund/basicimg.png}" ><br>
-                        <input type="file" style="display: block" id="file" name="file" accept=".gif, .jpg, .png" onchange="loadImg(this)">
-                        <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
-                            해상도 630x400 픽셀 이상<br></a>
-                    </div><br>
                     <div class="checkdiv">
                         <a class="basictitle">리워드 서류 제출 동의</a><br>
                         <a class="policyinfo">리워드 종류 및 생산 형태 선택 전, 반드시 관련 서류 제출에 대한 사항을 확인해주세요. 동의를 진행해야 리워드 등록이 가능합니다.</a><br>
@@ -82,6 +58,28 @@
                             <div class="agreementcheck">동의완료</div>
                             <div class="agreementDate" th:text="${ basicReq.rewardAgreementDate }"></div>
                         </th:block>
+                    </div><br>
+                    <div class="basicmenu">
+                        <a class="basictitle">1. 신청하고자 하는 프로젝트가 타 플랫폼에 신청을 했거나, 진행 중인 프로젝트인가요?</a><br>
+                        <input id="applicationStatus1" name="chk" type="checkbox" value="1"> 아니요, 떡잎펀드에서만 신청을 했고, 진행 중인 내용도 없습니다.<br>
+                        <input id="applicationStatus2" name="chk" type="checkbox" value="2"> 예, 현재 타 플랫폼에서 진행 중입니다. 또는 신청을 해 둔 상태입니다.
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">2. 리워드의 준비 상태 및 앞으로의 계획이 어떻게 되나요?</a><br>
+                        <textarea class="mockfundtitle1" id="rewardPreparingStatus" name="rewardPreparingStatus" type="text" th:placeholder="${ basicReq.rewardPreparingStatus }"></textarea>
+                        <input id="projectNo" name="projectNo" type="hidden" th:value="${ basicReq.projectNo }">
+                    </div>
+                    <div class="basicmenu form-date">
+                        <a class="basictitle">3. 리워드 전달 계획을 적어주세요.</a><br>
+                        <textarea class="mockfundtitle1" id="rewardDeliveryPlan" name="rewardDeliveryPlan" type="text" th:placeholder="${ basicReq.rewardDeliveryPlan }"></textarea>
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">4. 소개 사진 등록</a><br>
+                        <a class="basicsubtitle">프로젝트 페이지 상단에 노출될 사진을 올려주세요.</a><br>
+                        <img class="basicimg1" id="changeImg" th:src="@{ /images/mockfund/basicimg.png}" ><br>
+                        <input type="file" style="display: block" id="file" name="file" accept=".gif, .jpg, .png" onchange="loadImg(this)">
+                        <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
+                            해상도 630x400 픽셀 이상<br></a>
                     </div><br>
                     <div>
                         <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
