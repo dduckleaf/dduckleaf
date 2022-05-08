@@ -47,23 +47,27 @@
                                 <div class="product-list-view row">
                                     <div class="col-12">
                                         <div class="product-item-regist" style="border: solid #CCCCCC 1px; border-radius: 5px; padding: 10px;" >
-                                            <div class="product-content-regist align-self-center">
-                                                <form action="/faq/regist" style="margin-left: 150px;" method="post">
-                                                    <p class="faq-detail-text">제목 <input class="insert-text" id="title" name="faqTitle" th:text="${ faq.getFaqTitle()}"></p>
+                                            <div class="product-content-regist align-self-center" >
+                                                <div>
+                                                <form action="/faq/modify" style="margin-left: 150px;" method="post">
+                                                    <p class="faq-detail-text">제목 <input class="insert-text" id="title" name="faqTitle" th:value="${ modify.getFaqTitle()}"></p>
                                                     <br>
-                                                    <p class="faq-detail-text">설명<input class="insert-text" id="subTitle" name="faqSubTitle" th:text="${ faq.getFaqSubTitle()}" ></p>
+                                                    <p class="faq-detail-text">설명<input class="insert-text" id="subTitle" name="faqSubTitle" th:value="${ modify.getFaqSubTitle()}" ></p>
                                                     <br>
                                                     <div style="display: flex">
                                                         <p class="faq-detail-text" style=" top: auto;">내용</p>
 
-                                                        <textarea class="insert-text2" name="faqContent" id="content" th:text="${ faq.getFaqContent()}" ></textarea>
+                                                        <textarea class="insert-text2" name="faqContent" id="content" th:text="${ modify.getFaqContent()}" ></textarea>
+                                                        <input type="hidden" class="faqNo" name="faqNo" th:value="${modify.getFaqNo()}">
                                                     </div>
                                                     <br>
-                                                    <div class="btn-area">
+                                                    <div class="faqbtn-area">
                                                         <button class="small-btn btn1 faq-btn" type="submit" >확인</button>
-                                                        <button class="small-btn btn2 basic-btn" style="margin-left: 20px">취소</button>
                                                     </div>
                                                 </form>
+
+                                                <button  class="faq-cancel-btn" id="back" >취소</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -80,7 +84,12 @@
     <!-- Begin Footer Area -->
     <footer class="footer" th:replace="/common/footer.html"></footer>
     <!-- Footer Area End Here -->
+    <script>
+        $("#back").click(function () {
 
+            location.href='/faq/list';
+        });
+    </script>
     <!-- Begin Scroll To Top -->
     <a class="scroll-to-top" href="">
         <i class="fa fa-chevron-up"></i>

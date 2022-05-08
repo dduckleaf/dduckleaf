@@ -113,6 +113,8 @@ p.faqcontent-detail {
     justify-content: space-between;
 }
 .product-item-regist {
+    display: flex;
+    position: relative;
     margin-top: 50px !important;
     height: 600px;
     display: -webkit-box;
@@ -130,7 +132,26 @@ p.faqcontent-detail {
     cursor: pointer;
     margin-left: 52%;
 }
+.faqbtn-area1 {
 
+
+
+}
+
+.faq-cancel-btn{
+    position: absolute;
+    top : 515px;
+    right: 310px;
+    color: #FFF !important;
+    background: #C2423A;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 12px;
+    border: none;
+    cursor: pointer;
+
+}
 .mb-0 {
     margin-bottom: 0 !important;
 }
