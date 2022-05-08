@@ -72,6 +72,7 @@ public class ProjectController {
         long diffDay = TimeUnit.DAYS.convert(diffSec, TimeUnit.MILLISECONDS);
 
         mv.addObject("project", projectDetail.getProject());
+        mv.addObject("followingStatus", projectDetail.getFollowingStatus());
 
         if(projectDetail.getProject().getProgressStatus() == 2) {
 
