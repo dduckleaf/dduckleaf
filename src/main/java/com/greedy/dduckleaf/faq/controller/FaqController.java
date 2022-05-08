@@ -25,6 +25,8 @@ import java.util.List;
  * History
  * 2022/04/27 (이용선) 처음 작성 / FAQ 목록 조회 메소드 작성 시작
  * 2022/04/28 (이용선) FAQ 상세조회 메소드 작성
+ * 2022/05/07 (이용선) FAQ 수정 메소드 작성
+ * 2022/05/07 (이용선) FAQ 삭제 메소드 작성
  * </pre>
  * @version 1.0.1
  *
@@ -74,7 +76,7 @@ public class FaqController {
 
     /**
      * findFaqDetailList : FAQ 상세목록을 조회합니다.
-     * @param mv : 요청 정보를 담는 객체
+     * @param mv : 요청 정보를 담는 객체입니다.
      * @param faqNo : FAQ 번호를 전달받습니다.
      * @return mv : 브라우저로 전달할 데이터와 경로 정보를 반환합니다.
 
@@ -92,8 +94,14 @@ public class FaqController {
         return mv;
     }
 
+    /**
+    * faqRegistPage : FAQ 등록페이지
+    * @param mv : 요청 정보를 담는 객체입니다.
+    * @return mv : 브라우저로 전달할 데이터와 경로 정보를 반환합니다.
+    * @author 이용선
+    */
     @GetMapping("/regist")
-    public ModelAndView faqRegist(ModelAndView mv){
+    public ModelAndView faqRegistPage(ModelAndView mv){
 
 
         mv.setViewName("faq/regist");
@@ -101,6 +109,14 @@ public class FaqController {
         return mv;
     }
 
+    /**
+    * faqRegist: FAQ 등록
+    * @param mv : 요청 정보를 담는 객체입니다.
+    * @param user : 회원 정보를 담는 객체입니다.
+    * @param faqWrite : 등록할 FAQ 정보를 담는 객체입니다.
+    * @return mv : 브라우저로 전달할 데이터와 경로 정보를 반환합니다.
+    * @author 이용선
+    */
     @PostMapping("/regist")
     public ModelAndView faqRegist(@AuthenticationPrincipal CustomUser user, ModelAndView mv,FaqDTO faqWrite, RedirectAttributes rttr){
 
@@ -119,7 +135,58 @@ public class FaqController {
         return mv;
     }
 
-//    @GetMapping("")
+    /**
+    * modifyPage : FAQ 수정페이지
+    * @param mv : 요청 정보를 담는 객체입니다.
+    * @param faqNo : 수정할 FAQ 번호입니다.
+    * @return mv : 브라우저로 전달할 데이터와 경로정보를 반환합니다.
+    * @author 이용선
+    */
+    @GetMapping("/modify/{faqNo}")
+    public ModelAndView modifyFaq(ModelAndView mv, @PathVariable int faqNo) {
+//        int FaqNo = Integer.parseInt(faqNo);
+        System.out.println(faqNo);
+//        System.out.println(FaqNo);
+        FaqDTO faqmodify = faqService.findFaqDetail(faqNo);
 
+        mv.addObject("modify", faqmodify);
+        mv.setViewName("/faq/modify");
+
+        return mv;
+    }
+
+    /**
+    * modifyFaq : FAQ 수정
+    * @param mv : 요청 정보를 담는 객체입니다.
+    * @param updateFaq : 수정할 FAQ 정보를 담은 객체입니다.
+    * @return mv : 브라우저로 전달할 데이터와 경로정보를 반환합니다.
+    * @author 이용선
+    */
+    @PostMapping("/modify")
+    public ModelAndView modifyFaq(ModelAndView mv, FaqDTO updateFaq ) {
+        System.out.println(updateFaq);
+        faqService.modifyFaq(updateFaq);
+
+        mv.setViewName("redirect:/faq/list");
+
+        return mv;
+    }
+
+    /**
+    * removeFaq : FAQ 삭제
+    * @param mv : 요청 정보를 담는 객체입니다.
+    * @param faqNo : 삭제할 FAQ 번호입니다.
+    * @return mv : 브라우저로 전달할 데이터와 경로정보를 반환합니다.
+    * @author 이용선
+    */
+    @GetMapping("/remove/{faqNo}")
+    public ModelAndView removeFaq(ModelAndView mv, @PathVariable int faqNo) {
+
+        faqService.removeFaq(faqNo);
+
+        mv.setViewName("redirect:/faq/list");
+
+        return mv;
+    }
 
 }

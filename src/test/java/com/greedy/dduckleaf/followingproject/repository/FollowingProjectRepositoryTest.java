@@ -43,4 +43,34 @@ class FollowingProjectRepositoryTest {
         //then
         assertDoesNotThrow(() -> followingProjectRepository.save(followingProject));
     }
+
+    @Test
+    @DisplayName("관심 프로젝트 조회 테스트")
+    public void findByFollowingProjectTest() {
+
+        //given
+        int memberNo = 5;
+        int projectNo = 7;
+
+        //when
+        FollowingProject followingProject = followingProjectRepository.findByProjectNoAndMemberNo(projectNo, memberNo);
+
+        //then
+        System.out.println(followingProject);
+        assertNotNull(followingProject);
+    }
+
+    @Test
+    @DisplayName("관심프로젝트 취소 테스트")
+    @Transactional
+    public void removeFollowingProjectTest() {
+
+        //given
+        int followingProjectNo = 5;
+
+        //when
+
+        //then
+        assertDoesNotThrow(() -> followingProjectRepository.deleteById(followingProjectNo));
+    }
 }

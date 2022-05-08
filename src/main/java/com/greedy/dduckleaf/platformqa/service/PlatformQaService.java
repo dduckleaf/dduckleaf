@@ -29,9 +29,11 @@ import java.util.stream.Collectors;
  * History
  * 2022-05-01 (차화응) 처음 작성 / 1:1문의 목록조회 메소드 작성
  * 2022-05-01 (차화응) 1:1문의 카테고리 전체 조회 메소드 작성
+ * 2022-05-03 (차화응) 1:1문의 답변 전체 조회 메소드 작성
  * 2022-05-03 (차화응) 1:1문의 작성하기 메소드 작성
+ * 2022-05-04 (차화응) 1:1문의 삭제하기 메소드 작성
  * </pre>
- * @version 1.0.2
+ * @version 1.0.4
  * @author 차화응
  */
 @Service
@@ -77,6 +79,11 @@ public class PlatformQaService {
         return platformQaCategoryList.stream().map(platformQaCategory -> modelMapper.map(platformQaCategory, PlatformQaCategoryDTO.class)).collect(Collectors.toList());
     }
 
+    /**
+     * findAllPlatformQaReply : 1:1문의 답변 전체를 조회합니다.
+     *
+     * @author 차화응
+     */
     public List<PlatformQaReplyDTO> findAllPlatformQaReply() {
 
         List<PlatformQaReply> platformQaReplyList = platformQaReplyRepository.findAllPlatformQaReply();
@@ -105,4 +112,32 @@ public class PlatformQaService {
 
         platformQaRepository.save(platformQa);
     }
+
+    /**
+     * removePlatformQa : 1:1문의를 삭제합니다.
+     * @param platformQaNo : 삭제할 1:1문의 번호
+     *
+     * @author 차화응
+     */
+    @Transactional
+    public void removePlatformQa(int platformQaNo) {
+
+        platformQaRepository.deleteById(platformQaNo);
+    }
+
+    /**
+     * registNewPlatformQaReply : 1:1문의 답변을 등록합니다.
+     * @param newPlatformQaReply : 등록할 1:1문의 답변 정보를 담는 객체
+     *
+     * @author 차화응
+     */
+    @Transactional
+    public void registNewPlatformQaReply(PlatformQaReplyDTO newPlatformQaReply) {
+
+        String registDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new java.sql.Date(System.currentTimeMillis()));
+        newPlatformQaReply.setPlatformQaReplyRegistDate(registDate);
+
+        platformQaReplyRepository.save(modelMapper.map(newPlatformQaReply, PlatformQaReply.class));
+    }
+
 }

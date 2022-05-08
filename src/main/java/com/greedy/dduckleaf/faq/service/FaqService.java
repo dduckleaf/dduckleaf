@@ -22,6 +22,8 @@ import java.util.List;
  * History
  * 2022/04/27 (이용선) 처음 작성 / FAQ 목록 조회 메소드 작성 시작
  * 2022/04/28 (이용선) FAQ 상세조회 메소드 작성
+ * 2022/05/07 (이용선) FAQ 수정 메소드 작성
+ * 2022/05/07 (이용선) FAQ 삭제 메소드 작성
  * </pre>
  * @version 1.0.1
  *
@@ -45,7 +47,6 @@ public class FaqService {
      * findFaqList : FAQ 목록을 조회합니다.
      * @param pageable : 페이징 정보를 받는 객체입니다.
      * @return faqDTO : faq 목록 정보를 반환합니다.
-     *
      * @author 이용선
      */
     public Page<FaqDTO> findFaqList(Pageable pageable){
@@ -81,13 +82,43 @@ public class FaqService {
 
         return modelMapper.map(faq, FaqDTO.class);
     }
-
+    /**
+    * faqnewRegist : FAQ 등록을 합니다.
+    * @param faqWrite : FAQ 등록할 정보를 전달합니다.
+    * @author 이용선
+    */
     @Transactional
     public void faqnewRegist(FaqDTO faqWrite){
 
         faqRepository.save(modelMapper.map(faqWrite, Faq.class));
 
     }
+    /**
+    * modifyFaq : FAQ 수정을 합니다.
+    * @param updateFaq : FAQ 수정사항 정보를 담은 객체입니다.
+    * @author 이용선
+    */
+    @Transactional
+    public void modifyFaq(FaqDTO updateFaq) {
 
+        Faq modifyfaq = faqRepository.findById(updateFaq.getFaqNo()).get();
+        modifyfaq.setFaqTitle(updateFaq.getFaqTitle());
+        modifyfaq.setFaqSubTitle(updateFaq.getFaqSubTitle());
+        modifyfaq.setFaqContent(updateFaq.getFaqContent());
+
+
+    }
+
+    /**
+    * removeFaq : FAQ 삭제를 합니다.
+    * @param faqNo : FAQ 번호를 전달받습니다.
+    * @author 이용선
+    */
+    @Transactional
+    public void removeFaq(int faqNo) {
+
+        faqRepository.deleteById(faqNo);
+
+    }
 
 }

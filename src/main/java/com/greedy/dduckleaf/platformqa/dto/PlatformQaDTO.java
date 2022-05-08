@@ -2,6 +2,8 @@ package com.greedy.dduckleaf.platformqa.dto;
 
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -19,4 +21,5 @@ public class PlatformQaDTO {
     private int platformQaCategory;
     private MemberDTO member;
     private PlatformQaCategoryDTO qnaCategory;
+    private List<PlatformQaReplyDTO> platformQaReplyList;
 }
