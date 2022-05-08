@@ -18,5 +18,9 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface FarmingRecordRepository extends JpaRepository<FarmingRecord, Integer> {
 
+    /* 조회수 갱신 */
+    @Modifying
+    @Query("update FarmingRecord farmingRecord set farmingRecord.farmingRecordCount = farmingRecord.farmingRecordCount + 1 where farmingRecord.farmingRecordNo = :farmingRecordNo")
+    int updateFarmingRecordCount(int farmingRecordNo);
 
 }
