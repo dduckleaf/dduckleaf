@@ -112,4 +112,34 @@ public class PlatformQaController {
         return mv;
     }
 
+    /**
+     * registPlatformQaReply : 1:1문의 답변을 등록합니다.
+     * @param user : 회원 정보를 담는 객체
+     * @param mv : 요청 경로를 담는 객체
+     * @param newPlatformQaReply : 등록할 1:1문의 답변 정보를 담는 객체
+     * @return mv : 뷰로 전달할 데이터와 경로를 담는 객체
+     *
+     * @author 차화응
+     */
+    @PostMapping("/registRep")
+    public ModelAndView registPlatformQaReply(@AuthenticationPrincipal CustomUser user, ModelAndView mv, PlatformQaDTO platformQa, PlatformQaReplyDTO newPlatformQaReply) {
+
+        System.out.println("newPlatformQaReply = " + newPlatformQaReply);
+        System.out.println(platformQa);
+
+        int platformQaNo = platformQa.getPlatformQaNo();
+        int memberNo = user.getMemberNo();
+
+        newPlatformQaReply.setPlatformQaReplyStatus("Y");
+        newPlatformQaReply.setPlatformQaNo(platformQaNo);
+        newPlatformQaReply.setAdminNo(memberNo);
+        platformQa.setPlatformQaAnswerStatus("Y");
+
+        platformQaService.registNewPlatformQaReply(newPlatformQaReply);
+
+        mv.setViewName("redirect:/qna/list");
+
+        return mv;
+    }
+
 }

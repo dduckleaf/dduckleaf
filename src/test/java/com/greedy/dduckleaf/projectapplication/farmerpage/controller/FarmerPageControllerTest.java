@@ -55,4 +55,16 @@ class FarmerPageControllerTest {
 
     }
 
+    @Test
+    @DisplayName("파머탭에서 리워드 정보를 조회하는 메소드 테스트")
+    public void findRewardInfo_test() throws Exception {
+
+        int projectNo = 300;
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/farmerpage/reward/" + projectNo))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andExpect(MockMvcResultMatchers.forwardedUrl(""))
+                .andDo(MockMvcResultHandlers.print());
+
+    }
 }

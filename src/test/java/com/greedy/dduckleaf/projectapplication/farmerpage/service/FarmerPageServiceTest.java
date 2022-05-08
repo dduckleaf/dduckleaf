@@ -50,8 +50,18 @@ class FarmerPageServiceTest {
         assertNotNull(refundPolicy);
     }
 
+    @Test
+    @DisplayName("파머탭에서 리워드 정보를 조회하는 메소드 테스트")
+    public void findRewardInfo_test() {
 
+        //given
+        int projectNo = 300;
 
+        //when
+        RewardRegistInfoDTO reward = farmerPageService.findRewardInfo(projectNo);
 
+        //then
+        assertNotNull(reward);
+    }
 
 }
