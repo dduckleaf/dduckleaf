@@ -298,16 +298,14 @@ public class MemberController {
         return mv;
     }
 
-    @PostMapping("/remove")
-    public ModelAndView removeMember(ModelAndView mv, String withdrawReason, @AuthenticationPrincipal CustomUser user, RedirectAttributes rttr) {
+    @PostMapping(value={"/remove"}, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String removeMember(String withdrawReason, @AuthenticationPrincipal CustomUser user) {
 
         MemberWithdrawDTO memberWithdraw = new MemberWithdrawDTO();
         memberWithdraw.setMemberNo(user.getMemberNo());
         memberWithdraw.setWithdrawReason(withdrawReason);
 
-        String result = memberService.removeMember(memberWithdraw);
-
-
-        return mv;
+        return memberService.removeMember(memberWithdraw);
     }
 }
