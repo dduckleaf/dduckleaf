@@ -50,4 +50,22 @@ class FollowingProjectServiceTest {
         System.out.println(result);
         assertEquals(result, "관심프로젝트로 등록되었습니다.");
     }
+
+    @Test
+    @DisplayName("관심 프로젝트 취소 테스트")
+    @Transactional
+    public void removeFollowingProjectTest() {
+
+        //given
+        int projectNo = 7;
+        int memberNo = 5;
+
+        //when
+        String result = followingProjectService.removeFollowingProject(projectNo, memberNo);
+
+        //then
+        System.out.println(result);
+        assertEquals(result, "관심 프로젝트에서 제외되었습니다.");
+    }
+
 }
