@@ -1,11 +1,10 @@
 package com.greedy.dduckleaf.refund.examine.service;
 
 import com.greedy.dduckleaf.refund.examine.dto.RefundingDTO;
-import com.greedy.dduckleaf.refund.examine.entity.Funding;
-import com.greedy.dduckleaf.refund.examine.entity.Refunding;
-import com.greedy.dduckleaf.refund.examine.entity.RefundingHistory;
+import com.greedy.dduckleaf.refund.examine.entity.*;
 import com.greedy.dduckleaf.refund.examine.repository.*;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -32,7 +31,9 @@ public class RefundingForFarmerExamineService {
     private final RefundingHistoryForFarmerExamineRepository refundHistoryRepo;
     private final RefundingStatusForFarmerExamineRepository refundingStatusRepo;
     private final RewardShippingForRefundingFarmerExamineRepository shippingRepo;
-    public RefundingForFarmerExamineService(ModelMapper mapper, FundingForRefundingFarmerExamineRepository fundingRepo, RefundingForRefundingFarmerExamineRepository refundingRepo, RefundingHistoryForFarmerExamineRepository refundHistoryRepo, RefundingStatusForFarmerExamineRepository refundingStatusRepo, RewardShippingForRefundingFarmerExamineRepository shippingRepo) {
+    private final SettlementInfoForRefundingExamineRepository settlementInfoRepo;
+    private final SettlementChangeHistoryForRefundingExamineRepository settlementHistoryRepo;
+    public RefundingForFarmerExamineService(ModelMapper mapper, FundingForRefundingFarmerExamineRepository fundingRepo, RefundingForRefundingFarmerExamineRepository refundingRepo, RefundingHistoryForFarmerExamineRepository refundHistoryRepo, RefundingStatusForFarmerExamineRepository refundingStatusRepo, RewardShippingForRefundingFarmerExamineRepository shippingRepo, SettlementInfoForRefundingExamineRepository settlementInfoRepo, SettlementChangeHistoryForRefundingExamineRepository settlementHistoryRepo) {
 
         this.mapper = mapper;
         this.fundingRepo = fundingRepo;
@@ -40,6 +41,8 @@ public class RefundingForFarmerExamineService {
         this.refundHistoryRepo = refundHistoryRepo;
         this.refundingStatusRepo = refundingStatusRepo;
         this.shippingRepo = shippingRepo;
+        this.settlementInfoRepo = settlementInfoRepo;
+        this.settlementHistoryRepo = settlementHistoryRepo;
     }
 
     /**
@@ -72,14 +75,50 @@ public class RefundingForFarmerExamineService {
         refundingHistory.setRefundingHistoryCategory("환불신청");
         refundingHistory.setRefundingMemberNo(refunding.getMemberNo());
         refundingHistory.setManagerNo(memberNo);
+        refundHistoryRepo.save(refundingHistory);
+        refundingHistory = refundHistoryRepo.findLastest();
+
+        /* 정산금 변동 이력을 추가합니다. */
+        /* 1. 펀딩금에 관한 이력을 추가합니다. */
+        SettlementChangeHistory settlementHistory = new SettlementChangeHistory();
+        settlementHistory.setChangedAmount(funding.getFundingAmount() - funding.getDonateAmount());
+        settlementHistory.setChangedReason("환불");
+        settlementHistory.setChangedDate(getDateAndTime());
+        int projectNo = funding.getProjectNo();
+        SettlementInfo settlementInfo = settlementInfoRepo.findByProjectNo(projectNo);
+        settlementHistory.setSettlementInfoNo(settlementInfo.getSettlementInfoNo());
+        settlementHistory.setSettlementChangedCategory(2);
+        settlementHistory.setRefundingHistoryNo(refundingHistory.getRefundingHisotryNo());
+        System.out.println("settlementHistory = " + settlementHistory);
+        settlementHistoryRepo.save(settlementHistory);
+
+        /* 2. 후원금에 관한 이력을 추가합니다. */
+        SettlementChangeHistory settlementHistoryDonate = new SettlementChangeHistory();
+        settlementHistoryDonate.setChangedAmount(funding.getDonateAmount());
+        settlementHistoryDonate.setChangedReason("환불");
+        settlementHistoryDonate.setChangedDate(getDateAndTime());
+        settlementHistoryDonate.setSettlementInfoNo(settlementInfo.getSettlementInfoNo());
+        settlementHistoryDonate.setSettlementChangedCategory(2);
+        settlementHistoryDonate.setRefundingHistoryNo(refundingHistory.getRefundingHisotryNo());
+        System.out.println("settlementHistoryDonate = " + settlementHistoryDonate);
+        settlementHistoryRepo.save(settlementHistoryDonate);
+
+
+
+
+
+
+
+
+
 
         /* 발송내역에 해당 펀딩 정보를 삭제한다. */
-        shippingRepo.deleteById(shippingRepo.findByFunding_fundingInfoNo(funding.getFundingInfoNo()).getRewardShippingNo());
+//        shippingRepo.deleteById(shippingRepo.findByFunding_fundingInfoNo(funding.getFundingInfoNo()).getRewardShippingNo());
 
-        /* 수정된 데이터 변동사항을 DB에 저장한다. */
+
         fundingRepo.save(funding);
         refundingRepo.save(refunding);
-        refundHistoryRepo.save(refundingHistory);
+
     }
 
     /**
