@@ -57,7 +57,7 @@ public class ProjectController {
     @GetMapping("/projectdetail/{projectNo}")
     public ModelAndView findProjectDetail(ModelAndView mv, @PathVariable int projectNo, @AuthenticationPrincipal CustomUser user) throws ParseException {
 
-        ProjectDetailDTO projectDetail = projectService.findProjectDetail(projectNo, user.getMemberNo());
+        ProjectDetailDTO projectDetail = projectService.findProjectDetail(projectNo, user);
 
         String endDate = projectDetail.getProject().getEndDate().replace("-","");
         String nowDate = java.sql.Date.valueOf(LocalDate.now()).toString().replace("-","");

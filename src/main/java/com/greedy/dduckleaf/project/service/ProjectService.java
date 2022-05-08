@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.project.service;
 
+import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.project.dto.FundingInfoDTO;
 import com.greedy.dduckleaf.project.dto.ProjectDTO;
 import com.greedy.dduckleaf.project.dto.ProjectDetailDTO;
@@ -47,26 +48,33 @@ public class ProjectService {
     /**
      * findProjectDetail : 개별 프로젝트 상세정보를 조회합니다.
      * @param projectNo : 조회할 개별 프로젝트 번호
-     * @param memberNo : 로그인된 회원의 회원 번호
+     * @param user : 로그인된 회원의 회원 정보
      * @return new ProjectDetailDTO : 컨트롤러로 전달할 상세조회 정보
      */
-    public ProjectDetailDTO findProjectDetail(int projectNo, int memberNo) {
+    public ProjectDetailDTO findProjectDetail(int projectNo, CustomUser user) {
 
         ProjectDTO project = modelMapper.map(projectRepository.findById(projectNo).get(), ProjectDTO.class);
 
         List<FundingInfoDTO> fundingList = fundingInfoRepository.findAllByProjectNo(projectNo)
                                                                     .stream().map(fundingInfo -> modelMapper.map(fundingInfo, FundingInfoDTO.class)).collect(Collectors.toList());
-
-        List<FollowingProject> followingProjectList = followingProjectForProjectRepository.findByMemberNoAndProjectNo(memberNo, projectNo);
-
         String followingStatus = "";
 
-        if(followingProjectList.size() == 0) {
+        if(user != null) {
+
+            List<FollowingProject> followingProjectList = followingProjectForProjectRepository.findByMemberNoAndProjectNo(user.getMemberNo(), projectNo);
+
+            if(followingProjectList.size() == 0) {
+            followingStatus = "N";
+            }
+            if(followingProjectList.size() != 0) {
+            followingStatus = "Y";
+            }
+        }
+        if(user == null) {
+
             followingStatus = "N";
         }
-        if(followingProjectList.size() != 0) {
-            followingStatus = "Y";
-        }
+
 
         return new ProjectDetailDTO(project, fundingList, followingStatus);
     }
