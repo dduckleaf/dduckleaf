@@ -89,6 +89,8 @@ public class NoticeController {
 
         NoticeDTO notice = noticeService.findNoticeDetail(noticeNo);
 
+        noticeService.updateNoticeCount(noticeNo);  //조회수 갱신
+
         mv.addObject("notice", notice);
         mv.setViewName("notice/detail");
 

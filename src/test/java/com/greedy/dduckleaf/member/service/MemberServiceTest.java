@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
+import com.greedy.dduckleaf.member.dto.MemberWithdrawDTO;
 import com.greedy.dduckleaf.member.entity.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -277,4 +278,24 @@ class MemberServiceTest {
         //then
         assertEquals(result, "비밀번호가 변경되었습니다. 로그인페이지로 이동힙니다.");
     }
+
+    @Test
+    @DisplayName("회원 탈퇴 테스트")
+    @Transactional
+    public void removeMemberTest() {
+
+        //given
+        MemberWithdrawDTO memberWithdraw = new MemberWithdrawDTO();
+        memberWithdraw.setWithdrawReason("서비스 불만족");
+        memberWithdraw.setWithdrawDate("20220508");
+        memberWithdraw.setMemberNo(67);
+
+        //when
+        String result = memberService.removeMember(memberWithdraw);
+
+        //then
+        System.out.println(result);
+        assertEquals(result, "로그인페이지로 돌아갑니다.");
+    }
+
 }

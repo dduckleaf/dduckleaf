@@ -20,7 +20,7 @@
 <body>
 <div th:replace="/common/menubar.html"></div>
 <div class="container">
-    <div style="width: 1000px;">
+    <div style="width: 1000px; height: 2800px;">
         <div class="row1 representativeinfo">
             <div th:fragment="mockfundsidebar" class="col-md-2">
                 <button class="accordion">
@@ -36,7 +36,7 @@
                     <p onclick="location.href='/project/application/representative'">대표자 및 정산 정보</p>
                 </div>
             </div>
-            <form name="saveForm">
+            <form name="saveForm" method="post" encType="multipart/form-data" action="/project/application/modify/representative">
                 <div class="col-md-7">
                     <div class="breadcrumb">
                         <span class="breadcrumb home" onclick="location.href='/project/application/goMain'">펀딩 준비</span>&nbsp;
@@ -71,41 +71,41 @@
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">사업자 등록번호</a><br>
-                        <input class="farmerinfo" id="businessOwnNo" name="businessOwnNo" type="text" th:value="${ farmer.businessOwnNo }">
+                        <input class="farmerinfo" id="businessOwnNo" name="businessOwnNo" type="text" th:placeholder="${ farmer.businessOwnNo }">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">상호명</a><br>
                         <a class="basicsubtitle">사업자등록증에 등록된 상호명을 입력하세요.</a>
-                        <input class="farmerinfo" type="text" id="businessName" name="businessName" th:value="${ farmer.businessName }">
+                        <input class="farmerinfo" type="text" id="businessName" name="businessName" th:placeholder="${ farmer.businessName }">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">법인명(선택사항)</a><br>
                         <a class="basicsubtitle">법인 사업자일 경우 사업자등록증에 등록된 법인명을 입력하세요.</a>
-                        <input class="farmerinfo" type="text" th:value="${ farmer.corporateName }">
+                        <input class="farmerinfo" type="text" th:placeholder="${ farmer.corporateName }">
                     </div>
-                    <div class="basicmenu">
+                    <div class="basicmenu img-area1" id="ImgArea1">
                         <a class="basictitle">사업자 등록증</a><br>
-                        <a class="basicsubtitle">사업자인 경우 사업자등록증 상의 대표자명, 개인인 경우 주민등록중 상의 성명과 일치해야 합니다.</a>
-                        <label for="uploadfile"> 업로드 </label>
-                        <input type="file" name="uploadfile" id="uploadfile">
+                        <a class="basicsubtitle">사업자인 경우 사업자등록증 상의 대표자명, 개인인 경우 주민등록증 상의 성명과 일치해야 합니다.</a><br>
+                        <img class="basicimg1" id="changeImg1" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <input type="file" id="thumbnailImg1" name="farmerfinancial1" onchange="loadImg(this,1)">
                     </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">법인 인감 증명서</a>
-                        <label for="uploadfile2"> 업로드 </label>
-                        <input type="file" name="uploadfile2" id="uploadfile2"><br>
+                    <div class="basicmenu img-area2" id="ImgArea2">
+                        <a class="basictitle">법인 인감 증명서</a><br>
+                        <img class="basicimg1" id="changeImg2" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <input type="file" id="thumbnailImg2" name="farmerfinancial2" onchange="loadImg(this,2)"><br>
                         <a class="basicsubtitle">3개월 이내 발급받은 법인 인감 증명서를 업로드하세요.</a><br>
                         <a class="basicsubtitle">주민등록번호 뒷자리 마스킹 필수</a><br>
                         <a class="basicsubtitle">JPG, JPEG, PNG, PDF / 10MB 이하 파일 업로드 가능</a>
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">대표자명</a><br>
-                        <a class="basicsubtitle">사업자인 경우 사업자등록증 상의 대표자명, 개인인 경우 주민등록중 상의 성명과 일치해야 합니다.</a>
-                        <input class="farmerinfo" type="text" id="representativeName" name="representativeName" th:value="${ farmer.representativeName }">
+                        <a class="basicsubtitle">사업자인 경우 사업자등록증 상의 대표자명, 개인인 경우 주민등록증 상의 성명과 일치해야 합니다.</a>
+                        <input class="farmerinfo" type="text" id="representativeName" name="representativeName" th:placeholder="${ farmer.representativeName }">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">대표자 이메일</a><br>
                         <a class="basicsubtitle">펀딩하기 서비스 제공 시 추가 계약·약정이 필요한 경우, 입력된 대표자의 이메일로 전자 약정서가 발송됩니다.</a>
-                        <input class="farmerinfo" type="text" id="representativeEmail" name="representativeEmail" th:value="${ farmer.representativeEmail }">
+                        <input class="farmerinfo" type="text" id="representativeEmail" name="representativeEmail" th:placeholder="${ farmer.representativeEmail }">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">대표자 휴대폰 본인인증</a><br>
@@ -119,38 +119,38 @@
                         <input type="button" class="btn1 big-btn story-btn" id="send-phone"  value="인증번호 전송">
                         <div id="sendcomplete" style="display: none">인증번호가 전송되었습니다.</div>
                         <input type="hidden" id="verification-phone">
-                        <!--phone 인증번호 전송 버튼-->
+                    <!--phone 인증번호 전송 버튼-->
                         <br>
                         <div id="phone-verification-div">
-                            <!--phone 인증번호 입력칸-->
+                        <!--phone 인증번호 입력칸-->
                             <input type="text" id="phone-verification" name="verification" placeholder="인증번호" style="width: 400px; height: 40px;">
-                            <!--phone 인증번호 확인 버튼-->
+                        <!--phone 인증번호 확인 버튼-->
                             <input type="button" class="btn1 big-btn story-btn" id="check-phone-verification" value="확인">
                             <div id="checkmention" style="display: none">본인인증이 완료되었습니다.</div>
-                            <input type="hidden" id="checkPhoneResult" value="false">
+                                <input type="hidden" id="checkPhoneResult" value="false">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="basicmenu">
-                        <a class="basictitle">대표자 신분증</a>
-                        <label for="uploadfile2"> 업로드 </label>
-                        <input type="file" name="uploadfile2" id="uploadfile2"><br>
+                    <div class="basicmenu img-area3" id="ImgArea3">
+                        <a class="basictitle">대표자 신분증</a><br>
+                        <img class="basicimg1" id="changeImg3" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <input type="file" id="thumbnailImg3" name="farmerfinancial3" onchange="loadImg(this,3)">
                         <a class="basicsubtitle">대표자 확인을 위해 신분증 사본을 업로드하세요.</a><br>
                         <a class="basicsubtitle">주민등록번호 뒷자리 마스킹 필수</a><br>
                         <a class="basicsubtitle">JPG, JPEG, PNG, PDF / 10MB 이하 파일 업로드 가능</a>
                     </div><br>
                     <a style="font-size: 20pt;">세금계산서 발행 및 정산 계좌 정보</a><br>
-                    <div class="basicmenu">
-                        <a class="basictitle">대표자 신분증</a><br>
-                        <a class="basicsubtitle">서비스 이용 수수료에 대해 세금계산서를 발행하며, 사업자등록을 하지 않은 개인인 경우,</a><br>
-                        <a class="basicsubtitle">고유식별정보에 필요한 주민등록번호를 입력하세요.</a><br>
-                        <input class="registration" id="representativeSSN" name="representativeSSN" type="text" th:value="${ farmer.representativeSSN }">
-                        <input class="registration" type="text">
+                        <div class="basicmenu">
+                            <a class="basictitle">대표자 신분증</a><br>
+                            <a class="basicsubtitle">서비스 이용 수수료에 대해 세금계산서를 발행하며, 사업자등록을 하지 않은 개인인 경우,</a><br>
+                            <a class="basicsubtitle">고유식별정보에 필요한 주민등록번호를 입력하세요.</a><br>
+                            <input class="registration" id="representativeSSN" name="representativeSSN" type="text" th:placeholder="${ farmer.representativeSSN }">
+                            <input class="registration" type="text">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">세금계산서 발행 이메일</a><br>
                         <a class="basicsubtitle">세금계산서 발행 시, 입력되는 이메일 주소를 입력하세요. ( 본인의 이메일 주소 또는 세무 대리인의 이메일 주소)</a>
-                        <input class="farmerinfo" id="taxReceiveEmail" name="taxReceiveEmail" type="text" th:value="${ financialInfo.taxReceiveEmail }">
+                        <input class="farmerinfo" id="taxReceiveEmail" name="taxReceiveEmail" type="text" th:placeholder="${ financialInfo.taxReceiveEmail }">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">계좌 정보</a><br>
@@ -161,20 +161,20 @@
                         <select class="mockfundtitle1" id="bank" name="bank.bankNo">
                             <option th:each="bankList : ${ bankList }" th:value="${ bankList.bankNo }" th:utext="${ bankList.bankName }" th:selected="${ financialInfo.bank.bankNo == bankList.bankNo }"></option>
                         </select><br><br>
-                        <input class="farmerinfo" type="text" id="farmerAccount" name="farmerAccount" th:value="${ financialInfo.farmerAccount }">
+                        <input class="farmerinfo" type="text" id="farmerAccount" name="farmerAccount" th:placeholder="${ financialInfo.farmerAccount }">
                         <a class="basicsubtitle">특수문자(-)없이 숫자만 입력해주세요.</a>
-                        <input class="farmerinfo" type="text" id="farmerName" name="farmerName" th:value="${ financialInfo.farmerName }">
+                        <input class="farmerinfo" type="text" id="farmerName" name="farmerName" th:placeholder="${ financialInfo.farmerName }">
                         <a class="basicsubtitle">예금주 명은 계좌의 예금주와 정확하게 일치해야 합니다.</a>
                     </div>
-                    <div class="basicmenu">
+                    <div class="basicmenu img-area4" id="ImgArea4">
                         <a class="basictitle">통장 사본</a><br>
                         <a class="basicsubtitle">위 계좌 정보와 동일한 명의의 통장 사본을 제출해야 합니다.
-                            <br>JPG, JPEG, PNG, PDF / 10MB 이하 파일 1개만 업로드 가능합니다.</a>
-                        <label for="uploadfile"> 업로드 </label>
-                        <input type="file" name="uploadfile" id="uploadfile">
+                        <br>JPG, JPEG, PNG, PDF / 10MB 이하 파일 1개만 업로드 가능합니다.</a><br>
+                        <img class="basicimg1" id="changeImg4" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <input type="file" id="thumbnailImg4" name="farmerfinancial4" onchange="loadImg(this,4)">
                     </div>
                     <div>
-                        <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
+                        <button type="submit" class="btn1 big-btn" id="saveclick">저장하기</button>
                     </div>
                 </div>
             </form>
@@ -355,57 +355,5 @@
         }));
     });
 
-
-    // document.getElementById('endDate').value = new Date().toISOString().substring(0, 10);
-
-    $("#saveclick").click(function() {
-        Swal.fire({
-            title: '저장하시겠습니까?',
-            showCancelButton: true,
-            confirmButtonText: '확인',
-            cancelButtonText: '취소',
-            allowEnterKey: false,
-            customClass: {
-                confirmButton: 'savesuccess',
-                cancelButton: 'savecancel',
-                popup: 'savepopup'
-            },
-            buttonsStyling: false,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: '저장되었습니다',
-                    confirmButtonText: "확인",
-                    allowEnterKey: false,
-                    customClass: {
-                        confirmButton: 'saveok',
-                        popup: 'savepopup'
-                    },
-                    buttonsStyling: false,
-                }).then(function(memberNo, farmerNo, businessOwnNo, businessName, corporateName, representativeName,
-                                 representativeEmail, representativeSSN, taxReceiveEmail, bank, farmerAccount, farmerName) {
-
-                    let saveForm = document.saveForm;
-                    let url = '/project/application/modify/representative';
-                    saveForm.memberNo = memberNo;
-                    saveForm.farmerNo = farmerNo;
-                    saveForm.businessOwnNo = businessOwnNo;
-                    saveForm.businessName = businessName;
-                    saveForm.corporateName = corporateName;
-                    saveForm.representativeName = representativeName;
-                    saveForm.representativeEmail = representativeEmail;
-                    saveForm.representativeSSN = representativeSSN;
-                    saveForm.taxReceiveEmail = taxReceiveEmail;
-                    saveForm.bankNo = bank;
-                    saveForm.farmerAccount = farmerAccount;
-                    saveForm.farmerName = farmerName;
-
-                    saveForm.action = url;
-                    saveForm.method = 'post';
-                    saveForm.submit();
-                });
-            }
-        })
-    });
 </script>
 </html>

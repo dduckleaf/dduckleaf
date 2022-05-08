@@ -16,6 +16,6 @@ public class ProjectAttachmentDTO {
     private String projectAttachmentOriginalName;
     private int farmerNo;
 //    private int projectBasicInfoNo;                 //기본정보번호
-    private int projectNo;
+    private ProjectDTO project;
 //    private int financialInfoNo;
 }

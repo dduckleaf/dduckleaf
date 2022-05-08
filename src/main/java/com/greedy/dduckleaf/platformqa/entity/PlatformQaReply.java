@@ -22,7 +22,7 @@ public class PlatformQaReply {
     private String platformQaReplyContent;
 
     @Column(name = "PLATFORM_QA_REPLY_REGIST_DATE")
-    private String platformQaRegistDate;
+    private String platformQaReplyRegistDate;
 
     @Column(name = "PLATFORM_QA_REPLY_STATUS")
     private String platformQaReplyStatus;
@@ -33,7 +33,10 @@ public class PlatformQaReply {
     @Column(name = "ADMIN_NO")
     private int adminNo;
 
+//    @JoinColumn(name = "PLATFORM_QA_NO", insertable = false, updatable = false)
+//    private PlatformQa platformQa;
+
     @ManyToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "PLATFORM_QA_NO", insertable = false, updatable = false)
-    private PlatformQa platformQa;
+    @JoinColumn(name = "ADMIN_NO", insertable = false, updatable = false)
+    private Member member;
 }

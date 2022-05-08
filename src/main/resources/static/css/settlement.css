@@ -9,7 +9,7 @@
     height: 1220px;
 }
 
-.block {
+.farmer-tab-area-block {
     width: 100%;
     background-color: rgba(229, 221, 204, 0.5);
     padding-left: 10px;
@@ -70,4 +70,50 @@
 .settlement-table td {
     padding: 10px;
     border: none !important;
+}
+
+.step-block {
+    width: 200px;
+    height: 100px;
+    background-color: #BAC34E;
+    font-size: 13pt;
+    color: #fff;
+    padding: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: inline-block;
+}
+
+.btn5 {
+    background-color: #fff;
+    color: #44240E;
+    font-size: 10pt;
+    margin-top: 5px;
+}
+
+.body-area2 {
+    width: 80% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.settlement-info-table {
+    width: 80%;
+    border: none;
+    font-size: 12pt;
+    border-bottom: 1px solid #ababab;
+    border-right: 1px solid #ababab;
+}
+
+.settlement-info-table th {
+    border-right: 1px solid #ababab;
+    border-left: 1px solid #ababab;
+    text-align: right;
+    padding-right: 10px;
+    background-color: rgba(229, 221, 204, 0.5);
+}
+
+.settlement-info-table tr {
+    border-top: 1px solid #ababab;
+    height: 50px;
 }

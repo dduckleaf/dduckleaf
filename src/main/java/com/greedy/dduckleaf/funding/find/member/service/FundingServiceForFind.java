@@ -111,7 +111,11 @@ public class FundingServiceForFind {
     private ShippingAddressDTO parsingAddress(ShippingAddress address) {
 
         ShippingAddressDTO addressDTO = mapper.map(address, ShippingAddressDTO.class);
-        String addressInfo[] = address.getShippingAddress().split("\\$");
+
+        String addressInfo[] = {"","",""};
+        if(address.getShippingAddress() != null) {
+            addressInfo = address.getShippingAddress().split("\\$");
+        }
         for(int i = 0; i < addressInfo.length; i++) {
             System.out.println("addressInfo = " + addressInfo[i]);
         }

@@ -13,7 +13,7 @@ public class RefundingDTO {
     private String refundingDate;
     private int refundingCategoryNo;
     private String refundingReason;
-    private String refundingStatus;
+    private int refundingStatusNo;
     private int projectNo;
     private String refundingAccount;
     private int bankNo;

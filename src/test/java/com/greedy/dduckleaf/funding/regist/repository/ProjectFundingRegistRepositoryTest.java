@@ -48,8 +48,9 @@ class ProjectFundingRegistRepositoryTest {
     @DisplayName("프로젝트 번호로 특정 프로젝트의 배송비, 리워드정보 조회")
     public void findById_test() {
 
-        Project projectInfo = repo.findById(1).get();
+        Project projectInfo = repo.findById(7).get();
         assertNotNull(projectInfo);
+        System.out.println("projectInfo = " + projectInfo);
     }
 
     @Test

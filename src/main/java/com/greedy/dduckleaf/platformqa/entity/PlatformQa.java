@@ -3,6 +3,7 @@ package com.greedy.dduckleaf.platformqa.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -46,4 +47,8 @@ public class PlatformQa {
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "PLATFORM_QA_CATEGORY", insertable = false, updatable = false)
     private PlatformQaCategory qnaCategory;
+
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "PLATFORM_QA_NO")
+    private List<PlatformQaReply> platformQaReplyList;
 }

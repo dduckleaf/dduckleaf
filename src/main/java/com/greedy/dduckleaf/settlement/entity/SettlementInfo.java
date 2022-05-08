@@ -1,10 +1,7 @@
 package com.greedy.dduckleaf.settlement.entity;
-
-import javax.persistence.*;
-
 import lombok.*;
 
-import java.util.List;
+import javax.persistence.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,15 +28,10 @@ public class SettlementInfo {
     @Column(name = "TOTAL_COMMISSION_AMOUNT")
     private int totalCommissionAmount;                  //수수료총액
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_NO")
-    private Project project;                                    //프로젝트번호
+    private Project project;                            //프로젝트 번호
 
-    @OneToMany(mappedBy = "settlementInfo")
-    private List<SettlementPaymentInfo> settlementPaymentInfoList;
-
-    @OneToMany(mappedBy = "settlementInfo")
-    private List<SettlementChangeHistory> settlementChangeHistoryList;
 
     @Override
     public String toString() {

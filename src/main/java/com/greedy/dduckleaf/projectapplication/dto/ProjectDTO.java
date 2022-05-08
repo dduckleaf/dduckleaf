@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.projectapplication.dto;
 
+import com.greedy.dduckleaf.projectapplication.entity.FarmerInfo;
 import lombok.*;
 
 import java.util.List;
@@ -22,6 +23,6 @@ public class ProjectDTO {
     private String examineStatus;
     private String projectExamineStatus;
     private int maxTargetAmount;
-    private int farmerNo;
+    private FarmerInfoDTO farmer;
 
 }

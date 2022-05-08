@@ -50,17 +50,15 @@
                         <input id="projectNo" name="projectNo" type="hidden" th:value="${ basicInfo.projectNo }">
                         <input name="projectNo" type="hidden" th:value="${ project.projectNo }">
                         <input id="projectBasicInfoNo" name="projectBasicInfoNo" type="hidden" th:value="${ basicInfo.projectBasicInfoNo }">
-                        <input class="mockfundtitle1" id="projectName" name="projectName" type="text" th:value="${ basicInfo.projectName }">
-<!--                        <input class="mockfundtitle1" name="projectName" type="hidden" th:value="${ project.projectName }">-->
+                        <input class="mockfundtitle1" id="projectName" name="projectName" type="text" th:placeholder="${ basicInfo.projectName }">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">목표 금액</a><br>
-                        <input class="mockfundtitle2" id="projectTargetFund" name="projectTargetFund" type="number" th:value="${ basicInfo.projectTargetFund }"><a class="basictitle" style="margin-left: 15px;">원</a>
-<!--                        <input class="mockfundtitle2" name="projectTargetFund" type="hidden" th:value="${ project.fundTargetAmount }"><a class="basictitle" style="margin-left: 15px;"></a>-->
+                        <input class="mockfundtitle2" id="projectTargetFund" name="projectTargetFund" type="number" th:placeholder="${ basicInfo.projectTargetFund }"><a class="basictitle" style="margin-left: 15px;">원</a>
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">목표 최대 금액</a><br>
-                        <input class="mockfundtitle2" id="maxTargetAmount" name="maxTargetAmount" type="number" th:value="${ project.maxTargetAmount }"><a class="basictitle" style="margin-left: 15px;">원</a>
+                        <input class="mockfundtitle2" id="maxTargetAmount" name="maxTargetAmount" type="number" th:placeholder="${ project.maxTargetAmount }"><a class="basictitle" style="margin-left: 15px;">원</a>
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">대표 이미지</a><br>
@@ -81,7 +79,6 @@
                         <a class="basicsubtitle">요건·콘텐츠 확인 및 프로젝트 진행 일정과 리워드 발송을 함께 고려하여 종료일을 설정해 주세요.<br>
                             프로젝트 오픈일은 설정해주신 종료일 기준 한달 전으로 설정됩니다.</a>
                         <input class="mockfundtitle1" id="projectEndDate" name="projectEndDate" th:value="${ basicInfo.projectEndDate }" type="date">
-<!--                        <input class="mockfundtitle1" name="projectEndDate" th:value="${ project.endDate }" type="hidden">-->
                     </div>
                     <div>
                         <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>

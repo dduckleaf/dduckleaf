@@ -1,13 +1,14 @@
 package com.greedy.dduckleaf.member.controller;
 
 import com.google.gson.*;
+import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.authentication.model.service.AuthenticationService;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
+import com.greedy.dduckleaf.member.dto.MemberWithdrawDTO;
 import com.greedy.dduckleaf.member.service.MemberService;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.context.MessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -60,12 +61,11 @@ public class MemberController {
 
     /**
      * login: 떡잎 펀드 서비스를 이용하기 위해 로그인 합니다.
-     * @param member: 로그인을 시도할 로그인 정보
      * @return mv
      * @author 박상범
      */
     @PostMapping("/login")
-    public ModelAndView login(MemberDTO member, ModelAndView mv, RedirectAttributes rttr, Locale locale) {
+    public ModelAndView login(ModelAndView mv, RedirectAttributes rttr, Locale locale) {
 
         mv.setViewName("redirect:/");
         rttr.addFlashAttribute("successMessage", messageSource.getMessage("loginSuccess", null, locale));
@@ -163,7 +163,7 @@ public class MemberController {
      * @author 박상범
      */
     @PostMapping("/regist")
-    public String registMember(@ModelAttribute MemberDTO member, HttpServletRequest request, RedirectAttributes rttr, Locale locale){
+    public ModelAndView registMember(ModelAndView mv, @ModelAttribute MemberDTO member, HttpServletRequest request, RedirectAttributes rttr, Locale locale){
 
         String phone = request.getParameter("phone").replace("-", "");
         String email = request.getParameter("email");
@@ -171,14 +171,15 @@ public class MemberController {
         member.setMemberPwd(passwordEncoder.encode(member.getMemberPwd()));
         member.setPhone(phone);
         member.setEmail(email);
-        member.setMemberRole(1);
+        member.setMemberRole(2);
         member.setWithdrawalStatus("N");
 
         memberService.registMember(member);
 
         rttr.addFlashAttribute("successMessage", messageSource.getMessage("registMemberSuccess", null, locale));
+        mv.setViewName("/member/login");
 
-        return "/member/login";
+        return mv;
     }
 
     /**
@@ -295,5 +296,16 @@ public class MemberController {
         mv.setViewName("redirect:/member/login");
 
         return mv;
+    }
+
+    @PostMapping(value={"/remove"}, produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String removeMember(String withdrawReason, @AuthenticationPrincipal CustomUser user) {
+
+        MemberWithdrawDTO memberWithdraw = new MemberWithdrawDTO();
+        memberWithdraw.setMemberNo(user.getMemberNo());
+        memberWithdraw.setWithdrawReason(withdrawReason);
+
+        return memberService.removeMember(memberWithdraw);
     }
 }

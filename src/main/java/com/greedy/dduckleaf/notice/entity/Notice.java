@@ -30,16 +30,12 @@ public class Notice {
     @Column(name = "NOTICE_STATUS")
     private String noticeStatus;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "ADMIN_NO")
-//    private int adminNo;
-    private Admin admin;
+    @Column(name = "ADMIN_NO")
+    private int adminNo;
 
     @Column(name = "NOTICE_COUNT")
     private int noticeCount;
 
-//    @ManyToOne(cascade = {CascadeType.PERSIST})
     @Column(name = "NOTICE_CATEGORY_NO")
     private int noticeCategoryNo;
-//    private NoticeCategory noticeCategory;
 }

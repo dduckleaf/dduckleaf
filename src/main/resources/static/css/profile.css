@@ -208,5 +208,9 @@ label {
     float: left;
     margin-top: 20px;
 }
-
+#removeMember {
+    position: relative;
+    top: 490px;
+    left: 1300px;
+}
 

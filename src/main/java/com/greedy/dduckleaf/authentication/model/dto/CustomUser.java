@@ -16,6 +16,15 @@ public class CustomUser extends User {
     private String phone;
     private int memberRole;
     private String withdrawalStatus;
+    private String profileThumbnailPath;
+
+    public String getProfileThumbnailPath() {
+        return profileThumbnailPath;
+    }
+
+    public void setProfileThumbnailPath(String profileThumbnailPath) {
+        this.profileThumbnailPath = profileThumbnailPath;
+    }
 
     public int getMemberNo() {
         return memberNo;
@@ -107,8 +116,9 @@ public class CustomUser extends User {
                 ", memberPwd='" + memberPwd + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' +
-                ", memberRole='" + memberRole + '\'' +
+                ", memberRole=" + memberRole +
                 ", withdrawalStatus='" + withdrawalStatus + '\'' +
+                ", profileThumbnailPath='" + profileThumbnailPath + '\'' +
                 '}';
     }
 }

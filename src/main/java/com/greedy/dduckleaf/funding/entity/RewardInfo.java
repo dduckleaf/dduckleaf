@@ -18,10 +18,10 @@ import javax.persistence.Table;
 @Table(name = "TBL_REWARD_REGIST_INFO")
 public class RewardInfo {
 
-    @Id
     @Column(name = "REWARD_REGIST_INFO_NO")
     private int rewardRegistInfoNo;
 
+    @Id
     @Column(name = "PROJECT_NO")
     private int projectNo;
 
