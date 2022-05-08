@@ -1,10 +1,12 @@
 package com.greedy.dduckleaf.refund.examine.service;
 
 import com.greedy.dduckleaf.refund.examine.dto.RefundingDTO;
+import com.greedy.dduckleaf.refund.examine.dto.RefundingObjectionDTO;
 import com.greedy.dduckleaf.refund.examine.entity.*;
 import com.greedy.dduckleaf.refund.examine.repository.*;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -33,7 +35,10 @@ public class RefundingForFarmerExamineService {
     private final RewardShippingForRefundingFarmerExamineRepository shippingRepo;
     private final SettlementInfoForRefundingExamineRepository settlementInfoRepo;
     private final SettlementChangeHistoryForRefundingExamineRepository settlementHistoryRepo;
-    public RefundingForFarmerExamineService(ModelMapper mapper, FundingForRefundingFarmerExamineRepository fundingRepo, RefundingForRefundingFarmerExamineRepository refundingRepo, RefundingHistoryForFarmerExamineRepository refundHistoryRepo, RefundingStatusForFarmerExamineRepository refundingStatusRepo, RewardShippingForRefundingFarmerExamineRepository shippingRepo, SettlementInfoForRefundingExamineRepository settlementInfoRepo, SettlementChangeHistoryForRefundingExamineRepository settlementHistoryRepo) {
+    private final RefundingObjectionRepository objectionRepo;
+    private final RefundObjectionHistoryRepository refundObjectionHistoryRepo;
+
+    public RefundingForFarmerExamineService(ModelMapper mapper, FundingForRefundingFarmerExamineRepository fundingRepo, RefundingForRefundingFarmerExamineRepository refundingRepo, RefundingHistoryForFarmerExamineRepository refundHistoryRepo, RefundingStatusForFarmerExamineRepository refundingStatusRepo, RewardShippingForRefundingFarmerExamineRepository shippingRepo, SettlementInfoForRefundingExamineRepository settlementInfoRepo, SettlementChangeHistoryForRefundingExamineRepository settlementHistoryRepo, RefundingObjectionRepository objectionRepo, RefundObjectionHistoryRepository refundObjectionHistoryRepo) {
 
         this.mapper = mapper;
         this.fundingRepo = fundingRepo;
@@ -43,6 +48,8 @@ public class RefundingForFarmerExamineService {
         this.shippingRepo = shippingRepo;
         this.settlementInfoRepo = settlementInfoRepo;
         this.settlementHistoryRepo = settlementHistoryRepo;
+        this.objectionRepo = objectionRepo;
+        this.refundObjectionHistoryRepo = refundObjectionHistoryRepo;
     }
 
     /**
@@ -166,9 +173,54 @@ public class RefundingForFarmerExamineService {
      *
      * @author 홍성원
      */
+    @Transactional
     public void registObjection(int refundingNo) {
 
+        Refunding refunding = refundingRepo.findById(refundingNo).get();
 
+        RefundingObjection objection = new RefundingObjection();
+        objection.setRefundObjectionMemberNo(refunding.getMemberNo());
+        objection.setRefundingInfoNo(refundingNo);
+
+        objectionRepo.save(objection);
+
+        objection = objectionRepo.findLastest();
+
+
+        System.out.println("objection = " + objection);
+
+
+
+
+        RefundObjectionHistory refundObjectionHistory = new RefundObjectionHistory();
+
+        refundObjectionHistory.setHistoryDate(getDateAndTime());
+        refundObjectionHistory.setHistoryCategory("신청");
+        refundObjectionHistory.setRefundObjectionNo(objection.getRefundObjectionNo());
+
+        System.out.println("refundObjectionHistory = " + refundObjectionHistory);
+
+
+
+
+        refundObjectionHistoryRepo.save(refundObjectionHistory);
+    }
+
+    /**
+     * findObjectionList : 이의신청 내역을 조회합니다.
+     * @param pageable :
+     *
+     * @author 홍성원
+     */
+    public Page<RefundingObjectionDTO> findObjectionList(Pageable pageable) {
+
+        Page<RefundingObjection> objections = objectionRepo.findAll(pageable);
+
+        Page<RefundingObjectionDTO> objectionDTOs = objections.map(objection -> {
+            return mapper.map(objection, RefundingObjectionDTO.class);
+        });
+
+        return objectionDTOs;
     }
 }
 
