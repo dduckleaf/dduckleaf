@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.refund.examine.dto.FundingDTO;
+import com.greedy.dduckleaf.refund.examine.dto.RefundObjectionHistoryDTO;
 import com.greedy.dduckleaf.refund.examine.dto.RefundingDTO;
 import com.greedy.dduckleaf.refund.examine.dto.RefundingObjectionDTO;
 import org.junit.jupiter.api.DisplayName;
@@ -75,4 +76,42 @@ class RefundingForFarmerExamineServiceTest {
         //when & then
         assertDoesNotThrow(() -> service.registObjection(refundingNo));
     }
+
+    @Test
+    @DisplayName("이의신청 승인 이력 추가 테스트")
+    public void examineObjectionconfirm_test() {
+
+        //given
+        RefundObjectionHistoryDTO historyDTO = new RefundObjectionHistoryDTO();
+        historyDTO.setRefundObjectionNo(1);
+        int memberNo = 1;
+
+        //when & then
+        assertDoesNotThrow(() -> service.examineObjectionconfirm(historyDTO, memberNo));
+
+    }
+
+
+    @Test
+    @DisplayName("이의신청 승인 이력 추가 테스트")
+    public void examineObjectionRefuse_test() {
+
+        //given
+        RefundObjectionHistoryDTO historyDTO = new RefundObjectionHistoryDTO();
+        historyDTO.setRefundObjectionNo(1);
+        historyDTO.setRefuseReason("환불심사 이의신청 심사 거절사유");
+        int memberNo = 1;
+
+        //when & then
+        assertDoesNotThrow(() -> service.examineObjectionRefuse(historyDTO, memberNo));
+
+    }
 }
+
+
+
+
+
+
+
+

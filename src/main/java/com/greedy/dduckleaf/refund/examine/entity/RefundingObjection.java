@@ -26,4 +26,7 @@ public class RefundingObjection {
 
     @Column(name = "REFUND_OBJECTION_MEMBER_NO")
     private int refundObjectionMemberNo;
+
+    @Column(name = "REFUND_STUATUS")
+    private String refundStatus;
 }
