@@ -11,5 +11,5 @@ public class FollowingProjectDTO {
 
     private int followingProjectNo;
     private int memberNo;
-    private int projectNo;
+    private ProjectDTO project;
 }
