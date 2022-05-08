@@ -14,4 +14,6 @@ public class ProjectDetailDTO {
     private ProjectDTO project;
     private List<FundingInfoDTO> fundingInfoList;
     private String followingStatus;
+    private ProjectApplicationInfoDTO projectApplicationInfo;
+    private List<ProjectNoticeDTO> projectNotice;
 }

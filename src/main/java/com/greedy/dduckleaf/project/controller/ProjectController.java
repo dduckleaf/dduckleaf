@@ -6,6 +6,8 @@ import com.greedy.dduckleaf.project.dto.ProjectDTO;
 import com.greedy.dduckleaf.project.dto.ProjectDetailDTO;
 import com.greedy.dduckleaf.project.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,12 +54,12 @@ public class ProjectController {
      * @param user : 로그인된 회원 정보
      * @return mv : 뷰로 전달할 데이터와 경로를 담는 객체
      *
-     * @author 차화응
+     * @author 박상범, 박휘림, 차화응
      */
     @GetMapping("/projectdetail/{projectNo}")
-    public ModelAndView findProjectDetail(ModelAndView mv, @PathVariable int projectNo, @AuthenticationPrincipal CustomUser user) throws ParseException {
+    public ModelAndView findProjectDetail(ModelAndView mv, @PathVariable int projectNo, @AuthenticationPrincipal CustomUser user, @PageableDefault Pageable pageable) throws ParseException {
 
-        ProjectDetailDTO projectDetail = projectService.findProjectDetail(projectNo, user);
+        ProjectDetailDTO projectDetail = projectService.findProjectDetail(projectNo, user, pageable);
 
         String endDate = projectDetail.getProject().getEndDate().replace("-","");
         String nowDate = java.sql.Date.valueOf(LocalDate.now()).toString().replace("-","");
@@ -71,6 +73,8 @@ public class ProjectController {
         long diffSec = Math.abs(end.getTime() - now.getTime());
         long diffDay = TimeUnit.DAYS.convert(diffSec, TimeUnit.MILLISECONDS);
 
+        mv.addObject("projectInfo", projectDetail.getProjectApplicationInfo());
+        mv.addObject("projectNotice", projectDetail.getProjectNotice());
         mv.addObject("project", projectDetail.getProject());
         mv.addObject("followingStatus", projectDetail.getFollowingStatus());
 
@@ -93,4 +97,6 @@ public class ProjectController {
 
         return mv;
     }
+
+
 }

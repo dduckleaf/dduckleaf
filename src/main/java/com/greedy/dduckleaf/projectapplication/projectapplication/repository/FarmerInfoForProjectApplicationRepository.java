@@ -12,14 +12,12 @@ import java.util.List;
  * Comment : 프로젝트 신청
  * History
  * 2022/04/25 (박휘림) 처음 작성
- * 2022/04/30 (박휘림) findByMemberNo 메소드 작성
+ * 2022/04/30 (박휘림) findByFarmerNo 메소드 작성
  * </pre>
  * @version 1.0.1
  * @author 박휘림
  */
 public interface FarmerInfoForProjectApplicationRepository extends JpaRepository<FarmerInfo, Integer> {
-
-    FarmerInfo findByMemberNo(int projectNo);
 
     @Query(value = "SELECT * FROM TBL_FARMER_INFO A WHERE A.MEMBER_NO =:memberNo", nativeQuery = true)
     FarmerInfo findByFarmerNo(int memberNo);
