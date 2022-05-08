@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -50,5 +51,16 @@ public class SettlementInfo {
                 ", calculateDate='" + calculateDate + '\'' +
                 ", project=" + project +
                 '}';
+    }
+
+    @OneToMany(mappedBy = "settlementInfo")
+    private Collection<SettlementPaymentInfo> settlementPaymentInfo;
+
+    public Collection<SettlementPaymentInfo> getSettlementPaymentInfo() {
+        return settlementPaymentInfo;
+    }
+
+    public void setSettlementPaymentInfo(Collection<SettlementPaymentInfo> settlementPaymentInfo) {
+        this.settlementPaymentInfo = settlementPaymentInfo;
     }
 }

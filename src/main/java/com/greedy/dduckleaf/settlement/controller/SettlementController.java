@@ -1,6 +1,8 @@
 package com.greedy.dduckleaf.settlement.controller;
 
-import com.greedy.dduckleaf.settlement.calculate.dto.SettlementInfoDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.greedy.dduckleaf.settlement.calculate.dto.SettlementInfoPackage;
 import com.greedy.dduckleaf.settlement.calculate.service.SettlementCalculateService;
 import com.greedy.dduckleaf.settlement.dto.ProjectDTO;
 import com.greedy.dduckleaf.settlement.service.SettlementService;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -34,10 +37,12 @@ public class SettlementController {
     private final SettlementService mainService;
     @Autowired
     private final SettlementCalculateService calculateService;
+    private final ObjectMapper mapper;
 
-    public SettlementController(SettlementService mainService, SettlementCalculateService calculateService) {
+    public SettlementController(SettlementService mainService, SettlementCalculateService calculateService, ObjectMapper mapper) {
         this.mainService = mainService;
         this.calculateService = calculateService;
+        this.mapper = mapper;
     }
 
     /**
@@ -81,17 +86,38 @@ public class SettlementController {
         return mv;
     }
 
-    @GetMapping("/calculate/{projectNo}")
-    public ModelAndView calculateSettlement(ModelAndView mv, @PathVariable int projectNo) {
+    /**
+     * calculatePage: 정산정보가 계산된 테이블 조회를 요청하는 메소드입니다.
+     * @param projectNo: 프로젝트번호
+     * @return 메뉴바에 출력될 프로젝트 정보, 정산정보 계산 테이블 화면 경로
+     * @author 장민주
+     */
+    @GetMapping("/calculate/table/{projectNo}")
+    public ModelAndView calculatePage(ModelAndView mv, @PathVariable int projectNo) {
 
         ProjectDTO project = mainService.findProjectDetail(projectNo);
 
-        SettlementInfoDTO settlementInfo = calculateService.findSettlementInfo(projectNo);
+//        SettlementInfoPackage settlementInfoPackage = calculateService.findSettlementInfoPackage(projectNo);
 
         mv.addObject("project", project);
-        mv.addObject("settlementInfo", settlementInfo);
+//        mv.addObject("settlementInfoPackage", settlementInfoPackage);
         mv.setViewName("settlement/projectmanager/calculate");
 
         return mv;
+    }
+
+    /**
+     * calculateSettlementPayment: 회차별 정산금 지급내역 계산 및 지급내역조회를 요청하는 메소드입니다.
+     * @param projectNo: 프로젝트번호
+     * @return 기본정산정보, 회차별 정산금 지급내역목록, 적용수수료정보
+     * @author 장민주
+     */
+    @GetMapping(value = "/calculate/{projectNo}", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String calculateSettlementPayment(@PathVariable int projectNo) throws JsonProcessingException {
+
+        SettlementInfoPackage settlementInfoPackage = calculateService.findSettlementInfoPackage(projectNo);
+
+        return mapper.writeValueAsString(settlementInfoPackage);
     }
 }

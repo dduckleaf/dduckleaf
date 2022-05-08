@@ -2,8 +2,10 @@ package com.greedy.dduckleaf.settlement.calculate.service;
 
 import com.greedy.dduckleaf.config.*;
 import com.greedy.dduckleaf.settlement.calculate.dto.FundingInfoDTO;
+import com.greedy.dduckleaf.settlement.calculate.dto.ProjectApplyFeeInfoDTO;
 import com.greedy.dduckleaf.settlement.calculate.dto.RefundingInfoDTO;
 import com.greedy.dduckleaf.settlement.calculate.entity.SettlementInfo;
+import com.greedy.dduckleaf.settlement.calculate.entity.SettlementPaymentInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,7 @@ public class SettlementCalculateServiceTests {
 //        int projectNo = 1;
 //
 //        //when
-//        int feeApplyRate = service.getFeeApplyRateForProject(projectNo);
+//        ProjectApplyFeeInfoDTO feeApplyRate = service.getFeeApplyRateForProject(projectNo);
 //
 //        //then
 //        System.out.println("feeApplyRate = " + feeApplyRate);
@@ -119,4 +121,25 @@ public class SettlementCalculateServiceTests {
         assertDoesNotThrow(() -> service.registSettlementInfo(projectNo));
     }
 
+//    @Test
+//    @DisplayName("회차별 정산금 지급내역 계산 및 등록 성공 테스트")
+//    public void calculateSettlementForEachPaymentRound_test() {
+//
+//        //given
+//        int projectNo = 1;
+//
+//        //when & then
+//        assertDoesNotThrow(() -> service.calculateSettlementForEachPaymentRound(projectNo));
+//    }
+
+    @Test
+    @DisplayName("")
+    public void registOrModifySettlementPaymentInfo_test() {
+
+        //given
+        int projectNo = 1;
+
+        //when & then
+        assertDoesNotThrow(() -> service.registOrModifySettlementPaymentInfo(projectNo));
+    }
 }
