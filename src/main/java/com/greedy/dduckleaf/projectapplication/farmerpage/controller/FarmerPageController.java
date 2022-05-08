@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.projectapplication.farmerpage.controller;
 
 import com.greedy.dduckleaf.projectapplication.dto.RefundPolicyDTO;
+import com.greedy.dduckleaf.projectapplication.dto.RewardRegistInfoDTO;
 import com.greedy.dduckleaf.projectapplication.farmerpage.service.FarmerPageService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,20 @@ public class FarmerPageController {
         return mv;
     }
 
+    /**
+     * findRefundPolicy: 파머페이지에서 리워드 정보를 조회하는 메소드입니다.
+     * @param projectNo: 프로젝트 번호
+     * @return : 리워드 정보
+     * @author 박휘림
+     */
+    @GetMapping("/reward/{projectNo}")
+    public ModelAndView findRewardInfo(ModelAndView mv, @PathVariable int projectNo) {
+
+        RewardRegistInfoDTO rewardInfo = farmerPageService.findRewardInfo(projectNo);
+
+        mv.addObject("rewardInfo", rewardInfo);
+
+        return mv;
+    }
 
 }

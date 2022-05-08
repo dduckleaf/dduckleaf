@@ -47,5 +47,16 @@ public class FarmerPageService {
         return modelMapper.map(refundPolicy, RefundPolicyDTO.class);
     }
 
+    /**
+     * findRewardInfo: 파머페이지에서 리워드 정보를 조회하는 메소드입니다.
+     * @param projectNo: 프로젝트 번호
+     * @author 박휘림
+     */
+    public RewardRegistInfoDTO findRewardInfo(int projectNo) {
+
+        RewardRegistInfo reward = rewardRegistInfoRepository.findByProjectNo(projectNo);
+
+        return modelMapper.map(reward, RewardRegistInfoDTO.class);
+    }
 
 }
