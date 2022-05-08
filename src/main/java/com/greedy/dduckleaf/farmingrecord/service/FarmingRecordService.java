@@ -51,4 +51,29 @@ public class FarmingRecordService {
         return farmingRecordRepository.findAll(pageable).map(farmingRecord -> modelMapper.map(farmingRecord, FarmingRecordDTO.class));
     }
 
+    /**
+     * updateFarmingRecordCount : 농사일지 조회수를 갱신합니다.
+     * @param farmingRecordNo : 조회할 농사일지 번호
+     *
+     * @author 차화응
+     */
+    @Transactional
+    public int updateFarmingRecordCount(int farmingRecordNo) {
+
+        return farmingRecordRepository.updateFarmingRecordCount(farmingRecordNo);
+    }
+
+    /**
+     * findFarmingRecordDetail : 농사일지 상세정보를 조회합니다.
+     * @param farmingRecordNo : 조회할 농사일지 번호
+     *
+     * @author 차화응
+     */
+    public FarmingRecordDTO findFarmingRecordDetail(int farmingRecordNo) {
+
+        FarmingRecord farmingRecord = farmingRecordRepository.findById(farmingRecordNo).get();
+
+        return modelMapper.map(farmingRecord, FarmingRecordDTO.class);
+    }
+
 }

@@ -55,4 +55,25 @@ public class FarmingRecordController {
         return mv;
     }
 
+    /**
+     * findFarmingRecordDetail : 농사일지 상세정보를 조회합니다.
+     * @param mv : 요청 경로를 담는 객체
+     * @param farmingRecordNo : 조회할 농사일지 번호
+     * @return mv : 뷰로 전달할 데이터와 경로를 담는 객체
+     *
+     * @author 차화응
+     */
+    @GetMapping("/detail/{farmingRecordNo}")
+    public ModelAndView findFarmingRecordDetail(ModelAndView mv, @PathVariable int farmingRecordNo) {
+
+        FarmingRecordDTO farmingRecord = farmingRecordService.findFarmingRecordDetail(farmingRecordNo);
+
+        farmingRecordService.updateFarmingRecordCount(farmingRecordNo);
+
+        mv.addObject("farmingRecord", farmingRecord);
+        mv.setViewName("farmingrecord/detail");
+
+        return mv;
+    }
+
 }
