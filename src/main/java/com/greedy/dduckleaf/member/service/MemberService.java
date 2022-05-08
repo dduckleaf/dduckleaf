@@ -4,12 +4,8 @@ import com.greedy.dduckleaf.email.EmailSender;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
 import com.greedy.dduckleaf.member.dto.MemberWithdrawDTO;
 import com.greedy.dduckleaf.member.dto.ProfileAttachmentDTO;
-import com.greedy.dduckleaf.member.entity.BasicProfileAttachment;
-import com.greedy.dduckleaf.member.entity.Member;
-import com.greedy.dduckleaf.member.entity.ProfileAttachment;
-import com.greedy.dduckleaf.member.repository.BasicProfileAttachmentForMemberRepository;
-import com.greedy.dduckleaf.member.repository.MemberRepository;
-import com.greedy.dduckleaf.member.repository.ProfileAttachmentForMemberRepository;
+import com.greedy.dduckleaf.member.entity.*;
+import com.greedy.dduckleaf.member.repository.*;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
@@ -19,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <pre>
@@ -47,14 +45,20 @@ public class MemberService{
     private final MemberRepository memberRepository;
     private final BasicProfileAttachmentForMemberRepository basicProfileAttachmentForMemberRepository;
     private final ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository;
+    private final FundingInfoForMemberRepository fundingInfoForMemberRepository;
+    private final ProjectForMemberRepository projectForMemberRepository;
+    private final MemberWithdrawForMemberRepository memberWithdrawForMemberRepository;
     private final EmailSender emailSender;
 
     @Autowired
-    public MemberService(ModelMapper modelMapper, MemberRepository memberRepository, BasicProfileAttachmentForMemberRepository basicProfileAttachmentForMemberRepository, ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository, EmailSender emailSender) {
+    public MemberService(ModelMapper modelMapper, MemberRepository memberRepository, BasicProfileAttachmentForMemberRepository basicProfileAttachmentForMemberRepository, ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository, FundingInfoForMemberRepository fundingInfoForMemberRepository, ProjectForMemberRepository projectForMemberRepository, MemberWithdrawForMemberRepository memberWithdrawForMemberRepository, EmailSender emailSender) {
         this.modelMapper = modelMapper;
         this.memberRepository = memberRepository;
         this.basicProfileAttachmentForMemberRepository = basicProfileAttachmentForMemberRepository;
         this.profileAttachmentForMemberRepository = profileAttachmentForMemberRepository;
+        this.fundingInfoForMemberRepository = fundingInfoForMemberRepository;
+        this.projectForMemberRepository = projectForMemberRepository;
+        this.memberWithdrawForMemberRepository = memberWithdrawForMemberRepository;
         this.emailSender = emailSender;
     }
  
@@ -246,8 +250,29 @@ public class MemberService{
     @Transactional
     public String removeMember(MemberWithdrawDTO memberWithdraw) {
 
+        List<FundingInfo> fundingList = fundingInfoForMemberRepository
+                .findByProject_projectProgressStatus_projectProgressStatusNameAndProject_projectStatusAndMember_memberNo("진행중", "Y", memberWithdraw.getMemberNo());
 
+        if(fundingList.size() != 0) {
+            return "회원 탈퇴 실패";
+        }
 
-        return null;
+        List<String> projectProgressStatusNameList = new ArrayList<>();
+        projectProgressStatusNameList.add("심사중");
+        projectProgressStatusNameList.add("오픈예정");
+        projectProgressStatusNameList.add("진행중");
+        projectProgressStatusNameList.add("심사대기중");
+        projectProgressStatusNameList.add("반려");
+
+        List<Project> projectList = projectForMemberRepository
+                .findByProjectProgressStatus_projectProgressStatusNameInAndProjectStatusAndFarmer_memberNo(projectProgressStatusNameList, "Y", memberWithdraw.getMemberNo());
+
+        if(projectList.size() != 0) {
+            return "회원 탈퇴 실패";
+        }
+
+        memberWithdrawForMemberRepository.save(modelMapper.map(memberWithdraw, MemberWithdraw.class));
+
+        return "로그인페이지로 돌아갑니다.";
     }
 }

@@ -2,6 +2,13 @@ package com.greedy.dduckleaf.member.entity;
 
 import javax.persistence.*;
 
+import lombok.*;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@ToString
 @Entity(name = "FundingInfoForMember")
 @Table(name = "TBL_FUNDING_INFO")
 public class FundingInfo {
