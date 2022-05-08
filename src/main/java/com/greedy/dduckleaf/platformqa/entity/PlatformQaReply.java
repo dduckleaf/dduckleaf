@@ -33,9 +33,8 @@ public class PlatformQaReply {
     @Column(name = "ADMIN_NO")
     private int adminNo;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST})
-    @JoinColumn(name = "PLATFORM_QA_NO", insertable = false, updatable = false)
-    private PlatformQa platformQa;
+//    @JoinColumn(name = "PLATFORM_QA_NO", insertable = false, updatable = false)
+//    private PlatformQa platformQa;
 
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "ADMIN_NO", insertable = false, updatable = false)
