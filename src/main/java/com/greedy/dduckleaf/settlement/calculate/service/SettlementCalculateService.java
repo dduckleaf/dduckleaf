@@ -1,8 +1,6 @@
 package com.greedy.dduckleaf.settlement.calculate.service;
 
-import com.greedy.dduckleaf.settlement.calculate.dto.FundingInfoDTO;
-import com.greedy.dduckleaf.settlement.calculate.dto.RefundingInfoDTO;
-import com.greedy.dduckleaf.settlement.calculate.dto.SettlementInfoDTO;
+import com.greedy.dduckleaf.settlement.calculate.dto.*;
 import com.greedy.dduckleaf.settlement.calculate.entity.*;
 import com.greedy.dduckleaf.settlement.calculate.repository.*;
 import org.modelmapper.ModelMapper;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
 
@@ -32,10 +31,17 @@ import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
  *
  * 2022-05-06 (장민주) calculateSettlementForProject 리팩토링 -> 내부연산메소드로 변경
  * 2022-05-06 (장민주) registSettlementInfo 서비스메소드 작성
+ *
+ * 2022-05-08 (장민주) getFeeApplyRateForProject 내부연산 메소드 반환타입 수정
+ * 2022-05-08 (장민주) findSettlementInfo => findSettlementInfoPackage 서비스메소드 수정
+ * 2022-05-08 (장민주) getSettlementInfo 내부연산 메소드 작성
+ * 2022-05-08 (장민주) calculateSettlementForEachPaymentRound 내부연산 메소드 작성
+ * 2022-05-08 (장민주) registOrModifySettlementPaymentInfo 서비스메소드 작성
+ * 2022-05-08 (장민주) findSettlementInfoPackage 서비스메소드 수정
  * </pre>
  *
  * @author 장민주
- * @version 1.0.0
+ * @version 1.0.2
  */
 @Service
 public class SettlementCalculateService {
@@ -53,18 +59,24 @@ public class SettlementCalculateService {
     @Autowired
     private final SettlementInfoForSettlementCalculateRepository settlementInfoRepository;
     @Autowired
+    private final SettlementPaymentStandardForSettlementCalculateRepository settlementPaymentStandardRepository;
+    @Autowired
+    private final SettlementPaymentInfoForCalculateRepository settlementPaymentInfoRepository;
+    @Autowired
     private final ModelMapper modelMapper;
 
     public SettlementCalculateService(RefundingInfoForSettlementCalculateRepository refundingInfoRepository,
                                       RefundingStatusForSettlementRepository refundingStatusRepository,
                                       PaymentHistoryForSettlementCalculateRepository paymentHistoryRepository,
-                                      ProjectApplyFeeInfoForSettlementCalculateRepository projectApplyFeeInfoRepository, ProjectForSettlementCalculateRepository projectRepository, SettlementInfoForSettlementCalculateRepository settlementInfoRepository, ModelMapper modelMapper) {
+                                      ProjectApplyFeeInfoForSettlementCalculateRepository projectApplyFeeInfoRepository, ProjectForSettlementCalculateRepository projectRepository, SettlementInfoForSettlementCalculateRepository settlementInfoRepository, SettlementPaymentStandardForSettlementCalculateRepository settlementPaymentStandardRepository, SettlementPaymentInfoForCalculateRepository settlementPaymentInfoRepository, ModelMapper modelMapper) {
         this.refundingInfoRepository = refundingInfoRepository;
         this.refundingStatusRepository = refundingStatusRepository;
         this.paymentHistoryRepository = paymentHistoryRepository;
         this.projectApplyFeeInfoRepository = projectApplyFeeInfoRepository;
         this.projectRepository = projectRepository;
         this.settlementInfoRepository = settlementInfoRepository;
+        this.settlementPaymentStandardRepository = settlementPaymentStandardRepository;
+        this.settlementPaymentInfoRepository = settlementPaymentInfoRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -130,7 +142,8 @@ public class SettlementCalculateService {
         int donateAmount = totalDonateAmount - totalDonateAmountOfRefunding;
 
         /* 수수료율 조회 */
-        int feeApplyRate = getFeeApplyRateForProject(projectNo);
+        int feeApplyRate = getFeeApplyRateForProject(projectNo).getFeePolicy().getFeeApplyRate();
+        System.out.println("feeApplyRate = " + feeApplyRate);
         double feeRateConvertedIntoPercentage = ((double) feeApplyRate / (double) 100);
 
         /* (최종펀딩금액 + 최종후원금액)에 수수료율 곱하어 수수료 게산하기 */
@@ -157,13 +170,11 @@ public class SettlementCalculateService {
      * @return 프로젝트 적용 수수료율
      * @author 장민주
      */
-    private int getFeeApplyRateForProject(int projectNo) {
+    private ProjectApplyFeeInfoDTO getFeeApplyRateForProject(int projectNo) {
 
         ProjectApplyFeeInfo feeInfo = projectApplyFeeInfoRepository.findByProjectNo(projectNo);
 
-        int feeApplyRate = feeInfo.getFeePolicy().getFeeApplyRate();
-
-        return feeApplyRate;
+        return modelMapper.map(feeInfo, ProjectApplyFeeInfoDTO.class);
     }
 
     /**
@@ -257,13 +268,127 @@ public class SettlementCalculateService {
     }
 
     /**
-     * findSettlementInfo: 프로젝트번호로 정산정보 조회를 요청하는 메소드입니다.
+     * getSettlementInfo: (내부연산 메소드) 프로젝트 번호로 정산정보 조회를 요청하는 메소드입니다.
      * @param projectNo: 프로젝트번호
-     * @return 정산정보
+     * @return 프로젝트 정산정보
      * @author 장민주
      */
-    public SettlementInfoDTO findSettlementInfo(int projectNo) {
+    private SettlementInfoDTO getSettlementInfo(int projectNo) {
 
         return modelMapper.map(settlementInfoRepository.findByProject_ProjectNo(projectNo), SettlementInfoDTO.class);
     }
+
+
+    /**
+     * findSettlementInfo: 프로젝트번호로 종합 정산정보 조회를 요청하는 메소드입니다.
+     * @param projectNo: 프로젝트번호
+     * @return 기본정산정보, 회차별 정산정보 지급(예정)내역, 적용수수료정보
+     * @author 장민주
+     */
+    public SettlementInfoPackage findSettlementInfoPackage(int projectNo) {
+        /* 기본정산정보, 회차별 정산정보 지급내역, 적용수수료정보를 담는 DTO 인스턴스 생성 */
+        SettlementInfoPackage settlementInfoPackage = new SettlementInfoPackage();
+
+         /* 프로젝트 적용 수수료정책 조회 */
+        ProjectApplyFeeInfoDTO feeInfo = getFeeApplyRateForProject(projectNo);
+        settlementInfoPackage.setFeeInfo(feeInfo);
+
+        /* 프로젝트 정산정보 조회 */
+        SettlementInfoDTO settlementInfo = getSettlementInfo(projectNo);
+        settlementInfoPackage.setSettlementInfo(settlementInfo);
+
+        /* 회차별 정산금 지급내역 목록 조회 */
+        List<SettlementPaymentInfo> settlementPaymentInfos =
+                settlementPaymentInfoRepository.findBySettlementInfo_SettlementInfoNo(settlementInfo.getSettlementInfoNo());
+
+        if(!settlementPaymentInfos.isEmpty()) {
+            settlementInfoPackage.setSettlementPaymentInfos(settlementPaymentInfos.stream().map(settlementPaymentInfo ->
+                    modelMapper.map(settlementPaymentInfo, SettlementPaymentInfoDTO.class)).collect(Collectors.toList()));
+        }
+
+        /* 조회결과가 없으면 회차별 정산금 계산 method를 호출한다 */
+        if(settlementPaymentInfos.isEmpty()) {
+            List<SettlementPaymentInfo> newSettlementPaymentInfos = calculateSettlementForEachPaymentRound(projectNo);
+
+            settlementInfoPackage.setSettlementPaymentInfos(newSettlementPaymentInfos.stream().map(settlementPaymentInfo ->
+                    modelMapper.map(settlementPaymentInfo, SettlementPaymentInfoDTO.class)).collect(Collectors.toList()));
+        }
+
+        return settlementInfoPackage;
+    }
+
+    /**
+     * calculateSettlementForEachPaymentRound: 회차별 정산금 계산 메소드입니다.
+     * @param projectNo: 프로젝트번호
+     * @return 회차별 정산금 지급내역 목록
+     * @author 장민주
+     */
+    private List<SettlementPaymentInfo> calculateSettlementForEachPaymentRound(int projectNo) {
+
+        /* 프로젝트 정산정보 조회 */
+        SettlementInfoDTO settlementInfo = getSettlementInfo(projectNo);
+
+        /* 정산금지급기준 조회 */
+        String standardName = "기본";
+        List<SettlementPaymentStandard> settlementPaymentStandards = settlementPaymentStandardRepository.findAllByStandardName(standardName);
+
+        int totalAmount = settlementInfo.getFundingTotalAmount() + settlementInfo.getDonateAmount();
+
+        List<SettlementPaymentInfo> settlementPaymentInfos = new ArrayList<>();
+        settlementPaymentStandards.forEach(settlementPaymentStandard -> {
+            /* 회차별 정산금 지급비율 */
+            double rate = settlementPaymentStandard.getSettlementPaymentStandardPK()
+                    .getSettlementPaymentRoundRate().getSettlementPaymentRate();
+            /* 총정산금에 회차별 정산금 지급비율을 곱해 회차별 지급급액을 구한다 */
+            int paymentAmount = (int) ((double) totalAmount * rate);
+
+            SettlementPaymentInfo settlementPaymentInfo = new SettlementPaymentInfo();
+            settlementPaymentInfo.setSettlementInfo(modelMapper.map(settlementInfo, SettlementInfo.class));
+            settlementPaymentInfo.setSettlementPaymentStandard(modelMapper.map(settlementPaymentStandard, SettlementPaymentStandard.class));
+            settlementPaymentInfo.setSettlementPaymentAmount(paymentAmount);
+
+            settlementPaymentInfos.add(settlementPaymentInfo);
+        });
+
+        return settlementPaymentInfos;
+    }
+
+    /**
+     * registOrModifySettlementPaymentInfo: 회차별 정산금 지급내역 정보를 데이터베이스에 등록 또는 수정을 요청하는 메소드입니다.
+     * @param projectNo: 프로젝트번호
+     * @author 장민주
+     */
+    @Transactional
+    public void registOrModifySettlementPaymentInfo(int projectNo) {
+
+        /* 프로젝트 정산정보 조회 */
+        SettlementInfoDTO settlementInfo = getSettlementInfo(projectNo);
+
+        /* 회차별 정산금 지급금액 다시 계산 */
+        List<SettlementPaymentInfo> newSettlementPaymentInfos = calculateSettlementForEachPaymentRound(projectNo);
+
+        /* 정산정보에 대한 회차별 정산금 지급내역 데이터가 존재하는지 확인 */
+        List<SettlementPaymentInfo> foundSettlementPaymentInfos =
+                settlementPaymentInfoRepository.findBySettlementInfo_SettlementInfoNo(settlementInfo.getSettlementInfoNo());
+
+        /* 회차별 정산금 지급내역이 존재하지 않는 경우, 회차별 정산금액을 계산하여 새로운 row를 insert */
+        if(foundSettlementPaymentInfos.isEmpty()) {
+            settlementPaymentInfoRepository.saveAll(newSettlementPaymentInfos);
+        }
+
+        /* 회차별 정산금 지급내역이 존재하는 경우, 기존 row를 update */
+        if(!foundSettlementPaymentInfos.isEmpty()) {
+            for(int i = 0; i < foundSettlementPaymentInfos.size(); i++) {
+                foundSettlementPaymentInfos.get(i)
+                        .setSettlementPaymentAmount(newSettlementPaymentInfos.get(i).getSettlementPaymentAmount());
+            }
+        }
+    }
+
+
+
+
+
+
+
 }
