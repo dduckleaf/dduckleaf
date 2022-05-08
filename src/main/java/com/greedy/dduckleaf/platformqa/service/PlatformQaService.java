@@ -125,4 +125,19 @@ public class PlatformQaService {
         platformQaRepository.deleteById(platformQaNo);
     }
 
+    /**
+     * registNewPlatformQaReply : 1:1문의 답변을 등록합니다.
+     * @param newPlatformQaReply : 등록할 1:1문의 답변 정보를 담는 객체
+     *
+     * @author 차화응
+     */
+    @Transactional
+    public void registNewPlatformQaReply(PlatformQaReplyDTO newPlatformQaReply) {
+
+        String registDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new java.sql.Date(System.currentTimeMillis()));
+        newPlatformQaReply.setPlatformQaReplyRegistDate(registDate);
+
+        platformQaReplyRepository.save(modelMapper.map(newPlatformQaReply, PlatformQaReply.class));
+    }
+
 }
