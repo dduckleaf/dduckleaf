@@ -465,7 +465,7 @@ public class ProjectApplicationService {
      */
     public FarmerInfoDTO findFarmerInfoByMemberNo(int memberNo) {
 
-        FarmerInfo farmerInfo = farmerInfoRepository.findByMemberNo(memberNo);
+        FarmerInfo farmerInfo = farmerInfoRepository.findByFarmerNo(memberNo);
 
         return modelMapper.map(farmerInfo, FarmerInfoDTO.class);
     }
@@ -478,7 +478,7 @@ public class ProjectApplicationService {
     @Transactional
     public void modifyFarmerInfo(FarmerInfoDTO farmerInfo) {
 
-        FarmerInfo updateFarmerInfo = farmerInfoRepository.findByMemberNo(farmerInfo.getMemberNo());
+        FarmerInfo updateFarmerInfo = farmerInfoRepository.findByFarmerNo(farmerInfo.getMemberNo());
         updateFarmerInfo.setFarmerName(farmerInfo.getFarmerName());
         updateFarmerInfo.setFarmerEmail(farmerInfo.getFarmerEmail());
         updateFarmerInfo.setFarmerPhone(farmerInfo.getFarmerPhone());
@@ -544,7 +544,7 @@ public class ProjectApplicationService {
     @Transactional
     public void modifyRepresentative(FarmerInfoDTO farmerInfo, FarmerFinancialInfoDTO financialInfo) {
 
-        FarmerInfo updateFarmerInfo = farmerInfoRepository.findByMemberNo(farmerInfo.getMemberNo());
+        FarmerInfo updateFarmerInfo = farmerInfoRepository.findByFarmerNo(farmerInfo.getMemberNo());
         updateFarmerInfo.setBusinessOwnType(farmerInfo.getBusinessOwnType());
         updateFarmerInfo.setBusinessOwnNo(farmerInfo.getBusinessOwnNo());
         updateFarmerInfo.setBusinessName(farmerInfo.getBusinessName());
