@@ -536,20 +536,19 @@
       let $followingStatus = document.getElementById("following-project").value;
       const $projectNo = [[${ project.projectNo }]];
 
+      let projectNo = {
+        method: 'POST',
+        body: $projectNo,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+
       if($followingStatus == "N") {
 
-        let data = {
-          method: 'POST',
-          body: $projectNo,
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
-
-        fetch("/following/regist", data)
+        fetch("/following/regist", projectNo)
           .then(response => response.json())
           .then(response => {
-            console.table(response);
             if(response == "관심프로젝트로 등록되었습니다."){
 
               document.getElementById("following-img").src = "/images/common/fullheart.png";
@@ -575,7 +574,31 @@
       }
       if($followingStatus == "Y") {
 
-        /* 관심프로젝트 등록 취소*/
+        fetch("/following/remove", projectNo)
+          .then(response => response.json())
+          .then(response => {
+            if(response == "관심 프로젝트에서 제외되었습니다.") {
+
+              document.getElementById("following-img").src = "/images/common/heart.png";
+              document.getElementById("following-project").value = "N";
+              Swal.fire({
+                title: response,
+                showCancelButton: true,
+                showConfirmButton: false,
+                cancelButtonText: '확인',
+                allowEnterKey: false,
+                confirmButtonWidth: '100px',
+                customClass: {
+                  cancelButton: 'savecancel',
+                  popup: 'savepopup'
+                },
+                buttonsStyling: false,
+              });
+            }
+          })
+        .catch(error => {
+          console.log(error);
+        })
       }
     }
   }
