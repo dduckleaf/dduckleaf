@@ -5,6 +5,7 @@ import com.greedy.dduckleaf.config.ContextConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.refund.examine.entity.RefundingObjection;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,6 +36,7 @@ class RefundingObjectionRepositoryTest {
     }
 
     @Test
+    @DisplayName("전체 목록 조회 테스트")
     public void findAll_test() {
 
         //given
@@ -49,6 +51,7 @@ class RefundingObjectionRepositoryTest {
     }
 
     @Test
+    @DisplayName("최신 삽입 내역 조회 테스트")
     public void findLastest_test() {
 
         //when
@@ -60,5 +63,4 @@ class RefundingObjectionRepositoryTest {
 
 
     }
-
 }

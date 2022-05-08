@@ -5,6 +5,7 @@ import com.greedy.dduckleaf.config.ContextConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.refund.examine.entity.RefundObjectionHistory;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -29,7 +30,9 @@ class RefundObjectionHistoryRepositoryTest {
 
         assertNotNull(repo);
     }
+
     @Test
+    @DisplayName("최신 삽입 내역 조회 테스트")
     public void findAll_test() {
 
         //when
@@ -39,5 +42,4 @@ class RefundObjectionHistoryRepositoryTest {
         assertNotNull(refundObjectionHistories);
         refundObjectionHistories.forEach(System.out::println);
     }
-
 }

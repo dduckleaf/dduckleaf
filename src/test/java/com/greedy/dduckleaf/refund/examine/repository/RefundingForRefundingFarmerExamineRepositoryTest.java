@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.refund.examine.entity.Refunding;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +33,7 @@ class RefundingForRefundingFarmerExamineRepositoryTest {
     }
 
     @Test
+    @DisplayName("전체 목록 조회 테스트")
     @Transactional
     public void findById_test() {
         //given
@@ -44,5 +46,4 @@ class RefundingForRefundingFarmerExamineRepositoryTest {
         assertNotNull(refunding);
         System.out.println("refunding = " + refunding);
     }
-
 }
