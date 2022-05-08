@@ -5,10 +5,17 @@ import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.refund.examine.dto.FundingDTO;
 import com.greedy.dduckleaf.refund.examine.dto.RefundingDTO;
+import com.greedy.dduckleaf.refund.examine.dto.RefundingObjectionDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
+
+import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,5 +46,29 @@ class RefundingForFarmerExamineServiceTest {
 
         //when & then
         assertDoesNotThrow(() -> service.confirmRefunding(refundNo, memberNo));
+    }
+
+    @Test
+    public void findObjections_test() {
+
+        //given
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("refundObjectionNo").descending());
+
+        //when
+        Page<RefundingObjectionDTO> objections = service.findObjectionList(pageable);
+
+        //then
+        assertNotNull(objections);
+        objections.forEach(System.out::println);
+    }
+
+    @Test
+    public void registObjection_test() {
+
+        //given
+        int refundingNo = 39;
+
+        //when & then
+        assertDoesNotThrow(() -> service.registObjection(refundingNo));
     }
 }

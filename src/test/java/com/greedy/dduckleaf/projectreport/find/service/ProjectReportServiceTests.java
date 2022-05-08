@@ -66,7 +66,7 @@ public class ProjectReportServiceTests {
     @Test
     @DisplayName("모든 프로젝트신고내역 목록조회")
     public void findProjectReportList_test() {
-        //given
+        //giv en
         Pageable pageable = PageRequest.of(0, 10, Sort.by("projectReportNo").descending());
 
         //when
