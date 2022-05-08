@@ -8,7 +8,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Setter
 @Getter
-@toString
+@ToString
 @Entity(name = "SettlementInfoForRefundingExamine")
 @Table(name = "TBL_SETTLEMENT_INFO")
 public class SettlementInfo {

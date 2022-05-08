@@ -15,7 +15,6 @@ import javax.persistence.*;
 @Getter
 @ToString
 @Entity(name = "SettlementChangeHistory")
->>>>>>> origin/feature/refundingexamine/confirmregist
 @Table(name = "TBL_SETTLEMENT_CHANGE_HISTORY")
 public class SettlementChangeHistory {
     @Id
