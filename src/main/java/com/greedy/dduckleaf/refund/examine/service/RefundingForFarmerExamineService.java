@@ -15,7 +15,7 @@ import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
 /**
  * <pre>
  * Class : RefundingForFarmerExamineService
- * Comment :
+ * Comment : 파머의 환불요청 심사를 처리합니다.
  *
  * History
  * 2022-05-05 홍성원
@@ -70,7 +70,6 @@ public class RefundingForFarmerExamineService {
         Funding funding = fundingRepo.findById(refunding.getFunding().getFundingInfoNo()).get();
         funding.setFundingStatus("N");
 
-
         /* 환불이력에 승인 내역을 추가한다. */
         RefundingHistory refundingHistory = new RefundingHistory();
         refundingHistory.setManagerType("파머");
@@ -96,7 +95,6 @@ public class RefundingForFarmerExamineService {
         settlementHistory.setSettlementInfoNo(settlementInfo.getSettlementInfoNo());
         settlementHistory.setSettlementChangedCategory(2);
         settlementHistory.setRefundingHistoryNo(refundingHistory.getRefundingHisotryNo());
-        System.out.println("settlementHistory = " + settlementHistory);
         settlementHistoryRepo.save(settlementHistory);
 
         /* 2. 후원금에 관한 이력을 추가합니다. */
@@ -107,17 +105,7 @@ public class RefundingForFarmerExamineService {
         settlementHistoryDonate.setSettlementInfoNo(settlementInfo.getSettlementInfoNo());
         settlementHistoryDonate.setSettlementChangedCategory(2);
         settlementHistoryDonate.setRefundingHistoryNo(refundingHistory.getRefundingHisotryNo());
-        System.out.println("settlementHistoryDonate = " + settlementHistoryDonate);
         settlementHistoryRepo.save(settlementHistoryDonate);
-
-
-
-
-
-
-
-
-
 
         /* 발송내역에 해당 펀딩 정보를 삭제한다. */
         /* 남기랑 의견조율 해서 반영하자 */
@@ -129,10 +117,8 @@ public class RefundingForFarmerExamineService {
         settlement.setChangedReason("환불");
         settlement.setChangedDate(getDateAndTime());
 
-
         fundingRepo.save(funding);
         refundingRepo.save(refunding);
-
     }
 
     /**
@@ -183,14 +169,7 @@ public class RefundingForFarmerExamineService {
         objection.setRefundingInfoNo(refundingNo);
 
         objectionRepo.save(objection);
-
         objection = objectionRepo.findLastest();
-
-
-        System.out.println("objection = " + objection);
-
-
-
 
         RefundObjectionHistory refundObjectionHistory = new RefundObjectionHistory();
 
@@ -198,17 +177,12 @@ public class RefundingForFarmerExamineService {
         refundObjectionHistory.setHistoryCategory("신청");
         refundObjectionHistory.setRefundObjectionNo(objection.getRefundObjectionNo());
 
-        System.out.println("refundObjectionHistory = " + refundObjectionHistory);
-
-
-
-
         refundObjectionHistoryRepo.save(refundObjectionHistory);
     }
 
     /**
      * findObjectionList : 이의신청 내역을 조회합니다.
-     * @param pageable :
+     * @param pageable : 페이지 정보다 담긴 변수를 전달받습니다.
      *
      * @author 홍성원
      */
@@ -223,42 +197,3 @@ public class RefundingForFarmerExamineService {
         return objectionDTOs;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
