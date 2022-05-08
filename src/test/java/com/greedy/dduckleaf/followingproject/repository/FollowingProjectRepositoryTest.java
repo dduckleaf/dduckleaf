@@ -2,12 +2,15 @@ package com.greedy.dduckleaf.followingproject.repository;
 
 import com.greedy.dduckleaf.config.*;
 import com.greedy.dduckleaf.followingproject.entity.FollowingProject;
+import com.greedy.dduckleaf.followingproject.entity.Project;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,6 +26,9 @@ class FollowingProjectRepositoryTest {
     @Autowired
     private FollowingProjectRepository followingProjectRepository;
 
+    @Autowired
+    private ProjectForFollowingProjectRepository projectForFollowingProjectRepository;
+
     @Test
     public void initTest() {
         assertNotNull(followingProjectRepository);
@@ -35,13 +41,15 @@ class FollowingProjectRepositoryTest {
 
         //given
         FollowingProject followingProject = new FollowingProject();
-        followingProject.setProjectNo(7);
-        followingProject.setMemberNo(67);
+        Project project = projectForFollowingProjectRepository.findById(7).get();
+        followingProject.setProject(project);
+        followingProject.setMemberNo(5);
 
         //when
 
         //then
-        assertDoesNotThrow(() -> followingProjectRepository.save(followingProject));
+        System.out.println(followingProject);
+        followingProjectRepository.save(followingProject);
     }
 
     @Test
@@ -53,10 +61,9 @@ class FollowingProjectRepositoryTest {
         int projectNo = 7;
 
         //when
-        FollowingProject followingProject = followingProjectRepository.findByProjectNoAndMemberNo(projectNo, memberNo);
+        FollowingProject followingProject = followingProjectRepository.findByProjectProjectNoAndMemberNo(projectNo, memberNo);
 
         //then
-        System.out.println(followingProject);
         assertNotNull(followingProject);
     }
 
@@ -72,5 +79,18 @@ class FollowingProjectRepositoryTest {
 
         //then
         assertDoesNotThrow(() -> followingProjectRepository.deleteById(followingProjectNo));
+    }
+
+    @Test
+    @DisplayName("sadasd")
+    public void findTest() {
+
+        //given
+
+        //when
+        List<FollowingProject> followingProjectList = followingProjectRepository.findAll();
+
+        //then
+        followingProjectList.forEach(System.out::println);
     }
 }
