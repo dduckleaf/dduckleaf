@@ -35,8 +35,9 @@ import java.util.*;
  * 2022/04/30 (박휘림) findPolicyByProjectNo, modifyPolicy, modifyPolicyAgreementStatus, findFarmerInfoByMemberNo, modifyFarmerInfo 메소드 작성
  * 2022/05/01 (박휘림) sendPhoneVerification 메소드 작성
  * 2022/05/02 (박휘림) registProjectApplicationInfo 메소드 작성
+ * 2022/05/05 (박휘림) modifyRepresentative 메소드 작성
  * </pre>
- * @version 1.0.6
+ * @version 1.0.8
  * @author 박휘림
  */
 @Controller
@@ -63,7 +64,7 @@ public class ProjectApplicationController {
      */
     @GetMapping("/regist")
     public ModelAndView registProjectApplication(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
-        System.out.println("여기 안옴?");
+
         int farmerNo = user.getMemberNo();
 
         projectApplicationService.registProjectApplication(farmerNo);
@@ -133,7 +134,7 @@ public class ProjectApplicationController {
     @PostMapping("/modify/basicreq")
     public ModelAndView modifyBasicReq(ModelAndView mv, RewardRegistInfoDTO basicreq, @RequestParam(value = "file", required = false) MultipartFile file,
                                        @AuthenticationPrincipal CustomUser user) {
-        System.out.println("file = " + file);
+
         if(file != null) {
 
             int projectNo = findProjectNoByFarmerNo(user);
@@ -144,8 +145,6 @@ public class ProjectApplicationController {
             project.setProjectNo(projectNo);
 
             attachment.setProject(project);
-
-            String result = "";
 
             String rootLocation = uploadPath;
 
@@ -206,8 +205,6 @@ public class ProjectApplicationController {
             projectApplicationService.modifyBasicReq(basicreq);
 
             mv.setViewName("redirect:/project/application/goMain");
-
-
         }
 
         return mv;
@@ -277,8 +274,6 @@ public class ProjectApplicationController {
             project.setProjectNo(projectNo);
 
             attachment.setProject(project);
-//            attachment.setProjectBasicInfoNo(basicInfo.getProjectBasicInfoNo());
-            String result = "";
 
             String rootLocation = uploadPath;
 
@@ -313,10 +308,8 @@ public class ProjectApplicationController {
                     attachment.setFarmerNo(user.getMemberNo());
 
                     projectApplicationService.modifyBasicInfoAttachment(attachment);
-                    System.out.println("project에 목표최대금액넘어오냐.. = " + project);
-                    projectApplicationService.modifyBasicInfo(basicInfo, project);
 
-//                    projectApplicationService.modifyProject(project, basicInfo);
+                    projectApplicationService.modifyBasicInfo(basicInfo, project);
 
                     mv.setViewName("redirect:/project/application/goMain");
 
@@ -338,8 +331,6 @@ public class ProjectApplicationController {
         } else {
 
             projectApplicationService.modifyBasicInfo(basicInfo, project);
-
-//            projectApplicationService.modifyProject(project, basicInfo);
 
             mv.setViewName("redirect:/project/application/goMain");
         }
@@ -379,8 +370,6 @@ public class ProjectApplicationController {
     public ModelAndView modifyStory(@RequestParam(value = "file", required = false) MultipartFile file, ModelAndView mv,
                                     ProjectBasicInfoDTO story, @AuthenticationPrincipal CustomUser user) {
 
-        System.out.println("story = " + story);
-        System.out.println("file = " + file);
         if(file != null) {
 
             int projectNo = findProjectNoByFarmerNo(user);
@@ -548,7 +537,7 @@ public class ProjectApplicationController {
      */
     @PostMapping("/modify/policy")
     public ModelAndView modifyPolicy(ModelAndView mv, RefundPolicyDTO policy) {
-        System.out.println("policy = " + policy);
+
         projectApplicationService.modifyPolicy(policy);
 
         mv.setViewName("redirect:/project/application/goMain");
@@ -606,9 +595,6 @@ public class ProjectApplicationController {
     public ModelAndView modifyFarmerInfo(@RequestParam(value = "file", required = false) MultipartFile file, HttpServletRequest request,
                                          ModelAndView mv, FarmerInfoDTO farmerInfo, @AuthenticationPrincipal CustomUser user) {
 
-
-        System.out.println("farmerInfo = " + farmerInfo);
-        System.out.println("file = " + file);
         if(file != null) {
 
             int projectNo = findProjectNoByFarmerNo(user);
@@ -679,7 +665,6 @@ public class ProjectApplicationController {
             projectApplicationService.modifyFarmerInfo(farmerInfo);
 
             mv.setViewName("redirect:/project/application/goMain");
-
         }
 
         return mv;
@@ -702,8 +687,7 @@ public class ProjectApplicationController {
         FarmerInfoDTO farmer = projectApplicationService.findFarmerInfoByMemberNo(memberNo);
         FarmerFinancialInfoDTO financialInfo = projectApplicationService.findFarmerFinancialInfoByMemberNo(memberNo);
         List<BankDTO> bankList = projectApplicationService.findAllBank();
-        System.out.println("financialInfo = " + financialInfo);
-        System.out.println("bankList = " + bankList);
+
         mv.addObject("bankList", bankList);
         mv.addObject("farmer", farmer);
         mv.addObject("financialInfo", financialInfo);
@@ -711,24 +695,6 @@ public class ProjectApplicationController {
 
         return mv;
     }
-
-    /**
-     * modifyRepresentative: 대표자정보 작성 페이지에서 사용자가 입력한 값으로 기본데이터를 수정합니다.
-     * @param farmer: 사용자가 입력한 파머정보 데이터를 담은 객체
-     * @param financialInfo: 사용자가 입력한 대표자정보 데이터를 담은 객체
-     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
-     *            "redirect:/project/application/goMain" 프로젝트 신청 메인페이지 경로
-     * @author 박휘림
-     */
-//    @PostMapping("/modify/representative")
-//    public ModelAndView modifyRepresentative(ModelAndView mv, FarmerInfoDTO farmer, FarmerFinancialInfoDTO financialInfo) {
-//
-//        projectApplicationService.modifyRepresentative(farmer, financialInfo);
-//
-//        mv.setViewName("redirect:/project/application/goMain");
-//
-//        return mv;
-//    }
 
     /**
      * modifySettlementPolicyCheckStatus: 대표자 정보 페이지에서 사용자가 정산정책 정보 확인 시 확인 상태를 변경합니다.
@@ -742,7 +708,7 @@ public class ProjectApplicationController {
 
         projectApplicationService.modifySettlementPolicyCheckStatus(financialInfo);
 
-        mv.setViewName("redirect:/project/application/representative2");
+        mv.setViewName("redirect:/project/application/representative");
 
         return mv;
     }
@@ -756,7 +722,7 @@ public class ProjectApplicationController {
     @GetMapping(value = "/sendPhoneVerification", produces = "application/json; charset=UTF-8")
     @ResponseBody
     public String sendPhoneVerification(String phone){
-        System.out.println("phone = " + phone);
+
         String phoneResult = projectApplicationService.sendPhoneVerification(phone);
 
         Gson gson = new GsonBuilder()
@@ -770,66 +736,6 @@ public class ProjectApplicationController {
         return gson.toJson(phoneResult);
     }
 
-//    @PostMapping("/upload/img")
-//    public ModelAndView uploadBusinessLicense(ModelAndView mv, @RequestParam(value = "file", required = false) MultipartFile file,
-//                                              @AuthenticationPrincipal CustomUser user) {
-//        System.out.println("file = " + file);
-//            int projectNo = findProjectNoByFarmerNo(user);
-//
-//            ProjectAttachmentDTO attachment = new ProjectAttachmentDTO();
-//            attachment.setProjectNo(projectNo);
-//
-//            String rootLocation = uploadPath;
-//
-//            String fileUploadPath = rootLocation + "/upload/original";
-//
-//            File uploadDirectory = new File(fileUploadPath);
-//
-//                if(!uploadDirectory.exists()) {
-//
-//                    System.out.println("업로드 디렉토리 생성 : " + uploadDirectory.mkdirs());
-//                }
-//
-//                try {
-//
-//                    if(file.getSize() > 0) {
-//
-//                        String orgName = file.getOriginalFilename();
-//                        String ext = orgName.substring(orgName.lastIndexOf("."));
-//                        String savedName = UUID.randomUUID().toString().replace("-", "") + ext;
-//
-//                        file.transferTo(new File(uploadDirectory + "/" + savedName));
-//
-//                        attachment.setProjectAttachmentOriginalName(orgName);
-//                        attachment.setProjectAttachmentSaveName(savedName);
-//                        attachment.setProjectAttachmentSavePath(fileUploadPath);
-//                        attachment.setFarmerNo(user.getMemberNo());
-//
-//                    }
-//
-//                    attachment.setFarmerNo(user.getMemberNo());
-//
-//                    projectApplicationService.modifyBusinessLicenseAttachment(attachment);
-//
-//                    mv.setViewName("redirect:/project/application/goMain");
-//
-//                } catch (IllegalStateException | IOException e) {
-//                    e.printStackTrace();
-//
-//                    File deleteFile = new File(uploadDirectory + "/" + attachment.getProjectAttachmentSaveName());
-//                    boolean isDeleted1 = deleteFile.delete();
-//
-//                    if(isDeleted1) {
-//                        System.out.println("업로드 실패로 인한 사진 삭제 완료 !!!");
-//                        e.printStackTrace();
-//                    } else {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//        return mv;
-//    }
-
     /**
      * registProjectApplicationInfo: 프로젝트 심사를 신청합니다.
      * @param user: 로그인한 사용자의 정보를 받는 객체
@@ -839,31 +745,36 @@ public class ProjectApplicationController {
      */
     @PostMapping("/examination")
     public ModelAndView registProjectApplicationInfo(ModelAndView mv, @AuthenticationPrincipal CustomUser user, RedirectAttributes rttr) {
-        System.out.println("여기왔늬?");
+
         int projectNo = findProjectNoByFarmerNo(user);
         int memberNo = user.getMemberNo();
 
         projectApplicationService.registProjectApplicationInfo(projectNo, memberNo);
-
-//        rttr.addFlashAttribute("message", "프로젝트가 정상적으로 신청되었습니다.");
 
         mv.setViewName("/main/mainPage");
 
         return mv;
     }
 
+    /**
+     * modifyRepresentative: 대표자 및 정산 정보 페이지에서 사용자가 입력한 값으로 기본 데이터를 수정합니다.
+     * @param user: 로그인한 사용자의 정보를 받는 객체
+     * @param farmer: 파머 정보를 담은 객체
+     * @param financialInfo: 파머 금융 정보를 담은 객체
+     * @param farmerfinancial1: 이미지 파일 정보
+     * @param farmerfinancial2: 이미지 파일 정보
+     * @param farmerfinancial3: 이미지 파일 정보
+     * @param farmerfinancial4: 이미지 파일 정보
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "/project/application/goMain" 프로젝트 신청 메인 페이지 경로
+     * @author 박휘림
+     */
     @PostMapping("/modify/representative")
-    public ModelAndView modifyRepresentativee(ModelAndView mv, FarmerInfoDTO farmer, FarmerFinancialInfoDTO financialInfo,
-                                              HttpServletRequest request, @AuthenticationPrincipal CustomUser user,
+    public ModelAndView modifyRepresentative(ModelAndView mv, FarmerInfoDTO farmer, FarmerFinancialInfoDTO financialInfo, @AuthenticationPrincipal CustomUser user,
                                               @RequestParam("farmerfinancial1") MultipartFile farmerfinancial1,
                                               @RequestParam("farmerfinancial2") MultipartFile farmerfinancial2,
                                               @RequestParam("farmerfinancial3") MultipartFile farmerfinancial3,
                                               @RequestParam("farmerfinancial4") MultipartFile farmerfinancial4 ) {
-
-        System.out.println("farmerfinancial1 = " + farmerfinancial1);
-        System.out.println("farmerfinancial2 = " + farmerfinancial2);
-        System.out.println("farmerfinancial3 = " + farmerfinancial3);
-        System.out.println("farmerfinancial4 = " + farmerfinancial4);
 
         String rootLocation = uploadPath;
 
@@ -874,12 +785,10 @@ public class ProjectApplicationController {
         if(!uploadDirectory.exists()) {
 
             System.out.println("폴더 생성 : " + uploadDirectory.mkdirs());
-
         }
 
         /* 업르도 파일 하나하나에 대한 정보를 담을 리스트 */
         List<Map<String, String>> fileInfoList = new ArrayList<>();
-
 
         List<MultipartFile> fileList = new ArrayList<>();
         fileList.add(farmerfinancial1);
@@ -908,7 +817,7 @@ public class ProjectApplicationController {
 
                 }
             }
-            fileInfoList.forEach(System.out::println);
+
             List<ProjectAttachmentDTO> attachmentList = new ArrayList<>();
 
                 for(int i = 0; i < fileInfoList.size(); i++) {
@@ -928,16 +837,11 @@ public class ProjectApplicationController {
                     attachment.setProject(project);
                     attachment.setFarmerNo(user.getMemberNo());
                     attachment.setProjectAttachmentCategory("금융정보");
-                    System.out.println("attachment = " + attachment);
-                    attachmentList.add(attachment);
-                    System.out.println("리스트 출력 지점");
-                    attachmentList.forEach(System.out::println);
-                    System.out.println("리스트 출력 종료지점");
 
+                    attachmentList.add(attachment);
 
                 }
             projectApplicationService.modifyFarmerFinancialInfoAttachment(attachmentList);
-
 
         } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
@@ -947,6 +851,22 @@ public class ProjectApplicationController {
 
         mv.setViewName("redirect:/project/application/goMain");
 
+        return mv;
+    }
+
+    /**
+     * cancelProjectApplicaion: 파머페이지에서 심사 대기중인 신청 프로젝트를 취소하는 메소드입니다.
+     * @param projectNo: 프로젝트 번호
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/common/farmerpage" 파머탭 경로
+     * @author 박휘림
+     */
+    @GetMapping("cancel/{projectNo}")
+    public ModelAndView cancelProjectApplicaion(@PathVariable int projectNo, ModelAndView mv) {
+
+        projectApplicationService.cancelProjectApplication(projectNo);
+
+        mv.setViewName("redirect:/common/farmerpage");
         return mv;
     }
 
