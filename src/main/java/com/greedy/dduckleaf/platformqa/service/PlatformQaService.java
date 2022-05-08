@@ -140,4 +140,16 @@ public class PlatformQaService {
         platformQaReplyRepository.save(modelMapper.map(newPlatformQaReply, PlatformQaReply.class));
     }
 
+    /**
+     * modifyPlatformQaReply : 1:1문의 답변을 수정합니다.
+     * @param updatePlatformQaReply : 수정할 1:1문의 답변 정보를 담는 객체
+     *
+     * @author 차화응
+     */
+    @Transactional
+    public void modifyPlatformQaReply(PlatformQaReplyDTO updatePlatformQaReply) {
+
+        PlatformQaReply foundPlatformQaReply = platformQaReplyRepository.findById(updatePlatformQaReply.getPlatformQaReplyNo()).get();
+        foundPlatformQaReply.setPlatformQaReplyContent(updatePlatformQaReply.getPlatformQaReplyContent());
+    }
 }
