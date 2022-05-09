@@ -82,7 +82,7 @@ class FollowingProjectRepositoryTest {
     }
 
     @Test
-    @DisplayName("sadasd")
+    @DisplayName("관심 프로젝트 전체 조회 테스트")
     public void findTest() {
 
         //given
@@ -93,4 +93,5 @@ class FollowingProjectRepositoryTest {
         //then
         followingProjectList.forEach(System.out::println);
     }
+
 }
