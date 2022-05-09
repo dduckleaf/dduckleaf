@@ -162,10 +162,14 @@ public class RefundingForFarmerExamineService {
     @Transactional
     public void registObjection(int refundingNo) {
 
+        System.out.println("registObjection");
+        System.out.println("start");
+        System.out.println("refundingNo = " + refundingNo);
         Refunding refunding = refundingRepo.findById(refundingNo).get();
-
+        System.out.println("refunding = " + refunding);
         RefundingObjection objection = new RefundingObjection();
         objection.setRefundObjectionMemberNo(refunding.getMemberNo());
+        System.out.println("objection = " + objection);
         objection.setRefundingInfoNo(refundingNo);
 
         objectionRepo.save(objection);
@@ -178,6 +182,12 @@ public class RefundingForFarmerExamineService {
         refundObjectionHistory.setRefundObjectionNo(objection.getRefundObjectionNo());
 
         refundObjectionHistoryRepo.save(refundObjectionHistory);
+
+        /* 환불 상태를 심사 요청으로 변경한다. */
+        RefundingStatus status = refundingStatusRepo.findById(4).get();
+        System.out.println("status = " + status);
+        refunding.setRefundingStatus(status);
+        refundingRepo.save(refunding);
     }
 
     /**
