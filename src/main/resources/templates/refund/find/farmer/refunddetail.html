@@ -21,7 +21,6 @@
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<style>
         .tab-body-area {
-            border: 1px solid red;
             position: absolute;
             z-index: 1;
             left: 33%;
@@ -34,10 +33,8 @@
             margin-left: 8%;
             background-color: rgb(224, 222, 221);
             margin-top: 8%;
-            border: 1px solid greenyellow;
         }
         .refund-detail-area-box {
-            border: 1px solid blue;
             margin: 7%;
             width: 80%;
             height: 90%;
@@ -47,22 +44,12 @@
             font-weight: 1000;
             margin-bottom: 10px;
             width: 35%;
-            border: solid bisque;
         }
         .refund-detail-content {
             width: 60%;
-            border: solid darkcyan;
         }
         /* Round Corners */
         .round-corners {
-            display: inline-block;
-            transition-duration: 0.3s;
-            /*transition-property: border-radius;*/
-            transition-property: transform;
-            -webkit-tap-highlight-color: transparent;
-            transform: translateZ(0);
-            box-shadow: 0 0 1px transparent;
-
             color: #BAC34E;
             background: #FFF;
             border: 1px solid #BAC34E;
@@ -93,6 +80,7 @@
 	<hr>
 	<div class="refund-detail-area">
 		<div class="refund-detail-area-box">
+			<br><br>
 			<label class="refund-detail-title">주문일</label>
 			<label class="refund-detail-content">[[${refunding.refundingDate}]]</label><br>
 			<label class="refund-detail-title">펀딩 금액</label>
