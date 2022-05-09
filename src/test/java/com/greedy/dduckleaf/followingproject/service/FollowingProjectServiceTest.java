@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 
+import java.text.ParseException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -72,7 +73,7 @@ class FollowingProjectServiceTest {
 
     @Test
     @DisplayName("회원 번호로 관심 프로젝트 목록 조회 테스트")
-    public void findFollowingProjectListTest() {
+    public void findFollowingProjectListTest() throws ParseException {
 
         //given
         int memberNo = 67;
