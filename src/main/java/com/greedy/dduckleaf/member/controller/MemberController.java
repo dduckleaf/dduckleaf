@@ -19,6 +19,8 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
+import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
+
 /**
  * <pre>
  * Class: MemberController
@@ -308,12 +310,23 @@ public class MemberController {
      */
     @PostMapping(value={"/remove"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public String removeMember(String withdrawReason, @AuthenticationPrincipal CustomUser user) {
+    public String removeMember(@RequestBody String withdrawReason, @AuthenticationPrincipal CustomUser user) {
 
         MemberWithdrawDTO memberWithdraw = new MemberWithdrawDTO();
         memberWithdraw.setMemberNo(user.getMemberNo());
         memberWithdraw.setWithdrawReason(withdrawReason);
+        memberWithdraw.setWithdrawDate(getDateAndTime());
 
-        return memberService.removeMember(memberWithdraw);
+        String result = memberService.removeMember(memberWithdraw);
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .setPrettyPrinting()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .create();
+
+        return gson.toJson(result);
     }
 }
