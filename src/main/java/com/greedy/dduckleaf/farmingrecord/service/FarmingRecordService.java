@@ -13,15 +13,19 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
+
 /**
  * <pre>
  * Class : FarmingRecordService
  * Comment : 농사일지
  * History
- * 2022-05-07 (차화응) / 처음 작성
+ * 2022-05-07 (차화응) 처음 작성 / 농사일지 목록조회 메소드 작성
+ * 2022-05-08 (차화응) 농사일지 상세조회 메소드 작성
+ * 2022-05-09 (차화응) 농사일지 작성하기 메소드 작성
  * </pre>
  *
- * @version 1.0.0
+ * @version 1.0.3
  * @author 차화응
  */
 @Service
@@ -76,4 +80,17 @@ public class FarmingRecordService {
         return modelMapper.map(farmingRecord, FarmingRecordDTO.class);
     }
 
+    /**
+     * registNewFarmingRecord : 농사일지를 등록합니다.
+     * @param newFarmingRecord : 등록할 농사일지 정보를 담은 객체
+     *
+     * @author 차화응
+     */
+    @Transactional
+    public void registNewFarmingRecord(FarmingRecordDTO newFarmingRecord) {
+
+        newFarmingRecord.setFarmingRecordUploadDate(getDateAndTime());
+
+        farmingRecordRepository.save(modelMapper.map(newFarmingRecord, FarmingRecord.class));
+    }
 }
