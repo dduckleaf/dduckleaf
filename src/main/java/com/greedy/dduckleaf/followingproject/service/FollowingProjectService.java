@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.followingproject.service;
 
+import com.greedy.dduckleaf.followingproject.dto.ProjectDTO;
 import com.greedy.dduckleaf.followingproject.entity.FollowingProject;
 import com.greedy.dduckleaf.followingproject.entity.Project;
 import com.greedy.dduckleaf.followingproject.repository.FollowingProjectRepository;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -16,8 +19,9 @@ import javax.transaction.Transactional;
  * Comment : 관심 프로젝트
  * History
  * 2022/05/08 (박상범) 처음 작성 / 관심 프로젝트 등록 관련 메소드 작성, 관심 프로젝트 취소 관련 메소드 작성
+ * 2022/05/09 (박상범) 관심 프로젝트 목록 조회 관련 메소드 작성
  * </pre>
- * @version 1.0.1
+ * @version 1.0.2
  * @author 박상범
  */
 @Service
@@ -72,5 +76,23 @@ public class FollowingProjectService {
         followingProjectRepository.deleteById(followingProject.getFollowingProjectNo());
 
         return FOLLOWING_PROJECT_REMOVE_MESSAGE;
+    }
+
+    /**
+     * findFollowingProjectListA: 관심 프로젝트 목록을 조회합니다.
+     * @param memberNo:  회원 번호
+     * @return  회원이 관심프로젝트로 등록한 프로젝트 목록을 return합니다.
+     * @author 박상범
+     */
+    public List<ProjectDTO> findFollowingProjectList(int memberNo) {
+
+        List<Project> foundFollowingProjectList = projectForFollowingProjectRepository.findFollowingProjectList(memberNo);
+
+        List<ProjectDTO> followingProjectList = foundFollowingProjectList
+                                                        .stream()
+                                                        .map(project -> modelMapper.map(project, ProjectDTO.class))
+                                                        .collect(Collectors.toList());
+
+        return followingProjectList;
     }
 }
