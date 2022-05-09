@@ -12,7 +12,14 @@
 <link rel="stylesheet" href="../../static/css/style.css">
 <link rel="stylesheet" href="../../static/css/projectqa.css">
 
+<link rel="stylesheet" type="text/css" th:href="@{ /css/style.css }">
+<link rel="stylesheet" type="text/css" th:href="@{ /css/pro.css }">
 <body>
+
+<!-- Begin Main Header Area -->
+<div th:replace="/common/menubar.html"></div>
+<!-- Main Header Area End Here -->
+<br><br>
 
 <ul class="nav product-tab-nav product-tab-style-2" role="tablist">
     <li class="nav-item" role="presentation">
@@ -60,7 +67,7 @@
 
     <tr class="board-detail">
         <td>미답변</td>
-        <td align="left">비밀글입니다.<img class="lock-img" src="../../static/images/board/lock-icon.png"></td>
+        <td align="left">비밀글입니다.<img class="lock-img" th:src="@{/images/board/lock-icon.png}"></td>
         <td>mmmj*****</td>
         <td>2022-02-20<br>07:15</td>
     </tr>
@@ -73,19 +80,19 @@
     </tr>
     <tr class="board-detail">
         <td></td>
-        <td align="left"><img src="../../static/images/board/reply-icon.png" style="height: 20px; margin-right: 5px;">답글답글답글답글답글답글답글</td>
+        <td align="left"><img th:src="@{/images/board/lock-icon.png}" style="height: 20px; margin-right: 5px;">답글답글답글답글답글답글답글</td>
         <td>파머</td>
         <td><button class="btn-td">수정</button> | <button class="btn-td">삭제</button></td>
     </tr>
     <tr>
         <td>답변완료</td>
-        <td align="left">비밀글입니다.<img src="../../static/images/board/lock-icon.png" class="lock-img"></td>
+        <td align="left">비밀글입니다.<img th:src="@{/images/board/lock-icon.png}" class="lock-img"></td>
         <td>mmmj*****</td>
         <td>2022-02-20<br>07:15</td>
     </tr>
     <tr>
         <td>답변완료</td>
-        <td align="left">비밀글입니다.<img src="../../static/images/board/lock-icon.png" class="lock-img"></td>
+        <td align="left">비밀글입니다.<img th:src="@{/images/board/lock-icon.png}" class="lock-img"></td>
         <td>mmmj*****</td>
         <td>2022-02-20<br>07:15</td>
     </tr>
@@ -116,5 +123,18 @@
 
 <!-- 게시판영역 End Here -->
 
+<!-- Begin Footer Area -->
+<footer class="footer" th:replace="/common/footer.html"></footer>
+<!-- Footer Area End Here -->
+<!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+<link rel="stylesheet" th:href="@{css/vendor/font-awesome.min.css}"/>
+<link rel="stylesheet" th:href="@{css/vendor/Pe-icon-7-stroke.css}" />
+
+<!-- Plugin CSS (Global Plugins Files) -->
+<link rel="stylesheet" th:href="@{css/plugins/animate.min.css}">
+<link rel="stylesheet" th:href="@{css/plugins/jquery-ui.min.css}">
+<link rel="stylesheet" th:href="@{css/plugins/swiper-bundle.min.css}">
+<link rel="stylesheet" th:href="@{css/plugins/nice-select.css}">
+<link rel="stylesheet" th:href="@{css/plugins/magnific-popup.min.css}"/>
 </body>
 </html>
