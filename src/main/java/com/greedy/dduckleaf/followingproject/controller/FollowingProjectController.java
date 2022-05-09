@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -90,7 +91,7 @@ public class FollowingProjectController {
      * @author 박상범
      */
     @GetMapping("/list")
-    public ModelAndView followingProjectList(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+    public ModelAndView followingProjectList(ModelAndView mv, @AuthenticationPrincipal CustomUser user) throws ParseException {
 
         List<ProjectDTO> followingProjectList = followingProjectService.findFollowingProjectList(user.getMemberNo());
 

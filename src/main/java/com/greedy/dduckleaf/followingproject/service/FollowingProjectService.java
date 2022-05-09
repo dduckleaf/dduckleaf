@@ -10,7 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -84,14 +91,32 @@ public class FollowingProjectService {
      * @return  회원이 관심프로젝트로 등록한 프로젝트 목록을 return합니다.
      * @author 박상범
      */
-    public List<ProjectDTO> findFollowingProjectList(int memberNo) {
+    public List<ProjectDTO> findFollowingProjectList(int memberNo) throws ParseException {
 
         List<Project> foundFollowingProjectList = projectForFollowingProjectRepository.findFollowingProjectList(memberNo);
 
-        List<ProjectDTO> followingProjectList = foundFollowingProjectList
-                                                        .stream()
-                                                        .map(project -> modelMapper.map(project, ProjectDTO.class))
-                                                        .collect(Collectors.toList());
+        List<ProjectDTO> followingProjectList = new ArrayList<>();
+
+        for(int i = 0; i < foundFollowingProjectList.size(); i++) {
+
+            ProjectDTO project = modelMapper.map(foundFollowingProjectList.get(i), ProjectDTO.class);
+
+            String endDate = foundFollowingProjectList.get(i).getEndDate().replace("-","");
+            String nowDate = java.sql.Date.valueOf(LocalDate.now()).toString().replace("-","");
+
+            String format = "yyyyMMdd";
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.KOREA);
+            Date end = simpleDateFormat.parse(endDate);
+            Date now = simpleDateFormat.parse(nowDate);
+
+            long diffSec = Math.abs(end.getTime() - now.getTime());
+            long diffDay = TimeUnit.DAYS.convert(diffSec, TimeUnit.MILLISECONDS);
+
+            project.setDeadLine(diffDay);
+
+            followingProjectList.add(project);
+        }
 
         return followingProjectList;
     }
