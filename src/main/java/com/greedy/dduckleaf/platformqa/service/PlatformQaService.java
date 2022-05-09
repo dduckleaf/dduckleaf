@@ -25,15 +25,17 @@ import java.util.stream.Collectors;
 /**
  * <pre>
  * Class : PlatformQaService
- * Comment : 1:1 문의
+ * Comment : 1:1문의
  * History
  * 2022-05-01 (차화응) 처음 작성 / 1:1문의 목록조회 메소드 작성
  * 2022-05-01 (차화응) 1:1문의 카테고리 전체 조회 메소드 작성
  * 2022-05-03 (차화응) 1:1문의 답변 전체 조회 메소드 작성
  * 2022-05-03 (차화응) 1:1문의 작성하기 메소드 작성
  * 2022-05-04 (차화응) 1:1문의 삭제하기 메소드 작성
+ * 2022-05-05 (차화응) 1:1문의 답변 작성하기 메소드 작성
+ * 2022-05-08 (차화응) 1:1문의 답변 수정하기 메소드 작성 / 1:1문의 답변 삭제하기 메소드 작성
  * </pre>
- * @version 1.0.4
+ * @version 1.0.7
  * @author 차화응
  */
 @Service
@@ -152,4 +154,17 @@ public class PlatformQaService {
         PlatformQaReply foundPlatformQaReply = platformQaReplyRepository.findById(updatePlatformQaReply.getPlatformQaReplyNo()).get();
         foundPlatformQaReply.setPlatformQaReplyContent(updatePlatformQaReply.getPlatformQaReplyContent());
     }
+
+    /**
+     * removePlatformQaReply : 1:1문의 답변을 삭제합니다.
+     * @param platformQaReplyNo : 삭제할 1:1문의 답변 번호
+     *
+     * @author 차화응
+     */
+    @Transactional
+    public void removePlatformQaReply(int platformQaReplyNo) {
+
+        platformQaReplyRepository.deleteById(platformQaReplyNo);
+    }
+
 }
