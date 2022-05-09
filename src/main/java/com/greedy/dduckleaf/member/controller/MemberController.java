@@ -30,8 +30,9 @@ import java.util.Locale;
  * 2022/04/22 (박상범) 휴대폰 인증번호 전송 관련 메소드 구현 완료, 아이디 중복 체크 관련 메소드 구현 완료, 회원 가입 관련 메소드 구현 완료
  * 2022/04/23 (박상범) 아이디 찾기 관련 메소드 구현 완료
  * 2022/04/27 (박상범) 비밀번호 찾기 관련 메소드 구현 완료
+ * 2022/05/09 (박상범) 회원 탈퇴 관련 메소드 작성
  * </pre>
- * @version 1.0.8
+ * @version 1.0.9
  * @author 박상범
  */
 @Controller
@@ -298,6 +299,13 @@ public class MemberController {
         return mv;
     }
 
+    /**
+     * removeMember : 회원 탈퇴를 합니다.
+     * @param withdrawReason: 탈퇴 사유를 담은 변수입니다.
+     * @param user: 로그인된 회원 정보
+     * @return mv
+     * @author 박상범
+     */
     @PostMapping(value={"/remove"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public String removeMember(String withdrawReason, @AuthenticationPrincipal CustomUser user) {

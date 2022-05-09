@@ -29,8 +29,10 @@ import java.util.List;
  * 2022-04-30 (차화응) 처음 작성 / 1:1문의 목록조회 메소드 작성
  * 2022-05-03 (차화응) 1:1문의 작성하기 메소드 작성
  * 2022-05-04 (차화응) 1:1문의 삭제하기 메소드 작성
+ * 2022-05-05 (차화응) 1:1문의 답변 작성하기 메소드 작성
+ * 2022-05-08 (차화응) 1:1문의 답변 수정하기 메소드 작성 / 1:1문의 답변 삭제하기 메소드 작성
  * </pre>
- * @version 1.0.2
+ * @version 1.0.5
  * @author 차화응
  */
 @Controller
@@ -136,6 +138,42 @@ public class PlatformQaController {
         platformQa.setPlatformQaAnswerStatus("Y");
 
         platformQaService.registNewPlatformQaReply(newPlatformQaReply);
+
+        mv.setViewName("redirect:/qna/list");
+
+        return mv;
+    }
+
+    /**
+     * modifyPlatformQaReply : 1:1문의 답변을 수정합니다.
+     * @param mv : 요청 경로를 담는 객체
+     * @param updatePlatformQaReply : 수정할 1:1문의 답변 정보를 담는 객체
+     * @return mv : 뷰로 전달할 데이터와 경로를 담는 객체
+     *
+     * @author 차화응
+     */
+    @PostMapping("/modifyRep")
+    public ModelAndView modifyPlatformQaReply(ModelAndView mv, PlatformQaReplyDTO updatePlatformQaReply) {
+
+        platformQaService.modifyPlatformQaReply(updatePlatformQaReply);
+
+        mv.setViewName("redirect:/qna/list");
+
+        return mv;
+    }
+
+    /**
+     * removePlatformQaReply : 1:1문의 답변을 삭제합니다.
+     * @param mv : 요청 경로를 담는 객체
+     * @param platformQaReplyNo : 삭제할 1:1문의 답변 번호
+     * @return mv : 뷰로 전달할 데이터와 경로를 담는 객체
+     *
+     * @author 차화응
+     */
+    @GetMapping("/removeRep/{platformQaReplyNo}")
+    public ModelAndView removePlatformQaReply(ModelAndView mv, @PathVariable int platformQaReplyNo) {
+
+        platformQaService.removePlatformQaReply(platformQaReplyNo);
 
         mv.setViewName("redirect:/qna/list");
 

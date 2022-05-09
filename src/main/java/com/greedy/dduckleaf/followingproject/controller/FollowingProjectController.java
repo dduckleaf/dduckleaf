@@ -5,11 +5,15 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.followingproject.dto.FollowingProjectDTO;
+import com.greedy.dduckleaf.followingproject.dto.ProjectDTO;
 import com.greedy.dduckleaf.followingproject.service.FollowingProjectService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.text.ParseException;
+import java.util.List;
 
 /**
  * <pre>
@@ -17,8 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
  * Comment : 관심 프로젝트
  * History
  * 2022/05/08 (박상범) 처음 작성 / 관심 프로젝트 등록 관련 메소드 작성, 관심 프로젝트 취소 관련 메소드 작성
+ * 2022/05/09 (박상범) 관심 프로젝트 목록 조회 관련 메소드 작성
  * </pre>
- * @version 1.0.1
+ * @version 1.0.2
  * @author 박상범
  */
 @Controller
@@ -79,10 +84,19 @@ public class FollowingProjectController {
         return gson.toJson(result);
     }
 
+    /**
+     * followingProjectList: 관심 프로젝트 목록을 조회합니다.
+     * @param user:  로그인된 회원의 정보
+     * @return mv
+     * @author 박상범
+     */
     @GetMapping("/list")
-    public ModelAndView followingProjectList(ModelAndView mv, @AuthenticationPrincipal CustomUser user) {
+    public ModelAndView followingProjectList(ModelAndView mv, @AuthenticationPrincipal CustomUser user) throws ParseException {
 
+        List<ProjectDTO> followingProjectList = followingProjectService.findFollowingProjectList(user.getMemberNo());
 
+        mv.addObject("followingProjectList", followingProjectList);
+        mv.setViewName("/following/list");
 
         return mv;
     }

@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.followingproject.service;
 
+import com.greedy.dduckleaf.followingproject.dto.ProjectDTO;
 import com.greedy.dduckleaf.followingproject.entity.FollowingProject;
 import com.greedy.dduckleaf.followingproject.entity.Project;
 import com.greedy.dduckleaf.followingproject.repository.FollowingProjectRepository;
@@ -9,6 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -16,8 +26,9 @@ import javax.transaction.Transactional;
  * Comment : 관심 프로젝트
  * History
  * 2022/05/08 (박상범) 처음 작성 / 관심 프로젝트 등록 관련 메소드 작성, 관심 프로젝트 취소 관련 메소드 작성
+ * 2022/05/09 (박상범) 관심 프로젝트 목록 조회 관련 메소드 작성
  * </pre>
- * @version 1.0.1
+ * @version 1.0.2
  * @author 박상범
  */
 @Service
@@ -72,5 +83,41 @@ public class FollowingProjectService {
         followingProjectRepository.deleteById(followingProject.getFollowingProjectNo());
 
         return FOLLOWING_PROJECT_REMOVE_MESSAGE;
+    }
+
+    /**
+     * findFollowingProjectListA: 관심 프로젝트 목록을 조회합니다.
+     * @param memberNo:  회원 번호
+     * @return  회원이 관심프로젝트로 등록한 프로젝트 목록을 return합니다.
+     * @author 박상범
+     */
+    public List<ProjectDTO> findFollowingProjectList(int memberNo) throws ParseException {
+
+        List<Project> foundFollowingProjectList = projectForFollowingProjectRepository.findFollowingProjectList(memberNo);
+
+        List<ProjectDTO> followingProjectList = new ArrayList<>();
+
+        for(int i = 0; i < foundFollowingProjectList.size(); i++) {
+
+            ProjectDTO project = modelMapper.map(foundFollowingProjectList.get(i), ProjectDTO.class);
+
+            String endDate = foundFollowingProjectList.get(i).getEndDate().replace("-","");
+            String nowDate = java.sql.Date.valueOf(LocalDate.now()).toString().replace("-","");
+
+            String format = "yyyyMMdd";
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.KOREA);
+            Date end = simpleDateFormat.parse(endDate);
+            Date now = simpleDateFormat.parse(nowDate);
+
+            long diffSec = Math.abs(end.getTime() - now.getTime());
+            long diffDay = TimeUnit.DAYS.convert(diffSec, TimeUnit.MILLISECONDS);
+
+            project.setDeadLine(diffDay);
+
+            followingProjectList.add(project);
+        }
+
+        return followingProjectList;
     }
 }
