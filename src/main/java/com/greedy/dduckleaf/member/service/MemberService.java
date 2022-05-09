@@ -271,7 +271,11 @@ public class MemberService{
             return "회원 탈퇴 실패";
         }
 
+        Member member = memberRepository.findById(memberWithdraw.getMemberNo()).get();
+        member.setWithdrawalStatus("Y");
+
         memberWithdrawForMemberRepository.save(modelMapper.map(memberWithdraw, MemberWithdraw.class));
+        memberRepository.save(member);
 
         return "로그인페이지로 돌아갑니다.";
     }
