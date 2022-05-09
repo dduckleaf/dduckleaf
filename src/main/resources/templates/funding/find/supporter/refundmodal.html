@@ -7,8 +7,10 @@
     }
     .modal-content {
       width: 127% !important;
-      height: 300px;
       padding: 20px;
+    }
+    .modal-i {
+      height: 300px !important;
     }
     .refund-title {
       font-size: 2em;
@@ -80,7 +82,7 @@
 <div class="modal fade" id="refundaccount-modify"
      data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <div class="modal-content" style="top: 112px">
+    <div class="modal-content modal-i" style="top: 112px">
       <form action="/funding/regist/refundAccount" method="post">
         <div style="width: 90%;margin-left: 5%">
           <label class="refund-title">환불계좌 수정</label><br>
