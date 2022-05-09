@@ -18,82 +18,81 @@
             <hr width="100%">
         </div>
         <div class="farmer-tab-area-block">
-            <span class="text-subtitle">프로젝트명</span>
+            <span class="text-subtitle" th:text="${ project.projectName }"></span>
         </div>
         <p>
             떡잎 펀드 수수료 10%(VAT별도)를 제외한 금액이<br>
             1차 / 2차에 나누어 지급될 예정입니다.
         </p>
+        <br>
         <table class="mini-table">
             <tr>
                 <th style="padding-left: 5px; width: 30%">달성률</th>
-                <td style="padding-right: 5px;" align="right">%</td>
+                <td style="padding-right: 5px;" align="right" th:text="${ project.achievementRate } + ' ' + '%'"></td>
             </tr>
             <tr>
                 <th style="padding-left: 5px; width: 30%">총 펀딩금</th>
-                <td style="padding-right: 5px;" align="right">원</td>
+                <td style="padding-right: 5px;" align="right" th:text="${ settlementInfo.fundingTotalAmount } + ' ' + '원'"></td>
             </tr>
         </table>
         <p>※ 예상 정산금은 VAT가 계산되지 않은 금액입니다.</p>
         <br>
-        <button class=" basic-btn big-btn btn1" id="objection">이의신청내역</button>
+<!--        <button class=" basic-btn big-btn btn1" id="objection">이의신청내역</button>-->
         <table class="settlement-table">
             <tr>
-                <th style="width: 25%">1차 예상 정산금</th>
-                <th style="width: 25%">1차 정산금 지급예정일</th>
-                <th style="width: 25%">2차 예상 정산금</th>
-                <th style="width: 25%">2차 정산금 지급예정일</th>
-            </tr>
-            <tr>
-                <td>금액
-<!--                    <button class="basic-btn small-btn btn1">이의신청</button>-->
-                </td>
-                <td>날짜</td>
-                <td>금액
-<!--                    <button class="basic-btn small-btn btn1">이의신청</button>-->
-                </td>
-                <td>날짜</td>
-            </tr>
-            <tr>
-                <td> <button class="basic-btn small-btn btn1">이의신청</button></td>
-                <td></td>
-                <td> <button class="basic-btn small-btn btn1">이의신청</button></td>
-                <td></td>
-            </tr>
-        </table>
-        <table class="settlement-table">
-            <tr>
-                <th style="width: 25%">1차 확정 정산금</th>
+                <th style="width: 25%">1차 정산금 (원)</th>
                 <th style="width: 25%">1차 정산금 지급일</th>
-                <th style="width: 25%">2차 확정 정산금</th>
+                <th style="width: 25%">2차 정산금 (원)</th>
                 <th style="width: 25%">2차 정산금 지급일</th>
             </tr>
             <tr>
-<!--                <td>-->
-<!--                    금액<br>-->
-<!--                    <button class="basic-btn small-btn btn1">이의신청</button>-->
-<!--                </td>-->
-<!--                <td>날짜</td>-->
-<!--                <td>금액<br>-->
-<!--                    <button class="basic-btn small-btn btn1">이의신청</button>-->
-<!--                </td>-->
-<!--                <td>날짜</td>-->
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
+                <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentAmount eq null }">
+                    <td>-</td>
+                </th:block>
+                <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentAmount ne null }">
+                    <td th:text="${ settlementPaymentInfos[0].settlementPaymentAmount }"></td>
+                </th:block>
+                <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentDate eq null }">
+                    <td>-</td>
+                </th:block>
+                <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentDate ne null }">
+                    <td th:text="${ settlementPaymentInfos[0].settlementPaymentDate }"></td>
+                </th:block>
+                <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentAmount eq null }">
+                    <td>-</td>
+                </th:block>
+                <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentAmount ne null }">
+                    <td th:text="${ settlementPaymentInfos[1].settlementPaymentAmount }"></td>
+                </th:block>
+                <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentDate eq null }">
+                    <td>-</td>
+                </th:block>
+                <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentDate ne null }">
+                    <td th:text="${ settlementPaymentInfos[1].settlementPaymentDate }"></td>
+                </th:block>
+            </tr>
+            <tr>
+                <td>
+                    <button class="basic-btn small-btn btn1">확인</button>
+                    <button class="basic-btn small-btn btn2">이의신청</button>
+                </td>
+                <td>
+                    <button class="basic-btn small-btn btn1">확인</button>
+                    <button class="basic-btn small-btn btn2">이의신청</button>
+                </td>
+                <td>
+                    <button class="basic-btn small-btn btn1">확인</button>
+                    <button class="basic-btn small-btn btn2">이의신청</button>
+                </td>
+                <td>
+                    <button class="basic-btn small-btn btn1">확인</button>
+                    <button class="basic-btn small-btn btn2">이의신청</button>
+                </td>
             </tr>
         </table>
-
-
-
-
+        <hr>
     </div>
-
     <div th:replace="/common/footer.html"></div>
-
-
-
 </main>
 </body>
 </html>
