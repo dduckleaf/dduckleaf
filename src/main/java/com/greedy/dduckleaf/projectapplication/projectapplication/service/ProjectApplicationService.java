@@ -8,7 +8,6 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -57,9 +56,10 @@ public class ProjectApplicationService {
     private final BankForProjectApplicationRepository bankRepository;
     private final MemberForApplicationRepository memberRepository;
     private final ProjectAttachmentForProjectApplicationRepository projectAttachmentRepository;
+    private final ProjectApplyFeeInfoForProjectApplicationRepository feeInfoRepository;
 
     @Autowired
-    public ProjectApplicationService(ModelMapper modelMapper, RewardRegistInfoRepository rewardRegistInfoRepository, ProjectForApplicationRepository projectRepository, ProjectApplicationInfoRepository projectApplicationInfoRepository, ProjectShippingInfoRepository projectShippingInfoRepository, ProjectBasicInfoRepository projectBasicInfoRepository, FarmerInfoForProjectApplicationRepository farmerInfoRepository, RefundPolicyForProjectApplicationRepository refundPolicyRepository, FarmerFinancialInfoRepository farmerFinancialInfoRepository, ProjectRewardCategoryForProjectApplicationRepository projectRewardCategoryRepository, BankForProjectApplicationRepository bankRepository, MemberForApplicationRepository memberRepository, ProjectAttachmentForProjectApplicationRepository projectAttachmentRepository) {
+    public ProjectApplicationService(ModelMapper modelMapper, RewardRegistInfoRepository rewardRegistInfoRepository, ProjectForApplicationRepository projectRepository, ProjectApplicationInfoRepository projectApplicationInfoRepository, ProjectShippingInfoRepository projectShippingInfoRepository, ProjectBasicInfoRepository projectBasicInfoRepository, FarmerInfoForProjectApplicationRepository farmerInfoRepository, RefundPolicyForProjectApplicationRepository refundPolicyRepository, FarmerFinancialInfoRepository farmerFinancialInfoRepository, ProjectRewardCategoryForProjectApplicationRepository projectRewardCategoryRepository, BankForProjectApplicationRepository bankRepository, MemberForApplicationRepository memberRepository, ProjectAttachmentForProjectApplicationRepository projectAttachmentRepository, ProjectApplyFeeInfoForProjectApplicationRepository feeInfoRepository) {
         this.modelMapper = modelMapper;
         this.rewardRegistInfoRepository = rewardRegistInfoRepository;
         this.projectRepository = projectRepository;
@@ -73,6 +73,7 @@ public class ProjectApplicationService {
         this.bankRepository = bankRepository;
         this.memberRepository = memberRepository;
         this.projectAttachmentRepository = projectAttachmentRepository;
+        this.feeInfoRepository = feeInfoRepository;
     }
 
     /**
@@ -117,6 +118,12 @@ public class ProjectApplicationService {
         farmerInfoRepository.save(farmerInfo(farmerNo));
 
         farmerFinancialInfoRepository.save(farmerFinancialInfo(farmerNo));
+
+        ProjectApplyFeeInfo feeInfo = new ProjectApplyFeeInfo();
+        feeInfo.setFeePolicyRateNo(1);
+        feeInfo.setProjectNo(foundProject.getProjectNo());
+
+        feeInfoRepository.save(feeInfo);
 
     }
 

@@ -64,9 +64,10 @@ public class FundingRegistService {
      */
     public ProjectDTO findProjectFundingInfo(int projectNo) {
 
-        projectRepository.findById(projectNo);
+        Project project = projectRepository.findById(projectNo).get();
+        System.out.println("project = " + project);
 
-        return modelMapper.map((Object) projectRepository.findById(projectNo).get(), (Type) ProjectDTO.class);
+        return modelMapper.map((Object) projectRepository.findById(projectNo).get(), ProjectDTO.class);
     }
 
 

@@ -47,6 +47,8 @@ public class FundingRegistController {
 
         ProjectDTO fundingInfo = service.findProjectFundingInfo(projectNo);
 
+        System.out.println("fundingInfo = " + fundingInfo);
+
         mv.addObject("fundingInfo", fundingInfo);
         mv.setViewName("/funding/regist/fundingamount");
 

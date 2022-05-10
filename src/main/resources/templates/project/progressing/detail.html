@@ -52,7 +52,7 @@
                 <div class="swiper-wrapper">
                   <div class="swiper-slide">
                     <a href="/images/product/large-size/2-1-555x645.jpg" class="single-img gallery-popup">
-                      <img class="img-full" src="/images/project/potato.png" alt="Product Image">
+                      <img th:src="${ '/upload/original/' + attachment.get(0).projectAttachmentSaveName }" alt="Product Image" style="width: 600px; height: 400px;">
                     </a>
                   </div>
                 </div>
@@ -89,14 +89,14 @@
                       <button id="funding" class="basic-btn btn1 alittle-bigbig-btn">펀딩하기</button>
                     </th:block>
 
-                      <button class="basic-btn btn3 alittle-big-btn" id="following-project" th:value="${ followingStatus }">관심
-                        <th:block th:if="${ followingStatus == 'Y' }">
-                            <img src="/images/common/fullheart.png" id="following-img" alt="Product Image">
-                        </th:block>
-                        <th:block th:if="${ followingStatus == 'N' }">
-                            <img src="/images/common/heart.png" id="following-img" alt="Product Image">
-                        </th:block>
-                      </button>
+                    <button class="basic-btn btn3 alittle-big-btn" id="following-project" th:value="${ followingStatus }">관심
+                      <th:block th:if="${ followingStatus == 'Y' }">
+                        <img src="/images/common/fullheart.png" alt="Product Image">
+                      </th:block>
+                      <th:block th:if="${ followingStatus == 'N' }">
+                        <img src="/images/common/heart.png"  alt="Product Image">
+                      </th:block>
+                    </button>
 
                   </div><br>
                   <ul class="quantity-with-btn pb-7">
@@ -163,7 +163,7 @@
                     도서산간에 해당하는 서포터님은 배송 가능 여부를 반드시 파머에게 문의 후 펀딩에 참여해주세요.</p>
                 </div>
                 <div class="product-description-body">
-                  <img class="img-full" src="/images/project/story.png" alt="Product Image">
+                  <img class="img-full" th:src="${'/upload/original/' + attachment.get(2).projectAttachmentSaveName}" alt="Product Image">
                 </div>
               </div>
               <!-- 스토리 End Here -->
@@ -173,7 +173,7 @@
                 <div class="product-review-body">
                   <ul class="user-info-wrap">
                     <ul class="user-info">
-                      <img class="img-full" src="/images/project/farmer.png" alt="Product Image">
+                      <img th:src="${'/upload/original/' + attachment.get(3).projectAttachmentSaveName}" alt="Product Image" style="width: 500px; height: 300px;">
                       <div class="col-lg-1 order-2 pt-10 pt-lg-0"></div>
                       <div class="col-lg-2 order-2 pt-10 pt-lg-0">
                         <p>상호 명</p>
@@ -183,11 +183,11 @@
                         <p>파머 이메일</p>
                       </div>
                       <div class="col-lg-3 order-2 pt-10 pt-lg-0">
-                        <p>감자나라</p>
-                        <p>감자</p>
-                        <p>장감자</p>
-                        <p>010-1234-5678</p>
-                        <p>potatokun@naver.com</p>
+                        <p th:text="${ projectInfo.farmer.businessName }"></p>
+                        <p th:text="${ projectInfo.rewardRegistInfo.rewardName }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerName }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerPhone }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerEmail }"></p>
                       </div>
                     </ul>
                   </ul>
@@ -241,35 +241,7 @@
                 <div class="product-shipping-body">
                   <h4 class="title">농사일지</h4>
                   <!-- Begin 게시판영역 -->
-                  <table class="basic-table" id="project-qna-table" align="center">
-                    <tr>
-                      <th>답변상태</th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>작성일</th>
-                    </tr>
-                    <tr>
-                      <td>미답변</td>
-                      <td>솔향기가 솔솔나나여?</td>
-                      <td>mmmj*****</td>
-                      <td>2022-02-20<br>07:15</td>
-                    </tr>
-                    <tr>
-                      <td>답변완료</td>
-                      <td>비밀글입니다. <img src="/images/board/lock-icon.png" style="width: 20px; height: 20px;"></td>
-                      <td>mmmj*****</td>
-                      <td>2022-02-20<br>07:15</td>
-                    </tr>
-                  </table>
 
-                  <!-- paging -->
-                  <div class="paging-area" align="center">
-                    <button class="paging-btn first"><<</button>
-                    <button class="paging-btn prev"><</button>
-                    <button class="paging-btn">1</button>
-                    <button class="paging-btn next">></button>
-                    <button class="paging-btn last">>></button>
-                  </div>
 
                   <button class="basic-btn medium-btn btn1">문의작성</button>
                   <!-- 게시판영역 End Here -->
@@ -286,97 +258,88 @@
                 </div><br>
                 <div>
                   <h5>이 프로젝트의 정보 및 정책을 반드시 확인하세요.</h5>
-                  <p class="short-desc mb-0">펀딩 취소 안내</p>
-                  <p class="short-desc mb-0">펀딩 결제는 예약 상태로 유지되다가, 펀딩 마감일 다음 영업일 17시에 모두 함께 진행됩니다.</p>
-                  <p class="short-desc mb-0">결제 정보 변경은 결제가 진행되기 전까지 언제나 가능합니다</p>
+                  <p class="short-desc mb-0" th:text="${ projectInfo.refundPolicy.refundPolicyContent }"></p>
                 </div>
               </div>
               <!-- 반환정책 End Here -->
 
               <!-- Begin 공지사항 -->
               <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
-                <div class="product-shipping-body">
-                  <h4 class="title">공지사항</h4>
-                  <!-- Begin 게시판영역 -->
-                  <table class="basic-table" id="project-qna-table" align="center">
-                    <tr>
-                      <th>답변상태</th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>작성일</th>
-                    </tr>
-                    <tr>
-                      <td>미답변</td>
-                      <td>솔향기가 솔솔나나여?</td>
-                      <td>mmmj*****</td>
-                      <td>2022-02-20<br>07:15</td>
-                    </tr>
-                    <tr>
-                      <td>답변완료</td>
-                      <td>비밀글입니다.</td>
-                      <td>mmmj*****</td>
-                      <td>2022-02-20<br>07:15</td>
-                    </tr>
-                  </table>
-
-                  <!-- paging -->
-                  <div class="paging-area" align="center">
-                    <button class="paging-btn first"><<</button>
-                    <button class="paging-btn prev"><</button>
-                    <button class="paging-btn">1</button>
-                    <button class="paging-btn next">></button>
-                    <button class="paging-btn last">>></button>
-                  </div>
-
-                  <button class="basic-btn medium-btn btn1">문의작성</button>
-                  <!-- 게시판영역 End Here -->
-                </div>
-              </div>
-              <!-- 공지사항 End Here -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <hr>
-    <!-- Begin 연관상품 추천 -->
-    <div class="product-slider-area section-space-top-55 section-space-bottom-100">
-      <div class="container">
-        <div class="section-title text-center pb-55">
-          <span class="bottom-title">연관상품 추천</span>
-        </div>
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="swiper-slider-holder swiper-arrow">
-              <div class="swiper-container product-slider border-issue">
-                <div class="swiper-wrapper">
-                  <div class="swiper-slide">
-                    <div class="product-item">
-                      <div class="product-img img-zoom-effect">
-                        <a href="single-product.html">
-                          <img class="img-full mainimg" src="/images/project/potato.png" alt="Product Images">
-                        </a>
-                      </div>
-                      <div class="product-content">
-                        <a class="product-name" href="single-product.html">산지직송 짭짤이 토마토</a>
-                        <div class="price-box pb-1">
-                          <span class="new-price">짭짤 토메이로</span>
-                        </div>
-                        <progress class="relatedProduct" value="55" max="100"></progress>
-                        <a class="progressbar">55%</a><a class="progressbar1">22일 남음</a>
+                <div class="title-div">
+                      <span class="text-title">
+                        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">공지사항</span>
+                  <hr width="100%">
+                  <div class="notice-wrap">
+                    <div class="cont-div">
+                      <div id="projectNoticeList">
+                        <table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
+                          <tr>
+                            <th>번호</th>
+                            <th>제목</th>
+                            <th>작성일</th>
+                            <th>조회수</th>
+                          </tr>
+                          <tr th:each="projectNotice : ${ projectNotice }" class="noticeList" id="noticeList">
+                            <td th:text="${ projectNotice.projectNoticeNo }"></td>
+                            <td th:text="${ projectNotice.projectNoticeTitle }"></td>
+                            <td th:text="${ projectNotice.registDate }"></td>
+                            <td th:text="${ projectNotice.projectNoticeCount }"></td>
+                          </tr>
+                        </table>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <!-- 게시판영역 End Here -->
           </div>
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
+        <!-- 공지사항 End Here -->
       </div>
     </div>
-    <div th:replace="@{ /common/footer.html }"></div>
+</div>
+</div>
+</div>
+<hr>
+<!-- Begin 연관상품 추천 -->
+<div class="product-slider-area section-space-top-55 section-space-bottom-100">
+  <div class="container">
+    <div class="section-title text-center pb-55">
+      <span class="bottom-title">연관상품 추천</span>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="swiper-slider-holder swiper-arrow">
+          <div class="swiper-container product-slider border-issue">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <div class="product-item">
+                  <div class="product-img img-zoom-effect">
+                    <a href="single-product.html">
+                      <img class="img-full mainimg" src="/images/project/potato.png" alt="Product Images">
+                    </a>
+                  </div>
+                  <div class="product-content">
+                    <a class="product-name" href="single-product.html">산지직송 짭짤이 토마토</a>
+                    <div class="price-box pb-1">
+                      <span class="new-price">짭짤 토메이로</span>
+                    </div>
+                    <progress class="relatedProduct" value="55" max="100"></progress>
+                    <a class="progressbar">55%</a><a class="progressbar1">22일 남음</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+</div>
+<div th:replace="@{ /common/footer.html }"></div>
 </div>
 </div>
 </div>
@@ -405,12 +368,12 @@
   const $cannot = document.getElementById("cannot-funding");
   if($cannot) {
     $cannot.onclick = async function() {
-       Swal.fire('로그인이 필요한 서비스입니다.')
+      Swal.fire('로그인이 필요한 서비스입니다.')
       $cannot.location.href = "/member/login";
       alert(1);
     }
   }
-  
+
   /* 프로젝트 번호로 펀딩 요청 */
   const $funding = document.getElementById("funding");
   if($funding) {
@@ -443,82 +406,82 @@
       /* 로그인한 회원의 접근 */
       if($loginMember != null) {
         fetch("/report/categories")
-        .then(response => response.json())
-        .then(response => {
-          const $category = $(".appendArea");
-          $category.html("");
+                .then(response => response.json())
+                .then(response => {
+                  const $category = $(".appendArea");
+                  $category.html("");
 
-          for (let i in response) {
-            /* element 생성하여 모달 영역 안에 append */
-            const $div = $("<div class='block'>");
-            const $span = $("<span style='font-weight: bold'>");
-            const $p = $("<p>");
-            const $hidden = $("<input type='hidden' name='reportCategoryNo'>");
-            const $button = $("<input name='selectCategory' type='button' class='basic-btn small-btn btn3 popup-btn' value='선택'>");
+                  for (let i in response) {
+                    /* element 생성하여 모달 영역 안에 append */
+                    const $div = $("<div class='block'>");
+                    const $span = $("<span style='font-weight: bold'>");
+                    const $p = $("<p>");
+                    const $hidden = $("<input type='hidden' name='reportCategoryNo'>");
+                    const $button = $("<input name='selectCategory' type='button' class='basic-btn small-btn btn3 popup-btn' value='선택'>");
 
-            $span.text(response[i].reportCategoryName);
-            $p.text(response[i].reportCategoryContent);
-            $hidden.val(response[i].reportCategoryNo);
+                    $span.text(response[i].reportCategoryName);
+                    $p.text(response[i].reportCategoryContent);
+                    $hidden.val(response[i].reportCategoryNo);
 
-            $div.append($span);
-            $div.append($p);
-            $div.append($hidden);
-            $div.append($button);
+                    $div.append($span);
+                    $div.append($p);
+                    $div.append($hidden);
+                    $div.append($button);
 
-            $category.append($div);
-          }
-          document.querySelector('.focusout').style.display = 'block';
+                    $category.append($div);
+                  }
+                  document.querySelector('.focusout').style.display = 'block';
 
-        /* 신고유형 선택 시 신고서 작성화면 표시 */
-        var selectCategory = document.getElementsByName("selectCategory");
+                  /* 신고유형 선택 시 신고서 작성화면 표시 */
+                  var selectCategory = document.getElementsByName("selectCategory");
 
-        for(let i = 0; i < selectCategory.length; i++) {
-          if(selectCategory[i]) {
+                  for(let i = 0; i < selectCategory.length; i++) {
+                    if(selectCategory[i]) {
 
-            selectCategory[i].onclick = function() {
-              document.querySelector('.appendArea').style.display = 'none';
-              document.querySelector('.registArea').style.display = 'block';
+                      selectCategory[i].onclick = function() {
+                        document.querySelector('.appendArea').style.display = 'none';
+                        document.querySelector('.registArea').style.display = 'block';
 
-              $("[name=projectReportCategoryNo]").val(response[i].reportCategoryNo);
-              $("[name=projectNo]").val('[[${ project.projectNo }]]');
-              $("[name=reportCategoryName]").val(response[i].reportCategoryName);
+                        $("[name=projectReportCategoryNo]").val(response[i].reportCategoryNo);
+                        $("[name=projectNo]").val('[[${ project.projectNo }]]');
+                        $("[name=reportCategoryName]").val(response[i].reportCategoryName);
 
-              fetch("/report/policies")
-              .then(response => response.json())
-              .then(response => {
-                const $policyArea = $(".policyArea");
-                $policyArea.html("");
+                        fetch("/report/policies")
+                                .then(response => response.json())
+                                .then(response => {
+                                  const $policyArea = $(".policyArea");
+                                  $policyArea.html("");
 
-                const $policyName = $("<p class='policyContent'>");
-                $policyName.text(response[0].policy.policyName);
+                                  const $policyName = $("<p class='policyContent'>");
+                                  $policyName.text(response[0].policy.policyName);
 
-                for (let i in response) {
-                  /* element 생성하여 모달 영역 안에 append */
-                  const $title = $("<span class='policyContent'>");
-                  const $detail = $("<span class='policyContent'>");
-                  const colon = $("<span class='policyContent'>");
-                  const nextLine = $("<br>");
+                                  for (let i in response) {
+                                    /* element 생성하여 모달 영역 안에 append */
+                                    const $title = $("<span class='policyContent'>");
+                                    const $detail = $("<span class='policyContent'>");
+                                    const colon = $("<span class='policyContent'>");
+                                    const nextLine = $("<br>");
 
-                  $title.text(response[i].policyContentTitle);
-                  $detail.text(response[i].policyContentDetailContent);
-                  colon.text(": ");
+                                    $title.text(response[i].policyContentTitle);
+                                    $detail.text(response[i].policyContentDetailContent);
+                                    colon.text(": ");
 
-                  $policyArea.append($title);
-                  $policyArea.append(colon);
-                  $policyArea.append($detail);
-                  $policyArea.append(nextLine);
-                }
-              })
-              .catch(err => {
-                console.log(err);
-              });
-              }
-            }
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+                                    $policyArea.append($title);
+                                    $policyArea.append(colon);
+                                    $policyArea.append($detail);
+                                    $policyArea.append(nextLine);
+                                  }
+                                })
+                                .catch(err => {
+                                  console.log(err);
+                                });
+                      }
+                    }
+                  }
+                })
+                .catch(err => {
+                  console.log(err);
+                });
       }
     }
   }
@@ -547,58 +510,58 @@
       if($followingStatus == "N") {
 
         fetch("/following/regist", projectNo)
-          .then(response => response.json())
-          .then(response => {
-            if(response == "관심프로젝트로 등록되었습니다."){
+                .then(response => response.json())
+                .then(response => {
+                  if(response == "관심 프로젝트로 등록되었습니다."){
 
-              document.getElementById("following-img").src = "/images/common/fullheart.png";
-              document.getElementById("following-project").value = "Y";
-              Swal.fire({
-                title: response,
-                showCancelButton: true,
-                showConfirmButton: false,
-                cancelButtonText: '확인',
-                allowEnterKey: false,
-                confirmButtonWidth: '100px',
-                customClass: {
-                  cancelButton: 'savecancel',
-                  popup: 'savepopup'
-                },
-                buttonsStyling: false,
-              });
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          })
+                    document.getElementById("following-img").src = "/images/common/fullheart.png";
+                    document.getElementById("following-project").value = "Y";
+                    Swal.fire({
+                      title: response,
+                      showCancelButton: true,
+                      showConfirmButton: false,
+                      cancelButtonText: '확인',
+                      allowEnterKey: false,
+                      confirmButtonWidth: '100px',
+                      customClass: {
+                        cancelButton: 'savecancel',
+                        popup: 'savepopup'
+                      },
+                      buttonsStyling: false,
+                    });
+                  }
+                })
+                .catch(error => {
+                  console.log(error);
+                })
       }
       if($followingStatus == "Y") {
 
         fetch("/following/remove", projectNo)
-          .then(response => response.json())
-          .then(response => {
-            if(response == "관심 프로젝트에서 제외되었습니다.") {
+                .then(response => response.json())
+                .then(response => {
+                  if(response == "관심 프로젝트에서 제외되었습니다.") {
 
-              document.getElementById("following-img").src = "/images/common/heart.png";
-              document.getElementById("following-project").value = "N";
-              Swal.fire({
-                title: response,
-                showCancelButton: true,
-                showConfirmButton: false,
-                cancelButtonText: '확인',
-                allowEnterKey: false,
-                confirmButtonWidth: '100px',
-                customClass: {
-                  cancelButton: 'savecancel',
-                  popup: 'savepopup'
-                },
-                buttonsStyling: false,
-              });
-            }
-          })
-        .catch(error => {
-          console.log(error);
-        })
+                    document.getElementById("following-img").src = "/images/common/heart.png";
+                    document.getElementById("following-project").value = "N";
+                    Swal.fire({
+                      title: response,
+                      showCancelButton: true,
+                      showConfirmButton: false,
+                      cancelButtonText: '확인',
+                      allowEnterKey: false,
+                      confirmButtonWidth: '100px',
+                      customClass: {
+                        cancelButton: 'savecancel',
+                        popup: 'savepopup'
+                      },
+                      buttonsStyling: false,
+                    });
+                  }
+                })
+                .catch(error => {
+                  console.log(error);
+                })
       }
     }
   }
