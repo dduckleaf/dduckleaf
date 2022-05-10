@@ -9,7 +9,7 @@
 <main style="width: 1920px">
     <div th:replace="/common/menubar.html"></div>
     <div class="mypage" th:replace="/common/endproject.html"></div>
-    <div class="tab-body-area" style="border: 1px solid red !important;">
+    <div class="tab-body-area">
         <div class="title-div">
             <span class="text-title">
                 <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
@@ -82,21 +82,26 @@
             </th:block>
             <tr>
                 <td>
-                    <button class="basic-btn small-btn btn1"
-                           onclick="confirm('1차 정산금을 확정하시겠습니까?\n확정 후에는 변경할 수 없습니다.');">확인</button>
-                    <button class="basic-btn small-btn btn2" onclick="firstPayAmountObjection();">이의신청</button>
+<!--                    <button class="basic-btn small-btn btn1"-->
+<!--                           onclick="confirm('1차 정산금을 확정하시겠습니까?\n확정 후에는 변경할 수 없습니다.');">확인</button>-->
+                    <button class="basic-btn small-btn btn1" id="firstPayAmountCheck">확인</button>
+                    <input type="hidden" id="firstPayAmount" value="firstPayAmount">
+                    <button class="basic-btn small-btn btn2" id="firstPayAmountObjection">이의신청</button>
                 </td>
                 <td>
-                    <button class="basic-btn small-btn btn1" onclick="firstPayDateCheck();">확인</button>
-                    <button class="basic-btn small-btn btn2" onclick="firstPayDateObjection();">이의신청</button>
+                    <button class="basic-btn small-btn btn1" id="firstPayDateCheck">확인</button>
+                    <input type="hidden" id="firstPayDate" value="firstPayDate">
+                    <button class="basic-btn small-btn btn2" id="firstPayDateObjection">이의신청</button>
                 </td>
                 <td>
-                    <button class="basic-btn small-btn btn1" onclick="SecondPayAmountCheck();">확인</button>
-                    <button class="basic-btn small-btn btn2" onclick="SecondPayAmountObjection();">이의신청</button>
+                    <button class="basic-btn small-btn btn1" id="SecondPayAmountCheck">확인</button>
+                    <input type="hidden" id="SecondPayAmount" value="SecondPayAmount">
+                    <button class="basic-btn small-btn btn2" id="SecondPayAmountObjection">이의신청</button>
                 </td>
                 <td>
-                    <button class="basic-btn small-btn btn1" onclick="SecondPayDateCheck();">확인</button>
-                    <button class="basic-btn small-btn btn2" onclick="SecondPayDateObjection();">이의신청</button>
+                    <button class="basic-btn small-btn btn1" id="SecondPayDateCheck">확인</button>
+                    <input type="hidden" id="SecondPayDate" value="SecondPayDate">
+                    <button class="basic-btn small-btn btn2" id="SecondPayDateObjection">이의신청</button>
                 </td>
             </tr>
         </table>
@@ -105,39 +110,89 @@
     <div th:replace="/common/footer.html"></div>
 </main>
 </body>
-<!--<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
+    /* parameter로 보낼 데이터 변수로 선언 */
+    const firstPayAmount = $("#firstPayAmount");
+    const firstPayDate = $("#firstPayDate");
+    const SecondPayAmount = $("#SecondPayAmount");
+    const SecondPayDate = $("#SecondPayDate");
+
+    const firstPayAmountCheck = $("#firstPayAmountCheck");
+    const firstPayAmountObjection = $("#firstPayAmountObjection");
+    const firstPayDateCheck = $("#firstPayDateCheck");
+    const firstPayDateObjection = $("#firstPayDateObjection");
+    const SecondPayAmountCheck = $("#SecondPayAmountCheck");
+    const SecondPayAmountObjection = $("#SecondPayAmountObjection");
+    const SecondPayDateCheck = $("#SecondPayDateCheck");
+    const SecondPayDateObjection = $("#SecondPayDateObjection");
+
+    /* 1차 정산금 확인 접수 */
+    if(firstPayAmountCheck) {
+        firstPayAmountCheck.onclick = function() {
+            const result = confirm('1차 정산금을 확정하시겠습니까?\n확정 후에는 변경할 수 없습니다.');
+
+            if(result == true) {
+                location.href = "/settlement/check/" + firstPayAmount.val();
+            } else if(result == false) {
+                return false;
+            }
+        }
+    }
+
+    /* 2차 정산금 확인 접수 */
+    if(SecondPayAmountCheck) {
+        SecondPayAmountCheck.onclick = function() {
+            const result = confirm('2차 정산금을 확정하시겠습니까?\n확정 후에는 변경할 수 없습니다.');
+
+            if(result == true) {
+                location.href = "/settlement/check/" + SecondPayAmount.val();
+            } else if(result == false) {
+                return false;
+            }
+        }
+    }
+
+    /* 1차 정산금 지급 확인 접수 */
+    if(firstPayAmountCheck) {
+        firstPayAmountCheck.onclick = function() {
+            const result = confirm('1차 정산금을 확정하시겠습니까?\n확정 후에는 변경할 수 없습니다.');
+
+            if(result == true) {
+                location.href = "/settlement/check/" + firstPayAmount.val();
+            } else if(result == false) {
+                return false;
+            }
+        }
+    }
+
+    /* 2차 정산금 지급 확인 접수 */
+    if(SecondPayDateCheck) {
+        SecondPayDateCheck.onclick = function() {
+            const result = confirm('1차 정산금을 확정하시겠습니까?\n확정 후에는 변경할 수 없습니다.');
+
+            if(result == true) {
+                location.href = "/settlement/check/" + SecondPayDateCheck.val();
+            } else if(result == false) {
+                return false;
+            }
+        }
+    }
+
+
+
+
+
+
+
     // window.onload = function () {
     //     /* 1차 정산금 확인 */
-    //     function firstPayAmountCheck() {
-    //         // Swal.fire({
-    //         //     title: "1차 정산금을 확정하시겠습니까>?",
-    //         //     confirmButtonText: "확인",
-    //         //     allowEnterKey: false,
-    //         //     customClass: {
-    //         //         title: "swal-content",
-    //         //         confirmButton: "swal-btn",
-    //         //         popup: "swal-area"
-    //         //     }
-    //         // })
-    //         Swal.fire({
-    //             title: '"1차 정산금을 확정하시겠습니까?',
-    //             text: "확정 후에는 변경할 수 없습니다.",
-    //             icon: 'warning',
-    //             showCancelButton: true,
-    //             confirmButtonColor: '#BAC34E',
-    //             cancelButtonColor: '#C2423A',
-    //             confirmButtonText: '확인',
-    //             cancelButtonText: '취소',
-    //         }).then((result) => {
-    //             if (result.isConfirmed) {
-    //                 Swal.fire(
-    //                     '정산금 확인이 접수되었습니다.',
-    //                     '정산금이 7 영업일 이내에 지급될 예정입니다.',
-    //                     'success'
-    //                 )
-    //             }
-    //         })
+    //     function objectFirstPayAmount() {
+    //         if(confirm('1차 정산금을 수령하셨습니까?\n확인 후에는 변경할 수 없습니다.')) {
+    //            location.href = "/settlement/check/firstPayment";
+    //         } else {
+    //             return false;
+    //         }
     //     }
     // }
 </script>
