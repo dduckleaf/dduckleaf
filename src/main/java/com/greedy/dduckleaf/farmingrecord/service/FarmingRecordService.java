@@ -22,10 +22,11 @@ import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
  * History
  * 2022-05-07 (차화응) 처음 작성 / 농사일지 목록조회 메소드 작성
  * 2022-05-08 (차화응) 농사일지 상세조회 메소드 작성
- * 2022-05-09 (차화응) 농사일지 작성하기 메소드 작성
+ * 2022-05-09 (차화응) 농사일지 작성하기 메소드 작성 / 농사일지 수정하기 메소드 작성
+ * 2022-05-10 (차화응) 농사일지 삭제하기 메소드 작성
  * </pre>
  *
- * @version 1.0.3
+ * @version 1.0.5
  * @author 차화응
  */
 @Service
@@ -108,4 +109,15 @@ public class FarmingRecordService {
         foundFarmingRecord.setFarmingRecordContent(updateFarmingRecord.getFarmingRecordContent());
     }
 
+    /**
+     * removeFarmingRecord : 농사일지를 삭제합니다.
+     * @param farmingRecordNo : 삭제할 농사일지 번호
+     *
+     * @author 차화응
+     */
+    @Transactional
+    public void removeFarmingRecord(int farmingRecordNo) {
+
+        farmingRecordRepository.deleteById(farmingRecordNo);
+    }
 }

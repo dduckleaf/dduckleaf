@@ -5,8 +5,6 @@ import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.farmingrecord.dto.FarmingRecordDTO;
 import com.greedy.dduckleaf.farmingrecord.service.FarmingRecordService;
-import com.greedy.dduckleaf.notice.dto.NoticeCategoryDTO;
-import com.greedy.dduckleaf.notice.dto.NoticeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,8 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.List;
-
 /**
  * <pre>
  * Class : FarmingRecordController
@@ -29,10 +25,11 @@ import java.util.List;
  * 2022-05-06 (차화응) 처음 작성
  * 2022-05-07 (차화응) 농사일지 목록조회 메소드 작성
  * 2022-05-08 (차화응) 농사일지 상세조회 메소드 작성
- * 2022-05-09 (차화응) 농사일지 작성하기 메소드 작성
+ * 2022-05-09 (차화응) 농사일지 작성하기 메소드 작성 / 농사일지 수정하기 메소드 작성
+ * 2022-05-10 (차화응) 농사일지 삭제하기 메소드 작성
  *
  * </pre>
- * @version 1.0.3
+ * @version 1.0.5
  * @author 차화응
  */
 @Controller
@@ -156,6 +153,24 @@ public class FarmingRecordController {
     public ModelAndView modifyFarmingRecord(ModelAndView mv, FarmingRecordDTO updateFarmingRecord) {
 
         farmingRecordService.modifyFarmingRecord(updateFarmingRecord);
+
+        mv.setViewName("redirect:/farmingrecord/list");
+
+        return mv;
+    }
+
+    /**
+     * removeFarmingRecord : 농사일지를 삭제합니다.
+     * @param mv : 요청 경로를 담는 객체
+     * @param farmingRecordNo : 삭제할 농사일지 번호
+     * @return mv : 뷰로 전달할 데이터와 경로를 담는 객체
+     *
+     * @author 차화응
+     */
+    @GetMapping("/remove/{farmingRecordNo}")
+    public ModelAndView removeFarmingRecord(ModelAndView mv, @PathVariable int farmingRecordNo) {
+
+        farmingRecordService.removeFarmingRecord(farmingRecordNo);
 
         mv.setViewName("redirect:/farmingrecord/list");
 
