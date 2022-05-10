@@ -3,11 +3,10 @@ package com.greedy.dduckleaf.project.service;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.project.dto.*;
 import com.greedy.dduckleaf.project.entity.FollowingProject;
+import com.greedy.dduckleaf.project.entity.ProjectAttachment;
 import com.greedy.dduckleaf.project.repository.*;
-import com.greedy.dduckleaf.project.entity.ProjectNotice;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -38,15 +37,17 @@ public class ProjectService {
     private final FollowingProjectForProjectRepository followingProjectForProjectRepository;
     private final ProjectApplicationInfoForProjectDetailRepository projectApplicationInfoRepository;
     private final ProjectNoticeForProjectDetailRepository projectNoticeRepository;
+    private final ProjectAttachmentForProjectDetailRepository projectAttachmentRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ProjectService(ProjectRepository projectRepository, FundingInfoForProjectDetailRepository fundingInfoRepository, FollowingProjectForProjectRepository followingProjectForProjectRepository, ProjectApplicationInfoForProjectDetailRepository projectApplicationInfoRepository, ProjectNoticeForProjectDetailRepository projectNoticeRepository, ModelMapper modelMapper) {
+    public ProjectService(ProjectRepository projectRepository, FundingInfoForProjectDetailRepository fundingInfoRepository, FollowingProjectForProjectRepository followingProjectForProjectRepository, ProjectApplicationInfoForProjectDetailRepository projectApplicationInfoRepository, ProjectNoticeForProjectDetailRepository projectNoticeRepository, ProjectAttachmentForProjectDetailRepository projectAttachmentRepository, ModelMapper modelMapper) {
         this.projectRepository = projectRepository;
         this.fundingInfoRepository = fundingInfoRepository;
         this.followingProjectForProjectRepository = followingProjectForProjectRepository;
         this.projectApplicationInfoRepository = projectApplicationInfoRepository;
         this.projectNoticeRepository = projectNoticeRepository;
+        this.projectAttachmentRepository = projectAttachmentRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -75,6 +76,9 @@ public class ProjectService {
         List<ProjectNoticeDTO> projectNoticeList = projectNoticeRepository.findAllByProjectNoticeStatusAndProjectNo("Y", projectNo, pageable)
                                     .stream().map(projectNotice -> modelMapper.map(projectNotice, ProjectNoticeDTO.class)).collect(Collectors.toList());
 
+        List<ProjectAttachmentDTO> attachmentList = projectAttachmentRepository.findAllByProject_ProjectNo(projectNo)
+                                    .stream().map(projectAttachment -> modelMapper.map(projectAttachment, ProjectAttachmentDTO.class)).collect(Collectors.toList());
+
         if(user != null) {
 
             List<FollowingProject> followingProjectList = followingProjectForProjectRepository.findByMemberNoAndProjectNo(user.getMemberNo(), projectNo);
@@ -91,6 +95,6 @@ public class ProjectService {
             followingStatus = "N";
         }
 
-        return new ProjectDetailDTO(project, fundingList, followingStatus, projectApplicationInfo, projectNoticeList);
+        return new ProjectDetailDTO(project, fundingList, followingStatus, projectApplicationInfo, projectNoticeList, attachmentList);
     }
 }

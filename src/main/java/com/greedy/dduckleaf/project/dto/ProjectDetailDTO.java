@@ -16,4 +16,5 @@ public class ProjectDetailDTO {
     private String followingStatus;
     private ProjectApplicationInfoDTO projectApplicationInfo;
     private List<ProjectNoticeDTO> projectNotice;
+    private List<ProjectAttachmentDTO> attachmentList;
 }
