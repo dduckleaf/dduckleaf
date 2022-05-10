@@ -12,9 +12,8 @@ import lombok.*;
 @Table(name = "TBL_PROJECT_SHIPPING_FEE")
 public class ProjectShippingFee {
 
-    @Id
+
     @Column(name = "SHIPPING_FEE_NO")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int shppingFeeNo;
 
 
@@ -28,7 +27,7 @@ public class ProjectShippingFee {
     @Column(name = "EXTRA_SHIPPING_FEE_INFO")
     private String extraShippingFeeInfo;
 
-
+    @Id
     @Column(name = "PROJECT_NO")
     private int projectNo;
 

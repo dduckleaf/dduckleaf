@@ -16,12 +16,12 @@ import java.time.LocalDate;
 @Setter
 @Getter
 @Entity(name = "ProjectShippingInfoForProjectApplication")
-@Table(name = "TBL_PROJECT_SHIPPING_INFO")
+@Table(name = "TBL_PROJECT_SHIPPING_FEE")
 @DynamicInsert
 public class ProjectShippingInfo {
 
     @Id
-    @Column(name = "PROJECT_SHIPPING_INFO_NO")
+    @Column(name = "SHIPPING_FEE_NO")
     private int projectShippingInfoNo;
 
     @Column(name = "SHIPPING_FEE")
