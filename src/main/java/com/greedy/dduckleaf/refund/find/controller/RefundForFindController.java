@@ -6,6 +6,7 @@ import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.refund.find.dto.ProjectForAdminListDTO;
 import com.greedy.dduckleaf.refund.find.dto.ProjectForAdminRefundingListDTO;
 import com.greedy.dduckleaf.refund.find.dto.RefundingDTO;
+import com.greedy.dduckleaf.refund.find.dto.RefundingForAdminListDTO;
 import com.greedy.dduckleaf.refund.find.service.RefundingForFindService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -115,9 +116,9 @@ public class RefundForFindController {
     public ModelAndView adminFindRefundList(ModelAndView mv, @PathVariable int projectNo,
                                             @PageableDefault(size=10, sort="projectNo", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        Page<ProjectForAdminListDTO> projects = service.findAdminListByProject(projectNo, pageable);
+        Page<RefundingForAdminListDTO> refundings = service.findAdminRefundingListByProject(projectNo, pageable);
 
-        mv.addObject("projects", projects);
+        mv.addObject("projects", refundings);
         mv.setViewName("/refund/find/admin/refundlistbyproject");
         return mv;
     }

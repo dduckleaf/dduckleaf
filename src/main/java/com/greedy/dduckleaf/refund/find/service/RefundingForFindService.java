@@ -3,6 +3,7 @@ package com.greedy.dduckleaf.refund.find.service;
 import com.greedy.dduckleaf.refund.find.dto.ProjectForAdminListDTO;
 import com.greedy.dduckleaf.refund.find.dto.ProjectForAdminRefundingListDTO;
 import com.greedy.dduckleaf.refund.find.dto.RefundingDTO;
+import com.greedy.dduckleaf.refund.find.dto.RefundingForAdminListDTO;
 import com.greedy.dduckleaf.refund.find.entity.FundingCount;
 import com.greedy.dduckleaf.refund.find.entity.Project;
 import com.greedy.dduckleaf.refund.find.entity.ProjectForAdminList;
@@ -119,6 +120,25 @@ public class RefundingForFindService {
         });
 
         return projectDTOs;
+    }
+
+    public Page<RefundingForAdminListDTO> findAdminRefundingListByProject(int projectNo, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(),
+                Sort.by("refundInfoNo").descending());
+
+        Page<Refunding> refundings = refundingRepo.findByProject_projectNo(projectNo, pageable);
+
+        Page<RefundingForAdminListDTO> refundingDTOs = refundings.map(refunding -> {
+            RefundingForAdminListDTO refundingDTO = mapper.map(refunding, RefundingForAdminListDTO.class);
+
+            refundingDTO.setProjectNo(refunding.getProject().getProjectNo());
+            refundingDTO.setRefundStatus(refunding.getRefundingStatus().getRefundingStatusName());
+
+            return refundingDTO;
+        });
+
+       return refundingDTOs;
     }
 }
 
