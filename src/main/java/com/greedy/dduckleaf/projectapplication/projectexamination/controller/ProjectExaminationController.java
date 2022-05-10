@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 /**
  * <pre>
  * Class: ProjectExaminationController
@@ -134,6 +136,9 @@ public class ProjectExaminationController {
 
         ProjectApplicationInfoDTO detail = projectExaminationService.findProjectApplicationDetail(projectApplicationNo);
 
+        ProjectAttachmentDTO attachment = projectExaminationService.findIntroAttachmentByProjectNo(detail.getProject().getProjectNo());
+
+        mv.addObject("attachment", attachment);
         mv.addObject("detail", detail);
         mv.setViewName("project/manage/application/basicreq");
 
@@ -263,6 +268,9 @@ public class ProjectExaminationController {
 
         FarmerFinancialInfoDTO farmer = projectExaminationService.findFarmerFinancialInfo(detail.getFarmer().getMemberNo());
 
+        List<ProjectAttachmentDTO> attachmentList = projectExaminationService.findFarmerFinancialInfoAttachment(detail.getProject().getProjectNo());
+
+        mv.addObject("attachment", attachmentList);
         mv.addObject("farmer", farmer);
         mv.addObject("detail", detail);
         mv.setViewName("project/manage/application/representative");

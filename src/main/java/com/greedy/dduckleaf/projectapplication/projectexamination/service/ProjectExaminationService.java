@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -95,6 +97,19 @@ public class ProjectExaminationService {
     }
 
     /**
+     * findIntroAttachmentByProjectNo: 프로젝트 신청 시 업로드한 기본요건 첨부파일 정보를 조회합니다.
+     * @param projectNo: 프로젝트 번호
+     * @return 프로젝트 신청 첨부파일 정보
+     * @author 박휘림
+     */
+    public ProjectAttachmentDTO findIntroAttachmentByProjectNo(int projectNo) {
+
+        ProjectAttachment attachment = attachmentRepository.findIntroAttachmentByProjectNo(projectNo);
+
+        return modelMapper.map(attachment, ProjectAttachmentDTO.class);
+    }
+
+    /**
      * findBasicInfoAttachmentByProjectNo: 프로젝트 신청 시 업로드한 기본정보 첨부파일 정보를 조회합니다.
      * @param projectNo: 프로젝트 번호
      * @return 프로젝트 신청 첨부파일 정보
@@ -146,6 +161,24 @@ public class ProjectExaminationService {
         return  modelMapper.map(farmer, FarmerFinancialInfoDTO.class);
     }
 
+    /**
+     * findFarmerInfoAttachment: 프로젝트 신청 시 업로드한 금융정보 첨부파일 정보를 조회합니다.
+     * @param projectNo: 프로젝트 번호
+     * @return 프로젝트 신청 첨부파일 리스트
+     * @author 박휘림
+     */
+    public List<ProjectAttachmentDTO> findFarmerFinancialInfoAttachment(int projectNo) {
+
+        return attachmentRepository.findFarmerFinancialInfoAttachment(projectNo).stream()
+                .map(projectAttachment -> modelMapper.map(projectAttachment, ProjectAttachmentDTO.class)).collect(Collectors.toList());
+    }
+
+    /**
+     * approveProject: 프로젝트를 승인합니다.
+     * @param projectApplicationNo: 프로젝트 신청 번호
+     * @param adminNo: 관리자 번호
+     * @author 박휘림
+     */
     @Transactional
     public void approveProject(int projectApplicationNo, int adminNo) {
 
@@ -170,6 +203,13 @@ public class ProjectExaminationService {
         projectExamineHistoryRepository.save(projectExamineHistory);
     }
 
+    /**
+     * rejectProject: 프로젝트를 반려합니다.
+     * @param projectApplicationNo: 프로젝트 신청 번호
+     * @param adminNo: 관리자 번호
+     * @param history: 프로젝트 심사내역
+     * @author 박휘림
+     */
     @Transactional
     public void rejectProject(int projectApplicationNo, int adminNo, ProjectExamineHistoryDTO history) {
 
