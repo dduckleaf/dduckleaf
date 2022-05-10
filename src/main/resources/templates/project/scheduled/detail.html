@@ -34,7 +34,7 @@
 
 <body>
 <div class="main-wrapper">
-  <div th:replace="@{ /common/menubar.html }"></div>
+  <div th:replace="@{/common/menubar.html}"></div>
   <!-- Begin Main Content Area  -->
   <main class="main-content">
     <div class="single-product-area section-space-top-100">
@@ -46,8 +46,7 @@
                 <div class="swiper-wrapper">
                   <div class="swiper-slide">
                     <a href="/images/product/large-size/2-1-555x645.jpg" class="single-img gallery-popup">
-<!--                      <img class="img-full" src="/images/product/large-size/potato.png" alt="Product Image">-->
-                      <img class="img-full" th:src="${  }" alt="Product Image">
+                      <img th:src="${ '/upload/original/' + attachment.get(0).projectAttachmentSaveName }" alt="Product Image" style="width: 600px; height: 400px;">
                     </a>
                   </div>
                 </div>
@@ -73,16 +72,16 @@
                       <span class="short-desc">파머 정보</span>
                     </div>
                     <div class="farmerCorp">
-                      <strong>감자나라</strong>
+                      <strong th:text="${ projectInfo.farmer.businessName }"></strong>
                     </div>
                     <div class="farmerCorp">
-                      <span class="info">오픈 예정일 </span><a> 3/30(수) 14시 00분</a>
+                      <span class="info">오픈 예정일 </span><a th:text="${ project.openDate }">/a>
                     </div>
                   </div><br>
                   <ul class="quantity-with-btn pb-7">
                     <li class="add-to-cart">
-                      <button class="basic-btn btn3 fill-white-btn rounded-1">프로젝트에 문제를 발견하셨나요? 신고하기
-                        <img src="assets/images/header\icon/rightarrow.png" alt="Product Image">
+                      <button class="basic-btn btn3 fill-white-btn rounded-1" id="registReport">프로젝트에 문제를 발견하셨나요? 신고하기
+                        <img src="/images/common/rightarrow.png" alt="Product Image">
                       </button>
                     </li>
                   </ul>
@@ -139,7 +138,7 @@
                     도서산간에 해당하는 서포터님은 배송 가능 여부를 반드시 파머에게 문의 후 펀딩에 참여해주세요.</p>
                 </div>
                 <div class="product-description-body">
-                  <img class="img-full" src="assets/images/product/large-size/story.png" alt="Product Image">
+                  <img class="img-full" th:src="${'/upload/original/' + attachment.get(2).projectAttachmentSaveName}" alt="Product Image">
                 </div>
               </div>
               <!-- 스토리 End Here -->
@@ -149,7 +148,7 @@
                 <div class="product-review-body">
                   <ul class="user-info-wrap">
                     <ul class="user-info">
-                      <img class="img-full" src="assets/images/header\icon/farmer.png" alt="Product Image">
+                      <img th:src="${'/upload/original/' + attachment.get(3).projectAttachmentSaveName}" alt="Product Image" style="width: 500px; height: 300px;">
                       <div class="col-lg-1 order-2 pt-10 pt-lg-0"></div>
                       <div class="col-lg-2 order-2 pt-10 pt-lg-0">
                         <p>상호 명</p>
@@ -217,11 +216,11 @@
                                 <th>작성일</th>
                                 <th>조회수</th>
                               </tr>
-                              <tr th:each="project : ${ projectNotice }" class="noticeList" id="noticeList">
-                                <td th:text="${ project.projectNoticeNo }"></td>
-                                <td th:text="${ project.projectNoticeTitle }"></td>
-                                <td th:text="${ project.registDate }"></td>
-                                <td th:text="${ project.projectNoticeCount }"></td>
+                              <tr th:each="projectNotice : ${ projectNotice }" class="noticeList" id="noticeList">
+                                <td th:text="${ projectNotice.projectNoticeNo }"></td>
+                                <td th:text="${ projectNotice.projectNoticeTitle }"></td>
+                                <td th:text="${ projectNotice.registDate }"></td>
+                                <td th:text="${ projectNotice.projectNoticeCount }"></td>
                               </tr>
                             </table>
                           </div>

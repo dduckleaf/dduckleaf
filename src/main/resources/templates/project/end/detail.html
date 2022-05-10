@@ -44,7 +44,7 @@
                 <div class="swiper-wrapper">
                   <div class="swiper-slide">
                     <a href="/images/product/large-size/2-1-555x645.jpg" class="single-img gallery-popup">
-                      <img class="img-full" src="/images/project/potato.png" alt="Product Image">
+                      <img th:src="${ '/upload/original/' + attachment.get(0).projectAttachmentSaveName }" alt="Product Image" style="width: 600px; height: 400px;">
                     </a>
                   </div>
                 </div>
@@ -70,7 +70,7 @@
                       <a th:text="${ project.fundTargetAmount }"></a><span class="info">원 펀딩</span>
                     </div>
                     <div class="farmerCorp">
-                      <a></a><span class="info">명의 서포터</span>
+                      <a class="info" th:text="${ supporter.size() }"></a><span class="info">명의 서포터</span>
                     </div>
                   </div><br>
                   <div class="button-box">
@@ -136,7 +136,7 @@
                     도서산간에 해당하는 서포터님은 배송 가능 여부를 반드시 파머에게 문의 후 펀딩에 참여해주세요.</p>
                 </div>
                 <div class="product-description-body">
-                  <img class="img-full" src="/images/project/story.png" alt="Product Image">
+                  <img class="img-full" th:src="${'/upload/original/' + attachment.get(2).projectAttachmentSaveName}" alt="Product Image">
                 </div>
               </div>
               <!-- 스토리 End Here -->
@@ -146,7 +146,7 @@
                 <div class="product-review-body">
                   <ul class="user-info-wrap">
                     <ul class="user-info">
-                      <img class="img-full" src="/images/project/farmer.png" alt="Product Image">
+                      <img th:src="${'/upload/original/' + attachment.get(3).projectAttachmentSaveName}" alt="Product Image" style="width: 500px; height: 300px;">
                       <div class="col-lg-1 order-2 pt-10 pt-lg-0"></div>
                       <div class="col-lg-2 order-2 pt-10 pt-lg-0">
                         <p>상호 명</p>
@@ -156,11 +156,11 @@
                         <p>파머 이메일</p>
                       </div>
                       <div class="col-lg-3 order-2 pt-10 pt-lg-0">
-                        <p>감자나라</p>
-                        <p>감자</p>
-                        <p>장감자</p>
-                        <p>010-1234-5678</p>
-                        <p>potatokun@naver.com</p>
+                        <p th:text="${ projectInfo.farmer.businessName }"></p>
+                        <p th:text="${ projectInfo.rewardRegistInfo.rewardName }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerName }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerPhone }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerEmail }"></p>
                       </div>
                     </ul>
                   </ul>
@@ -259,9 +259,7 @@
                 </div><br>
                 <div>
                   <h5>이 프로젝트의 정보 및 정책을 반드시 확인하세요.</h5>
-                  <p class="short-desc mb-0">펀딩 취소 안내</p>
-                  <p class="short-desc mb-0">펀딩 결제는 예약 상태로 유지되다가, 펀딩 마감일 다음 영업일 17시에 모두 함께 진행됩니다.</p>
-                  <p class="short-desc mb-0">결제 정보 변경은 결제가 진행되기 전까지 언제나 가능합니다</p>
+                  <p class="short-desc mb-0" th:text="${ projectInfo.refundPolicy.refundPolicyContent }"></p>
                 </div>
               </div>
               <!-- 반환정책 End Here -->
@@ -269,27 +267,35 @@
               <!-- Begin 공지사항 -->
               <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
                 <div class="product-shipping-body">
-<!--                  <div th:include="@{ /project/notice/list.html }"></div>-->
-<!--                  <div th:include="@{ /project/notice/detail.html }"></div>-->
-
-<!--                  <div class="notice-wrap" th:if="${ projectNoticeDetail }">-->
-<!--                    <div class="cont-div">-->
-<!--                      <table>-->
-<!--                        <tr class="title" th:each="notice : ${ projectNoticeDetail }">-->
-<!--                          <input class="projectNo" id="projectNo" type="hidden" th:value="${ notice.projectNo }">-->
-<!--                          <td class="title" colspan="2" th:text="${ notice.projectNoticeTitle }">제목</td>-->
-<!--                        </tr>-->
-<!--                        <tr th:each="notice : ${ projectNoticeDetail }">-->
-<!--                          <td class="date" th:text="${ notice.registDate }">작성일</td>-->
-<!--                        </tr>-->
-<!--                        <tr th:each="notice : ${ projectNoticeDetail }">-->
-<!--                          <td class="content" colspan="2" th:text="${ notice.projectNoticeContent }">내용</td>-->
-<!--                        </tr>-->
-<!--                      </table>-->
-<!--                      <button class="basic-btn small-btn btn3 back" id="back">목록보기</button>-->
-<!--                    </div>-->
-<!--                  </div>-->
-
+                  <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
+                    <div class="title-div">
+                      <span class="text-title">
+                        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">공지사항</span>
+                      <hr width="100%">
+                      <div class="notice-wrap">
+                        <div class="cont-div">
+                          <div id="projectNoticeList">
+                            <table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
+                              <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성일</th>
+                                <th>조회수</th>
+                              </tr>
+                              <tr th:each="projectNotice : ${ projectNotice }" class="noticeList" id="noticeList">
+                                <td th:text="${ projectNotice.projectNoticeNo }"></td>
+                                <td th:text="${ projectNotice.projectNoticeTitle }"></td>
+                                <td th:text="${ projectNotice.registDate }"></td>
+                                <td th:text="${ projectNotice.projectNoticeCount }"></td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
                   <div class="product-slider-area section-space-top-55 section-space-bottom-100">
                     <div class="container">
                       <!-- Add Arrows -->
