@@ -25,13 +25,12 @@
         <table class="basic-table" align="center" style="width: 100%">
             <tr>
                 <th></th>
-                <th style="width: 10%;">프로젝트상태</th>
+                <th style="width: 10%;"></th>
                 <th style="width: 30%;">프로젝트명</th>
-                <th style="width: 10%;">파머명</th>
-                <th style="width: 10%;">펀딩개수</th>
-                <th style="width: 10%;">환불신청개수</th>
-                <th style="width: 15%;">오픈일</th>
-                <th style="width: 15%;">종료일</th>
+                <th style="width: 10%;">환불 상태</th>
+                <th style="width: 10%;">환불 신청일</th>
+                <th style="width: 10%;">환불 신청자 이름</th>
+                <th style="width: 15%;">환불처리 종료일</th>
             </tr>
             <tr th:each="project : ${ projects }">
                 <td><input type="hidden" th:value="${project.projectNo}"></td>
