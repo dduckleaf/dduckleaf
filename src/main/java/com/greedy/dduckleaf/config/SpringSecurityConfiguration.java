@@ -55,7 +55,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage("/member/login")
                 .successForwardUrl("/")
-                .failureForwardUrl("/error/loginfailed")
+                .failureForwardUrl("/error/login")
             .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
