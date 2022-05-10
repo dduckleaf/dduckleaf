@@ -106,17 +106,16 @@ public class FundingRegistService {
         System.out.println("shippingFee = " + shippingFee);
         funding.setProjectShippingFee(shippingFee);
 
-        System.out.println("/* 펀딩정보 삽입 */");
+        fundingRepo.save(funding);
+        funding = fundingRepo.findLastest();
 
         /* 배송지 삽입 */
         ShippingAddress shippingAddress = parsingShippingAddress(registDTO);
         shippingAddress.setFunding(funding);
-        System.out.println("/* 배송지 삽입 */");
 
         /* 결제내역 삽입 */
         PaymentHistory history = parsingPaymentHistory(registDTO);
         history.setFunding(funding);
-        System.out.println("/* 결제내역 삽입 */");
 
         /* 발송정보 삽입 */
         RewardShipping rewardShipping = parsingRewardShipping(registDTO);
@@ -125,22 +124,16 @@ public class FundingRegistService {
         rewardShippingRepo.save(rewardShipping);
         rewardShipping = rewardShippingRepo.findLatest();
 
-        System.out.println("rewardShipping = " + rewardShipping);
         /* 발송 내역 삽입*/
-
-        System.out.println("/* 발송 내역 삽입*/");
         RewardShippingHistory shippingHistory = new RewardShippingHistory();
         shippingHistory.setRecordDate(getDateAndTime());
         shippingHistory.setRewardShippingNo(rewardShipping.getRewardShippingNo());
         shippingHistory.setShippingStatus(1);
 
-
         /* 엔티티에 삽입한 행을 DB에 저장 */
-        fundingRepo.save(funding);
         payHistoryRepo.save(history);
         shippingAddressRepo.save(shippingAddress);
         rewardShippingHistoryRepo.save(shippingHistory);
-        System.out.println("/* 엔티티에 삽입한 행을 DB에 저장 */");
     }
 
     private RewardShipping parsingRewardShipping(FundingRegistDTO registDTO) {
