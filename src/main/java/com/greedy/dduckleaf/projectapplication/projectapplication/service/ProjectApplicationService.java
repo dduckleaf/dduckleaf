@@ -708,6 +708,7 @@ public class ProjectApplicationService {
      * @param projectNo: 프로젝트 번호
      * @author 박휘림
      */
+    @Transactional
     public void cancelProjectApplication(int projectNo) {
 
         Project project = projectRepository.findByProjectNo(projectNo);
