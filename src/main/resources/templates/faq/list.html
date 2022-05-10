@@ -27,7 +27,7 @@
 <div class="main-wrapper">
 
     <!-- Begin Main Header Area -->
-    <div th:replace="/common/userheader.html"></div>
+    <div th:replace="/common/menubar.html"></div>
     <!-- Main Header Area End Here -->
 
     <!-- Begin Main Content Area -->
@@ -55,35 +55,41 @@
                                     <div class="col-12" th:each="faq : ${ faqList }">
                                         <div class="product-item" style="border: solid #CCCCCC 1px; border-radius: 5px; padding: 10px;" >
                                             <div class="product-content align-self-center">
-                                                <p class="product-name" th:href="@{/faq/detail}" th:text="${ faq.faqSubTitle }"></p>
+                                                <p class="product-name" th:href="@{/faq/detail}" th:text="${ faq.faqTitle }"></p>
                                                 <input type="hidden" class="faqNumber" th:value="${faq.getFaqNo}">
-                                                <p class="faqcontent" >[[${faq.faqSubTitle}]]</p>
+                                                <p class="faqcontent" th:text="${ faq.faqSubTitle }"></p>
                                             </div>
                                             <div style="width: 250px;">
-                                                <p class="author" th:if="${not #strings.isEmpty(faq.member.memberName)}">작성자 : [[${faq.member.memberName}]]</p>
+                                                <p class="author">작성자 : [[${faq.member.memberName}]]</p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="pagination-area pt-10">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span class="fa fa-chevron-left"></span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span class="fa fa-chevron-right"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
+                        <div id="paging-area" align="center">
+                            <!-- 맨 앞으로 이동 -->
+                            <button class="paging-btn first" th:onclick="'location.href=\'/faq/list?page=' + @{${paging.startPage}}  + '\''"
+                                    th:disabled="${ faqList.first }"><<</button>
+
+                            <!-- 이전 페이지로 이동 -->
+                            <button class="paging-btn prev" th:onclick="'location.href=\'/faq/list?page=' + @{${paging.currentPage - 1}}  + '\''"
+                                    th:disabled="${ faqList.first }"><</button>
+
+                            <!-- 숫자 버튼 -->
+                            <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+                                <button class="paging-btn" th:onclick="'location.href=\'/faq/list?page=' + @{${page}}  + '\''"
+                                        th:text="${ page }"
+                                        th:disabled="${ paging.currentPage eq page }"></button>
+                            </th:block>
+
+                            <!-- 다음 페이지로 이동 -->
+                            <button class="paging-btn next" th:onclick="'location.href=\'/faq/list?page=' + @{${paging.currentPage + 1}}  + '\''"
+                                    th:disabled="${ faqList.last }">></button>
+
+                            <!-- 맨 마지막으로 이동 -->
+                            <button class="paging-btn last" th:onclick="'location.href=\'/faq/list?page=' + @{${paging.endPage}}  + '\''"
+                                    th:disabled="${ faqList.last }">>></button>
                         </div>
                     </div>
                 </div>
@@ -96,11 +102,6 @@
     <footer class="footer" th:replace="/common/footer.html"></footer>
     <!-- Footer Area End Here -->
 
-    <!-- Begin Scroll To Top -->
-    <a class="scroll-to-top" href="">
-        <i class="fa fa-chevron-up"></i>
-    </a>
-    <!-- Scroll To Top End Here -->
 
 </div>
 
