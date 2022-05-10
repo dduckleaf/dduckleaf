@@ -36,6 +36,9 @@ public class ProjectShippingInfo {
     @Column(name = "EXTRA_SHIPPING_FEE")
     private int extraShippingFee;
 
+    @Column(name = "EXTRA_SHIPPING_FEE_INFO")
+    private String extraShippingFeeInfo;
+
     @Override
     public String toString() {
         return "ProjectShippingInfo{" +
