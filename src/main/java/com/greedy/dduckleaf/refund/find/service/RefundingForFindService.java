@@ -125,7 +125,7 @@ public class RefundingForFindService {
     public Page<RefundingForAdminListDTO> findAdminRefundingListByProject(int projectNo, Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
-                Sort.by("refundInfoNo").descending());
+                Sort.by("refundingInfoNo").descending());
 
         Page<Refunding> refundings = refundingRepo.findByProject_projectNo(projectNo, pageable);
 
