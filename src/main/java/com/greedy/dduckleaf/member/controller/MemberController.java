@@ -63,15 +63,14 @@ public class MemberController {
     public void login() {}
 
     /**
-     * login: 떡잎 펀드 서비스를 이용하기 위해 로그인 합니다.
+     * loginSuccess: 로그인 성공 후 리다이덱트 요청을 합니다.
      * @return mv
      * @author 박상범
      */
-    @PostMapping("/login")
-    public ModelAndView login(ModelAndView mv, RedirectAttributes rttr, Locale locale) {
+    @PostMapping("/loginSuccess")
+    public ModelAndView loginSuccess(ModelAndView mv) {
 
         mv.setViewName("redirect:/");
-        rttr.addFlashAttribute("successMessage", messageSource.getMessage("loginSuccess", null, locale));
 
         return mv;
     }
