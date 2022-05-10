@@ -50,4 +50,7 @@ public class Refunding {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FUNDING_INFO_NO")
     private Funding funding;
+
+    @Column(name = "REFUNDING_END_DATE")
+    private String refundingEndDate;
 }

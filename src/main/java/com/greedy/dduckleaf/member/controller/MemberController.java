@@ -19,6 +19,8 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Locale;
 
+import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
+
 /**
  * <pre>
  * Class: MemberController
@@ -61,15 +63,14 @@ public class MemberController {
     public void login() {}
 
     /**
-     * login: 떡잎 펀드 서비스를 이용하기 위해 로그인 합니다.
+     * loginSuccess: 로그인 성공 후 리다이덱트 요청을 합니다.
      * @return mv
      * @author 박상범
      */
-    @PostMapping("/login")
-    public ModelAndView login(ModelAndView mv, RedirectAttributes rttr, Locale locale) {
+    @PostMapping("/loginSuccess")
+    public ModelAndView loginSuccess(ModelAndView mv) {
 
         mv.setViewName("redirect:/");
-        rttr.addFlashAttribute("successMessage", messageSource.getMessage("loginSuccess", null, locale));
 
         return mv;
     }
@@ -308,12 +309,23 @@ public class MemberController {
      */
     @PostMapping(value={"/remove"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
-    public String removeMember(String withdrawReason, @AuthenticationPrincipal CustomUser user) {
+    public String removeMember(@RequestBody String withdrawReason, @AuthenticationPrincipal CustomUser user) {
 
         MemberWithdrawDTO memberWithdraw = new MemberWithdrawDTO();
         memberWithdraw.setMemberNo(user.getMemberNo());
         memberWithdraw.setWithdrawReason(withdrawReason);
+        memberWithdraw.setWithdrawDate(getDateAndTime());
 
-        return memberService.removeMember(memberWithdraw);
+        String result = memberService.removeMember(memberWithdraw);
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .setPrettyPrinting()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .create();
+
+        return gson.toJson(result);
     }
 }

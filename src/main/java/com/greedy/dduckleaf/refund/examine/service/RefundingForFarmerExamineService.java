@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.refund.examine.service;
 
+import com.greedy.dduckleaf.refund.examine.dto.RefundObjectionHistoryDTO;
 import com.greedy.dduckleaf.refund.examine.dto.RefundingDTO;
 import com.greedy.dduckleaf.refund.examine.dto.RefundingObjectionDTO;
 import com.greedy.dduckleaf.refund.examine.entity.*;
@@ -37,8 +38,9 @@ public class RefundingForFarmerExamineService {
     private final SettlementChangeHistoryForRefundingExamineRepository settlementHistoryRepo;
     private final RefundingObjectionRepository objectionRepo;
     private final RefundObjectionHistoryRepository refundObjectionHistoryRepo;
+    private final RefundingObjectionRepository refundObjectionRepo;
 
-    public RefundingForFarmerExamineService(ModelMapper mapper, FundingForRefundingFarmerExamineRepository fundingRepo, RefundingForRefundingFarmerExamineRepository refundingRepo, RefundingHistoryForFarmerExamineRepository refundHistoryRepo, RefundingStatusForFarmerExamineRepository refundingStatusRepo, RewardShippingForRefundingFarmerExamineRepository shippingRepo, SettlementInfoForRefundingExamineRepository settlementInfoRepo, SettlementChangeHistoryForRefundingExamineRepository settlementHistoryRepo, RefundingObjectionRepository objectionRepo, RefundObjectionHistoryRepository refundObjectionHistoryRepo) {
+    public RefundingForFarmerExamineService(ModelMapper mapper, FundingForRefundingFarmerExamineRepository fundingRepo, RefundingForRefundingFarmerExamineRepository refundingRepo, RefundingHistoryForFarmerExamineRepository refundHistoryRepo, RefundingStatusForFarmerExamineRepository refundingStatusRepo, RewardShippingForRefundingFarmerExamineRepository shippingRepo, SettlementInfoForRefundingExamineRepository settlementInfoRepo, SettlementChangeHistoryForRefundingExamineRepository settlementHistoryRepo, RefundingObjectionRepository objectionRepo, RefundObjectionHistoryRepository refundObjectionHistoryRepo, RefundingObjectionRepository refundObjectionRepo) {
 
         this.mapper = mapper;
         this.fundingRepo = fundingRepo;
@@ -50,6 +52,7 @@ public class RefundingForFarmerExamineService {
         this.settlementHistoryRepo = settlementHistoryRepo;
         this.objectionRepo = objectionRepo;
         this.refundObjectionHistoryRepo = refundObjectionHistoryRepo;
+        this.refundObjectionRepo = refundObjectionRepo;
     }
 
     /**
@@ -162,10 +165,14 @@ public class RefundingForFarmerExamineService {
     @Transactional
     public void registObjection(int refundingNo) {
 
+        System.out.println("registObjection");
+        System.out.println("start");
+        System.out.println("refundingNo = " + refundingNo);
         Refunding refunding = refundingRepo.findById(refundingNo).get();
-
+        System.out.println("refunding = " + refunding);
         RefundingObjection objection = new RefundingObjection();
         objection.setRefundObjectionMemberNo(refunding.getMemberNo());
+        System.out.println("objection = " + objection);
         objection.setRefundingInfoNo(refundingNo);
 
         objectionRepo.save(objection);
@@ -178,6 +185,12 @@ public class RefundingForFarmerExamineService {
         refundObjectionHistory.setRefundObjectionNo(objection.getRefundObjectionNo());
 
         refundObjectionHistoryRepo.save(refundObjectionHistory);
+
+        /* 환불 상태를 심사 요청으로 변경한다. */
+        RefundingStatus status = refundingStatusRepo.findById(4).get();
+        System.out.println("status = " + status);
+        refunding.setRefundingStatus(status);
+        refundingRepo.save(refunding);
     }
 
     /**
@@ -196,4 +209,112 @@ public class RefundingForFarmerExamineService {
 
         return objectionDTOs;
     }
+
+     /**
+      * examineObjectionconfirm : 환불 심사의 이의신청을 승인합니다.
+      * @param historyDTO : 이의신청의 정보를 전달받습니다.
+      * @author 홍성원
+      */
+    public void examineObjectionconfirm(RefundObjectionHistoryDTO historyDTO, int memberNo) {
+
+        /* 환불 이의신청 내역 상태를 승인으로 변경합니다. */
+        RefundingObjection refundingObjection = refundObjectionRepo.findById(historyDTO.getRefundObjectionNo()).get();
+        refundingObjection.setRefundStatus("승인");
+
+        refundObjectionRepo.save(refundingObjection);
+
+        /* 환불 이의신청 이력에 승인 내역을 추가합니다. */
+        RefundObjectionHistory refuseObjectionHistory = new RefundObjectionHistory();
+        refuseObjectionHistory.setHistoryDate(getDateAndTime());
+        refuseObjectionHistory.setRefundObjectionNo(refundingObjection.getRefundObjectionNo());
+        refuseObjectionHistory.setHistoryCategory("승인");
+
+        refundObjectionHistoryRepo.save(refuseObjectionHistory);
+
+        /* 환불 내역 정보를 환불승인으로 수정합니다. */
+        Refunding refunding = refundingRepo.findById(refundingObjection.getRefundingInfoNo()).get();
+        RefundingStatus refundingStatus = refundingStatusRepo.findById(5).get();
+        refunding.setRefundingStatus(refundingStatus);
+        refunding.setRefundingEndDate(getDateAndTime());
+
+        refundingRepo.save(refunding);
+
+        /* 환불 이력에 승인 결과를 추가합니다. */
+        RefundingHistory refundingHistory = new RefundingHistory();
+        refundingHistory.setManagerType("관리자");
+        refundingHistory.setRefundingHistoryDate(getDateAndTime());
+        refundingHistory.setRefundingStatusNo(refundingStatus.getRefundingStatusNo());
+        refundingHistory.setHistoryCategory("승인");
+        refundingHistory.setRefundingHistoryCategory("플랫폼환불신청");
+        refundingHistory.setRefundingInfoNo(refunding.getRefundingInfoNo());
+        refundingHistory.setRefundingObjectionNo(refundingObjection.getRefundObjectionNo());
+        refundingHistory.setRefundingMemberNo(refunding.getMemberNo());
+        refundingHistory.setManagerNo(memberNo);
+
+        refundHistoryRepo.save(refundingHistory);
+     }
+
+      /**
+       * examineObjextionrefuse : 환불 심사의 이의신청을 거절합니다.
+       * @param historyDTO : 이의신청의 번호 및 거절사유가 담긴 정보를 전달받습니다.
+       * @return
+       * @author 홍성원
+       */
+    public void examineObjectionRefuse(RefundObjectionHistoryDTO historyDTO, int memberNo) {
+
+         /* 이의신청 내역의 상태를 거절로 변경합니다 */
+        RefundingObjection refundingObjection = refundObjectionRepo.findById(historyDTO.getRefundObjectionNo()).get();
+        refundingObjection.setRefundStatus("거절");
+
+        refundObjectionRepo.save(refundingObjection);
+
+        /* 이의신청 이력에 거절 내역을 추가합니다. */
+        RefundObjectionHistory history = new RefundObjectionHistory();
+        history.setHistoryDate(getDateAndTime());
+        history.setRefundObjectionNo(refundingObjection.getRefundObjectionNo());
+        history.setRefuseReason(historyDTO.getRefuseReason());
+        history.setHistoryCategory("거절");
+
+        refundObjectionHistoryRepo.save(history);
+
+        /* 환불 내역 정보를 환불거절로 수정합니다. */
+        Refunding refunding = refundingRepo.findById(refundingObjection.getRefundingInfoNo()).get();
+        RefundingStatus refundingStatus = refundingStatusRepo.findById(6).get();
+        refunding.setRefundingStatus(refundingStatus);
+        refunding.setRefundingEndDate(getDateAndTime());
+
+        refundingRepo.save(refunding);
+
+        /* 환불 이력에 거절 결과를 추가합니다. */
+        RefundingHistory refundingHistory = new RefundingHistory();
+        refundingHistory.setManagerType("관리자");
+        refundingHistory.setRefundingHistoryDate(getDateAndTime());
+        refundingHistory.setRefundingStatusNo(refundingStatus.getRefundingStatusNo());
+        refundingHistory.setHistoryCategory("거절");
+        refundingHistory.setRefundingHistoryCategory("플랫폼환불신청");
+        refundingHistory.setRefundingInfoNo(refunding.getRefundingInfoNo());
+        refundingHistory.setRefundingObjectionNo(refundingObjection.getRefundObjectionNo());
+        refundingHistory.setRefundingMemberNo(refunding.getMemberNo());
+        refundingHistory.setManagerNo(memberNo);
+
+        refundHistoryRepo.save(refundingHistory);
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

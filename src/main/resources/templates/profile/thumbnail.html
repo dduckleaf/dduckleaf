@@ -6,10 +6,11 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <!--탈퇴 모달창-->
-<form action="/member/remove" method="post">
+<form id="withdraw-form">
     <div class="modal fade" id="writeModalToggle" data-bs-backdrop="static"
          tabindex="-1" aria-labelledby="writeModalToggleLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -19,8 +20,7 @@
                 <h4 style="font-family: inherit;">어떤 점이 불편하셨나요?</h4>
                 <br>
                 <p style="font-family: inherit;">떡잎펀드를 이용하려면 불편했던 점을 말씀해주시면, 서비스 개선에 참고하도록 하겠습니다.</p>
-                <select style="width: 400px;" name="">
-                    <option disabled selected>탈퇴 사유는 무엇인가요?</option>
+                <select style="width: 400px;" id="withdrawReason" name="withdrawReason" placeholder="탈퇴 사유는 무엇인가요?">
                     <option value="콘텐츠 품질과 서비스 정보 부족">콘텐츠 품질과 서비스 정보 부족</option>
                     <option value="고객 서비스의 불만">고객 서비스의 불만</option>
                     <option value="프로젝트 진행안내">프로젝트 진행안내</option>
@@ -64,26 +64,8 @@
                 </div>
                 <div class="modal-footer" style="border-top: none;">
                     <div style="margin: 0 auto;">
-                        <button type="button" class="basic-btn small-btn btn1" data-bs-target="#confirmModal" data-bs-toggle="modal" data-bs-dismiss="modal">확인</button>
+                        <button type="button" class="basic-btn small-btn btn1" data-bs-target="#confirmModal" data-bs-toggle="modal" data-bs-dismiss="modal" id="withdraw">확인</button>
                         <button type="button" class="basic-btn small-btn btn3" data-bs-target="#writeModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">취소</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--확인창 닫기-->
-    <div class="modal fade" id="confirmModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="subModalToggleLabel" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header" style="border-bottom: none;">
-                    <button type="submit" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body" style="text-align: center;">
-                    탈퇴되었습니다.
-                </div>
-                <div class="modal-footer" style="border-top: none;">
-                    <div style="margin: 0 auto;">
-                        <button type="submit" class="basic-btn small-btn btn1" data-bs-target="#confirmModal">확인</button>
                     </div>
                 </div>
             </div>
@@ -153,6 +135,60 @@
                 })
                 .catch(error => {
                     console.log(error);
+                })
+        }
+    }
+
+    if(document.getElementById("withdraw")) {
+
+        document.getElementById("withdraw").onclick = function() {
+
+            let $withdrawReason = document.getElementById("withdrawReason").value;
+
+            let withdrawReason = {
+                method: 'POST',
+                body: $withdrawReason,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            fetch("/member/remove", withdrawReason)
+                .then(response => response.json())
+                .then(response => {
+                    if(response == "회원 탈퇴 실패") {
+                        Swal.fire({
+                            title: response,
+                            showCancelButton: true,
+                            showConfirmButton: false,
+                            cancelButtonText: '확인',
+                            allowEnterKey: false,
+                            confirmButtonWidth: '100px',
+                            customClass: {
+                                cancelButton: 'savecancel',
+                                popup: 'savepopup'
+                            },
+                            buttonsStyling: false,
+                        });
+                    }
+                    if(response == "로그인페이지로 돌아갑니다.") {
+                        Swal.fire({
+                            title: response,
+                            showCancelButton: false,
+                            showConfirmButton: true,
+                            confirmButtonText: '확인',
+                            allowEnterKey: false,
+                            confirmButtonWidth: '100px',
+                            customClass: {
+                                confirmButton: 'withdrawMember',
+                                popup: 'savepopup'
+                            },
+                            buttonsStyling: false,
+                        }).then(function (){
+                            location.href = '/member/logout';
+                        });
+
+                    }
                 })
         }
     }

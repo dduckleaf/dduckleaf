@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
 
@@ -45,7 +46,8 @@
                 <div class="swiper-wrapper">
                   <div class="swiper-slide">
                     <a href="/images/product/large-size/2-1-555x645.jpg" class="single-img gallery-popup">
-                      <img class="img-full" src="/images/product/large-size/potato.png" alt="Product Image">
+<!--                      <img class="img-full" src="/images/product/large-size/potato.png" alt="Product Image">-->
+                      <img class="img-full" th:src="${  }" alt="Product Image">
                     </a>
                   </div>
                 </div>
@@ -157,11 +159,11 @@
                         <p>파머 이메일</p>
                       </div>
                       <div class="col-lg-3 order-2 pt-10 pt-lg-0">
-                        <p>감자나라</p>
-                        <p>감자</p>
-                        <p>장감자</p>
-                        <p>010-1234-5678</p>
-                        <p>potatokun@naver.com</p>
+                        <p th:text="${ projectInfo.farmer.businessName }"></p>
+                        <p th:text="${ projectInfo.rewardRegistInfo.rewardName }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerName }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerPhone }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerEmail }"></p>
                       </div>
                     </ul>
                   </ul>
@@ -194,17 +196,41 @@
                 </div><br>
                 <div>
                   <h5>이 프로젝트의 정보 및 정책을 반드시 확인하세요.</h5>
-                  <p class="short-desc mb-0">펀딩 취소 안내</p>
-                  <p class="short-desc mb-0">펀딩 결제는 예약 상태로 유지되다가, 펀딩 마감일 다음 영업일 17시에 모두 함께 진행됩니다.</p>
-                  <p class="short-desc mb-0">결제 정보 변경은 결제가 진행되기 전까지 언제나 가능합니다</p>
+                  <p class="short-desc mb-0" th:text="${ projectInfo.refundPolicy.refundPolicyContent }"></p>
                 </div>
               </div>
               <!-- 반환정책 End Here -->
 
               <!-- Begin 공지사항 -->
               <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
-                <div class="product-shipping-body">
-                  <h4 class="title">공지사항</h4>
+                    <div class="title-div">
+                      <span class="text-title">
+                        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">공지사항</span>
+                        <hr width="100%">
+                          <div class="notice-wrap">
+                            <div class="cont-div">
+                              <div id="projectNoticeList">
+                                <table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
+                                  <tr>
+                                <th>번호</th>
+                                <th>제목</th>
+                                <th>작성일</th>
+                                <th>조회수</th>
+                              </tr>
+                              <tr th:each="project : ${ projectNotice }" class="noticeList" id="noticeList">
+                                <td th:text="${ project.projectNoticeNo }"></td>
+                                <td th:text="${ project.projectNoticeTitle }"></td>
+                                <td th:text="${ project.registDate }"></td>
+                                <td th:text="${ project.projectNoticeCount }"></td>
+                              </tr>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 </div>
               </div>
               <!-- 공지사항 End Here -->
@@ -212,7 +238,6 @@
           </div>
         </div>
       </div>
-    </div>
     <hr>
     <!-- Begin 연관상품 추천 -->
     <div class="product-slider-area section-space-top-55 section-space-bottom-100">

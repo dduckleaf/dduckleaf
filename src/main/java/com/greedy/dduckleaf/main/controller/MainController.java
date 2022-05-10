@@ -44,7 +44,7 @@ public class MainController {
 
         mv.addObject("dduckleafRecommendList", mainPage.getDduckleafRecommendList());
         mv.addObject("rankingList", mainPage.getRankingList());
-        mv.setViewName("main/mainPage");
+        mv.setViewName("/main/mainPage");
 
         return mv;
     }

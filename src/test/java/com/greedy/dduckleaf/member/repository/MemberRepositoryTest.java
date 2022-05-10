@@ -171,4 +171,19 @@ class MemberRepositoryTest {
         Member findMember = memberRepository.findById(67).get();
         assertEquals(findMember.getMemberPwd(), "@@@@@@@@@@@@@@@@@@@@@@@@@@");
     }
+
+    @Test
+    @DisplayName("회원 탈퇴 여부 확인 테스트")
+    public void findByMemberIdAndWithdrawalStatusTest() {
+
+        //given
+        String memberId = "USER03";
+
+        //when
+        Member member = memberRepository.findByMemberIdAndWithdrawalStatus(memberId, "N");
+
+        //then
+        System.out.println(member);
+        assertNotNull(member);
+    }
 }

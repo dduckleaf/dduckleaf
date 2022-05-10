@@ -373,10 +373,7 @@ class ProjectApplicationServiceTest {
         int projectNo = 214;
         int memberNo = 68;
 
-        //when
-        projectApplicationService.registProjectApplicationInfo(projectNo, memberNo);
-
-        //then
+        //when & then
         assertDoesNotThrow(() -> projectApplicationService.registProjectApplicationInfo(projectNo, memberNo));
     }
 
