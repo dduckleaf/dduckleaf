@@ -3,6 +3,7 @@ package com.greedy.dduckleaf.refund.find.service;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
+import com.greedy.dduckleaf.refund.find.dto.ProjectForAdminListDTO;
 import com.greedy.dduckleaf.refund.find.dto.RefundingDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,21 @@ class RefundingForFindServiceTest {
         assertNotNull(refundings);
         refundings.forEach(System.out::println);
     }
+
+    @Test
+    public void findAdminProjectList_test() {
+
+        //given
+        Pageable pageable = PageRequest.of(0, 10);
+
+        //when
+        Page<ProjectForAdminListDTO> projects = service.findAdminProjectList(pageable);
+
+        //then
+        assertNotNull(projects);
+        projects.forEach(System.out::println);
+    }
+
 }
 
 
