@@ -130,6 +130,21 @@ public class FundingRegistService {
         shippingHistory.setRewardShippingNo(rewardShipping.getRewardShippingNo());
         shippingHistory.setShippingStatus(1);
 
+        /* 달성률 반영 */
+        Project project = projectRepository.findById(registDTO.getProjectNo()).get();
+        double target = project.getFundTargetAmount();
+        int amount = 0;
+        List<Funding> fundingList = project.getFundingList();
+        for(int i = 0; i < fundingList.size(); i++) {
+
+            amount += fundingList.get(i).getFundingAmount();
+        }
+        amount += funding.getFundingAmount();
+
+        double rate = amount / target ;
+        project.setAchievementRate(rate);
+        projectRepository.save(project);
+
         /* 엔티티에 삽입한 행을 DB에 저장 */
         payHistoryRepo.save(history);
         shippingAddressRepo.save(shippingAddress);
