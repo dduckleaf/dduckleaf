@@ -93,12 +93,12 @@
                 </td>
                 <td>
                     <button class="basic-btn small-btn btn1" id="secondPayAmountCheck">확인</button>
-                    <input type="hidden" id="SecondPayAmount" value="secondPayAmount">
+                    <input type="hidden" id="secondPayAmount" value="secondPayAmount">
                     <button class="basic-btn small-btn btn2" id="secondPayAmountObjection">이의신청</button>
                 </td>
                 <td>
                     <button class="basic-btn small-btn btn1" id="secondPayDateCheck">확인</button>
-                    <input type="hidden" id="SecondPayDate" value="secondPayDate">
+                    <input type="hidden" id="secondPayDate" value="secondPayDate">
                     <button class="basic-btn small-btn btn2" id="secondPayDateObjection">이의신청</button>
                 </td>
             </tr>
@@ -112,9 +112,9 @@
 <script>
     /* parameter로 보낼 데이터 변수로 선언 */
     const firstPayAmount = $("#firstPayAmount");
-    const firstPayDate = $("#firstPayDate").val();
-    const secondPayAmount = $("#secondPayAmount").val();
-    const secondPayDate = $("#secondPayDate").val();
+    const firstPayDate = $("#firstPayDate");
+    const secondPayAmount = $("#secondPayAmount");
+    const secondPayDate = $("#secondPayDate");
 
     /* 1차 정산 확인 접수 */
     $("#firstPayAmountCheck").click(function() {
