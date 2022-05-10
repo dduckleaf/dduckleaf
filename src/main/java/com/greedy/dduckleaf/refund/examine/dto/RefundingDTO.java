@@ -20,4 +20,5 @@ public class RefundingDTO {
     private String refundingMemberName;
     private int memberNo;
     private FundingDTO funding;
+    private String refundingEndDate;
 }
