@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
+@ToString
 @Entity(name = "RewardShippingForFundingInfo")
 @Table(name = "TBL_REWARD_SHIPPING")
 public class RewardShipping {
