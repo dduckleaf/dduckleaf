@@ -60,10 +60,7 @@
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">대표 이미지</a><br>
-<!--                        <img th:src="@{${ attachment.projectAttachmentSavePath}${attachment.projectAttachmentSaveName}}" style="width: 120px; height: 120px;">-->
-                        <img th:src="/Users/hwiri/git/dduckLeaf/src/main/resources/static/upload/original/33966b5556bb4582a69ffa203f2a9b2b.png" style="width: 120px; height: 120px;">
-                        <a th:text="${ attachment.projectAttachmentOriginalName }"></a><br>
-                        <a th:text="${ attachment.projectAttachmentSaveName }"></a><br>
+                        <img th:src="@{${ '/upload/original/'+ attachment.projectAttachmentSaveName }}" style="width: 120px; height: 120px;">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">카테고리</a><br>

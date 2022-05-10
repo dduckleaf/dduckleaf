@@ -52,7 +52,7 @@
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">파머 프로필 이미지</a><br>
-                        <img class="basicimg1" id="changeImg" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <img th:src="@{${ '/upload/original/'+ attachment.projectAttachmentSaveName }}" style="width: 300px; height: 200px;">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">문의 이메일</a><br>
