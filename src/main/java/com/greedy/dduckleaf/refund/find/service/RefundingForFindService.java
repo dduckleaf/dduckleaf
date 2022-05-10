@@ -1,7 +1,13 @@
 package com.greedy.dduckleaf.refund.find.service;
 
+import com.greedy.dduckleaf.refund.find.dto.ProjectForAdminListDTO;
+import com.greedy.dduckleaf.refund.find.dto.ProjectForAdminRefundingListDTO;
 import com.greedy.dduckleaf.refund.find.dto.RefundingDTO;
+import com.greedy.dduckleaf.refund.find.entity.FundingCount;
+import com.greedy.dduckleaf.refund.find.entity.Project;
+import com.greedy.dduckleaf.refund.find.entity.ProjectForAdminList;
 import com.greedy.dduckleaf.refund.find.entity.Refunding;
+import com.greedy.dduckleaf.refund.find.repository.ProjectForAdminRefundFindRepositroy;
 import com.greedy.dduckleaf.refund.find.repository.RefundingForFindRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -29,10 +35,12 @@ import java.util.stream.Collectors;
 public class RefundingForFindService {
 
     private final RefundingForFindRepository refundingRepo;
+    private final ProjectForAdminRefundFindRepositroy projectRepo;
     private final ModelMapper mapper;
 
-    public RefundingForFindService(RefundingForFindRepository refundingRepo, ModelMapper mapper) {
+    public RefundingForFindService(RefundingForFindRepository refundingRepo, ProjectForAdminRefundFindRepositroy projectRepo, ModelMapper mapper) {
         this.refundingRepo = refundingRepo;
+        this.projectRepo = projectRepo;
         this.mapper = mapper;
     }
 
@@ -58,6 +66,59 @@ public class RefundingForFindService {
     public List<RefundingDTO> findFarmerRefundingList(int memberNo) {
 
         return refundingRepo.findByProject_farmerNo(memberNo).stream().map(refunding -> mapper.map(refunding, RefundingDTO.class)).collect(Collectors.toList());
+    }
+
+    public Page<ProjectForAdminListDTO> findAdminProjectList(Pageable pageable) {
+
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(),
+                Sort.by("projectNo").descending());
+
+        Page<ProjectForAdminList> projects = projectRepo.findAll(pageable);
+
+        Page<ProjectForAdminListDTO> projectDTOs = projects.map(project -> {
+            ProjectForAdminListDTO projectDTO =  mapper.map(project, ProjectForAdminListDTO.class);
+
+            projectDTO.setFundingCount(project.getFundings() != null? project.getFundings().size(): 0);
+
+            List<FundingCount> fundingCount = project.getFundings();
+            int refundCount = 0;
+            for(int i = 0; i < fundingCount.size(); i++) {
+                refundCount += fundingCount.get(i).getRefundings().size();
+            }
+
+            projectDTO.setRefundingCount(refundCount);
+
+            return projectDTO;
+        });
+
+        return projectDTOs;
+    }
+
+    public Page<ProjectForAdminListDTO> findAdminListByProject(int projectNo, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(),
+                Sort.by("projectNo").descending());
+
+        Page<ProjectForAdminList> projects = projectRepo.findAll(pageable);
+
+        Page<ProjectForAdminListDTO> projectDTOs = projects.map(project -> {
+            ProjectForAdminListDTO projectDTO =  mapper.map(project, ProjectForAdminListDTO.class);
+
+            projectDTO.setFundingCount(project.getFundings() != null? project.getFundings().size(): 0);
+
+            List<FundingCount> fundingCount = project.getFundings();
+            int refundCount = 0;
+            for(int i = 0; i < fundingCount.size(); i++) {
+                refundCount += fundingCount.get(i).getRefundings().size();
+            }
+
+            projectDTO.setRefundingCount(refundCount);
+
+            return projectDTO;
+        });
+
+        return projectDTOs;
     }
 }
 
