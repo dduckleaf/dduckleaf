@@ -1,0 +1,732 @@
+.tab-body-area {
+    border: 1px solid red;
+    position: absolute;
+    z-index: 1;
+    left: 33%;
+    right: 25%;
+    top: 18%;
+    width: 50%;
+    height: 1220px;
+}
+
+#regist {
+    margin-top: 10px;
+    float: right;
+}
+
+.btn-td2 {
+    border: none;
+    background: none;
+}
+
+.body-area {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 30px;
+    width: 70%;
+}
+
+.box {
+    border: 1px solid #ababab;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
+}
+
+#find-all, #reply-waiting, #reply-complete {
+    width: 170px;
+    height: 100px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    font-size: 14pt;
+}
+
+.test-subtitle {
+    font-size: 20pt;
+    font-weight: bold;
+}
+
+.detail-view {
+    border-top: 1px solid #ababab !important;
+    width: 100%;
+    margin-top: 12px !important;
+}
+
+.detail-view th {
+    width: 15%;
+    border-top: 1px solid #ababab !important;
+    border-right: 1px solid #ababab !important;
+}
+
+.detail-view td {
+    width: 85%;
+    text-align: left;
+    padding-left: 10px;
+}
+
+#remove, #back{
+    float: right;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+#not-exist {
+    text-align: center;
+    height: 60px;
+}
+
+.focusout {
+    display: none;
+    top: 0;
+    left: 0;
+    position: absolute;
+    content: none;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.swal-content {
+    padding-top: 80px;
+    font-family: "Poppins", sans-serif;
+    font-weight: normal;
+    font-size: 15pt;
+    color: #000;
+}
+
+.swal-btn {
+    border: none !important;
+    cursor: pointer !important;
+    width: 120px !important;
+    height: 35px !important;
+    border-radius: 5px !important;
+    font-size: 16px !important;
+    color: #FFF !important;
+    background: #BAC34E !important;
+    text-align: center !important;
+    padding: 0px !important;
+}
+
+.swal-area {
+    height: 250px;
+}
+
+.modalWrap {
+    position: fixed;
+    position: absolute;
+    top: 0;
+    left: 30%;
+    right: 30%;
+    margin-left: auto;
+    margin-right: auto;
+    background: #fff;
+    z-index: 2;
+    background-color: #fff;;
+    width: 600px;
+    /*height: 1000px;*/
+    margin-top: 20%;
+    margin-bottom: 20%;
+}
+
+.report-modal-footer {
+    width: 100%;
+    height: 150px;
+    background-color: rgba(250, 125, 125, 0.2);
+    color: red;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    font-size: 5pt;
+}
+
+.popup-content {
+    width: 90%;
+    margin-top: 5%;
+    margin-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#popup-submit, #popup-cancel {
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+textarea {
+    width: 100%;
+}
+
+.block {
+    border: 1px solid #ababab;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.modal-title {
+    font-weight: bold;
+    font-size: 20pt;
+}
+
+.modal-subtitle {
+    font-weight: bold;
+    font-size: 15pt;
+}
+
+.popup-btn {
+    position: relative;
+    left: 440px;
+    bottom: 0px;
+}
+
+.modal-top {
+    width: 100%;
+    height: 25px;
+    background-color: #BAC34E;
+}
+
+[name=projectReportContent], [name=reportRefUrl], [name=reportCategoryName],
+[name=reporterName], [name=reporterPhone], [name=reporterEmail] {
+    border: 1px solid #ababab;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.policyArea {
+    background-color: rgba(196, 196, 196, 0.3);
+    margin-bottom: 40px;
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
+.registArea {
+    display: none;
+}
+
+.policyContent {
+    font-size: 8pt;
+    color: rgba(0, 0, 0, 0.6);
+    margin-bottom: -10px !important;
+}
+
+.popup-notice {
+    font-size: 8pt;
+    color: red;
+    margin: 5px;
+    visibility: hidden;
+}
+
+#keyword{
+    font-weight: 1000;
+    font-size: 28px;
+}
+#search-result{
+    color: #ababab;
+    font-weight: 600;
+    font-size: 25px;
+}
+.bl{
+    border: 1px solid red;
+}
+.project-list-box{
+    height: 400px;
+}
+.project-progress {
+    -webkit-appearance: none;
+    width: 200px;
+    height: 5px;
+    margin-bottom: -2%;
+}
+.product-img {
+    position: relative;
+    overflow: hidden;
+}
+.img-zoom-effect {
+    position: relative;
+    overflow: hidden;
+}
+.img-full {
+    width: 100%;
+    overflow: hidden;
+    -o-object-fit: cover;
+    object-fit: cover;
+    -o-object-position: center center;
+    object-position: center center;
+}
+.project-list-paging{
+    font-size: 1em;
+    text-align: center;
+}
+#paging {
+    margin-bottom: 20px;
+}
+
+#paging button {
+    border: none;
+    background: none;
+}
+
+/* 진행률 바  */
+/* progress bar 하단 텍스트 */
+.progressbar-list {
+    float: left;
+    color: #BAC34E;
+}
+.progressName {
+    float: right;
+    font-size: 10pt;
+    color: #ABAEAB;
+}
+body {
+    margin:0;
+    padding:0;
+    background-color: #FFF;
+    font-size:14px;
+}
+
+div.row1 {
+    height: 1080px;
+}
+
+.leaf {
+    width: 25px;
+    height: 27px;
+    margin-right: 7px;
+    vertical-align: 5%;
+}
+
+button.accordion {
+    background-color:#FFF;
+    cursor: pointer;
+    width: 150%;
+    border: none;
+    font-size: 16px;
+    transition: 0.5s;
+    text-align: left;
+    padding:10px;
+    padding-bottom: 0px;
+    display: inline;
+}
+
+button.accordion>p{
+    float: left;
+    margin-left: 10px;
+}
+
+button.accordion.active{
+    color : #000;
+}
+
+button.accordion.active:after {
+    background-image: url("../images/common/arrow.png");
+    content:"";
+}
+
+div.panel {
+    padding: 0 18px;
+    padding-top: 0px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.fundmenutitle {
+    font-size: 20pt;
+}
+
+div.fundmenu > * {
+    font-size: 16pt;
+}
+
+.arrow {
+    margin-left: 30px;
+}
+
+.col-md-2, .col-md-7 {
+    float: left;
+}
+
+.col-md-2 {
+    margin-top: 20px !important;
+}
+
+.col-md-7 {
+    margin-left: 30%;
+    margin-top: 50px !important;
+    float: right;
+    width: 700px !important;
+}
+
+.col-md-7:not(.footer) {
+    float: unset;
+}
+
+.fundtitle {
+    font-size: 30pt;
+    width: 800px;
+}
+
+.funddata {
+    font-size: 20pt;
+    margin-top: 20px;
+    width: 700px;
+    border: 1px solid black;
+    border-top: 10px solid #BAC34E;
+}
+
+.fundsubtitle {
+    margin-left: 20px;
+    line-height: 70px;
+    padding-right: 20px;
+}
+
+.fund-btn {
+    float: right;
+    margin-right: 20px;
+    margin-top: 22px;
+    font-size: 14pt;
+    color: #BAC34E;
+    border: 1px solid #BAC34E;
+    border-radius: 5px;
+    text-align: center;
+    width: 100px;
+    height: 30px;
+}
+
+.fund-btn:hover {
+    cursor: pointer;
+}
+
+/* ================= 신청 메인 구분선 =================== */
+.breadcrumb:not(.div) {
+    margin-bottom: 0px;
+}
+
+.basictitle {
+    font-size: 20pt;
+}
+
+.basicsubtitle {
+    font-size: 10pt;
+    color: #C5C5C5;
+}
+
+.basicmenu {
+    margin-top: 20px;
+}
+
+.basicimg {
+    width: 70px;
+    height: 70px;
+}
+
+.basicimg:hover {
+    cursor: pointer;
+}
+
+.mockfundtitle1 {
+    width: 700px;
+    height: 50px;
+    font-size: 16pt;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.mockfundtitle2 {
+    width: 650px;
+    height: 50px;
+    font-size: 16pt;
+    padding-left: 10px;
+}
+
+input[type="date"]::before {
+    content: attr(data-th-placeholder);
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url("../images/mockfund/sidebararrow.png") no-repeat 98% 50%;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.btn1 {
+    float: right;
+    margin-top: 50px;
+}
+
+/* ========================= 기본 정보 구분선========================= */
+.projectsummary {
+    width: 700px;
+    height: 150px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.story-btn {
+    margin-top: 10px;
+    float: none;
+}
+
+.guideline {
+    color: #BAC34E;
+    text-decoration: underline;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.checkdiv {
+    height: 150px;
+}
+
+.guideline:hover, .home:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.panel > p {
+    cursor: pointer;
+}
+
+.story {
+    height: 1200px !important;
+}
+
+.agreementcheck {
+    border: 1px solid #BAC34E;
+    border-radius: 5px;
+    background-color: #BAC34E;
+    pointer-events: none;
+    color: #FFF;
+    font-size: 10pt;
+    padding: 5px 8px 5px 8px;
+    width: 80px;
+    text-align: center;
+}
+
+.agreementDate {
+    margin-left: 10px;
+    margin-top: 5px;
+}
+
+.agreementcheck, .agreementDate, .guideline {
+    float: left;
+}
+
+.agreementcheck:not(*) {
+    margin-top: 10px;
+}
+
+.story-btn, .guideline {
+    float: left;
+}
+
+/* ========================= 스토리 구분선========================= */
+.reward-area {
+    border: 1px solid black;
+    height: 300px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+
+.rewardtitle-section > * {
+    width: 100px;
+}
+
+.rewardtitle-section, .rewarddetail-section {
+    float: left;
+}
+
+.rewardtitle {
+    color: #BAC34E;
+    font-weight: bold;
+    margin-top: 30px !important;
+    margin-bottom: 55px !important;
+    display: block;
+}
+
+.rewarddetail {
+    margin-top: 30px;
+    display: block;
+}
+
+button.reward {
+    position: relative;
+    top: 300px;
+}
+
+.big-btn {
+    border: none;
+}
+
+hr {
+    position: relative;
+    bottom: 15px;
+}
+
+/* sweetalert 속성 */
+/* 저장 버튼 */
+.savepopup {
+    height: 250px;
+}
+
+.registpopup {
+    height: 400px;
+}
+
+.savesuccess {
+    background-color: #BAC34E !important;
+    color: #ffffff !important;
+    border: 1px solid #BAC34E !important;
+    width: 100px !important;
+    height: 40px;
+    margin-right: 3px;
+    border-radius: 5px;
+}
+
+.savecancel {
+    background-color: #ffffff !important;
+    color: #BAC34E !important;
+    border: 1px solid #BAC34E !important;
+    width: 100px !important;
+    height: 40px;
+    border-radius: 5px;
+}
+
+.saveok {
+    background-color: #BAC34E !important;
+    color: #ffffff !important;
+    border: 1px solid #BAC34E !important;
+    width: 100px !important;
+    height: 40px;
+    border-radius: 5px;
+}
+
+/* story alert */
+.startregist {
+    background-color: #ffffff !important;
+    color: #BAC34E !important;
+    border: 1px solid #BAC34E !important;
+    width: 400px !important;
+}
+
+.swal2-title {
+    font-family: inherit !important;
+    font-weight: normal;
+    padding-top: 80px !important;
+    font-size: 15pt !important;
+}
+
+.swalbasicinfo, .swalstory {
+    overflow: visible !important;
+}
+
+.swal2-validation-message {
+    background-color: #ffffff !important;
+}
+
+#swal-input1, #swal-input2, #swal-input3, #swal-input4 {
+    width: 400px;
+}
+
+.modalid {
+    float: left;
+    margin-left: 80px;
+}
+
+/*.swal2-confirm {
+    background-color: #BAC34E !important;
+    color: #ffffff !important;
+    width: 350px !important;
+}*/
+
+/* 체크박스 버튼 활성화 관련 css */
+.btnArea{width:100%; margin-top:30px;}
+.btnArea button{width:540px; height:40px; display:inline-block;background-color:#cbcbcb; border:none; outline:none; color:#303033; border-radius:3px; cursor:auto;}
+.btnArea button+button{margin-left:20px;}
+
+.checkT{width:2%;}
+.checkT p{width:15px; margin:12.5px auto; height:15px;}
+.checkT p input{display:block; width:100%; height:100%; border:1px solid #cbcbcb; background-color:#fff;}
+
+input[type="checkbox"] {
+    display: none !important;
+}
+
+input[type="checkbox"] + label {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border:3px solid #707070;
+    position: relative;
+}
+
+input[id="order2_chk"]:checked + label::after {
+    content: url("../images/mockfund/checked.png");
+    background-color: #bac34e !important;
+    font-size: 13px;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    position: absolute;
+    left: -1px;
+    top: -1px;
+}
+
+/* 체크박스 포함 alert css */
+.confirmtitle {
+    padding-top: 30px !important;
+    padding-left: 0px !important;
+    height: 60px !important;
+}
+
+.confirmcontainer {
+    margin-top: 10px !important;
+    text-align: left !important;
+}
+
+.confirmpopup {
+    height: 400px;
+    width: 600px !important;
+}
+
+.btnArea:not(.confirmcontainer) {
+    text-align: center;
+}
+
+.checkedarea {
+    border: 1px solid black;
+    padding-left: 10px;
+}
+
+.checkedarea2 {
+    border: 1px solid black;
+    border-top: 0px;
+    padding-left: 10px;
+}
+
+.checkT, .confirmsub {
+    display: inline-block;
+}
+
+.confirmsub {
+    margin-left: 20px;
+}
+
+.confirmsub2 {
+    padding-top: 10px;
+    font-size: 8pt;
+}
