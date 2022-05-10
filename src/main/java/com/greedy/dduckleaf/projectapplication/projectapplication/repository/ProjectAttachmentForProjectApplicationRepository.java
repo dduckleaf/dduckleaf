@@ -5,6 +5,8 @@ import com.greedy.dduckleaf.projectapplication.entity.ProjectBasicInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 /**
  * <pre>
  * Interface : ProjectAttachmentForProjectApplicationRepository
@@ -30,9 +32,6 @@ public interface ProjectAttachmentForProjectApplicationRepository extends JpaRep
     @Query(value = "SELECT * FROM TBL_PROJECT_ATTACHMENT A WHERE A.PROJECT_NO = :projectNo AND A.PROJECT_ATTACHMENT_CATEGORY = '파머사진'", nativeQuery = true)
     ProjectAttachment findFarmerInfoAttachment(int projectNo);
 
-    @Query(value = "SELECT * FROM TBL_PROJECT_ATTACHMENT A WHERE A.PROJECT_NO = :projectNo AND A.PROJECT_ATTACHMENT_CATEGORY = '사업자등록증'", nativeQuery = true)
-    ProjectAttachment findBusinessLicenseAttachment(int projectNo);
-
     @Query(value = "SELECT * FROM TBL_PROJECT_ATTACHMENT A WHERE A.PROJECT_NO = :projectNo AND A.PROJECT_ATTACHMENT_CATEGORY = '금융정보'", nativeQuery = true)
-    ProjectAttachment findFarmerFinancialInfoAttachment(int projectNo);
+    List<ProjectAttachment> findFarmerFinancialInfoAttachment(int projectNo);
 }
