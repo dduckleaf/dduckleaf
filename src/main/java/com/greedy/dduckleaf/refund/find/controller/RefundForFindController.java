@@ -107,8 +107,12 @@ public class RefundForFindController {
 
         Page<ProjectForAdminListDTO> projects = service.findAdminProjectList(pageable);
 
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projects);
+
+        mv.addObject("paging", paging);
         mv.addObject("projects", projects);
         mv.setViewName("/refund/find/admin/refundlist");
+
         return mv;
     }
 

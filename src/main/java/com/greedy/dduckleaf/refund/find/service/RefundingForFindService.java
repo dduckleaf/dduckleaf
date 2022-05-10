@@ -130,6 +130,7 @@ public class RefundingForFindService {
         Page<Refunding> refundings = refundingRepo.findByProject_projectNo(projectNo, pageable);
 
         Page<RefundingForAdminListDTO> refundingDTOs = refundings.map(refunding -> {
+            System.out.println("refunding = " + refunding);
             RefundingForAdminListDTO refundingDTO = mapper.map(refunding, RefundingForAdminListDTO.class);
 
             refundingDTO.setProjectNo(refunding.getProject().getProjectNo());
