@@ -55,7 +55,7 @@ public class Project {
 
     @OneToOne
     @JoinColumn(name = "PROJECT_NO")
-    private ProjectShippingFee projectShippingFee;
+    private ProjectShippingFeeForProject projectShippingFee;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_NO")

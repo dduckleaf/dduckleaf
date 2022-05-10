@@ -1,18 +1,24 @@
 package com.greedy.dduckleaf.funding.entity;
 
-import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import lombok.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
-@Entity(name = "ProjectShippingFeeForFundingRegist")
+@Entity(name = "ProjectShippingFeeForFundingRegistProject")
 @Table(name = "TBL_PROJECT_SHIPPING_FEE")
-public class ProjectShippingFee {
+public class ProjectShippingFeeForProject {
 
-    @Id
+
     @Column(name = "SHIPPING_FEE_NO")
     private int shppingFeeNo;
 
@@ -27,6 +33,7 @@ public class ProjectShippingFee {
     @Column(name = "EXTRA_SHIPPING_FEE_INFO")
     private String extraShippingFeeInfo;
 
+    @Id
     @Column(name = "PROJECT_NO")
     private int projectNo;
 
