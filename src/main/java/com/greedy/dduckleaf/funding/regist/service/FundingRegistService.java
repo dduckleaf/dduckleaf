@@ -138,10 +138,13 @@ public class FundingRegistService {
         for(int i = 0; i < fundingList.size(); i++) {
 
             amount += fundingList.get(i).getFundingAmount();
+            System.out.println("amount = " + amount);
         }
         amount += funding.getFundingAmount();
+        System.out.println("amount = " + amount);
 
-        double rate = amount / target ;
+        double rate = amount / target * 100;
+        System.out.println("re = " + rate);
         project.setAchievementRate(rate);
         projectRepository.save(project);
 

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
+
 import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
 /**
  * <pre>
@@ -39,8 +41,9 @@ public class RefundingForFarmerExamineService {
     private final RefundingObjectionRepository objectionRepo;
     private final RefundObjectionHistoryRepository refundObjectionHistoryRepo;
     private final RefundingObjectionRepository refundObjectionRepo;
+    private final ProjectForRefundingExamineRepository projectRepo;
 
-    public RefundingForFarmerExamineService(ModelMapper mapper, FundingForRefundingFarmerExamineRepository fundingRepo, RefundingForRefundingFarmerExamineRepository refundingRepo, RefundingHistoryForFarmerExamineRepository refundHistoryRepo, RefundingStatusForFarmerExamineRepository refundingStatusRepo, RewardShippingForRefundingFarmerExamineRepository shippingRepo, SettlementInfoForRefundingExamineRepository settlementInfoRepo, SettlementChangeHistoryForRefundingExamineRepository settlementHistoryRepo, RefundingObjectionRepository objectionRepo, RefundObjectionHistoryRepository refundObjectionHistoryRepo, RefundingObjectionRepository refundObjectionRepo) {
+    public RefundingForFarmerExamineService(ModelMapper mapper, FundingForRefundingFarmerExamineRepository fundingRepo, RefundingForRefundingFarmerExamineRepository refundingRepo, RefundingHistoryForFarmerExamineRepository refundHistoryRepo, RefundingStatusForFarmerExamineRepository refundingStatusRepo, RewardShippingForRefundingFarmerExamineRepository shippingRepo, SettlementInfoForRefundingExamineRepository settlementInfoRepo, SettlementChangeHistoryForRefundingExamineRepository settlementHistoryRepo, RefundingObjectionRepository objectionRepo, RefundObjectionHistoryRepository refundObjectionHistoryRepo, RefundingObjectionRepository refundObjectionRepo, ProjectForRefundingExamineRepository projectRepo) {
 
         this.mapper = mapper;
         this.fundingRepo = fundingRepo;
@@ -53,6 +56,7 @@ public class RefundingForFarmerExamineService {
         this.objectionRepo = objectionRepo;
         this.refundObjectionHistoryRepo = refundObjectionHistoryRepo;
         this.refundObjectionRepo = refundObjectionRepo;
+        this.projectRepo = projectRepo;
     }
 
     /**
@@ -154,6 +158,26 @@ public class RefundingForFarmerExamineService {
 
         refundingRepo.save(refunding);
         refundHistoryRepo.save(refundingHistory);
+
+        /* 환불 승인 시 프로젝트 달성률에 반영한다. */
+        /* 달성률 반영 */
+        Project project = projectRepo.findById(funding.getProjectNo()).get();
+        double target = project.getFundTargetAmount();
+        int amount = 0;
+        List<Funding> fundingList = project.getFundings();
+        for(int i = 0; i < fundingList.size(); i++) {
+
+            amount += fundingList.get(i).getFundingAmount();
+            System.out.println("amount = " + amount);
+        }
+        amount -= funding.getFundingAmount();
+        System.out.println("amount = " + amount);
+
+        double rate = amount / target * 100;
+        System.out.println("re = " + rate);
+
+        project.setAchievementRate(rate);
+        projectRepo.save(project);
     }
 
     /**
@@ -252,6 +276,26 @@ public class RefundingForFarmerExamineService {
         refundingHistory.setManagerNo(memberNo);
 
         refundHistoryRepo.save(refundingHistory);
+
+        /* 환불 승인 시 프로젝트 달성률에 반영한다. */
+        /* 달성률 반영 */
+        Project project = projectRepo.findById(refunding.getProject().getProjectNo()).get();
+        double target = project.getFundTargetAmount();
+        int amount = 0;
+        List<Funding> fundingList = project.getFundings();
+        for(int i = 0; i < fundingList.size(); i++) {
+
+            amount += fundingList.get(i).getFundingAmount();
+            System.out.println("amount = " + amount);
+        }
+        amount -= refunding.getFunding().getFundingAmount();
+        System.out.println("amount = " + amount);
+
+        double rate = amount / target * 100;
+        System.out.println("re = " + rate);
+
+        project.setAchievementRate(rate);
+        projectRepo.save(project);
      }
 
       /**
