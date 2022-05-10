@@ -5,6 +5,8 @@ import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.farmingrecord.dto.FarmingRecordDTO;
 import com.greedy.dduckleaf.farmingrecord.service.FarmingRecordService;
+import com.greedy.dduckleaf.notice.dto.NoticeCategoryDTO;
+import com.greedy.dduckleaf.notice.dto.NoticeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -116,6 +120,42 @@ public class FarmingRecordController {
         newFarmingRecord.setPublicStatus("N");
         newFarmingRecord.setProjectNo(1);
         farmingRecordService.registNewFarmingRecord(newFarmingRecord);
+
+        mv.setViewName("redirect:/farmingrecord/list");
+
+        return mv;
+    }
+
+    /**
+     * modifyPage : 농사일지를 수정하기 위해 작성 폼으로 이동합니다.
+     * @param mv : 요청 경로를 담는 객체
+     * @param farmingRecordNo : 수정할 농사일지 번호
+     * @return mv : 뷰로 전달할 데이터와 경로를 담는 객체
+     *
+     * @author 차화응
+     */
+    @GetMapping("/modify/{farmingRecordNo}")
+    public ModelAndView modifyPage(ModelAndView mv, @PathVariable int farmingRecordNo) {
+
+        FarmingRecordDTO farmingRecordDetail = farmingRecordService.findFarmingRecordDetail(farmingRecordNo);
+
+        mv.addObject("farmingRecordDetail", farmingRecordDetail);
+        mv.setViewName("farmingrecord/modify");
+
+        return mv;
+    }
+
+    /**
+     * modifyFarmingRecord : 농사일지를 수정합니다.
+     * @param updateFarmingRecord : 수정할 농사일지 정보를 담는 객체
+     * @return mv : 뷰로 전달할 데이터와 경로를 담는 객체
+     *
+     * @author 차화응
+     */
+    @PostMapping("/modify")
+    public ModelAndView modifyFarmingRecord(ModelAndView mv, FarmingRecordDTO updateFarmingRecord) {
+
+        farmingRecordService.modifyFarmingRecord(updateFarmingRecord);
 
         mv.setViewName("redirect:/farmingrecord/list");
 

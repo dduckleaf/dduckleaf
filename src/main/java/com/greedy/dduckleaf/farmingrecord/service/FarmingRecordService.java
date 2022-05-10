@@ -93,4 +93,19 @@ public class FarmingRecordService {
 
         farmingRecordRepository.save(modelMapper.map(newFarmingRecord, FarmingRecord.class));
     }
+
+    /**
+     * modifyFarmingRecord : 농사일지를 수정합니다.
+     * @param updateFarmingRecord : 수정할 농사일지 정보를 담은 객체
+     *
+     * @author 차화응
+     */
+    @Transactional
+    public void modifyFarmingRecord(FarmingRecordDTO updateFarmingRecord) {
+
+        FarmingRecord foundFarmingRecord = farmingRecordRepository.findById(updateFarmingRecord.getFarmingRecordNo()).get();
+        foundFarmingRecord.setFarmingRecordTitle(updateFarmingRecord.getFarmingRecordTitle());
+        foundFarmingRecord.setFarmingRecordContent(updateFarmingRecord.getFarmingRecordContent());
+    }
+
 }
