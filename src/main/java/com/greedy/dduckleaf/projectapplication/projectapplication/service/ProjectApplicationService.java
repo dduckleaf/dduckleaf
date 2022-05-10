@@ -118,8 +118,6 @@ public class ProjectApplicationService {
 
         farmerFinancialInfoRepository.save(farmerFinancialInfo(farmerNo));
 
-//        Bank bank =
-
     }
 
     private RewardRegistInfo registInfo(int farmerNo) {
@@ -160,7 +158,7 @@ public class ProjectApplicationService {
         farmerInfo.setBusinessName("상호명");
         farmerInfo.setBusinessOwnNo("사업자 등록번호");
         farmerInfo.setBusinessOwnType("사업자 유형");
-        farmerInfo.setCorporateName("법인명");
+        farmerInfo.setCorporateName(" ");
         farmerInfo.setFarmerName("파머 이름");
         farmerInfo.setFarmerEmail("이메일");
         farmerInfo.setFarmerPhone("전화번호");
@@ -496,7 +494,6 @@ public class ProjectApplicationService {
 
         ProjectAttachment projectAttachment = projectAttachmentRepository.findFarmerInfoAttachment(attachment.getProject().getProjectNo());
 
-        System.out.println("projectAttachment 파머사진 업데이트 서비스! = " + projectAttachment);
         if(projectAttachment == null) {
 
             attachment.setProjectAttachmentCategory("파머사진");
@@ -543,7 +540,7 @@ public class ProjectApplicationService {
      */
     @Transactional
     public void modifyRepresentative(FarmerInfoDTO farmerInfo, FarmerFinancialInfoDTO financialInfo) {
-
+        
         FarmerInfo updateFarmerInfo = farmerInfoRepository.findByFarmerNo(farmerInfo.getMemberNo());
         updateFarmerInfo.setBusinessOwnType(farmerInfo.getBusinessOwnType());
         updateFarmerInfo.setBusinessOwnNo(farmerInfo.getBusinessOwnNo());
@@ -716,6 +713,5 @@ public class ProjectApplicationService {
         Project project = projectRepository.findByProjectNo(projectNo);
         project.setProjectStatus("N");
         project.setProgressStatus(7);
-
     }
 }
