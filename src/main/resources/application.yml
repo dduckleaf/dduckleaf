@@ -9,10 +9,6 @@
       url: jdbc:mysql://220.78.127.194:3306/dduckleaf
       username: team2member
       password: team2
-#      driver-class-name: oracle.jdbc.driver.OracleDriver
-#      url: jdbc:oracle:thin:@oracle.team-greedy.com:1521:xe
-#      username: C##SPRING
-#      password: SPRING
       hikari:
         auto-commit: false
 
@@ -26,10 +22,10 @@
         '[format_sql]': true
         ddl-auto: validate
 
-#Live Reload 기능 활성화
-  devtools:
-    livereload:
-      enabled: true
+##Live Reload 기능 활성화
+#  devtools:
+#    livereload:
+#      enabled: true
 
   web:
     resources:
