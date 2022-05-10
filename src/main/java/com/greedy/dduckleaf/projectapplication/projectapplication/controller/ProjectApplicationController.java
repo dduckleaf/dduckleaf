@@ -854,6 +854,16 @@ public class ProjectApplicationController {
         return mv;
     }
 
+    @GetMapping("/waiting/{projectNo}")
+    public ModelAndView moveToWaitingProject(ModelAndView mv, @PathVariable int projectNo) {
+
+        ProjectDTO project = projectApplicationService.findProjectByProjectNo(projectNo);
+
+        mv.addObject("project", project);
+        mv.setViewName("/common/waitingproject");
+        return mv;
+    }
+
     /**
      * cancelProjectApplicaion: 파머페이지에서 심사 대기중인 신청 프로젝트를 취소하는 메소드입니다.
      * @param projectNo: 프로젝트 번호
