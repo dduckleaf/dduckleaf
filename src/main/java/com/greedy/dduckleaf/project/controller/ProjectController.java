@@ -73,6 +73,7 @@ public class ProjectController {
         long diffSec = Math.abs(end.getTime() - now.getTime());
         long diffDay = TimeUnit.DAYS.convert(diffSec, TimeUnit.MILLISECONDS);
 
+        mv.addObject("attachment", projectDetail.getAttachmentList());
         mv.addObject("projectInfo", projectDetail.getProjectApplicationInfo());
         mv.addObject("projectNotice", projectDetail.getProjectNotice());
         mv.addObject("project", projectDetail.getProject());
