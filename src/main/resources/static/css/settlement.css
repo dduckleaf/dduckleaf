@@ -1,5 +1,4 @@
 .tab-body-area {
-    border: 1px solid red;
     position: absolute;
     z-index: 1;
     left: 33%;
@@ -57,12 +56,13 @@
     border: none !important;
     text-align: center;
     margin-bottom: 10px;
+    border-collapse: inherit !important;
 }
 
 .settlement-table th {
     background-color: rgba(229, 221, 204, 0.5);
     font-size: 14pt;
-    border: none !important;
+    border: 1px solid rgba(229, 221, 204, 0.5) !important;
     height: 50px;
     padding: 15px;
 }

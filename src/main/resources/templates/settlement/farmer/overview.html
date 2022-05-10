@@ -45,48 +45,58 @@
                 <th style="width: 25%">2차 정산금 (원)</th>
                 <th style="width: 25%">2차 정산금 지급일</th>
             </tr>
+            <!-- 정산정보가 존재하지 않는 경우 -->
+            <th:block th:if="${ settlementInfo eq null }">
+                <tr>
+                   <td colspan="4">정산 내역이 없습니다.</td>
+                </tr>
+            </th:block>
+            <!-- 정산정보가 존재하는 경우 -->
+            <th:block th:if="${ settlementInfo ne null }">
+                <tr>
+                    <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentAmount eq null }">
+                        <td>-</td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentAmount ne null }">
+                        <td th:text="${ settlementPaymentInfos[0].settlementPaymentAmount }"></td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentDate eq null }">
+                        <td>-</td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentDate ne null }">
+                        <td th:text="${ settlementPaymentInfos[0].settlementPaymentDate }"></td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentAmount eq null }">
+                        <td>-</td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentAmount ne null }">
+                        <td th:text="${ settlementPaymentInfos[1].settlementPaymentAmount }"></td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentDate eq null }">
+                        <td>-</td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentDate ne null }">
+                        <td th:text="${ settlementPaymentInfos[1].settlementPaymentDate }"></td>
+                    </th:block>
+                </tr>
+            </th:block>
             <tr>
-                <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentAmount eq null }">
-                    <td>-</td>
-                </th:block>
-                <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentAmount ne null }">
-                    <td th:text="${ settlementPaymentInfos[0].settlementPaymentAmount }"></td>
-                </th:block>
-                <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentDate eq null }">
-                    <td>-</td>
-                </th:block>
-                <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentDate ne null }">
-                    <td th:text="${ settlementPaymentInfos[0].settlementPaymentDate }"></td>
-                </th:block>
-                <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentAmount eq null }">
-                    <td>-</td>
-                </th:block>
-                <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentAmount ne null }">
-                    <td th:text="${ settlementPaymentInfos[1].settlementPaymentAmount }"></td>
-                </th:block>
-                <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentDate eq null }">
-                    <td>-</td>
-                </th:block>
-                <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentDate ne null }">
-                    <td th:text="${ settlementPaymentInfos[1].settlementPaymentDate }"></td>
-                </th:block>
-            </tr>
-            <tr>
                 <td>
-                    <button class="basic-btn small-btn btn1">확인</button>
-                    <button class="basic-btn small-btn btn2">이의신청</button>
+                    <button class="basic-btn small-btn btn1"
+                           onclick="confirm('1차 정산금을 확정하시겠습니까?\n확정 후에는 변경할 수 없습니다.');">확인</button>
+                    <button class="basic-btn small-btn btn2" onclick="firstPayAmountObjection();">이의신청</button>
                 </td>
                 <td>
-                    <button class="basic-btn small-btn btn1">확인</button>
-                    <button class="basic-btn small-btn btn2">이의신청</button>
+                    <button class="basic-btn small-btn btn1" onclick="firstPayDateCheck();">확인</button>
+                    <button class="basic-btn small-btn btn2" onclick="firstPayDateObjection();">이의신청</button>
                 </td>
                 <td>
-                    <button class="basic-btn small-btn btn1">확인</button>
-                    <button class="basic-btn small-btn btn2">이의신청</button>
+                    <button class="basic-btn small-btn btn1" onclick="SecondPayAmountCheck();">확인</button>
+                    <button class="basic-btn small-btn btn2" onclick="SecondPayAmountObjection();">이의신청</button>
                 </td>
                 <td>
-                    <button class="basic-btn small-btn btn1">확인</button>
-                    <button class="basic-btn small-btn btn2">이의신청</button>
+                    <button class="basic-btn small-btn btn1" onclick="SecondPayDateCheck();">확인</button>
+                    <button class="basic-btn small-btn btn2" onclick="SecondPayDateObjection();">이의신청</button>
                 </td>
             </tr>
         </table>
@@ -95,4 +105,40 @@
     <div th:replace="/common/footer.html"></div>
 </main>
 </body>
+<!--<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>-->
+<script>
+    // window.onload = function () {
+    //     /* 1차 정산금 확인 */
+    //     function firstPayAmountCheck() {
+    //         // Swal.fire({
+    //         //     title: "1차 정산금을 확정하시겠습니까>?",
+    //         //     confirmButtonText: "확인",
+    //         //     allowEnterKey: false,
+    //         //     customClass: {
+    //         //         title: "swal-content",
+    //         //         confirmButton: "swal-btn",
+    //         //         popup: "swal-area"
+    //         //     }
+    //         // })
+    //         Swal.fire({
+    //             title: '"1차 정산금을 확정하시겠습니까?',
+    //             text: "확정 후에는 변경할 수 없습니다.",
+    //             icon: 'warning',
+    //             showCancelButton: true,
+    //             confirmButtonColor: '#BAC34E',
+    //             cancelButtonColor: '#C2423A',
+    //             confirmButtonText: '확인',
+    //             cancelButtonText: '취소',
+    //         }).then((result) => {
+    //             if (result.isConfirmed) {
+    //                 Swal.fire(
+    //                     '정산금 확인이 접수되었습니다.',
+    //                     '정산금이 7 영업일 이내에 지급될 예정입니다.',
+    //                     'success'
+    //                 )
+    //             }
+    //         })
+    //     }
+    // }
+</script>
 </html>
