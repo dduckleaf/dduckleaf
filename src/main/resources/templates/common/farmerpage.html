@@ -96,7 +96,7 @@
                 <td th:text="${project.examineStatus.examineProjectStatusName}"></td>
                 <td th:text="${project.achievementRate}"></td>
               </tr>
-              <tr th:if="${project.progressStatus.projectProgressStatusNo} == 5" th:onclick="'location.href=\'/shipping/management/default/' + @{${project.projectNo}} + '\''" style="cursor:pointer;">
+              <tr th:if="${project.progressStatus.projectProgressStatusNo} == 5" th:onclick="'location.href=\'/project/application/waiting/' + @{${project.projectNo}} + '\''" style="cursor:pointer;">
                 <td th:text="${project.projectNo}"></td>
                 <td th:text="${project.projectName}"></td>
                 <td th:text="${project.openDate}"></td>
@@ -140,11 +140,11 @@
   const endProjectDiv = document.getElementById("endProjectDiv");
   const endProjectNo = document.getElementById("endProjectNo");
 
-  for(let i = 0; i < endProjectDiv.length; i++) {
-    endProjectDiv[i].onclick = function () {
-      location.href = "/shipping/management/default/" + endProjectNo[i];
-    }
-  }
+  // for(let i = 0; i < endProjectDiv.length; i++) {
+  //   endProjectDiv[i].onclick = function () {
+  //     location.href = "/shipping/management/default/" + endProjectNo[i];
+  //   }
+  // }
 </script>
 <!-- JS Files
 ============================================ -->
