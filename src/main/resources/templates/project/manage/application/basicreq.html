@@ -53,6 +53,10 @@
                     <div class="basicmenu form-date">
                         <a class="basictitle">2. 리워드 전달 계획을 적어주세요.</a><br>
                         <textarea class="mockfundtitle1" id="rewardDeliveryPlan" name="rewardDeliveryPlan" type="text" th:text="${ detail.rewardRegistInfo.rewardDeliveryPlan }" readonly></textarea>
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">3. 소개 사진</a><br>
+                        <img th:src="@{${ '/upload/original/'+ attachment.projectAttachmentSaveName }}" style="width: 150px; height: 150px;">
                     </div><br>
                     <div>
                         <button type="button" class="btn3 big-btn back" style="float:right;">뒤로가기</button>

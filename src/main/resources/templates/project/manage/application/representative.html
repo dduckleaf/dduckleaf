@@ -47,6 +47,7 @@
                     <div class="basicmenu">
                         <a class="basictitle">사업자 구분</a><br>
                         <input class="mockfundtitle1" th:value="${ detail.farmer.businessOwnType }" readonly>
+                        <input type="hidden" id="projectApplicationNo" name="projectApplicationNo" th:value="${ detail.projectApplicationNo }" readonly>
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">사업자 등록번호</a><br>
@@ -56,18 +57,12 @@
                         <a class="basictitle">상호명</a><br>
                         <input class="farmerinfo" type="text" id="businessName" name="businessName" th:value="${ detail.farmer.businessName }" readonly>
                     </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">법인명(선택사항)</a><br>
-                        <input class="farmerinfo" type="text" th:value="${ detail.farmer.corporateName }" readonly>
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">사업자 등록증</a><br>
-                        <input type="file" name="uploadfile" id="uploadfile">
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">법인 인감 증명서</a>
-                        <input type="file" name="uploadfile2" id="uploadfile2"><br>
-                    </div>
+                    <th:block th:if="${ detail.farmer.corporateName } != null">
+                        <div class="basicmenu">
+                            <a class="basictitle">법인명</a><br>
+                            <input class="farmerinfo" type="text" th:value="${ detail.farmer.corporateName }" readonly>
+                        </div>
+                    </th:block>
                     <div class="basicmenu">
                         <a class="basictitle">대표자명</a><br>
                         <input class="farmerinfo" type="text" id="representativeName" name="representativeName" th:value="${ detail.farmer.representativeName }" readonly>
@@ -75,31 +70,31 @@
                     <div class="basicmenu">
                         <a class="basictitle">대표자 이메일</a><br>
                         <input class="farmerinfo" type="text" id="representativeEmail" name="representativeEmail" th:value="${ detail.farmer.representativeEmail }" readonly>
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">대표자 신분증</a>
-                        <input type="file" name="uploadfile2"><br>
                     </div><br>
                     <a style="font-size: 20pt;">세금계산서 발행 및 정산 계좌 정보</a><br>
-                    <div class="basicmenu">
-                        <a class="basictitle">대표자 신분증</a><br>
-                        <input class="registration" id="representativeSSN" name="representativeSSN" type="text" th:value="${ detail.farmer.representativeSSN }" readonly>
-                        <input class="registration" type="text">
-                    </div>
                     <div class="basicmenu">
                         <a class="basictitle">세금계산서 발행 이메일</a><br>
                         <input class="farmerinfo" id="taxReceiveEmail" name="taxReceiveEmail" type="text" th:value="${ farmer.taxReceiveEmail }" readonly>
                     </div>
                     <div class="basicmenu">
+                        <a class="basictitle">은행명</a><br>
+                        <input class="farmerinfo" type="text" id="bankName" name="farmerAccount" th:value="${ farmer.bank.bankName }" readonly><br><br>
                         <a class="basictitle">계좌번호</a><br>
                         <input class="farmerinfo" type="text" id="farmerAccount" name="farmerAccount" th:value="${ farmer.farmerAccount }" readonly><br><br>
                         <a class="basictitle">예금주</a><br>
                         <input class="farmerinfo" type="text" id="farmerName" name="farmerName" th:value="${ farmer.farmerName }" readonly>
                     </div>
                     <div class="basicmenu">
-                        <a class="basictitle">통장 사본</a><br>
-                        <input type="file" name="uploadfile">
-                    </div><br>
+                        <a class="basictitle">파머 금융정보 첨부파일</a><br>
+                        <a th:href="@{${ '/upload/original/'+ attachment.get(0).projectAttachmentSaveName }}" download="사업자등록증">사업자등록증</a><br>
+                        <a th:href="@{${ '/upload/original/'+ attachment.get(1).projectAttachmentSaveName }}" download="법인인감증명서">법인인감증명서</a><br>
+                        <a th:href="@{${ '/upload/original/'+ attachment.get(2).projectAttachmentSaveName }}" download="대표자신분증">대표자신분증</a><br>
+                        <a th:href="@{${ '/upload/original/'+ attachment.get(3).projectAttachmentSaveName }}" download="통장사본">통장사본</a><br>
+                        <img th:src="@{${ '/upload/original/'+ attachment.get(0).projectAttachmentSaveName }}" style="width: 300px; height: 200px; display: none">
+                        <img th:src="@{${ '/upload/original/'+ attachment.get(1).projectAttachmentSaveName }}" style="width: 300px; height: 200px; display: none">
+                        <img th:src="@{${ '/upload/original/'+ attachment.get(2).projectAttachmentSaveName }}" style="width: 300px; height: 200px; display: none">
+                        <img th:src="@{${ '/upload/original/'+ attachment.get(3).projectAttachmentSaveName }}" style="width: 300px; height: 200px; display: none">
+                    </div><br><br>
                     <div>
                         <button type="button" class="btn3 big-btn back" style="float:right;">뒤로가기</button>
                     </div>
