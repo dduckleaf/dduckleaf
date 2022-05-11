@@ -56,14 +56,15 @@
           </div>
           <div>
             <ul>
-              <li><a th:href="@{/}">농사일지</a></li>
-              <li><a th:href="@{/}">달성 현황</a></li>
-              <li><a th:href="@{/}">리워드 정보</a></li>
-              <li><a th:href="@{/}">반환정책</a></li>
-              <li><a th:href="@{/project/notice/list}">공지사항</a></li>
+<!--              <li><a th:href="@{/}">농사일지</a></li>-->
+<!--              <li><a th:href="@{/}">달성 현황</a></li>-->
+<!--              <li><a th:href="@{/}">리워드 정보</a></li>-->
+<!--              <li><a th:href="@{/}">반환정책</a></li>-->
+              <li><a th:href="@{/project/notice/list/{projectNo} (projectNo = ${project.projectNo})}">공지사항</a></li>
               <li style="height: 40px; line-height: 40px; background: #fff; border: 1px solid #bac34e; font-size: 20px;"><a th:href="@{/common/farmerpage}" style="color: #bac34e">나가기</a></li>
               <li style="height: 40px; line-height: 40px; font-size: 20px; border-radius: 5%; color: #C2423A; background: #FFF; border: 1px solid #C2423A; cursor: pointer;">
-              <a th:href="@{/project/application/cancel/{projectNo} (projectNo = ${ project.projectNo })}"  style="color: #C2423A">프로젝트 신청 취소</a></li>
+<!--              <a th:href="@{/project/application/cancel/{projectNo} (projectNo = ${ project.projectNo })}"  style="color: #C2423A">프로젝트 신청 취소</a></li>-->
+              <a id="cancel" style="color: #C2423A">프로젝트 신청 취소</a></li>
             </ul>
           </div>
         </aside>
@@ -103,8 +104,8 @@
 
 <script>
 
-  // const projectNo = $("#projectNo").val();
-  //
+  const projectNo = $("#projectNo").val();
+
   // $(".cancel").click(function() {
   //   location.href= "/project/application/cancel/" + projectNo;
   // });
@@ -129,6 +130,45 @@
       location.href = "/common/farmerpage";
     }
   }
+
+  $("#cancel").click(function() {
+    Swal.fire({
+      title: '취소하시겠습니까?',
+      showCancelButton: true,
+      confirmButtonText: '확인',
+      cancelButtonText: '취소',
+      allowEnterKey: false,
+      customClass: {
+        confirmButton: 'savesuccess',
+        cancelButton: 'savecancel',
+        popup: 'savepopup'
+      },
+      buttonsStyling: false,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: '취소되었습니다',
+          confirmButtonText: "확인",
+          allowEnterKey: false,
+          customClass: {
+            confirmButton: 'saveok',
+            popup: 'savepopup'
+          },
+          buttonsStyling: false,
+        }).then(function(projectNo) {
+
+          let saveForm = document.saveForm;
+          let url = '/project/application/cancel/' + projectNo;
+          saveForm.projectNo = projectNo;
+          // saveForm.formData = formData;
+
+          saveForm.action = url;
+          saveForm.method = 'get';
+          saveForm.submit();
+        });
+      }
+    })
+  });
 </script>
 <!-- JS Files
 ============================================ -->
@@ -163,6 +203,7 @@
     $tabBtn.removeClass('active');
     target.addClass('active');
   });
+
 </script>
 
 </body>
