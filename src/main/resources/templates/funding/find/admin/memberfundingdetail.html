@@ -44,7 +44,28 @@
             </tr>
         </table>
     </div>
-
+    <div class="project-list-paging">
+        <!-- 맨 앞으로 이동 -->
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist/detail/' + @{${memberNo}} + '?page=' + @{${paging.startPage}} + '\''"
+                th:disabled="${ fundings.first }" class="paging-btn first"><<</button>
+        
+        <!-- 이전 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist/detail/' + @{${memberNo}} + '?page=' + @{${paging.currentPage - 1}} + '\''"
+                th:disabled="${ fundings.first }" class="paging-btn prev"><</button>
+        
+        <!-- 숫자 버튼-->
+        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+            <button th:onclick="'location.href=\'/funding/find/admin/memberlist/detail/' + @{${memberNo}} + '?page=' + @{${page}} + '\''"
+                    th:text="${ page }" th:disabled="${ paging.currentPage eq page}" class="paging-btn"></button>
+        </th:block>
+        
+        <!-- 다음 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist/detail/' + @{${memberNo}} + '?page=' + @{${paging.currentPage + 1}} + '\''"
+                th:disabled="${ fundings.last}" class="paging-btn next">></button>
+        
+        <!-- 맨 마지막으로 이동-->
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist/detail/' + @{${memberNo}} + '?page=' + @{${paging.endPage}} + '\''"
+                th:disabled="${ fundings.last }" class="paging-btn last">>></button>
 </div>
 
 <script>
@@ -63,9 +84,8 @@
             }
 
             tds[i].onclick = function() {
-                const fundingNo = this.parentNode.children[0].innerText ;
-                alert(fundingNo);
-                location.href = "/funding/find/admin/memberlist/detail/" + fundingNo;
+                const fundingNo = this.parentNode.children[0].children[0].value ;
+                location.href = "/funding/find/admin/memberdetail/" + fundingNo;
             }
         }
     }

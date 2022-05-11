@@ -16,7 +16,7 @@
         <div class="title-div" style="margin-top: 3%">
 				<span class="text-title">
 					<img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">
-                    <label id="keyword">프로젝트 환불 조회</label>
+                    <label id="keyword">[[${title}]] 조회</label>
 				</span>
             <hr style="width: 100%">
         </div>
@@ -43,7 +43,27 @@
     </div>
     <!-- 페이징 공간  -->
     <div class="project-list-paging">
-
+        <!-- 맨 앞으로 이동 -->
+        <button th:onclick="'location.href=\'/refund/find/admin/refundlist/'+ @{${refundstatus}} +'?page=' + @{${paging.startPage}} + '\''"
+                th:disabled="${ refundings.first }" class="paging-btn first"><<</button>
+    
+        <!-- 이전 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${refundstatus}} +'?page=' + @{${paging.currentPage - 1}} + '\''"
+                th:disabled="${ refundings.first }" class="paging-btn prev"><</button>
+    
+        <!-- 숫자 버튼-->
+        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+            <button th:onclick="'location.href=\'/project/notice/list/'+ @{${refundstatus}} +'?page=' + @{${page}} + '\''"
+                    th:text="${ page }" th:disabled="${ paging.currentPage eq page}" class="paging-btn"></button>
+        </th:block>
+    
+        <!-- 다음 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${refundstatus}} +'?page=' + @{${paging.currentPage + 1}} + '\''"
+                th:disabled="${ refundings.last}" class="paging-btn next">></button>
+    
+        <!-- 맨 마지막으로 이동-->
+        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${refundstatus}} +'?page=' + @{${paging.endPage}} + '\''"
+                th:disabled="${ refundings.last }" class="paging-btn last">>></button>
     </div>
 </div>
 
