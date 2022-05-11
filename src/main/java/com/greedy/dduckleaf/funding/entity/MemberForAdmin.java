@@ -1,9 +1,6 @@
 package com.greedy.dduckleaf.funding.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,9 +9,10 @@ import java.util.List;
 @AllArgsConstructor
 @Setter
 @Getter
-@Entity(name = "MemberForFunding")
+@ToString
+@Entity(name = "MemberForAdminFindFunding")
 @Table(name = "TBL_MEMBER")
-public class Member {
+public class MemberForAdmin {
 
     @Id
     @Column(name = "MEMBER_NO")
@@ -46,18 +44,7 @@ public class Member {
     @JoinColumn(name = "MEMBER_NO")
     private FarmerInfo farmer;
 
-    @Override
-    public String toString() {
-        return "Member{" +
-                "memberNo=" + memberNo +
-                ", memberName='" + memberName + '\'' +
-                ", memberId='" + memberId + '\'' +
-                ", memberPwd='" + memberPwd + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", memberRole=" + memberRole +
-                ", whthdrawalStatus='" + whthdrawalStatus + '\'' +
-                ", farmer='" + farmer + '\'' +
-                '}';
-    }
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "MEMBER_NO")
+    private List<FundingForAdmin> fundings;
 }
