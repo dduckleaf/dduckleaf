@@ -19,35 +19,90 @@
 <body>
 <div class="main-wrapper">
 <div th:include="/common/menubar.html"></div>
-
-<div class="mypage" th:replace="/common/project.html"></div>
-
+    <th:block th:if="${ project.progressStatus == 5 }">
+        <div class="mypage" th:replace="/project/cancel/detail.html"></div>
+    </th:block>
+    <th:block th:if="${ project.progressStatus == 2 }">
+        <div class="mypage" th:replace="/common/project.html"></div>
+    </th:block>
+    <th:block th:if="${ project.progressStatus == 3 }">
+        <div class="mypage" th:replace="/common/project.html"></div>
+    </th:block>
+    <th:block th:if="${ project.progressStatus == 4 }">
+        <div class="mypage" th:replace="/common/endproject.html"></div>
+    </th:block>
 <!-- Begin 게시판영역 -->
     <div class="tab-body-area">
         <div class="title-div">
             <span class="text-title">
+                <th:block th:if="${ project.progressStatus != 5 }">
                 <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">공지사항</span>
                 <hr width="100%">
+                </th:block>
                 <div class="notice-wrap">
                     <div class="cont-div">
                         <div id="projectNoticeList">
-                            <table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
-                                <tr>
-                                    <th>번호</th>
-                                    <th>제목</th>
-                                    <th>작성일</th>
-                                    <th>조회수</th>
-                                </tr>
-                                <tr th:each="project : ${ projectNoticeList }" class="noticeList" id="noticeList">
-                            <!--                    <input type="hidden" th:text="${ project.projectNoticeNo }">-->
-                                    <td th:text="${ project.projectNoticeNo }"></td>
-                                    <td th:text="${ project.projectNoticeTitle }"></td>
-                                    <td th:text="${ project.registDate }"></td><!--이름을 넣어야하는데..어떻게 들고오나....수바-->
-                                    <td th:text="${ project.projectNoticeCount }"></td>
-                                </tr>
-                            </table>
+                            <th:block th:if="${ project.progressStatus == 5 }">
+                                <p style="font-size: 25pt; text-align: center">심사 대기중입니다.</p>
+<!--                                <table class="basic-table" id="project-qna-table1" align="center" style="width: 100%">-->
+<!--                                    <tr style="cursor:pointer;">-->
+<!--                                        <th style="width: 100px;">번호</th>-->
+<!--                                        <th style="width: 600px;">제목</th>-->
+<!--                                        <th style="width: 200px;">작성일</th>-->
+<!--                                    </tr>-->
+<!--                                    <tr>-->
+<!--                                        <td></td>-->
+<!--                                        <td>심사 대기중입니다.</td>-->
+<!--                                        <td></td>-->
+<!--                                    </tr>-->
+<!--                                </table>-->
+                            </th:block>
+                            <th:block th:if="${ project.progressStatus == 2 }">
+                                <table class="basic-table" id="project-qna-table2" align="center" style="width: 100%">
+                                    <tr style="cursor:pointer;">
+                                        <th style="width: 100px;">번호</th>
+                                        <th style="width: 600px;">제목</th>
+                                        <th style="width: 200px;">작성일</th>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>게시글이 존재하지 않습니다.</td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </th:block>
+                            <th:block th:if="${ project.progressStatus == 3 }">
+                                <table class="basic-table" id="project-qna-table3" align="center" style="width: 100%">
+                                    <tr style="cursor:pointer;">
+                                        <th style="width: 100px;">번호</th>
+                                        <th style="width: 600px;">제목</th>
+                                        <th style="width: 200px;">작성일</th>
+                                    </tr>
+                                    <tr th:each="project : ${ projectNoticeList }" class="noticeList">
+                                        <td th:text="${ project.projectNoticeNo }"></td>
+                                        <td th:text="${ project.projectNoticeTitle }"></td>
+                                        <td th:text="${ project.registDate }"></td>
+                                    </tr>
+                                </table>
+                            </th:block>
+                            <th:block th:if="${ project.progressStatus == 4 }">
+                                <table class="basic-table" id="project-qna-table4" align="center" style="width: 100%">
+                                    <tr style="cursor:pointer;">
+                                        <th style="width: 100px;">번호</th>
+                                        <th style="width: 600px;">제목</th>
+                                        <th style="width: 200px;">작성일</th>
+                                    </tr>
+                                    <tr th:each="project : ${ projectNoticeList }" class="noticeList">
+                                        <td th:text="${ project.projectNoticeNo }"></td>
+                                        <td th:text="${ project.projectNoticeTitle }"></td>
+                                        <td th:text="${ project.registDate }"></td>
+                                    </tr>
+                                </table>
+                            </th:block>
                         </div><br>
+                        <th:block th:if="${ project.progressStatus != 5 }">
                         <button class="basic-btn small-btn btn1 registProjectNotice" type="button">작성하기</button>
+                        </th:block>
                     </div>
                 </div>
             </div>
