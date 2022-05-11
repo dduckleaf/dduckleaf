@@ -27,6 +27,9 @@ public class Project {
     @Column(name = "ACHIEVEMENT_RATE")
     private int achievementRate;            //달성률
 
+    @Column(name = "PROJECT_STATUS")
+    private String projectStatus;           //승인여부
+
     @Column(name = "PROGRESS_STATUS")
     private int progressStatus;             //진행상태
 

@@ -25,12 +25,6 @@ public class FarmerInfo {
     @Column(name = "REPRESENTATIVE_EMAIL")
     private String representativeEmail;                 //대표자이메일
 
-    @OneToOne(mappedBy = "farmer")
-    private FarmerFinancialInfo farmerFinancialInfo;
-
-    @OneToMany(mappedBy = "farmer")
-    private List<Project> projects;
-
     @Override
     public String toString() {
         return "FarmerInfo{" +
