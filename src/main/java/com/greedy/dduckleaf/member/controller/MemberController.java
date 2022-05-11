@@ -175,6 +175,7 @@ public class MemberController {
         member.setEmail(email);
         member.setMemberRole(2);
         member.setWithdrawalStatus("N");
+        member.setMemberJoinDate(getDateAndTime());
 
         memberService.registMember(member);
 

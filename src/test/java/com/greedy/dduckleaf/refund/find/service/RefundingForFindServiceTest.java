@@ -5,6 +5,7 @@ import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.refund.find.dto.ProjectForAdminListDTO;
 import com.greedy.dduckleaf.refund.find.dto.RefundingDTO;
+import com.greedy.dduckleaf.refund.find.dto.RefundingForAdminListDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -90,6 +91,20 @@ class RefundingForFindServiceTest {
         projects.forEach(System.out::println);
     }
 
+    @Test
+    public void findAdminRefundingListByProject_test() {
+
+        //given
+        int projectNo = 343;
+        Pageable pageable = PageRequest.of(0, 10);
+
+        //when
+        Page<RefundingForAdminListDTO> refundings = service.findAdminRefundingListByProject(projectNo, pageable);
+
+        //then
+        assertNotNull(refundings);
+        refundings.forEach(System.out::println);
+    }
 }
 
 

@@ -107,8 +107,12 @@ public class RefundForFindController {
 
         Page<ProjectForAdminListDTO> projects = service.findAdminProjectList(pageable);
 
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projects);
+
+        mv.addObject("paging", paging);
         mv.addObject("projects", projects);
         mv.setViewName("/refund/find/admin/refundlist");
+
         return mv;
     }
 
@@ -118,8 +122,21 @@ public class RefundForFindController {
 
         Page<RefundingForAdminListDTO> refundings = service.findAdminRefundingListByProject(projectNo, pageable);
 
+
+
         mv.addObject("refundings", refundings);
         mv.setViewName("/refund/find/admin/refundlistbyproject");
+        return mv;
+    }
+
+    @GetMapping("/admin/refundingdetail/{refundingNo}")
+    public ModelAndView findAdminRefundingDetail(ModelAndView mv, @PathVariable int refundingNo) {
+
+        RefundingDTO refunding = service.findRefundingInfo(refundingNo);
+
+        mv.addObject("refunding", refunding);
+        mv.setViewName("/refund/find/admin/refunddetail");
+
         return mv;
     }
 }

@@ -4,14 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greedy.dduckleaf.settlement.calculate.dto.SettlementInfoPackage;
 import com.greedy.dduckleaf.settlement.calculate.service.SettlementCalculateService;
+import com.greedy.dduckleaf.settlement.check.service.SettlementCheckService;
 import com.greedy.dduckleaf.settlement.dto.ProjectDTO;
 import com.greedy.dduckleaf.settlement.service.SettlementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -24,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 2022-05-01 (장민주) farmerSettlementOverviewPage 메소드 작성
  * 2022-05-06 (장민주) projectManageOverviewPage 메소드 작성
  * 2022-05-09 (장민주) farmerSettlementOverviewPage -> findFarmerSettlementOverview 메소드 명 변경 및 코드 수정
+ * 2022-05-10 (장민주) modifyFarmerCheckStatus 메소드 작성
  * </pre>
  *
  * @author 장민주
@@ -37,11 +36,14 @@ public class SettlementController {
     private final SettlementService mainService;
     @Autowired
     private final SettlementCalculateService calculateService;
+    @Autowired
+    private final SettlementCheckService checkService;
     private final ObjectMapper mapper;
 
-    public SettlementController(SettlementService mainService, SettlementCalculateService calculateService, ObjectMapper mapper) {
+    public SettlementController(SettlementService mainService, SettlementCalculateService calculateService, SettlementCheckService checkService, ObjectMapper mapper) {
         this.mainService = mainService;
         this.calculateService = calculateService;
+        this.checkService = checkService;
         this.mapper = mapper;
     }
 
@@ -57,14 +59,13 @@ public class SettlementController {
         SettlementInfoPackage settlementInfoPackage = calculateService.findSettlementInfoPackage(projectNo);
 
         mv.addObject("project", settlementInfoPackage.getSettlementInfo().getProject());
-        System.out.println(settlementInfoPackage.getSettlementInfo().getProject());
         mv.addObject("settlementInfo", settlementInfoPackage.getSettlementInfo());
-        System.out.println(settlementInfoPackage.getSettlementInfo());
         mv.addObject("feeInfo", settlementInfoPackage.getFeeInfo());
-        System.out.println(settlementInfoPackage.getFeeInfo());
         mv.addObject("settlementPaymentInfos", settlementInfoPackage.getSettlementPaymentInfos());
-        System.out.println(settlementInfoPackage.getSettlementPaymentInfos());
         mv.setViewName("settlement/farmer/overview");
+
+        System.out.println("project = " + settlementInfoPackage.getSettlementInfo().getProject());
+        System.out.println("settlementInfoPackage = " + settlementInfoPackage);
 
         return mv;
     }
@@ -136,6 +137,22 @@ public class SettlementController {
         SettlementInfoPackage settlementInfoPackage = calculateService.findSettlementInfoPackage(projectNo);
 
         return mapper.writeValueAsString(settlementInfoPackage);
+    }
+
+    /**
+     * modifyFarmerCheckStatus: 파머가 정산정보를 확인했음을 데이터베이스에 반영할 것을 요청하는 메소드입니다.
+     * @param paymentNo: 파머가 확인한 정산금지급내역 번호
+     * @return 데이터 수정 성공실패 여부
+     * @author 장민주
+     */
+    @PostMapping(value = "/check", produces = "application/json; charset=UTF-8")
+    @ResponseBody
+    public String modifyFarmerCheckStatus(@RequestBody int paymentNo) throws JsonProcessingException {
+
+        /* 확인 요청이 접수되었다는 메시지 또는 접수가 실패되었다는 메시지를 전달 */
+        String modifyResult = checkService.modifySettlementPaymentInfo(paymentNo);
+
+        return  mapper.writeValueAsString(modifyResult);
     }
 
 }

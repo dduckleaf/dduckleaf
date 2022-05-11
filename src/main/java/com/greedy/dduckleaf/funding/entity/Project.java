@@ -78,9 +78,7 @@ public class Project {
                 ", rewardInfo=" + rewardInfo +
                 ", projectShippingFee=" + projectShippingFee +
                 ", projectShippingInfo=" + projectShippingInfo +
-                ", basicInfo=" + basicInfo +
                 ", farmer=" + farmer +
-                ", fundingList=" + fundingList +
                 '}';
     }
 

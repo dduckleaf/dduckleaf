@@ -2,8 +2,10 @@ package com.greedy.dduckleaf.funding.find.member.service;
 
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
+import com.greedy.dduckleaf.funding.dto.FundingByMemberForAdminDTO;
 import com.greedy.dduckleaf.funding.dto.FundingDTO;
 import com.greedy.dduckleaf.funding.find.member.dto.FundingFindDetailInfoForMemberDTO;
+import com.greedy.dduckleaf.funding.find.member.dto.FundingInfoByMemberForAdminDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +77,34 @@ class FundingServiceForFindTest {
         //then
         assertNotNull(fundingDTO);
         System.out.println("fundingDTO = " + fundingDTO);
+    }
+
+    @Test
+    public void findfundingInfoByMemberForAdmin_test() {
+
+        //given
+        Pageable pageable = PageRequest.of(0, 20);
+
+        //when
+        Page<FundingInfoByMemberForAdminDTO> fundinginfos = service.findfundingInfoByMemberForAdmin(pageable);
+
+        //then
+        assertNotNull(fundinginfos);
+        fundinginfos.forEach(System.out::println);
+    }
+
+    @Test
+    public void findFundingInfoByMemberId_test() {
+
+        //given
+        Pageable pageable = PageRequest.of(0, 20);
+        int memberNo = 7;
+
+        //when
+        Page<FundingByMemberForAdminDTO> fundings = service.findFundingInfoByMemberId(memberNo, pageable);
+
+        //then
+        assertNotNull(fundings);
+        fundings.forEach(System.out::println);
     }
 }

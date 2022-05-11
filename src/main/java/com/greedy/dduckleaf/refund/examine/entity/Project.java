@@ -3,6 +3,7 @@ package com.greedy.dduckleaf.refund.examine.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -31,4 +32,14 @@ public class Project {
 
     @Column(name = "FARMER_NO")
     private int farmerNo;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "PROJECT_NO")
+    private List<Funding> fundings;
+
+    @Column(name = "FUND_TARGET_AMOUNT")
+    private int fundTargetAmount;
+
+    @Column(name = "ACHIEVEMENT_RATE")
+    private double achievementRate;
 }

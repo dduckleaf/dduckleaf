@@ -3,8 +3,10 @@ package com.greedy.dduckleaf.refund.find.repository;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
+import com.greedy.dduckleaf.refund.find.dto.RefundingDTO;
 import com.greedy.dduckleaf.refund.find.entity.Refunding;
 import org.junit.jupiter.api.Test;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,8 @@ class RefundingForFindRepositoryTest {
 
     @Autowired
     private RefundingForFindRepository repo;
+    @Autowired
+    private ModelMapper mapper;
 
     @Test
     public void initTest() {
@@ -64,7 +68,7 @@ class RefundingForFindRepositoryTest {
     }
 
     @Test
-    public void test1() {
+    public void findByProject_farmerNo_test() {
 
         //given
         int farmerNo = 8;
@@ -74,14 +78,25 @@ class RefundingForFindRepositoryTest {
 
         //then
         assertNotNull(refundings);
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
         refundings.forEach(System.out::println);
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
-        System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();System.out.println();
+    }
+
+    @Test
+    public void findByProject_projectNo_test() {
+
+        //given
+        int projectNo = 343;
+        Pageable pageable = PageRequest.of(0, 10);
+
+        //when
+        Page<Refunding> refundings = repo.findByProject_projectNo(projectNo, pageable);
+
+        //then
+        assertNotNull(refundings);
+        refundings.forEach(System.out::println);
+
+        Page<RefundingDTO> dtos = refundings.map(refund -> mapper.map(refund, RefundingDTO.class));
+        dtos.forEach(System.out::println);
     }
 }
 

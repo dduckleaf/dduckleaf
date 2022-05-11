@@ -3,9 +3,11 @@ package com.greedy.dduckleaf.funding.find.member.controller;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
+import com.greedy.dduckleaf.funding.dto.FundingByMemberForAdminDTO;
 import com.greedy.dduckleaf.funding.dto.FundingDTO;
 import com.greedy.dduckleaf.funding.entity.Funding;
 import com.greedy.dduckleaf.funding.find.member.dto.FundingFindDetailInfoForMemberDTO;
+import com.greedy.dduckleaf.funding.find.member.dto.FundingInfoByMemberForAdminDTO;
 import com.greedy.dduckleaf.funding.find.member.service.FundingServiceForFind;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -83,6 +85,34 @@ public class FundingForMemberFindController {
         mv.addObject("funding", fundingDetailInfo.getFunding());
         mv.addObject("bankList", fundingDetailInfo.getBankList());
         mv.setViewName("/funding/find/supporter/fundingdetailinfo");
+
+        return mv;
+    }
+
+    @GetMapping("/admin/memberlist")
+    public ModelAndView sendFundingMemberListAdminPage(ModelAndView mv, @PageableDefault Pageable pageable) {
+
+        int buttonAmount = 5;
+        Page<FundingInfoByMemberForAdminDTO> fundingInfos = service.findfundingInfoByMemberForAdmin(pageable);
+
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(fundingInfos, buttonAmount);
+
+        mv.addObject("paging", paging);
+        mv.addObject("fundingInfos", fundingInfos);
+        mv.setViewName("/funding/find/admin/memberfundinglist");
+
+        return mv;
+    }
+
+    @GetMapping("/admin/memberlist/detail/{memberNo}")
+    public ModelAndView sendFundingMemberDetailAdminPage(ModelAndView mv, @PathVariable int memberNo, @PageableDefault Pageable pageable) {
+
+        Page<FundingByMemberForAdminDTO> fundings = service.findFundingInfoByMemberId(memberNo, pageable);
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(fundings, 5);
+
+        mv.addObject("paging", paging);
+        mv.addObject("fundings", fundings);
+        mv.setViewName("/funding/find/admin/memberfundingdetail");
 
         return mv;
     }

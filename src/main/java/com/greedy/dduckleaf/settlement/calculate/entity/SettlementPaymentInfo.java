@@ -37,10 +37,16 @@ public class SettlementPaymentInfo {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumns(value = {
-        @JoinColumn(name = "SETTLEMENT_PAYMENT_STANDARD_NO", referencedColumnName = "SETTLEMENT_PAYMENT_STANDARD_NO"),
-        @JoinColumn(name = "SETTLEMENT_PAYMENT_ROUND_RATE_NO", referencedColumnName = "SETTLEMENT_PAYMENT_ROUND_RATE_NO")
+        @JoinColumn(
+            name = "SETTLEMENT_PAYMENT_STANDARD_NO",
+            referencedColumnName = "SETTLEMENT_PAYMENT_STANDARD_NO"
+        ),
+        @JoinColumn(
+            name = "SETTLEMENT_PAYMENT_ROUND_RATE_NO",
+            referencedColumnName = "SETTLEMENT_PAYMENT_ROUND_RATE_NO"
+        )
     })
-    private SettlementPaymentStandard settlementPaymentStandard;             //정산금지급기준
+    private SettlementPaymentStandard settlementPaymentStandard;               //정산금지급기준
 
     @Override
     public String toString() {
