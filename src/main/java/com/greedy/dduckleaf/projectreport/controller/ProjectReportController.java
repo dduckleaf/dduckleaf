@@ -24,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
+
 /**
  * <pre>
  * Class : FundingRegistController
@@ -40,12 +42,13 @@ import java.util.List;
  *                    findProjectReportDetailForProjectManager 메소드 작성.
  * 2022/04/28 (장민주) registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 메소드 작성.
  *                    registProjectReportReply(ModelAndView, ProjectReportReplyDTO, int, CustomUser, RedirectAttributes) 리팩토링.
- * 2022/04/28 (장민주) findProjectReportWaitingList 메소드 작성.
- * 2022/04/28 (장민주) findProjectReportWaitingList 메소드 리팩토링.
+ *                    findProjectReportWaitingList 메소드 작성.
+ *                    findProjectReportWaitingList 메소드 리팩토링
  *                    -> findProjectsByProjectReportStatus 로 변경.
  * 2022/05/04 (장민주) registProjectReport 메소드 작성.
+ *
  * </pre>
- * @version 1.0.8
+ * @version 1.0.7
  * @author 장민주
  */
 @Controller
@@ -63,20 +66,17 @@ public class ProjectReportController {
 
     /**
     * findProjectReportListByMemberNo:회원번호로 로그인회원의 프로젝트신고내역 조회 요청 메소드입니다.
+    *  @param user 로그인한 사용자 정보
     *  @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
     * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
-     *           projectReportSummeryInfo : 프로젝트신고내역 요약정보
-     *           "report/list" : 요약정보를 출력할 브라우저 화면 경로
     */
     @GetMapping("/list")
     public ModelAndView findProjectReportListByMemberNo(@AuthenticationPrincipal CustomUser user, ModelAndView mv) {
 
         int memberNo = user.getMemberNo();
-        System.out.println("memberNo = " + memberNo);
 
         List<ProjectReportDTO> projectReportList = service.findProjectReportListByMemberNo(memberNo);
-        System.out.println("projectReportList = " + projectReportList);
-        
+
         mv.addObject("projectReportList", projectReportList);
         mv.setViewName("report/list");
 
@@ -85,10 +85,9 @@ public class ProjectReportController {
 
     /**
      * findProjectReportDetailForMember: 서포터 마이페이지 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
-     *  @param projectReportNo 상세조회를 요청할 프로젝트신고번호
-     * @return mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
-     *            projectReportInfo : 프로젝트신고내역 상세정보
-     *            "report/detail" : 상세정보를 출력할 브라우저 화면 경로
+     * @param projectReportNo 상세조회를 요청할 프로젝트신고번호
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @return mv: 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
      */
     @GetMapping("/detail/{projectReportNo}")
     public ModelAndView findProjectReportDetailForMember(ModelAndView mv, @PathVariable int projectReportNo) {
@@ -109,7 +108,9 @@ public class ProjectReportController {
 
     /**
      * findAllProjectReportList: 프로젝트 신고내역 전체조회 요청 메소드입니다.
-     * @return 프로젝트신고 목록, 프로젝트신고 목록이 출력될 화면 경로
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param pageable 페이지 정보를 담은 객체
+     * @return mv: 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
      */
     @GetMapping("/platformmanager/listAll")
     public ModelAndView findAllProjectReportList(ModelAndView mv,
@@ -130,7 +131,10 @@ public class ProjectReportController {
 
     /**
      * findProjectsByProjectReportStatus: 신고 처리 상태에 따른 프로젝트 신고내역 조회 요청 메소드입니다.
-     * @return mv 프로젝트신고 목록, 프로젝트신고 목록이 출력될 화면 경로
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param projectReportStatus 신고 처리 상태
+     * @param pageable 페이지 정보를 담은 객체
+     * @return mv: 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
      */
     @GetMapping("/platformmanager/{projectReportStatus}")
     public ModelAndView findProjectsByProjectReportStatus(ModelAndView mv, @PathVariable String projectReportStatus,
@@ -151,8 +155,9 @@ public class ProjectReportController {
 
     /**
     * findProjectReportDetail: 플랫폼관리 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
+    * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
     * @param projectReportNo 상세조회를 요청할 프로젝트신고번호
-    * @return mv 프로젝트 상세조회 데이터, 상세조회가 출력될 화면 경로
+    * @return mv: 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
     */
     @GetMapping("/platformmanager/detail/{projectReportNo}")
     public ModelAndView findProjectReportDetail(ModelAndView mv, @PathVariable int projectReportNo) {
@@ -167,9 +172,11 @@ public class ProjectReportController {
 
     /**
     * registProjectReportReply: 프로젝트 신고내역에 대한 답변 등록 요청 메소드입니다.
-    * @param projectReportReply: 등록해줄 프로젝트 신고 답변 정보
-    * @param user: 로그인한 관리자 회원 정보
-    * @return mv: 답변 등록 성공 메시지, redirect 할 화면경로
+    * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+    * @param projectReportReply 등록해줄 프로젝트 신고 답변 정보
+    * @param user 로그인한 관리자 정보
+    * @param rttr 등록 성공 시 전송할 일회성 메시지 data를 담은 객체
+    * @return mv: 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
     */
     @PostMapping("/platformmanager/regist")
     public ModelAndView registProjectReportReply(ModelAndView mv, @ModelAttribute ProjectReportReplyDTO projectReportReply,
@@ -178,7 +185,7 @@ public class ProjectReportController {
         /* 세션에서 로그인한 관리자의 회원번호 추출 */
         int adminNo = user.getMemberNo();
         /* 데이터베이스에 삽입해줄 현재 날짜, 시간정보 생성 */
-        String registDate = DateFormatting.getDateAndTime();
+        String registDate = getDateAndTime();
 
         projectReportReply.setAdminNo(adminNo);
         projectReportReply.setProjectReportReplyDate(registDate);
@@ -193,10 +200,12 @@ public class ProjectReportController {
 
     /**
      * registProjectReportReply: 관리자 프로젝트관리 메뉴 하위 신고관리에서 프로젝트 신고내역에 대한 답변 등록 요청하는 메소드입니다.
-     * @param projectReportReply: 등록해줄 프로젝트 신고 답변 정보
-     * @param projectNo: 신고 대상 프로젝트 번호
-     * @param user: 로그인한 관리자 회원 정보
-     * @return mv: 답변 등록 성공 메시지, redirect 할 화면경로
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param projectReportReply 등록해줄 프로젝트 신고 답변 정보
+     * @param projectNo 신고 대상 프로젝트 번호
+     * @param user 로그인한 관리자 회원 정보
+     * @param rttr 등록 성공 시 전송할 일회성 메시지 data를 담은 객체
+     * @return mv: 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
      */
     @PostMapping("/projectmanager/regist/{projectNo}")
     public ModelAndView registProjectReportReply(ModelAndView mv, @ModelAttribute ProjectReportReplyDTO projectReportReply,
@@ -206,7 +215,7 @@ public class ProjectReportController {
         /* 세션에서 로그인한 관리자의 회원번호 추출 */
         int adminNo = user.getMemberNo();
         /* 데이터베이스에 삽입해줄 현재 날짜, 시간정보 생성 */
-        String registDate = DateFormatting.getDateAndTime();
+        String registDate = getDateAndTime();
 
         projectReportReply.setAdminNo(adminNo);
         projectReportReply.setProjectReportReplyDate(registDate);
@@ -221,13 +230,14 @@ public class ProjectReportController {
 
     /**
      * findProjectReportListByProjectNo: 프로젝트 번호로 해당 프로젝트의 신고내역 조회를 요청하는 메소드입니다.
-     * @param projectNo: 프로젝트 번호
-     * @param pageable: 목록 조회시 페이징 처리를 위한 정보를 담는 객체
-     * @return mv: 프로젝트신고목록, 페이징정보, 프로젝트번호, 목록조회화면 경로
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param projectNo 프로젝트 번호
+     * @param pageable 목록 조회시 페이징 처리를 위한 정보를 담는 객체
+     * @return mv: 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
      * @author 장민주
      */
     @GetMapping("/projectmanager/list/{projectNo}")
-    public ModelAndView findProjectReportListOfOneProject(@PathVariable int projectNo, ModelAndView mv,
+    public ModelAndView findProjectReportListOfOneProject(ModelAndView mv, @PathVariable int projectNo,
            @PageableDefault(size=10, sort="projectReportNo", direction = Sort.Direction.DESC) Pageable pageable) {
 
         Page<ProjectReportDTO> projectReportList = service.findProjectReportListOfOneProject(projectNo, pageable);
@@ -246,13 +256,15 @@ public class ProjectReportController {
 
     /**
      * findProjectReportDetailForProjectManager: 프로젝트관리 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param projectNo 신고 대상 프로젝트 번호
      * @param projectReportNo 상세조회를 요청할 프로젝트신고번호
-     * @param projectNo: 신고 대상 프로젝트 번호
-     * @return mv: 프로젝트신고내역 상세정보, 상세정보를 출력할 브라우저 화면 경로
+     * @return mv: 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
      * @author 장민주
      */
     @GetMapping("/projectmanager/detail/{projectNo}/{projectReportNo}")
-    public ModelAndView findProjectReportDetailForProjectManager(ModelAndView mv, @PathVariable int projectNo, @PathVariable int projectReportNo) {
+    public ModelAndView findProjectReportDetailForProjectManager(ModelAndView mv, @PathVariable int projectNo,
+                                                                 @PathVariable int projectReportNo) {
 
         ReportDetailInfo reportDetailInfo = service.findProjectReportAndReply(projectReportNo);
 
@@ -298,12 +310,13 @@ public class ProjectReportController {
 
     /**
      * registProjectReport: 프로젝트 신고 등록을 요청하는 메소드입니다.
-     * @param projectReport: 프로젝트 신고 상세내용
-     * @param projectNo: 프로젝트 번호
-     * @param reportCategoryNo: 프로젝트 신고유형 번호
-     * @param user: 로그인한 사용자 정보
-     * @param rttr: 등록 성공 시 전송할 일회성 메시지 data를 담은 객체
-     * @return
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param projectReport 프로젝트 신고 상세내용
+     * @param projectNo 프로젝트 번호
+     * @param reportCategoryNo 프로젝트 신고유형 번호
+     * @param user 로그인한 사용자 정보
+     * @param rttr 등록 성공 시 전송할 일회성 메시지 data를 담은 객체
+     * @return mv: 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
      * @author 장민주
      */
     @PostMapping("/regist/{projectNo}/{reportCategoryNo}")
@@ -324,7 +337,7 @@ public class ProjectReportController {
         category.setReportCategoryNo(reportCategoryNo);
 
         /* 등록일 데이터를 생성 후 set */
-        projectReport.setProjectReportDate(DateFormatting.getDateAndTime());
+        projectReport.setProjectReportDate(getDateAndTime());
 
         /* projectReport에 필요한 나머지 데이터를 차례로 set */
         projectReport.setProject(project);
