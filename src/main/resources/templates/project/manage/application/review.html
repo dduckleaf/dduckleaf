@@ -28,8 +28,6 @@
     <link rel="stylesheet" th:href="@{ /css/style.css }">
     <link rel="stylesheet" th:href="@{ /css/project.css }">
     <link rel="stylesheet" th:href="@{ /css/projectapplication.css }">
-    <!-- 신기한 모달 -->
-<!--    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>-->
 </head>
 <body>
 <div class="main-wrapper">
@@ -45,7 +43,7 @@
                                 <div class="swiper-wrapper">
                                     <div class="swiper-slide">
                                         <a href="/images/product/large-size/2-1-555x645.jpg" class="single-img gallery-popup">
-                                            <img class="img-full" src="/images/project/potato.png" alt="Product Image">
+                                            <img th:src="${ '/upload/original/' + attachment.projectAttachmentSaveName }" alt="Product Image" style="width: 600px; height: 400px;">
                                         </a>
                                     </div>
                                 </div>
@@ -124,7 +122,6 @@
                         반려 사유
                         <textarea id="projectExamineDetailContent" name="projectExamineDetailContent" style="width: 90%; height: 300px;"></textarea>
                         <input type="hidden" name="projectApplicationNo" th:value="${ detail.projectApplicationNo }">
-<!--                        <input id="projectExamineHistoryNo" name="projectExamineHistoryNo" th:value="${ history.projectExamineHistoryNo }">-->
                     </div>
                 </div>
                 <div class="modal-footer" style="border-top: none;">
@@ -158,44 +155,7 @@
 </form>
 <!-- Modal HTML  -->
 
-
 <script>
-
-
-    // $(".reject").click(async function (agreement) {
-    //     const {value: formValues} = await Swal.fire({
-    //         title: '<img class="leaf" src="/images/common/Leaf.png" style="vertical-align: 10%; margin-right: 10px;">펀딩금 반환정책',
-    //         html:
-    //             '<div class="policymodal">' +
-    //             '<p>펀딩금 반환 정책을 확인해주세요<br>펀딩 종료 후 아래와 같은 경우 펀딩금 반환을 신청할 수 있습니다</p>' +
-    //             '<div>' +
-    //             '<form name="saveForm">' +
-    //             '반려사유<textarea id="projectExamineDetailContent" name="projectExamineDetailContent"></textarea></form>' +
-    //             '</div>' +
-    //             '<div class="btnArea">' +
-    //             '<button class="confirmbtn" id="confirmbtn" type="button">전송</button>' +
-    //             '</div>' + '</div>',
-    //         focusConfirm: false,
-    //         showConfirmButton: false,
-    //         customClass: {
-    //             title: 'confirmtitle',
-    //             popup: 'policypopup',
-    //             htmlContainer: 'confirmcontainer',
-    //         },
-    //         buttonsStyling: false,
-    //     }).then($("#confirmbtn").click(await function(projectExamineDetailContent) {
-    //         let saveForm = document.saveForm;
-    //         let url = '/project/examination/reject' + projectApplicationNo;
-    //
-    //         saveForm.projectExamineDetailContent = projectExamineDetailContent;
-    //         saveForm.action = url;
-    //         saveForm.method = 'post';
-    //         saveForm.submit();
-    //         scroll()
-    //     }));
-    // });
-
-
 
     $(".detail").click(function () {
 
@@ -222,24 +182,6 @@
         location.href='/project/examination/approval/' + projectApplicationNo;
 
     });
-
-    // $(".reject").click(function () {
-    //
-    //     const projectApplicationNo = $("#projectApplicationNo").val();
-    //     console.log(projectApplicationNo);
-    //
-    //     location.href='/project/examination/reject/' + projectApplicationNo;
-    //
-    // });
-    //
-    // $(".okok").click(function () {
-    //
-    //     const projectApplicationNo = $("#projectApplicationNo").val();
-    //     console.log(projectApplicationNo);
-    //
-    //     location.href='/project/examination/reject/' + projectApplicationNo;
-    //
-    // });
 
 </script>
 <script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
