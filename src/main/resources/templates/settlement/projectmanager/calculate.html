@@ -69,25 +69,28 @@
         calculate.onclick = function() {
 
             fetch("/settlement/calculate/[[${project.projectNo}]]")
-            .then(response => response.json())
-            .then(response => {
-                const $fundingAmount = $("#fundingAmount");
-                const $achieveRate = $("#achieveRate");
-                const $feeRate = $("#feeRate");
-                const $commissionAmount = $("#commissionAmount");
-                const $firstPayment = $("#first-payment");
-                const $secondPayment = $("#second-payment");
-                const $farmerCheckStatus = $("#farmerCheckStatus");
+                .then(response => response.json())
+                .then(response => {
+                    console.table(response);
 
-                /* 계산한 값을 테이블에 삽입 */
-                $fundingAmount.text(response.settlementInfo.fundingTotalAmount);
-                $achieveRate.text(response.settlementInfo.project.achievementRate);
-                $feeRate.text(response.feeInfo.feePolicy.feeApplyRate);
-                $commissionAmount.text(response.settlementInfo.totalCommissionAmount);
-                $firstPayment.text(response.settlementPaymentInfos[0].settlementPaymentAmount);
-                $secondPayment.text(response.settlementPaymentInfos[1].settlementPaymentAmount);
-                $farmerCheckStatus.val(response.settlementPaymentInfos[0].farmerSettlementCheckStatus);
-            });
+
+                    const $fundingAmount = $("#fundingAmount");
+                    const $achieveRate = $("#achieveRate");
+                    const $feeRate = $("#feeRate");
+                    const $commissionAmount = $("#commissionAmount");
+                    const $firstPayment = $("#first-payment");
+                    const $secondPayment = $("#second-payment");
+                    const $farmerCheckStatus = $("#farmerCheckStatus");
+
+                    /* 계산한 값을 테이블에 삽입 */
+                    $fundingAmount.text(response.settlementInfo.fundingTotalAmount);
+                    $achieveRate.text(response.settlementInfo.project.achievementRate);
+                    $feeRate.text(response.feeInfo.feePolicy.feeApplyRate);
+                    $commissionAmount.text(response.settlementInfo.totalCommissionAmount);
+                    $firstPayment.text(response.settlementPaymentInfos[0].settlementPaymentAmount);
+                    $secondPayment.text(response.settlementPaymentInfos[1].settlementPaymentAmount);
+                    $farmerCheckStatus.val(response.settlementPaymentInfos[0].farmerSettlementCheckStatus);
+                });
         }
     }
 
