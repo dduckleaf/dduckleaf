@@ -2,13 +2,6 @@ package com.greedy.dduckleaf.projectreport.find.entity;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "PolicyContentForProjectReport")
 @Table(name = "TBL_POLICY_CONTENT")
 public class PolicyContent {
@@ -27,6 +20,47 @@ public class PolicyContent {
 
     @Column(name = "POLICY_CONTENT_DETAIL_CONTENT")
     private String policyContentDetailContent;                      //정책 내용
+
+    public PolicyContent() {}
+
+    public PolicyContent(int policyContentNo, Policy policy, String policyContentTitle, String policyContentDetailContent) {
+        this.policyContentNo = policyContentNo;
+        this.policy = policy;
+        this.policyContentTitle = policyContentTitle;
+        this.policyContentDetailContent = policyContentDetailContent;
+    }
+
+    public int getPolicyContentNo() {
+        return policyContentNo;
+    }
+
+    public void setPolicyContentNo(int policyContentNo) {
+        this.policyContentNo = policyContentNo;
+    }
+
+    public Policy getPolicy() {
+        return policy;
+    }
+
+    public void setPolicy(Policy policy) {
+        this.policy = policy;
+    }
+
+    public String getPolicyContentTitle() {
+        return policyContentTitle;
+    }
+
+    public void setPolicyContentTitle(String policyContentTitle) {
+        this.policyContentTitle = policyContentTitle;
+    }
+
+    public String getPolicyContentDetailContent() {
+        return policyContentDetailContent;
+    }
+
+    public void setPolicyContentDetailContent(String policyContentDetailContent) {
+        this.policyContentDetailContent = policyContentDetailContent;
+    }
 
     @Override
     public String toString() {

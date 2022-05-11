@@ -1,20 +1,11 @@
 package com.greedy.dduckleaf.projectreport.detail.entity;
 
 import javax.persistence.*;
-
 import com.greedy.dduckleaf.projectreport.find.entity.*;
-import com.greedy.dduckleaf.projectreport.find.entity.Member;
-import com.greedy.dduckleaf.projectreport.find.entity.Project;
-import com.greedy.dduckleaf.projectreport.find.entity.ReportCategory;
-import lombok.*;
 
 import java.sql.Date;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectReportForProjectReportDetail")
 @Table(name = "TBL_PROJECT_REPORT")
 public class ProjectReport {
@@ -68,7 +59,132 @@ public class ProjectReport {
     private String projectReportStatus;
 
     @OneToMany(mappedBy = "projectReport", fetch = FetchType.EAGER)
-    List<ProjectReportReply> reportReplyList;
+    private List<ProjectReportReply> reportReplyList;
+
+    public ProjectReport() {}
+
+    public ProjectReport(int projectReportNo, Date projectReportDate, String projectReportContent, String reportRefUrl,
+                         String reporterPhone, String reporterEmail, String reporterName, Member member,
+                         FarmerInfo farmer, ReportCategory reportCategory, Project project, String projectReportStatus,
+                         List<ProjectReportReply> reportReplyList) {
+        this.projectReportNo = projectReportNo;
+        this.projectReportDate = projectReportDate;
+        this.projectReportContent = projectReportContent;
+        this.reportRefUrl = reportRefUrl;
+        this.reporterPhone = reporterPhone;
+        this.reporterEmail = reporterEmail;
+        this.reporterName = reporterName;
+        this.member = member;
+        this.farmer = farmer;
+        this.reportCategory = reportCategory;
+        this.project = project;
+        this.projectReportStatus = projectReportStatus;
+        this.reportReplyList = reportReplyList;
+    }
+
+    public int getProjectReportNo() {
+        return projectReportNo;
+    }
+
+    public void setProjectReportNo(int projectReportNo) {
+        this.projectReportNo = projectReportNo;
+    }
+
+    public Date getProjectReportDate() {
+        return projectReportDate;
+    }
+
+    public void setProjectReportDate(Date projectReportDate) {
+        this.projectReportDate = projectReportDate;
+    }
+
+    public String getProjectReportContent() {
+        return projectReportContent;
+    }
+
+    public void setProjectReportContent(String projectReportContent) {
+        this.projectReportContent = projectReportContent;
+    }
+
+    public String getReportRefUrl() {
+        return reportRefUrl;
+    }
+
+    public void setReportRefUrl(String reportRefUrl) {
+        this.reportRefUrl = reportRefUrl;
+    }
+
+    public String getReporterPhone() {
+        return reporterPhone;
+    }
+
+    public void setReporterPhone(String reporterPhone) {
+        this.reporterPhone = reporterPhone;
+    }
+
+    public String getReporterEmail() {
+        return reporterEmail;
+    }
+
+    public void setReporterEmail(String reporterEmail) {
+        this.reporterEmail = reporterEmail;
+    }
+
+    public String getReporterName() {
+        return reporterName;
+    }
+
+    public void setReporterName(String reporterName) {
+        this.reporterName = reporterName;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public FarmerInfo getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(FarmerInfo farmer) {
+        this.farmer = farmer;
+    }
+
+    public ReportCategory getReportCategory() {
+        return reportCategory;
+    }
+
+    public void setReportCategory(ReportCategory reportCategory) {
+        this.reportCategory = reportCategory;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public String getProjectReportStatus() {
+        return projectReportStatus;
+    }
+
+    public void setProjectReportStatus(String projectReportStatus) {
+        this.projectReportStatus = projectReportStatus;
+    }
+
+    public List<ProjectReportReply> getReportReplyList() {
+        return reportReplyList;
+    }
+
+    public void setReportReplyList(List<ProjectReportReply> reportReplyList) {
+        this.reportReplyList = reportReplyList;
+    }
 
     @Override
     public String toString() {
@@ -81,8 +197,11 @@ public class ProjectReport {
                 ", reporterEmail='" + reporterEmail + '\'' +
                 ", reporterName='" + reporterName + '\'' +
                 ", member=" + member +
+                ", farmer=" + farmer +
+                ", reportCategory=" + reportCategory +
                 ", project=" + project +
                 ", projectReportStatus='" + projectReportStatus + '\'' +
+//                ", reportReplyList=" + reportReplyList +
                 '}';
     }
 }

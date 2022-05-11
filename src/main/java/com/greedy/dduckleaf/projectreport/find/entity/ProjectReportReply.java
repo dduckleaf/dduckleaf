@@ -2,16 +2,9 @@ package com.greedy.dduckleaf.projectreport.find.entity;
 
 import javax.persistence.*;
 
-import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
-import java.sql.Date;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectReportReply")
 @Table(name = "TBL_PROJECT_REPORT_REPLY")
 @DynamicInsert
@@ -38,6 +31,66 @@ public class ProjectReportReply {
     @Column(name = "DELETE_YN")
     @ColumnDefault("N")
     private String deleteYn;
+
+    public ProjectReportReply() {}
+
+    public ProjectReportReply(int projectReportReplyNo, String projectReportReplyContent, String projectReportReplyDate,
+                              ProjectReport projectReport, int adminNo, String deleteYn) {
+        this.projectReportReplyNo = projectReportReplyNo;
+        this.projectReportReplyContent = projectReportReplyContent;
+        this.projectReportReplyDate = projectReportReplyDate;
+        this.projectReport = projectReport;
+        this.adminNo = adminNo;
+        this.deleteYn = deleteYn;
+    }
+
+    public int getProjectReportReplyNo() {
+        return projectReportReplyNo;
+    }
+
+    public void setProjectReportReplyNo(int projectReportReplyNo) {
+        this.projectReportReplyNo = projectReportReplyNo;
+    }
+
+    public String getProjectReportReplyContent() {
+        return projectReportReplyContent;
+    }
+
+    public void setProjectReportReplyContent(String projectReportReplyContent) {
+        this.projectReportReplyContent = projectReportReplyContent;
+    }
+
+    public String getProjectReportReplyDate() {
+        return projectReportReplyDate;
+    }
+
+    public void setProjectReportReplyDate(String projectReportReplyDate) {
+        this.projectReportReplyDate = projectReportReplyDate;
+    }
+
+    public ProjectReport getProjectReport() {
+        return projectReport;
+    }
+
+    public void setProjectReport(ProjectReport projectReport) {
+        this.projectReport = projectReport;
+    }
+
+    public int getAdminNo() {
+        return adminNo;
+    }
+
+    public void setAdminNo(int adminNo) {
+        this.adminNo = adminNo;
+    }
+
+    public String getDeleteYn() {
+        return deleteYn;
+    }
+
+    public void setDeleteYn(String deleteYn) {
+        this.deleteYn = deleteYn;
+    }
 
     @Override
     public String toString() {

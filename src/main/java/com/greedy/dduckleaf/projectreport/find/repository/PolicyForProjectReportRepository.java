@@ -18,6 +18,12 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface PolicyForProjectReportRepository extends JpaRepository<Policy, Integer> {
 
+    /**
+     * findPolicyNo: 정책명으로 해당 정책의 식별번호 조회를 요청하는 메소드입니다.
+     * @param policyName 정책명
+     * @return 정책번호
+     * @author 장민주
+     */
     @Query(value = "SELECT A.POLICY_NO\n" +
             "  FROM TBL_POLICY A\n" +
             " WHERE A.POLICY_NAME = :policyName",

@@ -19,9 +19,9 @@ public interface ProjectReportReplyRepository extends JpaRepository<ProjectRepor
 
     /**
      * findAllByProjectReport_ProjectReportNoAndDeleteYn: 프로젝트 신고번호로 해당 프로젝트신고의 답변 데이터를 요청하는 메소드입니다.
-     * @param projectReportNo: 프로젝트 신고번호
-     * @param deleteYn: 삭제 여부
-     * @return ProjectReportReply: 해당 프로젝트신고에 대한 답변 데이터를 저장하는 엔티티
+     * @param projectReportNo 프로젝트 신고번호
+     * @param deleteYn 삭제 여부
+     * @return 해당 프로젝트신고에 대한 답변 데이터를 저장하는 엔티티
      * @author 장민주
      */
     ProjectReportReply findAllByProjectReport_ProjectReportNoAndDeleteYn(int projectReportNo, String deleteYn);

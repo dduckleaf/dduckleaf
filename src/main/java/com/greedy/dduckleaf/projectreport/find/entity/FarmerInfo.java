@@ -5,12 +5,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import lombok.*;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "FarmerInfoForProjectReport")
 @Table(name = "TBL_FARMER_INFO")
 public class FarmerInfo {
@@ -21,6 +15,29 @@ public class FarmerInfo {
 
     @Column(name = "FARMER_NAME")
     private String farmerName;
+
+    public FarmerInfo() {}
+
+    public FarmerInfo(int memberNo, String farmerName) {
+        this.memberNo = memberNo;
+        this.farmerName = farmerName;
+    }
+
+    public int getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(int memberNo) {
+        this.memberNo = memberNo;
+    }
+
+    public String getFarmerName() {
+        return farmerName;
+    }
+
+    public void setFarmerName(String farmerName) {
+        this.farmerName = farmerName;
+    }
 
     @Override
     public String toString() {
