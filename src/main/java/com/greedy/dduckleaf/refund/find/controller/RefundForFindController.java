@@ -3,7 +3,10 @@ package com.greedy.dduckleaf.refund.find.controller;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
+import com.greedy.dduckleaf.refund.find.dto.ProjectForAdminListDTO;
+import com.greedy.dduckleaf.refund.find.dto.ProjectForAdminRefundingListDTO;
 import com.greedy.dduckleaf.refund.find.dto.RefundingDTO;
+import com.greedy.dduckleaf.refund.find.dto.RefundingForAdminListDTO;
 import com.greedy.dduckleaf.refund.find.service.RefundingForFindService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,7 +28,8 @@ import java.util.List;
  * Comment :
  *
  * History
- * 2022-05-04 홍성원
+ * 2022-05-04 홍성원 클래스 생성
+ * 2022-05-10 adminFindRefundList 메소드 작성 홍성원
  * </pre>
  *
  * @author 홍성원
@@ -94,6 +98,32 @@ public class RefundForFindController {
 
         mv.addObject("refunding", refunding);
         mv.setViewName("/refund/find/farmer/refunddetail");
+        return mv;
+    }
+
+    @GetMapping("/admin/list")
+    public ModelAndView adminFindRefundList(ModelAndView mv,
+    @PageableDefault(size=10, sort="projectNo", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<ProjectForAdminListDTO> projects = service.findAdminProjectList(pageable);
+
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projects);
+
+        mv.addObject("paging", paging);
+        mv.addObject("projects", projects);
+        mv.setViewName("/refund/find/admin/refundlist");
+
+        return mv;
+    }
+
+    @GetMapping("/admin/projectlist/{projectNo}")
+    public ModelAndView adminFindRefundList(ModelAndView mv, @PathVariable int projectNo,
+                                            @PageableDefault(size=10, sort="projectNo", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<RefundingForAdminListDTO> refundings = service.findAdminRefundingListByProject(projectNo, pageable);
+
+        mv.addObject("refundings", refundings);
+        mv.setViewName("/refund/find/admin/refundlistbyproject");
         return mv;
     }
 }

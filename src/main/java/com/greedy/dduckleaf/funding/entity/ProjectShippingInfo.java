@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Getter
 @ToString
 @Entity(name = "ProjectShippingInfoForFundingRegsit")
-@Table(name = "TBL_PROJECT_SHIPPING_INFO")
+@Table(name = "TBL_PROJECT_SHIPPING_FEE")
 public class ProjectShippingInfo {
 
     @Id

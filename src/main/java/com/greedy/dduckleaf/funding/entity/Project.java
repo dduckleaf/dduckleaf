@@ -55,9 +55,9 @@ public class Project {
 
     @OneToOne
     @JoinColumn(name = "PROJECT_NO")
-    private ProjectShippingFee projectShippingFee;
+    private ProjectShippingFeeForProject projectShippingFee;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_NO")
     private ProjectShippingInfo projectShippingInfo;
 
@@ -78,9 +78,7 @@ public class Project {
                 ", rewardInfo=" + rewardInfo +
                 ", projectShippingFee=" + projectShippingFee +
                 ", projectShippingInfo=" + projectShippingInfo +
-                ", basicInfo=" + basicInfo +
                 ", farmer=" + farmer +
-                ", fundingList=" + fundingList +
                 '}';
     }
 

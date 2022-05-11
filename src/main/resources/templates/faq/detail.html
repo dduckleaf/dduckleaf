@@ -15,8 +15,8 @@
 
 
     <!-- Style CSS -->
-    <!--<link rel="stylesheet" href="../../static/css/style.css">
-    <link rel="stylesheet" href="../../static/css/faq.css">-->
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/faq.css">
 
     <link rel="stylesheet" type="text/css" th:href="@{ /css/style.css }">
     <link rel="stylesheet" type="text/css" th:href="@{ /css/faq.css }">
@@ -27,7 +27,7 @@
 <div class="main-wrapper">
 
     <!-- Begin Main Header Area -->
-    <div th:replace="/common/userheader.html"></div>
+    <div th:replace="/common/menubar.html"></div>
     <!-- Main Header Area End Here -->
 
     <!-- Begin Main Content Area -->
@@ -45,47 +45,28 @@
                         <div class="tab-content text-charcoal pt-8">
                             <div class="tab-pane fade show active" id="list-view" role="tabpanel" aria-labelledby="list-view-tab">
                                 <div class="product-list-view row">
-                                    <div class="col-12">
-                                        <div class="product-item-detail" style="border: solid #CCCCCC 1px; border-radius: 5px; padding: 10px;" >
+                                    <div class="col-12" style="border: solid #CCCCCC 1px; border-radius: 5px; padding: 20px 10px;">
+                                        <div class="product-item-detail"  >
                                             <div class="product-content-detail align-self-center">
                                                 <p class="product-name-detail" th:text="${ faq.getFaqTitle()}"></p>
                                                 <p class="product-subname-detail" th:text="${ faq.getFaqSubTitle()}"></p><br>
-                                                <p class="faqcontent-detail" th:text="${ faq.getFaqContent()}"></p>
+                                                <p class="faqcontent-detail" style="white-space: pre-line" th:text="${ faq.getFaqContent()}"></p>
                                                 <input  type="hidden" class="faqNo" th:value="${faq.getFaqNo()}">
                                             </div>
                                             <div style="width: 250px;">
                                                 <p class="author" >작성자 : [[${faq.member.memberName}]]</p>
                                             </div>
                                         </div>
+                                        <div style="text-align: right">
+                                            <th:block sec:authorize="isAuthenticated()">
+                                                <button class="basic-btn medium-btn btn1" id="faqModify">수정</button>
+                                                <button class="basic-btn medium-btn btn2" id="faqDelete" style="margin-left: 20px;">삭제</button>
+                                            </th:block>
+                                            <button class="basic-btn medium-btn btn3" id="back" style="margin-left: 20px; margin-right: 20px">목록 보기</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <br>
-                            <div style="text-align: right">
-                                <th:block sec:authorize="isAuthenticated()">
-                                    <button class="basic-btn medium-btn btn1" id="faqModify">수정</button>
-                                    <button class="basic-btn medium-btn btn2" id="faqDelete" style="margin-left: 20px;">삭제</button>
-                                </th:block>
-                                <button class="basic-btn medium-btn btn3" id="back" style="margin-left: 20px;">목록</button>
-                            </div>
-                        </div>
-                        <div class="pagination-area pt-10">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Previous">
-                                            <span class="fa fa-chevron-left"></span>
-                                        </a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span class="fa fa-chevron-right"></span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
                 </div>
@@ -98,11 +79,6 @@
     <footer class="footer" th:replace="/common/footer.html"></footer>
     <!-- Footer Area End Here -->
 
-    <!-- Begin Scroll To Top -->
-    <a class="scroll-to-top" href="">
-        <i class="fa fa-chevron-up"></i>
-    </a>
-    <!-- Scroll To Top End Here -->
 
 </div>
 

@@ -64,9 +64,10 @@ public class FundingRegistService {
      */
     public ProjectDTO findProjectFundingInfo(int projectNo) {
 
-        projectRepository.findById(projectNo);
+        Project project = projectRepository.findById(projectNo).get();
+        System.out.println("project = " + project);
 
-        return modelMapper.map((Object) projectRepository.findById(projectNo).get(), (Type) ProjectDTO.class);
+        return modelMapper.map((Object) projectRepository.findById(projectNo).get(), ProjectDTO.class);
     }
 
 
@@ -105,17 +106,16 @@ public class FundingRegistService {
         System.out.println("shippingFee = " + shippingFee);
         funding.setProjectShippingFee(shippingFee);
 
-        System.out.println("/* 펀딩정보 삽입 */");
+        fundingRepo.save(funding);
+        funding = fundingRepo.findLastest();
 
         /* 배송지 삽입 */
         ShippingAddress shippingAddress = parsingShippingAddress(registDTO);
         shippingAddress.setFunding(funding);
-        System.out.println("/* 배송지 삽입 */");
 
         /* 결제내역 삽입 */
         PaymentHistory history = parsingPaymentHistory(registDTO);
         history.setFunding(funding);
-        System.out.println("/* 결제내역 삽입 */");
 
         /* 발송정보 삽입 */
         RewardShipping rewardShipping = parsingRewardShipping(registDTO);
@@ -124,22 +124,34 @@ public class FundingRegistService {
         rewardShippingRepo.save(rewardShipping);
         rewardShipping = rewardShippingRepo.findLatest();
 
-        System.out.println("rewardShipping = " + rewardShipping);
         /* 발송 내역 삽입*/
-
-        System.out.println("/* 발송 내역 삽입*/");
         RewardShippingHistory shippingHistory = new RewardShippingHistory();
         shippingHistory.setRecordDate(getDateAndTime());
         shippingHistory.setRewardShippingNo(rewardShipping.getRewardShippingNo());
         shippingHistory.setShippingStatus(1);
 
+        /* 달성률 반영 */
+        Project project = projectRepository.findById(registDTO.getProjectNo()).get();
+        double target = project.getFundTargetAmount();
+        int amount = 0;
+        List<Funding> fundingList = project.getFundingList();
+        for(int i = 0; i < fundingList.size(); i++) {
+
+            amount += fundingList.get(i).getFundingAmount();
+            System.out.println("amount = " + amount);
+        }
+        amount += funding.getFundingAmount();
+        System.out.println("amount = " + amount);
+
+        double rate = amount / target * 100;
+        System.out.println("re = " + rate);
+        project.setAchievementRate(rate);
+        projectRepository.save(project);
 
         /* 엔티티에 삽입한 행을 DB에 저장 */
-        fundingRepo.save(funding);
         payHistoryRepo.save(history);
         shippingAddressRepo.save(shippingAddress);
         rewardShippingHistoryRepo.save(shippingHistory);
-        System.out.println("/* 엔티티에 삽입한 행을 DB에 저장 */");
     }
 
     private RewardShipping parsingRewardShipping(FundingRegistDTO registDTO) {

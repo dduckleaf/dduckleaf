@@ -92,7 +92,7 @@ public class ProjectController {
         }
 
         if(projectDetail.getProject().getProgressStatus() == 4) {
-
+            mv.addObject("supporter", projectDetail.getFundingInfoList());
             mv.setViewName("project/end/detail");
         }
 

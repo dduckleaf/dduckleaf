@@ -27,7 +27,7 @@
 <div class="main-wrapper">
 
     <!-- Begin Main Header Area -->
-    <div th:replace="/common/userheader.html"></div>
+    <div th:replace="/common/menubar.html"></div>
     <!-- Main Header Area End Here -->
 
     <!-- Begin Main Content Area -->
@@ -57,7 +57,7 @@
                                                         <div style="display: flex">
                                                             <p class="faq-detail-text" style=" top: auto;">내용</p>
 
-                                                            <textarea class="insert-text2" name="faqContent" id="content" th:text="${ modify.getFaqContent()}" ></textarea>
+                                                            <textarea class="insert-text2" name="faqContent" id="content" style="white-space: pre-line" th:text="${ modify.getFaqContent()}" ></textarea>
                                                             <input type="hidden" class="faqNo" name="faqNo" th:value="${modify.getFaqNo()}">
                                                         </div>
                                                         <br>
@@ -89,11 +89,7 @@
             location.href='/faq/list';
         });
     </script>
-    <!-- Begin Scroll To Top -->
-    <a class="scroll-to-top" href="">
-        <i class="fa fa-chevron-up"></i>
-    </a>
-    <!-- Scroll To Top End Here -->
+
 
 </div>
 

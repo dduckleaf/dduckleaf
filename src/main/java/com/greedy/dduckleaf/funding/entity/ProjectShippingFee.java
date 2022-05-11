@@ -14,7 +14,6 @@ public class ProjectShippingFee {
 
     @Id
     @Column(name = "SHIPPING_FEE_NO")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int shppingFeeNo;
 
 
@@ -27,7 +26,6 @@ public class ProjectShippingFee {
 
     @Column(name = "EXTRA_SHIPPING_FEE_INFO")
     private String extraShippingFeeInfo;
-
 
     @Column(name = "PROJECT_NO")
     private int projectNo;
