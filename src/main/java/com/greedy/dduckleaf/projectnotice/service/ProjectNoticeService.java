@@ -1,5 +1,6 @@
 package com.greedy.dduckleaf.projectnotice.service;
 
+import com.greedy.dduckleaf.projectnotice.dto.ProjectDTO;
 import com.greedy.dduckleaf.projectnotice.dto.ProjectNoticeDTO;
 import com.greedy.dduckleaf.projectnotice.entity.Project;
 import com.greedy.dduckleaf.projectnotice.entity.ProjectNotice;
@@ -123,4 +124,10 @@ public class ProjectNoticeService {
         notice.setProjectNoticeStatus("N");
     }
 
+    public ProjectDTO findProjectInfo(int projectNo) {
+
+        Project project = projectRepository.findByProjectNo(projectNo);
+
+        return modelMapper.map(project, ProjectDTO.class);
+    }
 }

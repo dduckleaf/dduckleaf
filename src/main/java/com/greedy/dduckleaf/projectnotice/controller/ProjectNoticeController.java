@@ -3,6 +3,7 @@ package com.greedy.dduckleaf.projectnotice.controller;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
+import com.greedy.dduckleaf.projectnotice.dto.ProjectDTO;
 import com.greedy.dduckleaf.projectnotice.dto.ProjectNoticeDTO;
 import com.greedy.dduckleaf.projectnotice.service.ProjectNoticeService;
 import org.dom4j.rule.Mode;
@@ -54,17 +55,15 @@ public class ProjectNoticeController {
      *            "projectnotice/list" 프로젝트 공지사항 목록을 출력하는 뷰 경로
      * @author 박휘림
      */
-    @GetMapping (value = "/list", produces = "application/json")
+    @GetMapping (value = "/list/{projectNo}", produces = "application/json")
     @ResponseBody
-    public ModelAndView findProjectNoticeList(ModelAndView mv, @PageableDefault Pageable pageable, @AuthenticationPrincipal CustomUser user) {
-
-        int projectNo = findProjectNoByFarmerNo(user);
+    public ModelAndView findProjectNoticeList(ModelAndView mv, @PageableDefault Pageable pageable, @AuthenticationPrincipal CustomUser user, @PathVariable int projectNo) {
 
         Page<ProjectNoticeDTO> projectNoticeList = projectService.findProjectNoticeList(pageable, projectNo);
-
-        projectNoticeList.forEach(System.out::println);
+        ProjectDTO project = projectService.findProjectInfo(projectNo);
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectNoticeList);
 
+        mv.addObject("project", project);
         mv.addObject("projectNoticeList", projectNoticeList);
         mv.addObject("paging", paging);
         mv.setViewName("projectnotice/list");
@@ -142,7 +141,7 @@ public class ProjectNoticeController {
 
         projectService.registProjectNotice(newNotice);
 
-        mv.setViewName("redirect:/project/notice/list");
+        mv.setViewName("redirect:/project/notice/list/" + newNotice.getProjectNo());
 
         return mv;
     }
