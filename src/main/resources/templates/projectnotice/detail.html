@@ -30,7 +30,7 @@
                     <div class="cont-div">
                         <table>
                             <tr class="title" th:each="notice : ${ projectNoticeDetail }">
-                                <input class="projectNo" id="projectNo" type="hidden" th:value="${ notice.projectNo }">
+                                <input id="projectNo" name="projectNo" type="hidden" th:value="${ notice.projectNo }">
                                 <input class="projectNo" id="projectNoticeNo" type="hidden" th:value="${ notice.projectNoticeNo }">
                                 <td class="title" colspan="2" th:text="${ notice.projectNoticeTitle }">제목</td>
                             </tr>
@@ -53,9 +53,11 @@
 <div th:replace="/common/footer.html"></div>
 <script>
 
+    const projectNo = $("#projectNo").val();
+
     $("#back").click(function() {
 
-        location.href='/project/notice/list';
+        location.href='/project/notice/list/' + projectNo;
     });
 
     $("#removeProjectNotice").click(function() {
