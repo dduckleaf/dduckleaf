@@ -38,10 +38,14 @@ import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
  * 2022-05-08 (장민주) calculateSettlementForEachPaymentRound 내부연산 메소드 작성
  * 2022-05-08 (장민주) registOrModifySettlementPaymentInfo 서비스메소드 작성
  * 2022-05-08 (장민주) findSettlementInfoPackage 서비스메소드 수정
+ *
+ * 2022-05-11 (장민주) getSettlementInfo 내부연산 메소드 수정
+ * 2022-05-11 (장민주) saveSettlementPaymentHistory 내부연산 메소드 작성
+ * 2022-05-11 (장민주) findSettlementInfoPackage 서비스 메소드 작성
  * </pre>
  *
  * @author 장민주
- * @version 1.0.2
+ * @version 1.0.3
  */
 @Service
 public class SettlementCalculateService {
@@ -63,12 +67,20 @@ public class SettlementCalculateService {
     @Autowired
     private final SettlementPaymentInfoForCalculateRepository settlementPaymentInfoRepository;
     @Autowired
+    private final SettlementPaymentHistoryForCalculateRepository settlementPaymentHistoryRepository;
+    @Autowired
     private final ModelMapper modelMapper;
 
     public SettlementCalculateService(RefundingInfoForSettlementCalculateRepository refundingInfoRepository,
                                       RefundingStatusForSettlementRepository refundingStatusRepository,
                                       PaymentHistoryForSettlementCalculateRepository paymentHistoryRepository,
-                                      ProjectApplyFeeInfoForSettlementCalculateRepository projectApplyFeeInfoRepository, ProjectForSettlementCalculateRepository projectRepository, SettlementInfoForSettlementCalculateRepository settlementInfoRepository, SettlementPaymentStandardForSettlementCalculateRepository settlementPaymentStandardRepository, SettlementPaymentInfoForCalculateRepository settlementPaymentInfoRepository, ModelMapper modelMapper) {
+                                      ProjectApplyFeeInfoForSettlementCalculateRepository projectApplyFeeInfoRepository,
+                                      ProjectForSettlementCalculateRepository projectRepository,
+                                      SettlementInfoForSettlementCalculateRepository settlementInfoRepository,
+                                      SettlementPaymentStandardForSettlementCalculateRepository settlementPaymentStandardRepository,
+                                      SettlementPaymentInfoForCalculateRepository settlementPaymentInfoRepository,
+                                      SettlementPaymentHistoryForCalculateRepository settlementPaymentHistoryRepository,
+                                      ModelMapper modelMapper) {
         this.refundingInfoRepository = refundingInfoRepository;
         this.refundingStatusRepository = refundingStatusRepository;
         this.paymentHistoryRepository = paymentHistoryRepository;
@@ -77,6 +89,7 @@ public class SettlementCalculateService {
         this.settlementInfoRepository = settlementInfoRepository;
         this.settlementPaymentStandardRepository = settlementPaymentStandardRepository;
         this.settlementPaymentInfoRepository = settlementPaymentInfoRepository;
+        this.settlementPaymentHistoryRepository = settlementPaymentHistoryRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -275,6 +288,19 @@ public class SettlementCalculateService {
      */
     private SettlementInfoDTO getSettlementInfo(int projectNo) {
 
+        /* 정산정보가 존재하는지 여부 확인 */
+        SettlementInfo foundSettlementInfo = settlementInfoRepository.findByProject_ProjectNo(projectNo);
+
+        Boolean isExist = false;
+        if(foundSettlementInfo != null) {
+            isExist = true;
+        }
+
+        /* 정산정보가 존재하지 않는 경우, 먼저 정산정보를 계산하고 등록한다  */
+        if(isExist == false) {
+            registSettlementInfo(projectNo);
+        }
+
         return modelMapper.map(settlementInfoRepository.findByProject_ProjectNo(projectNo), SettlementInfoDTO.class);
     }
 
@@ -289,7 +315,7 @@ public class SettlementCalculateService {
         /* 기본정산정보, 회차별 정산정보 지급내역, 적용수수료정보를 담는 DTO 인스턴스 생성 */
         SettlementInfoPackage settlementInfoPackage = new SettlementInfoPackage();
 
-         /* 프로젝트 적용 수수료정책 조회 */
+        /* 프로젝트 적용 수수료정책 조회 */
         ProjectApplyFeeInfoDTO feeInfo = getFeeApplyRateForProject(projectNo);
         settlementInfoPackage.setFeeInfo(feeInfo);
 
@@ -309,6 +335,8 @@ public class SettlementCalculateService {
         /* 조회결과가 없으면 회차별 정산금 계산 method를 호출한다 */
         if(settlementPaymentInfos.isEmpty()) {
             List<SettlementPaymentInfo> newSettlementPaymentInfos = calculateSettlementForEachPaymentRound(projectNo);
+            /* 계산한 회차별 정산금 지급(예정) 내역 저장 */
+            registOrModifySettlementPaymentInfo(projectNo);
 
             settlementInfoPackage.setSettlementPaymentInfos(newSettlementPaymentInfos.stream().map(settlementPaymentInfo ->
                     modelMapper.map(settlementPaymentInfo, SettlementPaymentInfoDTO.class)).collect(Collectors.toList()));
@@ -346,6 +374,8 @@ public class SettlementCalculateService {
             settlementPaymentInfo.setSettlementInfo(modelMapper.map(settlementInfo, SettlementInfo.class));
             settlementPaymentInfo.setSettlementPaymentStandard(modelMapper.map(settlementPaymentStandard, SettlementPaymentStandard.class));
             settlementPaymentInfo.setSettlementPaymentAmount(paymentAmount);
+            settlementPaymentInfo.setFarmerSettlementCheckStatus("N");
+            settlementPaymentInfo.setSettlementPaymentStatus("지급예정");
 
             settlementPaymentInfos.add(settlementPaymentInfo);
         });
@@ -366,6 +396,7 @@ public class SettlementCalculateService {
 
         /* 회차별 정산금 지급금액 다시 계산 */
         List<SettlementPaymentInfo> newSettlementPaymentInfos = calculateSettlementForEachPaymentRound(projectNo);
+        System.out.println("newSettlementPaymentInfos = " + newSettlementPaymentInfos);
 
         /* 정산정보에 대한 회차별 정산금 지급내역 데이터가 존재하는지 확인 */
         List<SettlementPaymentInfo> foundSettlementPaymentInfos =
@@ -383,12 +414,29 @@ public class SettlementCalculateService {
                         .setSettlementPaymentAmount(newSettlementPaymentInfos.get(i).getSettlementPaymentAmount());
             }
         }
+
+        /* 정산금 지급내역에 대한 이력 추가 */
+        newSettlementPaymentInfos.forEach(settlementPaymentInfo -> {
+            saveSettlementPaymentHistory(settlementPaymentInfo);
+        });
     }
 
+    /**
+     * saveSettlementPaymentHistory: 회차별 정산금 지급내역 테이블 변동에 따른
+     *                               회차별 정산금 지급내역 히스토리에 새로운 행을 추가 요청하는 메소드입니다.
+     * @param settlementPaymentInfo: 생성된 회차별 정산금 지급내역
+     * @author 장민주
+     */
+    @Transactional
+    public void saveSettlementPaymentHistory(SettlementPaymentInfo settlementPaymentInfo) {
 
+        SettlementPaymentHistory settlementPaymentHistory = new SettlementPaymentHistory();
+        /* 회차별 정산금 지급내역 생성에 따른 히스토리 데이터 추가 */
+        settlementPaymentHistory.setSettlementPaymentInfo(settlementPaymentInfo);
+        settlementPaymentHistory.setSettlementPaymentHistoryDate(getDateAndTime());
+        settlementPaymentHistory.setSettlementPaymentHistoryCategory("지급금액계산");
+        settlementPaymentHistory.setSettlementStatus("확인요청중");
 
-
-
-
-
+        settlementPaymentHistoryRepository.save(settlementPaymentHistory);
+    }
 }

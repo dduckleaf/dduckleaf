@@ -61,7 +61,7 @@ public class SettlementCalculateServiceTests {
 //            System.out.println("fundingInfo = " + fundingInfo);
 //        });
 //    }
-    
+
 //    @Test
 //    @DisplayName("내부연산메소드: 환불승인번호 조회 테스트")
 //    public void getRefundingStatusNo_test() {
@@ -73,7 +73,7 @@ public class SettlementCalculateServiceTests {
 //        assertNotNull(refundingStatusNo);
 //        System.out.println("refundingStatusNo = " + refundingStatusNo);
 //    }
-    
+
 //    @Test
 //    @DisplayName("내부연산메소드: 프로젝트 환불내역 조회 테스트")
 //    public void findRefundingInfosForProject_test() {
@@ -137,7 +137,7 @@ public class SettlementCalculateServiceTests {
     public void registOrModifySettlementPaymentInfo_test() {
 
         //given
-        int projectNo = 1;
+        int projectNo = 345;
 
         //when & then
         assertDoesNotThrow(() -> service.registOrModifySettlementPaymentInfo(projectNo));
