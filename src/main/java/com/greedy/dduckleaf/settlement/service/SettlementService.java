@@ -29,11 +29,12 @@ import java.util.stream.Collectors;
  *            (장민주) findSettlementPaymentInfo 서비스 메소드 작성.
  *            (장민주) findSettlementInfoForEndProject 내부연산 메소드 작성.
  *            (장민주) findSettlementPaymentInfoForEndProject 내부연산 메소드 작성.
+ * 2022-05-11 (장민주) findAllEndProjectsAchievedSuccess 서비스 메소드 수정
  *
  * </pre>
  *
  * @author 장민주
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Service
 public class SettlementService {
@@ -46,7 +47,7 @@ public class SettlementService {
     private final ModelMapper modelMapper;
 
     public SettlementService(SettlementInfoRepository settlementInfoRepository,
-                            ProjectForSettlementRepository projectRepository, ModelMapper modelMapper) {
+                             ProjectForSettlementRepository projectRepository, ModelMapper modelMapper) {
         this.settlementInfoRepository = settlementInfoRepository;
         this.projectRepository = projectRepository;
         this.modelMapper = modelMapper;
@@ -125,7 +126,9 @@ public class SettlementService {
                 pageable.getPageSize(),
                 Sort.by("projectNo").descending());
 
-        return projectRepository.findAllByProgressStatusAndAchievementRateGreaterThan(progressStatus, achievementRate, pageable)
+        String projectStatus = "Y";
+
+        return projectRepository.findByProjectStatusAndProgressStatusAndAchievementRateGreaterThanEqual(projectStatus, progressStatus, achievementRate, pageable)
                 .map(project -> modelMapper.map(project, ProjectDTO.class));
     }
 
