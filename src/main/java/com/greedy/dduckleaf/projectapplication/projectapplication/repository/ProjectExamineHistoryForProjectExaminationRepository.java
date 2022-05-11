@@ -15,4 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ProjectExamineHistoryForProjectExaminationRepository extends JpaRepository<ProjectExamineHistory, Integer> {
 
+    ProjectExamineHistory findAllByProjectNo(int projectNo);
 }
