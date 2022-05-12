@@ -80,8 +80,7 @@ public class RefundForFindController {
     @GetMapping("/list/farmer")
     public ModelAndView sendFarmerRefundList(ModelAndView mv ,@AuthenticationPrincipal CustomUser user) {
 
-//        int memberNo = user.getMemberNo();
-        int memberNo = 7;
+        int memberNo = user.getMemberNo();
 
         List<RefundingDTO> refundings = service.findFarmerRefundingList(memberNo);
 
@@ -117,7 +116,7 @@ public class RefundForFindController {
     }
 
     @GetMapping("/admin/projectlist/{projectNo}")
-    public ModelAndView adminFindRefundList(ModelAndView mv, @PathVariable int projectNo,
+    public ModelAndView adminFindRefundListByProject(ModelAndView mv, @PathVariable int projectNo,
                                             @PageableDefault(size=10, sort="projectNo", direction = Sort.Direction.DESC) Pageable pageable) {
 
         Page<RefundingForAdminListDTO> refundings = service.findAdminRefundingListByProject(projectNo, pageable);
@@ -133,9 +132,37 @@ public class RefundForFindController {
     public ModelAndView findAdminRefundingDetail(ModelAndView mv, @PathVariable int refundingNo) {
 
         RefundingDTO refunding = service.findRefundingInfo(refundingNo);
-
         mv.addObject("refunding", refunding);
         mv.setViewName("/refund/find/admin/refunddetail");
+
+        return mv;
+    }
+
+    @GetMapping("/admin/refundlist")
+    public String sendAdminRefundManage() {
+
+        return "/refund/find/admin/refundselect";
+    }
+
+    @GetMapping("/admin/statuslist/{refundstatus}")
+    public ModelAndView adminFindRefundListByStatus(ModelAndView mv, @PathVariable int refundstatus,
+                                                     @PageableDefault(size=10, sort="refundingInfoNo", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<RefundingForAdminListDTO> refundings = service.findAdminRefundingListByStatus(refundstatus, pageable);
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(refundings);
+
+        String title = "";
+        switch(refundstatus) {
+            case 1: title = "이의신청 목록"; break;
+            case 2: title = "환불 승인 목록"; break;
+            case 3: title = "환불 거절 목록"; break;
+        }
+
+        mv.addObject("title", title);
+        mv.addObject("paging", paging);
+        mv.addObject("refundings", refundings);
+        mv.addObject("refundstatus", refundstatus);
+        mv.setViewName("/refund/find/admin/refundlistbystatus");
 
         return mv;
     }

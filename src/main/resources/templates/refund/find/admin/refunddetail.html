@@ -106,18 +106,33 @@
                     <label class="refund-detail-content">[[${refunding.refundingEndDate}]]</label><br><br>
                 </th:block>
             </div>
-            <div style="text-align: right">
-                <button id="back" class="round-corners" >뒤로가기</button>
-            </div>
         </div>
+        <th:block th:if="${refunding.refundingStatus.refundingStatusNo eq 4}">
+            <button id="detail-confirm" class="btn1 basic-btn medium-btn">승인 </button>
+            <button id="detail-refuse"  class="btn2 basic-btn medium-btn">거절</button>
+        </th:block>
+        <button id="detail-back" class="btn3 basic-btn medium-btn" >뒤로가기</button>
         <div style="height: 200px"></div>
     </div>
 </div>
 
 <script>
-    const $back = document.getElementById("back");
+    const $confirm = document.getElementById("detail-confirm");
+    const $refuse = document.getElementById("detail-refuse");
+    const $back = document.getElementById("detail-back");
     const $projectNo= [[${refunding.project.projectNo}]];
+    const $refundNo = [[${refunding.refundingInfoNo}]];
 
+    if($confirm) {
+        $confirm.onclick = function() {
+            location.href = "/refund/examine/platform/objection/confirm/" + $refundNo;
+        }
+    }
+    if($refuse) {
+        $refuse.onclick = function() {
+            location.href = "/refund/examine" + $projectNo;
+        }
+    }
     if($back) {
         $back.onclick = function() {
             location.href = "/refund/find/admin/projectlist/" + $projectNo;

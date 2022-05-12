@@ -89,6 +89,11 @@ public class FundingForMemberFindController {
         return mv;
     }
 
+    /**
+     * sendFundingMemberListAdminPage : 회원 별 펀딩 개수를 조회하는 페이지로 이동합니다.
+     *
+     * @author 홍성원
+     */
     @GetMapping("/admin/memberlist")
     public ModelAndView sendFundingMemberListAdminPage(ModelAndView mv, @PageableDefault Pageable pageable) {
 
@@ -104,6 +109,11 @@ public class FundingForMemberFindController {
         return mv;
     }
 
+    /**
+     * sendFundingMemberDetailAdminPage : 회원의 펀딩이력을 조회하는 페이지로 이동합니다.
+     *
+     * @author 홍성원
+     */
     @GetMapping("/admin/memberlist/detail/{memberNo}")
     public ModelAndView sendFundingMemberDetailAdminPage(ModelAndView mv, @PathVariable int memberNo, @PageableDefault Pageable pageable) {
 
@@ -112,7 +122,21 @@ public class FundingForMemberFindController {
 
         mv.addObject("paging", paging);
         mv.addObject("fundings", fundings);
+        mv.addObject("memberNo", memberNo);
         mv.setViewName("/funding/find/admin/memberfundingdetail");
+
+        return mv;
+    }
+
+    @GetMapping("/admin/memberdetail/{fundingNo}")
+    public ModelAndView findMemberDetail(ModelAndView mv, @PathVariable int fundingNo) {
+
+        FundingFindDetailInfoForMemberDTO fundingDetailInfo = service.findFundingInfo(fundingNo);
+
+        mv.addObject("addressInfo", fundingDetailInfo.getShippingAddress());
+        mv.addObject("funding", fundingDetailInfo.getFunding());
+        mv.addObject("bankList", fundingDetailInfo.getBankList());
+        mv.setViewName("/funding/find/admin/fundingdetailinfo");
 
         return mv;
     }
