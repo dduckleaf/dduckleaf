@@ -1,7 +1,6 @@
 package com.greedy.dduckleaf.faq.service;
 
 import com.greedy.dduckleaf.faq.dto.FaqDTO;
-import com.greedy.dduckleaf.faq.dto.MemberDTO;
 import com.greedy.dduckleaf.faq.entity.Faq;
 import com.greedy.dduckleaf.faq.repository.FaqRepository;
 import org.modelmapper.ModelMapper;
@@ -13,7 +12,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 
 /**
  * <pre>
@@ -57,11 +55,9 @@ public class FaqService {
 
         Page<FaqDTO> fq = faqRepository.findAll(pageable).map(faq -> {
             FaqDTO faqDTO= modelMapper.map(faq, FaqDTO.class);
-//            faqDTO.setMember(modelMapper.map(faq.getMember(), MemberDTO.class));
 
             return faqDTO;
         });
-
         fq.forEach(System.out::println);
 
         return fq;
@@ -70,8 +66,8 @@ public class FaqService {
 
     /**
      * findFaqDetail : FAQ 상세정보를 조회합니다.
-     * @param faqNo : FAQ 번호를 전달받습니다.
-     * @return FaqDTO : 자주묻는 질문들의 정보를 반환합니다.
+     * @param faqNo : FAQ 번호를 담은 객체입니다.
+     * @return FaqDTO : 해당 FAQ번호의 자주묻는 질문 내용정보를 반환합니다.
      *
      * @author 이용선
      */
@@ -84,7 +80,7 @@ public class FaqService {
     }
     /**
     * faqnewRegist : FAQ 등록을 합니다.
-    * @param faqWrite : FAQ 등록할 정보를 전달합니다.
+    * @param faqWrite : FAQ에 등록할 정보를 담은 객체입니다.
     * @author 이용선
     */
     @Transactional
@@ -111,7 +107,7 @@ public class FaqService {
 
     /**
     * removeFaq : FAQ 삭제를 합니다.
-    * @param faqNo : FAQ 번호를 전달받습니다.
+    * @param faqNo : FAQ 번호를 담은 객체입니다.
     * @author 이용선
     */
     @Transactional

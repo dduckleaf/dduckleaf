@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
 /**
  * <pre>
  * Class: FaqController
@@ -45,15 +43,11 @@ public class FaqController {
         this.faqService = faqService;
     }
 
-//    http://localhost:8008/faq/list
-//    @GetMapping("/list")
-//    public void FaqPage() {}
-
     /**
      * findFaqList : FAQ 목록을 조회합니다.
      * @param mv : 요청 정보를 받는 객체입니다.
      * @param pageable : 페이징 정보를 받는 객체입니다.
-     * @return mv : 브라우저로 전달할 데이터와 경로 정보를 받는 객체입니다.
+     * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
      *
      * @author 이용선
      */
@@ -78,7 +72,7 @@ public class FaqController {
      * findFaqDetailList : FAQ 상세목록을 조회합니다.
      * @param mv : 요청 정보를 담는 객체입니다.
      * @param faqNo : FAQ 번호를 전달받습니다.
-     * @return mv : 브라우저로 전달할 데이터와 경로 정보를 반환합니다.
+     * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
 
      * @author 이용선
      */
@@ -97,12 +91,11 @@ public class FaqController {
     /**
     * faqRegistPage : FAQ 등록페이지
     * @param mv : 요청 정보를 담는 객체입니다.
-    * @return mv : 브라우저로 전달할 데이터와 경로 정보를 반환합니다.
+    * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
     * @author 이용선
     */
     @GetMapping("/regist")
     public ModelAndView faqRegistPage(ModelAndView mv){
-
 
         mv.setViewName("faq/regist");
 
@@ -114,7 +107,7 @@ public class FaqController {
     * @param mv : 요청 정보를 담는 객체입니다.
     * @param user : 회원 정보를 담는 객체입니다.
     * @param faqWrite : 등록할 FAQ 정보를 담는 객체입니다.
-    * @return mv : 브라우저로 전달할 데이터와 경로 정보를 반환합니다.
+    * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
     * @author 이용선
     */
     @PostMapping("/regist")
@@ -128,8 +121,6 @@ public class FaqController {
         faqWrite.setMember(member);
         faqService.faqnewRegist(faqWrite);
 
-//        rttr.addFlashAttribute("registSuccessMessage", "자주묻는 질문이 등록되었습니다.");
-
         mv.setViewName("redirect:/faq/list");
 
         return mv;
@@ -139,14 +130,12 @@ public class FaqController {
     * modifyPage : FAQ 수정페이지
     * @param mv : 요청 정보를 담는 객체입니다.
     * @param faqNo : 수정할 FAQ 번호입니다.
-    * @return mv : 브라우저로 전달할 데이터와 경로정보를 반환합니다.
+    * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
     * @author 이용선
     */
     @GetMapping("/modify/{faqNo}")
     public ModelAndView modifyFaq(ModelAndView mv, @PathVariable int faqNo) {
-//        int FaqNo = Integer.parseInt(faqNo);
         System.out.println(faqNo);
-//        System.out.println(FaqNo);
         FaqDTO faqmodify = faqService.findFaqDetail(faqNo);
 
         mv.addObject("modify", faqmodify);
@@ -159,7 +148,7 @@ public class FaqController {
     * modifyFaq : FAQ 수정
     * @param mv : 요청 정보를 담는 객체입니다.
     * @param updateFaq : 수정할 FAQ 정보를 담은 객체입니다.
-    * @return mv : 브라우저로 전달할 데이터와 경로정보를 반환합니다.
+    * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
     * @author 이용선
     */
     @PostMapping("/modify")
@@ -176,7 +165,7 @@ public class FaqController {
     * removeFaq : FAQ 삭제
     * @param mv : 요청 정보를 담는 객체입니다.
     * @param faqNo : 삭제할 FAQ 번호입니다.
-    * @return mv : 브라우저로 전달할 데이터와 경로정보를 반환합니다.
+    * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
     * @author 이용선
     */
     @GetMapping("/remove/{faqNo}")
@@ -188,5 +177,4 @@ public class FaqController {
 
         return mv;
     }
-
 }
