@@ -77,33 +77,6 @@ public class NoticeService {
         return nl;
     }
 
-//    @Transactional
-//    public List<NoticeDTO> searchPosts(String keyword) {
-//
-//        List<Notice> notices = noticeRepository.findByTitleContaining(keyword);
-//        List<NoticeDTO> noticeDTOList = new ArrayList<>();
-//
-//        if(notices.isEmpty()) return noticeDTOList;
-//
-//        for(Notice notice : notices) {
-//            noticeDTOList.add(this.convertEntityToDTO(notice));
-//        }
-//
-//        return noticeDTOList;
-//    }
-
-//    private NoticeDTO convertEntityToDTO(Notice notice) {
-//
-//        return NoticeDTO.builder()
-//                .no(notice.getNoticeNo())
-//                .categoryNo(notice.getNoticeCategoryNo())
-//                .name(notice.getNoticeName())
-//                .adminNo(notice.getAdminNo())
-//                .registDate(notice.getNoticeRegistDate())
-//                .count(notice.getNoticeCount())
-//                .build();
-//    }
-
     /**
      * updateNoticeCount : 공지사항 조회수를 갱신합니다.
      * @param noticeNo : 조회할 공지사항 번호
