@@ -40,7 +40,7 @@
                     <td th:text="${funding.member.memberName}"></td>
                     <td th:text="${funding.fundingAmount}"></td>
                     <td th:text="${funding.rewardAmount}"></td>
-                    <td th:text="${funding.shippingFeeNo}"></td>
+                    <td th:text="${#strings.arraySplit(funding.shippingAddress.shippingAddress, '$')[1]}"></td>
                 </tr>
             </th:block>
         </table>
