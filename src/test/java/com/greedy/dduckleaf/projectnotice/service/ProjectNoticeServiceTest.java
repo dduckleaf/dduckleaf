@@ -34,22 +34,6 @@ class ProjectNoticeServiceTest {
         assertNotNull(modelMapper);
     }
 
-//    @Test
-////    @Transactional
-//    @DisplayName("프로젝트 번호로 프로젝트 공지사항을 조회하는 테스트")
-//    public void findProjectNoticeList_test() {
-//
-//        int projectNo = 2;
-//
-//        ProjectDTO project = projectService.findById(projectNo);
-//
-//        assertNotNull(project);
-//        assertNotNull(project.getProjectNoticeList());
-//
-//
-////        project.getProjectNoticeList().forEach(System.out::println);
-//    }
-
     @Test
     @Transactional
     @DisplayName("프로젝트 번호로 해당 프로젝트의 공지사항 조회 테스트")
@@ -58,11 +42,9 @@ class ProjectNoticeServiceTest {
         int projectNo = 2;
 
         Pageable pageable = PageRequest.of(1, 10);
-//        Pageable pageable = Pageable.unpaged();
         Page<ProjectNoticeDTO> noticeList = ProjectNoticeService.findProjectNoticeList(pageable, projectNo);
 
         assertNotNull(noticeList);
-        noticeList.forEach(System.out::println);
     }
 
     @Test
@@ -74,7 +56,6 @@ class ProjectNoticeServiceTest {
         ProjectNoticeDTO notice = ProjectNoticeService.findProjectNoticeDetail(projectNoticeNo);
 
         assertNotNull(notice);
-        System.out.println("notice = " + notice);
     }
 
 

@@ -38,23 +38,11 @@ class ProjectNoticeControllerTest {
         assertNotNull(mockMvc);
     }
 
-//    @Test
-//    public void findProjectNoticeList_test() throws Exception {
-//
-//        int projectNo = 2;
-//
-//        mockMvc.perform(MockMvcRequestBuilders.get("/project/notice/list/" + projectNo))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.forwardedUrl("project/notice/list"))
-//                .andDo(MockMvcResultHandlers.print());
-//    }
-
     @Test
     @DisplayName("프로젝트 번호로 해당 프로젝트의 공지사항 목록 조회 테스트")
     public void findProjectNoticeList_test() throws Exception {
 
         int projectNo = 2;
-//        Pageable pageable = PageRequest.of(10, 10);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/project/notice/list" + projectNo))
                 .andExpect(MockMvcResultMatchers.status().isOk())

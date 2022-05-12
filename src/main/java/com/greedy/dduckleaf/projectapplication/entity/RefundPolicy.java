@@ -1,20 +1,10 @@
 package com.greedy.dduckleaf.projectapplication.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import javax.print.attribute.standard.MediaSize;
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "refundPolicyForProjectApplication")
 @Table(name = "TBL_REFUND_POLICY")
 @DynamicInsert
@@ -35,6 +25,57 @@ public class RefundPolicy {
 
     @Column(name = "REFUND_POLICY_AGREEMENT_DATE")
     private String refundPolicyAgreementDate;
+
+    public RefundPolicy() {
+    }
+
+    public RefundPolicy(int refundPolicyNo, String refundPolicyContent, int projectNo, String refundPolicyAgreementStatus, String refundPolicyAgreementDate) {
+        this.refundPolicyNo = refundPolicyNo;
+        this.refundPolicyContent = refundPolicyContent;
+        this.projectNo = projectNo;
+        this.refundPolicyAgreementStatus = refundPolicyAgreementStatus;
+        this.refundPolicyAgreementDate = refundPolicyAgreementDate;
+    }
+
+    public int getRefundPolicyNo() {
+        return refundPolicyNo;
+    }
+
+    public void setRefundPolicyNo(int refundPolicyNo) {
+        this.refundPolicyNo = refundPolicyNo;
+    }
+
+    public String getRefundPolicyContent() {
+        return refundPolicyContent;
+    }
+
+    public void setRefundPolicyContent(String refundPolicyContent) {
+        this.refundPolicyContent = refundPolicyContent;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
+    }
+
+    public String getRefundPolicyAgreementStatus() {
+        return refundPolicyAgreementStatus;
+    }
+
+    public void setRefundPolicyAgreementStatus(String refundPolicyAgreementStatus) {
+        this.refundPolicyAgreementStatus = refundPolicyAgreementStatus;
+    }
+
+    public String getRefundPolicyAgreementDate() {
+        return refundPolicyAgreementDate;
+    }
+
+    public void setRefundPolicyAgreementDate(String refundPolicyAgreementDate) {
+        this.refundPolicyAgreementDate = refundPolicyAgreementDate;
+    }
 
     @PrePersist
     public void prePersist() {

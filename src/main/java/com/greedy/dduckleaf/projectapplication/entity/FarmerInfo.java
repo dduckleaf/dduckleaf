@@ -1,20 +1,9 @@
 package com.greedy.dduckleaf.projectapplication.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.sql.Date;
-import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "FarmerInfoForProjectApplication")
 @Table(name = "TBL_FARMER_INFO")
 @DynamicInsert
@@ -72,6 +61,165 @@ public class FarmerInfo {
 
     @Column(name = "HOMEPAGE_URL")
     private String homepageURL;
+
+    public FarmerInfo() {
+    }
+
+    public FarmerInfo(int memberNo, String farmerName, String farmerEmail, String farmerPhone, String businessOwnType, String businessOwnNo, String businessName, String representativeName, String representativeEmail, String representativeSSN, String corporateName, String corporationType, String taxType, String taxTypeCategory, Integer corporateLicenseNo, String kakaotTalkChannel, String homepageURL) {
+        this.memberNo = memberNo;
+        this.farmerName = farmerName;
+        this.farmerEmail = farmerEmail;
+        this.farmerPhone = farmerPhone;
+        this.businessOwnType = businessOwnType;
+        this.businessOwnNo = businessOwnNo;
+        this.businessName = businessName;
+        this.representativeName = representativeName;
+        this.representativeEmail = representativeEmail;
+        this.representativeSSN = representativeSSN;
+        this.corporateName = corporateName;
+        this.corporationType = corporationType;
+        this.taxType = taxType;
+        this.taxTypeCategory = taxTypeCategory;
+        this.corporateLicenseNo = corporateLicenseNo;
+        this.kakaotTalkChannel = kakaotTalkChannel;
+        this.homepageURL = homepageURL;
+    }
+
+    public int getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(int memberNo) {
+        this.memberNo = memberNo;
+    }
+
+    public String getFarmerName() {
+        return farmerName;
+    }
+
+    public void setFarmerName(String farmerName) {
+        this.farmerName = farmerName;
+    }
+
+    public String getFarmerEmail() {
+        return farmerEmail;
+    }
+
+    public void setFarmerEmail(String farmerEmail) {
+        this.farmerEmail = farmerEmail;
+    }
+
+    public String getFarmerPhone() {
+        return farmerPhone;
+    }
+
+    public void setFarmerPhone(String farmerPhone) {
+        this.farmerPhone = farmerPhone;
+    }
+
+    public String getBusinessOwnType() {
+        return businessOwnType;
+    }
+
+    public void setBusinessOwnType(String businessOwnType) {
+        this.businessOwnType = businessOwnType;
+    }
+
+    public String getBusinessOwnNo() {
+        return businessOwnNo;
+    }
+
+    public void setBusinessOwnNo(String businessOwnNo) {
+        this.businessOwnNo = businessOwnNo;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
+    public String getRepresentativeName() {
+        return representativeName;
+    }
+
+    public void setRepresentativeName(String representativeName) {
+        this.representativeName = representativeName;
+    }
+
+    public String getRepresentativeEmail() {
+        return representativeEmail;
+    }
+
+    public void setRepresentativeEmail(String representativeEmail) {
+        this.representativeEmail = representativeEmail;
+    }
+
+    public String getRepresentativeSSN() {
+        return representativeSSN;
+    }
+
+    public void setRepresentativeSSN(String representativeSSN) {
+        this.representativeSSN = representativeSSN;
+    }
+
+    public String getCorporateName() {
+        return corporateName;
+    }
+
+    public void setCorporateName(String corporateName) {
+        this.corporateName = corporateName;
+    }
+
+    public String getCorporationType() {
+        return corporationType;
+    }
+
+    public void setCorporationType(String corporationType) {
+        this.corporationType = corporationType;
+    }
+
+    public String getTaxType() {
+        return taxType;
+    }
+
+    public void setTaxType(String taxType) {
+        this.taxType = taxType;
+    }
+
+    public String getTaxTypeCategory() {
+        return taxTypeCategory;
+    }
+
+    public void setTaxTypeCategory(String taxTypeCategory) {
+        this.taxTypeCategory = taxTypeCategory;
+    }
+
+    public Integer getCorporateLicenseNo() {
+        return corporateLicenseNo;
+    }
+
+    public void setCorporateLicenseNo(Integer corporateLicenseNo) {
+        this.corporateLicenseNo = corporateLicenseNo;
+    }
+
+    public String getKakaotTalkChannel() {
+        return kakaotTalkChannel;
+    }
+
+    public void setKakaotTalkChannel(String kakaotTalkChannel) {
+        this.kakaotTalkChannel = kakaotTalkChannel;
+    }
+
+    public String getHomepageURL() {
+        return homepageURL;
+    }
+
+    public void setHomepageURL(String homepageURL) {
+        this.homepageURL = homepageURL;
+    }
 
     @Override
     public String toString() {

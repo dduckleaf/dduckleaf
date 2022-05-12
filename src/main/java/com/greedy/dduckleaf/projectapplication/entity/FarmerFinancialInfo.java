@@ -1,18 +1,11 @@
 package com.greedy.dduckleaf.projectapplication.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
+
 @Entity(name = "FarmerFinancialInfoForProjectApplication")
 @Table(name = "TBL_FARMER_FINANCIAL_INFO")
 @DynamicInsert
@@ -43,6 +36,84 @@ public class FarmerFinancialInfo {
 
     @Column(name = "SETTLEMENT_POLICY_CHECK_DATE")
     private String settlementPolicyCheckDate;
+
+    public FarmerFinancialInfo() {
+    }
+
+    public FarmerFinancialInfo(int financialInfoNo, int farmerNo, Bank bank, String taxReceiveEmail, String farmerAccount, String farmerName, String settlementPolicyCheckStatus, String settlementPolicyCheckDate) {
+        this.financialInfoNo = financialInfoNo;
+        this.farmerNo = farmerNo;
+        this.bank = bank;
+        this.taxReceiveEmail = taxReceiveEmail;
+        this.farmerAccount = farmerAccount;
+        this.farmerName = farmerName;
+        this.settlementPolicyCheckStatus = settlementPolicyCheckStatus;
+        this.settlementPolicyCheckDate = settlementPolicyCheckDate;
+    }
+
+    public int getFinancialInfoNo() {
+        return financialInfoNo;
+    }
+
+    public void setFinancialInfoNo(int financialInfoNo) {
+        this.financialInfoNo = financialInfoNo;
+    }
+
+    public int getFarmerNo() {
+        return farmerNo;
+    }
+
+    public void setFarmerNo(int farmerNo) {
+        this.farmerNo = farmerNo;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public String getTaxReceiveEmail() {
+        return taxReceiveEmail;
+    }
+
+    public void setTaxReceiveEmail(String taxReceiveEmail) {
+        this.taxReceiveEmail = taxReceiveEmail;
+    }
+
+    public String getFarmerAccount() {
+        return farmerAccount;
+    }
+
+    public void setFarmerAccount(String farmerAccount) {
+        this.farmerAccount = farmerAccount;
+    }
+
+    public String getFarmerName() {
+        return farmerName;
+    }
+
+    public void setFarmerName(String farmerName) {
+        this.farmerName = farmerName;
+    }
+
+    public String getSettlementPolicyCheckStatus() {
+        return settlementPolicyCheckStatus;
+    }
+
+    public void setSettlementPolicyCheckStatus(String settlementPolicyCheckStatus) {
+        this.settlementPolicyCheckStatus = settlementPolicyCheckStatus;
+    }
+
+    public String getSettlementPolicyCheckDate() {
+        return settlementPolicyCheckDate;
+    }
+
+    public void setSettlementPolicyCheckDate(String settlementPolicyCheckDate) {
+        this.settlementPolicyCheckDate = settlementPolicyCheckDate;
+    }
 
     @Override
     public String toString() {

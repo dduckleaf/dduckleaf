@@ -33,9 +33,6 @@ public class Project {
     @Column(name = "FARMER_NO")
     private Integer farmerNo;
 
-//    @OneToMany(mappedBy = "project")
-//    private List<ProjectNotice> projectNoticeList;
-
     public Project() {}
 
     public Project(int projectNo, String projectName, Date openDate, Date endDate, String projectStatus, int progressStatus, Integer farmerNo) {

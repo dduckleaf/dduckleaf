@@ -1,17 +1,39 @@
 package com.greedy.dduckleaf.main.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-
-import lombok.*;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
-@ToString
 public class FarmerDTO {
 
     private int memberNo;
     private String businessName;
+
+    public FarmerDTO() {
+    }
+
+    public FarmerDTO(int memberNo, String businessName) {
+        this.memberNo = memberNo;
+        this.businessName = businessName;
+    }
+
+    public int getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(int memberNo) {
+        this.memberNo = memberNo;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
+    @Override
+    public String toString() {
+        return "FarmerDTO{" +
+                "memberNo=" + memberNo +
+                ", businessName='" + businessName + '\'' +
+                '}';
+    }
 }

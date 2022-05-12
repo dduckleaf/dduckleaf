@@ -38,17 +38,5 @@ class ProjectManagerServiceTest {
         assertNotNull(modelMapper);
     }
 
-    @Test
-    @DisplayName("진행예정 프로젝트 목록 조회 메소드 테스트")
-    public void findScheduledProjectList_test() {
 
-        //given
-        Pageable pageable = PageRequest.of(1, 10);
-
-        //when
-        Page<ProjectDTO> projectList = projectManageService.findScheduledProjectList(pageable);
-
-        //then
-        projectList.forEach(System.out::println);
-    }
 }

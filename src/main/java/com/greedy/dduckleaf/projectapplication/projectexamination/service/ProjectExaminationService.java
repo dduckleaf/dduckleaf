@@ -27,8 +27,9 @@ import java.util.stream.Collectors;
  * 2022/05/02 (박휘림) findProjectApplicationList  메소드 작성
  * 2022/05/03 (박휘림) findProjectApplicationDetail, modifyProjectProgressStatus  메소드 작성
  * 2022/05/04 (박휘림) findBasicInfoAttachmentByProjectNo, findStoryAttachmentByProjectNo, findFarmerInfoAttachment, findFarmerFinancialInfo  메소드 작성
+ * 2022/05/10 (박휘림) approveProject, rejectProject, findProjectExamineHisory 메소드 작성
  * </pre>
- * @version 1.0.2
+ * @version 1.0.3
  * @author 박휘림
  */
 @Service
@@ -190,7 +191,6 @@ public class ProjectExaminationService {
         Project project = projectRepository.findByProjectNo(projectApplicationInfo.getProject().getProjectNo());
         project.setProgressStatus(2);
         project.setExamineStatus("3");
-//        project.setExamineStatus("심사완료");
         project.setProjectExamineStatus("승인");
 
         ProjectExamineHistory projectExamineHistory = new ProjectExamineHistory();
@@ -235,6 +235,12 @@ public class ProjectExaminationService {
         projectExamineHistoryRepository.save(projectExamineHistory);
     }
 
+    /**
+     * findProjectExamineHisory: 프로젝트를 반려합니다.
+     * @param projectNo: 프로젝트 번호
+     * @return 프로젝트 심사내역
+     * @author 박휘림
+     */
     public ProjectExamineHistoryDTO findProjectExamineHisory(int projectNo) {
 
         ProjectExamineHistory examineHistory = projectExamineHistoryRepository.findAllByProjectNo(projectNo);

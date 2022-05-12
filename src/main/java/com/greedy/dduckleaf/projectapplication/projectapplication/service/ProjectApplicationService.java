@@ -36,8 +36,9 @@ import java.util.stream.Collectors;
  * 2022/05/04 (박휘림) findProjectByProjectNo, modifyBasicReqAttachment 메소드 작성
  * 2022/05/05 (박휘림) modifyFarmerFinancialInfoAttachment 메소드 작성 시작
  * 2022/05/07 (박휘림) modifyFarmerFinancialInfoAttachment 메소드 작성 완료
+ * 2022/05/10 (박휘림) cancelProjectApplication 메소드 작성
  * </pre>
- * @version 1.0.9
+ * @version 1.0.10
  * @author 박휘림
  */
 @Service

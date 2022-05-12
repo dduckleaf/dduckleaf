@@ -3,8 +3,10 @@ package com.greedy.dduckleaf.projectapplication.projectexamination.controller;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
-import com.greedy.dduckleaf.projectapplication.dto.*;
-import com.greedy.dduckleaf.projectapplication.entity.ProjectExamineHistory;
+import com.greedy.dduckleaf.projectapplication.dto.FarmerFinancialInfoDTO;
+import com.greedy.dduckleaf.projectapplication.dto.ProjectApplicationInfoDTO;
+import com.greedy.dduckleaf.projectapplication.dto.ProjectAttachmentDTO;
+import com.greedy.dduckleaf.projectapplication.dto.ProjectExamineHistoryDTO;
 import com.greedy.dduckleaf.projectapplication.projectexamination.service.ProjectExaminationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,8 +28,12 @@ import java.util.List;
  * Comment : 프로젝트 심사
  * History
  * 2022/05/02 (박휘림) 처음 작성 /  findProjectApplicationInfoList 메소드 작성
+ * 2022/05/03 findProjectApplicationInfoDetail, modifyProjectProgressStatus 메소드 작성
+ * 2022/05/04 modifyProjectProgressStatus, findBasicReq, findBasicInfo, findStory, findReward, findPolicy, findFarmer, findRepresentative 메소드 작성
+ * 2022/05/10 approveProject, rejectProject 메소드 작성
+ * 2022/05/11 findProjectApplicationReason 메소드 작성
  * </pre>
- * @version 1.0.0
+ * @version 1.0.4
  * @author 박휘림
  */
 @Controller
@@ -284,6 +290,13 @@ public class ProjectExaminationController {
         return mv;
     }
 
+    /**
+     * approveProject: 프로젝트 오픈을 승인합니다.
+     * @param projectApplicaionNo: 프로젝트 신청 번호
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/project/examination/list" 신청 내역 목록으로 이동
+     * @author 박휘림
+     */
     @GetMapping("/approval/{projectApplicaionNo}")
     public ModelAndView approveProject(ModelAndView mv, @PathVariable int projectApplicaionNo, @AuthenticationPrincipal CustomUser user) {
 
@@ -296,6 +309,13 @@ public class ProjectExaminationController {
         return mv;
     }
 
+    /**
+     * rejectProject: 프로젝트 오픈을 반려합니다.
+     * @param projectApplicaion: 프로젝트 신청 내역 정보를 담은 DTO
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/project/examination/list" 신청 내역 목록으로 이동
+     * @author 박휘림
+     */
     @PostMapping("/reject")
     public ModelAndView rejectProject(ModelAndView mv, ProjectApplicationInfoDTO projectApplicaion, ProjectExamineHistoryDTO history, @AuthenticationPrincipal CustomUser user) {
 
@@ -312,7 +332,7 @@ public class ProjectExaminationController {
      * rejectApplicationReason: 반려된 프로젝트의 반려사유를 조회하는 메소드입니다.
      * @param projectNo: 프로젝트 번호
      * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
-     *            "redirect:/common/farmerpage" 파머탭 경로
+     *            "/project/reject/detail" 파머탭 반려사유 조회 페이지 경로
      * @author 박휘림
      */
     @GetMapping("/rejectreason/{projectNo}")

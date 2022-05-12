@@ -1,18 +1,12 @@
 package com.greedy.dduckleaf.projectapplication.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectExamineHistoryCategoryForProjectApplication")
 @Table(name = "TBL_PROJECT_EXAMINE_HISTORY")
 @DynamicInsert
@@ -25,8 +19,29 @@ public class ProjectExamineHistoryCategory {
     @Column(name = "PROJECT_EXAMINE_HISTORY_CATEGORY_NAME")
     private String projectExamineHistoryCategoryName;
 
-//    @OneToMany(mappedBy = "examineProjectStatus")
-//    private List<ProjectExamineHistory> projectExamineHistoryList;
+    public ProjectExamineHistoryCategory() {
+    }
+
+    public ProjectExamineHistoryCategory(int projectExamineHistoryCategoryNo, String projectExamineHistoryCategoryName) {
+        this.projectExamineHistoryCategoryNo = projectExamineHistoryCategoryNo;
+        this.projectExamineHistoryCategoryName = projectExamineHistoryCategoryName;
+    }
+
+    public int getProjectExamineHistoryCategoryNo() {
+        return projectExamineHistoryCategoryNo;
+    }
+
+    public void setProjectExamineHistoryCategoryNo(int projectExamineHistoryCategoryNo) {
+        this.projectExamineHistoryCategoryNo = projectExamineHistoryCategoryNo;
+    }
+
+    public String getProjectExamineHistoryCategoryName() {
+        return projectExamineHistoryCategoryName;
+    }
+
+    public void setProjectExamineHistoryCategoryName(String projectExamineHistoryCategoryName) {
+        this.projectExamineHistoryCategoryName = projectExamineHistoryCategoryName;
+    }
 
     @Override
     public String toString() {

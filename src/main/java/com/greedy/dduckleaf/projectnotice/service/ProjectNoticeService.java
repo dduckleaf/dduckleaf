@@ -4,8 +4,8 @@ import com.greedy.dduckleaf.projectnotice.dto.ProjectDTO;
 import com.greedy.dduckleaf.projectnotice.dto.ProjectNoticeDTO;
 import com.greedy.dduckleaf.projectnotice.entity.Project;
 import com.greedy.dduckleaf.projectnotice.entity.ProjectNotice;
-import com.greedy.dduckleaf.projectnotice.repository.ProjectNoticeRepository;
 import com.greedy.dduckleaf.projectnotice.repository.ProjectForProjectNoticeRepository;
+import com.greedy.dduckleaf.projectnotice.repository.ProjectNoticeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -124,6 +124,12 @@ public class ProjectNoticeService {
         notice.setProjectNoticeStatus("N");
     }
 
+    /**
+     * findProjectInfo: 프로젝트 정보를 조회합니다.
+     * @param projectNo: 프로젝트 번호
+     * @return 프로젝트 정보를 담은 dto
+     * @author 박휘림
+     */
     public ProjectDTO findProjectInfo(int projectNo) {
 
         Project project = projectRepository.findByProjectNo(projectNo);

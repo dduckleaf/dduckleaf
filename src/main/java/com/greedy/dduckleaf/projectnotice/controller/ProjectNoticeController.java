@@ -6,7 +6,6 @@ import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.projectnotice.dto.ProjectDTO;
 import com.greedy.dduckleaf.projectnotice.dto.ProjectNoticeDTO;
 import com.greedy.dduckleaf.projectnotice.service.ProjectNoticeService;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,9 +14,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <pre>
@@ -79,8 +75,8 @@ public class ProjectNoticeController {
      */
     public int findProjectNoByFarmerNo(@AuthenticationPrincipal CustomUser user) {
 
-//        int farmerNo = user.getMemberNo();
-        int farmerNo = 68;
+        int farmerNo = user.getMemberNo();
+
         int projectNo = projectService.findProjectNoByFarmerId(farmerNo);
 
         return projectNo;

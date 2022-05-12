@@ -56,7 +56,7 @@
                     </div>
                     <div>
                         <ul>
-                            <li><a th:href="@{/}">발송관리</a></li>
+                            <li><a th:href="@{/shipping/management/default/{projectNo} (projectNo = ${project.projectNo})}">발송관리</a></li>
                             <li><a th:href="@{/}">사업실패 증빙서류</a></li>
                             <li><a th:href="@{/settlement/farmer/overview/{projectNo} (projectNo = ${project.projectNo})}">정산금 조회</a></li>
                             <li><a th:href="@{/}">프로젝트 평가</a></li>
