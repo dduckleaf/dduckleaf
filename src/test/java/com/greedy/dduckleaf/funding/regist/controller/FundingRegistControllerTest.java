@@ -71,6 +71,5 @@ class FundingRegistControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.forwardedUrl("/funding/regist/shippinginfo"))
                 .andDo(MockMvcResultHandlers.print());
-
     }
 }

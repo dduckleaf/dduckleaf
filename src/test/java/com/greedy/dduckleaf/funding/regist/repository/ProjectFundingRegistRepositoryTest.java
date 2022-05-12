@@ -38,29 +38,43 @@ class ProjectFundingRegistRepositoryTest {
     @DisplayName("프로젝트의 배송비, 리워드 정보 전체 조회 테스트")
     public void findAll_test() {
 
+        //when
         List<Project> projectInfoList =  repo.findAll();
+
+        //then
         assertNotNull(projectInfoList);
-        projectInfoList.forEach(System.out::println);
         assertDoesNotThrow(() -> repo.save(new Project()));
+
+        projectInfoList.forEach(System.out::println);
     }
 
     @Test
     @DisplayName("프로젝트 번호로 특정 프로젝트의 배송비, 리워드정보 조회")
     public void findById_test() {
 
-        Project projectInfo = repo.findById(7).get();
+        //given
+        int projectNo = 7;
+
+        //when
+        Project projectInfo = repo.findById(projectNo).get();
+
+        //then
         assertNotNull(projectInfo);
         System.out.println("projectInfo = " + projectInfo);
     }
 
     @Test
+    @DisplayName("프로젝트 조회 테스트")
     public void findProjectListTest() {
 
-        Project project = repo.findById(1).get();
+        //given
+        int projectNo = 1;
 
+        //when
+        Project project = repo.findById(projectNo).get();
+
+        //then
         assertNotNull(project);
         System.out.println("project = " + project);
-
     }
-
 }

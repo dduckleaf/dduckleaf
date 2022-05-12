@@ -1,15 +1,8 @@
 package com.greedy.dduckleaf.refund.find.entity;
 
-import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
-@ToString
 @Entity(name = "ProjectForAdminRefundingFind")
 @Table(name = "TBL_PROJECT")
 public class ProjectForAdminList {
@@ -39,4 +32,85 @@ public class ProjectForAdminList {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PROJECT_NO")
     private List<FundingCount> fundings;
+
+    public ProjectForAdminList() {
+    }
+
+    public ProjectForAdminList(int projectNo, String projectName, ProjectProgressStatus progressStatus, String openDate, String endDate, Farmer farmer, List<FundingCount> fundings) {
+        this.projectNo = projectNo;
+        this.projectName = projectName;
+        this.progressStatus = progressStatus;
+        this.openDate = openDate;
+        this.endDate = endDate;
+        this.farmer = farmer;
+        this.fundings = fundings;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public ProjectProgressStatus getProgressStatus() {
+        return progressStatus;
+    }
+
+    public void setProgressStatus(ProjectProgressStatus progressStatus) {
+        this.progressStatus = progressStatus;
+    }
+
+    public String getOpenDate() {
+        return openDate;
+    }
+
+    public void setOpenDate(String openDate) {
+        this.openDate = openDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public Farmer getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(Farmer farmer) {
+        this.farmer = farmer;
+    }
+
+    public List<FundingCount> getFundings() {
+        return fundings;
+    }
+
+    public void setFundings(List<FundingCount> fundings) {
+        this.fundings = fundings;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectForAdminList{" +
+                "projectNo=" + projectNo +
+                ", projectName='" + projectName + '\'' +
+                ", progressStatus=" + progressStatus +
+                ", openDate='" + openDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", farmer=" + farmer +
+                '}';
+    }
 }

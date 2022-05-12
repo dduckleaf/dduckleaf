@@ -21,6 +21,7 @@ import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 @SpringBootTest
 @ContextConfiguration(classes = {
         BeanConfiguration.class,
@@ -87,9 +88,7 @@ class RefundingForFarmerExamineServiceTest {
 
         //when & then
         assertDoesNotThrow(() -> service.examineObjectionconfirm(objectionNo, memberNo));
-
     }
-
 
     @Test
     @DisplayName("이의신청 승인 이력 추가 테스트")
@@ -106,11 +105,3 @@ class RefundingForFarmerExamineServiceTest {
 
     }
 }
-
-
-
-
-
-
-
-

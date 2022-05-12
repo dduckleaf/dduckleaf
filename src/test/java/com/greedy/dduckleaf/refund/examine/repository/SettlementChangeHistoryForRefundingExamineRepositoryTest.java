@@ -33,8 +33,10 @@ class SettlementChangeHistoryForRefundingExamineRepositoryTest {
     @Test
     public void findAll_test() {
 
+        //when
         List<SettlementChangeHistory> histories = repo.findAll();
 
+        //then
         assertNotNull(histories);
         histories.forEach(System.out::println);
     }

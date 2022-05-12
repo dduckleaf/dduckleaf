@@ -24,5 +24,4 @@ class SettlementChangeHistoryForRefundingFarmerExamineRepositoryTest {
 
         assertNotNull(repo);
     }
-
 }

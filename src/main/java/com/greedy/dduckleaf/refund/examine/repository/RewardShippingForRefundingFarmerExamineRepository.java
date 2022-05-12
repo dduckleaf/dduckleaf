@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * <pre>
  * Class : RewardShippingForRefundingFarmerExamineRepository
- * Comment :
+ * Comment : 환불 심사
  *
  * History
  * 2022-05-05 홍성원

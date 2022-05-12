@@ -18,10 +18,10 @@ import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
 /**
  * <pre>
  * Class : RefundingForFarmerExamineService
- * Comment : 파머의 환불요청 심사를 처리합니다.
+ * Comment : 환불 심사
  *
  * History
- * 2022-05-05 홍성원
+ * 2022-05-05 홍성원 작성
  * </pre>
  *
  * @author 홍성원
@@ -68,16 +68,16 @@ public class RefundingForFarmerExamineService {
     @Transactional
     public void confirmRefunding(int refundiNo, int memberNo) {
 
-        /* 환불내역에 상태를 환불 승인으로 변경 후 환불 종료일을 현재시간으로 수정한다. */
+        /* 환불내역에 상태를 환불 승인으로 변경 후 환불 종료일을 현재시간으로 수정합니다. */
         Refunding refunding = refundingRepo.findById(refundiNo).get();
         refunding.setRefundingEndDate(getDateAndTime());
         refunding.setRefundingStatus(refundingStatusRepo.findById(2).get());
 
-        /* 펀딩 신청내역에 펀딩상태를 N으로 변경한다. */
+        /* 펀딩 신청내역에 펀딩상태를 N으로 변경합니다. */
         Funding funding = fundingRepo.findById(refunding.getFunding().getFundingInfoNo()).get();
         funding.setFundingStatus("N");
 
-        /* 환불이력에 승인 내역을 추가한다. */
+        /* 환불이력에 승인 내역을 추가합니다. */
         RefundingHistory refundingHistory = new RefundingHistory();
         refundingHistory.setManagerType("파머");
         refundingHistory.setRefundingHistoryDate(getDateAndTime());
@@ -114,7 +114,7 @@ public class RefundingForFarmerExamineService {
         settlementHistoryDonate.setRefundingHistoryNo(refundingHistory.getRefundingHisotryNo());
         settlementHistoryRepo.save(settlementHistoryDonate);
 
-        /* 발송내역에 해당 펀딩 정보를 삭제한다. */
+        /* 발송내역에 해당 펀딩 정보를 삭제합니다. */
         /* 남기랑 의견조율 해서 반영하자 */
 //        shippingRepo.deleteById(shippingRepo.findByFunding_fundingInfoNo(funding.getFundingInfoNo()).getRewardShippingNo());
 
@@ -137,13 +137,13 @@ public class RefundingForFarmerExamineService {
     @Transactional
     public void refuseRefunding(RefundingDTO refundingDTO) {
 
-        /* 환불내역에 상태를 환불 거절로 수정한다. */
+        /* 환불내역에 상태를 환불 거절로 수정합니다다. */
         Refunding refunding = refundingRepo.findById(refundingDTO.getRefundingInfoNo()).get();
         refunding.setRefundingStatus(refundingStatusRepo.findById(3).get());
 
         Funding funding = fundingRepo.findById(refunding.getFunding().getFundingInfoNo()).get();
 
-        /* 환불이력에 승인 내역을 추가한다. */
+        /* 환불이력에 승인 내역을 추가합니다. */
         RefundingHistory refundingHistory = new RefundingHistory();
         refundingHistory.setManagerType("파머");
         refundingHistory.setRefundingHistoryDate(getDateAndTime());
@@ -156,30 +156,28 @@ public class RefundingForFarmerExamineService {
         refundingHistory.setManagerNo(refundingDTO.getMemberNo());
         refundingHistory.setRefundingRefuseReason(refundingDTO.getRefundingReason());
 
-        System.out.println("ddd");
         refundingRepo.save(refunding);
-        System.out.println("ddd");
         refundHistoryRepo.save(refundingHistory);
-        System.out.println("ddd");
 
-        /* 환불 승인 시 프로젝트 달성률에 반영한다. */
+        /* 환불 승인 시 프로젝트 달성률에 반영합니다. */
         /* 달성률 반영 */
         Project project = projectRepo.findById(funding.getProjectNo()).get();
+
         double target = project.getFundTargetAmount();
         int amount = 0;
+
         List<Funding> fundingList = project.getFundings();
+
         for(int i = 0; i < fundingList.size(); i++) {
 
             amount += fundingList.get(i).getFundingAmount();
-            System.out.println("amount = " + amount);
         }
+
         amount -= funding.getFundingAmount();
-        System.out.println("amount = " + amount);
 
         double rate = amount / target * 100;
-        System.out.println("re = " + rate);
-
         project.setAchievementRate(rate);
+
         projectRepo.save(project);
     }
 
@@ -192,14 +190,9 @@ public class RefundingForFarmerExamineService {
     @Transactional
     public void registObjection(int refundingNo) {
 
-        System.out.println("registObjection");
-        System.out.println("start");
-        System.out.println("refundingNo = " + refundingNo);
         Refunding refunding = refundingRepo.findById(refundingNo).get();
-        System.out.println("refunding = " + refunding);
         RefundingObjection objection = new RefundingObjection();
         objection.setRefundObjectionMemberNo(refunding.getMemberNo());
-        System.out.println("objection = " + objection);
         objection.setRefundingInfoNo(refundingNo);
         objection.setRefundStatus("신청");
 
@@ -212,13 +205,11 @@ public class RefundingForFarmerExamineService {
         refundObjectionHistory.setHistoryCategory("신청");
         refundObjectionHistory.setRefundObjectionNo(objection.getRefundObjectionNo());
 
-        System.out.println("refundObjectionHistory = " + refundObjectionHistory);
         refundObjectionHistoryRepo.save(refundObjectionHistory);
 
 
-        /* 환불 상태를 심사 요청으로 변경한다. */
+        /* 환불 상태를 심사 요청으로 변경합니다. */
         RefundingStatus status = refundingStatusRepo.findById(4).get();
-        System.out.println("status = " + status);
         refunding.setRefundingStatus(status);
         refundingRepo.save(refunding);
     }
@@ -283,7 +274,7 @@ public class RefundingForFarmerExamineService {
 
         refundHistoryRepo.save(refundingHistory);
 
-        /* 환불 승인 시 프로젝트 달성률에 반영한다. */
+        /* 환불 승인 시 프로젝트 달성률에 반영합니다. */
         /* 달성률 반영 */
         Project project = projectRepo.findById(refunding.getProject().getProjectNo()).get();
         double target = project.getFundTargetAmount();
@@ -292,13 +283,10 @@ public class RefundingForFarmerExamineService {
         for(int i = 0; i < fundingList.size(); i++) {
 
             amount += fundingList.get(i).getFundingAmount();
-            System.out.println("amount = " + amount);
         }
         amount -= refunding.getFunding().getFundingAmount();
-        System.out.println("amount = " + amount);
 
         double rate = amount / target * 100;
-        System.out.println("re = " + rate);
 
         project.setAchievementRate(rate);
         projectRepo.save(project);
@@ -337,6 +325,7 @@ public class RefundingForFarmerExamineService {
 
         /* 환불 이력에 거절 결과를 추가합니다. */
         RefundingHistory refundingHistory = new RefundingHistory();
+
         refundingHistory.setManagerType("관리자");
         refundingHistory.setRefundingHistoryDate(getDateAndTime());
         refundingHistory.setRefundingStatusNo(refundingStatus.getRefundingStatusNo());
@@ -349,22 +338,4 @@ public class RefundingForFarmerExamineService {
 
         refundHistoryRepo.save(refundingHistory);
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

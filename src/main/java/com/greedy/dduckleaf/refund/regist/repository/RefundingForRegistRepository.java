@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 /**
  * <pre>
  * Class : RefundingForRegistRepository
- * Comment :
+ * Comment : 환불 등록
  *
  * History
  * 2022-05-03 홍성원
