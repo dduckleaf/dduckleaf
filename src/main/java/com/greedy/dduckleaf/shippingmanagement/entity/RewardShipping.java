@@ -94,7 +94,6 @@ public class RewardShipping {
                 ", shippingDueDate='" + shippingDueDate + '\'' +
                 ", memberNo=" + memberNo +
                 ", project=" + project +
-                ", fundingInfo=" + fundingInfo +
                 ", shippingStatus=" + shippingStatus +
                 '}';
     }
