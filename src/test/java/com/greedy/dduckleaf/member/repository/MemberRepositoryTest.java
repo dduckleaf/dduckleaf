@@ -186,4 +186,19 @@ class MemberRepositoryTest {
         System.out.println(member);
         assertNotNull(member);
     }
+
+    @Test
+    public void test() {
+
+        //given
+
+
+        //when
+        Member member = memberRepository.findById(3).get();
+
+        //then
+        System.out.println(member);
+        assertNotNull(member);
+
+    }
 }
