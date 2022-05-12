@@ -20,6 +20,7 @@
 				<div class="notice-wrap">
 					<div class="title-div" style="margin-top: 5%">
 						<span class="text-title"><img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">공개 예정 프로젝트</span>
+						<button type="button" class="btn3 basic-btn medium-btn" style="float:right;" id="openproject">프로젝트 오픈</button>
 						<hr style="width: 100%">
 					</div>
 					<div class="cont-div" style="width: 100%; text-align: center; margin-top: 2%">
@@ -38,7 +39,7 @@
 								<th>파머명</th>
 								<th>달성률(%)</th>
 								<th>목표금액</th>
-								<th>마감일</th>
+								<th>오픈일</th>
 							</tr>
 							<tr th:each="project : ${ projectList }">
 								<td><input type="hidden" id="projectNo" name="projectNo" th:value="${project.projectNo}"></td>
@@ -46,13 +47,14 @@
 								<td th:text="${ project.farmer.farmerName }"></td>
 								<td th:text="${ project.achievementRate}"></td>
 								<td th:text="${ project.fundTargetAmount }"></td>
-								<td th:text="${ project.endDate }"></td>
+								<td th:text="${ project.openDate }"></td>
 							</tr>
 						</table>
 						<br>
 						<div style="text-align: center">
 							<div th:replace="/project/manage/scheduled/projectlistpaging.html"></div>
 						</div>
+<!--						<button type="button" class="btn3 basic-btn medium-btn" style="float:right;">프로젝트 오픈</button>-->
 						<br>
 						<form id="search-form" action="/notice/search" method="get">
 							<fieldset>
@@ -88,21 +90,15 @@
 
                 tds[i].onclick = function() {
                     const $projectNo = this.parentNode.children[0].children[0].value;
-                    location.href = "/project/manage/end/detail/" + $projectNo;
+                    location.href = "/project/manage/scheduled/detail/" + $projectNo;
                 }
             }
         }
 
-        /* 검색 기능 */
-        let keyword = document.getElementById("searchValue").innerText;
-        let category = document.getElementById("category");
+		$("#openproject").click(function () {
+			location.href = "/project/manage/open";
+		});
 
-        const search = document.getElementById("search");
-        if(search) {
-            search.onclick = function() {
-                location.href = "/report/platformmanager"/ + category + "/" + keyword;
-            }
-        }
 	</script>
 </body>
 </html>
