@@ -32,7 +32,7 @@ class ProjectAttachmentForMainRepositoryTest {
     }
 
     @Test
-    @DisplayName("포르젝트의 사진 목록 조회")
+    @DisplayName("프로젝트의 사진 목록 조회")
     public void findProjectAttachmentListTest() {
 
         //given
