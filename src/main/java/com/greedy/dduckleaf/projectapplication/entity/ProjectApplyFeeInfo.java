@@ -1,17 +1,9 @@
 package com.greedy.dduckleaf.projectapplication.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectApplyFeeInfoForProjectApplication")
 @Table(name = "TBL_PROJECT_APPLY_FEE_INFO")
 @DynamicInsert
@@ -27,4 +19,46 @@ public class ProjectApplyFeeInfo {
 
     @Column(name = "FEE_POLICY_RATE_NO")
     private int feePolicyRateNo;
+
+    public ProjectApplyFeeInfo() {
+    }
+
+    public ProjectApplyFeeInfo(int projectApplyFeeInfoNo, int projectNo, int feePolicyRateNo) {
+        this.projectApplyFeeInfoNo = projectApplyFeeInfoNo;
+        this.projectNo = projectNo;
+        this.feePolicyRateNo = feePolicyRateNo;
+    }
+
+    public int getProjectApplyFeeInfoNo() {
+        return projectApplyFeeInfoNo;
+    }
+
+    public void setProjectApplyFeeInfoNo(int projectApplyFeeInfoNo) {
+        this.projectApplyFeeInfoNo = projectApplyFeeInfoNo;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
+    }
+
+    public int getFeePolicyRateNo() {
+        return feePolicyRateNo;
+    }
+
+    public void setFeePolicyRateNo(int feePolicyRateNo) {
+        this.feePolicyRateNo = feePolicyRateNo;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectApplyFeeInfo{" +
+                "projectApplyFeeInfoNo=" + projectApplyFeeInfoNo +
+                ", projectNo=" + projectNo +
+                ", feePolicyRateNo=" + feePolicyRateNo +
+                '}';
+    }
 }

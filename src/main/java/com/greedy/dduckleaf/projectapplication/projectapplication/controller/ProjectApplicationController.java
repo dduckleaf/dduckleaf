@@ -6,12 +6,9 @@ import com.google.gson.GsonBuilder;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.projectapplication.dto.*;
 import com.greedy.dduckleaf.projectapplication.projectapplication.service.ProjectApplicationService;
-import org.apache.tomcat.util.http.fileupload.FileItem;
-import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,8 +33,10 @@ import java.util.*;
  * 2022/05/01 (박휘림) sendPhoneVerification 메소드 작성
  * 2022/05/02 (박휘림) registProjectApplicationInfo 메소드 작성
  * 2022/05/05 (박휘림) modifyRepresentative 메소드 작성
+ * 2022/05/09 (박휘림) moveToWaitingProject 메소드 작성
+ * 2022/05/10 (박휘림) cancelProjectApplicaion 메소드 작성
  * </pre>
- * @version 1.0.8
+ * @version 1.0.9
  * @author 박휘림
  */
 @Controller
@@ -117,7 +116,7 @@ public class ProjectApplicationController {
         int projectNo = findProjectNoByFarmerNo(user);
 
         RewardRegistInfoDTO basicReq = projectApplicationService.findRewardRegistInfoByProjectNo(projectNo);
-        System.out.println("basicReq = " + basicReq);
+
         mv.addObject("basicReq", basicReq);
         mv.setViewName("project/regist/basicreq");
 
@@ -192,7 +191,7 @@ public class ProjectApplicationController {
                     boolean isDeleted1 = deleteFile.delete();
 
                     if(isDeleted1) {
-                        System.out.println("업로드 실패로 인한 사진 삭제 완료 !!!");
+
                         e.printStackTrace();
                     } else {
                         e.printStackTrace();
@@ -320,7 +319,7 @@ public class ProjectApplicationController {
                     boolean isDeleted1 = deleteFile.delete();
 
                     if(isDeleted1) {
-                        System.out.println("업로드 실패로 인한 사진 삭제 완료 !!!");
+
                         e.printStackTrace();
                     } else {
                         e.printStackTrace();
@@ -380,8 +379,6 @@ public class ProjectApplicationController {
             project.setProjectNo(projectNo);
 
             attachment.setProject(project);
-//            attachment.setProjectBasicInfoNo(story.getProjectBasicInfoNo());
-            String result = "";
 
             String rootLocation = uploadPath;
 
@@ -429,7 +426,7 @@ public class ProjectApplicationController {
                     boolean isDeleted1 = deleteFile.delete();
 
                     if(isDeleted1) {
-                        System.out.println("업로드 실패로 인한 사진 삭제 완료 !!!");
+
                         e.printStackTrace();
                     } else {
                         e.printStackTrace();
@@ -605,7 +602,6 @@ public class ProjectApplicationController {
             project.setProjectNo(projectNo);
 
             attachment.setProject(project);
-            String result = "";
 
             String rootLocation = uploadPath;
 
@@ -652,7 +648,7 @@ public class ProjectApplicationController {
                     boolean isDeleted1 = deleteFile.delete();
 
                     if(isDeleted1) {
-                        System.out.println("업로드 실패로 인한 사진 삭제 완료 !!!");
+
                         e.printStackTrace();
                     } else {
                         e.printStackTrace();
@@ -854,13 +850,21 @@ public class ProjectApplicationController {
         return mv;
     }
 
+    /**
+     * moveToWaitingProject: 파머페이지에서 심사 대기중인 신청 프로젝트 페이지로 이동합니다.
+     * @param projectNo: 프로젝트 번호
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "/project/cancel/detail" 심사 대기중인 프로젝트 경로
+     * @author 박휘림
+     */
     @GetMapping("/waiting/{projectNo}")
     public ModelAndView moveToWaitingProject(ModelAndView mv, @PathVariable int projectNo) {
 
         ProjectDTO project = projectApplicationService.findProjectByProjectNo(projectNo);
 
         mv.addObject("project", project);
-        mv.setViewName("/common/waitingproject");
+        mv.setViewName("/project/cancel/detail");
+
         return mv;
     }
 
@@ -871,13 +875,16 @@ public class ProjectApplicationController {
      *            "redirect:/common/farmerpage" 파머탭 경로
      * @author 박휘림
      */
-    @GetMapping("cancel/{projectNo}")
+    @GetMapping("/cancel/{projectNo}")
     public ModelAndView cancelProjectApplicaion(@PathVariable int projectNo, ModelAndView mv) {
 
         projectApplicationService.cancelProjectApplication(projectNo);
 
         mv.setViewName("redirect:/common/farmerpage");
+
         return mv;
     }
+
+
 
 }

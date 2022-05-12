@@ -3,7 +3,10 @@ package com.greedy.dduckleaf.projectapplication.projectexamination.service;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
-import com.greedy.dduckleaf.projectapplication.dto.*;
+import com.greedy.dduckleaf.projectapplication.dto.FarmerFinancialInfoDTO;
+import com.greedy.dduckleaf.projectapplication.dto.ProjectApplicationInfoDTO;
+import com.greedy.dduckleaf.projectapplication.dto.ProjectAttachmentDTO;
+import com.greedy.dduckleaf.projectapplication.dto.ProjectExamineHistoryDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -14,7 +17,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @ContextConfiguration(classes = {DduckleafApplication.class, BeanConfiguration.class, JPAConfiguration.class})

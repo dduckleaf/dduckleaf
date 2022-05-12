@@ -24,10 +24,11 @@ import static com.greedy.dduckleaf.project.finalfield.CodeForProject.BUTTON_AMOU
  *
  * History
  * 2022-05-01 (박휘림) 처음 작성 / findScheduledProjectList 메소드 작성
+ * 2022-05-11 (박휘림) findProjectApplicationInfoDetail, openProject 메소드 작성
  * </pre>
  *
  * @author 박휘림
- * @version 1.0.0
+ * @version 1.0.1
  */
 @Controller
 @RequestMapping("/project/manage")

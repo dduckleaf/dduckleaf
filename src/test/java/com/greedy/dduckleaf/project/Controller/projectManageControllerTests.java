@@ -1,4 +1,4 @@
-package com.greedy.dduckleaf.project.Controller;
+package com.greedy.dduckleaf.project.controller;
 
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;

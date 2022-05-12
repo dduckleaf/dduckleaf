@@ -1,21 +1,10 @@
 package com.greedy.dduckleaf.projectapplication.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectBasicInfoForProjectApplication")
 @Table(name = "TBL_PROJECT_BASIC_INFO")
 @DynamicInsert
@@ -56,6 +45,111 @@ public class ProjectBasicInfo {
 
     @Column(name = "PROJECT_MAX_TARGET")
     private int projectMaxTarget;
+
+    public ProjectBasicInfo() {
+    }
+
+    public ProjectBasicInfo(int projectBasicInfoNo, int projectNo, ProjectRewardCategory projectRewardCategory, String projectName, String projectEndDate, String projectInfo, int projectTargetFund, String projectPromotionAgreementStatus, String promotionAgreementDate, String projectOpenDate, int projectMaxTarget) {
+        this.projectBasicInfoNo = projectBasicInfoNo;
+        this.projectNo = projectNo;
+        this.projectRewardCategory = projectRewardCategory;
+        this.projectName = projectName;
+        this.projectEndDate = projectEndDate;
+        this.projectInfo = projectInfo;
+        this.projectTargetFund = projectTargetFund;
+        this.projectPromotionAgreementStatus = projectPromotionAgreementStatus;
+        this.promotionAgreementDate = promotionAgreementDate;
+        this.projectOpenDate = projectOpenDate;
+        this.projectMaxTarget = projectMaxTarget;
+    }
+
+    public int getProjectBasicInfoNo() {
+        return projectBasicInfoNo;
+    }
+
+    public void setProjectBasicInfoNo(int projectBasicInfoNo) {
+        this.projectBasicInfoNo = projectBasicInfoNo;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
+    }
+
+    public ProjectRewardCategory getProjectRewardCategory() {
+        return projectRewardCategory;
+    }
+
+    public void setProjectRewardCategory(ProjectRewardCategory projectRewardCategory) {
+        this.projectRewardCategory = projectRewardCategory;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getProjectEndDate() {
+        return projectEndDate;
+    }
+
+    public void setProjectEndDate(String projectEndDate) {
+        this.projectEndDate = projectEndDate;
+    }
+
+    public String getProjectInfo() {
+        return projectInfo;
+    }
+
+    public void setProjectInfo(String projectInfo) {
+        this.projectInfo = projectInfo;
+    }
+
+    public int getProjectTargetFund() {
+        return projectTargetFund;
+    }
+
+    public void setProjectTargetFund(int projectTargetFund) {
+        this.projectTargetFund = projectTargetFund;
+    }
+
+    public String getProjectPromotionAgreementStatus() {
+        return projectPromotionAgreementStatus;
+    }
+
+    public void setProjectPromotionAgreementStatus(String projectPromotionAgreementStatus) {
+        this.projectPromotionAgreementStatus = projectPromotionAgreementStatus;
+    }
+
+    public String getPromotionAgreementDate() {
+        return promotionAgreementDate;
+    }
+
+    public void setPromotionAgreementDate(String promotionAgreementDate) {
+        this.promotionAgreementDate = promotionAgreementDate;
+    }
+
+    public String getProjectOpenDate() {
+        return projectOpenDate;
+    }
+
+    public void setProjectOpenDate(String projectOpenDate) {
+        this.projectOpenDate = projectOpenDate;
+    }
+
+    public int getProjectMaxTarget() {
+        return projectMaxTarget;
+    }
+
+    public void setProjectMaxTarget(int projectMaxTarget) {
+        this.projectMaxTarget = projectMaxTarget;
+    }
 
     @Override
     public String toString() {

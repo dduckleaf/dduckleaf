@@ -17,9 +17,6 @@ public class Member {
     @Column(name = "MEMBER_ID")
     private String memberId;
 
-//    @OneToMany(mappedBy = "member")
-//    private List<ProjectNotice> projectNoticeList;
-
     @Column(name = "MEMBER_PWD")
     private String memberPwd;
 

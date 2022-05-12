@@ -1,16 +1,7 @@
 package com.greedy.dduckleaf.projectapplication.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectAttachmentForProjectApplication")
 @Table(name = "TBL_PROJECT_ATTACHMENT")
 public class ProjectAttachment {
@@ -35,15 +26,78 @@ public class ProjectAttachment {
     @Column(name = "FARMER_NO")
     private int farmerNo;
 
-//    @Column(name = "PROJECT_BASIC_INFO_NO")
-//    private int projectBasicInfoNo;                 //기본정보번호
-
     @ManyToOne
     @JoinColumn(name = "PROJECT_NO")
     private Project project;
 
-//    @Column(name = "FINANCIAL_INFO_NO")
-//    private int financialInfoNo;
+    public ProjectAttachment() {
+    }
+
+    public ProjectAttachment(int projectAttachmentNo, String projectAttachmentCategory, String projectAttachmentSavePath, String projectAttachmentSaveName, String projectAttachmentOriginalName, int farmerNo, Project project) {
+        this.projectAttachmentNo = projectAttachmentNo;
+        this.projectAttachmentCategory = projectAttachmentCategory;
+        this.projectAttachmentSavePath = projectAttachmentSavePath;
+        this.projectAttachmentSaveName = projectAttachmentSaveName;
+        this.projectAttachmentOriginalName = projectAttachmentOriginalName;
+        this.farmerNo = farmerNo;
+        this.project = project;
+    }
+
+    public int getProjectAttachmentNo() {
+        return projectAttachmentNo;
+    }
+
+    public void setProjectAttachmentNo(int projectAttachmentNo) {
+        this.projectAttachmentNo = projectAttachmentNo;
+    }
+
+    public String getProjectAttachmentCategory() {
+        return projectAttachmentCategory;
+    }
+
+    public void setProjectAttachmentCategory(String projectAttachmentCategory) {
+        this.projectAttachmentCategory = projectAttachmentCategory;
+    }
+
+    public String getProjectAttachmentSavePath() {
+        return projectAttachmentSavePath;
+    }
+
+    public void setProjectAttachmentSavePath(String projectAttachmentSavePath) {
+        this.projectAttachmentSavePath = projectAttachmentSavePath;
+    }
+
+    public String getProjectAttachmentSaveName() {
+        return projectAttachmentSaveName;
+    }
+
+    public void setProjectAttachmentSaveName(String projectAttachmentSaveName) {
+        this.projectAttachmentSaveName = projectAttachmentSaveName;
+    }
+
+    public String getProjectAttachmentOriginalName() {
+        return projectAttachmentOriginalName;
+    }
+
+    public void setProjectAttachmentOriginalName(String projectAttachmentOriginalName) {
+        this.projectAttachmentOriginalName = projectAttachmentOriginalName;
+    }
+
+    public int getFarmerNo() {
+        return farmerNo;
+    }
+
+    public void setFarmerNo(int farmerNo) {
+        this.farmerNo = farmerNo;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
     @Override
     public String toString() {
@@ -54,9 +108,7 @@ public class ProjectAttachment {
                 ", projectAttachmentSaveName='" + projectAttachmentSaveName + '\'' +
                 ", projectAttachmentOriginalName='" + projectAttachmentOriginalName + '\'' +
                 ", farmerNo=" + farmerNo +
-//                ", projectBasicInfoNo=" + projectBasicInfoNo +
                 ", project=" + project +
-//                ", financialInfoNo=" + financialInfoNo +
                 '}';
     }
 }

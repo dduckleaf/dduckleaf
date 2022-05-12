@@ -1,17 +1,8 @@
 package com.greedy.dduckleaf.projectapplication.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectRewardCategory")
 @Table(name = "TBL_PROJECT_REWARD_CATEGORY")
 public class ProjectRewardCategory {
@@ -25,6 +16,39 @@ public class ProjectRewardCategory {
 
     @OneToMany(mappedBy = "projectRewardCategory")
     private List<ProjectBasicInfo> projectBasicInfoList;
+
+    public ProjectRewardCategory() {
+    }
+
+    public ProjectRewardCategory(int projectCategoryNo, String projectCategoryName, List<ProjectBasicInfo> projectBasicInfoList) {
+        this.projectCategoryNo = projectCategoryNo;
+        this.projectCategoryName = projectCategoryName;
+        this.projectBasicInfoList = projectBasicInfoList;
+    }
+
+    public int getProjectCategoryNo() {
+        return projectCategoryNo;
+    }
+
+    public void setProjectCategoryNo(int projectCategoryNo) {
+        this.projectCategoryNo = projectCategoryNo;
+    }
+
+    public String getProjectCategoryName() {
+        return projectCategoryName;
+    }
+
+    public void setProjectCategoryName(String projectCategoryName) {
+        this.projectCategoryName = projectCategoryName;
+    }
+
+    public List<ProjectBasicInfo> getProjectBasicInfoList() {
+        return projectBasicInfoList;
+    }
+
+    public void setProjectBasicInfoList(List<ProjectBasicInfo> projectBasicInfoList) {
+        this.projectBasicInfoList = projectBasicInfoList;
+    }
 
     @Override
     public String toString() {

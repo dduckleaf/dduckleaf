@@ -15,10 +15,6 @@ public class ProjectNotice {
     @Column(name = "PROJECT_NOTICE_CONTENT")
     private String projectNoticeContent;
 
-//    @ManyToOne
-//    @JoinColumn(name = "PROJECT_NO")
-//    private Project project;
-
     @JoinColumn(name = "PROJECT_NO")
     private int projectNo;
 
@@ -36,9 +32,6 @@ public class ProjectNotice {
 
     @Column(name = "FARMER_NO")
     private int farmerNo;
-//    @ManyToOne
-//    @JoinColumn(name = "FARMER_NO")
-//    private Member member;
 
     public ProjectNotice() {}
 

@@ -1,15 +1,13 @@
 package com.greedy.dduckleaf.projectapplication.entity;
 
-import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
+
 @Entity(name = "ExamineProjectStatusForProjectApplication")
 @Table(name = "TBL_EXAMINE_PROJECT_STATUS")
 @DynamicInsert
@@ -22,8 +20,29 @@ public class ExamineProjectStatus {
     @Column(name = "EXAMINE_PROJECT_STATUS_NAME")
     private String examineProjectStatusName;
 
-//    @OneToMany(mappedBy = "examineProjectStatus")
-//    private List<ProjectExamineHistory> projectExamineHistoryList;
+    public ExamineProjectStatus() {
+    }
+
+    public ExamineProjectStatus(int examineProjectStatusCode, String examineProjectStatusName) {
+        this.examineProjectStatusCode = examineProjectStatusCode;
+        this.examineProjectStatusName = examineProjectStatusName;
+    }
+
+    public int getExamineProjectStatusCode() {
+        return examineProjectStatusCode;
+    }
+
+    public void setExamineProjectStatusCode(int examineProjectStatusCode) {
+        this.examineProjectStatusCode = examineProjectStatusCode;
+    }
+
+    public String getExamineProjectStatusName() {
+        return examineProjectStatusName;
+    }
+
+    public void setExamineProjectStatusName(String examineProjectStatusName) {
+        this.examineProjectStatusName = examineProjectStatusName;
+    }
 
     @Override
     public String toString() {

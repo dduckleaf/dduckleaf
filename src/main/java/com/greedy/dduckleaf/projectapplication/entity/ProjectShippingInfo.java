@@ -1,20 +1,10 @@
 package com.greedy.dduckleaf.projectapplication.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDate;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectShippingInfoForProjectApplication")
 @Table(name = "TBL_PROJECT_SHIPPING_FEE")
 @DynamicInsert
@@ -38,6 +28,66 @@ public class ProjectShippingInfo {
 
     @Column(name = "EXTRA_SHIPPING_FEE_INFO")
     private String extraShippingFeeInfo;
+
+    public ProjectShippingInfo() {
+    }
+
+    public ProjectShippingInfo(int projectShippingInfoNo, int shippingFee, String shippingDueDate, int projectNo, int extraShippingFee, String extraShippingFeeInfo) {
+        this.projectShippingInfoNo = projectShippingInfoNo;
+        this.shippingFee = shippingFee;
+        this.shippingDueDate = shippingDueDate;
+        this.projectNo = projectNo;
+        this.extraShippingFee = extraShippingFee;
+        this.extraShippingFeeInfo = extraShippingFeeInfo;
+    }
+
+    public int getProjectShippingInfoNo() {
+        return projectShippingInfoNo;
+    }
+
+    public void setProjectShippingInfoNo(int projectShippingInfoNo) {
+        this.projectShippingInfoNo = projectShippingInfoNo;
+    }
+
+    public int getShippingFee() {
+        return shippingFee;
+    }
+
+    public void setShippingFee(int shippingFee) {
+        this.shippingFee = shippingFee;
+    }
+
+    public String getShippingDueDate() {
+        return shippingDueDate;
+    }
+
+    public void setShippingDueDate(String shippingDueDate) {
+        this.shippingDueDate = shippingDueDate;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
+    }
+
+    public int getExtraShippingFee() {
+        return extraShippingFee;
+    }
+
+    public void setExtraShippingFee(int extraShippingFee) {
+        this.extraShippingFee = extraShippingFee;
+    }
+
+    public String getExtraShippingFeeInfo() {
+        return extraShippingFeeInfo;
+    }
+
+    public void setExtraShippingFeeInfo(String extraShippingFeeInfo) {
+        this.extraShippingFeeInfo = extraShippingFeeInfo;
+    }
 
     @Override
     public String toString() {

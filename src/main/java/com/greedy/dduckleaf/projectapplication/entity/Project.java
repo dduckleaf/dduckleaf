@@ -12,13 +12,8 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectForProjectApplication")
 @Table(name = "TBL_PROJECT")
-//@DynamicInsert
 public class Project {
 
     @Id
@@ -35,12 +30,10 @@ public class Project {
     private int fundTargetAmount;
 
     @Column(name = "OPEN_DATE")
-//    @Temporal(value = TemporalType.TIMESTAMP)
     @ColumnDefault("")
     private String openDate;
 
     @Column(name = "END_DATE")
-    //    @Temporal(value = TemporalType.TIMESTAMP)
     @ColumnDefault("NOW()")
     private String endDate;
 
@@ -67,13 +60,123 @@ public class Project {
     @ColumnDefault(value = "0")
     private int maxTargetAmount;
 
-//    @OneToOne(cascade = CascadeType.ALL)
     @OneToOne
     @JoinColumn(name = "FARMER_NO")
     private FarmerInfo farmer;
 
-//    @OneToMany(mappedBy = "project")
-//    private List<ProjectAttachment> attachment;
+    public Project() {
+    }
+
+    public Project(int projectNo, String projectName, int fundTargetAmount, String openDate, String endDate, String projectStatus, double achievementRate, String examineStatus, String projectExamineStatus, int progressStatus, int maxTargetAmount, FarmerInfo farmer) {
+        this.projectNo = projectNo;
+        this.projectName = projectName;
+        this.fundTargetAmount = fundTargetAmount;
+        this.openDate = openDate;
+        this.endDate = endDate;
+        this.projectStatus = projectStatus;
+        this.achievementRate = achievementRate;
+        this.examineStatus = examineStatus;
+        this.projectExamineStatus = projectExamineStatus;
+        this.progressStatus = progressStatus;
+        this.maxTargetAmount = maxTargetAmount;
+        this.farmer = farmer;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public int getFundTargetAmount() {
+        return fundTargetAmount;
+    }
+
+    public void setFundTargetAmount(int fundTargetAmount) {
+        this.fundTargetAmount = fundTargetAmount;
+    }
+
+    public String getOpenDate() {
+        return openDate;
+    }
+
+    public void setOpenDate(String openDate) {
+        this.openDate = openDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getProjectStatus() {
+        return projectStatus;
+    }
+
+    public void setProjectStatus(String projectStatus) {
+        this.projectStatus = projectStatus;
+    }
+
+    public double getAchievementRate() {
+        return achievementRate;
+    }
+
+    public void setAchievementRate(double achievementRate) {
+        this.achievementRate = achievementRate;
+    }
+
+    public String getExamineStatus() {
+        return examineStatus;
+    }
+
+    public void setExamineStatus(String examineStatus) {
+        this.examineStatus = examineStatus;
+    }
+
+    public String getProjectExamineStatus() {
+        return projectExamineStatus;
+    }
+
+    public void setProjectExamineStatus(String projectExamineStatus) {
+        this.projectExamineStatus = projectExamineStatus;
+    }
+
+    public int getProgressStatus() {
+        return progressStatus;
+    }
+
+    public void setProgressStatus(int progressStatus) {
+        this.progressStatus = progressStatus;
+    }
+
+    public int getMaxTargetAmount() {
+        return maxTargetAmount;
+    }
+
+    public void setMaxTargetAmount(int maxTargetAmount) {
+        this.maxTargetAmount = maxTargetAmount;
+    }
+
+    public FarmerInfo getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(FarmerInfo farmer) {
+        this.farmer = farmer;
+    }
 
     @Override
     public String toString() {

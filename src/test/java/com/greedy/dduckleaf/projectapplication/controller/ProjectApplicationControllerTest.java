@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @ContextConfiguration(classes = {DduckleafApplication.class, BeanConfiguration.class, JPAConfiguration.class})
@@ -198,15 +198,5 @@ class ProjectApplicationControllerTest {
                 .andDo(MockMvcResultHandlers.print());
 
     }
-
-    @Test
-    @DisplayName("파머 페이지에서 심사 대기중인 신청 프로젝트를 취소하는 메소드 테스트")
-    public void cancelProjectApplication_test() {
-
-        //given
-
-        //when & then
-    }
-
 
 }
