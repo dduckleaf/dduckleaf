@@ -3,7 +3,7 @@ package com.greedy.dduckleaf.shippingmanagement.repository;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
-import com.greedy.dduckleaf.shippingmanagement.entity.Project;
+import com.greedy.dduckleaf.shippingmanagement.entity.RewardShipping;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +21,10 @@ import static org.junit.jupiter.api.Assertions.*;
         DduckleafApplication.class,
         JPAConfiguration.class
 })
-class ProjectForShippingRepositoryTest {
+class RewardShippingForShippingRepositoryTest {
 
     @Autowired
-    private ProjectForShippingRepository repo;
+    private RewardShippingForShippingRepository repo;
 
     @Test
     public void initTest() {
@@ -32,33 +32,18 @@ class ProjectForShippingRepositoryTest {
     }
 
     @Test
-    @DisplayName("파머 프로젝트 조회")
-    public void findProjectNoByFarmerMemberNo() {
+    @DisplayName("프로젝트 정보 조회")
+    public void findByProjectProjectNoTest() {
 
-        //given
-        int memberNo = 5;
-
-        //when
-        List<Project> projectList = repo.findProjectNoByFarmerMemberNo(memberNo);
-
-        //then
-        assertNotNull(projectList);
-        projectList.forEach(System.out::println);
-    }
-    
-    @Test
-    @DisplayName("프로젝트 번호로 프로젝트 조회")
-    public void findProjectNoByProjectNoTest() {
-        
         //given
         int projectNo = 343;
 
         //when
-        Project project = repo.findProjectNoByProjectNo(projectNo);
-        
+        List<RewardShipping> shipping = repo.findByProjectProjectNo(projectNo);
+
         //then
-        assertNotNull(project);
-        System.out.println("project = " + project);
+        assertNotNull(shipping);
+        shipping.forEach(System.out::println);
     }
 
 }
