@@ -75,7 +75,7 @@ public class RefundingForFindService {
                 pageable.getPageSize(),
                 Sort.by("projectNo").descending());
 
-        Page<ProjectForAdminList> projects = projectRepo.findAll(pageable);
+        Page<ProjectForAdminList> projects = projectRepo.findByProgressStatus_progressNoBetween(3, 4, pageable);
 
         Page<ProjectForAdminListDTO> projectDTOs = projects.map(project -> {
             ProjectForAdminListDTO projectDTO =  mapper.map(project, ProjectForAdminListDTO.class);
@@ -130,16 +130,55 @@ public class RefundingForFindService {
         Page<Refunding> refundings = refundingRepo.findByProject_projectNo(projectNo, pageable);
 
         Page<RefundingForAdminListDTO> refundingDTOs = refundings.map(refunding -> {
-            System.out.println("refunding = " + refunding);
-            RefundingForAdminListDTO refundingDTO = mapper.map(refunding, RefundingForAdminListDTO.class);
+            RefundingForAdminListDTO refundingDTO = new RefundingForAdminListDTO();
 
+            refundingDTO.setRefundingDate(refunding.getRefundingDate());
             refundingDTO.setProjectNo(refunding.getProject().getProjectNo());
             refundingDTO.setRefundStatus(refunding.getRefundingStatus().getRefundingStatusName());
+            refundingDTO.setRefundingInfoNo(refunding.getRefundingInfoNo());
+            refundingDTO.setRefundingEndDate(refunding.getRefundingEndDate());
+            refundingDTO.setProjectName(refunding.getProject().getProjectName());
+            refundingDTO.setFarmerName(refunding.getRefundingMemberName());
+
+            System.out.println("refundingDTO = " + refundingDTO);
 
             return refundingDTO;
         });
 
        return refundingDTOs;
+    }
+
+    public Page<RefundingForAdminListDTO> findAdminRefundingListByStatus(int status, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(),
+                Sort.by("refundingInfoNo").descending());
+
+        String refundStatus = "";
+        switch(status) {
+            case 1: refundStatus = "요청"; break;
+            case 2: refundStatus = "승인"; break;
+            case 3: refundStatus = "거절"; break;
+        }
+
+        Page<Refunding> refundings = refundingRepo.findByRefundingStatus_refundingStatusNameContaining(refundStatus, pageable);
+
+        Page<RefundingForAdminListDTO> refundingDTOs = refundings.map(refunding -> {
+            RefundingForAdminListDTO refundingDTO = new RefundingForAdminListDTO();
+
+            refundingDTO.setRefundingDate(refunding.getRefundingDate());
+            refundingDTO.setProjectNo(refunding.getProject().getProjectNo());
+            refundingDTO.setRefundStatus(refunding.getRefundingStatus().getRefundingStatusName());
+            refundingDTO.setRefundingInfoNo(refunding.getRefundingInfoNo());
+            refundingDTO.setRefundingEndDate(refunding.getRefundingEndDate());
+            refundingDTO.setProjectName(refunding.getProject().getProjectName());
+            refundingDTO.setFarmerName(refunding.getRefundingMemberName());
+
+            System.out.println("refundingDTO = " + refundingDTO);
+
+            return refundingDTO;
+        });
+
+        return refundingDTOs;
     }
 }
 

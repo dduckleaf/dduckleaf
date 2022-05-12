@@ -4,6 +4,7 @@ import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.projectapplication.dto.*;
+import com.greedy.dduckleaf.projectapplication.entity.ProjectExamineHistory;
 import com.greedy.dduckleaf.projectapplication.projectexamination.service.ProjectExaminationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -75,9 +76,11 @@ public class ProjectExaminationController {
     public ModelAndView findProjectApplicationInfoReview(ModelAndView mv, @PathVariable int projectApplicationNo) {
 
         ProjectApplicationInfoDTO detail = projectExaminationService.findProjectApplicationDetail(projectApplicationNo);
+        ProjectAttachmentDTO attachment = projectExaminationService.findBasicInfoAttachmentByProjectNo(detail.getProject().getProjectNo());
 
         ProjectExamineHistoryDTO history = new ProjectExamineHistoryDTO();
 
+        mv.addObject("attachment", attachment);
         mv.addObject("history", history);
         mv.addObject("detail", detail);
         mv.setViewName("project/manage/application/review");
@@ -117,6 +120,9 @@ public class ProjectExaminationController {
 
         ProjectApplicationInfoDTO detail = projectExaminationService.modifyProjectProgressStatus(projectNo);
 
+        ProjectAttachmentDTO attachment = projectExaminationService.findBasicInfoAttachmentByProjectNo(detail.getProject().getProjectNo());
+
+        mv.addObject("attachment", attachment);
         mv.addObject("detail", detail);
         mv.setViewName("project/manage/application/review");
 
@@ -302,18 +308,20 @@ public class ProjectExaminationController {
         return mv;
     }
 
-//    @GetMapping("/reject/{projectApplicaionNo}")
-//    public ModelAndView rejectProject(ModelAndView mv, @PathVariable int projectApplicaionNo, String projectExamineDetailContent, @AuthenticationPrincipal CustomUser user) {
-//
-//        int adminNo = user.getMemberNo();
-//        System.out.println("projectApplicaionNo = " + projectApplicaionNo);
-//        projectExaminationService.rejectProject(projectApplicaionNo, adminNo, projectExamineDetailContent);
-//
-//        ProjectApplicationInfoDTO detail = projectExaminationService.findProjectApplicationDetail(projectApplicaionNo);
-//
-//        mv.addObject("detail", detail);
-//        mv.setViewName("redirect:project/manage/application/detail");
-//
-//        return mv;
-//    }
+    /**
+     * rejectApplicationReason: 반려된 프로젝트의 반려사유를 조회하는 메소드입니다.
+     * @param projectNo: 프로젝트 번호
+     * @return mv 뷰로 전달할 데이터와 경로를 담는 객체
+     *            "redirect:/common/farmerpage" 파머탭 경로
+     * @author 박휘림
+     */
+    @GetMapping("/rejectreason/{projectNo}")
+    public ModelAndView findProjectApplicationReason(ModelAndView mv, @PathVariable int projectNo) {
+
+        ProjectExamineHistoryDTO examineHistory = projectExaminationService.findProjectExamineHisory(projectNo);
+
+        mv.addObject("examinehistory", examineHistory);
+        mv.setViewName("/project/reject/detail");
+        return mv;
+    }
 }

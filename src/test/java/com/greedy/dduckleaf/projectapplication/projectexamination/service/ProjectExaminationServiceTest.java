@@ -162,4 +162,18 @@ class ProjectExaminationServiceTest {
         //then
         assertDoesNotThrow(() -> projectExaminationService.rejectProject(projectApplicationNo, adminNo, history));
     }
+
+    @Test
+    @DisplayName("프로젝트 신청 시 등록한 파머 금융 정보를 조회하는 메소드 테스트")
+    public void findProjectExamineHisory_test() {
+
+        //given
+        int projectNo = 68;
+
+        //when
+        ProjectExamineHistoryDTO examineHistory = projectExaminationService.findProjectExamineHisory(projectNo);
+
+        //then
+        assertNotNull(examineHistory);
+    }
 }

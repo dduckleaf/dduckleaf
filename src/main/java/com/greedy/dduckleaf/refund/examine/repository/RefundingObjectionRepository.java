@@ -4,6 +4,8 @@ import com.greedy.dduckleaf.refund.examine.entity.RefundingObjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 /**
  * <pre>
  * Class : RefundingObjectionRepository
@@ -19,4 +21,6 @@ public interface RefundingObjectionRepository extends JpaRepository<RefundingObj
 
     @Query(value = "SELECT * FROM TBL_REFUND_OBJECTION A ORDER BY A.REFUND_OBJECTION_NO DESC LIMIT 1", nativeQuery = true)
     RefundingObjection findLastest();
+
+    List<RefundingObjection> findByRefundingInfoNo(int refundingNo);
 }

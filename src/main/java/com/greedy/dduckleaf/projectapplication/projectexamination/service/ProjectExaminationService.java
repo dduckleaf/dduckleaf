@@ -92,6 +92,7 @@ public class ProjectExaminationService {
 
         Project project = projectRepository.findByProjectNo(projectApplication.getProject().getProjectNo());
         project.setProgressStatus(1);
+        project.setExamineStatus("2");
 
         return modelMapper.map(projectApplication, ProjectApplicationInfoDTO.class);
     }
@@ -217,9 +218,8 @@ public class ProjectExaminationService {
         projectApplicationInfo.setProjectApplicationCategory("반려");
 
         Project project = projectRepository.findByProjectNo(projectApplicationInfo.getProject().getProjectNo());
-        project.setProgressStatus(2);
-//        project.setExamineStatus("심사완료");
-        project.setExamineStatus("3");
+        project.setProgressStatus(6);  //반려
+        project.setExamineStatus("3"); //심사완료
         project.setProjectExamineStatus("반려");
         project.setProjectStatus("N");
 
@@ -235,4 +235,10 @@ public class ProjectExaminationService {
         projectExamineHistoryRepository.save(projectExamineHistory);
     }
 
+    public ProjectExamineHistoryDTO findProjectExamineHisory(int projectNo) {
+
+        ProjectExamineHistory examineHistory = projectExamineHistoryRepository.findAllByProjectNo(projectNo);
+
+        return modelMapper.map(examineHistory, ProjectExamineHistoryDTO.class);
+    }
 }
