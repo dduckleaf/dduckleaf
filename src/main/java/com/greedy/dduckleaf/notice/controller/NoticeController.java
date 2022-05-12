@@ -51,12 +51,7 @@ public class NoticeController {
     @GetMapping("/list")
     public ModelAndView findNoticeList(ModelAndView mv, @PageableDefault(size = 20) Pageable pageable) {
 
-        System.out.println("pageable = " + pageable);
-
         Page<NoticeForListDTO> noticeList = noticeService.findNoticeList(pageable);
-
-        noticeList.forEach(System.out::println);
-
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(noticeList);
 
         mv.addObject("noticeList", noticeList);
@@ -65,16 +60,6 @@ public class NoticeController {
 
         return mv;
     }
-
-//    @GetMapping("/search")
-//    public ModelAndView search(@RequestParam(value = "keyword") String keyword, ModelAndView mv) {
-//
-//        List<NoticeDTO> noticeDTOList = noticeService.searchPosts(keyword);
-//        mv.addObject("noticeList", noticeDTOList);
-//        mv.setViewName("notice/list");
-//
-//        return mv;
-//    }
 
     /**
      * findNoticeDetail : 공지사항 상세정보를 조회합니다.
@@ -88,7 +73,6 @@ public class NoticeController {
     public ModelAndView findNoticeDetail(ModelAndView mv, @PathVariable int noticeNo) {
 
         NoticeDTO notice = noticeService.findNoticeDetail(noticeNo);
-
         noticeService.updateNoticeCount(noticeNo);  //조회수 갱신
 
         mv.addObject("notice", notice);

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/shipping.css}">
+</head>
+<body>
+<main style="width: 1920px">
+    <form name="updatestatus">
+    <div th:replace="/common/menubar.html"></div>
+    <div class="mypage" th:replace="/common/endproject.html"></div>
+    <div class="tab-body-area">
+        <div class="title-div">
+            <span class="text-title">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+                발송관리
+            </span>
+            <button type="button" class="shippingbtn" onclick="checkbox(); return false;">발송완료</button>
+            <button type="button" class="delay" onclick="checkbox1(); return false;">발송지연</button>
+            <input type="hidden" name="projectNo" th:value="${project.projectNo}">
+            <hr width="100%">
+        </div>
+        <table class="shippingdetail">
+            <tr>
+                <th><input type="checkbox" value="selectall" onclick="selectAll(this)"></th>
+                <th>주문번호</th>
+                <th>상태</th>
+                <th>주문일</th>
+                <th>서포터</th>
+                <th>펀딩 금액</th>
+                <th>수량</th>
+                <th>배송지</th>
+            </tr>
+            <th:block th:if="${funding.rewardShippingList.shippingStatus.shippingStatusNo == 1}" th:each="funding:${funding}">
+            <tr>
+                <td><input type="checkbox" class="check"></td>
+                <input type="hidden" name="fundingInfoNo" th:value="${funding.fundingInfoNo}">
+                <td th:text="${funding.fundingInfoNo}"></td>
+                <td name="funding.rewardShippingList.shippingStatus.shippingStatusName" th:text="${funding.rewardShippingList.shippingStatus.shippingStatusName}"></td>
+                <td th:text="${funding.fundingDate}"></td>
+                <td th:text="${funding.member.memberName}"></td>
+                <td th:text="${funding.fundingAmount}"></td>
+                <td th:text="${funding.rewardAmount}"></td>
+                <td th:text="${funding.shippingFeeNo}"></td>
+            </tr>
+            </th:block>
+        </table>
+    </div>
+    </form>
+    <div th:replace="/common/footer.html"></div>
+
+
+
+</main>
+</body>
+</html>
+<script>
+    function selectAll(selectAll) {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked;
+        })
+    }
+
+    function checkbox(shippingstatus) {
+        let form = document.updatestatus;
+        let check = $('.check');
+        let url = '/shipping/management/modify/status/' + [[${project.projectNo}]];
+
+        if(check.is(':checked') == false) {
+            alert("선택된 값이 없습니다.");
+            return false;
+        } else {
+            form.shippingStatusName = shippingstatus;
+
+            form.action = url;
+            form.method = 'post';
+            form.submit();
+        }
+    }
+
+    function checkbox1(shippingstatus) {
+        let form = document.updatestatus;
+        let check = $('.check');
+        let url = '/shipping/management/modify/delaystatus/' + [[${project.projectNo}]];
+
+        if(check.is(':checked') == false) {
+            alert("선택된 값이 없습니다.");
+            return false;
+        } else {
+            form.shippingStatusName = shippingstatus;
+
+            form.action = url;
+            form.method = 'post';
+            form.submit();
+        }
+    }
+</script>
