@@ -38,6 +38,7 @@ class RefundingForFindServiceTest {
 
     @Test
     public void findRefundingListForMember_test() {
+
         //given
         int memberNo = 3;
         Pageable pageable = PageRequest.of(0, 10);
@@ -106,20 +107,3 @@ class RefundingForFindServiceTest {
         refundings.forEach(System.out::println);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

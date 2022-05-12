@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * <pre>
  * Class : RefundingRegistController
- * Comment :
+ * Comment : 환불 등록
  *
  * History
  * 2022-05-02 홍성원
@@ -31,6 +31,12 @@ public class RefundingRegistController {
         this.service = service;
     }
 
+    /**
+     * sendToRefundRegist : 환불 정보를 등록합니다.
+     * @param refundingInfo : 환불 정보를 전달받습니다.
+     *
+     * @author 홍성원
+     */
     @PostMapping(value = "/refundregist")
     public ModelAndView sendToRefundRegist(ModelAndView mv, RefundingDTO refundingInfo) {
 

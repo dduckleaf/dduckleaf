@@ -9,7 +9,7 @@ import com.greedy.dduckleaf.profile.entity.ProfileAttachment;
 import com.greedy.dduckleaf.profile.repository.BasicProfileAttachmentForProfileRepository;
 import com.greedy.dduckleaf.profile.repository.MemberForProfileRepository;
 import com.greedy.dduckleaf.profile.repository.ProfileAttachmentForProfileRepository;
-import com.greedy.dduckleaf.projectnotice.dto.ProfileDTO;
+import com.greedy.dduckleaf.profile.dto.ProfileDTO;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 import org.json.simple.JSONObject;
@@ -63,7 +63,7 @@ public class ProfileService {
         ProfileAttachmentDTO profileAttachment = modelMapper.map(profileAttachmentForProfileRepository.findProfileAttachmentByMember_memberNo(memberNo), ProfileAttachmentDTO.class);
         MemberDTO member = modelMapper.map(memberForProfileRepository.findById(memberNo).get(), MemberDTO.class);
 
-        return new ProfileDTO(member, profileAttachment);
+        return new ProfileDTO(profileAttachment, member);
     }
 
     /**

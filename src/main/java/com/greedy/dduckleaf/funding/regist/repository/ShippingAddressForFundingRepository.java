@@ -6,13 +6,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * <pre>
  * Class : ShippingAddressForFundingRepository
- * Comment :
+ * Comment : 펀딩 조회
  *
  * History
- * 2022-04-24 h99ww
+ * 2022-05-10 홍성원
  * </pre>
  *
- * @author h99ww
+ * @author 홍성원
  * @version 1.0.0
  */
 public interface ShippingAddressForFundingRepository extends JpaRepository<ShippingAddress, Integer> {

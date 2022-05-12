@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * <pre>
  * Class : PaymentHistoryForFundingFindMember
- * Comment :
+ * Comment : 결제이력의 쿼리문을 수행하는 레파지토리.
  *
  * History
  * 2022-05-02 홍성원

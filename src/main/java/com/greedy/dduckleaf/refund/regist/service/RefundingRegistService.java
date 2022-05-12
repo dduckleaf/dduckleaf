@@ -18,7 +18,7 @@ import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
 /**
  * <pre>
  * Class : RefundingRegistService
- * Comment :
+ * Comment : 환불 등록
  *
  * History
  * 2022-05-03 홍성원
@@ -41,12 +41,22 @@ public class RefundingRegistService {
         this.historyRepo = historyRepo;
 
     }
-
+    /**
+     * registRefunding : 환불정보를 등록합니다
+     * @param refundingInfo : 등록 할 환불 정보를 전달받습니다.
+     *
+     * @author 홍성원
+     */
     @Transactional
     public void registRefunding(RefundingDTO refundingInfo) {
+
+
         Refunding refunding = new Refunding();
+        /* 환불 번호로 환불 정보를 조회합니다. */
         Funding fundingInfo = fundingRepo.findById(refundingInfo.getFundingInfoNo()).get();
         String date = getDateAndTime();
+
+        /* 전달받은 환불 정보를 엔티티에 옮겨줍니다. */
         refunding.setRefundingDate(date);
         refunding.setRefundingCategoryNo(refundingInfo.getRefundingCategoryNo());
         refunding.setRefundingReason(refundingInfo.getRefundingReason());
@@ -58,10 +68,11 @@ public class RefundingRegistService {
         refunding.setMemberNo(fundingInfo.getMemberNo());
         refunding.setFundingInfoNo(refundingInfo.getFundingInfoNo());
 
+        /* 환불 정보를 DB에 삽입합니다.*/
         refundingRepo.save(refunding);
 
+        /* 등록한 환불 번호를 조회 후 환불 이력 정보를 등록합니다. */
         refunding = refundingRepo.findLatest();
-        System.out.println("refunding = " + refunding);
         Project project = projectRepo.findById(refunding.getProjectNo()).get();
 
         RefundingHistory history = new RefundingHistory();
@@ -76,39 +87,3 @@ public class RefundingRegistService {
         historyRepo.save(history);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

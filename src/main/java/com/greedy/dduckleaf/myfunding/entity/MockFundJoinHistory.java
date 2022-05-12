@@ -2,13 +2,6 @@ package com.greedy.dduckleaf.myfunding.entity;
 
 import javax.persistence.*;
 
-import lombok.*;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
-@ToString
 @Entity(name = "MockFundJoinHistoryForMyFunding")
 @Table(name = "TBL_MOCK_FUND_JOIN_HISTORY")
 public class MockFundJoinHistory {
@@ -27,4 +20,56 @@ public class MockFundJoinHistory {
 
     @Column(name = "TICKET_AMOUNT")
     private int ticketAmount;
+
+    public MockFundJoinHistory() {
+    }
+
+    public MockFundJoinHistory(int mockFundJoinHistoryNo, MockFund mockFund, Member member, int ticketAmount) {
+        this.mockFundJoinHistoryNo = mockFundJoinHistoryNo;
+        this.mockFund = mockFund;
+        this.member = member;
+        this.ticketAmount = ticketAmount;
+    }
+
+    public int getMockFundJoinHistoryNo() {
+        return mockFundJoinHistoryNo;
+    }
+
+    public void setMockFundJoinHistoryNo(int mockFundJoinHistoryNo) {
+        this.mockFundJoinHistoryNo = mockFundJoinHistoryNo;
+    }
+
+    public MockFund getMockFund() {
+        return mockFund;
+    }
+
+    public void setMockFund(MockFund mockFund) {
+        this.mockFund = mockFund;
+    }
+
+    public Member getMember() {
+        return member;
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+    }
+
+    public int getTicketAmount() {
+        return ticketAmount;
+    }
+
+    public void setTicketAmount(int ticketAmount) {
+        this.ticketAmount = ticketAmount;
+    }
+
+    @Override
+    public String toString() {
+        return "MockFundJoinHistory{" +
+                "mockFundJoinHistoryNo=" + mockFundJoinHistoryNo +
+                ", mockFund=" + mockFund +
+                ", member=" + member +
+                ", ticketAmount=" + ticketAmount +
+                '}';
+    }
 }

@@ -31,6 +31,7 @@ class RewardShippingForRefundingFarmerExamineRepositoryTest {
     
     @Test
     public void findByFunding_fundingInfoNo_test() {
+
         //given
         int fundingInfoNo = 115;
         

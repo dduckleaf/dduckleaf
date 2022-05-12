@@ -35,8 +35,6 @@ class ProjectForAdminRefundFindRepositroyTest {
     @Test
     public void finaAll_test() {
 
-        //given
-
         //when
         List<ProjectForAdminList> list = repo.findAll();
 
@@ -58,5 +56,4 @@ class ProjectForAdminRefundFindRepositroyTest {
         assertNotNull(projects);
         projects.forEach(System.out::println);
     }
-
 }

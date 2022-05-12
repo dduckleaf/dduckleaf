@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 /**
  * <pre>
  * Class : RefundingService
- * Comment :
+ * Comment : 환불 조회
  *
  * History
  * 2022-05-04 홍성원
@@ -45,6 +45,13 @@ public class RefundingForFindService {
         this.mapper = mapper;
     }
 
+    /**
+     * findRefundingListForMember : 회원의 환불 정보 목록을 조회합니다.
+     * @param  memberNo : 회원번호를 전달받습니다.
+     * @return Page<RefundingDTO> : 환불 목록을 반환합니다.
+     *
+     * @author 홍성원
+     */
     public Page<RefundingDTO> findRefundingListForMember(int memberNo, Pageable pageable) {
 
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
@@ -56,19 +63,38 @@ public class RefundingForFindService {
         return refundings.map(refunding -> mapper.map(refunding, RefundingDTO.class));
     }
 
+    /**
+     * findRefundingInfo : 환불정보를 조회합니다.
+     * @param  refundNo : 환불 번호를 전달받습니다.
+     * @return RefundingDTO  환불 정보를 반환합니다.
+     *
+     * @author 홍성원
+     */
     public RefundingDTO findRefundingInfo(int refundNo) {
 
         Refunding refunding = refundingRepo.findById(refundNo).get();
-        System.out.println("refunding = " + refunding);
 
         return mapper.map(refunding, RefundingDTO.class);
     }
 
+    /**
+     * findFarmerRefundingList : 파머탭에서 환불 목록을 조회합니다.
+     * @param memberNo : 파머의 번호를 전달받습니다.
+     * @return List<RefundingDTO> : 환불목록을 반환합니다.
+     *
+     * @author 홍성원
+     */
     public List<RefundingDTO> findFarmerRefundingList(int memberNo) {
 
         return refundingRepo.findByProject_farmerNo(memberNo).stream().map(refunding -> mapper.map(refunding, RefundingDTO.class)).collect(Collectors.toList());
     }
 
+    /**
+     * findAdminProjectList : 관리자 페이지에서 한 프로젝트내 환불 목록을 조회합니다./
+     * @return projectDTO : 하나의 프로젝트의 환불목록을 반환합니다.
+     *
+     * @author 홍성원
+     */
     public Page<ProjectForAdminListDTO> findAdminProjectList(Pageable pageable) {
 
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
@@ -96,6 +122,13 @@ public class RefundingForFindService {
         return projectDTOs;
     }
 
+    /**
+     * findAdminListByProject : 프로젝트 별 환불 개수를 조회합니다.
+     * @param  projectNo : 프로젝트 번호를 전달받습니다.
+     * @return projectDTOs : 프로젝트 정보를 반환합니다.
+     *
+     * @author 홍성원
+     */
     public Page<ProjectForAdminListDTO> findAdminListByProject(int projectNo, Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
@@ -122,6 +155,13 @@ public class RefundingForFindService {
         return projectDTOs;
     }
 
+    /**
+     * findAdminRefundingListByProject : 프로젝트의 환불 목록 및 정보를 조회합니다.
+     * @param  projectNo : 프로젝트 번호를 전달받습니다.
+     * @return refundingDTOs : 환불 정보 목록을 반환합니다.
+     *
+     * @author 홍성원
+     */
     public Page<RefundingForAdminListDTO> findAdminRefundingListByProject(int projectNo, Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
@@ -140,7 +180,6 @@ public class RefundingForFindService {
             refundingDTO.setProjectName(refunding.getProject().getProjectName());
             refundingDTO.setFarmerName(refunding.getRefundingMemberName());
 
-            System.out.println("refundingDTO = " + refundingDTO);
 
             return refundingDTO;
         });
@@ -148,6 +187,13 @@ public class RefundingForFindService {
        return refundingDTOs;
     }
 
+    /**
+     * findAdminRefundingListByStatus : 환불 상태별 목록을 조회합니다.
+     * @param status : 상태번호를 전달받습니다.
+     * @return refundingDTOs : 환불 목록을 조회합니다.
+     *
+     * @author 홍성원
+     */
     public Page<RefundingForAdminListDTO> findAdminRefundingListByStatus(int status, Pageable pageable) {
         pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0 : pageable.getPageNumber() - 1,
                 pageable.getPageSize(),
@@ -173,33 +219,9 @@ public class RefundingForFindService {
             refundingDTO.setProjectName(refunding.getProject().getProjectName());
             refundingDTO.setFarmerName(refunding.getRefundingMemberName());
 
-            System.out.println("refundingDTO = " + refundingDTO);
-
             return refundingDTO;
         });
 
         return refundingDTOs;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

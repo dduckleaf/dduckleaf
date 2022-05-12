@@ -54,9 +54,11 @@ class FundingServiceForFindTest {
     @Test
     @DisplayName("MemberNo로 Funding List 조회 테스트")
     public void findFundingByMemberNo_test() {
+
         //given
         int memberNo = 5;
         Pageable pageable = PageRequest.of(1, 10);
+
         //when
         Page<FundingDTO> fundingList =  service.findFundingByMemberNo(memberNo, pageable);
 
@@ -66,6 +68,7 @@ class FundingServiceForFindTest {
     }
 
     @Test
+    @DisplayName("펀딩정보 조회 테스트")
     public void findFundingInfo_test() {
 
         //given
@@ -80,6 +83,7 @@ class FundingServiceForFindTest {
     }
 
     @Test
+    @DisplayName("관리자의 회원별 펀딩목록 조회 테스트")
     public void findfundingInfoByMemberForAdmin_test() {
 
         //given
@@ -94,6 +98,7 @@ class FundingServiceForFindTest {
     }
 
     @Test
+    @DisplayName("관리자의 회원별 펀딩내역 조회 테스트")
     public void findFundingInfoByMemberId_test() {
 
         //given
