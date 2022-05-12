@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 /**
  * <pre>
  * Class : RewardShippingForFundingRegistRepository
- * Comment :
+ * Comment : 펀딩조회
  *
  * History
  * 2022-05-05 홍성원

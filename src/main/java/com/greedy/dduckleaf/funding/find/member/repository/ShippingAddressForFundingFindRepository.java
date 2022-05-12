@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * <pre>
  * Class : ShippingAddressForFundingFindRepository
- * Comment :
+ * Comment : 배송지를 담당하는 엔티티의 쿼리를 수행하는 레파지토리.
  *
  * History
  * 2022-05-02 홍성원
