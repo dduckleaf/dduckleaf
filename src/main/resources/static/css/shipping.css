@@ -8,17 +8,48 @@
     height: 1220px;
 }
 
-table {
+.shippinglist {
     width: 600px;
     height: 150px;
     border: 1px solid #bac34e;
     text-align: center;
 }
 
-th, tr {
+.shippinglist th, .shippinglist tr {
     border-bottom: none !important;
+}
+
+.shippingdetail {
+    width: 800px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+.shippingdetail th, .shippingdetail tr {
+    border-bottom: 1px solid black !important;
 }
 
 td {
     font-size: 14pt;
+}
+
+.shippingbtn, .delay {
+    border-radius: 5px;
+    border-color: rgba(0,0,0,0);
+    background-color: #bac34e;
+    color: #FFFFFF;
+    display: inline-block;
+}
+
+.shippingbtn {
+    margin-left: 438px;
+}
+
+.delaybtn {
+    float: right;
+    border-radius: 5px;
+    border-color: rgba(0,0,0,0);
+    background-color: #bac34e;
+    color: #FFFFFF;
+    margin-right: 160px;
 }
