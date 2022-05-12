@@ -109,13 +109,13 @@
         </div>
         <th:block th:if="${refunding.refundingStatus.refundingStatusNo eq 4}">
             <button id="detail-confirm" class="btn1 basic-btn medium-btn">승인 </button>
-            <button id="detail-refuse"  class="btn2 basic-btn medium-btn">거절</button>
+            <button id="detail-refuse"  class="btn2 basic-btn medium-btn" data-bs-toggle="modal" data-bs-target="#refuse-modal">거절</button>
         </th:block>
         <button id="detail-back" class="btn3 basic-btn medium-btn" >뒤로가기</button>
         <div style="height: 200px"></div>
     </div>
 </div>
-
+<div th:replace="/refund/find/admin/refusereasonmodal.html"></div>
 <script>
     const $confirm = document.getElementById("detail-confirm");
     const $refuse = document.getElementById("detail-refuse");
@@ -126,11 +126,6 @@
     if($confirm) {
         $confirm.onclick = function() {
             location.href = "/refund/examine/platform/objection/confirm/" + $refundNo;
-        }
-    }
-    if($refuse) {
-        $refuse.onclick = function() {
-            location.href = "/refund/examine" + $projectNo;
         }
     }
     if($back) {
