@@ -37,7 +37,7 @@ class ProjectFindServiceTest {
     public void findProjectLists_test() {
 
         Pageable pageable = PageRequest.of(0, 10);
-        String searchValue = "3";
+        String searchValue = "나";
         SearchDTO searchDTO = new SearchDTO();
         searchDTO.setSearchValue(searchValue);
         Page<ProjectDTO> projectList = service.findProjectLists(searchDTO, pageable);
@@ -50,7 +50,7 @@ class ProjectFindServiceTest {
     @Test
     public void findProjectLists_npe_test() {
 
-        Pageable pageable = PageRequest.of(1, 10);
+        Pageable pageable = PageRequest.of(0, 10);
         String searchValue = "3";
         SearchDTO searchDTO = new SearchDTO(null, 1, 3);
         searchDTO.setSearchValue(searchValue);
