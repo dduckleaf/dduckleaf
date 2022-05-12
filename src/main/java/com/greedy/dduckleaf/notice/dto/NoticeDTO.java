@@ -1,12 +1,5 @@
 package com.greedy.dduckleaf.notice.dto;
 
-import lombok.*;
-
-@NoArgsConstructor  //기본생성자
-@AllArgsConstructor //전체생성자초기화
-@Setter
-@Getter
-@ToString
 public class NoticeDTO {
 
     private int noticeNo;
@@ -18,28 +11,94 @@ public class NoticeDTO {
     private int noticeCount;
     private int noticeCategoryNo;
 
-//    public NoticeEntity toEntity() {
-//        NoticeEntity noticeEntity = NoticeEntity.builder()
-//                .no(noticeNo)
-//                .name(noticeName)
-//                .content(noticeContent)
-//                .registDate(noticeRegistDate)
-//                .status(noticeStatus)
-//                .adminNo(adminNo)
-//                .count(noticeCount)
-//                .categoryNo(noticeCategoryNo)
-//                .build();
-//
-//        return noticeEntity;
-//    }
+    public NoticeDTO() {}
 
-//    @Builder
-//    public NoticeDTO(int noticeNo, String noticeName, String noticeContent, java.sql.Date noticeRegistDate, String noticeStatus, int adminNo, int noticeCount, int noticeCategoryNo) {
-//
-//        this.no = noticeNo;
-//        this.name = noticeName;
-//
-//
-//
-//    }
+    public NoticeDTO(int noticeNo, String noticeName, String noticeContent, String noticeRegistDate, String noticeStatus, int adminNo, int noticeCount, int noticeCategoryNo) {
+        this.noticeNo = noticeNo;
+        this.noticeName = noticeName;
+        this.noticeContent = noticeContent;
+        this.noticeRegistDate = noticeRegistDate;
+        this.noticeStatus = noticeStatus;
+        this.adminNo = adminNo;
+        this.noticeCount = noticeCount;
+        this.noticeCategoryNo = noticeCategoryNo;
+    }
+
+    public int getNoticeNo() {
+        return noticeNo;
+    }
+
+    public void setNoticeNo(int noticeNo) {
+        this.noticeNo = noticeNo;
+    }
+
+    public String getNoticeName() {
+        return noticeName;
+    }
+
+    public void setNoticeName(String noticeName) {
+        this.noticeName = noticeName;
+    }
+
+    public String getNoticeContent() {
+        return noticeContent;
+    }
+
+    public void setNoticeContent(String noticeContent) {
+        this.noticeContent = noticeContent;
+    }
+
+    public String getNoticeRegistDate() {
+        return noticeRegistDate;
+    }
+
+    public void setNoticeRegistDate(String noticeRegistDate) {
+        this.noticeRegistDate = noticeRegistDate;
+    }
+
+    public String getNoticeStatus() {
+        return noticeStatus;
+    }
+
+    public void setNoticeStatus(String noticeStatus) {
+        this.noticeStatus = noticeStatus;
+    }
+
+    public int getAdminNo() {
+        return adminNo;
+    }
+
+    public void setAdminNo(int adminNo) {
+        this.adminNo = adminNo;
+    }
+
+    public int getNoticeCount() {
+        return noticeCount;
+    }
+
+    public void setNoticeCount(int noticeCount) {
+        this.noticeCount = noticeCount;
+    }
+
+    public int getNoticeCategoryNo() {
+        return noticeCategoryNo;
+    }
+
+    public void setNoticeCategoryNo(int noticeCategoryNo) {
+        this.noticeCategoryNo = noticeCategoryNo;
+    }
+
+    @Override
+    public String toString() {
+        return "NoticeDTO{" +
+                "noticeNo=" + noticeNo +
+                ", noticeName='" + noticeName + '\'' +
+                ", noticeContent='" + noticeContent + '\'' +
+                ", noticeRegistDate='" + noticeRegistDate + '\'' +
+                ", noticeStatus='" + noticeStatus + '\'' +
+                ", adminNo=" + adminNo +
+                ", noticeCount=" + noticeCount +
+                ", noticeCategoryNo=" + noticeCategoryNo +
+                '}';
+    }
 }
