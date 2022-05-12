@@ -13,11 +13,12 @@ public class ProjectDTO {
     private ProjectProgressStatusDTO projectProgressStatus;
     private FarmerDTO farmer;
     private long deadLine;
+    private String attachmentSavedName;
 
     public ProjectDTO() {
     }
 
-    public ProjectDTO(int projectNo, String projectName, Date openDate, Date endDate, String projectStatus, int achievementRate, ProjectProgressStatusDTO projectProgressStatus, FarmerDTO farmer, long deadLine) {
+    public ProjectDTO(int projectNo, String projectName, Date openDate, Date endDate, String projectStatus, int achievementRate, ProjectProgressStatusDTO projectProgressStatus, FarmerDTO farmer, long deadLine, String attachmentSavedName) {
         this.projectNo = projectNo;
         this.projectName = projectName;
         this.openDate = openDate;
@@ -27,6 +28,7 @@ public class ProjectDTO {
         this.projectProgressStatus = projectProgressStatus;
         this.farmer = farmer;
         this.deadLine = deadLine;
+        this.attachmentSavedName = attachmentSavedName;
     }
 
     public int getProjectNo() {
@@ -101,6 +103,14 @@ public class ProjectDTO {
         this.deadLine = deadLine;
     }
 
+    public String getAttachmentSavedName() {
+        return attachmentSavedName;
+    }
+
+    public void setAttachmentSavedName(String attachmentSavedName) {
+        this.attachmentSavedName = attachmentSavedName;
+    }
+
     @Override
     public String toString() {
         return "ProjectDTO{" +
@@ -113,6 +123,7 @@ public class ProjectDTO {
                 ", projectProgressStatus=" + projectProgressStatus +
                 ", farmer=" + farmer +
                 ", deadLine=" + deadLine +
+                ", attachmentSavedName='" + attachmentSavedName + '\'' +
                 '}';
     }
 }
