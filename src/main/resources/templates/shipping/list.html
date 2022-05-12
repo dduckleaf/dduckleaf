@@ -33,7 +33,7 @@
                 <th:block th:if="${rewardNotShipping.indexOf('shippingStatusNo=1') == -1}">
                     <td th:text="${rewardNotShipping.size()}" th:onclick="'location.href=\'/shipping/management/notshipped/' + @{${project.projectNo}} + '\''" style="cursor: pointer;"></td>
                 </th:block>
-                <th:block th:if="${rewardNotShipping.indexOf('shippingStatus=1') != -1}">
+                <th:block th:if="${rewardNotShipping.indexOf('shippingStatusNo=1') != -1}">
                     <td th:text="0" th:onclick="'location.href=\'/shipping/management/noshipped/' + @{${project.projectNo}} + '\''" style="cursor: pointer;"></td>
                 </th:block>
                 <th:block th:if="${rewardCompleteShipping.indexOf('shippingStatusNo=2') == -1}">
