@@ -1,12 +1,11 @@
 package com.greedy.dduckleaf.projectapplication.projectmanage.repository;
 
 import com.greedy.dduckleaf.projectapplication.entity.Project;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.util.List;
 
 /**
  * <pre>
@@ -23,5 +22,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 public interface ProjectManageRepository extends JpaRepository<Project, Integer> {
 
 
-    Page<Project> findAllByProjectExamineStatus(Pageable pageable, String 승인);
+    Page<Project> findAllByProjectExamineStatusAndProgressStatus(Pageable pageable, String 승인, int i);
+
+    List<Project> findAllByOpenDate(String openDate);
 }
