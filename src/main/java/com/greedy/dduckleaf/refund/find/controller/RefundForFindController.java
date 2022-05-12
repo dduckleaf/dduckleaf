@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * <pre>
  * Class : RefundForFindController
- * Comment :
+ * Comment : 환불 조회
  *
  * History
  * 2022-05-04 홍성원 클래스 생성
@@ -50,7 +50,6 @@ public class RefundForFindController {
     public ModelAndView refundListPage(@AuthenticationPrincipal CustomUser user, ModelAndView mv,
         @PageableDefault(size=10, sort="refundingInfoNo", direction = Sort.Direction.DESC) Pageable pageable) {
 
-//        int memberNo = user.getMemberNo();
         int memberNo = 7;
 
         Page<RefundingDTO> refundings = service.findRefundingListForMember(memberNo, pageable);
@@ -68,9 +67,6 @@ public class RefundForFindController {
     public ModelAndView refundDetailPage(ModelAndView mv, @PathVariable int refundNo) {
 
         RefundingDTO refunding = service.findRefundingInfo(refundNo);
-        System.out.println("Member Refunding Detail Controller");
-        System.out.println("RefundForFindController#refundDetailPage");
-        System.out.println("refunding = " + refunding);
         mv.addObject("refunding", refunding);
         mv.setViewName("/refund/find/member/refunddetail");
 

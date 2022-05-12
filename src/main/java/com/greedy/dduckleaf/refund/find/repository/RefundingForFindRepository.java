@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * <pre>
  * Class : RefundingForFindRepository
- * Comment :
+ * Comment : 환불 조회
  *
  * History
  * 2022-05-04 홍성원

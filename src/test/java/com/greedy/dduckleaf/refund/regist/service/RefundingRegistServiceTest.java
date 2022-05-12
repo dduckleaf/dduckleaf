@@ -27,15 +27,6 @@ class RefundingRegistServiceTest {
 
         assertNotNull(service);
     }
-
-    @Test
-    public void registRefunding_test() {
-
-
-
-
-    }
-
 }
 
 
