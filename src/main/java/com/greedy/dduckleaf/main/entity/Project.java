@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.main.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "ProjectForMain")
 @Table(name = "TBL_PROJECT")

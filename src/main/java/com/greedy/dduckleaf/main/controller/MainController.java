@@ -42,6 +42,7 @@ public class MainController {
 
         MainPageDTO mainPage = mainService.findMainPage();
 
+        System.out.println("mainPage.getRankingList().get(0).getAttachmentSavedName() = " + mainPage.getRankingList().get(0).getAttachmentSavedName());
         mv.addObject("dduckleafRecommendList", mainPage.getDduckleafRecommendList());
         mv.addObject("rankingList", mainPage.getRankingList());
         mv.setViewName("/main/mainPage");
