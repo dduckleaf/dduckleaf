@@ -3,7 +3,6 @@ package com.greedy.dduckleaf.faq.service;
 import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.faq.dto.FaqDTO;
-import com.greedy.dduckleaf.faq.dto.MemberDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,23 +38,4 @@ class FaqServiceTest {
         assertNotNull(fq);
         fq.forEach(System.out::println);
     }
-
-//    @Test
-//    public void faqRegistTest(){
-//
-//        FaqDTO faqWrite = new FaqDTO();
-//        faqWrite.setFaqNo(1);
-//
-//        MemberDTO member = new MemberDTO();
-//        member.setMemberNo(1);
-//
-//
-//        faqWrite.setFaqNo(faqWrite.getFaqNo());
-////        faqregist.setFaqContent("content");
-////        faqregist.setMember(member.getMemberNo());
-//
-//
-//        service.faqnewRegist(faqWrite);
-//    }
-
 }
