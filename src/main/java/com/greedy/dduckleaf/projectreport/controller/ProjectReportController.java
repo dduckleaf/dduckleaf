@@ -46,9 +46,10 @@ import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
  *                    findProjectReportWaitingList 메소드 리팩토링
  *                    -> findProjectsByProjectReportStatus 로 변경.
  * 2022/05/04 (장민주) registProjectReport 메소드 작성.
+ * 2022/05/11 (장민주) findAllProjectReportListForMemberManage 메소드 작성.
  *
  * </pre>
- * @version 1.0.7
+ * @version 1.0.8
  * @author 장민주
  */
 @Controller
@@ -125,6 +126,29 @@ public class ProjectReportController {
         mv.addObject("intent", "listAll");
 
         mv.setViewName("report/platformmanager/list");
+
+        return mv;
+    }
+
+    /**
+     * findAllProjectReportListForMemberManage: 프로젝트 신고내역 전체조회 요청 메소드입니다.
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param pageable 페이지 정보를 담은 객체
+     * @return mv: 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
+     */
+    @GetMapping("/membermanager/list")
+    public ModelAndView findAllProjectReportListForMemberManage(ModelAndView mv,
+        @PageableDefault(size=10, sort="projectReportNo", direction = Sort.Direction.DESC) Pageable pageable) {
+
+        Page<ProjectReportDTO> projectReportList = service.findProjectReportList(pageable);
+
+        PagingButtonInfo pagingInfo = Pagenation.getPagingButtonInfo(projectReportList);
+
+        mv.addObject("projectReportList", projectReportList);
+        mv.addObject("pagingInfo", pagingInfo);
+//        mv.addObject("intent", "listAll");
+
+        mv.setViewName("report/membermanager/list");
 
         return mv;
     }
