@@ -1,12 +1,7 @@
 package com.greedy.dduckleaf.settlement.entity;
-import lombok.*;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "FarmerFinancialInfoForSettlement")
 @Table(name = "TBL_FARMER_FINANCIAL_INFO")
 public class FarmerFinancialInfo {
@@ -34,6 +29,75 @@ public class FarmerFinancialInfo {
 
     @Column(name = "SETTLEMENT_POLICY_CHECK_DATE")
     private String settlementPolicyCheckDate;                   //정산 정책 확인일
+
+    public FarmerFinancialInfo() {}
+
+    public FarmerFinancialInfo(int financialInfoNo, FarmerInfo farmer, String farmerAccount, String farmerName,
+                               Bank bank, String settlementPolicyCheckStatus, String settlementPolicyCheckDate) {
+        this.financialInfoNo = financialInfoNo;
+        this.farmer = farmer;
+        this.farmerAccount = farmerAccount;
+        this.farmerName = farmerName;
+        this.bank = bank;
+        this.settlementPolicyCheckStatus = settlementPolicyCheckStatus;
+        this.settlementPolicyCheckDate = settlementPolicyCheckDate;
+    }
+
+    public int getFinancialInfoNo() {
+        return financialInfoNo;
+    }
+
+    public void setFinancialInfoNo(int financialInfoNo) {
+        this.financialInfoNo = financialInfoNo;
+    }
+
+    public FarmerInfo getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(FarmerInfo farmer) {
+        this.farmer = farmer;
+    }
+
+    public String getFarmerAccount() {
+        return farmerAccount;
+    }
+
+    public void setFarmerAccount(String farmerAccount) {
+        this.farmerAccount = farmerAccount;
+    }
+
+    public String getFarmerName() {
+        return farmerName;
+    }
+
+    public void setFarmerName(String farmerName) {
+        this.farmerName = farmerName;
+    }
+
+    public Bank getBank() {
+        return bank;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public String getSettlementPolicyCheckStatus() {
+        return settlementPolicyCheckStatus;
+    }
+
+    public void setSettlementPolicyCheckStatus(String settlementPolicyCheckStatus) {
+        this.settlementPolicyCheckStatus = settlementPolicyCheckStatus;
+    }
+
+    public String getSettlementPolicyCheckDate() {
+        return settlementPolicyCheckDate;
+    }
+
+    public void setSettlementPolicyCheckDate(String settlementPolicyCheckDate) {
+        this.settlementPolicyCheckDate = settlementPolicyCheckDate;
+    }
 
     @Override
     public String toString() {

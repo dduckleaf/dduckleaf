@@ -21,7 +21,11 @@ import java.util.List;
 @Transactional(Transactional.TxType.REQUIRED)
 public interface SettlementPaymentInfoForCalculateRepository extends JpaRepository<SettlementPaymentInfo, Integer> {
 
+        /**
+         * findBySettlementInfo_SettlementInfoNo: 정산정보번호로 회차별 정산금 지급내역 조회를 요청하는 메소드입니다.
+         * @param settlementInfoNo 정산정보번호
+         * @return 회차별 정산금지급내역
+         * @author 장민주
+         */
         List<SettlementPaymentInfo> findBySettlementInfo_SettlementInfoNo(int settlementInfoNo);
-
-
 }

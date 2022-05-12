@@ -1,13 +1,7 @@
 package com.greedy.dduckleaf.settlement.check.entity;
-import com.greedy.dduckleaf.settlement.check.entity.SettlementInfo;
-import lombok.*;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "SettlementPaymentInfoForFarmerCheck")
 @Table(name = "TBL_SETTLEMENT_PAYMENT_INFO")
 public class SettlementPaymentInfo {
@@ -39,6 +33,76 @@ public class SettlementPaymentInfo {
             @JoinColumn(name = "SETTLEMENT_PAYMENT_ROUND_RATE_NO", referencedColumnName = "SETTLEMENT_PAYMENT_ROUND_RATE_NO")
     })
     private SettlementPaymentStandard settlementPaymentStandard;             //정산금지급기준
+
+    public SettlementPaymentInfo() {}
+
+    public SettlementPaymentInfo(int settlementPaymentInfoNo, int settlementPaymentAmount, String farmerSettlementCheckStatus,
+                                 String settlementPaymentDate, SettlementInfo settlementInfo, String settlementPaymentStatus,
+                                 SettlementPaymentStandard settlementPaymentStandard) {
+        this.settlementPaymentInfoNo = settlementPaymentInfoNo;
+        this.settlementPaymentAmount = settlementPaymentAmount;
+        this.farmerSettlementCheckStatus = farmerSettlementCheckStatus;
+        this.settlementPaymentDate = settlementPaymentDate;
+        this.settlementInfo = settlementInfo;
+        this.settlementPaymentStatus = settlementPaymentStatus;
+        this.settlementPaymentStandard = settlementPaymentStandard;
+    }
+
+    public int getSettlementPaymentInfoNo() {
+        return settlementPaymentInfoNo;
+    }
+
+    public void setSettlementPaymentInfoNo(int settlementPaymentInfoNo) {
+        this.settlementPaymentInfoNo = settlementPaymentInfoNo;
+    }
+
+    public int getSettlementPaymentAmount() {
+        return settlementPaymentAmount;
+    }
+
+    public void setSettlementPaymentAmount(int settlementPaymentAmount) {
+        this.settlementPaymentAmount = settlementPaymentAmount;
+    }
+
+    public String getFarmerSettlementCheckStatus() {
+        return farmerSettlementCheckStatus;
+    }
+
+    public void setFarmerSettlementCheckStatus(String farmerSettlementCheckStatus) {
+        this.farmerSettlementCheckStatus = farmerSettlementCheckStatus;
+    }
+
+    public String getSettlementPaymentDate() {
+        return settlementPaymentDate;
+    }
+
+    public void setSettlementPaymentDate(String settlementPaymentDate) {
+        this.settlementPaymentDate = settlementPaymentDate;
+    }
+
+    public SettlementInfo getSettlementInfo() {
+        return settlementInfo;
+    }
+
+    public void setSettlementInfo(SettlementInfo settlementInfo) {
+        this.settlementInfo = settlementInfo;
+    }
+
+    public String getSettlementPaymentStatus() {
+        return settlementPaymentStatus;
+    }
+
+    public void setSettlementPaymentStatus(String settlementPaymentStatus) {
+        this.settlementPaymentStatus = settlementPaymentStatus;
+    }
+
+    public SettlementPaymentStandard getSettlementPaymentStandard() {
+        return settlementPaymentStandard;
+    }
+
+    public void setSettlementPaymentStandard(SettlementPaymentStandard settlementPaymentStandard) {
+        this.settlementPaymentStandard = settlementPaymentStandard;
+    }
 
     @Override
     public String toString() {

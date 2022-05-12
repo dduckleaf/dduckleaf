@@ -22,5 +22,11 @@ import java.util.List;
 public interface SettlementPaymentStandardForSettlementCalculateRepository
         extends JpaRepository<SettlementPaymentStandard, SettlementPaymentStandardPK> {
 
+    /**
+     * findAllByStandardName: 정산정보기준명으로 정산정보기준 데이터 조회 요청 메소드입니다.
+     * @param standardName 기준명
+     * @return 정산정보기준 정보
+     * @author 장민주
+     */
     List<SettlementPaymentStandard> findAllByStandardName(String standardName);
 }

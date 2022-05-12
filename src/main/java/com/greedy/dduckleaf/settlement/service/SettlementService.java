@@ -1,10 +1,6 @@
 package com.greedy.dduckleaf.settlement.service;
 
 import com.greedy.dduckleaf.settlement.dto.ProjectDTO;
-import com.greedy.dduckleaf.settlement.dto.SettlementInfoDTO;
-import com.greedy.dduckleaf.settlement.dto.SettlementOverview;
-import com.greedy.dduckleaf.settlement.dto.SettlementPaymentInfoDTO;
-import com.greedy.dduckleaf.settlement.entity.SettlementInfo;
 import com.greedy.dduckleaf.settlement.repository.ProjectForSettlementRepository;
 import com.greedy.dduckleaf.settlement.repository.SettlementInfoRepository;
 import org.modelmapper.ModelMapper;
@@ -14,10 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * <pre>

@@ -1,13 +1,7 @@
 package com.greedy.dduckleaf.settlement.entity;
-import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "FarmerInfoForSettlement")
 @Table(name = "TBL_FARMER_INFO")
 public class FarmerInfo {
@@ -24,6 +18,47 @@ public class FarmerInfo {
 
     @Column(name = "REPRESENTATIVE_EMAIL")
     private String representativeEmail;                 //대표자이메일
+
+    public FarmerInfo() {}
+
+    public FarmerInfo(int memberNo, String farmerName, String representativeName, String representativeEmail) {
+        this.memberNo = memberNo;
+        this.farmerName = farmerName;
+        this.representativeName = representativeName;
+        this.representativeEmail = representativeEmail;
+    }
+
+    public int getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(int memberNo) {
+        this.memberNo = memberNo;
+    }
+
+    public String getFarmerName() {
+        return farmerName;
+    }
+
+    public void setFarmerName(String farmerName) {
+        this.farmerName = farmerName;
+    }
+
+    public String getRepresentativeName() {
+        return representativeName;
+    }
+
+    public void setRepresentativeName(String representativeName) {
+        this.representativeName = representativeName;
+    }
+
+    public String getRepresentativeEmail() {
+        return representativeEmail;
+    }
+
+    public void setRepresentativeEmail(String representativeEmail) {
+        this.representativeEmail = representativeEmail;
+    }
 
     @Override
     public String toString() {

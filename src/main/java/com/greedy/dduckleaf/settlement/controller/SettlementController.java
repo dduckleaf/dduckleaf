@@ -49,7 +49,8 @@ public class SettlementController {
 
     /**
      * findFarmerSettlementOverview: 파머페이지 화면 경로를 찾아가기 위한 메소드입니다.
-     * @param projectNo: 프로젝트번호
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param projectNo 프로젝트번호
      * @return mv: 프로젝트정보, 정산금관리 화면 경로
      * @author 장민주
      */
@@ -72,7 +73,8 @@ public class SettlementController {
 
     /**
      * projectManageOverviewPage: 프로젝트관리페이지 화면 경로를 찾아가기 위한 메소드입니다.
-     * @param projectNo: 프로젝트번호
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param projectNo 프로젝트번호
      * @return mv: 프로젝트정보, 정산금관리 화면 경로
      * @author 장민주
      */
@@ -89,7 +91,8 @@ public class SettlementController {
 
     /**
      * settlementInfoPage: 정산정보 계산 및 조회페이지 경로를 찾아가기 위한 메소드입니다.
-     * @param projectNo: 프로젝트번호
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param projectNo 프로젝트번호
      * @return 프로젝트정보, 정산정보 계산 및 조회 화면 경로
      * @author 장민주
      */
@@ -106,7 +109,8 @@ public class SettlementController {
 
     /**
      * calculatePage: 정산정보가 계산된 테이블 조회를 요청하는 메소드입니다.
-     * @param projectNo: 프로젝트번호
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param projectNo 프로젝트번호
      * @return 메뉴바에 출력될 프로젝트 정보, 정산정보 계산 테이블 화면 경로
      * @author 장민주
      */
@@ -115,10 +119,7 @@ public class SettlementController {
 
         ProjectDTO project = mainService.findProjectDetail(projectNo);
 
-//        SettlementInfoPackage settlementInfoPackage = calculateService.findSettlementInfoPackage(projectNo);
-
         mv.addObject("project", project);
-//        mv.addObject("settlementInfoPackage", settlementInfoPackage);
         mv.setViewName("settlement/projectmanager/calculate");
 
         return mv;
@@ -126,7 +127,7 @@ public class SettlementController {
 
     /**
      * calculateSettlementPayment: 회차별 정산금 지급내역 계산 및 지급내역조회를 요청하는 메소드입니다.
-     * @param projectNo: 프로젝트번호
+     * @param projectNo 프로젝트번호
      * @return 기본정산정보, 회차별 정산금 지급내역목록, 적용수수료정보
      * @author 장민주
      */
@@ -141,7 +142,7 @@ public class SettlementController {
 
     /**
      * modifyFarmerCheckStatus: 파머가 정산정보를 확인했음을 데이터베이스에 반영할 것을 요청하는 메소드입니다.
-     * @param paymentNo: 파머가 확인한 정산금지급내역 번호
+     * @param paymentNo 파머가 확인한 정산금지급내역 번호
      * @return 데이터 수정 성공실패 여부
      * @author 장민주
      */

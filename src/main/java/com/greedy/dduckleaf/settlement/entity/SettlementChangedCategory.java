@@ -1,12 +1,7 @@
 package com.greedy.dduckleaf.settlement.entity;
-import lombok.*;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "SettlementChangedCategory")
 @Table(name = "TBL_SETTLEMENT_CHANGED_CATEGORY")
 public class SettlementChangedCategory {
@@ -17,6 +12,29 @@ public class SettlementChangedCategory {
 
     @Column(name = "SETTLEMENT_CHANGED_NAME")
     private String settlementChangedName;                           //정산정보 변경 구분명
+
+    public SettlementChangedCategory() {}
+
+    public SettlementChangedCategory(int settlementChangedCategory, String settlementChangedName) {
+        this.settlementChangedCategory = settlementChangedCategory;
+        this.settlementChangedName = settlementChangedName;
+    }
+
+    public int getSettlementChangedCategory() {
+        return settlementChangedCategory;
+    }
+
+    public void setSettlementChangedCategory(int settlementChangedCategory) {
+        this.settlementChangedCategory = settlementChangedCategory;
+    }
+
+    public String getSettlementChangedName() {
+        return settlementChangedName;
+    }
+
+    public void setSettlementChangedName(String settlementChangedName) {
+        this.settlementChangedName = settlementChangedName;
+    }
 
     @Override
     public String toString() {

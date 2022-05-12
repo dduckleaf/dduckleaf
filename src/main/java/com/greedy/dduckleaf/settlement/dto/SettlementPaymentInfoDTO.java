@@ -1,17 +1,9 @@
 package com.greedy.dduckleaf.settlement.dto;
 
 import com.greedy.dduckleaf.settlement.calculate.dto.SettlementPaymentStandardDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 public class SettlementPaymentInfoDTO {
 
     private int settlementPaymentInfoNo;                            //회차별정산금지급내역번호
@@ -22,6 +14,87 @@ public class SettlementPaymentInfoDTO {
     private String settlementPaymentStatus;                         //지급상태
     private SettlementPaymentStandardDTO settlementPaymentStandard;    //정산금지급기준
     private List<SettlementPaymentHistoryDTO> settlementPaymentHistoryList;
+
+    public SettlementPaymentInfoDTO() {}
+
+    public SettlementPaymentInfoDTO(int settlementPaymentInfoNo, int settlementPaymentAmount,
+                                    String farmerSettlementCheckStatus, String settlementPaymentDate,
+                                    SettlementInfoDTO settlementInfo, String settlementPaymentStatus,
+                                    SettlementPaymentStandardDTO settlementPaymentStandard,
+                                    List<SettlementPaymentHistoryDTO> settlementPaymentHistoryList) {
+        this.settlementPaymentInfoNo = settlementPaymentInfoNo;
+        this.settlementPaymentAmount = settlementPaymentAmount;
+        this.farmerSettlementCheckStatus = farmerSettlementCheckStatus;
+        this.settlementPaymentDate = settlementPaymentDate;
+        this.settlementInfo = settlementInfo;
+        this.settlementPaymentStatus = settlementPaymentStatus;
+        this.settlementPaymentStandard = settlementPaymentStandard;
+        this.settlementPaymentHistoryList = settlementPaymentHistoryList;
+    }
+
+    public int getSettlementPaymentInfoNo() {
+        return settlementPaymentInfoNo;
+    }
+
+    public void setSettlementPaymentInfoNo(int settlementPaymentInfoNo) {
+        this.settlementPaymentInfoNo = settlementPaymentInfoNo;
+    }
+
+    public int getSettlementPaymentAmount() {
+        return settlementPaymentAmount;
+    }
+
+    public void setSettlementPaymentAmount(int settlementPaymentAmount) {
+        this.settlementPaymentAmount = settlementPaymentAmount;
+    }
+
+    public String getFarmerSettlementCheckStatus() {
+        return farmerSettlementCheckStatus;
+    }
+
+    public void setFarmerSettlementCheckStatus(String farmerSettlementCheckStatus) {
+        this.farmerSettlementCheckStatus = farmerSettlementCheckStatus;
+    }
+
+    public String getSettlementPaymentDate() {
+        return settlementPaymentDate;
+    }
+
+    public void setSettlementPaymentDate(String settlementPaymentDate) {
+        this.settlementPaymentDate = settlementPaymentDate;
+    }
+
+    public SettlementInfoDTO getSettlementInfo() {
+        return settlementInfo;
+    }
+
+    public void setSettlementInfo(SettlementInfoDTO settlementInfo) {
+        this.settlementInfo = settlementInfo;
+    }
+
+    public String getSettlementPaymentStatus() {
+        return settlementPaymentStatus;
+    }
+
+    public void setSettlementPaymentStatus(String settlementPaymentStatus) {
+        this.settlementPaymentStatus = settlementPaymentStatus;
+    }
+
+    public SettlementPaymentStandardDTO getSettlementPaymentStandard() {
+        return settlementPaymentStandard;
+    }
+
+    public void setSettlementPaymentStandard(SettlementPaymentStandardDTO settlementPaymentStandard) {
+        this.settlementPaymentStandard = settlementPaymentStandard;
+    }
+
+    public List<SettlementPaymentHistoryDTO> getSettlementPaymentHistoryList() {
+        return settlementPaymentHistoryList;
+    }
+
+    public void setSettlementPaymentHistoryList(List<SettlementPaymentHistoryDTO> settlementPaymentHistoryList) {
+        this.settlementPaymentHistoryList = settlementPaymentHistoryList;
+    }
 
     @Override
     public String toString() {

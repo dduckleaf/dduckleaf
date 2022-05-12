@@ -58,6 +58,7 @@ public class SettlementCheckService {
 
         /* 조회한 엔티티의 확인여부컬럼 데이터 수정 */
         settlementPaymentInfo.setSettlementPaymentStatus("Y");
+        settlementPaymentInfoRepository.save(settlementPaymentInfo);
 
         /* 정산금 지급내역 변동이력을 새롭게 추가한다 */
         saveSettlementPaymentHistory(settlementPaymentInfo);

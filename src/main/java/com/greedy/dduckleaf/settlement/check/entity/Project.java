@@ -1,16 +1,10 @@
 package com.greedy.dduckleaf.settlement.check.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-import javax.persistence.*;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectForFarmerCheck")
 @Table(name = "TBL_PROJECT")
 public class Project {
@@ -34,15 +28,64 @@ public class Project {
     @Column(name = "PROGRESS_STATUS")
     private String progressStatus;          //진행상태
 
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "FARMER_NO")
-//    private FarmerInfo farmer;              //파머번호
-//
-//    @OneToMany(mappedBy = "project")
-//    private List<FundingInfo> fundingInfos;
-//
-//    @OneToMany(mappedBy = "project")
-//    private List<RefundingInfo> refundingInfos;
+    public Project() {}
+
+    public Project(int projectNo, String projectName, String openDate, String endDate, String achievementRate, String progressStatus) {
+        this.projectNo = projectNo;
+        this.projectName = projectName;
+        this.openDate = openDate;
+        this.endDate = endDate;
+        this.achievementRate = achievementRate;
+        this.progressStatus = progressStatus;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getOpenDate() {
+        return openDate;
+    }
+
+    public void setOpenDate(String openDate) {
+        this.openDate = openDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getAchievementRate() {
+        return achievementRate;
+    }
+
+    public void setAchievementRate(String achievementRate) {
+        this.achievementRate = achievementRate;
+    }
+
+    public String getProgressStatus() {
+        return progressStatus;
+    }
+
+    public void setProgressStatus(String progressStatus) {
+        this.progressStatus = progressStatus;
+    }
 
     @Override
     public String toString() {

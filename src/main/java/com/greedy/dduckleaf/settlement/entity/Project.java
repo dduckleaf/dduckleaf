@@ -1,12 +1,7 @@
 package com.greedy.dduckleaf.settlement.entity;
 
 import javax.persistence.*;
-import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectForSettlement")
 @Table(name = "TBL_PROJECT")
 public class Project {
@@ -36,6 +31,84 @@ public class Project {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FARMER_NO")
     private FarmerInfo farmer;              //파머번호
+
+    public Project() {}
+
+    public Project(int projectNo, String projectName, String openDate, String endDate, int achievementRate,
+                   String projectStatus, int progressStatus, FarmerInfo farmer) {
+        this.projectNo = projectNo;
+        this.projectName = projectName;
+        this.openDate = openDate;
+        this.endDate = endDate;
+        this.achievementRate = achievementRate;
+        this.projectStatus = projectStatus;
+        this.progressStatus = progressStatus;
+        this.farmer = farmer;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getOpenDate() {
+        return openDate;
+    }
+
+    public void setOpenDate(String openDate) {
+        this.openDate = openDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public int getAchievementRate() {
+        return achievementRate;
+    }
+
+    public void setAchievementRate(int achievementRate) {
+        this.achievementRate = achievementRate;
+    }
+
+    public String getProjectStatus() {
+        return projectStatus;
+    }
+
+    public void setProjectStatus(String projectStatus) {
+        this.projectStatus = projectStatus;
+    }
+
+    public int getProgressStatus() {
+        return progressStatus;
+    }
+
+    public void setProgressStatus(int progressStatus) {
+        this.progressStatus = progressStatus;
+    }
+
+    public FarmerInfo getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(FarmerInfo farmer) {
+        this.farmer = farmer;
+    }
 
     @Override
     public String toString() {

@@ -1,17 +1,9 @@
 package com.greedy.dduckleaf.settlement.check.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "SettlementPaymentHistoryForFarmerCheck")
 @Table(name = "TBL_SETTLEMENT_PAYMENT_HISTORY")
 @DynamicInsert
@@ -35,8 +27,57 @@ public class SettlementPaymentHistory {
     @Column(name = "SETTLEMENT_PAYMENT_HISTORY_CATEGORY")
     private String settlementPaymentHistoryCategory;                        //정산금 지급 이력 구분
 
-//    @Column(name = "REF_SETTLEMENT_OBJECTION_HISTORY_NO", nullable = true)
-//    private int settlementObjectionHistoryNo;                               //이의신청처리이력번호
+    public SettlementPaymentHistory() {}
+
+    public SettlementPaymentHistory(int settlementPaymentHistoryNo, SettlementPaymentInfo settlementPaymentInfo,
+                                    String settlementStatus, String settlementPaymentHistoryDate,
+                                    String settlementPaymentHistoryCategory) {
+        this.settlementPaymentHistoryNo = settlementPaymentHistoryNo;
+        this.settlementPaymentInfo = settlementPaymentInfo;
+        this.settlementStatus = settlementStatus;
+        this.settlementPaymentHistoryDate = settlementPaymentHistoryDate;
+        this.settlementPaymentHistoryCategory = settlementPaymentHistoryCategory;
+    }
+
+    public int getSettlementPaymentHistoryNo() {
+        return settlementPaymentHistoryNo;
+    }
+
+    public void setSettlementPaymentHistoryNo(int settlementPaymentHistoryNo) {
+        this.settlementPaymentHistoryNo = settlementPaymentHistoryNo;
+    }
+
+    public SettlementPaymentInfo getSettlementPaymentInfo() {
+        return settlementPaymentInfo;
+    }
+
+    public void setSettlementPaymentInfo(SettlementPaymentInfo settlementPaymentInfo) {
+        this.settlementPaymentInfo = settlementPaymentInfo;
+    }
+
+    public String getSettlementStatus() {
+        return settlementStatus;
+    }
+
+    public void setSettlementStatus(String settlementStatus) {
+        this.settlementStatus = settlementStatus;
+    }
+
+    public String getSettlementPaymentHistoryDate() {
+        return settlementPaymentHistoryDate;
+    }
+
+    public void setSettlementPaymentHistoryDate(String settlementPaymentHistoryDate) {
+        this.settlementPaymentHistoryDate = settlementPaymentHistoryDate;
+    }
+
+    public String getSettlementPaymentHistoryCategory() {
+        return settlementPaymentHistoryCategory;
+    }
+
+    public void setSettlementPaymentHistoryCategory(String settlementPaymentHistoryCategory) {
+        this.settlementPaymentHistoryCategory = settlementPaymentHistoryCategory;
+    }
 
     @Override
     public String toString() {

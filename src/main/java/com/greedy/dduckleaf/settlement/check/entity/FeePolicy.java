@@ -10,10 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "FeePolicyForFarmerCheck")
 @Table(name = "TBL_FEE_POLICY")
 public class FeePolicy {
@@ -39,6 +35,75 @@ public class FeePolicy {
 
     @Column(name = "FEE_CATEGORY")
     private String feeCategory;                 //수수료 구분
+
+    public FeePolicy() {}
+
+    public FeePolicy(int feePolicyRateNo, int feeApplyRate, String feePolicyStatus, String feePolicyExpireDate,
+                     String feePolicyStartDate, String feePolicyRegistDate, String feeCategory) {
+        this.feePolicyRateNo = feePolicyRateNo;
+        this.feeApplyRate = feeApplyRate;
+        this.feePolicyStatus = feePolicyStatus;
+        this.feePolicyExpireDate = feePolicyExpireDate;
+        this.feePolicyStartDate = feePolicyStartDate;
+        this.feePolicyRegistDate = feePolicyRegistDate;
+        this.feeCategory = feeCategory;
+    }
+
+    public int getFeePolicyRateNo() {
+        return feePolicyRateNo;
+    }
+
+    public void setFeePolicyRateNo(int feePolicyRateNo) {
+        this.feePolicyRateNo = feePolicyRateNo;
+    }
+
+    public int getFeeApplyRate() {
+        return feeApplyRate;
+    }
+
+    public void setFeeApplyRate(int feeApplyRate) {
+        this.feeApplyRate = feeApplyRate;
+    }
+
+    public String getFeePolicyStatus() {
+        return feePolicyStatus;
+    }
+
+    public void setFeePolicyStatus(String feePolicyStatus) {
+        this.feePolicyStatus = feePolicyStatus;
+    }
+
+    public String getFeePolicyExpireDate() {
+        return feePolicyExpireDate;
+    }
+
+    public void setFeePolicyExpireDate(String feePolicyExpireDate) {
+        this.feePolicyExpireDate = feePolicyExpireDate;
+    }
+
+    public String getFeePolicyStartDate() {
+        return feePolicyStartDate;
+    }
+
+    public void setFeePolicyStartDate(String feePolicyStartDate) {
+        this.feePolicyStartDate = feePolicyStartDate;
+    }
+
+    public String getFeePolicyRegistDate() {
+        return feePolicyRegistDate;
+    }
+
+    public void setFeePolicyRegistDate(String feePolicyRegistDate) {
+        this.feePolicyRegistDate = feePolicyRegistDate;
+    }
+
+    public String getFeeCategory() {
+        return feeCategory;
+    }
+
+    public void setFeeCategory(String feeCategory) {
+        this.feeCategory = feeCategory;
+    }
 
     @Override
     public String toString() {

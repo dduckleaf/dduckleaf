@@ -1,11 +1,5 @@
 package com.greedy.dduckleaf.settlement.dto;
 
-import lombok.*;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 public class FarmerInfoDTO {
 
     private int memberNo;                               //회원번호
@@ -23,6 +17,149 @@ public class FarmerInfoDTO {
     private String taxType;                           //과세유형
     private String taxTypeCategory;                   //구분
     private int corporateLicenseNo;                   //법인등록번호
+
+    public FarmerInfoDTO() {}
+
+    public FarmerInfoDTO(int memberNo, String farmerName, String farmerEmail, String farmerPhone, String businessOwnType,
+                         int businessOwnNo, String businessName, String representativeName, String representativeEmail,
+                         String representativeSsn, String corporateName, String corporationType, String taxType,
+                         String taxTypeCategory, int corporateLicenseNo) {
+        this.memberNo = memberNo;
+        this.farmerName = farmerName;
+        this.farmerEmail = farmerEmail;
+        this.farmerPhone = farmerPhone;
+        this.businessOwnType = businessOwnType;
+        this.businessOwnNo = businessOwnNo;
+        this.businessName = businessName;
+        this.representativeName = representativeName;
+        this.representativeEmail = representativeEmail;
+        this.representativeSsn = representativeSsn;
+        this.corporateName = corporateName;
+        this.corporationType = corporationType;
+        this.taxType = taxType;
+        this.taxTypeCategory = taxTypeCategory;
+        this.corporateLicenseNo = corporateLicenseNo;
+    }
+
+    public int getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(int memberNo) {
+        this.memberNo = memberNo;
+    }
+
+    public String getFarmerName() {
+        return farmerName;
+    }
+
+    public void setFarmerName(String farmerName) {
+        this.farmerName = farmerName;
+    }
+
+    public String getFarmerEmail() {
+        return farmerEmail;
+    }
+
+    public void setFarmerEmail(String farmerEmail) {
+        this.farmerEmail = farmerEmail;
+    }
+
+    public String getFarmerPhone() {
+        return farmerPhone;
+    }
+
+    public void setFarmerPhone(String farmerPhone) {
+        this.farmerPhone = farmerPhone;
+    }
+
+    public String getBusinessOwnType() {
+        return businessOwnType;
+    }
+
+    public void setBusinessOwnType(String businessOwnType) {
+        this.businessOwnType = businessOwnType;
+    }
+
+    public int getBusinessOwnNo() {
+        return businessOwnNo;
+    }
+
+    public void setBusinessOwnNo(int businessOwnNo) {
+        this.businessOwnNo = businessOwnNo;
+    }
+
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
+    public String getRepresentativeName() {
+        return representativeName;
+    }
+
+    public void setRepresentativeName(String representativeName) {
+        this.representativeName = representativeName;
+    }
+
+    public String getRepresentativeEmail() {
+        return representativeEmail;
+    }
+
+    public void setRepresentativeEmail(String representativeEmail) {
+        this.representativeEmail = representativeEmail;
+    }
+
+    public String getRepresentativeSsn() {
+        return representativeSsn;
+    }
+
+    public void setRepresentativeSsn(String representativeSsn) {
+        this.representativeSsn = representativeSsn;
+    }
+
+    public String getCorporateName() {
+        return corporateName;
+    }
+
+    public void setCorporateName(String corporateName) {
+        this.corporateName = corporateName;
+    }
+
+    public String getCorporationType() {
+        return corporationType;
+    }
+
+    public void setCorporationType(String corporationType) {
+        this.corporationType = corporationType;
+    }
+
+    public String getTaxType() {
+        return taxType;
+    }
+
+    public void setTaxType(String taxType) {
+        this.taxType = taxType;
+    }
+
+    public String getTaxTypeCategory() {
+        return taxTypeCategory;
+    }
+
+    public void setTaxTypeCategory(String taxTypeCategory) {
+        this.taxTypeCategory = taxTypeCategory;
+    }
+
+    public int getCorporateLicenseNo() {
+        return corporateLicenseNo;
+    }
+
+    public void setCorporateLicenseNo(int corporateLicenseNo) {
+        this.corporateLicenseNo = corporateLicenseNo;
+    }
 
     @Override
     public String toString() {

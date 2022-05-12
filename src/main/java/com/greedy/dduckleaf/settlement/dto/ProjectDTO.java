@@ -1,16 +1,5 @@
 package com.greedy.dduckleaf.settlement.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import javax.persistence.*;
-
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 public class ProjectDTO {
 
     private int projectNo;                              //프로젝트번호
@@ -25,6 +14,121 @@ public class ProjectDTO {
     private String examineStatus;                       //심사상태
     private String projectExamineStatus;                //심사결과
     private int maxTargetAmount;                        //목표최대금액
+
+    public ProjectDTO() {}
+
+    public ProjectDTO(int projectNo, String projectName, int progressStatus, String projectStatus, int achievementRate,
+                      int fundTargetAmount, FarmerInfoDTO farmer, String openDate, String endDate, String examineStatus,
+                      String projectExamineStatus, int maxTargetAmount) {
+        this.projectNo = projectNo;
+        this.projectName = projectName;
+        this.progressStatus = progressStatus;
+        this.projectStatus = projectStatus;
+        this.achievementRate = achievementRate;
+        this.fundTargetAmount = fundTargetAmount;
+        this.farmer = farmer;
+        this.openDate = openDate;
+        this.endDate = endDate;
+        this.examineStatus = examineStatus;
+        this.projectExamineStatus = projectExamineStatus;
+        this.maxTargetAmount = maxTargetAmount;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public int getProgressStatus() {
+        return progressStatus;
+    }
+
+    public void setProgressStatus(int progressStatus) {
+        this.progressStatus = progressStatus;
+    }
+
+    public String getProjectStatus() {
+        return projectStatus;
+    }
+
+    public void setProjectStatus(String projectStatus) {
+        this.projectStatus = projectStatus;
+    }
+
+    public int getAchievementRate() {
+        return achievementRate;
+    }
+
+    public void setAchievementRate(int achievementRate) {
+        this.achievementRate = achievementRate;
+    }
+
+    public int getFundTargetAmount() {
+        return fundTargetAmount;
+    }
+
+    public void setFundTargetAmount(int fundTargetAmount) {
+        this.fundTargetAmount = fundTargetAmount;
+    }
+
+    public FarmerInfoDTO getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(FarmerInfoDTO farmer) {
+        this.farmer = farmer;
+    }
+
+    public String getOpenDate() {
+        return openDate;
+    }
+
+    public void setOpenDate(String openDate) {
+        this.openDate = openDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getExamineStatus() {
+        return examineStatus;
+    }
+
+    public void setExamineStatus(String examineStatus) {
+        this.examineStatus = examineStatus;
+    }
+
+    public String getProjectExamineStatus() {
+        return projectExamineStatus;
+    }
+
+    public void setProjectExamineStatus(String projectExamineStatus) {
+        this.projectExamineStatus = projectExamineStatus;
+    }
+
+    public int getMaxTargetAmount() {
+        return maxTargetAmount;
+    }
+
+    public void setMaxTargetAmount(int maxTargetAmount) {
+        this.maxTargetAmount = maxTargetAmount;
+    }
 
     @Override
     public String toString() {

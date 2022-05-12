@@ -33,6 +33,7 @@ public class ProjectForSettlementRepositoryTests {
     @Test
     @DisplayName("종료된 프로젝트 중 달성률이 100% 이상인 프로젝트 조회 테스트")
     public void findByProjectStatusAndProgressStatusAndAchievementRateGreaterThanEqual_test() {
+
         //given
         String projectStatus = "Y";
         int progressStatus = 4;
@@ -51,6 +52,7 @@ public class ProjectForSettlementRepositoryTests {
     @Test
     @DisplayName("프로젝트 번호로 프로젝트 상세 조회")
     public void findByProjectNo_test() {
+
         //given
         int projectNo = 1;
 

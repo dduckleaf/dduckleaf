@@ -30,6 +30,7 @@ public class SettlementPaymentInfoForCalculateRepositoryTests {
     @Test
     @DisplayName("정산정보로 회차별 정산금 지급내역 조회: 존재하는 경우")
     public void findBySettlementInfo_SettlementInfoNo_isExist_test() {
+
         //given
         int settlementInfoNo = 25;
 
@@ -47,6 +48,7 @@ public class SettlementPaymentInfoForCalculateRepositoryTests {
     @Test
     @DisplayName("정산정보로 회차별 정산금 지급내역 조회: 존재하지 않는 경우")
     public void findBySettlementInfo_SettlementInfoNo_isEmpty_test() {
+
         //given
         int settlementInfoNo = 25;
 

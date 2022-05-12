@@ -35,11 +35,8 @@ public class SettlementPaymentStandardForSettlementCalculateRepositoryTests {
 
         //when
         List<SettlementPaymentStandard> settlementPaymentStandards = repository.findAllByStandardName(standardName);
-//        List<SettlementPaymentStandard> settlementPaymentStandards = repository.findAll();
-//        SettlementPaymentStandard settlementPaymentStandards = repository.findById(2).get();
 
         //then
-//        System.out.println("settlementPaymentStandards = " + settlementPaymentStandards);
         settlementPaymentStandards.forEach(settlementPaymentStandard -> {
             assertNotNull(settlementPaymentStandard);
         });

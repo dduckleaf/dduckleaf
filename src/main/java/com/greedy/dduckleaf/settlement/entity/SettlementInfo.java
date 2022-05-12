@@ -1,12 +1,7 @@
 package com.greedy.dduckleaf.settlement.entity;
-import lombok.*;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "SettlementInfo")
 @Table(name = "TBL_SETTLEMENT_INFO")
 public class SettlementInfo {
@@ -32,6 +27,65 @@ public class SettlementInfo {
     @JoinColumn(name = "PROJECT_NO")
     private Project project;                            //프로젝트 번호
 
+    public SettlementInfo() {}
+
+    public SettlementInfo(int settlementInfoNo, int fundingTotalAmount, int donateAmount, int settlementTotalAmount,
+                          int totalCommissionAmount, Project project) {
+        this.settlementInfoNo = settlementInfoNo;
+        this.fundingTotalAmount = fundingTotalAmount;
+        this.donateAmount = donateAmount;
+        this.settlementTotalAmount = settlementTotalAmount;
+        this.totalCommissionAmount = totalCommissionAmount;
+        this.project = project;
+    }
+
+    public int getSettlementInfoNo() {
+        return settlementInfoNo;
+    }
+
+    public void setSettlementInfoNo(int settlementInfoNo) {
+        this.settlementInfoNo = settlementInfoNo;
+    }
+
+    public int getFundingTotalAmount() {
+        return fundingTotalAmount;
+    }
+
+    public void setFundingTotalAmount(int fundingTotalAmount) {
+        this.fundingTotalAmount = fundingTotalAmount;
+    }
+
+    public int getDonateAmount() {
+        return donateAmount;
+    }
+
+    public void setDonateAmount(int donateAmount) {
+        this.donateAmount = donateAmount;
+    }
+
+    public int getSettlementTotalAmount() {
+        return settlementTotalAmount;
+    }
+
+    public void setSettlementTotalAmount(int settlementTotalAmount) {
+        this.settlementTotalAmount = settlementTotalAmount;
+    }
+
+    public int getTotalCommissionAmount() {
+        return totalCommissionAmount;
+    }
+
+    public void setTotalCommissionAmount(int totalCommissionAmount) {
+        this.totalCommissionAmount = totalCommissionAmount;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
     @Override
     public String toString() {

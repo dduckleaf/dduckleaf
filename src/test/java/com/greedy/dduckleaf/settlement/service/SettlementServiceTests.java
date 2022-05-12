@@ -4,11 +4,7 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.config.SpringSecurityConfiguration;
-import com.greedy.dduckleaf.projectreport.find.dto.ProjectReportDTO;
 import com.greedy.dduckleaf.settlement.dto.ProjectDTO;
-import com.greedy.dduckleaf.settlement.dto.SettlementInfoDTO;
-import com.greedy.dduckleaf.settlement.dto.SettlementOverview;
-import com.greedy.dduckleaf.settlement.dto.SettlementPaymentInfoDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.modelmapper.ModelMapper;
@@ -19,10 +15,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
-
-import javax.transaction.Transactional;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -49,9 +41,8 @@ public class SettlementServiceTests {
         assertNotNull(modelMapper);
     }
 
-
 //    @Test
-//    @DisplayName("파머의 정산정보 조회 요청 테스트")
+//    @DisplayName("내부연산: 파머의 정산정보 조회 요청 테스트")
 //    @Transactional
 //    public void findSettlementPaymentInfo_test() {
 //        //given
@@ -72,9 +63,9 @@ public class SettlementServiceTests {
 //
 //        System.out.println("settlementOverview = " + settlementOverview);
 //    }
-    
 
 //    @Test
+//    @DisplayName("내부연산: 프로젝트의 정산정보 조회 테스트")
 //    public void findSettlementInfoForEndProject_test() {
 //        //given
 //        int projectNo = 1;
@@ -91,6 +82,7 @@ public class SettlementServiceTests {
     @Test
     @DisplayName("달성률이 100% 이상인 종료된 프로젝트 목록 조회 테스트")
     public void findAllEndProjectsAchievedSuccess_test() {
+
         //given
         int progerssStatus = 4;
         int achievementRate = 100;
@@ -110,6 +102,7 @@ public class SettlementServiceTests {
     @Test
     @DisplayName("프로젝트 번호로 프로젝트 상세 조회 테스트")
     public void findProjectDetail_test() {
+
         //given
         int projectNo = 1;
 

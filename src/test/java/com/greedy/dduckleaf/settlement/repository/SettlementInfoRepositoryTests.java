@@ -34,6 +34,7 @@ public class SettlementInfoRepositoryTests {
     @Test
     @DisplayName("프로젝트 번호로 해당 프로젝트의 정산정보 조회")
     public void findByProject_ProjectNo_test() {
+
         //given
         int projectNo = 1;
         
