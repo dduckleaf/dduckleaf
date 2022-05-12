@@ -66,8 +66,6 @@ public class PlatformQaController {
         mv.addObject("platformQaCategoryList", platformQaCategoryList);
         mv.setViewName("platformqa/list");
 
-        platformQaList.forEach(System.out::println);
-
         return mv;
     }
 
@@ -125,9 +123,6 @@ public class PlatformQaController {
      */
     @PostMapping("/registRep")
     public ModelAndView registPlatformQaReply(@AuthenticationPrincipal CustomUser user, ModelAndView mv, PlatformQaDTO platformQa, PlatformQaReplyDTO newPlatformQaReply) {
-
-        System.out.println("newPlatformQaReply = " + newPlatformQaReply);
-        System.out.println(platformQa);
 
         int platformQaNo = platformQa.getPlatformQaNo();
         int memberNo = user.getMemberNo();
