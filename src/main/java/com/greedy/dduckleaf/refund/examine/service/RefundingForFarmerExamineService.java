@@ -156,8 +156,11 @@ public class RefundingForFarmerExamineService {
         refundingHistory.setManagerNo(refundingDTO.getMemberNo());
         refundingHistory.setRefundingRefuseReason(refundingDTO.getRefundingReason());
 
+        System.out.println("ddd");
         refundingRepo.save(refunding);
+        System.out.println("ddd");
         refundHistoryRepo.save(refundingHistory);
+        System.out.println("ddd");
 
         /* 환불 승인 시 프로젝트 달성률에 반영한다. */
         /* 달성률 반영 */
@@ -198,6 +201,7 @@ public class RefundingForFarmerExamineService {
         objection.setRefundObjectionMemberNo(refunding.getMemberNo());
         System.out.println("objection = " + objection);
         objection.setRefundingInfoNo(refundingNo);
+        objection.setRefundStatus("신청");
 
         objectionRepo.save(objection);
         objection = objectionRepo.findLastest();
@@ -208,7 +212,9 @@ public class RefundingForFarmerExamineService {
         refundObjectionHistory.setHistoryCategory("신청");
         refundObjectionHistory.setRefundObjectionNo(objection.getRefundObjectionNo());
 
+        System.out.println("refundObjectionHistory = " + refundObjectionHistory);
         refundObjectionHistoryRepo.save(refundObjectionHistory);
+
 
         /* 환불 상태를 심사 요청으로 변경한다. */
         RefundingStatus status = refundingStatusRepo.findById(4).get();
@@ -236,13 +242,13 @@ public class RefundingForFarmerExamineService {
 
      /**
       * examineObjectionconfirm : 환불 심사의 이의신청을 승인합니다.
-      * @param historyDTO : 이의신청의 정보를 전달받습니다.
+      * @param objectionNo : 이의신청의 정보를 전달받습니다.
       * @author 홍성원
       */
-    public void examineObjectionconfirm(RefundObjectionHistoryDTO historyDTO, int memberNo) {
+    public void examineObjectionconfirm(int refundingNo, int memberNo) {
 
         /* 환불 이의신청 내역 상태를 승인으로 변경합니다. */
-        RefundingObjection refundingObjection = refundObjectionRepo.findById(historyDTO.getRefundObjectionNo()).get();
+        RefundingObjection refundingObjection = refundObjectionRepo.findByRefundingInfoNo(refundingNo).get(0);
         refundingObjection.setRefundStatus("승인");
 
         refundObjectionRepo.save(refundingObjection);

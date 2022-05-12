@@ -27,4 +27,6 @@ public interface RefundingForFindRepository extends JpaRepository<Refunding, Int
     List<Refunding> findByProject_farmerNo(int memberNo);
 
     Page<Refunding> findByProject_projectNo(int projectNo, Pageable pageable);
+
+    Page<Refunding> findByRefundingStatus_refundingStatusNameContaining(String status, Pageable pageable);
 }

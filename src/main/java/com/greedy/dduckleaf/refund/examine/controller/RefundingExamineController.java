@@ -93,6 +93,17 @@ public class RefundingExamineController {
 
         return mv;
     }
+
+    @GetMapping("/platform/objection/confirm/{refundingNo}")
+    public ModelAndView examineObjectionconfirm(ModelAndView mv, @PathVariable int refundingNo, @AuthenticationPrincipal CustomUser user) {
+
+        int memberNo = user.getMemberNo();
+
+        service.examineObjectionconfirm(refundingNo, memberNo);
+
+        mv.setViewName("redirect:/refund/find/admin/statuslist/1");
+        return mv;
+    }
 }
 
 

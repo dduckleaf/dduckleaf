@@ -71,7 +71,7 @@ class RefundingForFarmerExamineServiceTest {
     public void registObjection_test() {
 
         //given
-        int refundingNo = 39;
+        int refundingNo = 49;
 
         //when & then
         assertDoesNotThrow(() -> service.registObjection(refundingNo));
@@ -82,12 +82,11 @@ class RefundingForFarmerExamineServiceTest {
     public void examineObjectionconfirm_test() {
 
         //given
-        RefundObjectionHistoryDTO historyDTO = new RefundObjectionHistoryDTO();
-        historyDTO.setRefundObjectionNo(1);
+        int objectionNo = 1;
         int memberNo = 1;
 
         //when & then
-        assertDoesNotThrow(() -> service.examineObjectionconfirm(historyDTO, memberNo));
+        assertDoesNotThrow(() -> service.examineObjectionconfirm(objectionNo, memberNo));
 
     }
 
