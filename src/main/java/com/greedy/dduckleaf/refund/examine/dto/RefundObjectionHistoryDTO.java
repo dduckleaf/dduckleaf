@@ -15,6 +15,7 @@ import javax.persistence.Table;
 public class RefundObjectionHistoryDTO {
 
     private int refundObjectionHistoryNo;
+    private int refundInfoNo;
     private String historyDate;
     private String historyCategory;
     private String refuseReason;

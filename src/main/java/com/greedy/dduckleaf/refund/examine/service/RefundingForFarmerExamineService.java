@@ -242,7 +242,7 @@ public class RefundingForFarmerExamineService {
 
      /**
       * examineObjectionconfirm : 환불 심사의 이의신청을 승인합니다.
-      * @param objectionNo : 이의신청의 정보를 전달받습니다.
+      * @param refundingNo : 이의신청의 정보를 전달받습니다.
       * @author 홍성원
       */
     public void examineObjectionconfirm(int refundingNo, int memberNo) {
@@ -313,7 +313,7 @@ public class RefundingForFarmerExamineService {
     public void examineObjectionRefuse(RefundObjectionHistoryDTO historyDTO, int memberNo) {
 
          /* 이의신청 내역의 상태를 거절로 변경합니다 */
-        RefundingObjection refundingObjection = refundObjectionRepo.findById(historyDTO.getRefundObjectionNo()).get();
+        RefundingObjection refundingObjection = refundObjectionRepo.findByRefundingInfoNo(historyDTO.getRefundInfoNo()).get(0);
         refundingObjection.setRefundStatus("거절");
 
         refundObjectionRepo.save(refundingObjection);
