@@ -21,4 +21,6 @@ import java.util.List;
 public interface ProjectForShippingRepository extends JpaRepository<Project, Integer> {
 
     List<Project> findProjectNoByFarmerMemberNo(int memberNo);
+
+    Project findProjectNoByProjectNo(int projectNo);
 }

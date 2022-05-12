@@ -2,41 +2,40 @@ package com.greedy.dduckleaf.shippingmanagement.entity;
 
 import javax.persistence.*;
 
-@Entity(name = "RewardShippingForShipping")
+@Entity(name = "RewardShippingStatusForShipping")
 @Table(name = "TBL_REWARD_SHIPPING")
-public class RewardShipping {
+public class RewardShippingStatus {
 
     @Id
     @Column(name = "REWARD_SHIPPING_NO")
-    private int rewardShippingNo;           //발송 번호
+    private int rewardShippingNo;       //발송 번호
 
     @Column(name = "SHIPPING_DUE_DATE")
-    private String shippingDueDate;         //발송 예정일
+    private String shippingDueDate;     //발송 예정일
 
     @Column(name = "MEMBER_NO")
-    private int memberNo;                   //회원 번호
+    private int memberNo;               //회원 번호
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "PROJECT_NO")
-    private Project project;                //프로젝트 엔티티 N:1 매핑
+    private Project project;            //프로젝트 엔티티 N:1 매핑
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "FUNDING_INFO_NO")
-    private FundingInfo fundingInfo;        //펀딩 신청 내역 엔티티 N:1 매핑
+    private FundingInfo fundingInfo;    //펀딩 신청 내역 엔티티 N:1 매핑
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "SHIPPING_STATUS_NO")
-    private ShippingStatus shippingStatus;  //발송 상태 엔티티 N:1 매핑
+    @Column(name = "SHIPPING_STATUS_NO")
+    private int shippingStatusNo;       //발송 상태 번호
 
-    public RewardShipping() {}
+    public RewardShippingStatus() {}
 
-    public RewardShipping(int rewardShippingNo, String shippingDueDate, int memberNo, Project project, FundingInfo fundingInfo, ShippingStatus shippingStatus) {
+    public RewardShippingStatus(int rewardShippingNo, String shippingDueDate, int memberNo, Project project, FundingInfo fundingInfo, int shippingStatusNo) {
         this.rewardShippingNo = rewardShippingNo;
         this.shippingDueDate = shippingDueDate;
         this.memberNo = memberNo;
         this.project = project;
         this.fundingInfo = fundingInfo;
-        this.shippingStatus = shippingStatus;
+        this.shippingStatusNo = shippingStatusNo;
     }
 
     public int getRewardShippingNo() {
@@ -79,23 +78,23 @@ public class RewardShipping {
         this.fundingInfo = fundingInfo;
     }
 
-    public ShippingStatus getShippingStatus() {
-        return shippingStatus;
+    public int getShippingStatusNo() {
+        return shippingStatusNo;
     }
 
-    public void setShippingStatus(ShippingStatus shippingStatus) {
-        this.shippingStatus = shippingStatus;
+    public void setShippingStatusNo(int shippingStatusNo) {
+        this.shippingStatusNo = shippingStatusNo;
     }
 
     @Override
     public String toString() {
-        return "RewardShipping{" +
+        return "RewardShippingStatus{" +
                 "rewardShippingNo=" + rewardShippingNo +
                 ", shippingDueDate='" + shippingDueDate + '\'' +
                 ", memberNo=" + memberNo +
                 ", project=" + project +
                 ", fundingInfo=" + fundingInfo +
-                ", shippingStatus=" + shippingStatus +
+                ", shippingStatusNo=" + shippingStatusNo +
                 '}';
     }
 }

@@ -1,23 +1,23 @@
 package com.greedy.dduckleaf.shippingmanagement.dto;
 
-public class RewardShippingDTO {
+public class RewardShippingStatusDTO {
 
-    private int rewardShippingNo;               //발송 번호
-    private String shippingDueDate;             //발송 예정일
-    private int memberNo;                       //회원 번호
-    private ProjectDTO project;                 //프로젝트 정보
-    private FundingInfoDTO fundingInfo;         //펀딩 신청 내역
-    private ShippingStatusDTO shippingStatus;   //발송 상태
+    private int rewardShippingNo;       //발송 번호
+    private String shippingDueDate;     //발송 예정일
+    private int memberNo;               //회원 번호
+    private ProjectDTO project;         //프로젝트 정보
+    private FundingInfoDTO fundingInfo; //펀딩 신청 내역
+    private int shippingStatusNo;       //발송 상태
 
-    public RewardShippingDTO() {}
+    public RewardShippingStatusDTO() {}
 
-    public RewardShippingDTO(int rewardShippingNo, String shippingDueDate, int memberNo, ProjectDTO project, FundingInfoDTO fundingInfo, ShippingStatusDTO shippingStatus) {
+    public RewardShippingStatusDTO(int rewardShippingNo, String shippingDueDate, int memberNo, ProjectDTO project, FundingInfoDTO fundingInfo, int shippingStatusNo) {
         this.rewardShippingNo = rewardShippingNo;
         this.shippingDueDate = shippingDueDate;
         this.memberNo = memberNo;
         this.project = project;
         this.fundingInfo = fundingInfo;
-        this.shippingStatus = shippingStatus;
+        this.shippingStatusNo = shippingStatusNo;
     }
 
     public int getRewardShippingNo() {
@@ -60,23 +60,23 @@ public class RewardShippingDTO {
         this.fundingInfo = fundingInfo;
     }
 
-    public ShippingStatusDTO getShippingStatus() {
-        return shippingStatus;
+    public int getShippingStatusNo() {
+        return shippingStatusNo;
     }
 
-    public void setShippingStatus(ShippingStatusDTO shippingStatus) {
-        this.shippingStatus = shippingStatus;
+    public void setShippingStatusNo(int shippingStatusNo) {
+        this.shippingStatusNo = shippingStatusNo;
     }
 
     @Override
     public String toString() {
-        return "RewardShippingDTO{" +
+        return "RewardShippingStatusDTO{" +
                 "rewardShippingNo=" + rewardShippingNo +
                 ", shippingDueDate='" + shippingDueDate + '\'' +
                 ", memberNo=" + memberNo +
                 ", project=" + project +
                 ", fundingInfo=" + fundingInfo +
-                ", shippingStatus=" + shippingStatus +
+                ", shippingStatusNo=" + shippingStatusNo +
                 '}';
     }
 }
