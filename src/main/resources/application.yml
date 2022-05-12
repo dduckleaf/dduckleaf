@@ -31,9 +31,9 @@
     resources:
       static-locations: file:src/main/resources/static/
 
-  thymeleaf:
-    cache: false
-    prefix: file:src/main/resources/templates/
+#  thymeleaf:
+#    cache: false
+#    prefix: file:src/main/resources/templates/
 
 ## SMTP config
   mail:

@@ -95,11 +95,7 @@
                     <div class="col-lg-3 order-2 pt-10 pt-lg-0">
                         <div class="sidebar-area" style="width: 300px;">
                             <div class="widgets-area mb-9">
-                                <h2 class="widgets-title mb-5"><a class="ranktext" style="font-size: 16pt; font-weight: bold;">실시간 랭킹</a>
-                                    <select class="ranktext1">
-                                        <option value="">정렬</option>
-                                        <option value="달성률순">달성률순</option>
-                                    </select></h2>
+                                <h2 class="widgets-title mb-5"><a class="ranktext" style="font-size: 16pt; font-weight: bold;">실시간 랭킹</a></h2>
                                 <div class="widgets-item">
                                     <div class="swiper-container">
                                         <div class="swiper-wrapper" id="productrank">
@@ -116,8 +112,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="product-img img-zoom-effect">
-                                                            <a href="single-product.html">
-                                                                <img class="img-full" id="rankingimg" th:src="@{images/main/bean.png}" alt="Product Images">
+                                                            <a th:href="'/project/projectdetail/' + ${project.projectNo}">
+                                                                <img class="img-full" id="rankingimg" th:src="'upload/original/' + ${project.attachmentSavedName}" alt="Product Images">
                                                             </a>
                                                         </div>
                                                     </div>
@@ -138,12 +134,12 @@
                                         <div class="col-lg-4 col-sm-6 mainproduct" style="margin-right: 30px; width: 300px;">
                                             <div class="product-item">
                                                 <div class="product-img img-zoom-effect">
-                                                    <a href="single-product.html">
-                                                        <img class="img-full mainimg" th:src="@{images/main/mushroom.png}" alt="Product Images">
+                                                    <a th:href="'/project/projectdetail/' + ${project.projectNo}">
+                                                        <img class="img-full mainimg" th:src="'upload/original/' + ${project.attachmentSavedName}" alt="Product Images">
                                                     </a>
                                                 </div>
                                                 <div class="product-content">
-                                                    <a class="product-name" href="single-product.html" style="margin-left: 20px;">[[${ project.projectName }]]</a><br><br>
+                                                    <a class="product-name" th:href="'/project/projectdetail/' + ${project.projectNo}" style="margin-left: 20px;">[[${ project.projectName }]]</a><br><br>
                                                     <div class="price-box pb-1" style="margin-left: 20px;">
                                                         <span class="new-price">[[${ project.farmer.businessName }]]</span>
                                                     </div>
