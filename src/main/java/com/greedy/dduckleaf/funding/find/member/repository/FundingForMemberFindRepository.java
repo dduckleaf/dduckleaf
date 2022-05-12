@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * <pre>
  * Class : FundingForMemberFindRepository
- * Comment : Funding엔티티의 레파지토리
+ * Comment : 펀딩엔티티의 쿼리문을 수행하는 레파지토리
  *
  * History
  * 2022-04-25 (홍성원) 처음 작성 /

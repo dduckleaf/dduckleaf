@@ -6,10 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * <pre>
  * Class : PaymentHistoryForFundingRepository
- * Comment :
+ * Comment : 펀딩 조회
  *
  * History
- * 2022-04-24 h99ww
+ * 2022-04-24 홍성원
  * </pre>
  *
  * @author h99ww

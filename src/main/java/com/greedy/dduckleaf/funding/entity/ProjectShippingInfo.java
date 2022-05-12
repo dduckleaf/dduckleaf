@@ -1,17 +1,10 @@
 package com.greedy.dduckleaf.funding.entity;
 
-import lombok.*;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
-@ToString
 @Entity(name = "ProjectShippingInfoForFundingRegsit")
 @Table(name = "TBL_PROJECT_SHIPPING_FEE")
 public class ProjectShippingInfo {
@@ -22,4 +15,36 @@ public class ProjectShippingInfo {
 
     @Column(name = "SHIPPING_DUE_DATE")
     private String shippingDueDate;
+
+    public ProjectShippingInfo() {
+    }
+
+    public ProjectShippingInfo(int projectdNo, String shippingDueDate) {
+        this.projectdNo = projectdNo;
+        this.shippingDueDate = shippingDueDate;
+    }
+
+    public int getProjectdNo() {
+        return projectdNo;
+    }
+
+    public void setProjectdNo(int projectdNo) {
+        this.projectdNo = projectdNo;
+    }
+
+    public String getShippingDueDate() {
+        return shippingDueDate;
+    }
+
+    public void setShippingDueDate(String shippingDueDate) {
+        this.shippingDueDate = shippingDueDate;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectShippingInfo{" +
+                "projectdNo=" + projectdNo +
+                ", shippingDueDate='" + shippingDueDate + '\'' +
+                '}';
+    }
 }

@@ -27,7 +27,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/funding/regist")
 public class FundingRegistController {
 
-    /* 빈으로 등록된 서비스 인스턴스를 의존성 주입 받습니다. */
     private final FundingRegistService service;
 
     @Autowired
@@ -47,7 +46,6 @@ public class FundingRegistController {
 
         ProjectDTO fundingInfo = service.findProjectFundingInfo(projectNo);
 
-        System.out.println("fundingInfo = " + fundingInfo);
 
         mv.addObject("fundingInfo", fundingInfo);
         mv.setViewName("/funding/regist/fundingamount");
@@ -81,17 +79,15 @@ public class FundingRegistController {
 
     /**
      * registByApi : 결제 된 펀딩결과를 저장 후 펀딩결과화면으로 리다이렉트하는 핸들러메소드입니다.
-     * @param
-     * @return
+     * @param registDTO : 등록 정보가 담긴 DTO를 전달받습니다.
      *
      * @author 홍성원
      */
     @GetMapping("/fundinginfo")
     public String registByApi(FundingRegistDTO registDTO, @AuthenticationPrincipal CustomUser user) {
 
+        /* 전달받은 정보에 세션에 담긴 회원 번호를 저장 후 등록합니다. */
         registDTO.setMemberNo(user.getMemberNo());
-
-        System.out.println("registDTO.getShippingAddress() = " + registDTO.getShippingAddress());
         service.registFunding(registDTO);
 
         return "redirect:/funding/regist/result/" + registDTO.getProjectNo();
@@ -100,21 +96,28 @@ public class FundingRegistController {
     /**
      * sendToFundingResultDetailInfo : 펀딩결제 후 리다이렉트 받는 핸들러메소드입니다.
      * @param projectNo : 결제성공한 해당 펀딩의 번호를 전달받습니다.
-     * @return
+     * @return endDate : 프로젝트 발송 예상일을 반환합니다.
      *
      * @author 홍성원
      */
     @GetMapping("/result/{projectNo}")
     public ModelAndView sendToFundingResultDetailInfo(ModelAndView mv, @PathVariable int projectNo){
 
+        /* 펀딩 등록 후 프로젝트 발송예상일을 담아 반환합니다. */
         String endDate = service.findProjetEndDate(projectNo);
-        System.out.println("endDate = " + endDate);
+
         mv.addObject("endDate", endDate);
         mv.setViewName("/funding/regist/fundingresult");
 
         return mv;
     }
 
+    /**
+     * modifyShippingAddress : 배송지 정보를 수정합니다.
+     * @param   address : 새로 입력받은 배송지 정보를 전달받습니다.
+     *
+     * @author 홍성원
+     */
     @PostMapping("/shippingaddress")
     public ModelAndView modifyShippingAddress(ModelAndView mv, ShippingAddressDTO address) {
 
@@ -124,6 +127,13 @@ public class FundingRegistController {
 
         return mv;
     }
+
+    /**
+     * modifyRefundAccount : 회원 환불계좌 정보를 수정합니다.
+     * @param accountInfo : 환불계좌 정보를 전달받습니다.
+     *
+     * @author 홍성원
+     */
     @PostMapping("/refundAccount")
     public ModelAndView modifyRefundAccount(ModelAndView mv, FundingDTO accountInfo) {
 
@@ -134,35 +144,3 @@ public class FundingRegistController {
         return mv;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
