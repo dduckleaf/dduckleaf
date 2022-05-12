@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>FAQ 목록조회</title>
+    <title>FAQ 목록</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
 
-
-    <!-- Style CSS -->
-    <!--<link rel="stylesheet" href="../../static/css/style.css">
-    <link rel="stylesheet" href="../../static/css/faq.css">-->
 
     <link rel="stylesheet" type="text/css" th:href="@{ /css/style.css }">
     <link rel="stylesheet" type="text/css" th:href="@{ /css/faq.css }">
@@ -108,7 +102,6 @@
 <script >
     window.onload = function () {
         let div = document.getElementsByClassName("product-item");
-        // let $faqNumber = document.getElementsByClassName("faqNumber");
         let faqNumber = document.querySelectorAll(".faqNumber");
 
         console.table(div.value);
@@ -116,7 +109,6 @@
 
         for (let i = 0; i < div.length; i++) {
             div[i].onclick = function () {
-                // faqNum = faqNumber[i].value;
                 location.href = "/faq/detail/" + faqNumber[i].value;
             }
         }

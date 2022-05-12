@@ -44,7 +44,7 @@ public class FaqController {
     }
 
     /**
-     * findFaqList : FAQ 목록을 조회합니다.
+     * findFaqList : FAQ(자주묻는질문) 목록을 조회합니다.
      * @param mv : 요청 정보를 받는 객체입니다.
      * @param pageable : 페이징 정보를 받는 객체입니다.
      * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
@@ -69,7 +69,7 @@ public class FaqController {
     }
 
     /**
-     * findFaqDetailList : FAQ 상세목록을 조회합니다.
+     * findFaqDetailList : FAQ(자주묻는질문) 상세목록을 조회합니다.
      * @param mv : 요청 정보를 담는 객체입니다.
      * @param faqNo : FAQ 번호를 전달받습니다.
      * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
@@ -89,7 +89,7 @@ public class FaqController {
     }
 
     /**
-    * faqRegistPage : FAQ 등록페이지
+    * faqRegistPage : FAQ(자주묻는질문) 등록페이지로 포워딩합니다.
     * @param mv : 요청 정보를 담는 객체입니다.
     * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
     * @author 이용선
@@ -103,7 +103,7 @@ public class FaqController {
     }
 
     /**
-    * faqRegist: FAQ 등록
+    * faqRegist: FAQ(자주묻는질문)을 등록한 후 목록페이지로 포워딩합니다.
     * @param mv : 요청 정보를 담는 객체입니다.
     * @param user : 회원 정보를 담는 객체입니다.
     * @param faqWrite : 등록할 FAQ 정보를 담는 객체입니다.
@@ -127,7 +127,7 @@ public class FaqController {
     }
 
     /**
-    * modifyPage : FAQ 수정페이지
+    * modifyPage : FAQ(자주묻는질문) 수정페이지로 포워딩합니다.
     * @param mv : 요청 정보를 담는 객체입니다.
     * @param faqNo : 수정할 FAQ 번호입니다.
     * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
@@ -145,7 +145,7 @@ public class FaqController {
     }
 
     /**
-    * modifyFaq : FAQ 수정
+    * modifyFaq : FAQ(자주묻는질문)내용을 수정한 후 목록페이지로 포워딩합니다.
     * @param mv : 요청 정보를 담는 객체입니다.
     * @param updateFaq : 수정할 FAQ 정보를 담은 객체입니다.
     * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.
@@ -162,7 +162,7 @@ public class FaqController {
     }
 
     /**
-    * removeFaq : FAQ 삭제
+    * removeFaq : FAQ(자주묻는질문)을 삭제한 후 목록페이지로 포워딩합니다.
     * @param mv : 요청 정보를 담는 객체입니다.
     * @param faqNo : 삭제할 FAQ 번호입니다.
     * @return mv : 브라우저로 전달할 데이터와 경로 정보를 담은 객체입니다.

@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
-
 <head>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>FAQ 등록</title>
@@ -13,17 +11,11 @@
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
 
-
-    <!-- Style CSS -->
-    <link rel="stylesheet" href="../../static/css/style.css">
-    <link rel="stylesheet" href="../../static/css/faq.css">
-
     <link rel="stylesheet" type="text/css" th:href="@{ /css/style.css }">
     <link rel="stylesheet" type="text/css" th:href="@{ /css/faq.css }">
 </head>
 
 <body>
-
 <div class="main-wrapper">
 
     <!-- Begin Main Header Area -->
@@ -32,7 +24,6 @@
 
     <!-- Begin Main Content Area -->
     <main class="main-content">
-
         <div class="shop-area section-space-y-axis-100">
             <div class="title-div" style="margin: auto; width: 1400px;">
                 <span class="text-title" >
@@ -55,17 +46,15 @@
                                                     <br>
                                                     <div style="display: flex">
                                                         <p class="faq-detail-text" style=" top: auto;">내용</p>
-
                                                         <textarea class="insert-text2" name="faqContent" id="content" placeholder="자주 묻는 질문 답변을 입력하세요"></textarea>
                                                     </div>
                                                     <br>
                                                     <div class="btn-area">
                                                         <button class="small-btn btn1 faq-btn" type="submit" >확인</button>
-
                                                     </div>
                                                 </form>
                                                 <div style="display: flex; align-items: end">
-                                                <button class="small-btn btn2 faq-cancel-btn" id="back" >취소</button>
+                                                    <button class="small-btn btn2 faq-cancel-btn" id="back" >취소</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -83,6 +72,7 @@
     <!-- Begin Footer Area -->
     <footer class="footer" th:replace="/common/footer.html"></footer>
     <!-- Footer Area End Here -->
+
     <script>
         $("#back").click(function () {
 

@@ -42,7 +42,7 @@ public class FaqService {
     }
 
     /**
-     * findFaqList : FAQ 목록을 조회합니다.
+     * findFaqList : FAQ(자주묻는질문)의 목록을 조회합니다.
      * @param pageable : 페이징 정보를 받는 객체입니다.
      * @return faqDTO : faq 목록 정보를 반환합니다.
      * @author 이용선
@@ -65,7 +65,7 @@ public class FaqService {
     }
 
     /**
-     * findFaqDetail : FAQ 상세정보를 조회합니다.
+     * findFaqDetail : FAQ(자주묻는질문)의 상세정보를 조회합니다.
      * @param faqNo : FAQ 번호를 담은 객체입니다.
      * @return FaqDTO : 해당 FAQ번호의 자주묻는 질문 내용정보를 반환합니다.
      *
@@ -79,7 +79,7 @@ public class FaqService {
         return modelMapper.map(faq, FaqDTO.class);
     }
     /**
-    * faqnewRegist : FAQ 등록을 합니다.
+    * faqnewRegist : FAQ(자주묻는질문)을 등록합니다.
     * @param faqWrite : FAQ에 등록할 정보를 담은 객체입니다.
     * @author 이용선
     */
@@ -90,7 +90,7 @@ public class FaqService {
 
     }
     /**
-    * modifyFaq : FAQ 수정을 합니다.
+    * modifyFaq : FAQ(자주묻는질문)을 수정합니다.
     * @param updateFaq : FAQ 수정사항 정보를 담은 객체입니다.
     * @author 이용선
     */
@@ -106,7 +106,7 @@ public class FaqService {
     }
 
     /**
-    * removeFaq : FAQ 삭제를 합니다.
+    * removeFaq : FAQ(자주묻는질문)을 삭제합니다.
     * @param faqNo : FAQ 번호를 담은 객체입니다.
     * @author 이용선
     */
