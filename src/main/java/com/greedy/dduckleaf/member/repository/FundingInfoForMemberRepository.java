@@ -7,20 +7,18 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * <pre>
+ * Interface : FundingInfoForMemberRepository
+ * Comment : 펀딩내역
+ * History
+ * 2022/05/04 (박상범) 처음 작성
+ * </pre>
+ * @version 1.0.1
+ * @author 박상범
+ */
 @Repository
 public interface FundingInfoForMemberRepository extends JpaRepository<FundingInfo, Integer> {
 
-//    @Query(value = "SELECT " +
-//            "              A.FUNDING_INFO_NO, " +
-//            "              A.MEMBER_NO " +
-////            "              A.PROJECT_NO " +
-//            "         FROM TBL_FUNDING_INFO A " +
-//            "         JOIN TBL_MEMBER B ON (A.MEMBER_NO = B.MEMBER_NO) " +
-//            "         JOIN TBL_PROJECT C ON (A.PROJECT_NO = C.PROJECT_NO) " +
-//            "         JOIN TBL_PROJECT_PROGRESS_STATUS D ON (C.PROGRESS_STATUS = D.PROJECT_PROGRESS_STATUS_NO) " +
-//            "        WHERE D.PROJECT_PROGRESS_STATUS_NAME = '진행중' " +
-//            "          AND C.PROJECT_STATUS = 'Y' " +
-//            "          AND B.MEMBER_NO = ? ",
-//            nativeQuery = true)
     List<FundingInfo> findByProject_projectProgressStatus_projectProgressStatusNameAndProject_projectStatusAndMember_memberNo(String projectProgressStatusName, String projectStatus, int memberNo);
 }
