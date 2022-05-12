@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.refund.examine.controller;
 
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
+import com.greedy.dduckleaf.refund.examine.dto.RefundObjectionHistoryDTO;
 import com.greedy.dduckleaf.refund.examine.dto.RefundingDTO;
 import com.greedy.dduckleaf.refund.examine.dto.RefundingObjectionDTO;
 import com.greedy.dduckleaf.refund.examine.entity.RefundingObjection;
@@ -102,6 +103,16 @@ public class RefundingExamineController {
         service.examineObjectionconfirm(refundingNo, memberNo);
 
         mv.setViewName("redirect:/refund/find/admin/statuslist/1");
+        return mv;
+    }
+
+    @PostMapping("/platform/objection/refuse")
+    public ModelAndView examineObjectionRefuse(ModelAndView mv, RefundObjectionHistoryDTO historyDTO, @AuthenticationPrincipal CustomUser user) {
+
+        int memberNo = user.getMemberNo();
+        service.examineObjectionRefuse(historyDTO, memberNo);
+        mv.setViewName("redirect:/refund/find/admin/statuslist/1");
+
         return mv;
     }
 }

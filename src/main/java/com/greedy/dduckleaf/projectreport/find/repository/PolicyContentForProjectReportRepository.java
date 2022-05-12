@@ -20,5 +20,11 @@ import java.util.List;
  */
 public interface PolicyContentForProjectReportRepository extends JpaRepository<PolicyContent, Integer> {
 
+    /**
+     * findAllByPolicy_PolicyNo: 정책번호로 해당 정책의 상세내용 조회를 요청하는 메소드입니다.
+     * @param policyNo 정책번호
+     * @return
+     * @author 장민주
+     */
     List<PolicyContent> findAllByPolicy_PolicyNo(int policyNo);
 }

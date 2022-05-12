@@ -14,9 +14,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * </pre>
  *
  * @author 장민주
- * @version 1.0.1
+ * @version 1.0.0
  */
 public interface MemberForProjectReportRepository extends JpaRepository<Member, Integer> {
 
+    /**
+     * findMemberByMemberNo: 회원번호로 회원의 상세정보를 조회하는 메소드입니다.
+     * @param memberNo
+     * @return 회원 정보
+     * @author 장민주
+     */
     Member findMemberByMemberNo(int memberNo);
 }

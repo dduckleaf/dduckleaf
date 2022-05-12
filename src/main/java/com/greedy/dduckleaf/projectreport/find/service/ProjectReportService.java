@@ -74,8 +74,7 @@ public class ProjectReportService {
     /**
     * findProjectReportListByMemberNo: 회원번호로 로그인한 서포터의 신고내역 목록조회용 메소드입니다.
     * @param memberNo 로그인한 회원의 회원번호
-    * @return List<ProjectReportDTO>
-     *        로그인한 회원이 등록한 모든 신고내역
+    * @return 로그인한 회원이 등록한 모든 신고내역
     */
     public List<ProjectReportDTO> findProjectReportListByMemberNo(int memberNo) {
 
@@ -124,8 +123,8 @@ public class ProjectReportService {
 
     /**
     * findProjectReportList: 모든 프로젝트신고내역 목록 조회를 요청하는 메소드입니다.
-    * @param pageable: 페이징에 필요한 정보를 담는 객체
-    * @return Page<ProjectReportDTO> 페이징 처리가 된 조회 결과를 DTO로 변환한 프로젝트신고목록
+    * @param pageable 페이징에 필요한 정보를 담는 객체
+    * @return 페이징 처리가 된 조회 결과를 DTO로 변환한 프로젝트신고목록
     * @author 장민주
     */
     public Page<ProjectReportDTO> findProjectReportList(Pageable pageable) {
@@ -139,9 +138,9 @@ public class ProjectReportService {
 
     /**
      * findProjectReportWaitingList: 신고 처리 상태에 따라 프로젝트 신고내역 목록 조회를 요청하는 메소드입니다.
-     * @param pageable: 페이징에 필요한 정보를 담는 객체
-     * @param projectReportStatus: 프로젝트 신고 처리 상태
-     * @return Page<ProjectReportDTO> 페이징 처리가 된 조회 결과를 DTO로 변환한 프로젝트신고목록
+     * @param pageable 페이징에 필요한 정보를 담는 객체
+     * @param projectReportStatus 프로젝트 신고 처리 상태
+     * @return 페이징 처리가 된 조회 결과를 DTO로 변환한 프로젝트신고목록
      * @author 장민주
      */
     public Page<ProjectReportDTO> findProjectsByProjectReportStatus(Pageable pageable, String projectReportStatus) {
@@ -160,8 +159,7 @@ public class ProjectReportService {
     * findReplyByProjectReportNo: (내부연산 메소드) 프로젝트 신고번호로 해당 신고의 답변 조회 요청 메소드입니다.
     * @param projectReportNo 프로젝트 신고번호
     * @param deleteYn 삭제 여부
-    * @return ProjectReportReplyDTO
-    *         영속성 해제를 위해 DTO 타입으로 변환해준 신고 답변 내역
+    * @return 영속성 해제를 위해 DTO 타입으로 변환해준 신고 답변 내역
     */
     private ProjectReportReplyDTO findReplyByProjectReportNo(int projectReportNo, String deleteYn) {
 
@@ -174,8 +172,7 @@ public class ProjectReportService {
     /**
      * findProjectReportDetail: (내부연산 메소드) 프로젝트 신고번호로 해당 프로젝트신고 상세내용 조회용 메소드입니다.
      * @param projectReportNo 프로젝트 신고번호
-     * @return ProjectReportDTO
-     *         영속성 해제를 위해 DTO 타입으로 변환해준 신고 상세내용
+     * @return 영속성 해제를 위해 DTO 타입으로 변환해준 신고 상세내용
      */
     private ProjectReportDTO findProjectReportDetail(int projectReportNo) {
 
@@ -185,8 +182,7 @@ public class ProjectReportService {
     /**
     * findProjectReportAndReply: 프로젝트 신고번호로 프로젝트신고내역 상세 조회 요청용 메소드입니다.
     * @param projectReportNo 프로젝트 신고번호
-    * @return ReportDetailInfo
-    *         신고내역 상세정보와 해당 신고내역의 답변 정보를 저장한 DTO
+    * @return 신고내역 상세정보와 해당 신고내역의 답변 정보를 저장한 DTO
     */
     public ReportDetailInfo findProjectReportAndReply(int projectReportNo) {
 
@@ -207,8 +203,7 @@ public class ProjectReportService {
 
     /**
     * registReply: 프로젝트신고 답변 등록용 메소드입니다.
-    * @param projectReportReply 등록해줄 신고답변 내용
-    * @exception 예외 답변 등록 실패
+    * @param reply 등록해줄 신고답변 내용
     */
     @Transactional
     public void registReply(ProjectReportReplyDTO reply) {
@@ -218,10 +213,9 @@ public class ProjectReportService {
 
     /**
      * findProjectReportListOfOneProject: 프로젝트 번호로 해당 프로젝트의 신고목록 조회 요청 메소드입니다.
-     * @param projectNo: 프로젝트 번호
-     * @param progressStatus: 프로젝트 진행 상태
-     * @param pageable: 페이징에 필요한 정보를 담는 객체
-     * @return projectReportList 한 프로젝트에 대한 프로젝트 신고목록 리스트
+     * @param projectNo 프로젝트 번호
+     * @param pageable 페이징에 필요한 정보를 담는 객체
+     * @return 한 프로젝트에 대한 프로젝트 신고목록 리스트
      * @author 장민주
      */
     public Page<ProjectReportDTO> findProjectReportListOfOneProject(int projectNo, Pageable pageable) {
@@ -247,7 +241,7 @@ public class ProjectReportService {
 
     /**
      * findPolicyContents: 약관 및 규정정책 번호로 약관 상세내용 조회 요청 메소드입니다.
-     * @param policyName: 약관 및 규정정책명
+     * @param policyName 약관 및 규정정책명
      * @return 약관 상세내용
      * @author 장민주
      */
@@ -261,7 +255,7 @@ public class ProjectReportService {
 
     /**
      * findPolicyNo: (내부연산 메소드) 약관 및 규정정책 식별번호 조회 요청 메소드입니다.
-     * @param policyName: 정책명
+     * @param policyName 정책명
      * @return 약관 및 규정정책 식별번호
      * @author 장민주
      */
@@ -272,7 +266,7 @@ public class ProjectReportService {
 
     /**
      * registProjectReport: 프로젝트 신고 등록 요청 메소드입니다.
-     * @param projectReport: 프로젝트 신고 상세내용
+     * @param projectReport 프로젝트 신고 상세내용
      * @return 등록 성공 여부
      * @author 장민주
      */
@@ -301,6 +295,4 @@ public class ProjectReportService {
 
         reportRepository.save(newReport);
     }
-
-
 }

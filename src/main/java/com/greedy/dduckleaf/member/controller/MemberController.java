@@ -2,12 +2,11 @@ package com.greedy.dduckleaf.member.controller;
 
 import com.google.gson.*;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
-import com.greedy.dduckleaf.authentication.model.service.AuthenticationService;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
 import com.greedy.dduckleaf.member.dto.MemberWithdrawDTO;
 import com.greedy.dduckleaf.member.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -44,15 +43,12 @@ public class MemberController {
     private final MemberService memberService;
     private final MessageSource messageSource;
     private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
-    private final AuthenticationService authenticationService;
 
-    public MemberController(MemberService memberService, MessageSource messageSource, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, AuthenticationService authenticationService) {
+    @Autowired
+    public MemberController(MemberService memberService, MessageSource messageSource, PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
         this.messageSource = messageSource;
         this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-        this.authenticationService = authenticationService;
     }
 
     /**

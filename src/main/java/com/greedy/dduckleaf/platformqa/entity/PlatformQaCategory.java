@@ -1,14 +1,7 @@
 package com.greedy.dduckleaf.platformqa.entity;
 
-import lombok.*;
-
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
-@ToString
 @Entity(name = "PlatformQaCategory")
 @Table(name = "TBL_PLATFORM_QA_CATEGORY")
 public class PlatformQaCategory {
@@ -20,4 +13,35 @@ public class PlatformQaCategory {
 
     @Column(name = "PLATFORM_QA_CATEGORY_NAME")
     private String platformQaCategoryName;
+
+    public PlatformQaCategory() {}
+
+    public PlatformQaCategory(int platformQaCategoryNo, String platformQaCategoryName) {
+        this.platformQaCategoryNo = platformQaCategoryNo;
+        this.platformQaCategoryName = platformQaCategoryName;
+    }
+
+    public int getPlatformQaCategoryNo() {
+        return platformQaCategoryNo;
+    }
+
+    public void setPlatformQaCategoryNo(int platformQaCategoryNo) {
+        this.platformQaCategoryNo = platformQaCategoryNo;
+    }
+
+    public String getPlatformQaCategoryName() {
+        return platformQaCategoryName;
+    }
+
+    public void setPlatformQaCategoryName(String platformQaCategoryName) {
+        this.platformQaCategoryName = platformQaCategoryName;
+    }
+
+    @Override
+    public String toString() {
+        return "PlatformQaCategory{" +
+                "platformQaCategoryNo=" + platformQaCategoryNo +
+                ", platformQaCategoryName='" + platformQaCategoryName + '\'' +
+                '}';
+    }
 }

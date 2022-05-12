@@ -1,12 +1,7 @@
 package com.greedy.dduckleaf.projectreport.find.entity;
 
 import javax.persistence.*;
-import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "PolicyForProjectReport")
 @Table(name = "TBL_POLICY")
 public class Policy {
@@ -28,6 +23,56 @@ public class Policy {
 
     @Column(name = "POLICY_NAME")
     private String policyName;                              //정책명
+
+    public Policy() {}
+
+    public Policy(int policyNo, String policyRegistDate, PolicyCategory policyCategory, String policyExpirationDate, String policyName) {
+        this.policyNo = policyNo;
+        this.policyRegistDate = policyRegistDate;
+        this.policyCategory = policyCategory;
+        this.policyExpirationDate = policyExpirationDate;
+        this.policyName = policyName;
+    }
+
+    public int getPolicyNo() {
+        return policyNo;
+    }
+
+    public void setPolicyNo(int policyNo) {
+        this.policyNo = policyNo;
+    }
+
+    public String getPolicyRegistDate() {
+        return policyRegistDate;
+    }
+
+    public void setPolicyRegistDate(String policyRegistDate) {
+        this.policyRegistDate = policyRegistDate;
+    }
+
+    public PolicyCategory getPolicyCategory() {
+        return policyCategory;
+    }
+
+    public void setPolicyCategory(PolicyCategory policyCategory) {
+        this.policyCategory = policyCategory;
+    }
+
+    public String getPolicyExpirationDate() {
+        return policyExpirationDate;
+    }
+
+    public void setPolicyExpirationDate(String policyExpirationDate) {
+        this.policyExpirationDate = policyExpirationDate;
+    }
+
+    public String getPolicyName() {
+        return policyName;
+    }
+
+    public void setPolicyName(String policyName) {
+        this.policyName = policyName;
+    }
 
     @Override
     public String toString() {

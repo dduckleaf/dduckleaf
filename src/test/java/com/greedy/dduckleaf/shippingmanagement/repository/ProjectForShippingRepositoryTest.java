@@ -45,5 +45,20 @@ class ProjectForShippingRepositoryTest {
         assertNotNull(projectList);
         projectList.forEach(System.out::println);
     }
+    
+    @Test
+    @DisplayName("프로젝트 번호로 프로젝트 조회")
+    public void findProjectNoByProjectNoTest() {
+        
+        //given
+        int projectNo = 343;
+
+        //when
+        Project project = repo.findProjectNoByProjectNo(projectNo);
+        
+        //then
+        assertNotNull(project);
+        System.out.println("project = " + project);
+    }
 
 }

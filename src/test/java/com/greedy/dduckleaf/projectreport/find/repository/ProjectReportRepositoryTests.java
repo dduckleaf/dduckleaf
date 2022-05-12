@@ -14,20 +14,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.test.context.ContextConfiguration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@ContextConfiguration(classes = {
+@SpringBootTest(classes = {
         DduckleafApplication.class,
-        com.greedy.dduckleaf.config.ContextConfiguration.class,
+        ContextConfiguration.class,
         BeanConfiguration.class,
         JPAConfiguration.class,
         SpringSecurityConfiguration.class
@@ -49,6 +45,7 @@ public class ProjectReportRepositoryTests {
     @Test
     @DisplayName("모든 프로젝트신고내역 목록조회 테스트")
     public void findAll_test() {
+
         //given
         Pageable pageable = PageRequest.of(0,
                 10,
@@ -65,6 +62,7 @@ public class ProjectReportRepositoryTests {
     @Test
     @DisplayName("답변 대기 중인 프로젝트 신고내역 목록조회 테스트")
     public void findWaitingListByProjectReportStatus_test() {
+
         //given
         String projectReportStatus = "미답변";
         Pageable pageable = PageRequest.of(0,
@@ -82,6 +80,7 @@ public class ProjectReportRepositoryTests {
     @Test
     @DisplayName("답변 완료 프로젝트 신고내역 목록조회 테스트")
     public void findRepliedListByProjectReportStatus_test() {
+
         //given
         String projectReportStatus = "답변완료";
         Pageable pageable = PageRequest.of(0,

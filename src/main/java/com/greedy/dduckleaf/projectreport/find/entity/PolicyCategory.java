@@ -1,12 +1,7 @@
 package com.greedy.dduckleaf.projectreport.find.entity;
 
 import javax.persistence.*;
-import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "PolicyCategoryForProjectReport")
 @Table(name = "TBL_POLICY_CATEGORY")
 public class PolicyCategory {
@@ -18,6 +13,29 @@ public class PolicyCategory {
 
     @Column(name = "POLICY_CATEGORY_NAME")
     private String policyCategoryName;                  //구분명
+
+    public PolicyCategory() {}
+
+    public PolicyCategory(int policyCategoryNo, String policyCategoryName) {
+        this.policyCategoryNo = policyCategoryNo;
+        this.policyCategoryName = policyCategoryName;
+    }
+
+    public int getPolicyCategoryNo() {
+        return policyCategoryNo;
+    }
+
+    public void setPolicyCategoryNo(int policyCategoryNo) {
+        this.policyCategoryNo = policyCategoryNo;
+    }
+
+    public String getPolicyCategoryName() {
+        return policyCategoryName;
+    }
+
+    public void setPolicyCategoryName(String policyCategoryName) {
+        this.policyCategoryName = policyCategoryName;
+    }
 
     @Override
     public String toString() {

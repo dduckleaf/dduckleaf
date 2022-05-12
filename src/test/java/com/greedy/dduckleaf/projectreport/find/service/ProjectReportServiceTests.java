@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.projectreport.find.service;
 
 import com.greedy.dduckleaf.common.utility.DateFormatting;
+import com.greedy.dduckleaf.common.utility.PolicyName;
 import com.greedy.dduckleaf.config.*;
 import com.greedy.dduckleaf.projectreport.find.dto.*;
 import com.greedy.dduckleaf.projectreport.find.entity.Member;
@@ -38,7 +39,6 @@ public class ProjectReportServiceTests {
     @PersistenceContext
     private EntityManager entityManager;
 
-
     @Autowired
     private ModelMapper modelMapper;
 
@@ -52,6 +52,7 @@ public class ProjectReportServiceTests {
     @Test
     @DisplayName("회원번호로 프로젝트신고내역 목록조회 테스트")
     public void findProjectReportListByMemberNo_test() {
+
         //given
         int memberNo = 3;
 
@@ -66,7 +67,8 @@ public class ProjectReportServiceTests {
     @Test
     @DisplayName("모든 프로젝트신고내역 목록조회")
     public void findProjectReportList_test() {
-        //giv en
+
+        //given
         Pageable pageable = PageRequest.of(0, 10, Sort.by("projectReportNo").descending());
 
         //when
@@ -83,6 +85,7 @@ public class ProjectReportServiceTests {
     @Test
     @DisplayName("신고 답변 대기 중인 프로젝트 신고목록 조회")
     public void findProjectReportWaitingList_test() {
+
         //given
         Pageable pageable = PageRequest.of(0, 10, Sort.by("projectReportNo").descending());
         String projectReportStatus = "미답변";
@@ -101,6 +104,7 @@ public class ProjectReportServiceTests {
     @Test
     @DisplayName("신고 답변 완료 프로젝트 신고목록 조회")
     public void findProjectReportRepliedList_test() {
+
         //given
         Pageable pageable = PageRequest.of(0, 10, Sort.by("projectReportNo").descending());
         String projectReportStatus = "답변완료";
@@ -231,6 +235,7 @@ public class ProjectReportServiceTests {
     @Test
     @DisplayName("모든 프로젝트 신고유형 조회 테스트")
     public void findAllReportCategories_test() {
+
         //when
         List<ReportCategoryDTO> categories = service.findAllReportCategories();
 
@@ -245,8 +250,9 @@ public class ProjectReportServiceTests {
     @Test
     @DisplayName("개인정보 수집 및 이용동의 약관 조회 요청 테스트")
     public void findPolicyContents_test() {
+
         //given
-        String policyName = "개인정보 수집 및 이용";
+        String policyName = PolicyName.POLICY_NAME_개인정보_수집_및_이용;
 
         //when
         List<PolicyContentDTO> policyContents = service.findPolicyContents(policyName);
@@ -330,5 +336,4 @@ public class ProjectReportServiceTests {
         //when & then
         assertThrows(Exception.class, () -> service.registProjectReport(report));
     }
-    
 }

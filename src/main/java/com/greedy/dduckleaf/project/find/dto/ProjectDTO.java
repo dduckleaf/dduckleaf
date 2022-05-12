@@ -27,4 +27,5 @@ public class ProjectDTO {
     private MemberDTO farmer;
     private ProjectRewardCategoryDTO reward;
     private String timeInfo;
+    private String imagePath;
 }

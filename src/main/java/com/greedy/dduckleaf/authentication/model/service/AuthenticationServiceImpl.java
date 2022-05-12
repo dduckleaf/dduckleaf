@@ -3,8 +3,10 @@ package com.greedy.dduckleaf.authentication.model.service;
 import com.greedy.dduckleaf.authentication.model.dto.CustomUser;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
 import com.greedy.dduckleaf.member.entity.Member;
+import com.greedy.dduckleaf.member.entity.PermitByUrl;
 import com.greedy.dduckleaf.member.entity.ProfileAttachment;
 import com.greedy.dduckleaf.member.repository.MemberRepository;
+import com.greedy.dduckleaf.member.repository.PermitByUrlForMemberRepository;
 import com.greedy.dduckleaf.member.repository.ProfileAttachmentForMemberRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,14 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
     private final MemberRepository memberRepository;
     private final ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository;
+    private final PermitByUrlForMemberRepository permitByUrlForMemberRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public AuthenticationServiceImpl(MemberRepository memberRepository, ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository, ModelMapper modelMapper) {
+    public AuthenticationServiceImpl(MemberRepository memberRepository, ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository, PermitByUrlForMemberRepository permitByUrlForMemberRepository, ModelMapper modelMapper) {
         this.memberRepository = memberRepository;
         this.profileAttachmentForMemberRepository = profileAttachmentForMemberRepository;
+        this.permitByUrlForMemberRepository = permitByUrlForMemberRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -46,16 +50,8 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 
         MemberDTO loginMember = modelMapper.map(member, MemberDTO.class);
 
-        String memberRole = "";
-
-        if(member.getMemberRole() == 1) {
-            memberRole = "ROLE_ADMIN";
-        } else {
-            memberRole = "ROLE_MEMBER";
-        }
-
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(memberRole));
+        authorities.add(new SimpleGrantedAuthority(member.getMemberCategory().getMemberRoleName()));
 
         CustomUser user = new CustomUser(loginMember, authorities);
         user.setProfileThumbnailPath(profileAttachment.getProfileThumbnailPath());
@@ -69,23 +65,20 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         Map<String, List<String>> permitListMap = new HashMap<>();
         List<String> adminPermitList = new ArrayList<>();
         List<String> memberPermitList = new ArrayList<>();
-        List<String> notMemberPermitList = new ArrayList<>();
 
+        List<PermitByUrl> adminPermitByUrlList = permitByUrlForMemberRepository.findByMemberRole(1);
+        List<PermitByUrl> memberPermitByUrlList = permitByUrlForMemberRepository.findByMemberRole(2);
 
-        /* 일반회원 권한 */
-        /* 일반 멤버만 할 수 있는 url 예)펀딩하기 */
-        memberPermitList.add("/member/update");
-        memberPermitList.add("/member/logout");
-        memberPermitList.add("/member/delete");
-        memberPermitList.add("/main/main");
+        for(int i = 0; i < adminPermitByUrlList.size(); i++) {
+            adminPermitList.add(adminPermitByUrlList.get(i).getPermitByUrl());
+        }
 
-        /* 관리자 권한 */
-        /* 관리자만 할 수 있는 url 예)관리자페이지*/
-        adminPermitList.add("/admin/list");
+        for(int i = 0; i < memberPermitByUrlList.size(); i++) {
+            memberPermitList.add(memberPermitByUrlList.get(i).getPermitByUrl());
+        }
 
         permitListMap.put("adminPermitList", adminPermitList);
         permitListMap.put("memberPermitList", memberPermitList);
-        permitListMap.put("notMemberPermitList", notMemberPermitList);
 
         return permitListMap;
     }

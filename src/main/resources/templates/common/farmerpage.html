@@ -95,7 +95,7 @@
                 <td th:text="${project.examineStatus.examineProjectStatusName}"></td>
                 <td th:text="${project.achievementRate}"></td>
               </tr>
-              <tr th:if="${project.progressStatus.projectProgressStatusNo} == 4" th:onclick="'location.href=\'/project/notice/list/' + @{${project.projectNo}} + '\''" style="cursor:pointer;">
+              <tr th:if="${project.progressStatus.projectProgressStatusNo} == 4" th:onclick="'location.href=\'/shipping/management/default/' + @{${project.projectNo}} + '\''" style="cursor:pointer;">
                 <td th:text="${project.projectNo}"></td>
                 <td th:text="${project.projectName}"></td>
                 <td th:text="${project.openDate}"></td>

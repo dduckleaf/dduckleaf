@@ -32,15 +32,15 @@ public interface ProjectReportMainRepository extends JpaRepository<ProjectReport
     /**
      * findAll: 모든 프로젝트신고내역 목록조회용 메소드입니다.
      *
-     * @param pageable: 한 페이지에 출력될 데이터를 조회하기 위한 페이징정보
+     * @param pageable 한 페이지에 출력될 데이터를 조회하기 위한 페이징정보
      * @return 한 페이지에 담길 프로젝트신고목록 리스트
      */
     Page<ProjectReport> findAll(Pageable pageable);
 
     /**
      * findByProjectReportStatus: 답변 대기 중인 프로젝트신고내역 목록조회용 메소드입니다.
-     * @param projectReportStatus: 신고 처리 상태
-     * @param pageable: 한 페이지에 출력될 데이터를 조회하기 위한 페이징정보
+     * @param projectReportStatus 신고 처리 상태
+     * @param pageable 한 페이지에 출력될 데이터를 조회하기 위한 페이징정보
      * @return 한 페이지에 담길 프로젝트신고목록 리스트
      * @author 장민주
      */
@@ -49,17 +49,16 @@ public interface ProjectReportMainRepository extends JpaRepository<ProjectReport
     /**
      * findByProjectNo: 프로젝트 신고번호로 프로젝트 신고 상세내용 데이터를 조회하기 위한 메소드입니다.
      *
-     * @param projectReportNo: 프로젝트 신고번호
-     * @return ProjectReport: 해당하는 프로젝트 신고 상세내용
+     * @param projectReportNo 프로젝트 신고번호
+     * @return 해당하는 프로젝트 신고 상세내용
      */
     ProjectReport findByProjectReportNo(int projectReportNo);
 
     /**
      * findByProjectNo: 프로젝트 번호로 해당 프로젝트의 신고 목록 조회하기 위한 메소드입니다.
-     *
-     * @param projectNo: 프로젝트 번호
-     * @param pageable:  한 페이지에 출력될 데이터를 조회하기 위한 페이징정보
-     * @return Page<ProjectReport>: 한 페이지에 보여질 프로젝트신고목록
+     * @param projectNo 프로젝트 번호
+     * @param pageable  한 페이지에 출력될 데이터를 조회하기 위한 페이징정보
+     * @return 한 페이지에 보여질 프로젝트신고목록
      * @author 장민주
      */
     Page<ProjectReport> findByProject_ProjectNo(@PathVariable int projectNo, Pageable pageable);

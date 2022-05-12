@@ -47,36 +47,4 @@ public class Project {
                 ", projectName='" + projectName + '\'' +
                 '}';
     }
-
-    //    @Column(name = "FUND_TARGET_AMOUNT")
-//    private int fundTargetAmount;
-//
-//    @Column(name = "OPEN_DATE")
-//    private Date openDate;
-//
-//    @Column(name = "END_DATE")
-//    private Date endDate;
-//
-//    @Column(name = "PROJECT_STATUS")
-//    private String projectStatus;
-//
-//    @Column(name = "ACHIEVEMENT_RATE")
-//    private int achievementRate;
-//
-//    @Column(name = "EXAMINE_STATUS")
-//    private String examineStatus;
-//
-//    @Column(name = "PROJECT_EXAMINE_STATUS")
-//    private String projectExamineStatus;
-//
-//    @Column(name = "PROGRESS_STATUS")
-//    private String progressStatus;
-//
-//    @Column(name = "MAX_TARGET_AMOUNT")
-//    private int maxTargetAmount;
-//
-//    @JoinColumn(name = "FARMER_NO")
-//    @ManyToOne(cascade = CascadeType.PERSIST)
-//    private FarmerInfo farmerInfo;
-
 }

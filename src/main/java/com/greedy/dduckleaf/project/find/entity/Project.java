@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -58,4 +59,8 @@ public class Project {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PROJECT_NO")
     private ProjectBasicInfo basicInfo;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "PROJECT_NO")
+    private List<ProjectAttachment> attachments;
 }
