@@ -15,7 +15,6 @@
                 <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
                 발송관리
             </span>
-            <button>발송 상태 변경</button>
             <hr width="100%">
         </div>
         <table class="shippingdetail">
@@ -38,7 +37,7 @@
                     <td th:text="${funding.member.memberName}"></td>
                     <td th:text="${funding.fundingAmount}"></td>
                     <td th:text="${funding.rewardAmount}"></td>
-                    <td th:text="${funding.shippingFeeNo}"></td>
+                    <td th:text="${#strings.arraySplit(funding.shippingAddress.shippingAddress, '$')[1]}"></td>
                 </tr>
             </th:block>
         </table>
