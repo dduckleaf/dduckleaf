@@ -18,5 +18,6 @@ import java.util.List;
  */
 @Repository
 public interface MockFundJoinHistoryForMyFundingRepository extends JpaRepository<MockFundJoinHistory, Integer> {
+
     List<MockFundJoinHistory> findByMember_memberNo(int memberNo);
 }

@@ -13,4 +13,25 @@ public class MockFund {
     @Column(name = "MOCK_FUND_NO")
     private int mockFundNo;
 
+    public MockFund() {
+    }
+
+    public MockFund(int mockFundNo) {
+        this.mockFundNo = mockFundNo;
+    }
+
+    public int getMockFundNo() {
+        return mockFundNo;
+    }
+
+    public void setMockFundNo(int mockFundNo) {
+        this.mockFundNo = mockFundNo;
+    }
+
+    @Override
+    public String toString() {
+        return "MockFund{" +
+                "mockFundNo=" + mockFundNo +
+                '}';
+    }
 }
