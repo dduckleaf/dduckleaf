@@ -446,29 +446,6 @@
                     <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.endPage}}  + '\''"
                             th:disabled="${ platformQaList.last }">>></button>
                 </div>
-                <form id="search-form" action="/qna/search" method="get">
-                    <fieldset>
-                        <div class="search">
-                            <select name="" id="question-category">
-                                <option value="" disabled selected>문의 유형</option>
-                                <option value="">일반</option>
-                                <option value="">펀딩</option>
-                                <option value="">리워드</option>
-                                <option value="">환불</option>
-                                <option value="">배송</option>
-                                <option value="">계정</option>
-                                <option value="">기타</option>
-                            </select>
-                            <select name="" id="answer-status">
-                                <option value="" disabled selected>답변 상태</option>
-                                <option value="">답변 완료</option>
-                                <option value="">답변 대기</option>
-                            </select>
-                            <input type="text" name="keyword" placeholder="검색어를 입력해주세요">
-                            <button type="submit"><i class="fas fa-search"></i></button>
-                        </div>
-                    </fieldset>
-                </form>
             </div>
         </div>
     </main>
