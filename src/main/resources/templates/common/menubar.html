@@ -56,19 +56,21 @@
                                         </a>
                                     </li>
                                     <li class="d-none d-lg-block">
-                                        <button class="basic-btn btn3 little-big-btn" onclick="location.href='/project/application/regist'">프로젝트 오픈 신청</button>
+                                        <th:block sec:authorize="hasRole('MEMBER')">
+                                            <button class="basic-btn btn3 little-big-btn" onclick="location.href='/project/application/regist'">프로젝트 오픈 신청</button>
+                                        </th:block>
                                     </li>
                                     <li class="d-block d-lg-none">
                                         <a href="#searchBar" class="search-btn toolbar-btn">
                                             <i class="pe-7s-search"></i>
                                         </a>
                                     </li>
-                                    <li class="minicart-wrap me-3 me-lg-0">
-                                        <a href="#miniCart" class="minicart-btn toolbar-btn">
-                                            <img src="/images/common/alarm.png">
-                                            <span class="quantity">3</span>
-                                        </a>
-                                    </li>
+<!--                                    <li class="minicart-wrap me-3 me-lg-0">-->
+<!--                                        <a href="#miniCart" class="minicart-btn toolbar-btn">-->
+<!--                                            <img src="/images/common/alarm.png">-->
+<!--                                            <span class="quantity">3</span>-->
+<!--                                        </a>-->
+<!--                                    </li>-->
                                     <li class="mobile-menu_wrap d-block d-lg-none">
                                         <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn pl-0">
                                             <i class="pe-7s-menu"></i>
