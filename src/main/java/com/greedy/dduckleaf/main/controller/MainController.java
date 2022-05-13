@@ -6,7 +6,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
@@ -42,7 +41,6 @@ public class MainController {
 
         MainPageDTO mainPage = mainService.findMainPage();
 
-        System.out.println("mainPage.getRankingList().get(0).getAttachmentSavedName() = " + mainPage.getRankingList().get(0).getAttachmentSavedName());
         mv.addObject("dduckleafRecommendList", mainPage.getDduckleafRecommendList());
         mv.addObject("rankingList", mainPage.getRankingList());
         mv.setViewName("/main/mainPage");
