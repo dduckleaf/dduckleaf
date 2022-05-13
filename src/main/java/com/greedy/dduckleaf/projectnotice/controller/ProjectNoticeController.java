@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import static com.greedy.dduckleaf.project.finalfield.CodeForProject.BUTTON_AMOUNT;
+
 /**
  * <pre>
  * Class: ProjectNoticeController
@@ -57,11 +59,12 @@ public class ProjectNoticeController {
 
         Page<ProjectNoticeDTO> projectNoticeList = projectService.findProjectNoticeList(pageable, projectNo);
         ProjectDTO project = projectService.findProjectInfo(projectNo);
-        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(projectNoticeList);
+        PagingButtonInfo pagingInfo = Pagenation.getPagingButtonInfo(projectNoticeList, BUTTON_AMOUNT);
 
         mv.addObject("project", project);
         mv.addObject("projectNoticeList", projectNoticeList);
-        mv.addObject("paging", paging);
+        mv.addObject("pagingInfo", pagingInfo);
+        mv.addObject("intent", "list/{projectNo}");
         mv.setViewName("projectnotice/list");
 
         return mv;
@@ -108,11 +111,11 @@ public class ProjectNoticeController {
      *            "projectnotice/regist" 프로젝트 공지사항 작성하기폼을 출력하는 뷰 경로
      * @author 박휘림
      */
-    @GetMapping("/regist")
-    public ModelAndView registPage(ModelAndView mv) {
-
+    @GetMapping("/regist/{projectNo}")
+    public ModelAndView registPage(ModelAndView mv, @PathVariable int projectNo) {
+        ProjectDTO project = projectService.findProjectInfo(projectNo);
         mv.setViewName("projectnotice/regist");
-
+        mv.addObject("project", project);
         return mv;
     }
 
@@ -129,11 +132,8 @@ public class ProjectNoticeController {
                                             ProjectNoticeDTO newNotice) {
 
         int farmerNo = user.getMemberNo();
-
-        int projectNo = findProjectNoByFarmerNo(user);
-
+//
         newNotice.setFarmerNo(farmerNo);
-        newNotice.setProjectNo(projectNo);
 
         projectService.registProjectNotice(newNotice);
 
@@ -172,7 +172,7 @@ public class ProjectNoticeController {
 
         projectService.modifyProjectNotice(updateNotice);
 
-        mv.setViewName("redirect:/project/notice/list");
+        mv.setViewName("redirect:/project/notice/list/" + updateNotice.getProjectNo());
 
         return mv;
     }
@@ -187,9 +187,9 @@ public class ProjectNoticeController {
     @GetMapping("/remove/{projectNoticeNo}")
     public ModelAndView removeProjectNotice(ModelAndView mv, @PathVariable int projectNoticeNo) {
 
-        projectService.removeProjectNotice(projectNoticeNo);
+        int projectNo = projectService.removeProjectNotice(projectNoticeNo);
 
-        mv.setViewName("redirect:/project/notice/list");
+        mv.setViewName("redirect:/project/notice/list/" + projectNo);
 
         return mv;
     }
