@@ -196,7 +196,7 @@ public class ProfileController {
 
         profileService.modifyEmail(member);
 
-        mv.setViewName("redirect:/myfunding/default");
+        mv.setViewName("redirect:/following/list");
 
         return mv;
     }
@@ -224,15 +224,13 @@ public class ProfileController {
     @PostMapping("/modify/phone")
     public ModelAndView modifyPhone(ModelAndView mv, String phone, @AuthenticationPrincipal CustomUser user) {
 
-        System.out.println(phone);
-
         MemberDTO member = new MemberDTO();
         member.setMemberNo(user.getMemberNo());
         member.setPhone(phone);
 
         profileService.modifyPhone(member);
 
-        mv.setViewName("redirect:/myfunding/default");
+        mv.setViewName("redirect:/following/list");
 
         return mv;
     }
@@ -253,7 +251,7 @@ public class ProfileController {
 
         profileService.modifyMemberPwd(member);
 
-        mv.setViewName("redirect:/myfunding/default");
+        mv.setViewName("redirect:/following/list");
 
         return mv;
     }
