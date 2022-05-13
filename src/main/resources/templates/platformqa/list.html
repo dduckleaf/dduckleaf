@@ -5,7 +5,7 @@
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>떡잎펀드 - 1:1 문의</title>
+    <title>떡잎펀드</title>
     <meta name="robots" content="noindex, follow"/>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -352,8 +352,9 @@
             </div>
             <div class="cont-div">
                 <div style="text-align: right">
-<!--                    <button class="medium-btn btn1 basic-btn" onclick="location.href='/qna/regist'">작성하기</button>-->
-                    <button class="medium-btn btn1 basic-btn" data-bs-toggle="modal" data-bs-target="#writePreModalToggle">작성하기</button>
+                    <th:block sec:authorize="hasRole('MEMBER')">
+                        <button class="medium-btn btn1 basic-btn" data-bs-toggle="modal" data-bs-target="#writePreModalToggle">작성하기</button>
+                    </th:block>
                 </div>
                 <table>
                     <colgroup>
