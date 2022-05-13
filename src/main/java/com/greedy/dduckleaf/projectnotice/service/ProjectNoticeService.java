@@ -118,10 +118,12 @@ public class ProjectNoticeService {
      * @author 박휘림
      */
     @Transactional
-    public void removeProjectNotice(int projectNoticeNo) {
+    public int removeProjectNotice(int projectNoticeNo) {
 
         ProjectNotice notice = projectNoticeRepository.findById(projectNoticeNo).get();
         notice.setProjectNoticeStatus("N");
+
+        return notice.getProjectNo();
     }
 
     /**
