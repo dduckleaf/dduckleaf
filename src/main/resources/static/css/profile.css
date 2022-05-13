@@ -209,8 +209,11 @@ label {
     margin-top: 20px;
 }
 #removeMember {
-    position: relative;
+    border: none;
+    position: fixed;
     top: 490px;
     left: 1300px;
+    height: 50px!important;
+    width: 230px!important;
 }
 

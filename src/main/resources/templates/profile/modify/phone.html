@@ -5,7 +5,8 @@
     <title>떡잎펀드</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
@@ -226,10 +227,8 @@
             })
         });
 
-        if(document.getElementById("cancel")) {
-            document.getElementById("cancel").onclick = function() {
-                location.href = "/myfunding/default";
-            }
+        document.getElementById("cancel").onclick = function() {
+            location.href = "/following/list";
         }
     </script>
 </html>
