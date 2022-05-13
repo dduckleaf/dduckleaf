@@ -34,8 +34,8 @@
 <!--                <th:block th:if="${ project.reward ne null}">-->
                     <div class="col-3 project-list-box">
                         <div class="product-img img-zoom-effect">
-                            <a th:href="'/project/projectdetail/' + @{${project.projectNo}}">
-                                <img class="img-full mainimg" src="/images/main/mushroom.png" alt="Product Images">
+                            <a th:href="'/project/projectdetail/' + ${project.projectNo}">
+                                <img class="img-full mainimg" th:src="'/upload/original/' + ${project.attachmentSavedName}" alt="Product Images">
                             </a>
                         </div>
                         <div class="product-content">
