@@ -3,7 +3,6 @@ package com.greedy.dduckleaf.member.service;
 import com.greedy.dduckleaf.email.EmailSender;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
 import com.greedy.dduckleaf.member.dto.MemberWithdrawDTO;
-import com.greedy.dduckleaf.member.dto.ProfileAttachmentDTO;
 import com.greedy.dduckleaf.member.entity.*;
 import com.greedy.dduckleaf.member.repository.*;
 import net.nurigo.java_sdk.api.Message;
@@ -18,6 +17,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
 
 /**
  * <pre>
@@ -48,10 +48,11 @@ public class MemberService{
     private final FundingInfoForMemberRepository fundingInfoForMemberRepository;
     private final ProjectForMemberRepository projectForMemberRepository;
     private final MemberWithdrawForMemberRepository memberWithdrawForMemberRepository;
+    private final MemberCategoryForMemberRepository memberCategoryForMemberRepository;
     private final EmailSender emailSender;
 
     @Autowired
-    public MemberService(ModelMapper modelMapper, MemberRepository memberRepository, BasicProfileAttachmentForMemberRepository basicProfileAttachmentForMemberRepository, ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository, FundingInfoForMemberRepository fundingInfoForMemberRepository, ProjectForMemberRepository projectForMemberRepository, MemberWithdrawForMemberRepository memberWithdrawForMemberRepository, EmailSender emailSender) {
+    public MemberService(ModelMapper modelMapper, MemberRepository memberRepository, BasicProfileAttachmentForMemberRepository basicProfileAttachmentForMemberRepository, ProfileAttachmentForMemberRepository profileAttachmentForMemberRepository, FundingInfoForMemberRepository fundingInfoForMemberRepository, ProjectForMemberRepository projectForMemberRepository, MemberWithdrawForMemberRepository memberWithdrawForMemberRepository, MemberCategoryForMemberRepository memberCategoryForMemberRepository, EmailSender emailSender) {
         this.modelMapper = modelMapper;
         this.memberRepository = memberRepository;
         this.basicProfileAttachmentForMemberRepository = basicProfileAttachmentForMemberRepository;
@@ -59,6 +60,7 @@ public class MemberService{
         this.fundingInfoForMemberRepository = fundingInfoForMemberRepository;
         this.projectForMemberRepository = projectForMemberRepository;
         this.memberWithdrawForMemberRepository = memberWithdrawForMemberRepository;
+        this.memberCategoryForMemberRepository = memberCategoryForMemberRepository;
         this.emailSender = emailSender;
     }
  
@@ -158,19 +160,32 @@ public class MemberService{
     @Transactional
     public void registMember(MemberDTO member) {
 
+        Member registMember = new Member();
+        registMember.setMemberName(member.getMemberName());
+        registMember.setMemberId(member.getMemberId());
+        registMember.setMemberPwd(member.getMemberPwd());
+        registMember.setEmail(member.getEmail());
+        registMember.setPhone(member.getPhone());
+        registMember.setWithdrawalStatus("N");
+        registMember.setMemberJoinDate(getDateAndTime());
+
+        MemberCategory memberCategory = memberCategoryForMemberRepository.findById(2).get();
+
+        registMember.setMemberCategory(memberCategory);
+
         int basicProfileAttachmentNo = (int) ((Math.random() * 6) + 1);
 
         BasicProfileAttachment basicProfileAttachment = basicProfileAttachmentForMemberRepository.findById(basicProfileAttachmentNo).get();
 
-        ProfileAttachmentDTO profileAttachment = new ProfileAttachmentDTO();
+        ProfileAttachment profileAttachment = new ProfileAttachment();
         profileAttachment.setProfileSavedName(basicProfileAttachment.getProfileSavedName());
         profileAttachment.setProfileOriginalName(basicProfileAttachment.getProfileOriginalName());
         profileAttachment.setProfilePath(basicProfileAttachment.getProfilePath());
         profileAttachment.setProfileThumbnailPath(basicProfileAttachment.getProfileThumbnailPath());
-        profileAttachment.setMemberNo(member.getMemberNo());
+        profileAttachment.setMember(registMember);
 
-        profileAttachmentForMemberRepository.save(modelMapper.map(profileAttachment, ProfileAttachment.class));
-        memberRepository.save(modelMapper.map(member, Member.class));
+        memberRepository.save(registMember);
+        profileAttachmentForMemberRepository.save(profileAttachment);
     }
  
     /**
