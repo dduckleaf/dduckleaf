@@ -209,11 +209,13 @@ label {
     margin-top: 20px;
 }
 #removeMember {
-    border: none;
-    position: fixed;
-    top: 490px;
-    left: 1300px;
+    border: 1px solid #C2423A!important;
+    position: relative;
+    top: 580px;
+    left: 465px;
     height: 50px!important;
-    width: 230px!important;
+    width: 458px!important;
+    color: #C2423A!important;
+    background: #FFF;
 }
 
