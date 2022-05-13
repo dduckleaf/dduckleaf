@@ -178,8 +178,14 @@
 
         const projectApplicationNo = $("#projectApplicationNo").val();
         console.log(projectApplicationNo);
+        if(!confirm("승인하시겠습니까?")) {
+            location.href='/project/examination/review/' + projectApplicationNo;
+        } else {
+            alert("승인되었습니다. 승인된 프로젝트는 공개예정 목록으로 이동합니다.");
+            location.href='/project/examination/approval/' + projectApplicationNo;
+        }
 
-        location.href='/project/examination/approval/' + projectApplicationNo;
+
 
     });
 
