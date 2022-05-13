@@ -3,7 +3,9 @@ package com.greedy.dduckleaf.followingproject.service;
 import com.greedy.dduckleaf.followingproject.dto.ProjectDTO;
 import com.greedy.dduckleaf.followingproject.entity.FollowingProject;
 import com.greedy.dduckleaf.followingproject.entity.Project;
+import com.greedy.dduckleaf.followingproject.entity.ProjectAttachment;
 import com.greedy.dduckleaf.followingproject.repository.FollowingProjectRepository;
+import com.greedy.dduckleaf.followingproject.repository.ProjectAttachmentForFollowingProjectRepository;
 import com.greedy.dduckleaf.followingproject.repository.ProjectForFollowingProjectRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +37,16 @@ public class FollowingProjectService {
 
     private final FollowingProjectRepository followingProjectRepository;
     private final ProjectForFollowingProjectRepository projectForFollowingProjectRepository;
+    private final ProjectAttachmentForFollowingProjectRepository projectAttachmentForFollowingProjectRepository;
     private final ModelMapper modelMapper;
     private final String FOLLOWING_PROJECT_REGIST_MESSAGE = "관심 프로젝트로 등록되었습니다.";
     private final String FOLLOWING_PROJECT_REMOVE_MESSAGE = "관심 프로젝트에서 제외되었습니다.";
 
     @Autowired
-    public FollowingProjectService(FollowingProjectRepository followingProjectRepository, ProjectForFollowingProjectRepository projectForFollowingProjectRepository, ModelMapper modelMapper) {
+    public FollowingProjectService(FollowingProjectRepository followingProjectRepository, ProjectForFollowingProjectRepository projectForFollowingProjectRepository, ProjectAttachmentForFollowingProjectRepository projectAttachmentForFollowingProjectRepository, ModelMapper modelMapper) {
         this.followingProjectRepository = followingProjectRepository;
         this.projectForFollowingProjectRepository = projectForFollowingProjectRepository;
+        this.projectAttachmentForFollowingProjectRepository = projectAttachmentForFollowingProjectRepository;
         this.modelMapper = modelMapper;
     }
 
@@ -112,7 +116,10 @@ public class FollowingProjectService {
             long diffSec = Math.abs(end.getTime() - now.getTime());
             long diffDay = TimeUnit.DAYS.convert(diffSec, TimeUnit.MILLISECONDS);
 
+            List<ProjectAttachment> projectAttachmentList = projectAttachmentForFollowingProjectRepository.findByProjectProjectNo(foundFollowingProjectList.get(i).getProjectNo());
+
             project.setDeadLine(diffDay);
+            project.setAttachmentSavedName(projectAttachmentList.get(0).getProjectAttachmentSaveName());
 
             followingProjectList.add(project);
         }
