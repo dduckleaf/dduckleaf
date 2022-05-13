@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/settlement.css}">
+    <link rel="stylesheet" th:href="@{ /css/funding.css }">
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+</head>
+<body>
+<main style="width: 1920px">
+    <div class="row">
+        <div th:replace="/common/adminheader.html"></div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <div th:replace="/project/manage/end/luckysubmenu.html"></div>
+        </div>
+        <div class="col-10">
+            <div class="body-area2">
+                <br>
+
+                    <br><br><br>
+                    <div class="title-div">
+                            <span class="text-title">
+                                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">펀딩정보 관리</span>
+                    </div>
+                <hr>
+                <div class="funding-detail-info-border">
+                    <div class="funding-detail-info-box">
+                        <label class="category">[[${funding.rewardCategoryName}]]</label><br>
+                        <label class="projectStatus">
+                            <th:block th:if="${ funding.project.progressStatus eq '3'}">진행중</th:block>
+                            <th:block th:if="${ funding.project.progressStatus eq '4'}">완료</th:block>
+                        </label><br>
+                        <label class="projectName">[[${funding.project.projectName}]]</label><br>
+                        <label class="farmerName">[[${funding.project.farmer.farmer.businessName}]]</label><br>
+                        <br>
+                        <br>
+                        <div class="row">
+                            <div class="col-10">
+                                <label class="funding-order">주문일</label><br>
+                            </div>
+                            <div class="col " style="text-align: right;">
+                                <label class="funding-order">[[${funding.fundingDate}]]</label><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-10 ">
+                                <label class="funding-order">펀딩금 총액</label><br>
+                            </div>
+                            <div class="col" style="text-align: right;">
+                                <label class="funding-order">[[${funding.fundingAmount}]] 원</label><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-10 ">
+                                <label class="funding-order">리워드 결제금액</label><br>
+                            </div>
+                            <div class="col" style="text-align: right;">
+                                <label class="funding-order" th:text="${ funding.rewardAmount * funding.project.rewardInfo.rewardPrice} + ' 원'"> </label><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-10 ">
+                                <label class="funding-order">후원금</label><br>
+                            </div>
+                            <div class="col" style="text-align: right;">
+                                <label class="funding-order">[[${funding.donateAmount}]] 원</label><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-10 ">
+                                <label class="funding-order">배송비</label><br>
+                            </div>
+                            <div class="col" style="text-align: right;">
+                                <th:block th:if="${ funding.extraShippingFeeStatus eq 'N'}">
+                                    <label class="funding-order">[[${funding.project.projectShippingFee.shippingFee}]] 원</label><br>
+                                </th:block>
+                                <th:block th:if="${ funding.extraShippingFeeStatus eq 'Y'}">
+                                    <label class="funding-order">[[${funding.project.projectShippingFee.extraShippingFee}]] 원</label><br>
+                                </th:block>
+
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <div class="funding-detail-info-border">
+                    <div class="funding-detail-reward-info-box">
+                        <label class="funding-detail-reward-name">환불계좌 정보</label><br><br><br><br>
+                        <label class="funding-detail-reward-info">예금주명 : [[${funding.refundName}]]</label><br><br><br>
+                        <label class="funding-detail-reward-info">은행 : [[${funding.refundBankCode.bankName}]]</label><br><br>
+                        <label class="funding-detail-reward-info">환불계좌 : [[${funding.refundAccount}]]</label><br><br><br>
+                        <label class="funding-detail-reward-info">* 프로젝트 교환/ 펀딩금반환/AS정책은 반환정책을 확인하세요</label><br><br>
+                    </div>
+                </div>
+                <div class="funding-detail-info-border">
+                    <div class="funding-detail-shipping-info-box">
+                        <label>배송지 정보</label><br><br>
+                        <label>[[${addressInfo.shippingMemberName}]]</label><br>
+                        <label>[[${addressInfo.shippingMemberPhone}]]</label><br><br>
+                        <label>[ [[${addressInfo.zipCode}]] ] [[${addressInfo.address1}]] [[${addressInfo.address2}]]</label><br>
+                        <label>[[${addressInfo.shippingRequire}]]</label><br><br>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-left: 30%; margin-top: 3%">
+            <button class="basic-btn btn3 big-btn" th:onclick="'location.href=\'/funding/find/endproject/' + @{${project.projectNo}} + '\''">뒤로가기</button>
+        </div>
+        <div style="height: 200px"></div>
+    </div>
+</main>
+</body>
+<script>
+</script>
+</html>

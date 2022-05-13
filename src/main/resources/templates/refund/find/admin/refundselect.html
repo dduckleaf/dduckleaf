@@ -26,6 +26,7 @@
             <button class="basic-btn btn1" id="waiting">이의신청</button>
             <button class="basic-btn btn1" id="refundconfirm">승인목록</button>
             <button class="basic-btn btn1" id="refuse">거절목록</button>
+            <button class="basic-btn btn1" id="byproject">프로젝트조회</button>
         </div>
 
 </div>
@@ -35,6 +36,7 @@
     const waiting = document.getElementById("waiting");
     const confirm = document.getElementById("refundconfirm");
     const refuse = document.getElementById("refuse");
+    const project = document.getElementById("byproject");
 
     if(findall) {
         findall.onclick = function() {
@@ -55,6 +57,12 @@
     if(refuse) {
         refuse.onclick = function() {
             location.href = "/refund/find/admin/statuslist/3";
+        }
+    }
+
+    if(project) {
+        project.onclick = function() {
+            location.href = "/refund/find/admin/list";
         }
     }
 

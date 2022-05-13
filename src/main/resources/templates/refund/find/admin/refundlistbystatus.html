@@ -65,7 +65,12 @@
         <button th:onclick="'location.href=\'/project/notice/list/'+ @{${refundstatus}} +'?page=' + @{${paging.endPage}} + '\''"
                 th:disabled="${ refundings.last }" class="paging-btn last">>></button>
     </div>
+
+    <div style="text-align: right; margin-right: 1%;margin-top: 3%">
+        <button  onclick="location.href='/refund/find/admin/refundlist'" class="btn3 basic-btn medium-btn">뒤로가기</button>
+    </div>
 </div>
+
 
 <script>
     /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
