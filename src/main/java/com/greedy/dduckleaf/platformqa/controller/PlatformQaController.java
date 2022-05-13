@@ -55,7 +55,7 @@ public class PlatformQaController {
      * @author 차화응
      */
     @GetMapping("/list")
-    public ModelAndView findPlatformQaList(ModelAndView mv, @PageableDefault(size = 5) Pageable pageable) {
+    public ModelAndView findPlatformQaList(ModelAndView mv, @PageableDefault Pageable pageable) {
 
         Page<PlatformQaDTO> platformQaList = platformQaService.findPlatformQaList(pageable);
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(platformQaList);
