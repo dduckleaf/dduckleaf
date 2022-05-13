@@ -10,10 +10,12 @@ public class NoticeDTO {
     private int adminNo;
     private int noticeCount;
     private int noticeCategoryNo;
+    private AdminDTO admin;
+    private NoticeCategoryDTO noticeCategory;
 
     public NoticeDTO() {}
 
-    public NoticeDTO(int noticeNo, String noticeName, String noticeContent, String noticeRegistDate, String noticeStatus, int adminNo, int noticeCount, int noticeCategoryNo) {
+    public NoticeDTO(int noticeNo, String noticeName, String noticeContent, String noticeRegistDate, String noticeStatus, int adminNo, int noticeCount, int noticeCategoryNo, AdminDTO admin, NoticeCategoryDTO noticeCategory) {
         this.noticeNo = noticeNo;
         this.noticeName = noticeName;
         this.noticeContent = noticeContent;
@@ -22,6 +24,8 @@ public class NoticeDTO {
         this.adminNo = adminNo;
         this.noticeCount = noticeCount;
         this.noticeCategoryNo = noticeCategoryNo;
+        this.admin = admin;
+        this.noticeCategory = noticeCategory;
     }
 
     public int getNoticeNo() {
@@ -88,6 +92,22 @@ public class NoticeDTO {
         this.noticeCategoryNo = noticeCategoryNo;
     }
 
+    public AdminDTO getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(AdminDTO admin) {
+        this.admin = admin;
+    }
+
+    public NoticeCategoryDTO getNoticeCategory() {
+        return noticeCategory;
+    }
+
+    public void setNoticeCategory(NoticeCategoryDTO noticeCategory) {
+        this.noticeCategory = noticeCategory;
+    }
+
     @Override
     public String toString() {
         return "NoticeDTO{" +
@@ -99,6 +119,8 @@ public class NoticeDTO {
                 ", adminNo=" + adminNo +
                 ", noticeCount=" + noticeCount +
                 ", noticeCategoryNo=" + noticeCategoryNo +
+                ", admin=" + admin +
+                ", noticeCategory=" + noticeCategory +
                 '}';
     }
 }

@@ -32,9 +32,17 @@ public class Notice {
     @Column(name = "NOTICE_CATEGORY_NO")
     private int noticeCategoryNo;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "ADMIN_NO", insertable = false, updatable = false)
+    private Admin admin;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @JoinColumn(name = "NOTICE_CATEGORY_NO", insertable = false, updatable = false)
+    private NoticeCategory noticeCategory;
+
     public Notice() {}
 
-    public Notice(int noticeNo, String noticeName, String noticeContent, String noticeRegistDate, String noticeStatus, int adminNo, int noticeCount, int noticeCategoryNo) {
+    public Notice(int noticeNo, String noticeName, String noticeContent, String noticeRegistDate, String noticeStatus, int adminNo, int noticeCount, int noticeCategoryNo, Admin admin, NoticeCategory noticeCategory) {
         this.noticeNo = noticeNo;
         this.noticeName = noticeName;
         this.noticeContent = noticeContent;
@@ -43,6 +51,8 @@ public class Notice {
         this.adminNo = adminNo;
         this.noticeCount = noticeCount;
         this.noticeCategoryNo = noticeCategoryNo;
+        this.admin = admin;
+        this.noticeCategory = noticeCategory;
     }
 
     public int getNoticeNo() {
@@ -109,6 +119,22 @@ public class Notice {
         this.noticeCategoryNo = noticeCategoryNo;
     }
 
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public NoticeCategory getNoticeCategory() {
+        return noticeCategory;
+    }
+
+    public void setNoticeCategory(NoticeCategory noticeCategory) {
+        this.noticeCategory = noticeCategory;
+    }
+
     @Override
     public String toString() {
         return "Notice{" +
@@ -120,6 +146,8 @@ public class Notice {
                 ", adminNo=" + adminNo +
                 ", noticeCount=" + noticeCount +
                 ", noticeCategoryNo=" + noticeCategoryNo +
+                ", admin=" + admin +
+                ", noticeCategory=" + noticeCategory +
                 '}';
     }
 }
