@@ -52,7 +52,7 @@
                     </table>
                     <input type="hidden" id="farmerCheckStatus">
                     <button class="basic-btn big-btn btn1" id="calculate">계산하기</button>
-                    <button class="basic-btn big-btn btn1" id="farmerCheck">파머 확인여부 보기</button>
+<!--                    <button class="basic-btn big-btn btn1" id="farmerCheck">파머 확인여부 보기</button>-->
                     <button class="basic-btn big-btn btn3" id="back">이전 화면</button>
                 </div>
             </div>
@@ -94,22 +94,6 @@
         }
     }
 
-    /* 파머 확인여부 보기 */
-    const farmerCheck = document.getElementById("farmerCheck");
-    if(farmerCheck) {
-        farmerCheck.onclick = function() {
-            Swal.fire({
-                title: "파머 정산정보 확인 여부 : " + $("#farmerCheckStatus").val(),
-                confirmButtonText: "확인",
-                allowEnterKey: false,
-                customClass: {
-                    title: "swal-content",
-                    confirmButton: "swal-btn",
-                    popup: "swal-area"
-                }
-            })
-        }
-    }
     /* 이전 화면으로 이동 */
     const back = document.getElementById("back");
     if(back) {
