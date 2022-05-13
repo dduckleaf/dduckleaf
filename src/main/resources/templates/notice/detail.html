@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>떡잎펀드 - 공지사항</title>
+  <title>떡잎펀드</title>
   <meta name="robots" content="noindex, follow"/>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,6 +41,44 @@
   <header th:replace="/common/menubar.html"></header>
   <!-- Main Header Area End Here -->
 
+  <!-- 삭제 모달 -->
+  <div class="modal fade" id="removeModalToggle" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="removeModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="border-bottom: none;">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+          삭제하시겠습니까?
+        </div>
+        <div class="modal-footer" style="border-top: none;">
+          <div style="margin: 0 auto;">
+            <button type="button" class="basic-btn small-btn btn1" data-bs-target="#removeConfirmModal" data-bs-toggle="modal" data-bs-dismiss="modal">확인</button>
+            <button type="button" class="basic-btn small-btn btn3" data-bs-target="#removeModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">취소</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="removeConfirmModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="removeConfirmModalLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header" style="border-bottom: none;">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" th:onclick="'location.href=\'' + @{/notice/remove/{bno}(bno=${ notice.noticeNo })} + '\''"></button>
+        </div>
+        <div class="modal-body" style="text-align: center;">
+          삭제되었습니다!
+        </div>
+        <div class="modal-footer" style="border-top: none;">
+          <div style="margin: 0 auto;">
+            <button type="button" class="basic-btn small-btn btn1" data-bs-target="#removeConfirmModal" th:onclick="'location.href=\'' + @{/notice/remove/{bno}(bno=${ notice.noticeNo })} + '\''">확인</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 삭제 모달 -->
+
   <!-- 마이 페이지 -->
   <!-- Begin Main Content Area -->
   <main class="main-content">
@@ -63,13 +101,13 @@
             <td>번호</td>
             <td class="no" style="text-align: left; text-indent: 10px" th:text="${ notice.noticeNo }"></td>
             <td>분류</td>
-            <td class="category" style="text-align: left; text-indent: 10px" th:text="${ notice.noticeCategoryNo }"></td>
+            <td class="category" style="text-align: left; text-indent: 10px" th:text="${ notice.noticeCategory.noticeCategoryName }"></td>
             <td>제목</td>
             <td class="title" style="text-align: left; text-indent: 10px" th:text="${ notice.noticeName }"></td>
           </tr>
           <tr>
             <td>작성자</td>
-            <td class="author" style="text-align: left; text-indent: 10px" th:text="${ notice.adminNo }"></td>
+            <td class="author" style="text-align: left; text-indent: 10px" th:text="${ notice.admin.memberName }"></td>
             <td>등록일</td>
             <td class="date" style="text-align: left; text-indent: 10px" th:text="${ notice.noticeRegistDate }"></td>
             <td>조회수</td>
@@ -80,8 +118,11 @@
           </tr>
         </table>
         <div style="text-align: right">
-          <button class="basic-btn medium-btn btn1" th:onclick="'window.location.href=\'' + @{/notice/modify/{bno}(bno=${ notice.noticeNo })} + '\''">수정</button>
-          <button class="basic-btn medium-btn btn4" th:onclick="'window.location.href=\'' + @{/notice/remove/{bno}(bno=${ notice.noticeNo })} + '\''">삭제</button>
+          <th:block sec:authorize="hasRole('ADMIN')">
+            <button class="basic-btn medium-btn btn1" th:onclick="'window.location.href=\'' + @{/notice/modify/{bno}(bno=${ notice.noticeNo })} + '\''">수정</button>
+<!--            <button class="basic-btn medium-btn btn4" th:onclick="'window.location.href=\'' + @{/notice/remove/{bno}(bno=${ notice.noticeNo })} + '\''">삭제</button>-->
+            <button class="basic-btn medium-btn btn4" data-bs-toggle="modal" data-bs-target="#removeModalToggle">삭제</button>
+          </th:block>
           <button class="basic-btn medium-btn btn3" th:onclick="window.location.href='/notice/list'">목록보기</button>
         </div>
       </div>
@@ -112,12 +153,6 @@
 ============================================ -->
 <!-- Global Vendor, plugins JS -->
 
-<!-- Vendor JS -->
-<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
-<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
-<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
-<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
-<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
 
 <!--Plugins JS-->
 <script th:src="@{ /js/plugins/wow.min.js }"></script>
