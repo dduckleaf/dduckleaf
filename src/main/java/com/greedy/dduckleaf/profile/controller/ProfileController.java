@@ -207,7 +207,7 @@ public class ProfileController {
      * @return mv
      * @author 박상범
      */
-    @GetMapping(value = {"/send/phone/verification"}, produces = "application/json; charset=UTF-8")
+    @PostMapping(value = {"/send/phone/verification"}, produces = "application/json; charset=UTF-8")
     @ResponseBody
     public String sendPhoneVerification(@RequestBody String phone) {
 
