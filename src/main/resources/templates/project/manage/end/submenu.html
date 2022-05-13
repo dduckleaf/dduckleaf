@@ -43,7 +43,7 @@
     /* 펀딩내역 관리로 이동 */
     if(funding) {
         funding.onclick = function() {
-            location.href = "";
+            location.href = "/funding/find/endproject/[[${project.projectNo}]]";
         }
     }
 
@@ -53,18 +53,18 @@
             location.href = "/settlement/projectmanager/overview/[[${project.projectNo}]]";
         }
     }
-
-    /* 리워드 발송 관리로 이동 */
-    if(shipping) {
-        shipping.onclick = function() {
-            location.href = "";
-        }
-    }
+    //
+    // /* 리워드 발송 관리로 이동 */
+    // if(shipping) {
+    //     shipping.onclick = function() {
+    //         location.href = "";
+    //     }
+    // }
 
     /* 환불 관리로 이동 */
     if(refunding) {
         refunding.onclick = function() {
-            location.href = "";
+            location.href = "/refund/find/admin/end/projectlist/[[${project.projectNo}]]";
         }
     }
 </script>
