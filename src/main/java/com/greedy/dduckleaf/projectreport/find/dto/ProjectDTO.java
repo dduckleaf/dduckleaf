@@ -12,19 +12,19 @@ public class ProjectDTO {
     private String openDate;
     private String endDate;
     private double achievementRate;
-    private FarmerInfo farmerInfo;
+    private FarmerInfo farmer;
 
     public ProjectDTO() {}
 
     public ProjectDTO(int projectNo, String projectName, int progressStatus, String openDate, String endDate,
-                   double achievementRate, FarmerInfo farmerInfo) {
+                      double achievementRate, FarmerInfo farmer) {
         this.projectNo = projectNo;
         this.projectName = projectName;
         this.progressStatus = progressStatus;
         this.openDate = openDate;
         this.endDate = endDate;
         this.achievementRate = achievementRate;
-        this.farmerInfo = farmerInfo;
+        this.farmer = farmer;
     }
 
     public int getProjectNo() {
@@ -75,24 +75,24 @@ public class ProjectDTO {
         this.achievementRate = achievementRate;
     }
 
-    public FarmerInfo getFarmerInfo() {
-        return farmerInfo;
+    public FarmerInfo getFarmer() {
+        return farmer;
     }
 
-    public void setFarmerInfo(FarmerInfo farmerInfo) {
-        this.farmerInfo = farmerInfo;
+    public void setFarmer(FarmerInfo farmer) {
+        this.farmer = farmer;
     }
 
     @Override
     public String toString() {
-        return "Project{" +
+        return "ProjectDTO{" +
                 "projectNo=" + projectNo +
                 ", projectName='" + projectName + '\'' +
                 ", progressStatus=" + progressStatus +
                 ", openDate='" + openDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 ", achievementRate=" + achievementRate +
-                ", farmerInfo=" + farmerInfo +
+                ", farmer=" + farmer +
                 '}';
     }
 }
