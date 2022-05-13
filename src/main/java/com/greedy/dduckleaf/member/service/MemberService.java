@@ -100,18 +100,18 @@ public class MemberService{
             return "휴대폰 번호가 유효하지 않습니다.";
         }
 
-        if(member == null) {
+        if(member != null) {
             return "이미 사용중인 휴대전화 번호입니다.";
         }
 
         String code = (int) (Math.random() * 899999) + 100000 + "";
-        String api_key = "NCS2DRV64W2NLRRJ";
-        String api_secret = "KHIZVNRLB6BCFXT9OKV3EUHBGZNYXRMV";
+        String api_key = "NCSMW5CKIIGCIUO1";
+        String api_secret = "GTY9AORLARLD0KNOSO1AND3KFOREO9N9";
         Message coolsms = new Message(api_key, api_secret);
         HashMap<String, String> params = new HashMap<String, String>();
 
         params.put("to", phone);
-        params.put("from", "01062019811");
+        params.put("from", "01066933114");
         params.put("type", "SMS");
         params.put("text", code);
         params.put("app_version", "test app 1.2");
