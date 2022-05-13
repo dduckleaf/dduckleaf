@@ -10,4 +10,6 @@ public interface ProjectApplicationInfoForManageRepository extends JpaRepository
     ProjectApplicationInfo findByProject_ProjectNo(int projectNo);
 
     List<ProjectApplicationInfo> findAllByProjectOpenDateAndProjectProgressStatus(String openDate, int i);
+
+    List<ProjectApplicationInfo> findAllByProject_EndDateAndProjectProgressStatus(String endDate, int i);
 }

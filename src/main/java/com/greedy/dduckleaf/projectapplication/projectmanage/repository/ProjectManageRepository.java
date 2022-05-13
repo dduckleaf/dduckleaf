@@ -1,6 +1,7 @@
 package com.greedy.dduckleaf.projectapplication.projectmanage.repository;
 
 import com.greedy.dduckleaf.projectapplication.entity.Project;
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,4 +26,6 @@ public interface ProjectManageRepository extends JpaRepository<Project, Integer>
     Page<Project> findAllByProjectExamineStatusAndProgressStatus(Pageable pageable, String 승인, int i);
 
     List<Project> findAllByOpenDate(String openDate);
+
+    Page<Project> findAllByProgressStatus(Pageable pageable, int i);
 }

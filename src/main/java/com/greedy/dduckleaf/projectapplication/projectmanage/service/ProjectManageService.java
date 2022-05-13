@@ -71,16 +71,63 @@ public class ProjectManageService {
     }
 
     /**
-     * openProject: 프로젝트 상태를 심사중에서 오픈예정으로 변경합니다.
+     * openProject: 프로젝트 상태를 오픈예정에서 진행 중으로 변경합니다.
      * @author 박휘림
      */
     @Transactional
-    public void openProject() {
+    public String openProject() {
 
         String openDate = LocalDate.now().toString();
 
         List<ProjectApplicationInfo> projectList = projectApplicationInfoForManageRepository.findAllByProjectOpenDateAndProjectProgressStatus(openDate, 2);
 
-        projectList.forEach(projectApplicationInfo -> projectApplicationInfo.getProject().setProgressStatus(3));
+        String result = "";
+
+        if(projectList.isEmpty()) {
+            result = "변경사항이 존재하지 않습니다.";
+        } else {
+            projectList.forEach(projectApplicationInfo -> projectApplicationInfo.getProject().setProgressStatus(3));
+            result = "프로젝트 상태가 진행 중으로 변경되었습니다.";
+        }
+
+        return result;
+    }
+
+    /**
+     * findProgressingProjectList: 진행중 프로젝트 목록을 조회합니다.
+     * @param pageable: 페이징 정보를 담은 객체
+     * @return 진행 중 프로젝트 목록
+     * @author 박휘림
+     */
+    public Page<ProjectDTO> findProgressingProjectList(Pageable pageable) {
+
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0 ? 0 : pageable.getPageNumber() - 1,
+                pageable.getPageSize(),
+                Sort.by("projectNo").descending());
+
+        return projectRepository.findAllByProgressStatus(pageable, 3).map(project -> modelMapper.map(project, ProjectDTO.class));
+    }
+
+    /**
+     * openProject: 프로젝트 상태를 진행 중에서 진행 완료로 변경합니다.
+     * @author 박휘림
+     */
+    @Transactional
+    public String endProject() {
+
+        String endDate = LocalDate.now().toString();
+
+        List<ProjectApplicationInfo> projectList = projectApplicationInfoForManageRepository.findAllByProject_EndDateAndProjectProgressStatus(endDate, 3);
+
+        String result;
+
+        if(projectList.isEmpty()) {
+            result = "변경사항이 존재하지 않습니다.";
+        } else {
+            projectList.forEach(projectApplicationInfo -> projectApplicationInfo.getProject().setProgressStatus(4));
+            result = "프로젝트 상태가 진행 완료로 변경되었습니다.";
+        }
+
+        return result;
     }
 }
