@@ -44,15 +44,6 @@
                         <span class="breadcrumb">스토리 작성</span>
                     </div>
                     <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">스토리 작성</a><br><hr>
-                    <a>파머님의 프로젝트를 소개해주세요.</a>
-                    <div class="basicmenu">
-                        <a class="basictitle">프로젝트 요약</a><br>
-                        <a class="basicsubtitle">프로젝트 페이지 상단에 노출됩니다.</a><br>
-                        <input class="projectsummary" type="hidden" th:value="${ story.projectInfo }">
-                        <input class="projectsummary" id="projectInfo" name="projectInfo" type="text" th:placeholder="${ story.projectInfo }">
-                        <input type="hidden" id="projectNo" name="projectNo" th:value="${ story.projectNo }">
-                        <input type="hidden" id="projectBasicInfoNo" name="projectBasicInfoNo" th:value="${ story.projectBasicInfoNo }">
-                    </div>
                     <div>
                         <a class="basictitle">스토리 광고 심의 동의</a><br>
                         <a class="basicsubtitle">스토리 작성 전, 플랫폼에서 제공하는 광고 심의 가이드라인을 반드시 확인하세요.
@@ -65,6 +56,15 @@
                             <div class="agreementcheck">동의완료</div>
                             <div class="agreementDate" th:text="${ story.promotionAgreementDate }"></div>
                         </th:block>
+                    </div>
+                    <a>파머님의 프로젝트를 소개해주세요.</a>
+                    <div class="basicmenu">
+                        <a class="basictitle">프로젝트 요약</a><br>
+                        <a class="basicsubtitle">프로젝트 페이지 상단에 노출됩니다.</a><br>
+                        <input class="projectsummary" type="hidden" th:value="${ story.projectInfo }">
+                        <input class="projectsummary" id="projectInfo" name="projectInfo" type="text" th:placeholder="${ story.projectInfo }">
+                        <input type="hidden" id="projectNo" name="projectNo" th:value="${ story.projectNo }">
+                        <input type="hidden" id="projectBasicInfoNo" name="projectBasicInfoNo" th:value="${ story.projectBasicInfoNo }">
                     </div>
                     <div class="basicmenu">
                         <a class="basictitle">프로젝트 스토리</a><br>

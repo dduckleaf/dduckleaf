@@ -42,23 +42,12 @@
                 <div class="notice-wrap">
                     <div class="cont-div">
                         <div id="projectNoticeList">
+                            <input type="hidden" id="projectNo" class="projectNo" th:value="${ project.projectNo }">
                             <th:block th:if="${ project.progressStatus == 5 }">
                                 <p style="font-size: 25pt; text-align: center">심사 대기중입니다.</p>
-<!--                                <table class="basic-table" id="project-qna-table1" align="center" style="width: 100%">-->
-<!--                                    <tr style="cursor:pointer;">-->
-<!--                                        <th style="width: 100px;">번호</th>-->
-<!--                                        <th style="width: 600px;">제목</th>-->
-<!--                                        <th style="width: 200px;">작성일</th>-->
-<!--                                    </tr>-->
-<!--                                    <tr>-->
-<!--                                        <td></td>-->
-<!--                                        <td>심사 대기중입니다.</td>-->
-<!--                                        <td></td>-->
-<!--                                    </tr>-->
-<!--                                </table>-->
                             </th:block>
                             <th:block th:if="${ project.progressStatus == 2 }">
-                                <table class="basic-table" id="project-qna-table2" align="center" style="width: 100%">
+                                <table class="basic-table" id="project-qna-table2 noticeList" align="center" style="width: 100%; cursor: pointer;">
                                     <tr style="cursor:pointer;">
                                         <th style="width: 100px;">번호</th>
                                         <th style="width: 600px;">제목</th>
@@ -72,7 +61,7 @@
                                 </table>
                             </th:block>
                             <th:block th:if="${ project.progressStatus == 3 }">
-                                <table class="basic-table" id="project-qna-table3" align="center" style="width: 100%">
+                                <table class="basic-table" id="project-qna-table3 noticeList" align="center" style="width: 100%; cursor: pointer;">
                                     <tr style="cursor:pointer;">
                                         <th style="width: 100px;">번호</th>
                                         <th style="width: 600px;">제목</th>
@@ -86,7 +75,7 @@
                                 </table>
                             </th:block>
                             <th:block th:if="${ project.progressStatus == 4 }">
-                                <table class="basic-table" id="project-qna-table4" align="center" style="width: 100%">
+                                <table class="basic-table" id="project-qna-table4 noticeList" align="center" style="width: 100%; cursor: pointer;">
                                     <tr style="cursor:pointer;">
                                         <th style="width: 100px;">번호</th>
                                         <th style="width: 600px;">제목</th>
@@ -100,6 +89,9 @@
                                 </table>
                             </th:block>
                         </div><br>
+                        <div style="text-align: center">
+                            <div th:replace="/projectnotice/projectlistpaging.html"></div>
+                        </div>
                         <th:block th:if="${ project.progressStatus != 5 }">
                         <button class="basic-btn small-btn btn1 registProjectNotice" type="button">작성하기</button>
                         </th:block>
@@ -108,45 +100,23 @@
             </div>
         </div>
     </div>
-    <!--<td th:te></td>-->
-    <div id="pagination" class="pagenumbers" align="center">
-        <!-- 맨 앞으로 이동 -->
-        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.startPage}} + '\''"
-                th:disabled="${ projectNoticeList.first }" class="paging-btn first"><<</button>
-
-        <!-- 이전 페이지로 이동 -->
-        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.currentPage - 1}} + '\''"
-                th:disabled="${ projectNoticeList.first }" class="paging-btn prev"><</button>
-
-        <!-- 숫자 버튼-->
-        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
-            <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${page}} + '\''"
-                    th:text="${ page }" th:disabled="${ paging.currentPage eq page}" class="paging-btn"></button>
-        </th:block>
-
-        <!-- 다음 페이지로 이동 -->
-        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.currentPage + 1}} + '\''"
-                th:disabled="${ projectNoticeList.last}" class="paging-btn next">></button>
-
-        <!-- 맨 마지막으로 이동-->
-        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${projectNo}} +'?page=' + @{${paging.endPage}} + '\''"
-                th:disabled="${ projectNoticeList.last }" class="paging-btn last">>></button>
-    </div>
 </div>
 
 <div th:replace="/common/footer.html"></div>
 <script>
 
+    const projectNo = $("#projectNo").val();
+
     $(".registProjectNotice").click(function() {
 
-        location.href='/project/notice/regist';
+        location.href='/project/notice/regist/' + projectNo;
     });
 
     $("#back").click(function() {
-        // const projectNo =
-        location.href='/project/notice/list';
+
+        location.href='/project/notice/list/' + projectNo;
     });
-    //요 친구가 조회해와야하는 필드명을 적는 곳
+
     function projectNoticeData(projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate, projectNo) {
 
         return {projectNoticeNo, projectNoticeTitle, projectNoticeCount, registDate, projectNo};
@@ -162,33 +132,32 @@
             let html = '';
 
             if (!json.length) {
-                alert("암것도 없음");
-                console.log("암것도 없음");
                 html = '<td colspan="5">등록된 게시글이 없습니다.</td>';
             } else {
                 json.forEach((projectNoticeData, idx) => {
-                    console.log("게시글있음");
-
                 });
             }
         });
     }
 
-    /* 목록 눌러서 상세조회로 이동 */
-    /* 게시글을 클릭하면 해당 게시글 번호로 이동한다. */
-    if(document.querySelectorAll("#noticeList td")) {
-        const $tds = document.querySelectorAll("#noticeList td");
-        for( let i = 0; i < $tds.length; i++) {
+    /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for(let i = 0; i < tds.length; i++) {
 
-            $tds[i].onclick = function() {
-                const projectNoticeNo = this.parentNode.children[0].innerText;
-                console.log(projectNoticeNo);
+            tds[i].onmouseenter = function() {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
 
-                // document.getElementById("projectNoticeList").style.display = "none";
-                // document.getElementById("pagination").style.display = "none";
-                // document.getElementById("projectNoticeDetail").style.display = "block";
+            tds[i].onmouseout = function() {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
 
-                location.href = '/project/notice/detail/' + projectNoticeNo;
+            tds[i].onclick = function() {
+                const $projectNoticeNo = this.parentNode.children[0].innerText;
+
+                location.href = "/project/notice/detail/" + $projectNoticeNo;
 
             }
         }

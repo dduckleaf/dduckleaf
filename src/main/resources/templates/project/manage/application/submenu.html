@@ -13,29 +13,33 @@
 </head>
 <body>
 <div class="vertical-menubar-area">
-    <span class="text-title"></span>
+    <span class="text-title"><p th:text="${ detail.project.projectName }"></p></span>
     <div class="block">
         <input type="hidden">
         <p>파머정보</p>
         <p class="text-subtitle" th:text="${ detail.farmer.farmerName }"></p>
-        <br><br>
+        <br>
         <p>희망 오픈 예정일</p>
         <p style="font-size: 15pt;" th:text="${ detail.project.openDate }"></p>
+        <p>상호명</p>
+        <p style="font-size: 15pt;" th:text="${ detail.farmer.businessName }"></p>
         <br>
     </div>
-    <div >
-        <button class="basic-btn btn3 medium-btn" style="width: 100%; margin-top: 2%;">프로젝트 수정</button>
-    </div>
-    <div class="block">
-        <p style="font-size: 15pt;" th:text="${ detail.farmer.businessName }"></p><br>
-        <a>기본요건 확인</a><br>
-        <a>기본정보 확인</a><br>
-        <a>스토리 확인</a><br>
-        <a>리워드 설계 확인</a><br>
-        <a>위험요인 및 정책 확인</a><br>
-        <a>파머정보 확인</a><br>
-        <a>대표자 및 정산정보 확인</a>
-    </div>
+    <th:block th:if="${ detail.project.progressStatus } == 1">
+        <div>
+            <button class="basic-btn btn3 medium-btn" style="width: 100%; margin-top: 2%;" onclick="location.href='/project/examination/list'">목록으로</button>
+        </div>
+    </th:block>
+    <th:block th:if="${ detail.project.progressStatus } == 5">
+        <div>
+            <button class="basic-btn btn3 medium-btn" style="width: 100%; margin-top: 2%;" onclick="location.href='/project/examination/list'">목록으로</button>
+        </div>
+    </th:block>
+    <th:block th:if="${ detail.project.progressStatus } == 2">
+        <div>
+            <button class="basic-btn btn3 medium-btn" style="width: 100%; margin-top: 2%;" onclick="location.href='/project/manage/scheduled/list'">목록으로</button>
+        </div>
+    </th:block>
 </div>
 </body>
 </html>

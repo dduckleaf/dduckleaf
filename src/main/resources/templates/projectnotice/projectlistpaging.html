@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+<!-- 맨 앞으로 이동 -->
+<script>
+</script>
+<button th:onclick="'location.href=\'/project/manage/' + @{${intent}} + '?page=' + @{${pagingInfo.startPage}} + '\''"
+		th:disabled="${ projectNoticeList.first }" class="paging-btn first"><<</button>
+
+<!-- 이전 페이지로 이동 -->
+<button th:onclick="'location.href=\'/project/manage/' + @{${intent}} + '?page=' + @{${pagingInfo.currentPage - 1}} + '\''"
+		th:disabled="${ projectNoticeList.first }" class="paging-btn prev"><</button>
+
+<!--&lt;!&ndash; 숫자 버튼&ndash;&gt;-->
+<th:block th:each="page : ${#numbers.sequence(pagingInfo.startPage, pagingInfo.endPage)}">
+	<button th:onclick="'location.href=\'/project/manage/' + @{${intent}} + '?page=' + @{${page}} + '\''"
+			th:text="${ page }" th:disabled="${ pagingInfo.currentPage eq page}" class="paging-btn"></button>
+</th:block>
+
+<!-- 다음 페이지로 이동 -->
+<button th:onclick="'location.href=\'/project/manage/' + @{${intent}} + '?page=' + @{${pagingInfo.currentPage + 1}} + '\''"
+		th:disabled="${ projectNoticeList.last}" class="paging-btn next">></button>
+
+<!-- 맨 마지막으로 이동-->
+<button th:onclick="'location.href=\'/project/manage/' + @{${intent} + '?page=' + @{${pagingInfo.endPage}} + '\''"
+		th:disabled="${ projectNoticeList.last }" class="paging-btn last">>></button>
+</body>
+</html>
