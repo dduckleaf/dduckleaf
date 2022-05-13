@@ -6,7 +6,7 @@
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Harmic - My account</title>
+  <title>떡잎펀드</title>
   <meta name="robots" content="noindex, follow" />
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,7 +54,7 @@
                 <span style="display: none" id="profile-attachment" sec:authentication="principal.profileThumbnailPath"></span>
                 <img class="member-icon" id="profile">
                 <img th:src="@{/images/profile/profilemodify.png}" id="profile-modify">
-                <div class="member-name"><span>박상범</span>님</div>
+                <div class="member-name"><span sec:authentication="principal.username"></span>님</div>
                 <div class="logout-btn"><a th:href="@{/member/logout}">로그아웃</a></div>
               </div>
               <div>
