@@ -17,19 +17,19 @@
   ============================================ -->
 
   <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
-  <link rel="stylesheet" href="assets/css/vendor/font-awesome.min.css" />
-  <link rel="stylesheet" href="assets/css/vendor/Pe-icon-7-stroke.css" />
+  <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+  <link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}" />
 
   <!-- Plugin CSS (Global Plugins Files) -->
-  <link rel="stylesheet" href="assets/css/plugins/animate.min.css">
-  <link rel="stylesheet" href="assets/css/plugins/jquery-ui.min.css">
-  <link rel="stylesheet" href="assets/css/plugins/swiper-bundle.min.css">
-  <link rel="stylesheet" href="assets/css/plugins/nice-select.css">
-  <link rel="stylesheet" href="assets/css/plugins/magnific-popup.min.css" />
+  <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
 
   <!-- Style CSS -->
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link rel="stylesheet" href="assets/css/project.css">
+  <link rel="stylesheet" th:href="@{ /css/style.css }">
+  <link rel="stylesheet" th:href="@{ /css/project.css }">
 </head>
 
 <body>
@@ -80,7 +80,7 @@
                   </div><br>
                   <ul class="quantity-with-btn pb-7">
                     <li class="add-to-cart">
-                      <button class="basic-btn btn3 fill-white-btn rounded-1" id="registReport">프로젝트에 문제를 발견하셨나요? 신고하기
+                      <button class="basic-btn btn3 fill-white-btn rounded-1" id="registReport" style="width: 500px;">프로젝트에 문제를 발견하셨나요? 신고하기
                         <img src="/images/common/rightarrow.png" alt="Product Image">
                       </button>
                     </li>
