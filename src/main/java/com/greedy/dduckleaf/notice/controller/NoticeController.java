@@ -49,7 +49,7 @@ public class NoticeController {
      * @author 차화응
      */
     @GetMapping("/list")
-    public ModelAndView findNoticeList(ModelAndView mv, @PageableDefault(size = 20) Pageable pageable) {
+    public ModelAndView findNoticeList(ModelAndView mv, @PageableDefault Pageable pageable) {
 
         Page<NoticeForListDTO> noticeList = noticeService.findNoticeList(pageable);
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(noticeList);
