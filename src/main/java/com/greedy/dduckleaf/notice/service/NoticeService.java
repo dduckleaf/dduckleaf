@@ -72,8 +72,6 @@ public class NoticeService {
             return noticeDTO;
         });
 
-        nl.forEach(System.out::println);
-
         return nl;
     }
 

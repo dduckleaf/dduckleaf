@@ -35,9 +35,12 @@ public class FundingInfo {
     @OneToMany(mappedBy = "fundingInfo", fetch = FetchType.EAGER)
     private List<RewardShipping> rewardShippingList;    //리워드 발송 정보 1:N 매핑
 
+    @OneToOne(mappedBy = "fundingInfo", fetch = FetchType.EAGER)
+    private ShippingAddress shippingAddress;            //배송지 정보 1:N 매핑
+
     public FundingInfo() {}
 
-    public FundingInfo(int fundingInfoNo, String fundingDate, int fundingAmount, Member member, int rewardAmount, String fundingStatus, Project project, List<RewardShipping> rewardShippingList) {
+    public FundingInfo(int fundingInfoNo, String fundingDate, int fundingAmount, Member member, int rewardAmount, String fundingStatus, Project project, List<RewardShipping> rewardShippingList, ShippingAddress shippingAddress) {
         this.fundingInfoNo = fundingInfoNo;
         this.fundingDate = fundingDate;
         this.fundingAmount = fundingAmount;
@@ -46,6 +49,7 @@ public class FundingInfo {
         this.fundingStatus = fundingStatus;
         this.project = project;
         this.rewardShippingList = rewardShippingList;
+        this.shippingAddress = shippingAddress;
     }
 
     public int getFundingInfoNo() {
@@ -112,6 +116,14 @@ public class FundingInfo {
         this.rewardShippingList = rewardShippingList;
     }
 
+    public ShippingAddress getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(ShippingAddress shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
     @Override
     public String toString() {
         return "FundingInfo{" +
@@ -122,6 +134,8 @@ public class FundingInfo {
                 ", rewardAmount=" + rewardAmount +
                 ", fundingStatus='" + fundingStatus + '\'' +
                 ", project=" + project +
+                ", rewardShippingList=" + rewardShippingList +
+                ", shippingAddress=" + shippingAddress +
                 '}';
     }
 }

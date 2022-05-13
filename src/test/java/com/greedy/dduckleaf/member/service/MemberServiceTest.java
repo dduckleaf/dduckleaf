@@ -5,7 +5,6 @@ import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.config.JPAConfiguration;
 import com.greedy.dduckleaf.member.dto.MemberDTO;
 import com.greedy.dduckleaf.member.dto.MemberWithdrawDTO;
-import com.greedy.dduckleaf.member.entity.Member;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
 
 @SpringBootTest
 @ContextConfiguration(classes = {
@@ -298,4 +298,22 @@ class MemberServiceTest {
         assertEquals(result, "로그인페이지로 돌아갑니다.");
     }
 
+    @Test
+    @DisplayName("회원 가입 테스트")
+    public void registMemberTest() {
+
+        //given
+        MemberDTO member = new MemberDTO();
+        member.setMemberName("박상범");
+        member.setMemberId("qkrtkdqja");
+        member.setMemberPwd("123123123");
+        member.setEmail("sangbum0497@gmail.com");
+        member.setPhone("01011111111");
+        member.setMemberJoinDate(getDateAndTime());
+
+        //when
+
+        //then
+        assertDoesNotThrow(() -> memberService.registMember(member));
+    }
 }
