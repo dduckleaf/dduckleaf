@@ -36,7 +36,7 @@
 
 }
 
-#find-all, #waiting, #refuse, #refundconfirm, #reply-complete {
+#find-all, #waiting, #refuse, #byproject, #refundconfirm, #reply-complete {
     width: 170px;
     height: 100px;
     margin-left: 50px;

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/settlement.css}">
+</head>
+<body>
+<main style="width: 1920px">
+    <div class="row">
+        <div th:replace="/common/adminheader.html"></div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <div th:replace="/project/manage/end/luckysubmenu.html"></div>
+        </div>
+        <div class="col-10">
+            <div class="body-area2">
+                <br>
+
+                    <br><br><br>
+                    <div class="title-div">
+                            <span class="text-title">
+                                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">펀딩정보 관리</span>
+                    </div>
+                    <!-- 정산정보 이력 테이블 -->
+                    <table class="basic-table" style="width: 100%">
+                        <tr>
+                            <th></th>
+                            <th>회원번호</th>
+                            <th>펀딩금액</th>
+                            <th>후원금</th>
+                            <th>리워드명</th>
+                            <th>리워드 수량</th>
+                        </tr>
+                        <tr th:each="funding : ${fundingInfos}">
+                            <td ><input type="hidden" th:value="${funding.fundingInfoNo}"></td>
+                            <td th:text="${funding.memberNo}"></td>
+                            <td th:text="${funding.fundingAmount}"></td>
+                            <td th:text="${funding.donateAmount}"></td>
+                            <td th:text="${funding.project.rewardInfo.rewardName}"></td>
+                            <td th:text="${funding.rewardAmount} + EA"></td>
+                        </tr>
+
+                    </table>
+                    <div id="paging-area" align="center">
+                        <!-- 맨 앞으로 이동 -->
+                        <button class="paging-btn first" th:onclick="'location.href=\'/funding/find/endproject/' + @{${projectNo}} + '?page=' + @{${paging.startPage}}  + '\''"
+                                th:disabled="${ fundingInfos.first }"><<</button>
+
+                        <!-- 이전 페이지로 이동 -->
+                        <button class="paging-btn prev" th:onclick="'location.href=\'/funding/find/endproject/' + @{${projectNo}} + '?page=' + @{${paging.currentPage - 1}}  + '\''"
+                                th:disabled="${ fundingInfos.first }"><</button>
+
+                        <!-- 숫자 버튼 -->
+                        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+                            <button class="paging-btn" th:onclick="'location.href=\'/funding/find/endproject/' + @{${projectNo}} + '?page=' + @{${page}}  + '\''"
+                                    th:text="${ page }"
+                                    th:disabled="${ paging.currentPage eq page }"></button>
+                        </th:block>
+
+                        <!-- 다음 페이지로 이동 -->
+                        <button class="paging-btn next" th:onclick="'location.href=\'/funding/find/endproject/' + @{${projectNo}} + '?page=' + @{${paging.currentPage + 1}}  + '\''"
+                                th:disabled="${ fundingInfos.last }">></button>
+
+                        <!-- 맨 마지막으로 이동 -->
+                        <button class="paging-btn last" th:onclick="'location.href=\'/funding/find/endproject/' + @{${projectNo}} + '?page=' + @{${paging.endPage}}  + '\''"
+                                th:disabled="${ fundingInfos.last }">>></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<script>
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for(let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function() {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function() {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function() {
+                const fundingInfoNo = this.parentNode.children[0].children[0].value ;
+                location.href = "/funding/find/endproject/detail/" + fundingInfoNo;
+            }
+        }
+    }
+</script>
+</html>
