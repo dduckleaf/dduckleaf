@@ -16,11 +16,15 @@ public class FarmerInfo {
     @Column(name = "FARMER_NAME")
     private String farmerName;
 
+    @Column(name = "BUSINESS_NAME")
+    private String businessName;
+
     public FarmerInfo() {}
 
-    public FarmerInfo(int memberNo, String farmerName) {
+    public FarmerInfo(int memberNo, String farmerName, String businessName) {
         this.memberNo = memberNo;
         this.farmerName = farmerName;
+        this.businessName = businessName;
     }
 
     public int getMemberNo() {
@@ -39,11 +43,20 @@ public class FarmerInfo {
         this.farmerName = farmerName;
     }
 
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
     @Override
     public String toString() {
         return "FarmerInfo{" +
                 "memberNo=" + memberNo +
                 ", farmerName='" + farmerName + '\'' +
+                ", businessName='" + businessName + '\'' +
                 '}';
     }
 }

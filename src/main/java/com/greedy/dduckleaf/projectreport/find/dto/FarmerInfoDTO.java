@@ -4,12 +4,14 @@ public class FarmerInfoDTO {
 
     private int memberNo;
     private String farmerName;
+    private String businessName;
 
     public FarmerInfoDTO() {}
 
-    public FarmerInfoDTO(int memberNo, String farmerName) {
+    public FarmerInfoDTO(int memberNo, String farmerName, String businessName) {
         this.memberNo = memberNo;
         this.farmerName = farmerName;
+        this.businessName = businessName;
     }
 
     public int getMemberNo() {
@@ -28,11 +30,20 @@ public class FarmerInfoDTO {
         this.farmerName = farmerName;
     }
 
+    public String getBusinessName() {
+        return businessName;
+    }
+
+    public void setBusinessName(String businessName) {
+        this.businessName = businessName;
+    }
+
     @Override
     public String toString() {
-        return "FarmerInfoDTO{" +
+        return "FarmerInfo{" +
                 "memberNo=" + memberNo +
                 ", farmerName='" + farmerName + '\'' +
+                ", businessName='" + businessName + '\'' +
                 '}';
     }
 }
