@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>떡잎펀드 - 공지사항</title>
+    <title>떡잎펀드</title>
     <meta name="robots" content="noindex, follow"/>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +51,9 @@
             </div>
             <div class="cont-div">
                 <div style="text-align: right">
-                    <button class="medium-btn btn1 basic-btn" onclick="location.href='/notice/regist'">작성하기</button>
+                    <th:block sec:authorize="hasRole('ADMIN')">
+                        <button class="medium-btn btn1 basic-btn" onclick="location.href='/notice/regist'">작성하기</button>
+                    </th:block>
                 </div>
                 <table>
                     <colgroup>
