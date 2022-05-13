@@ -13,14 +13,14 @@
     <div class="tab-body-area">
         <div class="title-div">
             <span class="text-title">
-                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: 0%; width: 25px; height: 27px; margin-right: 7px;">
                 발송관리
             </span>
-            <button type="button" class="shippingbtn" onclick="checkbox(); return false;">발송완료</button>
-            <button type="button" class="delay" onclick="checkbox1(); return false;">발송지연</button>
             <input type="hidden" name="projectNo" th:value="${project.projectNo}">
             <hr width="100%">
         </div>
+        <button type="button" class="shippingbtn" onclick="checkbox(); return false;">발송완료</button>
+        <button type="button" class="delay" onclick="checkbox1(); return false;">발송지연</button>
         <table class="shippingdetail">
             <tr>
                 <th><input type="checkbox" value="selectall" onclick="selectAll(this)"></th>

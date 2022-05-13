@@ -9,9 +9,9 @@
 }
 
 .shippinglist {
-    width: 600px;
+    width: 960px;
     height: 150px;
-    border: 1px solid #bac34e;
+    border: 1px solid #ABABAB;
     text-align: center;
 }
 
@@ -19,8 +19,16 @@
     border-bottom: none !important;
 }
 
+.shippinglist tr, .shippinglist td {
+    width: 190px;
+}
+
+.shippinglist td {
+    font-size: 20pt;
+}
+
 .shippingdetail {
-    width: 800px;
+    width: 960px;
     border: 1px solid black;
     text-align: center;
 }
@@ -33,16 +41,27 @@ td {
     font-size: 14pt;
 }
 
-.shippingbtn, .delay {
+.delay, .shippingbtn {
     border-radius: 5px;
     border-color: rgba(0,0,0,0);
     background-color: #bac34e;
     color: #FFFFFF;
     display: inline-block;
+    float: right;
+    margin-bottom: 10px;
+}
+
+.modifydatebtn {
+    border-radius: 5px;
+    border-color: rgba(0,0,0,0);
+    background-color: #bac34e;
+    color: #FFFFFF;
+    display: inline-block;
+    float: right;
 }
 
 .shippingbtn {
-    margin-left: 438px;
+    margin-left: 5px;
 }
 
 .delaybtn {
@@ -51,5 +70,5 @@ td {
     border-color: rgba(0,0,0,0);
     background-color: #bac34e;
     color: #FFFFFF;
-    margin-right: 160px;
+    margin-bottom: 10px;
 }
