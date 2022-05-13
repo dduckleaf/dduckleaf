@@ -47,9 +47,11 @@ import static com.greedy.dduckleaf.common.utility.DateFormatting.getDateAndTime;
  *                    -> findProjectsByProjectReportStatus 로 변경.
  * 2022/05/04 (장민주) registProjectReport 메소드 작성.
  * 2022/05/11 (장민주) findAllProjectReportListForMemberManage 메소드 작성.
+ * 2022/05/12 (장민주) findProjectReportListOfOneProject 메소드 수정.
+ *            (장민주) findProjectReportDetailForProjectManager 메소드 수정.
  *
  * </pre>
- * @version 1.0.8
+ * @version 1.0.9
  * @author 장민주
  */
 @Controller
@@ -146,7 +148,6 @@ public class ProjectReportController {
 
         mv.addObject("projectReportList", projectReportList);
         mv.addObject("pagingInfo", pagingInfo);
-//        mv.addObject("intent", "listAll");
 
         mv.setViewName("report/membermanager/list");
 
@@ -265,13 +266,17 @@ public class ProjectReportController {
            @PageableDefault(size=10, sort="projectReportNo", direction = Sort.Direction.DESC) Pageable pageable) {
 
         Page<ProjectReportDTO> projectReportList = service.findProjectReportListOfOneProject(projectNo, pageable);
-        projectReportList.forEach(System.out::println);
+
+        ProjectDTO project = projectReportList.stream().findFirst().get().getProject();
 
         PagingButtonInfo pagingInfo = Pagenation.getPagingButtonInfo(projectReportList);
 
         mv.addObject("projectReportList", projectReportList);
         mv.addObject("pagingInfo", pagingInfo);
         mv.addObject("projectNo", projectNo);
+        mv.addObject("project", project);
+
+        System.out.println("project = " + project);
 
         mv.setViewName("report/projectmanager/list");
 
@@ -281,19 +286,17 @@ public class ProjectReportController {
     /**
      * findProjectReportDetailForProjectManager: 프로젝트관리 하위의 신고관리메뉴에서 보내는 프로젝트 신고번호로 프로젝트신고내역 상세조회 요청 메소드입니다.
      * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
-     * @param projectNo 신고 대상 프로젝트 번호
      * @param projectReportNo 상세조회를 요청할 프로젝트신고번호
      * @return mv: 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장한 객체
      * @author 장민주
      */
-    @GetMapping("/projectmanager/detail/{projectNo}/{projectReportNo}")
-    public ModelAndView findProjectReportDetailForProjectManager(ModelAndView mv, @PathVariable int projectNo,
-                                                                 @PathVariable int projectReportNo) {
+    @GetMapping("/projectmanager/detail/{projectReportNo}")
+    public ModelAndView findProjectReportDetailForProjectManager(ModelAndView mv, @PathVariable int projectReportNo) {
 
         ReportDetailInfo reportDetailInfo = service.findProjectReportAndReply(projectReportNo);
 
         mv.addObject("reportDetailInfo", reportDetailInfo);
-        mv.addObject("projectNo", projectNo);
+        mv.addObject("project", reportDetailInfo.getProjectReport().getProject());
         mv.addObject("projectReportNo", projectReportNo);
         mv.setViewName("report/projectmanager/detail");
 
