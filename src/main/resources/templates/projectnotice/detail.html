@@ -41,9 +41,11 @@
                                 <td class="content" colspan="2" th:text="${ notice.projectNoticeContent }">내용</td>
                             </tr>
                         </table><br>
-                        <button class="basic-btn small-btn btn1 back" id="back">목록</button>
-                        <button class="basic-btn small-btn btn3 back" id="modifyProjectNotice">수정</button>
-                        <button class="basic-btn small-btn btn2 back" id="removeProjectNotice">삭제</button>
+                        <div>
+                            <button class="basic-btn small-btn btn1" id="modifyProjectNotice" style="float: right;">수정</button>
+                            <button class="basic-btn small-btn btn2" id="removeProjectNotice" style="float: right; margin-right: 1%;">삭제</button>
+                            <button class="basic-btn small-btn btn3 back" id="back" style="float:left;">목록</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -60,18 +62,26 @@
         location.href='/project/notice/list/' + projectNo;
     });
 
+    const projectNoticeNo = $("#projectNoticeNo").val();
+
     $("#removeProjectNotice").click(function() {
 
-        const projectNoticeNo = $("#projectNoticeNo").val();
+        if(!confirm("삭제하시겠습니까?")) {
 
-        location.href='/project/notice/remove/' + projectNoticeNo;
+        } else {
+            location.href='/project/notice/remove/' + projectNoticeNo;
+        }
     });
 
     $("#modifyProjectNotice").click(function() {
 
         const projectNoticeNo = $("#projectNoticeNo").val();
 
-        location.href='/project/notice/modify/' + projectNoticeNo;
+        if(!confirm("수정하시겠습니까?")) {
+
+        } else {
+            location.href='/project/notice/modify/' + projectNoticeNo;
+        }
     });
 
 </script>

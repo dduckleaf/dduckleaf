@@ -33,17 +33,18 @@
                              <form method="post" action="/project/notice/regist">
                                 <div class="title-form">
                                     <label for="projectNoticeTitle">제목</label>
-                                    <input type="text" id="projectNoticeTitle" name="projectNoticeTitle">
+                                    <input type="text" id="projectNoticeTitle" name="projectNoticeTitle" required>
                                     <input type="hidden" name="projectNoticeStatus" value="Y">
+                                    <input type="hidden" id="projectNo" name="projectNo" th:value="${project.projectNo}">
                                     <input type="hidden" id="registDate" name="registDate">
                                 </div><br>
                                 <div class="content-form">
                                     <label for="projectNoticeContent">내용</label>
-                                    <textarea id="projectNoticeContent" name="projectNoticeContent"></textarea>
+                                    <textarea id="projectNoticeContent" name="projectNoticeContent" required></textarea>
                                 </div>
                                 <div class="btn-area">
                                     <button class="basic-btn small-btn btn1 registProjectNotice" type="submit">등록</button>
-                                    <button class="basic-btn small-btn btn3 back" type="button">취소</button>
+                                    <button class="basic-btn small-btn btn3 back" type="button" style="margin-right: 1%;">취소</button>
                                 </div>
                              </form>
                          </div>
@@ -57,24 +58,11 @@
 
     <script>
 
-        $(".registProjectNotice").click(function () {
-
-            const projectNoticeTitle = $("#projectNoticeTitle").val();
-            console.log(projectNoticeTitle);
-            const projectNoticeContent = $("#projectNoticeContent").val();
-            console.log(projectNoticeContent);
-            if(projectNoticeTitle == "" || projectNoticeTitle == null) {
-                alert("제목을 입력하세요");
-                // location.reload(false);
-            } else if (projectNoticeContent == "" || projectNoticeContent == null) {
-                alert("내용을 입력하세요");
-            }
-
-        })
+        const projectNo = $("#projectNo").val();
 
         $(".back").click(function() {
 
-            location.href='/project/notice/list';
+            location.href='/project/notice/list/' + projectNo;
         });
 
         document.getElementById('registDate').value = new Date().toISOString().substring(0, 10);;
