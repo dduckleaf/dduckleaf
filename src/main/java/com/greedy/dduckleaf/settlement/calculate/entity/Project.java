@@ -1,17 +1,8 @@
 package com.greedy.dduckleaf.settlement.calculate.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "ProjectForSettlementCalculate")
 @Table(name = "TBL_PROJECT")
 public class Project {
@@ -44,6 +35,93 @@ public class Project {
 
     @OneToMany(mappedBy = "project")
     private List<RefundingInfo> refundingInfos;
+
+    public Project() {}
+
+    public Project(int projectNo, String projectName, String openDate, String endDate, String achievementRate,
+                   String progressStatus, FarmerInfo farmer, List<FundingInfo> fundingInfos, List<RefundingInfo> refundingInfos) {
+        this.projectNo = projectNo;
+        this.projectName = projectName;
+        this.openDate = openDate;
+        this.endDate = endDate;
+        this.achievementRate = achievementRate;
+        this.progressStatus = progressStatus;
+        this.farmer = farmer;
+        this.fundingInfos = fundingInfos;
+        this.refundingInfos = refundingInfos;
+    }
+
+    public int getProjectNo() {
+        return projectNo;
+    }
+
+    public void setProjectNo(int projectNo) {
+        this.projectNo = projectNo;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
+    public String getOpenDate() {
+        return openDate;
+    }
+
+    public void setOpenDate(String openDate) {
+        this.openDate = openDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getAchievementRate() {
+        return achievementRate;
+    }
+
+    public void setAchievementRate(String achievementRate) {
+        this.achievementRate = achievementRate;
+    }
+
+    public String getProgressStatus() {
+        return progressStatus;
+    }
+
+    public void setProgressStatus(String progressStatus) {
+        this.progressStatus = progressStatus;
+    }
+
+    public FarmerInfo getFarmer() {
+        return farmer;
+    }
+
+    public void setFarmer(FarmerInfo farmer) {
+        this.farmer = farmer;
+    }
+
+    public List<FundingInfo> getFundingInfos() {
+        return fundingInfos;
+    }
+
+    public void setFundingInfos(List<FundingInfo> fundingInfos) {
+        this.fundingInfos = fundingInfos;
+    }
+
+    public List<RefundingInfo> getRefundingInfos() {
+        return refundingInfos;
+    }
+
+    public void setRefundingInfos(List<RefundingInfo> refundingInfos) {
+        this.refundingInfos = refundingInfos;
+    }
 
     @Override
     public String toString() {

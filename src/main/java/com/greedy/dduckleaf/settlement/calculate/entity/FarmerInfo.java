@@ -1,17 +1,8 @@
 package com.greedy.dduckleaf.settlement.calculate.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "FarmerInfoForSettlementCalculate")
 @Table(name = "TBL_FARMER_INFO")
 public class FarmerInfo {
@@ -29,8 +20,55 @@ public class FarmerInfo {
     @Column(name = "REPRESENTATIVE_EMAIL")
     private String representativeEmail;                 //대표자이메일
 
-//    @OneToOne(mappedBy = "farmer")
-//    private FarmerFinancialInfo farmerFinancialInfo;
+    public FarmerInfo() {}
+
+    public FarmerInfo(int memberNo, String farmerName, String representativeName, String representativeEmail, List<Project> projects) {
+        this.memberNo = memberNo;
+        this.farmerName = farmerName;
+        this.representativeName = representativeName;
+        this.representativeEmail = representativeEmail;
+        this.projects = projects;
+    }
+
+    public int getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(int memberNo) {
+        this.memberNo = memberNo;
+    }
+
+    public String getFarmerName() {
+        return farmerName;
+    }
+
+    public void setFarmerName(String farmerName) {
+        this.farmerName = farmerName;
+    }
+
+    public String getRepresentativeName() {
+        return representativeName;
+    }
+
+    public void setRepresentativeName(String representativeName) {
+        this.representativeName = representativeName;
+    }
+
+    public String getRepresentativeEmail() {
+        return representativeEmail;
+    }
+
+    public void setRepresentativeEmail(String representativeEmail) {
+        this.representativeEmail = representativeEmail;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
 
     @OneToMany(mappedBy = "farmer")
     private List<Project> projects;

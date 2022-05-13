@@ -1,16 +1,7 @@
 package com.greedy.dduckleaf.settlement.calculate.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "RefundingInfoForSettlement")
 @Table(name = "TBL_REFUNDING")
 public class RefundingInfo {
@@ -40,6 +31,75 @@ public class RefundingInfo {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FUNDING_INFO_NO")
     private FundingInfo fundingInfo;                //펀딩내역번호
+
+    public RefundingInfo() {}
+
+    public RefundingInfo(int refundingInfoNo, String refundingDate, int refundingCategoryNo,
+                         RefundingStatus refundingStatus, Project project, String refundingEndDate, FundingInfo fundingInfo) {
+        this.refundingInfoNo = refundingInfoNo;
+        this.refundingDate = refundingDate;
+        this.refundingCategoryNo = refundingCategoryNo;
+        this.refundingStatus = refundingStatus;
+        this.project = project;
+        this.refundingEndDate = refundingEndDate;
+        this.fundingInfo = fundingInfo;
+    }
+
+    public int getRefundingInfoNo() {
+        return refundingInfoNo;
+    }
+
+    public void setRefundingInfoNo(int refundingInfoNo) {
+        this.refundingInfoNo = refundingInfoNo;
+    }
+
+    public String getRefundingDate() {
+        return refundingDate;
+    }
+
+    public void setRefundingDate(String refundingDate) {
+        this.refundingDate = refundingDate;
+    }
+
+    public int getRefundingCategoryNo() {
+        return refundingCategoryNo;
+    }
+
+    public void setRefundingCategoryNo(int refundingCategoryNo) {
+        this.refundingCategoryNo = refundingCategoryNo;
+    }
+
+    public RefundingStatus getRefundingStatus() {
+        return refundingStatus;
+    }
+
+    public void setRefundingStatus(RefundingStatus refundingStatus) {
+        this.refundingStatus = refundingStatus;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public String getRefundingEndDate() {
+        return refundingEndDate;
+    }
+
+    public void setRefundingEndDate(String refundingEndDate) {
+        this.refundingEndDate = refundingEndDate;
+    }
+
+    public FundingInfo getFundingInfo() {
+        return fundingInfo;
+    }
+
+    public void setFundingInfo(FundingInfo fundingInfo) {
+        this.fundingInfo = fundingInfo;
+    }
 
     @Override
     public String toString() {

@@ -1,12 +1,7 @@
 package com.greedy.dduckleaf.settlement.calculate.entity;
-import lombok.*;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "PaymentHistoryForSettlementCalculate")
 @Table(name = "TBL_PAYMENT_HISTORY")
 public class PaymentHistory {
@@ -24,6 +19,47 @@ public class PaymentHistory {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FUNDING_INFO_NO")
     private FundingInfo fundingInfo;                //펀딩 신청 내역 번호
+
+    public PaymentHistory() {}
+
+    public PaymentHistory(int paymentHistoryNo, String paymentResultStatus, String paymentResultDate, FundingInfo fundingInfo) {
+        this.paymentHistoryNo = paymentHistoryNo;
+        this.paymentResultStatus = paymentResultStatus;
+        this.paymentResultDate = paymentResultDate;
+        this.fundingInfo = fundingInfo;
+    }
+
+    public int getPaymentHistoryNo() {
+        return paymentHistoryNo;
+    }
+
+    public void setPaymentHistoryNo(int paymentHistoryNo) {
+        this.paymentHistoryNo = paymentHistoryNo;
+    }
+
+    public String getPaymentResultStatus() {
+        return paymentResultStatus;
+    }
+
+    public void setPaymentResultStatus(String paymentResultStatus) {
+        this.paymentResultStatus = paymentResultStatus;
+    }
+
+    public String getPaymentResultDate() {
+        return paymentResultDate;
+    }
+
+    public void setPaymentResultDate(String paymentResultDate) {
+        this.paymentResultDate = paymentResultDate;
+    }
+
+    public FundingInfo getFundingInfo() {
+        return fundingInfo;
+    }
+
+    public void setFundingInfo(FundingInfo fundingInfo) {
+        this.fundingInfo = fundingInfo;
+    }
 
     @Override
     public String toString() {

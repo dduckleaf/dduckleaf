@@ -1,13 +1,8 @@
 package com.greedy.dduckleaf.settlement.calculate.entity;
-import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "FundingInfoForSettlement")
 @Table(name = "TBL_FUNDING_INFO")
 public class FundingInfo {
@@ -31,6 +26,66 @@ public class FundingInfo {
 
     @OneToMany(mappedBy = "fundingInfo")
     private List<RefundingInfo> refundingInfos;
+
+    public FundingInfo() {}
+
+    public FundingInfo(int fundingInfoNo, int fundingAmount, int donateAmount, String fundingStatus, Project project,
+                       List<RefundingInfo> refundingInfos) {
+        this.fundingInfoNo = fundingInfoNo;
+        this.fundingAmount = fundingAmount;
+        this.donateAmount = donateAmount;
+        this.fundingStatus = fundingStatus;
+        this.project = project;
+        this.refundingInfos = refundingInfos;
+    }
+
+    public int getFundingInfoNo() {
+        return fundingInfoNo;
+    }
+
+    public void setFundingInfoNo(int fundingInfoNo) {
+        this.fundingInfoNo = fundingInfoNo;
+    }
+
+    public int getFundingAmount() {
+        return fundingAmount;
+    }
+
+    public void setFundingAmount(int fundingAmount) {
+        this.fundingAmount = fundingAmount;
+    }
+
+    public int getDonateAmount() {
+        return donateAmount;
+    }
+
+    public void setDonateAmount(int donateAmount) {
+        this.donateAmount = donateAmount;
+    }
+
+    public String getFundingStatus() {
+        return fundingStatus;
+    }
+
+    public void setFundingStatus(String fundingStatus) {
+        this.fundingStatus = fundingStatus;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public List<RefundingInfo> getRefundingInfos() {
+        return refundingInfos;
+    }
+
+    public void setRefundingInfos(List<RefundingInfo> refundingInfos) {
+        this.refundingInfos = refundingInfos;
+    }
 
     @Override
     public String toString() {
