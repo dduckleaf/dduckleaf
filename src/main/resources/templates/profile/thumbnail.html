@@ -89,13 +89,17 @@
             <div id="changeImg">바꾸기</div><div id="deleteImg">기본 이미지로 변경</div>
         </div>
     </form>
+    <button class="big-btn btn2" id="removeMember" data-bs-toggle="modal" data-bs-target="#writeModalToggle" >탈퇴하기</button>
 </div>
-<button class="big-btn btn2" id="removeMember" data-bs-toggle="modal" data-bs-target="#writeModalToggle" >탈퇴하기</button>
 </body>
 <script>
 
     window.onload = function() {
         document.getElementById("titleImg").src = document.getElementById("profile-attachment").innerText;
+    }
+
+    document.getElementById("removeMember").onclick = function () {
+        document.getElementById("withdraw-form").style.display = 'block';
     }
 
     const $titleImgDiv = document.getElementById("changeImg");
