@@ -133,7 +133,7 @@
     const backToList = document.getElementById("backToList");
     if(backToList) {
         backToList.onclick = function() {
-            location.href = "/report/projectmanager/list/[[${projectNo}]]";
+            location.href = "/report/projectmanager/list/[[${project.projectNo}]]";
         }
     }
 
@@ -141,7 +141,7 @@
     const backToDetail = document.getElementById("backToDetail");
     if(backToDetail) {
         backToDetail.onclick = function() {
-            location.href = "/report/projectmanager/detail/[[${projectNo}]]/[[${ projectReportNo }]]";
+            location.href = "/report/projectmanager/detail/[[${ projectReportNo }]]";
         }
     }
 
