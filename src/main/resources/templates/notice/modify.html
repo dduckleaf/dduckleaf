@@ -5,7 +5,7 @@
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>떡잎펀드 - 공지사항</title>
+    <title>떡잎펀드</title>
     <meta name="robots" content="noindex, follow"/>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,8 +59,8 @@
                         <div class="category-form">
                             <label for="categoryNo">분류</label>
                             <select name="noticeCategoryNo" id="categoryNo">
-                                <option disabled selected>분류명</option>
-                                <option th:each="category : ${ categoryList }" th:value="${category.noticeCategoryNo}" th:text="${category.noticeCategoryName}"></option>
+<!--                                <option th:each="category : ${ categoryList }" th:value="${category.noticeCategoryNo}" th:text="${category.noticeCategoryName}"></option>-->
+                                <option th:each="category : ${ categoryList }" th:value="${ category.noticeCategoryNo }" th:utext="${ category.noticeCategoryName }" th:selected="${ noticeDetail.noticeCategoryNo == category.noticeCategoryNo }"></option>
                             </select>
                         </div>
                         <div class="content-form" th:each="notice : ${ noticeDetail }">
