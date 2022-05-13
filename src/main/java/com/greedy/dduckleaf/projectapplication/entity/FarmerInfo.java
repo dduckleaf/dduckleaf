@@ -11,7 +11,6 @@ public class FarmerInfo {
 
     @Id
     @Column(name = "MEMBER_NO")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int memberNo;
 
     @Column(name = "FARMER_NAME")
@@ -244,19 +243,4 @@ public class FarmerInfo {
                 '}';
     }
 
-    @PrePersist
-    public void prePersist() {
-
-        this.farmerName = this.farmerName  == null ? "파머이름" : this.farmerName ;
-        this.farmerEmail = this.farmerEmail  == null ? "이메일" : this.farmerEmail ;
-        this.farmerPhone = this.farmerPhone  == null ? "전화번호" : this.farmerPhone ;
-        this.businessOwnNo = this.businessOwnNo  == null ? "사업자등록번호" : this.businessOwnNo ;
-        this.businessName = this.businessName  == null ? "상호명" : this.businessName ;
-        this.representativeName = this.representativeName  == null ? "대표자명" : this.representativeName ;
-        this.representativeEmail = this.representativeEmail  == null ? "대표자이메일" : this.representativeEmail ;
-        this.representativeSSN = this.representativeSSN  == null ? "주민등록번호" : this.representativeSSN ;
-        this.corporateName = this.corporateName  == null ? "법인명" : this.corporateName ;
-        this.businessOwnType = this.businessOwnType  == null ? "사업자유형" : this.businessOwnType ;
-
-    }
 }

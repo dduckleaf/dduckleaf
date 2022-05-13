@@ -61,12 +61,10 @@
                 <div class="single-product-content">
                   <input type="hidden" th:value="${ project.projectNo }">
                   <div class="title" th:text="${ project.projectName }"></div><br>
-                  <div class="price-box pb-1">
-                    <button class="basic-btn btn-fill-green btn-border-white rounded-1">관심 프로젝트 추가</button>
-                  </div>
-                  <div class="align-center">
-                    <a class="short-desc align-center">관심 프로젝트에 추가하여 펀딩 시작 알림을 받아보세요!</a>
-                  </div><br>
+<!--                  <div class="price-box pb-1">-->
+<!--                    <button class="basic-btn btn-fill-green btn-border-white rounded-1">관심 프로젝트 추가</button>-->
+<!--                  </div>-->
+
                   <div class="infoBox rounded-1">
                     <div>
                       <span class="short-desc">파머 정보</span>
@@ -80,9 +78,9 @@
                   </div><br>
                   <ul class="quantity-with-btn pb-7">
                     <li class="add-to-cart">
-                      <button class="basic-btn btn3 fill-white-btn rounded-1" id="registReport" style="width: 500px;">프로젝트에 문제를 발견하셨나요? 신고하기
-                        <img src="/images/common/rightarrow.png" alt="Product Image">
-                      </button>
+                      <div class="align-center">
+                        <a class="short-desc align-center" th:text="${ projectInfo.projectBasicInfo.projectInfo }"></a>
+                      </div><br>
                     </li>
                   </ul>
                 </div>
@@ -107,21 +105,21 @@
                   파머 정보
                 </a>
               </li>
-              <li class="nav-item" role="presentation">
-                <a class="btn btn-custom-size" id="qna-tab" data-bs-toggle="tab" href="#qna" role="tab" aria-controls="qna" aria-selected="false">
-                  관련 문의
-                </a>
-              </li>
-              <li class="nav-item" role="presentation">
-                <a class="btn btn-custom-size" id="farmnote-tab" data-bs-toggle="tab" href="#farmnote" role="tab" aria-controls="farmnote" aria-selected="false">
-                  농사 일지
-                </a>
-              </li>
-              <li class="nav-item" role="presentation">
-                <a class="btn btn-custom-size" id="refundpolicy-tab" data-bs-toggle="tab" href="#refundpolicy" role="tab" aria-controls="refundpolicy" aria-selected="false">
-                  반환 정책
-                </a>
-              </li>
+<!--              <li class="nav-item" role="presentation">-->
+<!--                <a class="btn btn-custom-size" id="qna-tab" data-bs-toggle="tab" href="#qna" role="tab" aria-controls="qna" aria-selected="false">-->
+<!--                  관련 문의-->
+<!--                </a>-->
+<!--              </li>-->
+<!--              <li class="nav-item" role="presentation">-->
+<!--                <a class="btn btn-custom-size" id="farmnote-tab" data-bs-toggle="tab" href="#farmnote" role="tab" aria-controls="farmnote" aria-selected="false">-->
+<!--                  농사 일지-->
+<!--                </a>-->
+<!--              </li>-->
+<!--              <li class="nav-item" role="presentation">-->
+<!--                <a class="btn btn-custom-size" id="refundpolicy-tab" data-bs-toggle="tab" href="#refundpolicy" role="tab" aria-controls="refundpolicy" aria-selected="false">-->
+<!--                  반환 정책-->
+<!--                </a>-->
+<!--              </li>-->
               <li class="nav-item" role="presentation">
                 <a class="btn btn-custom-size" id="notice-tab" data-bs-toggle="tab" href="#notice" role="tab" aria-controls="notice" aria-selected="false">
                   공지사항
@@ -171,33 +169,33 @@
               <!-- 파머정보 End Here -->
 
               <!-- Begin 관련 문의 -->
-              <div class="tab-pane fade" id="qna" role="tabpanel" aria-labelledby="qna-tab">
-                <div class="product-shipping-body">
-                  <h4 class="title">관련문의</h4>
-                </div>
-              </div>
-              <!-- 관련 문의 End Here -->
+<!--              <div class="tab-pane fade" id="qna" role="tabpanel" aria-labelledby="qna-tab">-->
+<!--                <div class="product-shipping-body">-->
+<!--                  <h4 class="title">관련문의</h4>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              &lt;!&ndash; 관련 문의 End Here &ndash;&gt;-->
 
-              <!-- Begin 농사 일지 -->
-              <div class="tab-pane fade" id="farmnote" role="tabpanel" aria-labelledby="farmnote-tab">
-                <div class="product-shipping-body">
-                  <h4 class="title">농사일지</h4>
-                </div>
-              </div>
-              <!-- 농사 일지 End Here -->
+<!--              &lt;!&ndash; Begin 농사 일지 &ndash;&gt;-->
+<!--              <div class="tab-pane fade" id="farmnote" role="tabpanel" aria-labelledby="farmnote-tab">-->
+<!--                <div class="product-shipping-body">-->
+<!--                  <h4 class="title">농사일지</h4>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              &lt;!&ndash; 농사 일지 End Here &ndash;&gt;-->
 
-              <!-- Begin 반환 정책 -->
-              <div class="tab-pane fade" id="refundpolicy" role="tabpanel" aria-labelledby="refundpolicy-tab">
-                <br>
-                <div class="notice">
-                  <p class="noticeP"><img src="assets/images/header\icon/alert.png">
-                    도서산간에 해당하는 서포터님은 배송 가능 여부를 반드시 파머에게 문의 후 펀딩에 참여해주세요.</p>
-                </div><br>
-                <div>
-                  <h5>이 프로젝트의 정보 및 정책을 반드시 확인하세요.</h5>
-                  <p class="short-desc mb-0" th:text="${ projectInfo.refundPolicy.refundPolicyContent }"></p>
-                </div>
-              </div>
+<!--              &lt;!&ndash; Begin 반환 정책 &ndash;&gt;-->
+<!--              <div class="tab-pane fade" id="refundpolicy" role="tabpanel" aria-labelledby="refundpolicy-tab">-->
+<!--                <br>-->
+<!--                <div class="notice">-->
+<!--                  <p class="noticeP"><img src="assets/images/header\icon/alert.png">-->
+<!--                    도서산간에 해당하는 서포터님은 배송 가능 여부를 반드시 파머에게 문의 후 펀딩에 참여해주세요.</p>-->
+<!--                </div><br>-->
+<!--                <div>-->
+<!--                  <h5>이 프로젝트의 정보 및 정책을 반드시 확인하세요.</h5>-->
+<!--                  <p class="short-desc mb-0" th:text="${ projectInfo.refundPolicy.refundPolicyContent }"></p>-->
+<!--                </div>-->
+<!--              </div>-->
               <!-- 반환정책 End Here -->
 
               <!-- Begin 공지사항 -->
@@ -211,16 +209,14 @@
                       <div id="projectNoticeList">
                         <table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
                           <tr>
-                            <th>번호</th>
-                            <th>제목</th>
-                            <th>작성일</th>
-                            <th>조회수</th>
+                            <th style="width: 5%;">번호</th>
+                            <th style="width: 80%;">제목</th>
+                            <th style="width: 15%;">작성일</th>
                           </tr>
-                          <tr th:each="projectNotice : ${ projectNotice }" class="noticeList" id="noticeList">
-                            <td th:text="${ projectNotice.projectNoticeNo }"></td>
-                            <td th:text="${ projectNotice.projectNoticeTitle }"></td>
-                            <td th:text="${ projectNotice.registDate }"></td>
-                            <td th:text="${ projectNotice.projectNoticeCount }"></td>
+                          <tr>
+                            <td></td>
+                            <td>오픈 예정 프로젝트입니다.</td>
+                            <td></td>
                           </tr>
                         </table>
                       </div>
@@ -239,41 +235,41 @@
 </div>
 <hr>
 <!-- Begin 연관상품 추천 -->
-<div class="product-slider-area section-space-top-55 section-space-bottom-100">
-  <div class="container">
-    <div class="section-title text-center pb-55">
-      <span class="bottom-title">연관상품 추천</span>
-    </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="swiper-slider-holder swiper-arrow">
-          <div class="swiper-container product-slider border-issue">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <div class="product-item">
-                  <div class="product-img img-zoom-effect">
-                    <a href="single-product.html">
-                      <img class="img-full mainimg" src="assets/images/product/large-size/potato.png" alt="Product Images">
-                    </a>
-                  </div>
-                  <div class="product-content">
-                    <a class="product-name" href="single-product.html">산지직송 짭짤이 토마토</a>
-                    <div class="price-box pb-1">
-                      <span class="new-price">짭짤 토메이로</span>
-                    </div>
-                    <progress class="relatedProduct" value="55" max="100"></progress>
-                    <a class="progressbar">55%</a><a class="progressbar1">22일 남음</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Add Arrows -->
-    <div class="swiper-button-next"></div>
-    <div class="swiper-button-prev"></div>
+<!--<div class="product-slider-area section-space-top-55 section-space-bottom-100">-->
+<!--  <div class="container">-->
+<!--    <div class="section-title text-center pb-55">-->
+<!--      <span class="bottom-title">연관상품 추천</span>-->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--      <div class="col-lg-12">-->
+<!--        <div class="swiper-slider-holder swiper-arrow">-->
+<!--          <div class="swiper-container product-slider border-issue">-->
+<!--            <div class="swiper-wrapper">-->
+<!--              <div class="swiper-slide">-->
+<!--                <div class="product-item">-->
+<!--                  <div class="product-img img-zoom-effect">-->
+<!--                    <a href="single-product.html">-->
+<!--                      <img class="img-full mainimg" src="assets/images/product/large-size/potato.png" alt="Product Images">-->
+<!--                    </a>-->
+<!--                  </div>-->
+<!--                  <div class="product-content">-->
+<!--                    <a class="product-name" href="single-product.html">산지직송 짭짤이 토마토</a>-->
+<!--                    <div class="price-box pb-1">-->
+<!--                      <span class="new-price">짭짤 토메이로</span>-->
+<!--                    </div>-->
+<!--                    <progress class="relatedProduct" value="55" max="100"></progress>-->
+<!--                    <a class="progressbar">55%</a><a class="progressbar1">22일 남음</a>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; Add Arrows &ndash;&gt;-->
+<!--    <div class="swiper-button-next"></div>-->
+<!--    <div class="swiper-button-prev"></div>-->
   </div>
 </div>
 </div>
