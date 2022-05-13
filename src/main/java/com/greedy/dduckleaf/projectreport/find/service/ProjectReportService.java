@@ -209,6 +209,10 @@ public class ProjectReportService {
     public void registReply(ProjectReportReplyDTO reply) {
 
         replyRepository.save(modelMapper.map(reply, ProjectReportReply.class));
+
+        ProjectReport foundReport = reportRepository.findById(reply.getProjectReportNo()).get();
+
+        foundReport.setProjectReportStatus("답변완료");
     }
 
     /**
