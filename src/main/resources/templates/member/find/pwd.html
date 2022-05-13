@@ -2,8 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>떡잎펀드</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/member.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/findPwd.css}">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
 </head>
 <body style="overflow: hidden">
     <div th:replace="/common/userheader.html"></div>
@@ -20,9 +23,11 @@
             <input type="text" id="email" name="email" placeholder="이메일">
             <!--인증번호 전송 버튼-->
             <input type="button" class="small-btn" id="email-verification" value="인증번호 전송">
-            <input type="text" id="verification" placeholder="인증번호">
-            <!--인증번호 확인 버튼-->
-            <input type="button" class="small-btn" id="check-verification" value="확인">
+            <div class="verification-div">
+                <input type="text" id="verification" placeholder="인증번호">
+                <!--인증번호 확인 버튼-->
+                <input type="button" class="small-btn" id="check-verification" value="확인">
+            </div>
             <!--인증여부-->
             <input type="hidden" id="check-result" value="false">
             <!--넘겨받은 인증 번호-->
