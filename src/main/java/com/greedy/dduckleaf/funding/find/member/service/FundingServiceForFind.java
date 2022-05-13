@@ -46,9 +46,10 @@ public class FundingServiceForFind {
     private final BankRepository bankRepo;
     private final ProjectRepositoryForManageEndProjectDetail projectRepo;
     private final ModelMapper mapper;
+    private final RefundingForFundingRefundingRepository refundRepo;
 
     @Autowired
-    public FundingServiceForFind(FundingForMemberFindRepository fundingRepo, PaymentHistoryForFundingFindMemberRepository paymentRepo, ShippingAddressForFundingFindRepository addressRepo, MemberForFundingFindRepository memberRepo, BankRepository bankRepo, ProjectRepositoryForManageEndProjectDetail projectRepo, ModelMapper mapper) {
+    public FundingServiceForFind(FundingForMemberFindRepository fundingRepo, PaymentHistoryForFundingFindMemberRepository paymentRepo, ShippingAddressForFundingFindRepository addressRepo, MemberForFundingFindRepository memberRepo, BankRepository bankRepo, ProjectRepositoryForManageEndProjectDetail projectRepo, ModelMapper mapper, RefundingForFundingRefundingRepository refundRepo) {
         this.fundingRepo = fundingRepo;
         this.paymentRepo = paymentRepo;
         this.addressRepo = addressRepo;
@@ -56,6 +57,7 @@ public class FundingServiceForFind {
         this.bankRepo = bankRepo;
         this.projectRepo = projectRepo;
         this.mapper = mapper;
+        this.refundRepo = refundRepo;
     }
 
     /**
@@ -261,5 +263,18 @@ public class FundingServiceForFind {
         ProjectDTO project = mapper.map(projectRepo.findById(projectNo).get(), ProjectDTO.class);
 
         return new ProjectManageFundingDTO(fundingDTOs, project);
+    }
+
+    public RefundingFindDetailInfoDTO findRefudingInfo(int projectNo, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() - 1, PAGE_SIZE,
+                Sort.by("refundingInfoNo").descending());
+
+
+        RefundingFindDetailInfoDTO info = new RefundingFindDetailInfoDTO();
+
+        info.setProject(mapper.map(projectRepo.findById(projectNo).get(), ProjectDTO.class));
+        info.setRefundings(refundRepo.findByProject_projectNo(projectNo, pageable));
+
+        return info;
     }
 }

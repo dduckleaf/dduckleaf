@@ -122,7 +122,7 @@
     const $back = document.getElementById("detail-back");
     const $projectNo= [[${refunding.project.projectNo}]];
     const $refundNo = [[${refunding.refundingInfoNo}]];
-
+    const $refundstatus = [[${refundstatus}]];
     if($confirm) {
         $confirm.onclick = function() {
             location.href = "/refund/examine/platform/objection/confirm/" + $refundNo;
@@ -130,7 +130,7 @@
     }
     if($back) {
         $back.onclick = function() {
-            location.href = "/refund/find/admin/projectlist/" + $projectNo;
+            location.href = "/refund/find/admin/statuslist/" + $refundstatus;
         }
     }
 </script>

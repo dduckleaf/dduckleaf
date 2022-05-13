@@ -118,7 +118,7 @@ public class ProjectFindService implements CodeForProject {
 
         /* 진행상태별로 다르게 문구를 저장합니다. */
         switch (progressStatus) {
-            case PROJECT_PROGRESS_STATUS_오픈예정: timeInfo = projectDTO.getOpenDate() + " 오픈예정"; break;
+            case PROJECT_PROGRESS_STATUS_오픈예정: timeInfo = projectDTO.getOpenDate() + ""; break;
             /* 진행중일 경우 Dday를 계산 후 저장합니다. */
             case PROJECT_PROGRESS_STATUS_진행중: timeInfo = calculateDDay(projectDTO.getEndDate()); break;
             case PROJECT_PROGRESS_STATUS_종료: timeInfo = projectDTO.getEndDate() + " 종료됨";break;

@@ -5,6 +5,7 @@ import com.greedy.dduckleaf.common.paging.Pagenation;
 import com.greedy.dduckleaf.common.paging.PagingButtonInfo;
 import com.greedy.dduckleaf.funding.dto.FundingByMemberForAdminDTO;
 import com.greedy.dduckleaf.funding.dto.FundingDTO;
+import com.greedy.dduckleaf.funding.dto.RefundingFindDetailInfoDTO;
 import com.greedy.dduckleaf.funding.entity.Funding;
 import com.greedy.dduckleaf.funding.find.member.dto.FundingFindDetailInfoForMemberDTO;
 import com.greedy.dduckleaf.funding.find.member.dto.FundingInfoByMemberForAdminDTO;
@@ -188,6 +189,22 @@ public class FundingForMemberFindController {
         mv.addObject("bankList", fundingDetailInfo.getBankList());
         mv.addObject("project", fundingDetailInfo.getFunding().getProject());
         mv.setViewName("/funding/find/admin/projectfundingmanagedetail");
+
+        return mv;
+    }
+
+    @GetMapping("/admin/refunding/projectlist/{projectNo}")
+    public ModelAndView findNotFundingRefunding(ModelAndView mv, @PathVariable int projectNo, @PageableDefault Pageable pageable) {
+
+        RefundingFindDetailInfoDTO info = service.findRefudingInfo(projectNo, pageable);
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(info.getRefundings(), BUTTON_AMOUNT);
+
+        /* 펀딩정보와 회원번호, 페이징 정보를 저장 후 반환합니다. */
+        mv.addObject("paging", paging);
+        mv.addObject("project", info.getProject());
+        mv.addObject("refundings", info.getRefundings());
+
+        mv.setViewName("/refund/find/admin/projectrefundmanage");
 
         return mv;
     }

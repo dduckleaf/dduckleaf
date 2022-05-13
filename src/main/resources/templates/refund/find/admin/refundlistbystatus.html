@@ -72,7 +72,7 @@
 </div>
 
 
-<script>
+<script th:inline="javascript">
     /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
     const tds = document.getElementsByTagName("td");
     if(tds) {
@@ -89,7 +89,8 @@
 
             tds[i].onclick = function() {
                 const refundingNo = this.parentNode.children[0].children[0].value;
-                location.href = "/refund/find/admin/refundingdetail/" + refundingNo;
+                const refundstatus = [[${refundstatus}]];
+                location.href = "/refund/find/admin/refundingdetail/" + refundingNo + "/"  + refundstatus;
             }
         }
     }

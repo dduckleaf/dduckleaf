@@ -50,7 +50,7 @@ public class RefundForFindController {
     public ModelAndView refundListPage(@AuthenticationPrincipal CustomUser user, ModelAndView mv,
         @PageableDefault(size=10, sort="refundingInfoNo", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        int memberNo = 7;
+        int memberNo = user.getMemberNo();
 
         Page<RefundingDTO> refundings = service.findRefundingListForMember(memberNo, pageable);
 
@@ -113,22 +113,26 @@ public class RefundForFindController {
 
     @GetMapping("/admin/projectlist/{projectNo}")
     public ModelAndView adminFindRefundListByProject(ModelAndView mv, @PathVariable int projectNo,
-                                            @PageableDefault(size=10, sort="projectNo", direction = Sort.Direction.DESC) Pageable pageable) {
+                                                     @PageableDefault(size=10, sort="projectNo", direction = Sort.Direction.DESC) Pageable pageable) {
 
         Page<RefundingForAdminListDTO> refundings = service.findAdminRefundingListByProject(projectNo, pageable);
 
 
 
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(refundings);
+
+        mv.addObject("paging", paging);
         mv.addObject("refundings", refundings);
         mv.setViewName("/refund/find/admin/refundlistbyproject");
         return mv;
     }
 
-    @GetMapping("/admin/refundingdetail/{refundingNo}")
-    public ModelAndView findAdminRefundingDetail(ModelAndView mv, @PathVariable int refundingNo) {
+    @GetMapping("/admin/refundingdetail/{refundingNo}/{refundstatus}")
+    public ModelAndView findAdminRefundingDetail(ModelAndView mv, @PathVariable int refundingNo, @PathVariable int refundstatus) {
 
         RefundingDTO refunding = service.findRefundingInfo(refundingNo);
         mv.addObject("refunding", refunding);
+        mv.addObject("refundstatus", refundstatus);
         mv.setViewName("/refund/find/admin/refunddetail");
 
         return mv;
