@@ -57,6 +57,8 @@ public class FollowingProjectController {
                 .disableHtmlEscaping()
                 .create();
 
+        System.out.println(result);
+
         return gson.toJson(result);
     }
 
@@ -80,6 +82,8 @@ public class FollowingProjectController {
                 .serializeNulls()
                 .disableHtmlEscaping()
                 .create();
+
+        System.out.println(result);
 
         return gson.toJson(result);
     }
