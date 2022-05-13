@@ -103,7 +103,7 @@
                         <th>답변일</th>
                         <td name="projectReportReplyDate">
                             <input name="projectReportReplyDate" type="text" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" readonly>
-                            <input name="projectReportNo" id="test" type="hidden" th:value="${ reportDetailInfo.projectReport.projectReportNo }">
+                            <input name="projectReportNo" type="hidden" th:value="${ reportDetailInfo.projectReport.projectReportNo }">
                         </td>
                     </tr>
                     <tr>
