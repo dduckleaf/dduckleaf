@@ -139,6 +139,7 @@ public class FundingForMemberFindController {
 
         return mv;
     }
+    
     /**
      * findMemberDetail : 회원의 펀딩 상세내역을 조회합니다.
      * @Param fundingNo : 펀딩번호를 전달받습니다.

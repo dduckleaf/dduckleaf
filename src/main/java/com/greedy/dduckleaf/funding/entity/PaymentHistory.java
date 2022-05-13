@@ -4,10 +4,6 @@ import javax.persistence.*;
 
 import lombok.*;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "PaymentHistoryForFunding")
 @Table(name = "TBL_PAYMENT_HISTORY")
 public class PaymentHistory {
@@ -30,6 +26,57 @@ public class PaymentHistory {
     @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "FUNDING_INFO_NO")
     private Funding funding;
+
+    public PaymentHistory() {
+    }
+
+    public PaymentHistory(int paymentHistoryNo, int memberNo, String paymentResultStauts, String paymentResultDate, Funding funding) {
+        this.paymentHistoryNo = paymentHistoryNo;
+        this.memberNo = memberNo;
+        this.paymentResultStauts = paymentResultStauts;
+        this.paymentResultDate = paymentResultDate;
+        this.funding = funding;
+    }
+
+    public int getPaymentHistoryNo() {
+        return paymentHistoryNo;
+    }
+
+    public void setPaymentHistoryNo(int paymentHistoryNo) {
+        this.paymentHistoryNo = paymentHistoryNo;
+    }
+
+    public int getMemberNo() {
+        return memberNo;
+    }
+
+    public void setMemberNo(int memberNo) {
+        this.memberNo = memberNo;
+    }
+
+    public String getPaymentResultStauts() {
+        return paymentResultStauts;
+    }
+
+    public void setPaymentResultStauts(String paymentResultStauts) {
+        this.paymentResultStauts = paymentResultStauts;
+    }
+
+    public String getPaymentResultDate() {
+        return paymentResultDate;
+    }
+
+    public void setPaymentResultDate(String paymentResultDate) {
+        this.paymentResultDate = paymentResultDate;
+    }
+
+    public Funding getFunding() {
+        return funding;
+    }
+
+    public void setFunding(Funding funding) {
+        this.funding = funding;
+    }
 
     @Override
     public String toString() {
