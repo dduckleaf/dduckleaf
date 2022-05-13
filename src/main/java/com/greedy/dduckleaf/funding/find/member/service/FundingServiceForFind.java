@@ -7,10 +7,8 @@ import com.greedy.dduckleaf.funding.entity.MemberForAdmin;
 import com.greedy.dduckleaf.funding.entity.ShippingAddress;
 import com.greedy.dduckleaf.funding.find.member.dto.FundingFindDetailInfoForMemberDTO;
 import com.greedy.dduckleaf.funding.find.member.dto.FundingInfoByMemberForAdminDTO;
-import com.greedy.dduckleaf.funding.find.member.repository.FundingForMemberFindRepository;
-import com.greedy.dduckleaf.funding.find.member.repository.MemberForFundingFindRepository;
-import com.greedy.dduckleaf.funding.find.member.repository.PaymentHistoryForFundingFindMemberRepository;
-import com.greedy.dduckleaf.funding.find.member.repository.ShippingAddressForFundingFindRepository;
+import com.greedy.dduckleaf.funding.find.member.dto.ProjectManageFundingDTO;
+import com.greedy.dduckleaf.funding.find.member.repository.*;
 import com.greedy.dduckleaf.funding.regist.repository.BankRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,15 +44,17 @@ public class FundingServiceForFind {
     private final ShippingAddressForFundingFindRepository addressRepo;
     private final MemberForFundingFindRepository memberRepo;
     private final BankRepository bankRepo;
+    private final ProjectRepositoryForManageEndProjectDetail projectRepo;
     private final ModelMapper mapper;
 
     @Autowired
-    public FundingServiceForFind(FundingForMemberFindRepository fundingRepo, PaymentHistoryForFundingFindMemberRepository paymentRepo, ShippingAddressForFundingFindRepository addressRepo, MemberForFundingFindRepository memberRepo, BankRepository bankRepo, ModelMapper mapper) {
+    public FundingServiceForFind(FundingForMemberFindRepository fundingRepo, PaymentHistoryForFundingFindMemberRepository paymentRepo, ShippingAddressForFundingFindRepository addressRepo, MemberForFundingFindRepository memberRepo, BankRepository bankRepo, ProjectRepositoryForManageEndProjectDetail projectRepo, ModelMapper mapper) {
         this.fundingRepo = fundingRepo;
         this.paymentRepo = paymentRepo;
         this.addressRepo = addressRepo;
         this.memberRepo = memberRepo;
         this.bankRepo = bankRepo;
+        this.projectRepo = projectRepo;
         this.mapper = mapper;
     }
 
@@ -250,5 +250,16 @@ public class FundingServiceForFind {
         });
 
         return fundingDTOs;
+    }
+
+    public ProjectManageFundingDTO findFundingInfoByProjectNo(int projectNo, Pageable pageable) {
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() - 1, PAGE_SIZE,
+                Sort.by("fundingInfoNo").descending());
+
+        Page<Funding> fundings = fundingRepo.findByProject_projectNo(projectNo, pageable);
+        Page<FundingDTO> fundingDTOs = fundings.map(funding -> mapper.map(funding, FundingDTO.class));
+        ProjectDTO project = mapper.map(projectRepo.findById(projectNo).get(), ProjectDTO.class);
+
+        return new ProjectManageFundingDTO(fundingDTOs, project);
     }
 }

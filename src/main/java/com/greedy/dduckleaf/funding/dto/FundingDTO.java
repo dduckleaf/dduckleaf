@@ -3,6 +3,7 @@ package com.greedy.dduckleaf.funding.dto;
 import lombok.*;
 
 import javax.persistence.Column;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

@@ -4,8 +4,10 @@ import com.greedy.dduckleaf.config.BeanConfiguration;
 import com.greedy.dduckleaf.config.DduckleafApplication;
 import com.greedy.dduckleaf.funding.dto.FundingByMemberForAdminDTO;
 import com.greedy.dduckleaf.funding.dto.FundingDTO;
+import com.greedy.dduckleaf.funding.entity.Funding;
 import com.greedy.dduckleaf.funding.find.member.dto.FundingFindDetailInfoForMemberDTO;
 import com.greedy.dduckleaf.funding.find.member.dto.FundingInfoByMemberForAdminDTO;
+import com.greedy.dduckleaf.funding.find.member.dto.ProjectManageFundingDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,5 +113,21 @@ class FundingServiceForFindTest {
         //then
         assertNotNull(fundings);
         fundings.forEach(System.out::println);
+    }
+
+    @Test
+    @DisplayName("관리자의 프로젝트별 펀딩내역 조회 테스트")
+    public void findFundingInfoByProjectNo_test() {
+
+        //given
+        Pageable pageable = PageRequest.of(0, 20);
+        int projectNo = 343;
+
+        //when
+        ProjectManageFundingDTO fundings = service.findFundingInfoByProjectNo(projectNo, pageable);
+
+        //then
+        assertNotNull(fundings);
+        fundings.getFundingInfos().forEach(System.out::println);
     }
 }

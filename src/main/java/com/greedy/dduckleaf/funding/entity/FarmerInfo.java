@@ -35,4 +35,7 @@ public class FarmerInfo {
 
     @Column(name = "BUSINESS_NAME")
     private String businessName;
+
+    @Column(name = "FARMER_NAME")
+    private String farmerName;
 }

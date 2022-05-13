@@ -8,6 +8,7 @@ import com.greedy.dduckleaf.funding.dto.FundingDTO;
 import com.greedy.dduckleaf.funding.entity.Funding;
 import com.greedy.dduckleaf.funding.find.member.dto.FundingFindDetailInfoForMemberDTO;
 import com.greedy.dduckleaf.funding.find.member.dto.FundingInfoByMemberForAdminDTO;
+import com.greedy.dduckleaf.funding.find.member.dto.ProjectManageFundingDTO;
 import com.greedy.dduckleaf.funding.find.member.service.FundingServiceForFind;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -156,6 +157,37 @@ public class FundingForMemberFindController {
         mv.addObject("funding", fundingDetailInfo.getFunding());
         mv.addObject("bankList", fundingDetailInfo.getBankList());
         mv.setViewName("/funding/find/admin/fundingdetailinfo");
+
+        return mv;
+    }
+
+    @GetMapping("/endproject/{projectNo}")
+    public ModelAndView findFundingListEndProject(ModelAndView mv, @PathVariable int projectNo, @PageableDefault Pageable pageable) {
+
+        ProjectManageFundingDTO manageDTO = service.findFundingInfoByProjectNo(projectNo, pageable);
+
+        PagingButtonInfo paging = Pagenation.getPagingButtonInfo(manageDTO.getFundingInfos(), BUTTON_AMOUNT);
+
+        /* 펀딩정보와 회원번호, 페이징 정보를 저장 후 반환합니다. */
+        mv.addObject("paging", paging);
+        mv.addObject("fundingInfos", manageDTO.getFundingInfos());
+        mv.addObject("project", manageDTO.getProject());
+        mv.setViewName("/funding/find/admin/projectfundingmanage");
+
+        return mv;
+    }
+    @GetMapping("/endproject/detail/{fundingNo}")
+    public ModelAndView findFundingDetailEndProject(ModelAndView mv, @PathVariable int fundingNo) {
+
+        /* 펀딩 번호로, 해당 번호의 정보를 조회합니다. */
+        FundingFindDetailInfoForMemberDTO fundingDetailInfo = service.findFundingInfo(fundingNo);
+
+        /* 조회해온 주소지, 펀딩정보, 은행목록 정보를 모델에 저장 후 반환합니다. */
+        mv.addObject("addressInfo", fundingDetailInfo.getShippingAddress());
+        mv.addObject("funding", fundingDetailInfo.getFunding());
+        mv.addObject("bankList", fundingDetailInfo.getBankList());
+        mv.addObject("project", fundingDetailInfo.getFunding().getProject());
+        mv.setViewName("/funding/find/admin/projectfundingmanagedetail");
 
         return mv;
     }
