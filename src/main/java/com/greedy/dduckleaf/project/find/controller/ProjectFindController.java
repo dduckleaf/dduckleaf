@@ -67,7 +67,6 @@ public class ProjectFindController implements CodeForProject {
 
         /* request에서 추출한 검색에 필요한 정보를 SearchDTO에 담아 서비스의 프로젝트 조회메소드에 전달인자로 넣어 호출합니다. */
         SearchDTO searchDTO = new SearchDTO(searchValue, rewardCategory, progressStatus);
-        System.out.println("searchDTO = " + searchDTO);
         Page<ProjectDTO> projectList = service.findProjectLists(searchDTO, pageable);
 
         /* 한 페이지에 표시할 버튼의 개수를 설정합니다. */
