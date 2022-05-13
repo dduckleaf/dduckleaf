@@ -1,7 +1,5 @@
 package com.greedy.dduckleaf.member.entity;
 
-import com.greedy.dduckleaf.profile.entity.Member;
-
 import javax.persistence.*;
 
 @Entity(name = "ProfileAttachmentForMember")
