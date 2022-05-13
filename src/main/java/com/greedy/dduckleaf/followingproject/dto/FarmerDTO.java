@@ -1,29 +1,16 @@
-package com.greedy.dduckleaf.followingproject.entity;
+package com.greedy.dduckleaf.followingproject.dto;
 
-import lombok.*;
+public class FarmerDTO {
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity(name = "FarmerForFollowingProject")
-@Table(name = "TBL_FARMER_INFO")
-public class Farmer {
-
-    @Id
-    @Column(name = "MEMBER_NO")
     private int memberNo;
-
-    @Column(name = "BUSINESS_NAME")
     private String businessName;
 
-    public Farmer() {
-    }
-
-    public Farmer(int memberNo, String businessName) {
+    public FarmerDTO(int memberNo, String businessName) {
         this.memberNo = memberNo;
         this.businessName = businessName;
+    }
+
+    public FarmerDTO() {
     }
 
     public int getMemberNo() {
@@ -44,7 +31,7 @@ public class Farmer {
 
     @Override
     public String toString() {
-        return "Farmer{" +
+        return "FarmerDTO{" +
                 "memberNo=" + memberNo +
                 ", businessName='" + businessName + '\'' +
                 '}';

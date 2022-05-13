@@ -1,25 +1,14 @@
-package com.greedy.dduckleaf.followingproject.entity;
+package com.greedy.dduckleaf.followingproject.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class ProjectProgressStatusDTO {
 
-@Entity(name = "ProjectProgressStatusForFollowingProject")
-@Table(name = "TBL_PROJECT_PROGRESS_STATUS")
-public class ProjectProgressStatus {
-
-    @Id
-    @Column(name = "PROJECT_PROGRESS_STATUS_NO")
     private int projectProgressStatusNo;
-
-    @Column(name = "PROJECT_PROGRESS_STATUS_NAME")
     private String projectProgressStatusName;
 
-    public ProjectProgressStatus() {
+    public ProjectProgressStatusDTO() {
     }
 
-    public ProjectProgressStatus(int projectProgressStatusNo, String projectProgressStatusName) {
+    public ProjectProgressStatusDTO(int projectProgressStatusNo, String projectProgressStatusName) {
         this.projectProgressStatusNo = projectProgressStatusNo;
         this.projectProgressStatusName = projectProgressStatusName;
     }
@@ -42,7 +31,7 @@ public class ProjectProgressStatus {
 
     @Override
     public String toString() {
-        return "ProjectProgressStatus{" +
+        return "ProjectProgressStatusDTO{" +
                 "projectProgressStatusNo=" + projectProgressStatusNo +
                 ", projectProgressStatusName='" + projectProgressStatusName + '\'' +
                 '}';
