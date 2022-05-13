@@ -91,10 +91,10 @@
 
                     <button class="basic-btn btn3 alittle-big-btn" id="following-project" th:value="${ followingStatus }">관심
                       <th:block th:if="${ followingStatus == 'Y' }">
-                        <img src="/images/common/fullheart.png" alt="Product Image">
+                        <img src="/images/common/fullheart.png" id="following-img" alt="Product Image">
                       </th:block>
                       <th:block th:if="${ followingStatus == 'N' }">
-                        <img src="/images/common/heart.png"  alt="Product Image">
+                        <img src="/images/common/heart.png" id="following-img" alt="Product Image">
                       </th:block>
                     </button>
 
