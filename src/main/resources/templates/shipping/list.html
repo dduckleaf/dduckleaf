@@ -14,10 +14,9 @@
         <form name="saveForm">
         <div class="title-div">
             <span class="text-title">
-                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: 0%; width: 25px; height: 27px; margin-right: 7px;">
                 발송관리
             </span>
-            <button type="button" id="modifydate" class="shippingbtn">발송예정일 수정</button>
             <hr width="100%">
             <input type="hidden" name="projectNo" th:value="${project.projectNo}">
         </div>
@@ -51,6 +50,7 @@
             </tr>
         </table>
         <br>리워드 발송이 완료되면 발송 정보 입력을 통해 발송 처리를 진행하세요.
+            <button type="button" id="modifydate" class="modifydatebtn">발송예정일 수정</button>
         </form>
     </div>
 
