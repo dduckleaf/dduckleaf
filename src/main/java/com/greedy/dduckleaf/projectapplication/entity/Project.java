@@ -60,7 +60,7 @@ public class Project {
     @ColumnDefault(value = "0")
     private int maxTargetAmount;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "FARMER_NO")
     private FarmerInfo farmer;
 

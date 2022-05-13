@@ -85,8 +85,9 @@ public class ProjectApplicationService {
     @Transactional
     public void registProjectApplication(int farmerNo) {
 
-        FarmerInfo farmer = new FarmerInfo();
-        farmer.setMemberNo(farmerNo);
+        farmerInfoRepository.save(farmerInfo(farmerNo));
+
+        FarmerInfo farmer = farmerInfoRepository.findByFarmerNo(farmerNo);
 
         Project openProject = new Project();
         openProject.setFarmer(farmer);
@@ -115,8 +116,6 @@ public class ProjectApplicationService {
         refundPolicy.setProjectNo(foundProject.getProjectNo());
 
         refundPolicyRepository.save(refundPolicy);
-
-        farmerInfoRepository.save(farmerInfo(farmerNo));
 
         farmerFinancialInfoRepository.save(farmerFinancialInfo(farmerNo));
 
@@ -148,7 +147,7 @@ public class ProjectApplicationService {
     private ProjectShippingInfo shippingInfo(int farmerNo) {
 
         ProjectShippingInfo shippingInfo = new ProjectShippingInfo();
-
+        shippingInfo.setExtraShippingFee(0);
         return shippingInfo;
     }
 
@@ -166,7 +165,7 @@ public class ProjectApplicationService {
         farmerInfo.setBusinessName("상호명");
         farmerInfo.setBusinessOwnNo("사업자 등록번호");
         farmerInfo.setBusinessOwnType("사업자 유형");
-        farmerInfo.setCorporateName(" ");
+        farmerInfo.setCorporateName("법인명");
         farmerInfo.setFarmerName("파머 이름");
         farmerInfo.setFarmerEmail("이메일");
         farmerInfo.setFarmerPhone("전화번호");
