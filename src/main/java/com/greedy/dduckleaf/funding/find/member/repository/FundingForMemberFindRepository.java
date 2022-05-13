@@ -22,4 +22,6 @@ public interface FundingForMemberFindRepository extends JpaRepository<Funding, I
 
     /* 회원번호로 펀딩목록을 조회홥니다. */
     Page<Funding> findByMemberNo(int memberNo, Pageable pageable);
+
+    Page<Funding> findByProject_projectNo(int projectNo, Pageable pageable);
 }

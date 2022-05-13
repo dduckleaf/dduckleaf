@@ -149,7 +149,8 @@ public class FundingRegistService {
         amount += funding.getFundingAmount();
 
         double rate = amount / target * 100;
-        project.setAchievementRate(rate);
+
+        project.setAchievementRate(Math.round(rate));
         projectRepository.save(project);
 
         /* 엔티티에 삽입한 행을 DB에 저장합니다 */

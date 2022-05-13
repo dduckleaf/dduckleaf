@@ -17,4 +17,5 @@ public class FarmerInfoDTO {
 
     private int memberNo;
     private String businessName;
+    private String farmerName;
 }
