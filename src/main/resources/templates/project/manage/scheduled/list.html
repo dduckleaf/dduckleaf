@@ -10,6 +10,10 @@
         }
 	</style>
 </head>
+<script>
+	const message = "[[${ message }]]";
+	message && alert(message);
+</script>
 <body>
 <main style="width: 1920px">
 	<div th:replace="/common/adminheader.html"></div>
@@ -54,20 +58,7 @@
 						<div style="text-align: center">
 							<div th:replace="/project/manage/scheduled/projectlistpaging.html"></div>
 						</div>
-<!--						<button type="button" class="btn3 basic-btn medium-btn" style="float:right;">프로젝트 오픈</button>-->
 						<br>
-						<form id="search-form" action="/notice/search" method="get">
-							<fieldset>
-								<div class="search">
-									<select style="width: 200px" name="searchCondition" id="">
-										<option value="projectName">프로젝트명</option>
-										<option value="farmerName">파머명</option>
-									</select>
- 									<input type="text" name="searchValue" placeholder="검색어를 입력해주세요">
-									<button type="submit" class="btn1 basic-btn small-btn">검색</button>
-								</div>
-							</fieldset>
-						</form>
 					</div>
 				</div>
 			</main>
@@ -96,6 +87,7 @@
         }
 
 		$("#openproject").click(function () {
+			alert("프로젝트 상태를 진행 중으로 변경하시겠습니까?");
 			location.href = "/project/manage/open";
 		});
 
