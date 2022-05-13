@@ -1,6 +1,6 @@
 @charset "UTF-8";
 html {
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 body {
     width: 100%;
@@ -126,8 +126,8 @@ body {
     position: relative;
     top: -48px;
     left: 305px;
-    width: 43px;
-    height: 35px;
+    width: 90px;
+    height: 43px;
     font-size: 12px;
     margin-top: 0px;
     text-align: center;
@@ -346,11 +346,11 @@ body {
     font-weight: 700;
 }
 #email-verification {
-    position: relative;
-    top: -71px;
-    left: 303px;
-    width: 90px;
-    height: 43px;
+    /*position: relative;*/
+    /*top: -71px;*/
+    /*left: 303px;*/
+    /*width: 90px!important;*/
+    /*height: 43px!important;*/
 }
 #check-verification {
     position: relative;
