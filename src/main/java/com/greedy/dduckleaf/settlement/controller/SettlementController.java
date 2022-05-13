@@ -2,11 +2,12 @@ package com.greedy.dduckleaf.settlement.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.greedy.dduckleaf.settlement.calculate.dto.SettlementInfoPackage;
+import com.greedy.dduckleaf.settlement.check.dto.SettlementInfoPackage;
 import com.greedy.dduckleaf.settlement.calculate.service.SettlementCalculateService;
 import com.greedy.dduckleaf.settlement.check.service.SettlementCheckService;
 import com.greedy.dduckleaf.settlement.dto.ProjectDTO;
 import com.greedy.dduckleaf.settlement.service.SettlementService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +40,14 @@ public class SettlementController {
     @Autowired
     private final SettlementCheckService checkService;
     private final ObjectMapper mapper;
+    private final ModelMapper modelMapper;
 
-    public SettlementController(SettlementService mainService, SettlementCalculateService calculateService, SettlementCheckService checkService, ObjectMapper mapper) {
+    public SettlementController(SettlementService mainService, SettlementCalculateService calculateService, SettlementCheckService checkService, ObjectMapper mapper, ModelMapper modelMapper) {
         this.mainService = mainService;
         this.calculateService = calculateService;
         this.checkService = checkService;
         this.mapper = mapper;
+        this.modelMapper = modelMapper;
     }
 
     /**
@@ -57,7 +60,8 @@ public class SettlementController {
     @GetMapping("/farmer/overview/{projectNo}")
     public ModelAndView findFarmerSettlementOverview(ModelAndView mv, @PathVariable int projectNo) {
 
-        SettlementInfoPackage settlementInfoPackage = calculateService.findSettlementInfoPackage(projectNo);
+        com.greedy.dduckleaf.settlement.calculate.dto.SettlementInfoPackage settlementInfoPackage =
+                calculateService.findSettlementInfoPackage(projectNo);
 
         mv.addObject("project", settlementInfoPackage.getSettlementInfo().getProject());
         mv.addObject("settlementInfo", settlementInfoPackage.getSettlementInfo());
@@ -135,7 +139,8 @@ public class SettlementController {
     @ResponseBody
     public String calculateSettlementPayment(@PathVariable int projectNo) throws JsonProcessingException {
 
-        SettlementInfoPackage settlementInfoPackage = calculateService.findSettlementInfoPackage(projectNo);
+        com.greedy.dduckleaf.settlement.calculate.dto.SettlementInfoPackage settlementInfoPackage =
+                calculateService.findSettlementInfoPackage(projectNo);
 
         return mapper.writeValueAsString(settlementInfoPackage);
     }
@@ -154,6 +159,28 @@ public class SettlementController {
         String modifyResult = checkService.modifySettlementPaymentInfo(paymentNo);
 
         return  mapper.writeValueAsString(modifyResult);
+    }
+
+    /**
+     * paymentSettingPage: 회차별 정산금 지급일 등록 페이지로 이동을 요청하는 메소드입니다.
+     * @param mv 브라우저로 전달할 데이터와 브라우저 경로 정보를 저장하는 객체
+     * @param projectNo 프로젝트번호
+     * @return 기본정산정보, 회차별 정산금 지급내역목록, 적용수수료정보
+     * @author 장민주
+     */
+    @GetMapping("/paymentSetting/{projectNo}")
+    public ModelAndView paymentSettingPage(ModelAndView mv, @PathVariable int projectNo) {
+
+        com.greedy.dduckleaf.settlement.check.dto.SettlementInfoPackage settlementInfoPackage =
+                modelMapper.map(calculateService.findSettlementInfoPackage(projectNo),
+                        com.greedy.dduckleaf.settlement.check.dto.SettlementInfoPackage.class);
+
+        mv.addObject("settlementInfoPackage", settlementInfoPackage);
+        mv.addObject("project", settlementInfoPackage.getSettlementInfo().getProject());
+        mv.setViewName("settlement/projectmanager/paymentSetting");
+
+
+        return mv;
     }
 
 }
