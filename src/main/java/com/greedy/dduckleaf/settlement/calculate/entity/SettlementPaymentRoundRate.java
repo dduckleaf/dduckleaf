@@ -1,16 +1,10 @@
 package com.greedy.dduckleaf.settlement.calculate.entity;
 
-import lombok.*;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Setter
-@Getter
 @Entity(name = "SettlementPaymentRoundRateForCalculate")
 @Table(name = "TBL_SETTLEMENT_PAYMENT_ROUND_RATE")
 public class SettlementPaymentRoundRate {
@@ -24,6 +18,38 @@ public class SettlementPaymentRoundRate {
 
     @Column(name = "SETTLEMENT_PAYMENT_RATE")
     private double settlementPaymentRate;                  //지급비율
+
+    public SettlementPaymentRoundRate() {}
+
+    public SettlementPaymentRoundRate(int settlementPaymentRoundRateNo, int settlementPaymentRound, double settlementPaymentRate) {
+        this.settlementPaymentRoundRateNo = settlementPaymentRoundRateNo;
+        this.settlementPaymentRound = settlementPaymentRound;
+        this.settlementPaymentRate = settlementPaymentRate;
+    }
+
+    public int getSettlementPaymentRoundRateNo() {
+        return settlementPaymentRoundRateNo;
+    }
+
+    public void setSettlementPaymentRoundRateNo(int settlementPaymentRoundRateNo) {
+        this.settlementPaymentRoundRateNo = settlementPaymentRoundRateNo;
+    }
+
+    public int getSettlementPaymentRound() {
+        return settlementPaymentRound;
+    }
+
+    public void setSettlementPaymentRound(int settlementPaymentRound) {
+        this.settlementPaymentRound = settlementPaymentRound;
+    }
+
+    public double getSettlementPaymentRate() {
+        return settlementPaymentRate;
+    }
+
+    public void setSettlementPaymentRate(double settlementPaymentRate) {
+        this.settlementPaymentRate = settlementPaymentRate;
+    }
 
     @Override
     public String toString() {
