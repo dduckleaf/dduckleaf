@@ -121,6 +121,10 @@
     const $projectNo= [[${refunding.project.projectNo}]];
     const $refundNo = [[${refunding.refundingInfoNo}]];
     const $refundstatus = [[${refundstatus}]];
+    let $url = "/refund/find/admin/statuslist/";
+    if($refundstatus > 3) {
+        $url = "/refund/find/admin/projectlist/";
+    }
     if($confirm) {
         $confirm.onclick = function() {
             location.href = "/refund/examine/platform/objection/confirm/" + $refundNo;
@@ -128,7 +132,7 @@
     }
     if($back) {
         $back.onclick = function() {
-            location.href = "/refund/find/admin/statuslist/" + $refundstatus;
+            location.href = $url + $refundstatus;
         }
     }
 </script>
