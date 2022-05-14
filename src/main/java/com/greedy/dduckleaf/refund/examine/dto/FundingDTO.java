@@ -19,5 +19,5 @@ public class FundingDTO {
     private int projectNo;
     private int memberNo;
     private String extraShippingFeeStatus;
-    private int refundAccount;
+    private String refundAccount;
 }

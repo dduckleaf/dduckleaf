@@ -41,12 +41,12 @@ public class Funding {
     private String extraShippingFeeStatus;
 
     @Column(name = "REFUND_ACCOUNT")
-    private int refundAccount;
+    private String refundAccount;
 
     public Funding() {
     }
 
-    public Funding(int fundingInfoNo, String fundingDate, int fundingAmount, int rewardAmount, String fundingStatus, int donateAmount, String refundName, int projectNo, int memberNo, String extraShippingFeeStatus, int refundAccount) {
+    public Funding(int fundingInfoNo, String fundingDate, int fundingAmount, int rewardAmount, String fundingStatus, int donateAmount, String refundName, int projectNo, int memberNo, String extraShippingFeeStatus, String refundAccount) {
         this.fundingInfoNo = fundingInfoNo;
         this.fundingDate = fundingDate;
         this.fundingAmount = fundingAmount;
@@ -140,11 +140,11 @@ public class Funding {
         this.extraShippingFeeStatus = extraShippingFeeStatus;
     }
 
-    public int getRefundAccount() {
+    public String getRefundAccount() {
         return refundAccount;
     }
 
-    public void setRefundAccount(int refundAccount) {
+    public void setRefundAccount(String refundAccount) {
         this.refundAccount = refundAccount;
     }
 

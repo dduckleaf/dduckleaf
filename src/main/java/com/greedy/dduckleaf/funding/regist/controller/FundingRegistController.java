@@ -90,7 +90,6 @@ public class FundingRegistController {
         registDTO.setMemberNo(user.getMemberNo());
         service.registFunding(registDTO);
 
-        System.out.println("registDTO = " + registDTO);
         return "redirect:/funding/regist/result/" + registDTO.getProjectNo();
     }
 

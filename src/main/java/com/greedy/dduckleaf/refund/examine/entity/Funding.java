@@ -48,5 +48,5 @@ public class Funding {
     private String extraShippingFeeStatus;
 
     @Column(name = "REFUND_ACCOUNT")
-    private int refundAccount;
+    private String refundAccount;
 }
