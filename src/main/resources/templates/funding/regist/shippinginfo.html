@@ -181,7 +181,7 @@
 					<input type="checkbox" name="supply" id="supply">
 					<span style="margin-left: 10px"> 개인정보 제3자 제공 동의 </span>
 				</label>
-				<a href="" style=" color: #ababab">자세히 보기</a>
+				<a data-bs-toggle="modal" data-bs-target="#policyfirst" style=" color: #ababab">자세히 보기</a>
 			</div>
 		</div>
 		<div class="funding-regist-policy-check">
@@ -190,7 +190,7 @@
 					<input type="checkbox" name="responsibility" id="responsibility">
 					<span style="margin-left: 10px"> 책임 규정에 대한 동의 </span>
 				</label>
-				<a href="" style=" color: #ababab">자세히 보기</a>
+				<a data-bs-toggle="modal" data-bs-target="#policysecond"  style=" color: #ababab">자세히 보기</a>
 			</div>
 		</div>
 		
@@ -283,6 +283,9 @@
 
 
 	</script>
+	
+	<div th:replace="/funding/regist/policyfirst.html"></div>
+	<div th:replace="/funding/regist/policysecond.html"></div>
 </div>
 <footer class="footer" th:replace="/common/footer.html"></footer>
 </body>
