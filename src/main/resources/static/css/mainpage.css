@@ -59,6 +59,10 @@ progress::-webkit-progress-value {
 .mainimg {
     height: 180px;
 }
+.projectlist {
+    width: 270px;
+    height: 153px;
+}
 
 /* 실시간랭킹 가로영역*/
 #productrank {
