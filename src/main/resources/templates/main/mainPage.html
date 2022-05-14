@@ -90,7 +90,7 @@
                                                             <h2 class="ranking">[[${ projectStat.count }]]</h2>
                                                         </div>
                                                         <div class="rank-content">
-                                                            <a class="rank-name" href="single-product.html">[[${ project.projectName }]]</a>
+                                                            <a class="rank-name" th:href="'/project/projectdetail/' + ${project.projectNo}">[[${ project.projectName }]]</a>
                                                             <div class="price-box pb-1">
                                                                 <span class="rank-percent">[[${ project.achievementRate }]]%</span><span class="rank-compony" style="margin-left: 10px;">[[${ project.farmer.businessName }]]</span>
                                                             </div>
