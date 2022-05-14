@@ -105,9 +105,6 @@
         let div = document.getElementsByClassName("product-item");
         let faqNumber = document.querySelectorAll(".faqNumber");
 
-        console.table(div.value);
-        console.table(faqNumber.value);
-
         for (let i = 0; i < div.length; i++) {
             div[i].onclick = function () {
                 location.href = "/faq/detail/" + faqNumber[i].value;
