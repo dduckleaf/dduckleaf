@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico" />
 
     <link rel="stylesheet" type="text/css" th:href="@{ /css/style.css }">
     <link rel="stylesheet" type="text/css" th:href="@{ /css/faq.css }">
@@ -43,7 +43,7 @@
                                             <div class="product-content-regist align-self-center" >
                                                 <div>
                                                     <form action="/faq/modify" style="margin-left: 150px;" method="post">
-                                                        <p class="faq-detail-text">제목 <input class="insert-text" id="title" name="faqTitle" th:value="${ modify.getFaqTitle()}"></p>
+                                                        <p class="faq-detail-text">주제 <input class="insert-text" id="title" name="faqTitle" th:value="${ modify.getFaqTitle()}"></p>
                                                         <br>
                                                         <p class="faq-detail-text">설명<input class="insert-text" id="subTitle" name="faqSubTitle" th:value="${ modify.getFaqSubTitle()}" ></p>
                                                         <br>
@@ -55,10 +55,10 @@
                                                         </div>
                                                         <br>
                                                         <div class="faqbtn-area">
-                                                            <button class="small-btn btn1 faq-btn" type="submit" >확인</button>
+                                                            <input type="button" class="small-btn btn2 faq-cancel-btn" id="back" value="취소">
+                                                            <button class="small-btn btn1 faq-btn" type="submit" >등록</button>
                                                         </div>
                                                     </form>
-                                                    <button  class="faq-cancel-btn" id="back" >취소</button>
                                                 </div>
                                             </div>
                                         </div>
