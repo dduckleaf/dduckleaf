@@ -135,6 +135,7 @@ public class RefundForFindController {
         RefundingDTO refunding = service.findRefundingInfo(refundingNo);
         mv.addObject("refunding", refunding);
         mv.addObject("refundstatus", refundstatus);
+
         mv.setViewName("/refund/find/admin/refunddetail");
 
         return mv;
