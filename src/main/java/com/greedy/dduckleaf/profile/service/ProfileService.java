@@ -117,6 +117,8 @@ public class ProfileService {
 
         Member foundMember = memberForProfileRepository.findById(member.getMemberNo()).get();
         foundMember.setEmail(member.getEmail());
+
+        memberForProfileRepository.save(foundMember);
     }
 
     /**

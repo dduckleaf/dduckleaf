@@ -215,7 +215,7 @@ public class ProfileController {
     }
 
     /**
-     * modifyPhone: 회원의 이메일 주소를 변경합니다.
+     * modifyPhone: 회원의 휴대전화 번호를 변경합니다.
      * @param phone: 변경할 휴대전화 번호
      * @param user: 로그인된 회원 정보
      * @return mv
