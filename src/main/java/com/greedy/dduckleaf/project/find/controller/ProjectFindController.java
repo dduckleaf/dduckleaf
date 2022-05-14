@@ -41,8 +41,6 @@ public class ProjectFindController implements CodeForProject {
         this.service = service;
     }
 
-
-
     /**
      * projectFind : 프로젝트 목록조회 정보를 조회 후 포워딩요청을 보냅니다.
      * @param pageable 목록조회 페이징정보가 담긴 Pageable 인스턴스를 전달받습니다.

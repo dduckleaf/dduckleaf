@@ -18,7 +18,7 @@ public interface CodeForProject {
     final int PROJECT_PROGRESS_STATUS_오픈예정 = 2;
     final int PROJECT_PROGRESS_STATUS_진행중 = 3;
     final int PROJECT_PROGRESS_STATUS_종료 = 4;
-    final int PAGE_SIZE = 4;
+    final int PAGE_SIZE = 12;
     final int PROJECT_LIST_STATUS = 2;
     final int BUTTON_AMOUNT = 7;
 }
