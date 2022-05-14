@@ -20,7 +20,29 @@
         <input type="hidden" id="memberNo" name="memberNo" th:value="${ memberNo }">
         <br>
         <br>
-        <button type="submit">확인</button>
+        <button id="modify-btn" type="submit">확인</button>
     </form>
 </body>
+    <script>
+        window.addEventListener('load', (e) => {
+            const modifyBtn = document.getElementById("modify-btn");
+            const form = document.getElementsByClassName("find-modify-pwd-form");
+
+            modifyBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                let password = document.getElementById("password").value;
+                let passwordCheck = document.getElementById("passwordCheck").value;
+
+                if(password != passwordCheck) {
+                    alert("비밀번호를 확인해주세요");
+                }
+
+                if(password == passwordCheck) {
+                    form.submit();
+                }
+            })
+        })
+
+    </script>
 </html>
