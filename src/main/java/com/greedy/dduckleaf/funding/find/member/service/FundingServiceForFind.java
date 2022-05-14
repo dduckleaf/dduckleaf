@@ -209,7 +209,7 @@ public class FundingServiceForFind {
      */
     public Page<FundingByMemberForAdminDTO> findFundingInfoByMemberId(int memberNo, Pageable pageable) {
 
-        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() - 1, PAGE_SIZE,
+        pageable = PageRequest.of(pageable.getPageNumber() <= 0? 0: pageable.getPageNumber() - 1, 10,
                 Sort.by("fundingInfoNo").descending());
 
         Page<Funding> fundings = fundingRepo.findByMemberNo(memberNo, pageable);

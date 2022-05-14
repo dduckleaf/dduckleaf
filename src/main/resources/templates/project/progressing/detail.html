@@ -255,10 +255,19 @@
   /* 비회원 상태의 사용자가 펀딩하기를 시도할 경우 */
   const $cannot = document.getElementById("cannot-funding");
   if($cannot) {
-    $cannot.onclick = async function() {
-      Swal.fire('로그인이 필요한 서비스입니다.')
-      $cannot.location.href = "/member/login";
-      alert(1);
+    $cannot.onclick = function() {
+      Swal.fire({
+        title: "로그인이 필요한 서비스입니다.",
+        confirmButtonText: "확인",
+        allowEnterKey: false,
+        customClass: {
+          title: "swal-content",
+          confirmButton: "swal-btn",
+          popup: "swal-area"
+        }
+      })
+      
+      
     }
   }
 

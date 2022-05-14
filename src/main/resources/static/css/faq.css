@@ -126,13 +126,11 @@ p.faqcontent-detail {
 .faq-btn {
     border: none;
     cursor: pointer;
-    margin-left: 65%;
+    margin-left: 5%;
 }
 
 .faq-cancel-btn{
-    position: absolute;
-    top : 515px;
-    margin-left: 45%;
+    margin-left: 50%;
     color: #FFF !important;
     background: #C2423A;
     width: 80px;

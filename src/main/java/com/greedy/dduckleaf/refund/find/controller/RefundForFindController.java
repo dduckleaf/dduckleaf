@@ -58,6 +58,7 @@ public class RefundForFindController {
 
         mv.addObject("refundings", refundings);
         mv.addObject("pagingInfo", pagingInfo);
+        mv.addObject("fundingSize", refundings != null ?refundings.getTotalPages(): 0);
         mv.setViewName("/refund/find/member/refundlist");
 
         return mv;
@@ -123,6 +124,7 @@ public class RefundForFindController {
 
         mv.addObject("paging", paging);
         mv.addObject("refundings", refundings);
+        mv.addObject("projectNo", projectNo);
         mv.setViewName("/refund/find/admin/refundlistbyproject");
         return mv;
     }
@@ -162,7 +164,12 @@ public class RefundForFindController {
         mv.addObject("paging", paging);
         mv.addObject("refundings", refundings);
         mv.addObject("refundstatus", refundstatus);
-        mv.setViewName("/refund/find/admin/refundlistbystatus");
+
+        if(refundstatus <= 3) {
+            mv.setViewName("/refund/find/admin/refundlistbystatus");
+        } else {
+            mv.setViewName("/refund/find/admin/projectlist/" +refundstatus);
+        }
 
         return mv;
     }

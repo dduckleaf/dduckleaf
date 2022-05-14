@@ -2,9 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>떡잎펀드</title>
     <link rel="stylesheet" th:href="@{/css/shipping.css}">
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
 </head>
 <body>
 <main style="width: 1920px">
@@ -62,18 +64,6 @@
 </body>
 </html>
 <script>
-    const arr = document.getElementsByClassName('shippingList');
-
-    let arr2 = [arr];
-    let count = 0;
-    for(let i = 0; i < arr.length; i++) {
-        if(arr[i]['shippingStatus'] === 1) {
-            count++;
-        }
-    }
-
-    console.log(count);
-
     $("#modifydate").click(async function (modifydate) {
         const {value: formValues} = await Swal.fire({
             title: '발송 예정일 수정',
@@ -89,18 +79,9 @@
                 title: 'confirmtitle',
                 popup: 'confirmpopup',
                 htmlContainer: 'confirmcontainer',
+                confirmButton: 'confirmbtn',
             },
             buttonsStyling: false,
-        }).then($("#confirmbtn").click(await function(shippingDueDates) {
-            let saveForm = document.saveForm;
-            let url = '/shipping/management/modify/duedate';
-            let shippingDueDate = document.getElementsByName("shippingDueDate");
-            saveForm.shippingDueDates = shippingDueDate;
-
-            saveForm.action = url;
-            saveForm.method = 'post';
-            saveForm.submit();
-            scroll()
-        }));
+        })
     });
 </script>
