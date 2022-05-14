@@ -65,7 +65,7 @@
                         </div>
                         <div class="content-form" th:each="notice : ${ noticeDetail }">
                             <label for="content">내용</label>
-                            <textarea id="content" name="noticeContent" th:text="${ notice.noticeContent }"></textarea>
+                            <textarea id="content" name="noticeContent" style="resize: none;" th:text="${ notice.noticeContent }"></textarea>
                             <input type="hidden" name="noticeNo" th:value = "${ notice.noticeNo }">
                         </div>
                         <div class="btn-area">
