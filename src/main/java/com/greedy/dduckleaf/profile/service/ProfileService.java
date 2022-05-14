@@ -178,6 +178,8 @@ public class ProfileService {
 
         Member foundMember = memberForProfileRepository.findById(member.getMemberNo()).get();
         foundMember.setPhone(member.getPhone());
+
+        memberForProfileRepository.save(foundMember);
     }
 
     /**
@@ -191,6 +193,8 @@ public class ProfileService {
 
         Member foundMember = memberForProfileRepository.findById(member.getMemberNo()).get();
         foundMember.setMemberPwd(member.getMemberPwd());
+
+        memberForProfileRepository.save(foundMember);
     }
 
     /**
