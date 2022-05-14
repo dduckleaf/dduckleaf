@@ -12,12 +12,12 @@ public class FundingDTO {
     private int projectNo;
     private int memberNo;
     private String extraShippingFeeStatus;
-    private int refundAccount;
+    private String refundAccount;
 
     public FundingDTO() {
     }
 
-    public FundingDTO(int fundingInfoNo, String fundingDate, int fundingAmount, int rewardAmount, String fundingStatus, int donateAmount, String refundName, int projectNo, int memberNo, String extraShippingFeeStatus, int refundAccount) {
+    public FundingDTO(int fundingInfoNo, String fundingDate, int fundingAmount, int rewardAmount, String fundingStatus, int donateAmount, String refundName, int projectNo, int memberNo, String extraShippingFeeStatus, String refundAccount) {
         this.fundingInfoNo = fundingInfoNo;
         this.fundingDate = fundingDate;
         this.fundingAmount = fundingAmount;
@@ -111,11 +111,11 @@ public class FundingDTO {
         this.extraShippingFeeStatus = extraShippingFeeStatus;
     }
 
-    public int getRefundAccount() {
+    public String getRefundAccount() {
         return refundAccount;
     }
 
-    public void setRefundAccount(int refundAccount) {
+    public void setRefundAccount(String refundAccount) {
         this.refundAccount = refundAccount;
     }
 
