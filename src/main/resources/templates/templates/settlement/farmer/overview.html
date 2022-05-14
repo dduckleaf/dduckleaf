@@ -37,9 +37,6 @@
         </table>
         <p>※ 예상 정산금은 VAT가 계산되지 않은 금액입니다.</p>
         <br>
-        <!--        <button class=" basic-btn big-btn btn1" id="objection">이의신청내역</button>-->
-
-        <!-- 회차별 정산정보 식별번호를 매개변수로 전달하기 위한 hidden 태그 -->
         <input type="hidden" id="firstPayment" th:value="${ settlementPaymentInfos[0].settlementPaymentInfoNo }">
         <input type="hidden" id="secondPayment" th:value="${ settlementPaymentInfos[1].settlementPaymentInfoNo }">
 
@@ -89,19 +86,15 @@
             <tr>
                 <td>
                     <button class="basic-btn small-btn btn1" id="firstPayAmountCheck">확인</button>
-                    <button class="basic-btn small-btn btn2" id="firstPayAmountObjection">이의신청</button>
                 </td>
                 <td>
-                    <button class="basic-btn small-btn btn1" id="firstPayDateCheck">확인</button>
-                    <button class="basic-btn small-btn btn2" id="firstPayDateObjection">이의신청</button>
+                    <button class="basic-btn small-btn btn1" id="firstPayDateCheck">지급확인</button>
                 </td>
                 <td>
                     <button class="basic-btn small-btn btn1" id="secondPayAmountCheck">확인</button>
-                    <button class="basic-btn small-btn btn2" id="secondPayAmountObjection">이의신청</button>
                 </td>
                 <td>
-                    <button class="basic-btn small-btn btn1" id="secondPayDateCheck">확인</button>
-                    <button class="basic-btn small-btn btn2" id="secondPayDateObjection">이의신청</button>
+                    <button class="basic-btn small-btn btn1" id="secondPayDateCheck">지급확인</button>
                 </td>
             </tr>
         </table>
@@ -143,11 +136,6 @@
         }
     });
 
-    /* 1차 정산 이의신청 접수 */
-    // $("#firstPayAmountObjection").click(function() {
-    //     alert("이의신청");
-    // });
-
     /* 2차 정산 확인 접수 */
     $("#secondPayAmountCheck").click(function() {
         const result = confirm('2차 정산금을 확정하시겠습니까?\n확정 후에는 변경할 수 없습니다.');
@@ -174,11 +162,6 @@
             return false;
         }
     });
-
-    /* 2차 정산 이의신청 접수 */
-    // $("#secondPayAmountObjection").click(function() {
-    //     alert("이의신청");
-    // });
 
     /* 1차 정산금 지급 확인 접수 */
     $("#firstPayDateCheck").click(function() {
@@ -207,11 +190,6 @@
         }
     });
 
-    /* 1차 정산금 지급 이의신청 접수 */
-    // $("#firstPayDateObjection").click(function() {
-    //     alert("이의신청");
-    // });
-
     /* 2차 정산금 지급 확인 접수 */
     $("#secondPayDateCheck").click(function() {
         const result = confirm('2차 정산금을 지급받으셨나요?\n[확인] 버튼을 눌러 지급확인을 완료해주세요.');
@@ -238,10 +216,5 @@
             return false;
         }
     });
-
-    /* 2차 정산금 지급 이의신청 접수 */
-    // $("#secondPayDateObjection").click(function() {
-    //     alert("이의신청");
-    // });
 </script>
 </html>
