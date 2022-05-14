@@ -114,7 +114,9 @@
             <td class="count" style="text-align: left; text-indent: 10px" th:text="${ notice.noticeCount }"></td>
           </tr>
           <tr>
-            <td class="content" colspan="6" style="text-align: justify; text-indent: 10px" th:text="${ notice.noticeContent }"></td>
+            <td class="content" colspan="6">
+              <textarea th:text="${ notice.noticeContent }" style="width: 100%; resize: none; border: none; padding-top: 10px; text-indent: 10px; text-align: justify;" cols="60" rows="15" readonly></textarea>
+            </td>
           </tr>
         </table>
         <div style="text-align: right">
