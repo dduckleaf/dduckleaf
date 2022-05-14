@@ -9,11 +9,14 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
-    
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico" />
+
     <!-- Style CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{ /css/style.css }">
     <link rel="stylesheet" type="text/css" th:href="@{ /css/faq.css }">
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/faq.css">
+
 </head>
 
 <body>
@@ -52,9 +55,9 @@
                                                         <textarea class="insert-text2" name="faqContent" id="content" placeholder="자주 묻는 질문 답변을 입력하세요"></textarea>
                                                     </div>
                                                     <br>
+                                                    <input type="button" class="small-btn btn2 faq-cancel-btn" id="back" value="취소">
                                                     <button class="small-btn btn1 faq-btn" type="submit" >확인</button>
                                                 </form>
-                                                <button class="small-btn btn2 faq-cancel-btn" id="back" >취소</button>
                                             </div>
                                         </div>
                                     </div>

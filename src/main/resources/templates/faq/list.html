@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 <head>
     <meta charset="UTF-8">
@@ -9,7 +10,7 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico" />
 
 
     <link rel="stylesheet" type="text/css" th:href="@{ /css/style.css }">
@@ -42,8 +43,8 @@
                             <div class="tab-pane fade show active" id="list-view" role="tabpanel" aria-labelledby="list-view-tab">
                                 <div class="product-list-view row">
                                     <div t style="text-align: right">
-                                        <th:block sec:authorize="isAuthenticated()">
-                                            <button class="basic-btn small-btn btn1" id="faqRegist">등록</button>
+                                        <th:block sec:authorize="hasRole('ADMIN')">
+                                            <button class="basic-btn small-btn btn1" id="faqRegist">FAQ작성</button>
                                         </th:block>
                                     </div>
                                     <div class="col-12" th:each="faq : ${ faqList }">
