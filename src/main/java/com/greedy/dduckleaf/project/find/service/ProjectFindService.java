@@ -92,9 +92,7 @@ public class ProjectFindService implements CodeForProject {
             projectDTO.setReward(mapper.map(project.getBasicInfo().getCategory(), ProjectRewardCategoryDTO.class));
 
             projectDTO.setImagePath("/upload/original/" + project.getAttachments().get(0).getProjectAttachmentSaveName());
-            System.out.println("projectDTO.getImagePath() = " + projectDTO.getImagePath());
             parsingProjectTimeInfo(projectDTO);
-            System.out.println("projectDTO = " + projectDTO);
 
             return projectDTO;
         });
