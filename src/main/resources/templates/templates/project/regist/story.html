@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>펀딩 신청</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+    <link rel="stylesheet" th:href="@{ /css/projectapplication.css }">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div class="container">
+    <div style="width: 1000px;">
+        <div class="row1 story">
+            <div th:fragment="mockfundsidebar" class="col-md-2">
+                <button class="accordion">
+                    <p class="fundmenutitle">펀딩 준비<img class="arrow" th:src="@{ /images/common/vector.png }"></p>
+                </button>
+                <div class="panel">
+                    <p onclick="location.href='/project/application/basicreq'">기본요건</p>
+                    <p onclick="location.href='/project/application/basicinfo'">기본정보</p>
+                    <p onclick="location.href='/project/application/story'">스토리 작성</p>
+                    <p onclick="location.href='/project/application/reward'">리워드 설계</p>
+                    <p onclick="location.href='/project/application/policy'">위험요인 및 정책</p>
+                    <p onclick="location.href='/project/application/farmer'">파머 정보</p>
+                    <p onclick="location.href='/project/application/representative'">대표자 및 정산 정보</p>
+                </div>
+            </div>
+            <form name="saveForm" enctype="multipart/form-data">
+                <div class="col-md-7">
+                    <div class="breadcrumb">
+                        <span class="breadcrumb home" onclick="location.href='/project/application/goMain'">펀딩 준비</span>&nbsp;
+                        <span class="breadcrumb">></span>&nbsp;
+                        <span class="breadcrumb">스토리 작성</span>
+                    </div>
+                    <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">스토리 작성</a><br><hr>
+                    <div>
+                        <a class="basictitle">스토리 광고 심의 동의</a><br>
+                        <a class="basicsubtitle">스토리 작성 전, 플랫폼에서 제공하는 광고 심의 가이드라인을 반드시 확인하세요.
+                            <br>동의를 진행해야 스토리 작성이 가능합니다.</a><br>
+                        <input type="hidden" th:value="${ story.projectPromotionAgreementStatus }">
+                        <th:block th:if="${ story.projectPromotionAgreementStatus == 'N'}">
+                            <button type="button" class="btn1 big-btn story-btn" id="agreement"><img class="check" th:src="@{ /images/common/check.png }"> 동의하기</button><a class="guideline">식품 표시 광고 준수사항을 위반하는 광고</a>
+                        </th:block>
+                        <th:block th:if="${ story.projectPromotionAgreementStatus == 'Y'}">
+                            <div class="agreementcheck">동의완료</div>
+                            <div class="agreementDate" th:text="${ story.promotionAgreementDate }"></div>
+                        </th:block>
+                    </div>
+                    <a>파머님의 프로젝트를 소개해주세요.</a>
+                    <div class="basicmenu">
+                        <a class="basictitle">프로젝트 요약</a><br>
+                        <a class="basicsubtitle">프로젝트 페이지 상단에 노출됩니다.</a><br>
+                        <input class="projectsummary" type="hidden" th:value="${ story.projectInfo }">
+                        <input class="projectsummary" id="projectInfo" name="projectInfo" type="text" th:placeholder="${ story.projectInfo }">
+                        <input type="hidden" id="projectNo" name="projectNo" th:value="${ story.projectNo }">
+                        <input type="hidden" id="projectBasicInfoNo" name="projectBasicInfoNo" th:value="${ story.projectBasicInfoNo }">
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">프로젝트 스토리</a><br>
+                        <a class="basicsubtitle">프로젝트 스토리로 사용할 사진을 등록해주세요.</a><br>
+                        <img class="basicimg1" id="changeImg" th:src="@{/images/mockfund/basicimg.png}"><br>
+                        <input type="file" style="display: block" id="file" name="file" accept=".gif, .jpg, .png" onchange="loadImg(this)">
+                        <a class="basicsubtitle">2MB 이하의 JPEG, PNG 파일<br>
+                            해상도 630x400 픽셀 이상<br>여러 장 등록 가능</a>
+                    </div>
+                    <div>
+                        <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="footer" th:replace="/common/footer.html"></footer>
+<!-- JS Files
+============================================ -->
+<!-- Global Vendor, plugins JS -->
+
+<!-- Vendor JS -->
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
+
+<!--Plugins JS-->
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
+
+<!--Main JS (Common Activation Codes)-->
+<script th:src="@{ /js/main.js }"></script>
+
+</body>
+<script>
+    var acc = document.getElementsByClassName("accordion");
+
+    for (var i = 0; i < acc.length; i++) {
+
+        acc[i].onclick = function() {
+            // 클릭이 일어났을 때 기존에 열려 있던 아코디언을 접는다. (1개의 아코디언만 열리게)
+            for (var j = 0 ; j<acc.length; j++){
+                // 버튼 상태에 입혀진 active 라는 클래스를 지운다.
+                acc[j].classList.remove("active");
+                // 버튼 다음에 있는 div 콘텐츠 높이를 0으로 만든다. == 아코디언을 접는다.
+                if (this!==acc[j]) {
+                    acc[j].nextElementSibling.style.maxHeight = null;
+                }
+            }
+
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight){
+                this.classList.remove("active");
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+
+        }
+    }
+
+
+    $("#agreement").click(async function (agreement) {
+        const {value: formValues} = await Swal.fire({
+            title: '<img class="leaf" src="/images/common/Leaf.png" style="vertical-align: -20%; margin-right: 10px;">식품 표시 광고 준수사항을 위반하는 광고',
+            html:
+                '<br><div class="basicreqmodal">' +
+                '<p>●질병의 예방, 치료에 효능이 있는 것으로 인식할 우려가 있는 표시 또는 광고<br></p>' +
+                '<div>' +
+                '<p>●식품 등을 의약품으로 인식할 우려가 있는 표시 또는 광고<br></p>' +
+                '<p>●거짓 과장된 표시 또는 광고<br></p>' +
+                '<p>●소비자를 기만하는 표시 또는 광고<br></p>' +
+                '<p>●다른 제품을 비방하는 표시 또는 광고 또는 직간접적으로 비교하여 다른 업체의 제품보다 우수한 것으로 오인할 수 있는 표시 또는 광고<br></p>' +
+                '<p>●객관적 근거 없이 본인 또는 리워드를 다른 영업자나 식품 등과 부당하게 비교하는 표시 또는 광고<br></p>' +
+                '</div>' +
+                '<div>' +
+                '<p>●건강기능식품이 아닌 것을 이로 인식할 우려가 있는 표시 또는 광고<br></p>' +
+                '</div>' +
+                '<div class="confirmsub">' +
+                '<p><input type="checkbox" id="order2_chk">내용을 확인했습니다<label for="order2_chk"></label></p>' +
+                '</div>' +
+                '<div class="btnArea">' +
+                '<button class="confirmbtn" id="confirmbtn" disabled="disabled">확인</button>' +
+                '</div>' + '</div>',
+            focusConfirm: false,
+            showConfirmButton: false,
+            customClass: {
+                title: 'confirmtitle',
+                popup: 'confirmpopup',
+                htmlContainer: 'confirmcontainer',
+            },
+            buttonsStyling: false,
+        }).then($("#order2_chk").click(await function () {
+            var order2Chk = $("#order2_chk").prop("checked");
+
+            if (order2Chk) {
+                $(".order2_chks").prop("checked", true);
+                $(".btnArea button").css({
+                    "backgroundColor": "#BAC34E",
+                    "cursor": "pointer",
+                    "color": "#fff"
+                }).prop("disabled", false)
+            } else {
+                $(".order2_chks").prop("checked", false);
+                $(".btnArea button").css({
+                    "backgroundColor": "#cbcbcb",
+                    "cursor": "auto",
+                    "color": "#303033"
+                }).prop("disabled", true);
+            }
+        })).then($("#confirmbtn").click(await function() {
+            let saveForm = document.saveForm;
+            let url = '/project/application/promotionagreement';
+
+            saveForm.action = url;
+            saveForm.method = 'post';
+            saveForm.submit();
+            scroll()
+        }));
+    });
+
+
+    /* 저장하기 버튼 */
+    $("#saveclick").click(function() {
+        Swal.fire({
+            title: '저장하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            allowEnterKey: false,
+            confirmButtonWidth: '100px',
+            customClass: {
+                confirmButton: 'savesuccess',
+                cancelButton: 'savecancel',
+                popup: 'savepopup'
+            },
+            buttonsStyling: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: '저장되었습니다',
+                    confirmButtonText: "확인",
+                    allowEnterKey: false,
+                    customClass: {
+                        confirmButton: 'saveok',
+                        popup: 'savepopup'
+                    },
+                    buttonsStyling: false,
+                }).then(function(projectInfo, projectNo, projectBasicInfoNo, introduction, file) {
+
+                    /* 이미지 등록 */
+                    const $basicimg = document.getElementById("changeImg");
+
+                    $basicimg.onclick = function() {
+                        document.getElementById("file").click();
+                    }
+
+                    function loadImg(value) {
+                        if(value.files && value.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function(e) {
+                                document.getElementById("$basicimg").src = e.target.result;
+                            }
+                            reader.readAsDataURL(value.files[0]);
+                        }
+                    }
+
+                    let formData = new FormData();
+                    formData.append('file', file);
+                    console.log(formData);
+
+                    let saveForm = document.saveForm;
+                    let url = '/project/application/modify/story';
+                    saveForm.projectInfo = projectInfo;
+                    saveForm.projectNo = projectNo;
+                    saveForm.projectBasicInfoNo = projectBasicInfoNo;
+                    saveForm.introduction = introduction;
+                    // saveForm.story = story;
+
+                    saveForm.action = url;
+                    saveForm.method = 'post';
+                    saveForm.submit();
+                });
+            }
+        })
+    });
+
+
+</script>
+</html>

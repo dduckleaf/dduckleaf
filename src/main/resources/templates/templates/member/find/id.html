@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>떡잎펀드</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member.css}">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
+</head>
+<body style="overflow: hidden">
+<div th:replace="/common/userheader.html"></div>
+<div class="top-area">
+    <h1>아이디·비밀번호 찾기</h1>
+    <input type="button" id="find-id-id" value="아이디 찾기">
+    <input type="button" id="find-id-pwd" value="비밀번호 찾기">
+</div>
+<div class="bottom-area">
+    <div class="find-id-div">
+        <p>등록한 이메일을 입력해주세요.<br>
+            가입여부를 확인해드립니다.</p>
+        <input type="text" id="findMemberIdByEmail" name="email" placeholder="이메일"><br>
+        <button class="bigbigbig-btn" id="send-email-id">확인</button>
+    </div>
+</div>
+</body>
+<script>
+    document.getElementById("find-id-id").onclick = function() {
+        location.href = "/member/find";
+    }
+
+    document.getElementById("find-id-pwd").onclick = function () {
+        location.href = "/member/find/pwd";
+    }
+
+    document.getElementById("send-email-id").onclick = function() {
+        const $email = document.getElementById("findMemberIdByEmail").value
+
+        location.href = "/member/find/id?email=" + $email;
+    }
+</script>
+</html>

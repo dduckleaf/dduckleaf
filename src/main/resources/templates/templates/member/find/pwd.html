@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>떡잎펀드</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/findPwd.css}">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
+</head>
+<body style="overflow: hidden">
+    <div th:replace="/common/userheader.html"></div>
+    <div class="top-area">
+        <h1>아이디·비밀번호 찾기</h1>
+        <input type="button" id="find-pwd-id" value="아이디 찾기">
+        <input type="button" id="find-pwd-pwd" value="비밀번호 찾기">
+    </div>
+    <div class="bottom-area">
+        <form class="find-pwd-form" action="/member/find/modify" method="post" >
+            <p>아이디를 통해 <br>
+            등록된 이메일로 인증번호가 전송됩니다.</p>
+            <input type="text" id="memberId" name="memberId" placeholder="아이디">
+            <input type="text" id="email" name="email" placeholder="이메일">
+            <!--인증번호 전송 버튼-->
+            <input type="button" class="small-btn" id="email-verification" value="인증번호 전송">
+            <div class="verification-div">
+                <input type="text" id="verification" placeholder="인증번호">
+                <!--인증번호 확인 버튼-->
+                <input type="button" class="small-btn" id="check-verification" value="확인">
+            </div>
+            <!--인증여부-->
+            <input type="hidden" id="check-result" value="false">
+            <!--넘겨받은 인증 번호-->
+            <input type="hidden" id="get-verification">
+            <!--넘겨받은 멤버 넘버-->
+            <button type="submit" class="ok-btn">확인</button>
+        </form>
+    </div>
+</body>
+    <script>
+        document.getElementById("find-pwd-id").onclick = function() {
+            location.href = "/member/find";
+        }
+
+        document.getElementById("find-pwd-pwd").onclick = function() {
+            location.href = "/member/find/pwd";
+        }
+
+        let $getVerification = document.getElementById("get-verification").value;
+
+        /* 회원가입 여부를 판단해 이메일 전송 */
+        document.getElementById("email-verification").onclick = function() {
+
+            const memberId = document.getElementById("memberId").value;
+            const email = document.getElementById("email").value;
+
+            let data = {
+                method: 'post',
+                body: JSON.stringify({
+                    memberId,
+                    email
+                }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+
+            fetch('/member/find/check', data)
+                .then(response => response.json())
+                .then(response => {
+                    if(response == "아이디와 이메일이 일치하는 회원의 정보가 없습니다.") {
+                        alert(response);
+                    }
+                    if(response != "아이디와 이메일이 일치하는 회원의 정보가 없습니다."){
+                        alert("이메일로 인증번호가 전송되었습니다.");
+                        $getVerification = response;
+                    }
+                }).catch(err => {
+                    console.log(err);
+            });
+        }
+
+        document.getElementById("check-verification").onclick = function() {
+
+            let $verification = document.getElementById("verification");
+
+            if($verification.value == $getVerification){
+                alert("인증되었습니다.")
+                $verification.style.border = '1px solid #39F928';
+                document.getElementById("check-result").value = "true";
+            } else {
+                alert("인증번호가 일치하지않습니다.")
+                $verification.style.border = '1px solid #C8B5B5';
+                document.getElementById("check-result").value = "false";
+            }
+        }
+
+        window.addEventListener('load', (e) => {
+            const okButton = document.getElementById("ok-btn");
+            const findForm = document.getElementsByClassName("find-pwd-form");
+
+            okButton.addEventListener('click', (e) => {
+                e.preventDefault(); //기본 폼 동작 막기
+
+                let checkResult = document.getElementById("check-result").value;
+
+                if(checkResult == "false"){
+                    alert("이메일인증을 해주세요.");
+                }
+                if(checkResult == "true") {
+                    findForm.submit();  //폼 동작 다시 실행
+                }
+            })
+        })
+    </script>
+</html>

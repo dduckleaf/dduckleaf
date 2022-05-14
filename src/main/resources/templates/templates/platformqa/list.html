@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>떡잎펀드</title>
+    <meta name="robots" content="noindex, follow"/>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
+
+    <!-- CSS
+    ============================================ -->
+
+    <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+    <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}"/>
+
+    <!-- Plugin CSS (Global Plugins Files) -->
+    <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/platformqa.css}">
+
+</head>
+
+<body>
+
+<div class="main-wrapper">
+
+    <!-- Begin Main Header Area -->
+    <header th:replace="/common/menubar.html"></header>
+    <!-- Main Header Area End Here -->
+
+    <!-- 문의 작성 모달 -->
+    <form action="/qna/regist" method="post">
+        <!-- 비관리자 작성글 권한 사전 안내 -->
+        <div class="modal fade" id="writePreModalToggle" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="writePreModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header" style="border-bottom: none;">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        1:1문의를 작성한 후 작성한 글 수정 및 본인 삭제를 할 수 없습니다.<br><br>
+                        위의 내용에 동의하고 1:1문의를 작성하시겠습니까?
+                    </div>
+                    <div class="modal-footer" style="border-top: none;">
+                        <div style="margin: 0 auto;">
+                            <button type="button" class="basic-btn small-btn btn1" data-bs-target="#writeModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">확인</button>
+                            <button type="button" class="basic-btn small-btn btn3" data-bs-target="#writePreModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 작성 양식 및 등록 여부 선택 -->
+        <div class="modal fade" id="writeModalToggle" data-bs-backdrop="static" tabindex="-1" aria-labelledby="writeModalToggleLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content" style="text-align: center;">
+                    <div class="modal-header" style="border-bottom: none;">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="padding: 0;">
+                        <div class="category-form">
+                            <label for="categoryNo" style="display: inline-block; width: 90%; text-align: left;">문의 유형</label>
+                            <select name="qnaCategory.platformQaCategoryNo" id="categoryNo" style="width: 90%;">
+                                <option disabled selected>문의 유형</option>
+                                <th:block th:each="platformQaCategory : ${ platformQaCategoryList }">
+                                    <option th:value="${ platformQaCategory.platformQaCategoryNo }">[[${ platformQaCategory.platformQaCategoryName }]]</option>
+                                </th:block>
+                            </select>
+                        </div>
+                        <div class="title-form" style="margin-top: 10px;">
+                            <label for="title" style="display: inline-block; width: 90%; text-align: left;">제목</label>
+                            <input type="text" id="title" name="platformQaTitle" style="width: 90%;">
+                        </div>
+                        <div class="content-form" style="margin-top: 10px;">
+                            <label for="content" style="display: inline-block; width: 90%; text-align: left;">문의 내용</label>
+                            <textarea id="content" name="platformQaContent" style="width: 90%; height: 300px; resize: none;"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="border-top: none;">
+                        <div style="margin: 0 auto;">
+                            <button type="button" class="basic-btn small-btn btn1" data-bs-target="#subModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">등록</button>
+                            <button type="button" class="basic-btn small-btn btn3" data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 등록 의사 재확인 -->
+        <div class="modal fade" id="subModalToggle" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="subModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header" style="border-bottom: none;">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        등록하시겠습니까?
+                    </div>
+                    <div class="modal-footer" style="border-top: none;">
+                        <div style="margin: 0 auto;">
+                            <button type="button" class="basic-btn small-btn btn1" data-bs-target="#confirmModal" data-bs-toggle="modal" data-bs-dismiss="modal">확인</button>
+                            <button type="button" class="basic-btn small-btn btn3" data-bs-target="#writeModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">취소</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 등록 결과 알림 -->
+        <div class="modal fade" id="confirmModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="confirmModalLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header" style="border-bottom: none;">
+                        <button type="submit" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="text-align: center;">
+                        등록되었습니다!
+                    </div>
+                    <div class="modal-footer" style="border-top: none;">
+                        <div style="margin: 0 auto;">
+                            <button type="submit" class="basic-btn small-btn btn1" data-bs-target="#confirmModal">확인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- 문의 작성 모달  -->
+
+    <!-- 문의 삭제 모달 -->
+    <div class="modal fade" id="removeModalToggle" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="removeModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: none;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    삭제하시겠습니까?
+                </div>
+                <div class="modal-footer" style="border-top: none;">
+                    <div style="margin: 0 auto;">
+                        <button type="button" class="basic-btn small-btn btn1" data-bs-target="#removeConfirmModal" data-bs-toggle="modal" data-bs-dismiss="modal">확인</button>
+                        <button type="button" class="basic-btn small-btn btn3" data-bs-target="#removeModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="removeConfirmModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="removeConfirmModalLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: none;">
+                    <button type="button" class="btn-close questionRemove" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    삭제되었습니다!
+                </div>
+                <div class="modal-footer" style="border-top: none;">
+                    <div style="margin: 0 auto;">
+                        <button type="button" class="basic-btn small-btn btn1 questionRemove" data-bs-target="#removeConfirmModal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 문의 삭제 모달 -->
+
+    <!-- 답변 작성 모달 -->
+    <th:block th:each="platformQa : ${ platformQaList }">
+        <form action="/qna/registRep" method="post">
+            <div class="modal fade" id="writeRepModalToggle" data-bs-backdrop="static" tabindex="-1" aria-labelledby="writeRepModalToggleLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="text-align: center;">
+                        <div class="modal-header" style="border-bottom: none;">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="padding: 0;">
+                            <div class="content-form">
+                                <label for="rep-content" style="display: inline-block; width: 90%; text-align: left;">답변 내용</label>
+                                <textarea id="rep-content" name="platformQaReplyContent" style="width: 90%; height: 300px; resize: none;"></textarea>
+                                <input type="hidden" id="platformQaNo" name="platformQaNo" th:value="${ platformQa.platformQaNo }">
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="border-top: none;">
+                            <div style="margin: 0 auto;">
+                                <button type="button" class="basic-btn small-btn btn1" data-bs-target="#subRepModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">등록</button>
+                                <button type="button" class="basic-btn small-btn btn3" data-bs-dismiss="modal">취소</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="subRepModalToggle" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="subRepModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border-bottom: none;">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="text-align: center;">
+                            등록하시겠습니까?
+                        </div>
+                        <div class="modal-footer" style="border-top: none;">
+                            <div style="margin: 0 auto;">
+                                <button type="button" class="basic-btn small-btn btn1" data-bs-target="#confirmRepModal" data-bs-toggle="modal" data-bs-dismiss="modal">확인</button>
+                                <button type="button" class="basic-btn small-btn btn3" data-bs-target="#writeRepModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">취소</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="confirmRepModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="confirmRepModalLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border-bottom: none;">
+                            <button type="submit" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="text-align: center;">
+                            등록되었습니다!
+                        </div>
+                        <div class="modal-footer" style="border-top: none;">
+                            <div style="margin: 0 auto;">
+                                <button type="submit" id="replyRegist" class="basic-btn small-btn btn1" data-bs-target="#confirmRepModal">확인</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </th:block>
+    <!-- 답변 작성 모달 -->
+
+    <!-- 답변 수정 모달 -->
+    <th:block th:each="platformQa : ${ platformQaList }">
+        <form action="/qna/modifyRep" method="post">
+            <div class="modal fade" id="modifyRepModalToggle" data-bs-backdrop="static" tabindex="-1" aria-labelledby="modifyRepModalToggleLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content" style="text-align: center;">
+                        <div class="modal-header" style="border-bottom: none;">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div th:each="platformQaReply : ${ platformQa.getPlatformQaReplyList() }" class="modal-body" style="padding: 0;">
+                            <div class="content-form">
+                                <label for="platformQaReplyContent" style="display: inline-block; width: 90%; text-align: left;">답변 내용</label>
+                                <textarea id="platformQaReplyContent" name="platformQaReplyContent" th:text="${ platformQaReply.platformQaReplyContent }" style="width: 90%; height: 300px; resize: none;"></textarea>
+                                <input type="hidden" id="platformQaReplyNo" name="platformQaReplyNo" th:value="${ platformQaReply.platformQaReplyNo }">
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="border-top: none;">
+                            <div style="margin: 0 auto;">
+                                <button type="button" class="basic-btn small-btn btn1" data-bs-target="#subModRepModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">등록</button>
+                                <button type="button" class="basic-btn small-btn btn3" data-bs-dismiss="modal">취소</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="subModRepModalToggle" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="subModRepModalToggleLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border-bottom: none;">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="text-align: center;">
+                            등록하시겠습니까?
+                        </div>
+                        <div class="modal-footer" style="border-top: none;">
+                            <div style="margin: 0 auto;">
+                                <button type="button" class="basic-btn small-btn btn1" data-bs-target="#confirmModRepModal" data-bs-toggle="modal" data-bs-dismiss="modal">확인</button>
+                                <button type="button" class="basic-btn small-btn btn3" data-bs-target="#modifyRepModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">취소</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal fade" id="confirmModRepModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="confirmModRepModalLabel" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header" style="border-bottom: none;">
+                            <button type="submit" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" style="text-align: center;">
+                            수정되었습니다!
+                        </div>
+                        <div class="modal-footer" style="border-top: none;">
+                            <div style="margin: 0 auto;">
+                                <button type="submit" id="replyModify" class="basic-btn small-btn btn1" data-bs-target="#confirmModRepModal">확인</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </th:block>
+    <!-- 답변 수정 모달 -->
+
+    <!-- 답변 삭제 모달 -->
+    <div class="modal fade" id="removeRepModalToggle" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="removeRepModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: none;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    삭제하시겠습니까?
+                </div>
+                <div class="modal-footer" style="border-top: none;">
+                    <div style="margin: 0 auto;">
+                        <button type="button" class="basic-btn small-btn btn1" data-bs-target="#removeRepConfirmModal" data-bs-toggle="modal" data-bs-dismiss="modal">확인</button>
+                        <button type="button" class="basic-btn small-btn btn3" data-bs-target="#removeRepModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="removeRepConfirmModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="removeRepConfirmModalLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: none;">
+                    <button type="button" class="btn-close replyRemove" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    삭제되었습니다!
+                </div>
+                <div class="modal-footer" style="border-top: none;">
+                    <div style="margin: 0 auto;">
+                        <button type="button" class="basic-btn small-btn btn1 replyRemove" data-bs-target="#removeRepConfirmModal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 답변 삭제 모달 -->
+
+    <!-- 마이 페이지 -->
+    <!-- Begin Main Content Area -->
+    <main class="main-content">
+        <div class="qna-wrap">
+            <div class="title-div">
+                <span class="text-title"><img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">1:1 문의</span>
+                <hr style="width: 100%">
+            </div>
+            <div class="cont-div">
+                <div style="text-align: right">
+                    <th:block sec:authorize="hasRole('MEMBER')">
+                        <button class="medium-btn btn1 basic-btn" data-bs-toggle="modal" data-bs-target="#writePreModalToggle">작성하기</button>
+                    </th:block>
+                </div>
+                <table>
+                    <colgroup>
+                        <col style="width: 5%">
+                        <col style="width: 10%">
+<!--                        <col style="width: 10%">-->
+                        <col style="width: 60%">
+                        <col style="width: 10%">
+                        <col style="width: 15%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>번호</th>
+                            <th>문의 유형</th>
+<!--                            <th>답변 상태</th>-->
+                            <th>제목</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
+                        </tr>
+                    </thead>
+                    <tbody th:each="platformQa : ${ platformQaList }">
+                        <!-- 문의 제목 행 -->
+                        <tr>
+                            <td th:text="${ platformQa.platformQaNo }"></td>
+                            <td th:text="${ platformQa.qnaCategory.platformQaCategoryName }"></td>
+<!--                            <td th:text="${ platformQa.platformQaAnswerStatus }"></td>-->
+                            <td th:text="${ platformQa.platformQaTitle }" class="align_l tit" style="cursor: pointer;"></td>
+                            <td th:text="${ platformQa.member.memberId }"></td>
+                            <td th:text="${ platformQa.platformQaRegistDate }"></td>
+                        </tr>
+                        <!-- 문의 내용 행 -->
+                        <tr style="display: none;">
+                            <td></td>
+                            <td></td>
+<!--                            <td></td>-->
+                            <td th:text="${ platformQa.platformQaContent }" class="align_l"></td>
+                            <td colspan="2" class="text-end">
+                                <!-- 답변 작성 버튼 -->
+                                <th:block sec:authorize="hasRole('ADMIN')">
+                                    <input type="hidden" th:value="${ platformQa.platformQaNo }" name="platformQaNo">
+                                    <button class="basic-btn small-btn btn1 write-reply" data-bs-toggle="modal" data-bs-target="#writeRepModalToggle">답변 작성</button>
+                                </th:block>
+                                <!-- 문의 삭제 버튼 -->
+<!--                                <button class="basic-btn small-btn btn4" th:onclick="'location.href=\'' + @{/qna/remove/{bno}(bno=${ platformQa.platformQaNo })} + '\''">삭제</button>-->
+                                <th:block sec:authorize="hasRole('ADMIN')">
+                                    <button class="basic-btn small-btn btn4 delete-question" data-bs-toggle="modal" data-bs-target="#removeModalToggle">삭제</button>
+                                </th:block>
+                            </td>
+                        </tr>
+                        <!-- 답변 내용 행 -->
+                        <tr th:each="platformQaReply : ${ platformQa.getPlatformQaReplyList() }" style="display: none; background: #fafafa;">
+                            <td></td>
+                            <td></td>
+<!--                            <td></td>-->
+                            <th:block>
+                                <td class="align_l" style="padding: 10px 0;"><span style="background: #BAC34E; color: #fff; border-radius: 5px;">답변</span> [[${ platformQaReply.platformQaReplyContent }]]</td>
+                            </th:block>
+<!--                            <td th:text="${ platformQaReply.member.memberNo }"></td>-->
+                            <td>
+                                <th:block sec:authorize="hasRole('ADMIN')">
+                                    <input type="hidden" th:value="${ platformQaReply.platformQaReplyNo }" name="platformQaReplyNo">
+                                    <button class="modify-reply" data-bs-toggle="modal" data-bs-target="#modifyRepModalToggle" style="cursor: pointer; border: none; background: transparent; color: #BAC34E;">수정</button> | <button class="delete-reply" data-bs-toggle="modal" data-bs-target="#removeRepModalToggle" style="cursor: pointer; border: none; background: transparent; color: #C2423A;">삭제</button>
+                                </th:block>
+                            </td>
+                            <td th:text="${ platformQaReply.platformQaReplyRegistDate }"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="paging" align="center">
+                    <!-- 가장 처음 -->
+                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.startPage}}  + '\''"
+                            th:disabled="${ platformQaList.first }"><<</button>
+
+                    <!-- 이전 페이지 -->
+                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.currentPage - 1}}  + '\''"
+                            th:disabled="${ platformQaList.first }"><</button>
+
+                    <!-- 페이지 번호 -->
+                    <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+                        <button th:onclick="'location.href=\'/qna/list?page=' + @{${page}}  + '\''"
+                                th:text="${ page }"
+                                th:disabled="${ paging.currentPage eq page }"></button>
+                    </th:block>
+
+                    <!-- 다음 페이지 -->
+                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.currentPage + 1}}  + '\''"
+                            th:disabled="${ platformQaList.last }">></button>
+
+                    <!-- 가장 끝 -->
+                    <button th:onclick="'location.href=\'/qna/list?page=' + @{${paging.endPage}}  + '\''"
+                            th:disabled="${ platformQaList.last }">>></button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Main Content Area End Here -->
+
+    <!-- 배경색 본문 -->
+    <!-- <div class="bgcolor-div">
+
+    </div> -->
+
+    <!-- Begin Footer Area -->
+    <footer th:replace="/common/footer.html"></footer>
+    <!-- Footer Area End Here -->
+
+    <!-- Begin Scroll To Top -->
+    <a class="scroll-to-top" href="">
+        <i class="fa fa-chevron-up"></i>
+    </a>
+    <!-- Scroll To Top End Here -->
+
+</div>
+
+<!-- Global Vendor, plugins JS -->
+
+<!-- JS Files
+============================================ -->
+<!-- Global Vendor, plugins JS -->
+
+<!-- Vendor JS -->
+<script th:src="@{ js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ js/vendor/jquery.waypoints.js }"></script>
+
+<!--Plugins JS-->
+<script th:src="@{ js/plugins/wow.min.js }"></script>
+<script th:src="@{ js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ js/plugins/parallax.min.js }"></script>
+<script th:src="@{ js/plugins/jquery.magnific-popup.min.js }"></script>
+
+<!--Main JS (Common Activation Codes)-->
+<script th:src="@{ js/main.js }"></script>
+
+<script>
+    /*Qna 제목 클릭 토글*/
+    var $qnaTit = $('td.tit');
+    $qnaTit.click(function(e) {
+        e.preventDefault();
+        var target = $(this);
+        var index = target.index();
+        target.parent().toggleClass('active');
+        target.parent().next().toggle();
+        target.parent().next().next().toggle();
+    });
+
+    $(".write-reply").click(function () {
+        const platformQaNo = this.parentNode.children[0].value;
+        // alert(platformQaNo);
+        $("#platformQaNo").val(platformQaNo);
+    });
+    // $("#replyRegist").click(function () {
+    //     const platformQaNo = $("#platformQaNo").val();
+    //     location.href="/qna/registRep/"+platformQaNo;
+    // });
+
+    $(".delete-question").click(function () {
+        const platformQaNo = this.parentNode.children[0].value;
+        // alert(platformQaNo);
+        $(".questionRemove").click(function () {
+            location.href="/qna/remove/"+platformQaNo;
+        });
+    });
+
+    $(".modify-reply").click(function () {
+        const platformQaReplyNo = this.parentNode.children[0].value;
+        // alert(platformQaReplyNo);
+        $("#platformQaReplyNo").val(platformQaReplyNo);
+
+        const platformQaReplyContent = this.parentNode.parentNode.children[3].lastChild.textContent;
+        // alert(platformQaReplyContent);
+        $("#platformQaReplyContent").val(platformQaReplyContent);
+    });
+
+    $(".delete-reply").click(function () {
+        const platformQaReplyNo = this.parentNode.children[0].value;
+        // alert(platformQaReplyNo);
+        $(".replyRemove").click(function () {
+            location.href="/qna/removeRep/"+platformQaReplyNo;
+        });
+    });
+
+</script>
+
+</body>
+
+</html>

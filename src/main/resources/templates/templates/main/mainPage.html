@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>떡잎펀드</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
+    <!-- CSS ============================================ -->
+
+    <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+    <link rel="stylesheet" th:href="@{css/vendor/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{css/vendor/Pe-icon-7-stroke.css}" />
+
+    <!-- Plugin CSS (Global Plugins Files) -->
+    <link rel="stylesheet" th:href="@{css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/jquery-ui.min.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/magnific-popup.min.css}"/>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{css/style.css}"/>
+    <link rel="stylesheet" th:href="@{css/mainpage.css}"/>
+    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/mainpage.css">
+
+</head>
+
+<body style="margin: 0px;">
+
+<div style="margin-top: 5px;" th:replace="/common/menubar.html"></div>
+
+<!-- Begin Slider Area -->
+<div class="slider-area">
+
+    <!-- Main Slider -->
+    <div class="swiper-container main-slider swiper-arrow with-bg_white">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide animation-style-01">
+                <div class="slide-inner bg-height">
+                    <img class="banner-img" src="/images/main/banner.png">
+                </div>
+            </div>
+            <div class="swiper-slide animation-style-01">
+                <div class="slide-inner bg-height" >
+                    <img class="banner-img" src="/images/main/banner2.png">
+                </div>
+            </div>
+            <div class="swiper-slide animation-style-01">
+                <div class="slide-inner bg-height" >
+                    <img class="banner-img" src="/images/main/banner3.png">
+                </div>
+            </div>
+<!--            <div class="swiper-slide animation-style-01">-->
+<!--                <div class="slide-inner bg-height" data-bg-image="../../static/images/common/logo.png">-->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="swiper-slide animation-style-01">-->
+<!--                <div class="slide-inner bg-height" data-bg-image="../../static/images/common/logo.png">-->
+
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="swiper-slide animation-style-01">-->
+<!--                <div class="slide-inner bg-height" data-bg-image="../../static/images/common/logo.png">-->
+
+<!--                </div>-->
+<!--            </div>-->
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination with-bg d-md-none"></div>
+
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+
+</div>
+<!-- Slider Area End Here -->
+
+<!-- Begin Product Area -->
+<div class="main-wrapper">
+    <!-- Begin Main Content Area -->
+    <main>
+        <div class="shop-area section-space-y-axis-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-3 order-2 pt-10 pt-lg-0">
+                        <div class="sidebar-area" style="width: 300px;">
+                            <div class="widgets-area mb-9">
+                                <h2 class="widgets-title mb-5"><a class="ranktext" style="font-size: 16pt; font-weight: bold;">실시간 랭킹</a></h2>
+                                <div class="widgets-item">
+                                    <div class="swiper-container">
+                                        <div class="swiper-wrapper" id="productrank">
+                                            <div class="swiper-slide">
+                                                <th:block th:each="project : ${ rankingList }">
+                                                    <div class="product-list-item">
+                                                        <div>
+                                                            <h2 class="ranking">[[${ projectStat.count }]]</h2>
+                                                        </div>
+                                                        <div class="rank-content">
+                                                            <a class="rank-name" href="single-product.html">[[${ project.projectName }]]</a>
+                                                            <div class="price-box pb-1">
+                                                                <span class="rank-percent">[[${ project.achievementRate }]]%</span><span class="rank-compony" style="margin-left: 10px;">[[${ project.farmer.businessName }]]</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="product-img img-zoom-effect">
+                                                            <a th:href="'/project/projectdetail/' + ${project.projectNo}">
+                                                                <img class="img-full" id="rankingimg" th:src="'upload/original/' + ${project.attachmentSavedName}" alt="Product Images">
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </th:block>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 order-1">
+                        <div class="tab-content text-charcoal pt-8" id="dduckleaf-recommend" align="left">
+                            <div class="tab-pane fade show active" id="grid-view" role="tabpanel" aria-labelledby="grid-view-tab">
+                                <div class="product-grid-view row related">
+                                    <h2 class="widgets-title mb-5"><a style="font-size: 20pt; font-weight: bold;">떡잎추천</a></h2>
+                                    <th:block th:each="project : ${ dduckleafRecommendList }">
+                                        <div class="col-lg-4 col-sm-6 mainproduct" style="margin-right: 30px; width: 300px;">
+                                            <div class="product-item">
+                                                <div class="product-img img-zoom-effect">
+                                                    <a th:href="'/project/projectdetail/' + ${project.projectNo}">
+                                                        <img class="img-full mainimg" th:src="'upload/original/' + ${project.attachmentSavedName}" alt="Product Images">
+                                                    </a>
+                                                </div>
+                                                <div class="product-content">
+                                                    <a class="product-name" th:href="'/project/projectdetail/' + ${project.projectNo}" style="margin-left: 20px;">[[${ project.projectName }]]</a><br><br>
+                                                    <div class="price-box pb-1" style="margin-left: 20px;">
+                                                        <span class="new-price">[[${ project.farmer.businessName }]]</span>
+                                                    </div>
+                                                    <progress class="progress" th:value="${ project.achievementRate }" max="100"></progress>
+                                                    <a class="progressbar">[[${ project.achievementRate }]]%</a><a class="progressbar1">[[${ project.deadLine }]]일 남음</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!-- Main Content Area End Here -->
+    <footer th:replace="/common/footer.html"></footer>
+</div>
+<!-- Product Area End Here -->
+
+
+
+<!-- Begin Scroll To Top -->
+<a class="scroll-to-top" href="">
+    <i class="fa fa-chevron-up"></i>
+</a>
+<!-- Scroll To Top End Here -->
+
+</div>
+
+<!-- Global Vendor, plugins JS -->
+
+<!-- JS Files
+============================================ -->
+<!-- Global Vendor, plugins JS -->
+
+<!-- Vendor JS -->
+<script th:src="@{/js/vendor/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/vendor/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/js/vendor/jquery-migrate-3.3.0.min.js}"></script>
+<script th:src="@{/js/vendor/modernizr-3.11.2.min.js}"></script>
+<script th:src="@{/js/vendor/jquery.waypoints.js}"></script>
+
+
+<!--Plugins JS-->
+<script th:src="@{/js/plugins/wow.min.js}"></script>
+<script th:src="@{/js/plugins/jquery-ui.min.js}"></script>
+<script th:src="@{/js/plugins/swiper-bundle.min.js}"></script>
+<script th:src="@{/js/plugins/jquery.nice-select.js}"></script>
+<script th:src="@{/js/plugins/parallax.min.js}"></script>
+<script th:src="@{/js/plugins/jquery.magnific-popup.min.js}"></script>
+
+<!--Main JS (Common Activation Codes)-->
+<script th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

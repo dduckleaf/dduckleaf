@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Harmic - Contact</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+    <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}" />
+
+    <!-- Plugin CSS (Global Plugins Files) -->
+    <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css }">
+</head>
+<body style="margin-top: 5px; margin-left: 0px;">
+    <div class="header-top border-bottom py-0" style="margin-top: 5px;">
+        <div class="container">
+            <div class="row align-items-center">
+                <th:block sec:authorize="isAnonymous()">
+                    <div class="col-1">
+                        <a href="/member/login">로그인</a>
+                    </div>
+                    <div class="col-1">
+                        <a href="/member/regist">회원가입</a>
+                    </div>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <div class="col-7" style="float: left">
+                        <a style="color: #BAC34E;"><span sec:authentication="principal.memberName"></span>님 환영합니다.</a>
+                        <a style="margin-left: 50px;" href="/member/logout">로그아웃</a>
+                        <th:block sec:authorize="hasRole('ADMIN')">
+                            <button class="small-btn" style="margin-left:30px; margin-bottom: 10px!important; color: white; background: #BAC34E; border: none; width: 140px;" onclick="location.href='/admin/dashboard'">Admin DashBoard</button>
+                        </th:block>
+                    </div>
+                    <div class="col-2" style="margin-bottom: 10px; margin-left: 20px">
+                        <th:block sec:authorize="hasRole('MEMBER')">
+                            <a href="/following/list"><img src="/images/common/vector.png">My Page</a>
+                        </th:block>
+                    </div>
+                    <div class="col-2" style="margin-bottom: 10px;">
+                        <th:block sec:authorize="hasRole('MEMBER')">
+                            <a href="/following/list"><img src="/images/common/heart.png">관심있는 프로젝트</a>
+                        </th:block>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

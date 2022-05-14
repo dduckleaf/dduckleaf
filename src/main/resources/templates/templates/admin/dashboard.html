@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	
+	<!-- 파이차트 -->
+	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	<script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+                ['Task', 'Hours per Day'],
+                ['Work',     11],
+                ['Eat',      2],
+                ['Commute',  2],
+                ['Watch TV', 2],
+                ['Sleep',    7]
+            ]);
+
+            var options = {
+                title: 'My Daily Activities'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+        }
+    </script>
+        
+    <!-- 월별펀딩금  -->
+	<script type="text/javascript">
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawBasic);
+
+        function drawBasic() {
+
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'X');
+            data.addColumn('number', 'Dogs');
+
+            data.addRows([
+                [0, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
+                [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
+                [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
+                [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
+                [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
+                [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
+                [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
+                [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
+                [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
+                [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
+                [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
+                [66, 70], [67, 72], [68, 75], [69, 80]
+            ]);
+
+            var options = {
+                hAxis: {
+                    title: 'Time'
+                },
+                vAxis: {
+                    title: 'Popularity'
+                }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+            chart.draw(data, options);
+        }
+	</script>
+	
+	
+	<!-- 막대그래프 -->
+	<script type="text/javascript">
+        google.charts.load('current', {'packages':['bar']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Year', 'Sales', 'Expenses'],
+                ['2014', 1000, 400],
+                ['2015', 1170, 460],
+                ['2016', 660, 1120],
+                ['2017', 1030, 540]
+            ]);
+
+            var options = {
+                chart: {
+                    title: 'Company Performance',
+                    subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+                }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+            chart.draw(data, google.charts.Bar.convertOptions(options));
+        }
+	</script>
+	
+	<!-- 회원추이 -->
+	<script>
+        google.charts.load('current', {packages: ['corechart', 'line']});
+        google.charts.setOnLoadCallback(drawLineColors);
+
+        function drawLineColors() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'X');
+            data.addColumn('number', 'Dogs');
+            data.addColumn('number', 'Cats');
+
+            data.addRows([
+                [0, 0, 0],    [1, 10, 5],   [2, 23, 15],  [3, 17, 9],   [4, 18, 10],  [5, 9, 5],
+                [6, 11, 3],   [7, 27, 19],  [8, 33, 25],  [9, 40, 32],  [10, 32, 24], [11, 35, 27],
+                [12, 30, 22], [13, 40, 32], [14, 42, 34], [15, 47, 39], [16, 44, 36], [17, 48, 40],
+                [18, 52, 44], [19, 54, 46], [20, 42, 34], [21, 55, 47], [22, 56, 48], [23, 57, 49],
+                [24, 60, 52], [25, 50, 42], [26, 52, 44], [27, 51, 43], [28, 49, 41], [29, 53, 45],
+                [30, 55, 47], [31, 60, 52], [32, 61, 53], [33, 59, 51], [34, 62, 54], [35, 65, 57],
+                [36, 62, 54], [37, 58, 50], [38, 55, 47], [39, 61, 53], [40, 64, 56], [41, 65, 57],
+                [42, 63, 55], [43, 66, 58], [44, 67, 59], [45, 69, 61], [46, 69, 61], [47, 70, 62],
+                [48, 72, 64], [49, 68, 60], [50, 66, 58], [51, 65, 57], [52, 67, 59], [53, 70, 62],
+                [54, 71, 63], [55, 72, 64], [56, 73, 65], [57, 75, 67], [58, 70, 62], [59, 68, 60],
+                [60, 64, 56], [61, 60, 52], [62, 65, 57], [63, 67, 59], [64, 68, 60], [65, 69, 61],
+                [66, 70, 62], [67, 72, 64], [68, 75, 67], [69, 80, 72]
+            ]);
+
+            var options = {
+                hAxis: {
+                    title: 'Time'
+                },
+                vAxis: {
+                    title: 'Popularity'
+                },
+                colors: ['#a52714', '#097138']
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div2'));
+            chart.draw(data, options);
+        }
+	</script>
+	
+	
+	<style>
+
+        .bl{
+            /*border: 1px solid orangered;*/
+        }
+        
+        .dashboard-title{
+	        position: relative;
+	        top: 60%
+        }
+        .chard-area{
+            height: 500px;
+        }
+	</style>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Harmic - My account</title>
+	<meta name="robots" content="noindex, follow" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+
+	
+	<!-- CSS
+	============================================ -->
+	
+	<!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+	<link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+	<link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}" />
+	
+	<!-- Plugin CSS (Global Plugins Files) -->
+	<link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+	<link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+	<link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+	<link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+	<link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
+	
+	<!-- Style CSS -->
+	<!--  <link rel="stylesheet" href="assets/css/style.css">-->
+	<link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/mypage.css}">
+
+</head>
+<body>
+
+<div class="main-wrapper">
+	<div th:replace="/common/adminheader.html"></div>
+
+	<div class="bl row" style="height:200px">
+        <div class="bl col-2" style="height: 100%"></div>
+        <div class="bl col-8" style="height: 100%">
+	        <div id="async-test" class="dashboard-title bl">
+		       <h1>🍃 관리자 대시보드</h1>
+		        <hr>
+	        </div>
+	        
+        </div>
+        <div class="bl col-2" style="height: 100%"></div>
+    </div>
+	<div class="row">
+		<div class="col-2 bl"></div>
+		<div class="col-7 bl">
+			<div class="row">
+				<!-- 파이차트 모의펀딩 활성화 추이 -->
+				<div id="piechart" style="width: 100%;" class="chard-area col"></div>
+			</div>
+			<div class="row">
+				<!-- 선 그래프 월별 펀딩금 -->
+				<div id="chart_div" style="width: 100%;" class="chard-area col"></div>
+			</div>
+			<div class="row">
+				<!-- 막대그래프 2개 월별 성공프로젝트/ 실패프로젝트 -->
+				<div id="columnchart_material" style="width: 100%;" class="chard-area col"></div>
+			</div>
+			<div class="row">
+				<!-- 선그래프 회원현황 -->
+				<div id="chart_div2" style="width: 100%;" class="chard-area col"></div>
+			</div>
+		</div>
+		<div class="col-1 bl"></div>
+		<div class="col-2 bl"><h3>관리자 메뉴 바로가기</h3></div>
+	</div>
+</div>
+	
+ 
+<script>
+
+</script>
+
+</body>
+
+</html>

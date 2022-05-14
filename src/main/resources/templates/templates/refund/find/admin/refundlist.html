@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/adminrefund.css}">
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+
+</head>
+<body>
+<div th:replace="/common/adminheader.html"></div>
+<div class="container" style="height: 70%">
+
+    <div class="" style="width: 1200px;">
+        <div class="title-div" style="margin-top: 3%">
+				<span class="text-title">
+					<img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">
+                    <label id="keyword">프로젝트별 전체 환불 조회</label>
+				</span>
+            <hr style="width: 100%">
+        </div>
+    </div>
+    <div class="row" style="margin-left: 2%">
+        <table class="basic-table" align="center" style="width: 100%">
+            <tr>
+                <th></th>
+                <th style="width: 10%;">프로젝트상태</th>
+                <th style="width: 30%;">프로젝트명</th>
+                <th style="width: 10%;">파머명</th>
+                <th style="width: 10%;">펀딩개수</th>
+                <th style="width: 10%;">환불신청개수</th>
+                <th style="width: 15%;">오픈일</th>
+                <th style="width: 15%;">종료일</th>
+            </tr>
+            <tr th:each="project : ${ projects }">
+                <td><input type="hidden" th:value="${project.projectNo}"></td>
+                <td th:text="${ project.progressStatus.progressName }"></td>
+                <td th:text="${ project.projectName }"></td>
+                <td th:text="${ project.farmer.farmerName }"></td>
+                <td th:text="${ project.fundingCount}"></td>
+                <td th:text="${ project.refundingCount }"></td>
+                <td th:text="${ project.openDate }"></td>
+                <td th:text="${ project.endDate }"></td>
+            </tr>
+        </table>
+    </div>
+    <!-- 페이징 공간  -->
+    <div class="project-list-paging">
+        <!-- 맨 앞으로 이동 -->
+        <button th:onclick="'location.href=\'/refund/find/admin/list/?page=' + @{${paging.startPage}} + '\''"
+                th:disabled="${ projects.first }" class="paging-btn first"><<</button>
+    
+        <!-- 이전 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/refund/find/admin/list/?page=' + @{${paging.currentPage - 1}} + '\''"
+                th:disabled="${ projects.first }" class="paging-btn prev"><</button>
+    
+        <!-- 숫자 버튼-->
+        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+            <button th:onclick="'location.href=\'/refund/find/admin/list/?page=' + @{${page}} + '\''"
+                    th:text="${ page }" th:disabled="${ paging.currentPage eq page}" class="paging-btn"></button>
+        </th:block>
+    
+        <!-- 다음 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/refund/find/admin/list/?page=' + @{${paging.currentPage + 1}} + '\''"
+                th:disabled="${ projects.last}" class="paging-btn next">></button>
+    
+        <!-- 맨 마지막으로 이동-->
+        <button th:onclick="'location.href=\'/refund/find/admin/list/?page=' + @{${paging.endPage}} + '\''"
+                th:disabled="${ projects.last }" class="paging-btn last">>></button>
+    </div>
+    <div style="text-align: right; margin-right: 1%;margin-top: 3%">
+        <button  onclick="location.href='/refund/find/admin/refundlist'" class="btn3 basic-btn medium-btn">뒤로가기</button>
+    </div>
+</div>
+
+<script>
+    /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for(let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function() {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function() {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function() {
+                const projectNo = this.parentNode.children[0].children[0].value;
+                location.href = "/refund/find/admin/projectlist/" + projectNo;
+            }
+        }
+    }
+
+    /* 검색 기능 */
+    // let keyword = document.getElementById("searchValue").innerText;
+    // let category = document.getElementById("category");
+    //
+    // const search = document.getElementById("search");
+    // if(search) {
+    //     search.onclick = function() {
+    //         location.href = "/report/platformmanager"/ + category + "/" + keyword;
+    //     }
+    // }
+</script>
+</body>
+</html>

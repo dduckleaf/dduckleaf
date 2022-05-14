@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>펀딩 신청</title>
+	<meta name="robots" content="noindex, follow" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+	<script src="https://kit.fontawesome.com/c24bc5c6f2.js" crossorigin="anonymous"></script>
+	<!-- Style CSS -->
+	<link rel="stylesheet" th:href="@{ /css/funding.css }">
+	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	
+	<!-- JQuery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div class="container" style="height: 70%">
+	<div class="" style="width: 1200px;">
+		<div class="fundingrewardstep-front">
+			<button class="mt-3 basic-btn btn3 big-btn"> < &nbsp스토리로 돌아가기</button>
+			<a style="margin-left: 40%; font-size: 0.9em; color: #ababab"><U>펀딩하기는 쇼핑하기가 아닙니다! 자세히 알아보세요.</U></a>
+			<br>
+		</div>
+		<div class="fundingrewardstep">
+			<img class=""  src="/images/funding/regist/fundingrewardstep1.png">
+		</div>
+		<!-- 리워드 선택 -->
+		<label class="title">리워드 선택</label>
+		<label class="sub-title">펀딩해주시는 금액에 따라 감사의 의미로 리워드가 제공됩니다.</label>
+		<div class="funding-box">
+			<div class="">
+				<span class="funding-box-title">리워드 정보</span><br><br>
+				<span th:text="${fundingInfo.rewardInfo.rewardInfo}"></span>&nbsp<span th:text="${ fundingInfo.rewardInfo.rewardUnit }"></span>
+				<span id="rewardPrice" style="font-size: 1em;font-weight: 700; margin-left: 1%" th:text="${fundingInfo.rewardInfo.rewardPrice}"></span>원
+			</div>
+		</div>
+		<div style="height: 200px"> </div>
+		<!-- 펀딩금 정하기 -->
+		<label class="title" style="margin-bottom: 1%">펀딩금 정하기</label>
+		<label class="sub-title">리워드 수량을 조절하여 펀딩하실 금액을 확정해주세요.</label>
+		<div class="funding-box">
+			<form id="reward-funding-info">
+				<div>
+					<span class="funding-box-title" >수량</span><br>
+					<input id="rewardAmount" name="rewardAmount" value="0" type="number" min="1" required>
+					<label style="font-size: 1.2em; font-weight: 800;margin-left: 2%">펀딩금액</label>
+					<label id="rewardTotalPrice"></label>원
+				</div>
+				<div>
+					<span class="funding-box-title">후원금 더하기(선택)</span><br>
+					<input id="donate" name="donate" type="number" min="0" value="0" required>
+					<label> 원을 추가로 후원합니다.</label>
+				</div>
+				<div>
+					<span class="funding-box-title">배송비</span><br>
+					<select id="shippingFee" class="shipping-fee-select" required>
+						<option disabled selected>배송비 선택</option>
+						<option th:value="${ fundingInfo.projectShippingFee.shippingFee }" th:text="기본배송비 + ${ fundingInfo.projectShippingFee.shippingFee }"></option>
+						<th:block th:if="${ fundingInfo.projectShippingFee.shippingFee < fundingInfo.projectShippingFee.extraShippingFee}">
+							<option th:value="${ fundingInfo.projectShippingFee.extraShippingFee }" th:text="${ fundingInfo.projectShippingFee.extraShippingFeeInfo + ' ' + fundingInfo.projectShippingFee.extraShippingFee}"></option>
+						</th:block>
+						
+					</select>
+				</div>
+				<input type="hidden" id="rewardTotal" name="rewardTotal">
+				<input type="hidden" id="rewardPrice-forwarding" name="rewardPrice">
+				<input type="hidden" id="totalFunding-forwarding" name="totalFunding">
+				<input type="hidden" id="shippingFee-forwarding" name="shippingFee">
+				<input type="hidden" id="extraShippingFee-forwarding" name="extraShippingFee">
+				<input type="hidden" id="projectNo" name="projectNo">
+			</form>
+		</div>
+		<div style="height: 200px"> </div>
+		<!-- 결제 총 금액 -->
+		<label class="title">총 금액</label>
+		<div class="funding-box">
+			<div style="text-align: center;height: 200px">
+				<div style="height: 50px"></div>
+				<label id="totalFunding" style="margin:2%; font-size:1.8em; font-weight: 1800"></label><span>원을 펀딩하시겠습니까?</span>
+			</div>
+		</div>
+		
+		<div style="text-align: center; width: 100%; margin: 5%">
+				<label id ="test"></label>
+				<input id="fundinginfo-submit" type="button" class="basic-btn btn1 bigbig-btn" value="펀딩하기">
+		</div>
+	</div>
+</div>
+
+
+<footer class="footer" th:replace="/common/footer.html"></footer>
+<script th:inline="javascript">
+	const $rewardPrice = document.getElementById("rewardPrice").innerText;
+    const $rewardCount = document.getElementById("rewardAmount");
+    const $rewardTotal = document.getElementById("rewardTotalPrice");
+    const $shippingFee = document.getElementById("shippingFee");
+    const $donate = document.getElementById("donate");
+    const $totalFunding = document.getElementById("totalFunding");
+	const $$rewardTotal = document.getElementById("rewardTotal");
+	
+    
+    if($rewardCount) {
+        $rewardCount.onchange = function() {
+            $rewardTotal.innerText = $rewardPrice * $rewardCount.value;
+            $$rewardTotal.value = parseInt($rewardTotal.innerText);
+            let $fee = $shippingFee.value;
+            if($shippingFee.value == '배송비 선택') {
+                $fee = 0;
+            }
+            $totalFunding.innerText = "";
+            $totalFunding.innerText = parseInt($rewardTotal.innerText) + parseInt($fee) + parseInt($donate.value);
+        }
+    }
+    if($shippingFee) {
+        $shippingFee.onchange = function() {
+            let $fee = $shippingFee.value;
+            if($shippingFee.value == '배송비 선택') {
+                $fee = 0;
+            }
+            $totalFunding.innerText = "";
+            $totalFunding.innerText = parseInt($rewardTotal.innerText) + parseInt($fee) + parseInt($donate.value);        }
+    }
+    if($donate) {
+        $donate.onchange = function() {
+            let $fee = $shippingFee.value;
+            if($fee == '배송비 선택') {
+                $fee = 0;
+            }
+            $totalFunding.innerText = "";
+            $totalFunding.innerText = parseInt($rewardTotal.innerText) + parseInt($fee) + parseInt($donate.value);
+        }
+    }
+    
+    const $fundinginfo = document.getElementById("reward-funding-info");
+    const $submit = document.getElementById("fundinginfo-submit");
+    
+    if($submit) {
+        $submit.onclick = function() {
+            const $$projectNo = "[[${ fundingInfo.projectNo }]]";
+            const $$rewardAmount = document.getElementById("rewardAmount").value;
+            const $$donate = document.getElementById("donate").value;
+            const $$shippingFee = document.getElementById("shippingFee");
+            const $$totalFunding = document.getElementById("totalFunding").innerText;
+            
+            if($$rewardAmount == 0) {
+				Swal.fire({
+					icon: 'warning',
+					title: '리워드수량을 입력하세요!'
+				})
+            } else if($$shippingFee.value == '배송비 선택') {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '배송비를 선택하세요!'
+                })
+            } else {
+                document.getElementById("shippingFee-forwarding").value = 0;
+                document.getElementById("extraShippingFee-forwarding").value = 0;
+                
+                if($$shippingFee.children[1].selected) {
+                    document.getElementById("shippingFee-forwarding").value = $$shippingFee.value;
+                } else {
+                    document.getElementById("extraShippingFee-forwarding").value = $$shippingFee.value;
+                }
+                
+                document.getElementById("rewardPrice-forwarding").value = "[[${ fundingInfo.rewardInfo.rewardPrice }]]";
+                document.getElementById("totalFunding-forwarding").value = parseInt($$totalFunding);
+                document.getElementById("projectNo").value = $$projectNo;
+                
+	            $fundinginfo.method = "get";
+	            $fundinginfo.action = "/funding/regist/shipping";
+	            $fundinginfo.submit();
+            }
+	    }
+    }
+</script>
+</body>
+</html>
+

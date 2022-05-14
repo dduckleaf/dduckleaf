@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>펀딩 목록 조회</title>
+	<meta name="robots" content="noindex, follow" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+	<script src="https://kit.fontawesome.com/c24bc5c6f2.js" crossorigin="anonymous"></script>
+	<!-- Style CSS -->
+	<link rel="stylesheet" th:href="@{ /css/refund.css }">
+	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	
+	<!-- JQuery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<style>
+        .tab-body-area {
+            position: absolute;
+            z-index: 1;
+            left: 33%;
+            right: 25%;
+            top: 18%;
+            width: 50%;
+            height: 1220px;
+        }
+	</style>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div th:replace="/common/supporterpage.html"></div>
+
+<div class="tab-body-area" style="width: 47%">
+	<span class="text-title">
+        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+		 환불 목록
+	</span>
+	<div class="title-div">
+		<hr width="100%">
+		<div class="notice-wrap">
+			<div class="cont-div">
+				<div id="projectNoticeList">
+					<th:block th:if="${fundingSize ne 0}">
+					<table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
+						<tr>
+							<th></th>
+							<th>프로젝트명</th>
+							<th>환불상태</th>
+							<th>신청일</th>
+						</tr>
+							<tr th:each="refunding : ${ refundings }" >
+								<td><input type="hidden" th:value="${refunding.refundingInfoNo}"></td>
+								<td th:text="${refunding.project.projectName}"></td>
+								<td th:text="${refunding.refundingStatus.refundingStatusName}"></td>
+								<td th:text="${refunding.refundingDate}"></td>
+								
+							</tr>
+					</table>
+					<div style="text-align: center; color:#ababab; font-size: 1.1em; font-weight: " >
+						<div id="pagination" class="pagenumbers" align="center">
+							<!-- 맨 앞으로 이동 -->
+							<button th:onclick="'location.href=\'/refund/find/member/list'+ '?page=' + @{${pagingInfo.startPage}} + '\''"
+							        th:disabled="${ refundings.first }" class="paging-btn first"><<</button>
+							
+							<!-- 이전 페이지로 이동 -->
+							<button th:onclick="'location.href=\'/refund/find/member/list' +'?page=' + @{${pagingInfo.currentPage - 1}} + '\''"
+							        th:disabled="${ refundings.first }" class="paging-btn prev"><</button>
+							
+							<!-- 숫자 버튼-->
+							<th:block th:each="page : ${#numbers.sequence(pagingInfo.startPage, pagingInfo.endPage)}">
+								<button th:onclick="'location.href=\'/refund/find/member/list' +'?page=' + @{${page}} + '\''"
+								        th:text="${ page }" th:disabled="${ pagingInfo.currentPage eq page}" class="paging-btn"></button>
+							</th:block>
+							
+							<!-- 다음 페이지로 이동 -->
+							<button th:onclick="'location.href=\'/refund/find/member/list' +'?page=' + @{${pagingInfo.currentPage + 1}} + '\''"
+							        th:disabled="${ refundings.last}" class="paging-btn next">></button>
+							
+							<!-- 맨 마지막으로 이동-->
+							<button th:onclick="'location.href=\'/refund/find/member/list' +'?page=' + @{${pagingInfo.endPage}} + '\''"
+							        th:disabled="${ refundings.last }" class="paging-btn last">>></button>
+						</div>
+					</div>
+					
+					</th:block>
+					<th:block th:if="${fundingSize eq 0}">
+						<div style="height: 50px"></div>
+						<div style="width: 100%;text-align: center">
+							환불 내역이 없습니다.
+						</div>
+					</th:block>
+				</div><br>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+
+<div th:replace="/common/footer.html"></div>
+<script>
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for (let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function () {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function () {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function () {
+                const refundNo = this.parentNode.children[0].children[0].value;
+                location.href = "/refund/find/member/detail/" + refundNo;
+            }
+        }
+    }
+</script>
+</body>
+</html>

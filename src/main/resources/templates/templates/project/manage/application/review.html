@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>개별 프로젝트 상세조회 - 진행중</title>
+    <meta name="robots" content="noindex, follow"/>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico" />
+
+    <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+    <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}" />
+
+    <!-- Plugin CSS (Global Plugins Files) -->
+    <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+    <link rel="stylesheet" th:href="@{ /css/project.css }">
+    <link rel="stylesheet" th:href="@{ /css/projectapplication.css }">
+</head>
+<body>
+<div class="main-wrapper">
+    <div th:replace="/common/adminheader.html"></div>
+    <!-- Begin Main Content Area  -->
+    <main class="main-content">
+        <div class="single-product-area section-space-top-100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="single-product-img h-100">
+                            <div class="swiper-container single-product-slider">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide">
+                                        <a href="/images/product/large-size/2-1-555x645.jpg" class="single-img gallery-popup">
+                                            <img th:src="${ '/upload/original/' + attachment.projectAttachmentSaveName }" alt="Product Image" style="width: 600px; height: 400px;">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="product-thumb-with-content row">
+                            <div class="col-12 order-lg-1 order-2 pt-10 pt-lg-0">
+                                <div class="single-product-content">
+                                    <input type="hidden" id="projectApplicationNo" name="projectApplicationNo" th:value="${ detail.projectApplicationNo }">
+                                    <input type="hidden" id="projectNo" name="projectNo" th:value="${ detail.project.projectNo }">
+                                    <div class="title" th:text="${ detail.projectBasicInfo.projectName }"></div>
+                                    <div class="infoBox2 rounded-1">
+                                        <div>
+                                            <a></a><span class="short-desc">파머 정보</span>
+                                        </div>
+                                        <div class="farmerCorp">
+                                            <a th:text="${ detail.farmer.farmerName }"></a>
+                                        </div>
+                                        <div class="farmerCorp">
+                                            <a></a><span class="info">희망 오픈 예정일</span>
+                                        </div>
+                                        <div class="farmerCorp">
+                                            <a class="info" th:text="${ detail.project.openDate }"></a>
+                                        </div>
+                                    </div>
+                                    <ul class="quantity-with-btn pb-7">
+                                        <button type="button" class="basic-btn btn1 btn-fill-green rounded-1 detail" id="detail" style="height: 60px; font-size: 15pt;">신청 정보 열람
+                                            <img src="/images/common/rightarrow.png" alt="Product Image">
+                                        </button>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><br><br><br>
+        <th:block th:if="${ detail.projectApplicationCategory == '심사대기중' }">
+            <div style="width: 300px; margin: auto !important;">
+                <button type="button" class="basic-btn medium-btn examination" style= "color: #FFF; background: #BAC34E;">심사하기</button>
+                <button type="button" class="basic-btn btn3 medium-btn" onclick="location.href='/project/examination/list'">목록으로</button>
+            </div><br><br>
+        </th:block>
+        <th:block th:if="${ detail.projectApplicationCategory == '심사중' }">
+            <div style="width: 500px; margin: auto !important; align-content: center">
+                <button type="button" class="basic-btn medium-btn approval" style= "color: #FFF; background: #BAC34E;">승인</button>
+                <button type="button" class="basic-btn medium-btn reject" style= "color: #FFF; background: #BAC34E;" data-bs-toggle="modal" data-bs-target="#rejectModalToggle">반려</button>
+                <button type="button" class="basic-btn btn3 medium-btn" onclick="location.href='/project/examination/list'">목록으로</button>
+            </div><br><br>
+        </th:block>
+        <th:block th:if="${ detail.projectApplicationCategory == '승인'}">
+            <div style="width: 100px; margin: auto !important; align-content: center">
+                <button type="button" class="basic-btn btn3 medium-btn" onclick="location.href='/project/examination/list'">목록으로</button>
+            </div><br><br>
+        </th:block>
+        <th:block th:if="${ detail.projectApplicationCategory == '반려'}">
+            <div style="width: 100px; margin: auto !important; align-content: center">
+                <button type="button" class="basic-btn btn3 medium-btn" onclick="location.href='/project/examination/list'">목록으로</button>
+            </div><br><br>
+        </th:block>
+    </main>
+</div>
+
+<form action="/project/examination/reject" method="post">
+    <div class="modal fade" id="rejectModalToggle" data-bs-backdrop="static"
+         tabindex="-1" aria-labelledby="writeModalToggleLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" style="text-align: center;">
+                <div class="modal-header" style="border-bottom: none;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="padding: 0;">
+                    <div class="content-form" style="margin-top: 10px;">
+                        반려 사유
+                        <textarea id="projectExamineDetailContent" name="projectExamineDetailContent" style="width: 90%; height: 300px;"></textarea>
+                        <input type="hidden" name="projectApplicationNo" th:value="${ detail.projectApplicationNo }">
+                    </div>
+                </div>
+                <div class="modal-footer" style="border-top: none;">
+                    <div style="margin: 0 auto; width: 220px;">
+                        <button type="button" class="basic-btn small-btn btn1 rejectbtn" data-bs-target="#confirmModal"
+                                data-bs-toggle="modal" data-bs-dismiss="modal" style="margin-top: 0px !important;">반려</button>
+                        <button type="button" class="basic-btn small-btn btn3 cancelbtn"
+                                data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="confirmModal" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="subModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: none;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    반려되었습니다
+                </div>
+                <div class="modal-footer" style="border-top: none;">
+                    <div style="margin: 0 auto;">
+                        <button type="submit" class="basic-btn small-btn btn1" data-bs-target="#confirmModal">확인</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- Modal HTML  -->
+
+<script>
+
+    $(".detail").click(function () {
+
+        const projectApplicationNo = $("#projectApplicationNo").val();
+        console.log(projectApplicationNo);
+
+       location.href='/project/examination/detail/' + projectApplicationNo;
+    });
+
+    $(".examination").click(function () {
+
+        const projectApplicationNo = $("#projectApplicationNo").val();
+        console.log(projectApplicationNo);
+
+        location.href='/project/examination/modify/' + projectApplicationNo;
+
+    });
+
+    $(".approval").click(function () {
+
+        const projectApplicationNo = $("#projectApplicationNo").val();
+        console.log(projectApplicationNo);
+        if(!confirm("승인하시겠습니까?")) {
+            location.href='/project/examination/review/' + projectApplicationNo;
+        } else {
+            alert("승인되었습니다. 승인된 프로젝트는 공개예정 목록으로 이동합니다.");
+            location.href='/project/examination/approval/' + projectApplicationNo;
+        }
+
+
+
+    });
+
+</script>
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
+
+<!--Plugins JS-->
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
+
+<!--Main JS (Common Activation Codes)-->
+<script th:src="@{ /js/main.js }"></script>
+
+</body>
+
+</html>

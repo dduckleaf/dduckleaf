@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/adminrefund.css}">
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+
+</head>
+<body>
+<div th:replace="/common/adminheader.html"></div>
+<div class="container" style="height: 70%">
+    <div class="" style="width: 1200px;">
+        <div class="title-div" style="margin-top: 3%">
+				<span class="text-title">
+					<img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">
+                    <label id="keyword">펀딩 참여 이력</label>
+				</span>
+            <hr style="width: 100%">
+        </div>
+    </div>
+    <div class="row" style="margin-left: 2%">
+        <table class="basic-table" align="center" style="width: 100%">
+            <tr>
+                <th></th>
+                <th style="width: 20%;">프로젝트명</th>
+                <th style="width: 10%;">펀딩금</th>
+                <th style="width: 10%;">후원금</th>
+                <th style="width: 20%;">리워드</th>
+                <th style="width: 10%;">수량</th>
+                <th style="width: 10%;">배송비</th>
+                <th style="width: 20%;">참여일</th>
+            </tr>
+            <tr th:each="funding : ${fundings}">
+                <td><input type="hidden" th:value="${funding.fundingNo}"></td>
+                <td th:text="${funding.projectName}"></td>
+                <td th:text="${funding.fundingAmount}"></td>
+                <td th:text="${funding.donate}"></td>
+                <td th:text="${funding.reward}"></td>
+                <td th:text="${funding.rewardCount}"></td>
+                <td th:text="${funding.shippingFee}"></td>
+                <td th:text="${funding.date}"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="project-list-paging">
+        <!-- 맨 앞으로 이동 -->
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist/detail/' + @{${memberNo}} + '?page=' + @{${paging.startPage}} + '\''"
+                th:disabled="${ fundings.first }" class="paging-btn first"><<</button>
+        
+        <!-- 이전 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist/detail/' + @{${memberNo}} + '?page=' + @{${paging.currentPage - 1}} + '\''"
+                th:disabled="${ fundings.first }" class="paging-btn prev"><</button>
+        
+        <!-- 숫자 버튼-->
+        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+            <button th:onclick="'location.href=\'/funding/find/admin/memberlist/detail/' + @{${memberNo}} + '?page=' + @{${page}} + '\''"
+                    th:text="${ page }" th:disabled="${ paging.currentPage eq page}" class="paging-btn"></button>
+        </th:block>
+        
+        <!-- 다음 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist/detail/' + @{${memberNo}} + '?page=' + @{${paging.currentPage + 1}} + '\''"
+                th:disabled="${ fundings.last}" class="paging-btn next">></button>
+        
+        <!-- 맨 마지막으로 이동-->
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist/detail/' + @{${memberNo}} + '?page=' + @{${paging.endPage}} + '\''"
+                th:disabled="${ fundings.last }" class="paging-btn last">>></button>
+</div>
+
+    <div style="text-align: right; margin-right: 1%;margin-top: 3%">
+        <button  onclick="location.href='/funding/find/admin/memberlist'" class="btn3 basic-btn medium-btn">뒤로가기</button>
+    </div>
+
+<script>
+    /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for(let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function() {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function() {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function() {
+                const fundingNo = this.parentNode.children[0].children[0].value ;
+                location.href = "/funding/find/admin/memberdetail/" + fundingNo;
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

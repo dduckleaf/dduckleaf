@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/report.css}">
+</head>
+<body>
+<main style="width: 1920px">
+    <div th:replace="/common/menubar.html"></div>
+    <div class="mypage" th:replace="/common/supporterpage.html"></div>
+
+    <div class="tab-body-area">
+        <div class="title-div">
+            <span class="text-title">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">나의 신고내역 조회</span>
+            <hr width="100%">
+        </div>
+        <!-- Begin 게시판영역 -->
+        <table class="basic-table" id="project-qna-table" align="center">
+            <tr>
+                <th style="width: 10%;">진행상태</th>
+                <th style="width: 60%;">신고 프로젝트 명</th>
+                <th style="width: 20%;">신고유형</th>
+                <th style="width: 10%;">작성일</th>
+            </tr>
+            <th:block th:if="${ #strings.isEmpty(projectReportList) }">
+                <tr>
+                    <td colspan="3" align="center">신고내역이 없습니다.</td>
+                </tr>
+            </th:block>
+            <th:block th:if="${ !#strings.isEmpty(projectReportList) }">
+                <tr th:each="report : ${ projectReportList }" class="board-detail">
+                    <td th:text="${ report.getProjectReportNo() }" hidden></td>
+                    <td th:text="${ report.getProjectReportStatus() }"></td>
+                    <td th:text="${ report.project.getProjectName() }"></td>
+                    <td th:text="${ report.reportCategory.getReportCategoryName() }"></td>
+                    <td th:text="${ report.getProjectReportDate() }"></td>
+                </tr>
+            </th:block>
+        </table>
+        <script>
+            console.log(document.getElementsByTagName("td"));
+        </script>
+        <br>
+        <!-- 게시판영역 End Here -->
+    </div>
+
+    <div th:replace="/common/footer.html"></div>
+</main>
+<script>
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for (let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function () {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function () {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function () {
+                const reportNo = this.parentNode.children[0].innerText;
+                location.href = "/report/detail/" + reportNo;
+            }
+        }
+    }
+</script>
+</body>
+</html>

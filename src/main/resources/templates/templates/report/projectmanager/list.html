@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<script>
+    /* 신고 답변 등록 성공 메시지 */
+    const registSuccessMessage = "[[${ registSuccessMessage }]]";
+    registSuccessMessage && alert(registSuccessMessage);
+</script>
+<body>
+    <main style="width: 1920px">
+        <div class="row">
+        <div th:replace="/common/adminheader.html"></div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <div th:replace="/common/projectmanager/menubar.html"></div>
+            </div>
+            <div class="col-10">
+                <div class="body-area">
+                    <div class="title-div">
+                        <span class="text-title">
+                            <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">프로젝트 신고내역 </span>
+                        <hr width="100%">
+                    </div>
+                    <table class="basic-table" style="width: 100%">
+                        <tr>
+                            <th style="width: 5%;">신고번호</th>
+                            <th style="width: 8%;">처리상태</th>
+                            <th style="width: 45%;">신고 프로젝트 명</th>
+                            <th style="width: 25%;">신고유형</th>
+                            <th style="width: 8%;">신고자 아이디</th>
+                            <th style="width: 9%;">신고일</th>
+                        </tr>
+                        <th:block th:if="${ #strings.isEmpty(projectReportList) }">
+                            <tr>
+                                <td colspan="3" align="center">신고내역이 없습니다.</td>
+                            </tr>
+                        </th:block>
+                        <th:block th:if="${ !#strings.isEmpty(projectReportList) }">
+                            <tr th:each="report : ${ projectReportList }">
+                                <td th:text="${ report.getProjectReportNo() }"></td>
+                                <td th:text="${ report.getProjectReportStatus() }"></td>
+                                <td th:text="${ report.project.getProjectName() }"></td>
+                                <td th:text="${ report.reportCategory.getReportCategoryName() }"></td>
+                                <td th:text="${ report.member.getMemberId() }"></td>
+                                <td th:text="${ report.getProjectReportDate() }"></td>
+                            </tr>
+                        </th:block>
+                    </table>
+                    <br>
+                    <!--paging-->
+                    <div id="paging-area" align="center">
+                        <!-- 맨 앞으로 이동 -->
+                        <button class="paging-btn first" th:onclick="'location.href=\'/report/projectmanager/list/' + @{${ project.projectNo }} + '?page=' + @{${pagingInfo.startPage}}  + '\''"
+                                th:disabled="${ projectReportList.first }"><<</button>
+
+                        <!-- 이전 페이지로 이동 -->
+                        <button class="paging-btn prev" th:onclick="'location.href=\'/report/projectmanager/list/' + @{${ project.projectNo }} + '?page=' + @{${pagingInfo.currentPage - 1}}  + '\''"
+                                th:disabled="${ projectReportList.first }"><</button>
+
+                        <!-- 숫자 버튼 -->
+                        <th:block th:each="page : ${#numbers.sequence(pagingInfo.startPage, pagingInfo.endPage)}">
+                            <button class="paging-btn" th:onclick="'location.href=\'/report/projectmanager/list/' + @{${ project.projectNo }} + '?page=' + @{${page}}  + '\''"
+                                    th:text="${ page }"
+                                    th:disabled="${ pagingInfo.currentPage eq page }"></button>
+                        </th:block>
+
+                        <!-- 다음 페이지로 이동 -->
+                        <button class="paging-btn next" th:onclick="'location.href=\'/report/projectmanager/list/' + @{${ project.projectNo }} + '?page=' + @{${pagingInfo.currentPage + 1}}  + '\''"
+                                th:disabled="${ projectReportList.last }">></button>
+
+                        <!-- 맨 마지막으로 이동 -->
+                        <button class="paging-btn last" th:onclick="'location.href=\'/report/projectmanager/list/' + @{${ project.projectNo }} + '?page=' + @{${pagingInfo.endPage}}  + '\''"
+                                th:disabled="${ projectReportList.last }">>></button>
+                    </div>
+                    <!--paging end-->
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script>
+    /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for(let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function() {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function() {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function() {
+                const reportNo = this.parentNode.children[0].innerText;
+                location.href = "/report/projectmanager/detail/" + reportNo;
+            }
+        }
+    }
+</script>
+</html>

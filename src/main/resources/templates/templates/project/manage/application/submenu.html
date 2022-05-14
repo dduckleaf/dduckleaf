@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <style>
+        /*.vertical-menubar-area {*/
+        /*    width: 20%;*/
+        /*}*/
+    </style>
+</head>
+<body>
+<div class="vertical-menubar-area">
+    <span class="text-title"><p th:text="${ detail.project.projectName }"></p></span>
+    <div class="block">
+        <input type="hidden">
+        <p>파머정보</p>
+        <p class="text-subtitle" th:text="${ detail.farmer.farmerName }"></p>
+        <br>
+        <p>희망 오픈 예정일</p>
+        <p style="font-size: 15pt;" th:text="${ detail.project.openDate }"></p>
+        <p>상호명</p>
+        <p style="font-size: 15pt;" th:text="${ detail.farmer.businessName }"></p>
+        <br>
+    </div>
+    <th:block th:if="${ detail.project.progressStatus } == 1">
+        <div>
+            <button class="basic-btn btn3 medium-btn" style="width: 100%; margin-top: 2%;" onclick="location.href='/project/examination/list'">목록으로</button>
+        </div>
+    </th:block>
+    <th:block th:if="${ detail.project.progressStatus } == 5">
+        <div>
+            <button class="basic-btn btn3 medium-btn" style="width: 100%; margin-top: 2%;" onclick="location.href='/project/examination/list'">목록으로</button>
+        </div>
+    </th:block>
+    <th:block th:if="${ detail.project.progressStatus } == 2">
+        <div>
+            <button class="basic-btn btn3 medium-btn" style="width: 100%; margin-top: 2%;" onclick="location.href='/project/manage/scheduled/list'">목록으로</button>
+        </div>
+    </th:block>
+</div>
+</body>
+</html>

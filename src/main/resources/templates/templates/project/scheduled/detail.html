@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>개별 프로젝트 상세조회 - 진행예정</title>
+  <meta name="robots" content="noindex, follow" />
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico" />
+
+  <!-- CSS
+  ============================================ -->
+
+  <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+  <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+  <link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}" />
+
+  <!-- Plugin CSS (Global Plugins Files) -->
+  <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" th:href="@{ /css/style.css }">
+  <link rel="stylesheet" th:href="@{ /css/project.css }">
+</head>
+
+<body>
+<div class="main-wrapper">
+  <div th:replace="@{/common/menubar.html}"></div>
+  <!-- Begin Main Content Area  -->
+  <main class="main-content">
+    <div class="single-product-area section-space-top-100">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="single-product-img h-100">
+              <div class="swiper-container single-product-slider">
+                <div class="swiper-wrapper">
+                  <div class="swiper-slide">
+                    <a href="/images/product/large-size/2-1-555x645.jpg" class="single-img gallery-popup">
+                      <img th:src="${ '/upload/original/' + attachment.get(0).projectAttachmentSaveName }" alt="Product Image" style="width: 600px; height: 400px;">
+                    </a>
+                  </div>
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="product-thumb-with-content row">
+              <div class="col-12 order-lg-1 order-2 pt-10 pt-lg-0">
+                <div class="single-product-content">
+                  <input type="hidden" th:value="${ project.projectNo }">
+                  <div class="title" th:text="${ project.projectName }"></div><br>
+<!--                  <div class="price-box pb-1">-->
+<!--                    <button class="basic-btn btn-fill-green btn-border-white rounded-1">관심 프로젝트 추가</button>-->
+<!--                  </div>-->
+
+                  <div class="infoBox rounded-1">
+                    <div>
+                      <span class="short-desc">파머 정보</span>
+                    </div>
+                    <div class="farmerCorp">
+                      <strong th:text="${ projectInfo.farmer.businessName }"></strong>
+                    </div>
+                    <div class="farmerCorp">
+                      <span class="info">오픈 예정일 </span><a th:text="${ project.openDate }">/a>
+                    </div>
+                  </div><br>
+                  <ul class="quantity-with-btn pb-7">
+                    <li class="add-to-cart">
+                      <div class="align-center">
+                        <a class="short-desc align-center" th:text="${ projectInfo.projectBasicInfo.projectInfo }"></a>
+                      </div><br>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="product-tab-area section-space-top-100">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="nav product-tab-nav product-tab-style-2" role="tablist">
+              <li class="nav-item" role="presentation">
+                <a class="active btn btn-custom-size" id="story-tab" data-bs-toggle="tab" href="#story" role="tab" aria-controls="story" aria-selected="true">
+                  스토리
+                </a>
+              </li>
+              <li class="nav-item" role="presentation">
+                <a class="btn btn-custom-size" id="farmerInfo-tab" data-bs-toggle="tab" href="#farmerInfo" role="tab" aria-controls="farmerInfo" aria-selected="false">
+                  파머 정보
+                </a>
+              </li>
+<!--              <li class="nav-item" role="presentation">-->
+<!--                <a class="btn btn-custom-size" id="qna-tab" data-bs-toggle="tab" href="#qna" role="tab" aria-controls="qna" aria-selected="false">-->
+<!--                  관련 문의-->
+<!--                </a>-->
+<!--              </li>-->
+<!--              <li class="nav-item" role="presentation">-->
+<!--                <a class="btn btn-custom-size" id="farmnote-tab" data-bs-toggle="tab" href="#farmnote" role="tab" aria-controls="farmnote" aria-selected="false">-->
+<!--                  농사 일지-->
+<!--                </a>-->
+<!--              </li>-->
+<!--              <li class="nav-item" role="presentation">-->
+<!--                <a class="btn btn-custom-size" id="refundpolicy-tab" data-bs-toggle="tab" href="#refundpolicy" role="tab" aria-controls="refundpolicy" aria-selected="false">-->
+<!--                  반환 정책-->
+<!--                </a>-->
+<!--              </li>-->
+              <li class="nav-item" role="presentation">
+                <a class="btn btn-custom-size" id="notice-tab" data-bs-toggle="tab" href="#notice" role="tab" aria-controls="notice" aria-selected="false">
+                  농사일지
+                </a>
+              </li>
+            </ul>
+
+            <div class="tab-content product-tab-content">
+              <!-- Begin 스토리 -->
+              <div class="tab-pane fade show active" id="story" role="tabpanel" aria-labelledby="story-tab">
+                <br>
+                <div class="notice">
+                  <p class="noticeP"><img src="assets/images/header\icon/alert.png">
+                    도서산간에 해당하는 서포터님은 배송 가능 여부를 반드시 파머에게 문의 후 펀딩에 참여해주세요.</p>
+                </div>
+                <div class="product-description-body">
+                  <img class="img-full" th:src="${'/upload/original/' + attachment.get(2).projectAttachmentSaveName}" alt="Product Image">
+                </div>
+              </div>
+              <!-- 스토리 End Here -->
+
+              <!-- Begin 파머정보 -->
+              <div class="tab-pane fade" id="farmerInfo" role="tabpanel" aria-labelledby="farmerInfo-tab">
+                <div class="product-review-body">
+                  <ul class="user-info-wrap">
+                    <ul class="user-info">
+                      <img th:src="${'/upload/original/' + attachment.get(3).projectAttachmentSaveName}" alt="Product Image" style="width: 500px; height: 300px;">
+                      <div class="col-lg-1 order-2 pt-10 pt-lg-0"></div>
+                      <div class="col-lg-2 order-2 pt-10 pt-lg-0">
+                        <p>상호 명</p>
+                        <p>리워드 명</p>
+                        <p>파머 명</p>
+                        <p>파머 전화번호</p>
+                        <p>파머 이메일</p>
+                      </div>
+                      <div class="col-lg-3 order-2 pt-10 pt-lg-0">
+                        <p th:text="${ projectInfo.farmer.businessName }"></p>
+                        <p th:text="${ projectInfo.rewardRegistInfo.rewardName }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerName }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerPhone }"></p>
+                        <p th:text="${ projectInfo.farmer.farmerEmail }"></p>
+                      </div>
+                    </ul>
+                  </ul>
+                </div>
+              </div>
+              <!-- 파머정보 End Here -->
+
+              <!-- Begin 관련 문의 -->
+<!--              <div class="tab-pane fade" id="qna" role="tabpanel" aria-labelledby="qna-tab">-->
+<!--                <div class="product-shipping-body">-->
+<!--                  <h4 class="title">관련문의</h4>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              &lt;!&ndash; 관련 문의 End Here &ndash;&gt;-->
+
+<!--              &lt;!&ndash; Begin 농사 일지 &ndash;&gt;-->
+<!--              <div class="tab-pane fade" id="farmnote" role="tabpanel" aria-labelledby="farmnote-tab">-->
+<!--                <div class="product-shipping-body">-->
+<!--                  <h4 class="title">농사일지</h4>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              &lt;!&ndash; 농사 일지 End Here &ndash;&gt;-->
+
+<!--              &lt;!&ndash; Begin 반환 정책 &ndash;&gt;-->
+<!--              <div class="tab-pane fade" id="refundpolicy" role="tabpanel" aria-labelledby="refundpolicy-tab">-->
+<!--                <br>-->
+<!--                <div class="notice">-->
+<!--                  <p class="noticeP"><img src="assets/images/header\icon/alert.png">-->
+<!--                    도서산간에 해당하는 서포터님은 배송 가능 여부를 반드시 파머에게 문의 후 펀딩에 참여해주세요.</p>-->
+<!--                </div><br>-->
+<!--                <div>-->
+<!--                  <h5>이 프로젝트의 정보 및 정책을 반드시 확인하세요.</h5>-->
+<!--                  <p class="short-desc mb-0" th:text="${ projectInfo.refundPolicy.refundPolicyContent }"></p>-->
+<!--                </div>-->
+<!--              </div>-->
+              <!-- 반환정책 End Here -->
+
+              <!-- Begin 공지사항 -->
+              <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
+<!--                <div class="title-div">-->
+<!--                      <span class="text-title">-->
+<!--                        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">공지사항</span>-->
+<!--                  <hr width="100%">-->
+                  <div class="notice-wrap">
+                    <div class="cont-div">
+                      <div id="projectNoticeList">
+                        <table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
+                          <tr>
+                            <th style="width: 5%;">번호</th>
+                            <th style="width: 80%;">제목</th>
+                            <th style="width: 15%;">작성일</th>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td>오픈 예정 프로젝트입니다.</td>
+                            <td></td>
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+<!--            </div>-->
+
+          </div>
+        </div>
+        <!-- 공지사항 End Here -->
+      </div>
+    </div>
+</div>
+</div>
+<hr>
+<!-- Begin 연관상품 추천 -->
+<!--<div class="product-slider-area section-space-top-55 section-space-bottom-100">-->
+<!--  <div class="container">-->
+<!--    <div class="section-title text-center pb-55">-->
+<!--      <span class="bottom-title">연관상품 추천</span>-->
+<!--    </div>-->
+<!--    <div class="row">-->
+<!--      <div class="col-lg-12">-->
+<!--        <div class="swiper-slider-holder swiper-arrow">-->
+<!--          <div class="swiper-container product-slider border-issue">-->
+<!--            <div class="swiper-wrapper">-->
+<!--              <div class="swiper-slide">-->
+<!--                <div class="product-item">-->
+<!--                  <div class="product-img img-zoom-effect">-->
+<!--                    <a href="single-product.html">-->
+<!--                      <img class="img-full mainimg" src="assets/images/product/large-size/potato.png" alt="Product Images">-->
+<!--                    </a>-->
+<!--                  </div>-->
+<!--                  <div class="product-content">-->
+<!--                    <a class="product-name" href="single-product.html">산지직송 짭짤이 토마토</a>-->
+<!--                    <div class="price-box pb-1">-->
+<!--                      <span class="new-price">짭짤 토메이로</span>-->
+<!--                    </div>-->
+<!--                    <progress class="relatedProduct" value="55" max="100"></progress>-->
+<!--                    <a class="progressbar">55%</a><a class="progressbar1">22일 남음</a>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; Add Arrows &ndash;&gt;-->
+<!--    <div class="swiper-button-next"></div>-->
+<!--    <div class="swiper-button-prev"></div>-->
+  </div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Main Content Area End Here  -->
+
+<!-- Begin Scroll To Top -->
+<a class="scroll-to-top" href="">
+  <i class="fa fa-chevron-up"></i>
+</a>
+<!-- Scroll To Top End Here -->
+
+</div>
+
+<!-- Global Vendor, plugins JS -->
+
+<!-- JS Files
+============================================ -->
+<!-- Global Vendor, plugins JS -->
+
+<!-- Vendor JS -->
+<script src="assets/js/vendor/bootstrap.bundle.min.js"></script>
+<script src="assets/js/vendor/jquery-3.5.1.min.js"></script>
+<script src="assets/js/vendor/jquery-migrate-3.3.0.min.js"></script>
+<script src="assets/js/vendor/modernizr-3.11.2.min.js"></script>
+<script src="assets/js/vendor/jquery.waypoints.js"></script>
+
+<!--Plugins JS-->
+<script src="assets/js/plugins/wow.min.js"></script>
+<script src="assets/js/plugins/jquery-ui.min.js"></script>
+<script src="assets/js/plugins/swiper-bundle.min.js"></script>
+<script src="assets/js/plugins/jquery.nice-select.js"></script>
+<script src="assets/js/plugins/parallax.min.js"></script>
+<script src="assets/js/plugins/jquery.magnific-popup.min.js"></script>
+
+<!--Main JS (Common Activation Codes)-->
+<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

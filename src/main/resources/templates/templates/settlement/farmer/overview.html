@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/settlement.css}">
+</head>
+<body>
+<main style="width: 1920px">
+    <div th:replace="/common/menubar.html"></div>
+    <div class="mypage" th:replace="/common/endproject.html"></div>
+    <div class="tab-body-area">
+        <div class="title-div">
+            <span class="text-title">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+                정산금 조회
+            </span>
+            <hr width="100%">
+        </div>
+        <div class="farmer-tab-area-block">
+            <span class="text-subtitle" th:text="${ project.projectName }"></span>
+        </div>
+        <p>
+            떡잎 펀드 수수료 10%(VAT별도)를 제외한 금액이<br>
+            1차 / 2차에 나누어 지급될 예정입니다.
+        </p>
+        <br>
+        <table class="mini-table">
+            <tr>
+                <th style="padding-left: 5px; width: 30%">달성률</th>
+                <td style="padding-right: 5px;" align="right" th:text="${ project.achievementRate } + ' ' + '%'"></td>
+            </tr>
+            <tr>
+                <th style="padding-left: 5px; width: 30%">총 펀딩금</th>
+                <td style="padding-right: 5px;" align="right" th:text="${ settlementInfo.fundingTotalAmount } + ' ' + '원'"></td>
+            </tr>
+        </table>
+        <p>※ 예상 정산금은 VAT가 계산되지 않은 금액입니다.</p>
+        <br>
+        <!--        <button class=" basic-btn big-btn btn1" id="objection">이의신청내역</button>-->
+
+        <!-- 회차별 정산정보 식별번호를 매개변수로 전달하기 위한 hidden 태그 -->
+        <input type="hidden" id="firstPayment" th:value="${ settlementPaymentInfos[0].settlementPaymentInfoNo }">
+        <input type="hidden" id="secondPayment" th:value="${ settlementPaymentInfos[1].settlementPaymentInfoNo }">
+
+        <!-- 정산정보 확인 테이블 -->
+        <table class="settlement-table">
+            <tr>
+                <th style="width: 25%">1차 정산금 (원)</th>
+                <th style="width: 25%">1차 정산금 지급일</th>
+                <th style="width: 25%">2차 정산금 (원)</th>
+                <th style="width: 25%">2차 정산금 지급일</th>
+            </tr>
+            <!-- 정산정보가 존재하지 않는 경우 -->
+            <th:block th:if="${ settlementInfo eq null }">
+                <tr>
+                    <td colspan="4">정산 내역이 없습니다.</td>
+                </tr>
+            </th:block>
+            <!-- 정산정보가 존재하는 경우 -->
+            <th:block th:if="${ settlementInfo ne null }">
+                <tr>
+                    <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentAmount eq null }">
+                        <td>-</td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentAmount ne null }">
+                        <td th:text="${ settlementPaymentInfos[0].settlementPaymentAmount }"></td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentDate eq null }">
+                        <td>-</td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[0].settlementPaymentDate ne null }">
+                        <td th:text="${ settlementPaymentInfos[0].settlementPaymentDate }"></td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentAmount eq null }">
+                        <td>-</td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentAmount ne null }">
+                        <td th:text="${ settlementPaymentInfos[1].settlementPaymentAmount }"></td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentDate eq null }">
+                        <td>-</td>
+                    </th:block>
+                    <th:block th:if="${ settlementPaymentInfos[1].settlementPaymentDate ne null }">
+                        <td th:text="${ settlementPaymentInfos[1].settlementPaymentDate }"></td>
+                    </th:block>
+                </tr>
+            </th:block>
+            <tr>
+                <td>
+                    <button class="basic-btn small-btn btn1" id="firstPayAmountCheck">확인</button>
+                    <button class="basic-btn small-btn btn2" id="firstPayAmountObjection">이의신청</button>
+                </td>
+                <td>
+                    <button class="basic-btn small-btn btn1" id="firstPayDateCheck">확인</button>
+                    <button class="basic-btn small-btn btn2" id="firstPayDateObjection">이의신청</button>
+                </td>
+                <td>
+                    <button class="basic-btn small-btn btn1" id="secondPayAmountCheck">확인</button>
+                    <button class="basic-btn small-btn btn2" id="secondPayAmountObjection">이의신청</button>
+                </td>
+                <td>
+                    <button class="basic-btn small-btn btn1" id="secondPayDateCheck">확인</button>
+                    <button class="basic-btn small-btn btn2" id="secondPayDateObjection">이의신청</button>
+                </td>
+            </tr>
+        </table>
+        <hr>
+    </div>
+    <div th:replace="/common/footer.html"></div>
+</main>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    /* parameter로 보낼 데이터 변수로 선언 */
+    const firstPayment = $("#firstPayment");
+    const secondPayment = $("#secondPayment");
+
+    /* 1차 정산 확인 접수 */
+    $("#firstPayAmountCheck").click(function() {
+        const result = confirm('1차 정산금을 확정하시겠습니까?\n확정 후에는 변경할 수 없습니다.');
+
+        if(result == true) {
+            let paymentNo = {
+                method: 'POST',
+                body: firstPayment.val(),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            fetch("/settlement/check", paymentNo)
+                .then(response => response.json())
+                .then(response => {
+                    alert(response);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
+        } else if(result == false) {
+            return false;
+        }
+    });
+
+    /* 1차 정산 이의신청 접수 */
+    // $("#firstPayAmountObjection").click(function() {
+    //     alert("이의신청");
+    // });
+
+    /* 2차 정산 확인 접수 */
+    $("#secondPayAmountCheck").click(function() {
+        const result = confirm('2차 정산금을 확정하시겠습니까?\n확정 후에는 변경할 수 없습니다.');
+
+        if(result == true) {
+            let paymentNo = {
+                method: 'POST',
+                body: secondPayment.val(),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            fetch("/settlement/check/", paymentNo)
+                .then(response => response.json())
+                .then(response => {
+                    alert(response);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
+        } else if(result == false) {
+            return false;
+        }
+    });
+
+    /* 2차 정산 이의신청 접수 */
+    // $("#secondPayAmountObjection").click(function() {
+    //     alert("이의신청");
+    // });
+
+    /* 1차 정산금 지급 확인 접수 */
+    $("#firstPayDateCheck").click(function() {
+        const result = confirm('1차 정산금을 지급받으셨나요?\n[확인] 버튼을 눌러 지급확인을 완료해주세요.');
+
+        if (result == true) {
+            let paymentNo = {
+                method: 'POST',
+                body: firstPayment.val(),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            fetch("/settlement/check/", paymentNo)
+                .then(response => response.json())
+                .then(response => {
+                    alert(response);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
+        } else if (result == false) {
+            return false;
+        }
+    });
+
+    /* 1차 정산금 지급 이의신청 접수 */
+    // $("#firstPayDateObjection").click(function() {
+    //     alert("이의신청");
+    // });
+
+    /* 2차 정산금 지급 확인 접수 */
+    $("#secondPayDateCheck").click(function() {
+        const result = confirm('2차 정산금을 지급받으셨나요?\n[확인] 버튼을 눌러 지급확인을 완료해주세요.');
+
+        if (result == true) {
+            let paymentNo = {
+                method: 'POST',
+                body: secondPayment.val(),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            fetch("/settlement/check/", paymentNo)
+                .then(response => response.json())
+                .then(response => {
+                    alert(response);
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
+        } else if (result == false) {
+            return false;
+        }
+    });
+
+    /* 2차 정산금 지급 이의신청 접수 */
+    // $("#secondPayDateObjection").click(function() {
+    //     alert("이의신청");
+    // });
+</script>
+</html>

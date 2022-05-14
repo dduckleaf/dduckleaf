@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>떡잎펀드</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+</head>
+<body>
+<!--탈퇴 모달창-->
+<form id="withdraw-form">
+    <div class="modal fade" id="writeModalToggle" data-bs-backdrop="static"
+         tabindex="-1" aria-labelledby="writeModalToggleLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="padding: 60px; font-family: inherit;">
+                <h3 style="text-align: left; font-family: inherit;">탈퇴하기</h3>
+                <br>
+                <h4 style="font-family: inherit;">어떤 점이 불편하셨나요?</h4>
+                <br>
+                <p style="font-family: inherit;">떡잎펀드를 이용하려면 불편했던 점을 말씀해주시면, 서비스 개선에 참고하도록 하겠습니다.</p>
+                <select style="width: 400px;" id="withdrawReason" name="withdrawReason" placeholder="탈퇴 사유는 무엇인가요?">
+                    <option value="콘텐츠 품질과 서비스 정보 부족">콘텐츠 품질과 서비스 정보 부족</option>
+                    <option value="고객 서비스의 불만">고객 서비스의 불만</option>
+                    <option value="프로젝트 진행안내">프로젝트 진행안내</option>
+                    <option value="시스템 장애(속도, 잦은 장애)">시스템 장애(속도, 잦은 장애)</option>
+                    <option value="개인 정보 노출 우려">개인 정보 노출 우려</option>
+                </select>
+                <br>
+                <br>
+                <br>
+                <br>
+                <h4 style="font-family: inherit;">탈퇴 전, 꼭 확인하세요!</h4>
+                <br>
+                <p style="font-family: inherit;">탈퇴 전 반드시 아래 유의 사항을 확인하시기 바랍니다.</p>
+                <p style="color: red; font-family: inherit;">신청한 펀딩이 있거나, 참여∙모집중인 프로젝트가 있을때는 탈퇴가 불가능합니다.</p>
+                <br>
+                <br>
+                <p style="font-family: inherit;">탈퇴 후 3개월 내 재가입 불가</p>
+                <p style="color: red;">탈퇴 후 3개월 내 동일 아이디로 재가입 불가</p>
+                <br>
+                <br>
+                <div class="modal-footer" style="border-top: none;">
+                    <div style="margin: 0 auto;">
+                        <button type="button" class="basic-btn big-btn btn1" data-bs-target="#subModalToggle"
+                                data-bs-toggle="modal" data-bs-dismiss="modal">탈퇴하기</button>
+                        <button type="button" class="basic-btn big-btn btn3"
+                                data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--확인창-->
+    <div class="modal fade" id="subModalToggle" data-bs-backdrop="static" aria-hidden="true" aria-labelledby="subModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom: none;">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="text-align: center;">
+                    탈퇴하시겠습니까?
+                </div>
+                <div class="modal-footer" style="border-top: none;">
+                    <div style="margin: 0 auto;">
+                        <button type="button" class="basic-btn small-btn btn1" data-bs-target="#confirmModal" data-bs-toggle="modal" data-bs-dismiss="modal" id="withdraw">확인</button>
+                        <button type="button" class="basic-btn small-btn btn3" data-bs-target="#writeModalToggle" data-bs-toggle="modal" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div th:replace="/common/menubar.html"></div>
+<div class="title-div">
+    <span class="text-title"><img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">프로필 정보 설정</span>
+</div>
+<div class="profile-div">
+    <form method="post" id="profile-form" enctype="multipart/form-data">
+        <div class="profile-img-div">
+            <h5 style="font-family: inherit">프로필 사진</h5><br>
+            <span style="display: none" id="profile-attachment" sec:authentication="principal.profileThumbnailPath"></span>
+            <img id="titleImg"><br>
+            <input type="file" style="display: none" id="imageFile" name="uploadedImg" accept=".gif, .jpg, .png" onchange="loadImg(this)">
+            <div id="changeImg">바꾸기</div><div id="deleteImg">기본 이미지로 변경</div>
+        </div>
+    </form>
+</div>
+</body>
+<button class="big-btn btn2" id="removeMember" data-bs-toggle="modal" data-bs-target="#writeModalToggle" >탈퇴하기</button>
+<script>
+
+    window.onload = function() {
+        document.getElementById("titleImg").src = document.getElementById("profile-attachment").innerText;
+    }
+
+    const $titleImgDiv = document.getElementById("changeImg");
+
+    $titleImgDiv.onclick = function() {
+        document.getElementById("imageFile").click();
+    }
+
+    async function loadImg(value) {
+        if (value.files && value.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById("titleImg").src = e.target.result;
+            }
+            reader.readAsDataURL(value.files[0]);
+        }
+
+        let formData = new FormData();
+        formData.append("file", value.files[0]);
+        let response = await fetch('/profile/uploadImg', {
+            method: "POST",
+            body: formData
+        });
+        if (response.status == 200) {
+            alert("프로필 사진이 변경되었습니다.");
+        }
+    }
+
+    if(document.getElementById("deleteImg")) {
+
+        document.getElementById("deleteImg").onclick = function() {
+
+            fetch("/profile/remove/thumbnail")
+                .then(response => response.json())
+                .then(response => {
+                    console.table(response);
+                    document.getElementById("titleImg").src = response;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
+    }
+
+    if(document.getElementById("withdraw")) {
+
+        document.getElementById("withdraw").onclick = function() {
+
+            let $withdrawReason = document.getElementById("withdrawReason").value;
+
+            let withdrawReason = {
+                method: 'POST',
+                body: $withdrawReason,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            fetch("/member/remove", withdrawReason)
+                .then(response => response.json())
+                .then(response => {
+                    if(response == "회원 탈퇴 실패") {
+                        Swal.fire({
+                            title: response,
+                            showCancelButton: true,
+                            showConfirmButton: false,
+                            cancelButtonText: '확인',
+                            allowEnterKey: false,
+                            confirmButtonWidth: '100px',
+                            customClass: {
+                                cancelButton: 'savecancel',
+                                popup: 'savepopup'
+                            },
+                            buttonsStyling: false,
+                        });
+                    }
+                    if(response == "로그인페이지로 돌아갑니다.") {
+                        Swal.fire({
+                            title: response,
+                            showCancelButton: false,
+                            showConfirmButton: true,
+                            confirmButtonText: '확인',
+                            allowEnterKey: false,
+                            confirmButtonWidth: '100px',
+                            customClass: {
+                                confirmButton: 'withdrawMember',
+                                popup: 'savepopup'
+                            },
+                            buttonsStyling: false,
+                        }).then(function (){
+                            location.href = '/member/logout';
+                        });
+
+                    }
+                })
+        }
+    }
+</script>
+</html>

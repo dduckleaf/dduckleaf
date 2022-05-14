@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Harmic - My account</title>
+  <meta name="robots" content="noindex, follow" />
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+
+  <!-- CSS
+  ============================================ -->
+
+  <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+  <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+  <link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}" />
+
+  <!-- Plugin CSS (Global Plugins Files) -->
+  <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+  <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
+
+  <!-- Style CSS -->
+  <!--  <link rel="stylesheet" href="assets/css/style.css">-->
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link rel="stylesheet" th:href="@{/css/mypage.css}">
+  <link rel="stylesheet" th:href="@{/css/shipping.css}">
+  <style>
+    .tab-body-zone {
+      position: absolute;
+      z-index: 1;
+      left: 33%;
+      right: 25%;
+      top: 16%;
+      width: 48%;
+      height: 1220px;
+    }
+  </style>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div th:replace="/common/farmerheader.html"></div>
+
+<div class="tab-body-zone">
+  <span class="text-title">
+    <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+    프로젝트 목록
+  </span>
+  <div class="title-div">
+    <hr width="100%">
+    <div class="project-wrap">
+      <div class="cont-div">
+        <div id="projectList">
+          <table class="basic-table" id="project-qna-table" style="border: white!important;">
+            <tr>
+              <th>번호</th>
+              <th>프로젝트 이름</th>
+              <th>오픈일</th>
+              <th>종료일</th>
+              <th>진행 상태</th>
+              <th>심사 상태</th>
+              <th>달성률</th>
+            </tr>
+            <th:block th:each="project:${projectList}">
+              <tr th:if="${project.progressStatus.projectProgressStatusNo} == 1" style="cursor:pointer;" onclick="alert('심사 중인 프로젝트입니다.')">
+                <td th:text="${project.projectNo}"></td>
+                <td th:text="${project.projectName}"></td>
+                <td th:text="${project.openDate}"></td>
+                <td th:text="${project.endDate}"></td>
+                <td th:text="${project.progressStatus.projectProgressStatusName}"></td>
+                <td th:text="${project.examineStatus.examineProjectStatusName}"></td>
+                <td th:text="${project.achievementRate}"></td>
+              </tr>
+              <tr th:if="${project.progressStatus.projectProgressStatusNo} == 2" th:onclick="'location.href=\'/project/notice/list/' + @{${project.projectNo}} + '\''" style="cursor:pointer;">
+                <td th:text="${project.projectNo}"></td>
+                <td th:text="${project.projectName}"></td>
+                <td th:text="${project.openDate}"></td>
+                <td th:text="${project.endDate}"></td>
+                <td th:text="${project.progressStatus.projectProgressStatusName}"></td>
+                <td th:text="${project.examineStatus.examineProjectStatusName}"></td>
+                <td th:text="${project.achievementRate}"></td>
+              </tr>
+              <tr th:if="${project.progressStatus.projectProgressStatusNo} == 3" th:onclick="'location.href=\'/project/notice/list/' + @{${project.projectNo}} + '\''" style="cursor:pointer;">
+                <td th:text="${project.projectNo}"></td>
+                <td th:text="${project.projectName}"></td>
+                <td th:text="${project.openDate}"></td>
+                <td th:text="${project.endDate}"></td>
+                <td th:text="${project.progressStatus.projectProgressStatusName}"></td>
+                <td th:text="${project.examineStatus.examineProjectStatusName}"></td>
+                <td th:text="${project.achievementRate}"></td>
+              </tr>
+              <tr th:if="${project.progressStatus.projectProgressStatusNo} == 4" th:onclick="'location.href=\'/shipping/management/default/' + @{${project.projectNo}} + '\''" style="cursor:pointer;">
+                <td th:text="${project.projectNo}"></td>
+                <td th:text="${project.projectName}"></td>
+                <td th:text="${project.openDate}"></td>
+                <td th:text="${project.endDate}"></td>
+                <td th:text="${project.progressStatus.projectProgressStatusName}"></td>
+                <td th:text="${project.examineStatus.examineProjectStatusName}"></td>
+                <td th:text="${project.achievementRate}"></td>
+              </tr>
+              <tr th:if="${project.progressStatus.projectProgressStatusNo} == 5" th:onclick="'location.href=\'/project/notice/list/' + @{${project.projectNo}} + '\''" style="cursor:pointer;">
+                <td th:text="${project.projectNo}"></td>
+                <td th:text="${project.projectName}"></td>
+                <td th:text="${project.openDate}"></td>
+                <td th:text="${project.endDate}"></td>
+                <td th:text="${project.progressStatus.projectProgressStatusName}"></td>
+                <td th:text="${project.examineStatus.examineProjectStatusName}"></td>
+                <td th:text="${project.achievementRate}"></td>
+              </tr>
+              <tr th:if="${project.progressStatus.projectProgressStatusNo} == 6" th:onclick="'location.href=\'/project/examination/rejectreason/' + @{${project.projectNo}} + '\''" style="cursor:pointer;">
+                <td th:text="${project.projectNo}"></td>
+                <td th:text="${project.projectName}"></td>
+                <td th:text="${project.openDate}"></td>
+                <td th:text="${project.endDate}"></td>
+                <td th:text="${project.progressStatus.projectProgressStatusName}"></td>
+                <td th:text="${project.examineStatus.examineProjectStatusName}"></td>
+                <td th:text="${project.achievementRate}"></td>
+              </tr>
+            </th:block>
+          </table>
+        </div><br>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  const profile = document.getElementById("profile")
+  if(profile) {
+    profile.onclick = function () {
+      location.href = "/thumbnail/regist";
+    }
+  }
+
+  const supporterpage = document.getElementById("supporterTab");
+  if(supporterpage) {
+    supporterpage.onclick = function () {
+      location.href = "/common/supporterpage";
+    }
+  }
+
+  const farmerpage = document.getElementById("farmerTab");
+  if(farmerpage) {
+    farmerpage.onclick = function () {
+      location.href = "/common/farmerpage";
+    }
+  }
+
+  $(".examination").click(function () {
+    alert("심사중인 프로젝트입니다");
+  });
+
+  const endProjectDiv = document.getElementById("endProjectDiv");
+  const endProjectNo = document.getElementById("endProjectNo");
+
+  // for(let i = 0; i < endProjectDiv.length; i++) {
+  //   endProjectDiv[i].onclick = function () {
+  //     location.href = "/shipping/management/default/" + endProjectNo[i];
+  //   }
+  // }
+</script>
+<!-- JS Files
+============================================ -->
+<!-- Global Vendor, plugins JS -->
+
+<!-- Vendor JS -->
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
+
+<!--Plugins JS-->
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
+
+<!--Main JS (Common Activation Codes)-->
+<script th:src="@{ /js/main.js }"></script>
+
+<!-- 탭 메뉴 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<div th:replace="/common/footer.html"></div>
+</body>
+</html>

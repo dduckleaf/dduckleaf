@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<style>
+</style>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member.css}">
+    <script>
+        const successMessage = "[[${ message }]]";
+        if(successMessage) {
+            alert(successMessage);
+        }
+    </script>
+</head>
+<body>
+<div th:replace="/common/userheader.html"></div>
+<div class="login-form">
+    <button onclick="location.href='/'" class="logo"></button><br>
+    <h1 class="login-title">로그인</h1>
+    <form action="/member/login" method="post">
+        <input type="text" name="username" placeholder="아이디">
+        <input type="password" name="password" placeholder="비밀번호"><br>
+        <input type="button" onclick="location.href='/member/find'" class="login-find" value="아이디·비밀번호 찾기>"><br>
+        <button type="submit" class="lgoin-btn">로그인</button>
+    </form>
+    <a align="center" onclick="location.href='/member/regist'" class="login-regist">회원가입</a>
+</div>
+</body>
+</html>

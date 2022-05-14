@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/myfunding.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}">
+</head>
+<body>
+    <div th:replace="/common/menubar.html"></div>
+    <div th:replace="/common/supporterpage.html"></div>
+    <div class="myfunding-div">
+        <div class="title-div">
+            <span class="text-title">
+            <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">나의 펀딩</span>
+            <hr width="100%">
+        </div>
+        <br clear="both">
+        <table class="myfunding-table">
+            <tr>
+                <th>
+                    <h1 class="myfunding-times" th:text="${ myFunding.fundingTimes }"></h1>
+                    <br>
+                    <h1 class="myfunding-contenttile">프로젝트</h1>
+                </th>
+                <th style="border-left: 2px solid #F2F4F9; border-right: 2px solid #F2F4F9;">
+                    <h1 class="myfunding-times" th:text="${ myFunding.mockFundingTimes }"></h1>
+                    <br>
+                    <h1 class="myfunding-contenttile">모의 펀딩</h1>
+                </th>
+                <th>
+                    <h1 class="myfunding-times" th:text="${ myFunding.ticketAmount }"></h1>
+                    <br>
+                    <h1 class="myfunding-contenttile">모의 펀딩 티켓 갯수</h1>
+                </th>
+            </tr>
+            <tr>
+                <td colspan="3"></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

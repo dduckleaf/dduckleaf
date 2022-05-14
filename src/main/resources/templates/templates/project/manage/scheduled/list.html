@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+	<link rel="stylesheet" th:href="@{/css/report.css}">
+	<style>
+        #back {
+            float: right;
+        }
+	</style>
+</head>
+<script>
+	const message = "[[${ message }]]";
+	message && alert(message);
+</script>
+<body>
+<main style="width: 1920px">
+	<div th:replace="/common/adminheader.html"></div>
+	
+	<div class="container" style="height: 70%">
+		<div class="" style="width: 1200px;">
+			<main class="main-content">
+				<div class="notice-wrap">
+					<div class="title-div" style="margin-top: 5%">
+						<span class="text-title"><img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">공개 예정 프로젝트</span>
+						<button type="button" class="btn3 basic-btn medium-btn" style="float:right;" id="openproject">프로젝트 오픈</button>
+						<hr style="width: 100%">
+					</div>
+					<div class="cont-div" style="width: 100%; text-align: center; margin-top: 2%">
+						<table style="text-align: center;width: 100%;" class="basic-table">
+							<colgroup>
+								<col style="width: 0.1%">
+								<col style="width: 30%">
+								<col style="width: 20%">
+								<col style="width: 15%">
+								<col style="width: 15%">
+								<col style="width: 19.9%">
+							</colgroup>
+							<tr style="border-top: #D9D9D9 solid 2px">
+								<th></th>
+								<th>프로젝트명</th>
+								<th>파머명</th>
+								<th>달성률(%)</th>
+								<th>목표금액</th>
+								<th>오픈일</th>
+							</tr>
+							<tr th:each="project : ${ projectList }">
+								<td><input type="hidden" id="projectNo" name="projectNo" th:value="${project.projectNo}"></td>
+								<td th:text="${ project.projectName }"></td>
+								<td th:text="${ project.farmer.farmerName }"></td>
+								<td th:text="${ project.achievementRate}"></td>
+								<td th:text="${ project.fundTargetAmount }"></td>
+								<td th:text="${ project.openDate }"></td>
+							</tr>
+						</table>
+						<br>
+						<div style="text-align: center">
+							<div th:replace="/project/manage/scheduled/projectlistpaging.html"></div>
+						</div>
+						<br>
+					</div>
+				</div>
+			</main>
+		</div>
+	</div>
+	<script>
+        /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
+        const tds = document.getElementsByTagName("td");
+        if(tds) {
+            for(let i = 0; i < tds.length; i++) {
+
+                tds[i].onmouseenter = function() {
+                    this.parentNode.style.backgroundColor = "#f0f0f0";
+                    this.parentNode.style.cursor = "pointer";
+                }
+
+                tds[i].onmouseout = function() {
+                    this.parentNode.style.backgroundColor = "#fff";
+                }
+
+                tds[i].onclick = function() {
+                    const $projectNo = this.parentNode.children[0].children[0].value;
+                    location.href = "/project/manage/scheduled/detail/" + $projectNo;
+                }
+            }
+        }
+
+		$("#openproject").click(function () {
+			alert("프로젝트 상태를 진행 중으로 변경하시겠습니까?");
+			location.href = "/project/manage/open";
+		});
+
+	</script>
+</body>
+</html>

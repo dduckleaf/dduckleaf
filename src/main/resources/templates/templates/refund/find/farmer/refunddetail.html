@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>펀딩 목록 조회</title>
+	<meta name="robots" content="noindex, follow" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+	<script src="https://kit.fontawesome.com/c24bc5c6f2.js" crossorigin="anonymous"></script>
+	<!-- Style CSS -->
+	<link rel="stylesheet" th:href="@{ /css/funding.css }">
+	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	
+	<!-- JQuery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<style>
+        .tab-body-area {
+            position: absolute;
+            z-index: 1;
+            left: 33%;
+            right: 25%;
+            top: 18%;
+            width: 50%;
+        }
+        .refund-detail-area {
+            width: 84%;
+            margin-left: 8%;
+            background-color: rgb(224, 222, 221);
+            margin-top: 8%;
+        }
+        .refund-detail-area-box {
+            margin: 7%;
+            width: 80%;
+            height: 90%;
+        }
+        .refund-detail-title {
+            font-size: 1.2em;
+            font-weight: 1000;
+            margin-bottom: 10px;
+            width: 35%;
+        }
+        .refund-detail-content {
+            width: 60%;
+        }
+        /* Round Corners */
+        .round-corners {
+            color: #BAC34E;
+            background: #FFF;
+            border: 1px solid #BAC34E;
+            width: 250px;
+            height: 40px;
+            font-size: 20px;
+
+            cursor: pointer;
+        }
+        .round-corners:hover {
+            border-radius: 1em;
+            transform: translateY(-5px);
+        }
+	</style>
+</head>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div th:replace="/common/farmerheader.html"></div>
+
+
+
+<div class="tab-body-area" style="width: 47%">
+	<span class="text-title">
+        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+		 환불 내역
+	</span>
+	<hr>
+	<div class="refund-detail-area">
+		<div class="refund-detail-area-box">
+			<br><br>
+			<label class="refund-detail-title">주문일</label>
+			<label class="refund-detail-content">[[${refunding.refundingDate}]]</label><br>
+			<label class="refund-detail-title">펀딩 금액</label>
+			<label class="refund-detail-content">[[${refunding.funding.fundingAmount}]]</label><br>
+			<label class="refund-detail-title">리워드 금액</label>
+			<label class="refund-detail-content">[[${refunding.project.rewardInfo.rewardPrice}]]</label><br>
+			<label class="refund-detail-title">리워드 수량</label>
+			<label class="refund-detail-content">[[${refunding.project.rewardInfo.rewardUnit}]] X [[${refunding.funding.rewardAmount}]] EA</label><br>
+			<label class="refund-detail-title">프로젝트상태</label>
+			<label class="refund-detail-content">[[${refunding.project.progressStatus.progressName}]]</label><br>
+			<label class="refund-detail-title">환불 신청일</label>
+			<label class="refund-detail-content">[[${refunding.refundingDate}]]</label><br>
+			<br>
+			
+			<label class="refund-detail-title">신청 사유</label>
+			<label class="refund-detail-content">[[${refunding.refundingCategory.refundingCategoryName}]]</label><br><br>
+			<label class="refund-detail-title">상세 이유</label>
+			<label class="refund-detail-content">[[${refunding.refundingReason}]]</label><br><br>
+			<br>
+			<div style="width:50px"></div>
+		</div>
+	</div>
+	<div style="text-align: right; margin-right: 8%;margin-top: 2%" >
+		<button class="basic-btn btn1 medium-btn" th:onclick="'location.href=\'/refund/examine/farmer/confirm/' + @{${refunding.refundingInfoNo}} + '\''">승인</button>
+		<button class="basic-btn btn2 medium-btn" data-bs-toggle="modal" data-bs-target="#refuse-modal">거절</button>
+		<button class="basic-btn btn3 medium-btn" onclick="location.href='/refund/find/list/farmer'">뒤로가기</button>
+	
+	</div>
+</div>
+<div th:replace="/common/footer.html"></div>
+<div th:replace="/refund/find/farmer/refusereasonmodal.html"></div>
+</body>
+</html>

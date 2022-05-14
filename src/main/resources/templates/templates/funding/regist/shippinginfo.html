@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>펀딩 신청</title>
+	<meta name="robots" content="noindex, follow" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+	<script src="https://kit.fontawesome.com/c24bc5c6f2.js" crossorigin="anonymous"></script>
+	<!-- Style CSS -->
+	<link rel="stylesheet" th:href="@{ /css/funding.css }">
+	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- 다음 주소 API CDN -->
+	<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<!-- jQuery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+	<!-- iamport.payment.js -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div class="container" style="height: 70%">
+	<div class="" style="width: 1200px;">
+		<div class="fundingrewardstep-front">
+			<button class="mt-3 basic-btn btn3 big-btn"> < &nbsp스토리로 돌아가기</button>
+			<label>펀딩하기는 쇼핑하기가 아닙니다! 자세히 알아보세요.</label><br>
+		</div>
+		<div class="fundingrewardstep">
+			<img class=""  src="/images/funding/regist/fundingrewardstep2.png">
+		</div>
+		<!-- 리워드 정보 -->
+		<label class="title">리워드 정보</label>
+		<hr size="3px">
+		<div class="regist-reward-info">
+			<div class="label-tag">
+				<label>[[${project.farmer.farmer.businessName}]] &nbsp;&nbsp;[[${project.projectName}]]</label>
+			</div>
+			<div class="label-tag row">
+				<div class="row">
+					<div class="col-8" style="text-align: right">
+					</div>
+					<div class="col-2" style="text-align: right">
+						<span>수량: [[${ registInfo.rewardAmount }]]개</span>
+					</div>
+					<div class="col-2" style="text-align: center">
+						<span>[[${ registInfo.rewardTotal }]]원</span>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="label-tag">
+				<div class="row" style="width: 100%">
+					<div class="col-10">
+						<label>추가 후원금</label>
+					</div>
+					<div class="col-2" style="text-align: center">
+						[[${ registInfo.donate }]]원
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="label-tag">
+				<div class="row" style="width: 100%">
+					<div class="col-10">
+						<label>배송비</label>
+					</div>
+					<div class="col-2" style="text-align: center">
+						<th:block th:if="${ registInfo.shippingFee > 0 }">
+							[[${ registInfo.shippingFee }]]원
+						</th:block>
+						<th:block th:if="${ registInfo.extraShippingFee > 0 }">
+							[[${ registInfo.extraShippingFee }]]원
+						</th:block>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<div class="label-tag">
+				<div class="row" style="width: 100%">
+					<div class="col-10">
+						<label>최종 결제 금액</label>
+					</div>
+					<div class="col-2" style="text-align: center">
+						<label class="total-price">[[${ registInfo.totalFunding }]]원</label>
+					</div>
+				</div>
+			</div>
+			<hr>
+		</div>
+		
+		
+		<div style="height: 100px;"></div>
+		<!-- 서포터 정보 -->
+		<label class="title">서포터 정보</label><br>
+		<div class="funding-regist-sup-info">
+			<div class="funding-regist-sup-info-name">
+				<div class="row">
+					<div class="col-2"><label>이름</label></div>
+					<div class="col"><span>[[${ member.memberName}]]</span></div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-2"><label>이메일</label></div>
+					<div class="col"><span>[[${ member.email }]]</span></div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="col-2"><label>휴대폰 번호</label></div>
+					<div class="col"><span>[[${ member.phone }]]</span></div>
+				</div>
+			</div>
+			<div class="funding-regist-sup-info-check">
+				<hr style="color: #ABABAB;" size="6px"><br>
+				<label for="agree_all">
+					<input type="checkbox" name="agree_all" id="agree_all">
+					<span> (필수) 펀딩 진행에 대한 새소식 및 결제 관련 안내를 받습니다. </span>
+				</label>
+			</div>
+		</div>
+		
+		<br><br><br><br>
+		<form id="sendform">
+			<label class="title">리워드 배송지 입력</label><br>
+			<hr style="color: #ABABAB;" size="6px"><br>
+			<div class="funding-regist-shipping-area">
+				<div class="funding-regist-shipping-area-info">
+					<label>이름</label><br>
+					<input name="shippingAddress.shippingMemberName" type="text"><br>
+					<label>휴대폰 번호</label><span>('-' 없이 숫자만 입력해주세요.)</span><br>
+					<input name="shippingAddress.shippingMemberPhone" type="text"><br>
+					<label>주소</label><br>
+					<input type="text" name="shippingAddress.zipCode" id="zipCode" readonly><input type="button" value="검색" class="basic-btn btn1 small-btn" id="searchZipCode" style="margin-left: 1%;"><br>
+					<input type="text" name="shippingAddress.address1" id="address1"><br>
+					<input type="text" name="shippingAddress.address2" id="address2"><br>
+
+					<label>배송 요청사항 (선택)</label><br>
+					<input name="shippingAddress.shippingRequire" type="text" placeholder=" 예) 부재 시 연락 바랍니다."><br><br>
+				</div>
+			</div>
+
+			<!-- 환불 계좌 입력-->
+			<div style="margin-top: 2%"></div>
+			<label class="title">환불 계좌 입력</label><br>
+			<hr style="color: #ABABAB;" size="6px"><br>
+			<label style="font-weight: 1000; font-size: 1.1em">예금주명</label><br>
+			<input type="text" name="refundName" style="margin-top: 1%;width: 41.7%">
+			
+			<div style="margin-top: 3%">
+				<label style="font-weight: 1000; font-size: 1.1em;margin-bottom: 1%">환불계좌</label><br>
+				<select class="shipping-fee-select" name="refundAccountInfo.bankCode">
+					<option disabled selected>은행명</option>
+					<option th:each="bank : ${ bankList }" th:value="${bank.bankNo}" th:text="${bank.bankName}"></option>
+				</select>
+				<input class="shipping-fee-select-account" name="refundAccountInfo.accountNo" type="number" placeholder="'-' 없이 숫자만 입력해주세요.">
+			</div>
+
+			<input type="hidden" id="totalFunding" name="totalFunding">
+			<input type="hidden" id="rewardTotal" name="rewardTotal">
+			<input type="hidden" id="rewardPrice" name="rewardPrice">
+			<input type="hidden" id="rewardAmount" name="rewardAmount">
+			<input type="hidden" id="donate" name="donate">
+			<input type="hidden" id="shippingFee" name="shippingFee">
+			<input type="hidden" id="extraShippingFee" name="extraShippingFee">
+			<input type="hidden" id="projectNo" name="projectNo">
+		</form>
+		<!-- 약관 동의 -->
+		<div style="margin-top: 4%"></div>
+		<label class="title">약관 동의</label><br>
+		<hr style="color: #ABABAB;" size="6px"><br>
+		
+		
+		<div class="funding-regist-policy-check">
+			<div class="funding-regist-policy-check-area">
+				<label for="supply" style="width: 90%">
+					<input type="checkbox" name="supply" id="supply">
+					<span style="margin-left: 10px"> 개인정보 제3자 제공 동의 </span>
+				</label>
+				<a data-bs-toggle="modal" data-bs-target="#policyfirst" style=" color: #ababab">자세히 보기</a>
+			</div>
+		</div>
+		<div class="funding-regist-policy-check">
+			<div class="funding-regist-policy-check-area">
+				<label for="responsibility" style="width: 90%">
+					<input type="checkbox" name="responsibility" id="responsibility">
+					<span style="margin-left: 10px"> 책임 규정에 대한 동의 </span>
+				</label>
+				<a data-bs-toggle="modal" data-bs-target="#policysecond"  style=" color: #ababab">자세히 보기</a>
+			</div>
+		</div>
+		
+		
+		<!-- 결제 예약 시 유의사항 -->
+		<div style="margin-top: 6%"></div>
+		<label class="title">결제 예약 시 유의사항</label><br>
+		<hr style="color: #ABABAB;" size="6px"><br>
+		<div style="font-size: 0.8em; color: #ABABAB;">
+			* 결제 실행일에 한도 초과, 카드 이용 정지 등 결제자의 귀책 사유로 인하여 결제가 실패할 수 있으니, 결제수단이 유효한지 한번 확인 해주세요.<br>
+			* 1차 결제 실패 시 실패일로부터 3 영업일 동안 재결제를 실행합니다. 모든 재결제 실패 시 펀딩  신청이 소멸됩니다.<br>
+			* 결제 예약 이후, 결제 정보를 변경하려면 마이페이지>나의펀딩의 결제 정보에서 결제 정보를 변경해주세요.<br>
+		</div>
+		
+		
+		
+		<!-- 버튼 -->
+		<div style="text-align: center; width: 100%; margin: 5%">
+			<input type="button" id="funding-submit" onclick="requestPay()" class="basic-btn btn1 bigbig-btn" value="결제하기">
+		</div>
+	</div>
+	<script>
+        const $searchZipCode = document.getElementById("searchZipCode");
+
+        $searchZipCode.onclick = function() {
+
+            new daum.Postcode({
+                oncomplete: function(data){
+
+                    document.getElementById("zipCode").value = data.zonecode;
+                    document.getElementById("address1").value = data.address;
+                    document.getElementById("address2").focus();
+                }
+            }).open();
+        }
+	
+	</script>
+	<script th:inline="javascript">
+  
+		const $submit = document.getElementById("funding-submit");
+        let IMP = window.IMP;
+        IMP.init("imp38104797");
+
+        function requestPay() {
+
+            const $sendform = document.getElementById("sendform")
+
+            const $totalFunding = document.getElementById("totalFunding");
+            const $rewardTotal = document.getElementById("rewardTotal");
+            const $rewardPrice = document.getElementById("rewardPrice");
+            const $rewardAmount = document.getElementById("rewardAmount");
+            const $donate = document.getElementById("donate");
+            const $shippingFee = document.getElementById("shippingFee");
+            const $extraShippingFee = document.getElementById("extraShippingFee");
+            const $projectNo = document.getElementById("projectNo");
+
+            $totalFunding.value = "[[${ registInfo.totalFunding }]]";
+            $rewardTotal.value = "[[${ registInfo.rewardTotal }]]";
+            $rewardPrice.value = "[[${ registInfo.rewardPrice }]]";
+            $rewardAmount.value = "[[${ registInfo.rewardAmount }]]";
+            $donate.value = "[[${ registInfo.donate }]]";
+            $shippingFee.value = "[[${ registInfo.shippingFee }]]";
+            $extraShippingFee.value = "[[${ registInfo.extraShippingFee }]]";
+            $projectNo.value = "[[${ registInfo.projectNo }]]";
+
+            $sendform.method = "get";
+            $sendform.action = "/funding/regist/fundinginfo";
+
+
+            $sendform.submit();
+            
+            //
+            // IMP.request_pay({ // param
+            //     pg: "kakaopay",
+            //     pay_method: "kakaopay",
+            //     merchant_uid: "dduckleaf" + new Date().getTime(),
+            //     name: "상품명",
+            //     amount: $totalFunding.value,
+            //     buyer_tel: "휴대폰번호",
+            // },function (rsp) {
+            //     if (rsp.success) {
+			//
+            //         $sendform.submit();
+			//
+            //     }else{
+            //         alert("실패");
+            //     }
+            // });
+        }
+
+
+	</script>
+	
+	<div th:replace="/funding/regist/policyfirst.html"></div>
+	<div th:replace="/funding/regist/policysecond.html"></div>
+</div>
+<footer class="footer" th:replace="/common/footer.html"></footer>
+</body>
+</html>

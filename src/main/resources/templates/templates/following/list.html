@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>떡잎펀드</title>
+    <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+    <link rel="stylesheet" th:href="@{css/vendor/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{css/vendor/Pe-icon-7-stroke.css}" />
+
+    <!-- Plugin CSS (Global Plugins Files) -->
+    <link rel="stylesheet" th:href="@{css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/jquery-ui.min.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{css/plugins/magnific-popup.min.css}"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/mypage.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/following.css}">
+    <link rel="stylesheet" th:href="@{ /css/projectlist.css }">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico" />
+</head>
+<body>
+    <div th:replace="/common/menubar.html"></div>
+    <div th:replace="/common/supporterpage.html"></div>
+    <div class="following-project-div">
+        <div class="title-div">
+            <span class="text-title">
+            <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">관심 프로젝트</span>
+            <hr width="100%">
+        </div>
+        <br clear="both">
+        <div class="row" style="margin-top: 70px">
+            <th:block th:each="project : ${followingProjectList}">
+<!--                <th:block th:if="${ project.reward ne null}">-->
+                    <div class="col-3 project-list-box">
+                        <div class="product-img img-zoom-effect">
+                            <a th:href="'/project/projectdetail/' + ${project.projectNo}">
+                                <img class="img-full mainimg" th:src="'/upload/original/' + ${project.attachmentSavedName}" alt="Product Images">
+                            </a>
+                        </div>
+                        <div class="product-content">
+                            <a class="product-name" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.projectName}]]</a><br>
+                            <div class="price-box pb-1">
+                                <span class="new-price">[[${project.farmer.businessName}]]</span>
+                            </div>
+                            <progress class="project-progress" th:value="${project.achievementRate}" max="100"></progress>
+                            <a class="progressbar-list" href="/project/projectdetail/@{${project.projectNo}}">[[${project.achievementRate}]]%</a><br>
+
+                            <a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.projectProgressStatus.projectProgressStatusName}]]</a><br>
+                            <a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.deadLine}]]일 남음</a>
+                        </div>
+                    </div>
+<!--                </th:block>-->
+            </th:block>
+        </div>
+    </div>
+    <div th:replace="@{/common/footer.html}"></div>
+</body>
+<!-- Vendor JS -->
+<script th:src="@{/js/vendor/bootstrap.bundle.min.js}"></script>
+<script th:src="@{/js/vendor/jquery-3.5.1.min.js}"></script>
+<script th:src="@{/js/vendor/jquery-migrate-3.3.0.min.js}"></script>
+<script th:src="@{/js/vendor/modernizr-3.11.2.min.js}"></script>
+<script th:src="@{/js/vendor/jquery.waypoints.js}"></script>
+
+
+<!--Plugins JS-->
+<script th:src="@{/js/plugins/wow.min.js}"></script>
+<script th:src="@{/js/plugins/jquery-ui.min.js}"></script>
+<script th:src="@{/js/plugins/swiper-bundle.min.js}"></script>
+<script th:src="@{/js/plugins/jquery.nice-select.js}"></script>
+<script th:src="@{/js/plugins/parallax.min.js}"></script>
+<script th:src="@{/js/plugins/jquery.magnific-popup.min.js}"></script>
+
+<!--Main JS (Common Activation Codes)-->
+<script th:src="@{/js/main.js}"></script>
+</html>

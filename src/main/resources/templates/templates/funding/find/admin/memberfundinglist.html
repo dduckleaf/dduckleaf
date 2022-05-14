@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/adminrefund.css}">
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+
+</head>
+<body>
+<div th:replace="/common/adminheader.html"></div>
+<div class="container" style="height: 70%">
+    <div class="" style="width: 1200px;">
+        <div class="title-div" style="margin-top: 3%">
+				<span class="text-title">
+					<img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">
+                    <label id="keyword">회원별 펀딩 참여 이력</label>
+				</span>
+            <hr style="width: 100%">
+        </div>
+    </div>
+    <div class="row" style="margin-left: 2%">
+        <table class="basic-table" align="center" style="width: 100%">
+            <tr>
+                <th style="width: 10%;">회원번호</th>
+                <th style="width: 30%;">회원 이름</th>
+                <th style="width: 20%;">펀딩개수</th>
+                <th style="width: 20%;">최근 참여일</th>
+                <th style="width: 20%;">환불신청개수</th>
+            </tr>
+            <tr th:each="funding : ${fundingInfos}">
+                <td th:text="${funding.memberNo}"></td>
+                <td th:text="${funding.memberName}"></td>
+                <td th:text="${funding.fundingCount}"></td>
+                <td th:text="${funding.recentFundingdate}"></td>
+                <td th:text="${funding.refundingCount}"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="project-list-paging">
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist?page=' + @{${paging.startPage}} + '\''"
+                th:disabled="${ fundingInfos.first }" class="paging-btn first"><<</button>
+
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist?page=' + @{${paging.currentPage - 1}} + '\''"
+                th:disabled="${ fundingInfos.first }" class="paging-btn prev"><</button>
+
+        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+            <button th:onclick="'location.href=\'/funding/find/admin/memberlist?page=' + @{${page}} + '\''"
+                    th:text="${ page }" th:disabled="${ paging.currentPage eq page}" class="paging-btn"></button>
+        </th:block>
+
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist?page=' + @{${paging.currentPage + 1}} + '\''"
+                th:disabled="${ fundingInfos.last}" class="paging-btn next">></button>
+
+        <button th:onclick="'location.href=\'/funding/find/admin/memberlist ?page=' + @{${paging.endPage}} + '\''"
+                th:disabled="${ fundingInfos.last }" class="paging-btn last">>></button>
+    </div>
+</div>
+
+<script>
+    /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for(let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function() {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function() {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function() {
+                const memberNo = this.parentNode.children[0].innerText ;
+                location.href = "/funding/find/admin/memberlist/detail/" + memberNo;
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <!-- 아래 코드를 모두 복사하여 각자 페이징해줄 영역에 붙여넣기 -->
+    <!-- 객체이름설정, 버튼클릭 시 요청url 설정 등 수정해서 사용하시면 됩니다 -->
+
+    <div id="paging-area" align="center">
+        <!-- 맨 앞으로 이동 -->
+        <button class="paging-btn first" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.startPage}}  + '\''"
+                th:disabled="${ menuList.first }"><<</button>
+
+        <!-- 이전 페이지로 이동 -->
+        <button class="paging-btn prev" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.currentPage - 1}}  + '\''"
+                th:disabled="${ menuList.first }"><</button>
+
+        <!-- 숫자 버튼 -->
+        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+            <button class="paging-btn" th:onclick="'location.href=\'/menu/list?page=' + @{${page}}  + '\''"
+                    th:text="${ page }"
+                    th:disabled="${ paging.currentPage eq page }"></button>
+        </th:block>
+
+        <!-- 다음 페이지로 이동 -->
+        <button class="paging-btn next" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.currentPage + 1}}  + '\''"
+                th:disabled="${ menuList.last }">></button>
+
+        <!-- 맨 마지막으로 이동 -->
+        <button class="paging-btn last" th:onclick="'location.href=\'/menu/list?page=' + @{${paging.endPage}}  + '\''"
+                th:disabled="${ menuList.last }">>></button>
+    </div>
+</body>
+</html>

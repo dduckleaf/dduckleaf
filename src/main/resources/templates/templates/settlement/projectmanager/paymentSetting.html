@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/settlement.css}">
+</head>
+<body>
+    <main style="width: 1920px;">
+        <div class="row">
+            <div th:replace="/common/adminheader.html"></div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+<!--                <div th:replace="/project/manage/end/submenu.html"></div>-->
+            </div>
+            <div class="col-10">
+                <div class="body-area2">
+                    <br><br>
+                    <div class="title-div">
+                            <span class="text-title">
+                                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+                                [[${ settlementInfoPackage.getSettlementPaymentInfos[0].getSettlementPaymentStandard().getSettlementPaymentStandardNo() }]]회차 정산금 지급 관리</span>
+                        <hr width="100%">
+                    </div>
+                    <div class="table-area" align="center">
+                        <table class="settlement-info-table" style="width: 100%">
+                            <tr>
+                                <th style="width: 20%">1회차 정산금 지급(예정)일</th>
+                                <td style="width: 30%" id="firstFundingAmount" th:text="${ settlementInfoPackage.settlementPaymentInfos[0].getSettlementPaymentDate() }"></td>
+                                <th style="width: 20%">금액 (원)</th>
+                                <td style="width: 30%" id="first-payment" th:text="${ settlementInfoPackage.settlementPaymentInfos[0].getSettlementPaymentAmount() }"></td>
+                            </tr>
+                            <tr>
+                                <th style="width: 20%">지급 상태</th>
+                                <td style="width: 30%" id="firstFundingStatus" th:text="${ settlementInfoPackage.settlementPaymentInfos[0].getSettlementPaymentStatus() }"></td>
+                                <th style="width: 20%">파머 확인여부</th>
+                                <td style="width: 30%" id="farmerCheck1" th:text="${ settlementInfoPackage.settlementPaymentInfos[0].getFarmerSettlementCheckStatus() }"></td>
+                            </tr>
+                            <tr>
+                                <th style="width: 20%">2회차 정산금 지급(예정)일</th>
+                                <td style="width: 30%" id="secondFundingAmount" th:text="${ settlementInfoPackage.settlementPaymentInfos[1].getSettlementPaymentDate() }"></td>
+                                    <th style="width: 20%">금액 (원)</th>
+                                <td style="width: 30%" id="second-payment" th:text="${ settlementInfoPackage.settlementPaymentInfos[1].getSettlementPaymentAmount() }"></td>
+                            </tr>
+                            <tr>
+                                <th style="width: 20%">지급 상태</th>
+                                <td style="width: 30%" id="secondFundingStatus" th:text="${ settlementInfoPackage.settlementPaymentInfos[1].getSettlementPaymentStatus() }"></td>
+                                <th style="width: 20%">파머 확인여부</th>
+                                <td style="width: 30%" id="farmerCheck2" th:text="${ settlementInfoPackage.settlementPaymentInfos[1].getFarmerSettlementCheckStatus() }"></td>
+                            </tr>
+                        </table>
+                        <br><br>
+                        <input type="hidden" id="farmerCheckStatus">
+                        <button class="basic-btn big-btn btn3" id="back">이전 화면</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    /* 정산금 지급일 등록 */
+    function setDate() {
+
+    }
+
+    /* 이전 화면으로 이동 */
+    const back = document.getElementById("back");
+    if(back) {
+        back.onclick = function() {
+            location.href = "/settlement/projectmanager/overview/[[${project.projectNo}]]";
+        }
+    }
+</script>
+</html>

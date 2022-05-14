@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+</head>
+<body>
+		<!-- -->
+		<!-- 맨 앞으로 이동 -->
+		<button
+				th:onclick="'location.href=\'/project/find/' + @{${intent}} + '?page=' + @{${paging.startPage}} + '&searchValue=' + @{${searchDTO.searchValue}} + '&rewardCategory=' + @{${searchDTO.rewardCategory}} + '&progressStatus=' + @{${searchDTO.rewardCategory}} +  '\''"
+		        th:disabled="${ projectList.first }" class="paging-btn first"><<</button>
+		
+		<!-- 이전 페이지로 이동 -->
+		<button th:onclick="'location.href=\'/project/find/' + @{${intent}} + '?page=' + @{${paging.currentPage - 1}} + '&searchValue=' + @{${searchDTO.searchValue}} + '&rewardCategory=' + @{${searchDTO.rewardCategory}} + '&progressStatus=' + @{${searchDTO.rewardCategory}} +  '\''"
+		        th:disabled="${ projectList.first }" class="paging-btn prev"><</button>
+		
+		<!-- 숫자 버튼-->
+		<th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+			<button th:onclick="'location.href=\'/project/find/' + @{${intent}} + '?page=' + @{${page}} + '&searchValue=' + @{${searchDTO.searchValue}} + '&rewardCategory=' + @{${searchDTO.rewardCategory}} + '&progressStatus=' + @{${searchDTO.rewardCategory}} +  '\''"
+			        th:text="${ page }" th:disabled="${ paging.currentPage eq page}" class="paging-btn"></button>
+		</th:block>
+		
+		<!-- 다음 페이지로 이동 -->
+		<button th:onclick="'location.href=\'/project/find/' + @{${intent}} + '?page=' + @{${paging.currentPage + 1}} + '&searchValue=' + @{${searchDTO.searchValue}} + '&rewardCategory=' + @{${searchDTO.rewardCategory}} + '&progressStatus=' + @{${searchDTO.rewardCategory}} +  '\''"
+		        th:disabled="${ projectList.last}" class="paging-btn next">></button>
+		
+		<!-- 맨 마지막으로 이동-->
+		<button th:onclick="'location.href=\'/project/find/' + @{${intent}} + '?page=' + @{${paging.endPage}} + '&searchValue=' + @{${searchDTO.searchValue}} + '&rewardCategory=' + @{${searchDTO.rewardCategory}} + '&progressStatus=' + @{${searchDTO.rewardCategory}} +  '\''"
+		        th:disabled="${ projectList.last }" class="paging-btn last">>></button>
+</body>
+</html>

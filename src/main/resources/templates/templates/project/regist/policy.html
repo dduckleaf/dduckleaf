@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>펀딩 신청</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+    <link rel="stylesheet" th:href="@{ /css/projectapplication.css }">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div class="container">
+    <div style="width: 1000px;">
+        <div class="row1">
+            <div th:fragment="mockfundsidebar" class="col-md-2">
+                <button class="accordion">
+                    <p class="fundmenutitle">펀딩 준비<img class="arrow" th:src="@{ /images/common/vector.png }"></p>
+                </button>
+                <div class="panel">
+                    <p onclick="location.href='/project/application/basicreq'">기본요건</p>
+                    <p onclick="location.href='/project/application/basicinfo'">기본정보</p>
+                    <p onclick="location.href='/project/application/story'">스토리 작성</p>
+                    <p onclick="location.href='/project/application/reward'">리워드 설계</p>
+                    <p onclick="location.href='/project/application/policy'">위험요인 및 정책</p>
+                    <p onclick="location.href='/project/application/farmer'">파머 정보</p>
+                    <p onclick="location.href='/project/application/representative'">대표자 및 정산 정보</p>
+                </div>
+            </div>
+            <form name="saveForm">
+                <div class="col-md-7">
+                    <div class="breadcrumb">
+                        <span class="breadcrumb home" onclick="location.href='/project/application/goMain'">펀딩 준비</span>&nbsp;
+                        <span class="breadcrumb">></span>&nbsp;
+                        <span class="breadcrumb">위험요인 및 정책</span>
+                    </div>
+                    <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">위험요인 및 정책</a><br><hr>
+                    <a>크라우드펀딩 특성 상, 리워드 발송 예상 변동 기간에 대하여 서포터에게 미리 알리고,</a><br>
+                    <a>교환/펀딩금반환 정책을 고지하여야 합니다.</a><br>
+                    <a>서포터에게 하는 약속인 만큼, 프로젝트 오픈 후에는 수정이 불가하니 신중하게 작성하세요.</a>
+                    <div><br>
+                        <a class="basictitle">펀딩금 반환 정책</a><br>
+                        <input type="hidden" id="projectNo" name="projectNo" th:value="${ policy.projectNo }">
+                        <a class="basicsubtitle">파머가 프로젝트 페이지에 기재한 바와 동일한 품질의 리워드를 약속한 일자에 제공하지 못할 경우,
+                            <br>서포터는 아래 정책에 따라 펀딩금 반환 신청을 할 수 있습니다.</a><br>
+                        <th:block th:if="${ policy.refundPolicyAgreementStatus == 'N'}">
+                            <button type="button" class="btn1 big-btn story-btn" id="agreement"><img class="check" th:src="@{ /images/common/check.png }"> 동의하기</button>
+                        </th:block>
+                        <th:block th:if="${ policy.refundPolicyAgreementStatus == 'Y'}">
+                            <div class="agreementcheck">동의완료</div>
+                            <div class="agreementDate" th:text="${ policy.refundPolicyAgreementDate }"></div>
+                        </th:block>
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">리워드 수령 후 발견된 하자에 대한 보상 정책</a><br>
+                        <a class="basicsubtitle">서포터가 상품에 하자를 발견할 시에 어떻게 처리할 것인지에 대한 정책을 작성하세요.</a><br>
+                        <textarea class="refundpolicy" type="text" id="refundPolicyContent" name="refundPolicyContent" th:placeholder="${ policy.refundPolicyContent }"></textarea>
+                    </div>
+                    <div>
+                        <button type="button" class="btn1 big-btn" id="saveclick">저장하기</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="footer" th:replace="/common/footer.html"></footer>
+<!-- JS Files
+============================================ -->
+<!-- Global Vendor, plugins JS -->
+
+<!-- Vendor JS -->
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
+
+<!--Plugins JS-->
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
+
+<!--Main JS (Common Activation Codes)-->
+<script th:src="@{ /js/main.js }"></script>
+
+</body>
+<script>
+    var acc = document.getElementsByClassName("accordion");
+
+    for (var i = 0; i < acc.length; i++) {
+
+        acc[i].onclick = function() {
+            // 클릭이 일어났을 때 기존에 열려 있던 아코디언을 접는다. (1개의 아코디언만 열리게)
+            for (var j = 0 ; j<acc.length; j++){
+                // 버튼 상태에 입혀진 active 라는 클래스를 지운다.
+                acc[j].classList.remove("active");
+                // 버튼 다음에 있는 div 콘텐츠 높이를 0으로 만든다. == 아코디언을 접는다.
+                if (this!==acc[j]) {
+                    acc[j].nextElementSibling.style.maxHeight = null;
+                }
+            }
+
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight){
+                this.classList.remove("active");
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+
+        }
+    }
+
+
+    $("#agreement").click(async function (agreement) {
+        const {value: formValues} = await Swal.fire({
+            title: '<img class="leaf" src="/images/common/Leaf.png" style="vertical-align: 10%; margin-right: 10px;">펀딩금 반환정책',
+            html:
+                '<div class="policymodal">' +
+                '<p>펀딩금 반환 정책을 확인해주세요<br>펀딩 종료 후 아래와 같은 경우 펀딩금 반환을 신청할 수 있습니다</p>' +
+                '<div>' +
+                '<p>●리워드 발송 지연에 의한 펀딩금 반환 정책<br>서포터는 리워드가 리워드 발송 시작 예정일까지 발송되지 않은 경우 펀딩금 반환을 신청할 수 있습니다.<br>' +
+                '    파머님이 직접 설정한 리워드 발송 시작 예정일까지 리워드 발송이 시작되지 않은 경우, <br>서포터는 리워드 발송 시작 예정일 다음날부터 펀딩금 반환을 신청할 수 있으며,<br>신청 즉시 결제 취소가 진행됩니다.' +
+                '<br>단, 파머님이 리워드 발송을 시작하고 발송 상태를 변경한 경우 서포터는 펀딩금 반환을 신청할 수 없습니다.</p>' +
+                '</div>' +
+                '<div>' +
+                '<p>●서포터는 리워드 배송 완료 후, 리워드에 하자가 발생한 경우에 한해서 펀딩금 반환을 신청할 수 있습니다.<br>' +
+                '<p>●파머는 서포터의 펀딩금 반환 신청에 대해 승인·거절할 수 있습니다.<br>' +
+                '</div>' +
+                '<div class="policyconfirm" style="width: 200px;">' +
+                '<p style="width: 200px; text-align: center; align-content: center;"><input type="checkbox" id="order2_chk"">내용을 확인했습니다<label for="order2_chk"></label></p>' +
+                '</div>' +
+                '<div class="btnArea">' +
+                '<button class="confirmbtn" id="confirmbtn" disabled="disabled">확인</button>' +
+                '</div>' + '</div>',
+            focusConfirm: false,
+            showConfirmButton: false,
+            customClass: {
+                title: 'confirmtitle',
+                popup: 'policypopup',
+                htmlContainer: 'confirmcontainer',
+            },
+            buttonsStyling: false,
+        }).then($("#order2_chk").click(await function () {
+            var order2Chk = $("#order2_chk").prop("checked");
+
+            if (order2Chk) {
+                $(".order2_chks").prop("checked", true);
+                $(".btnArea button").css({
+                    "backgroundColor": "#BAC34E",
+                    "cursor": "pointer",
+                    "color": "#fff"
+                }).prop("disabled", false)
+            } else {
+                $(".order2_chks").prop("checked", false);
+                $(".btnArea button").css({
+                    "backgroundColor": "#cbcbcb",
+                    "cursor": "auto",
+                    "color": "#303033"
+                }).prop("disabled", true);
+            }
+        })).then($("#confirmbtn").click(await function() {
+            let saveForm = document.saveForm;
+            let url = '/project/application/policyagreement';
+
+            saveForm.action = url;
+            saveForm.method = 'post';
+            saveForm.submit();
+            scroll()
+        }));
+    });
+
+
+    /* 저장하기 버튼 */
+    $("#saveclick").click(function() {
+        Swal.fire({
+            title: '저장하시겠습니까?',
+            showCancelButton: true,
+            confirmButtonText: '확인',
+            cancelButtonText: '취소',
+            allowEnterKey: false,
+            confirmButtonWidth: '100px',
+            customClass: {
+                confirmButton: 'savesuccess',
+                cancelButton: 'savecancel',
+                popup: 'savepopup'
+            },
+            buttonsStyling: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: '저장되었습니다',
+                    confirmButtonText: "확인",
+                    allowEnterKey: false,
+                    customClass: {
+                        confirmButton: 'saveok',
+                        popup: 'savepopup'
+                    },
+                    buttonsStyling: false,
+                }).then(function(refundPolicyContent, projectNo) {
+                    let saveForm = document.saveForm;
+                    let url = '/project/application/modify/policy';
+                    saveForm.refundPolicyContent = refundPolicyContent;
+                    saveForm.projectNo = projectNo;
+
+                    saveForm.action = url;
+                    saveForm.method = 'post';
+                    saveForm.submit();
+                });
+            }
+        })
+    });
+
+</script>
+</html>
