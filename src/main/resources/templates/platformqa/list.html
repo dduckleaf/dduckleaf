@@ -86,7 +86,7 @@
                         </div>
                         <div class="content-form" style="margin-top: 10px;">
                             <label for="content" style="display: inline-block; width: 90%; text-align: left;">문의 내용</label>
-                            <textarea id="content" name="platformQaContent" style="width: 90%; height: 300px;"></textarea>
+                            <textarea id="content" name="platformQaContent" style="width: 90%; height: 300px; resize: none;"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer" style="border-top: none;">
@@ -188,7 +188,7 @@
                         <div class="modal-body" style="padding: 0;">
                             <div class="content-form">
                                 <label for="rep-content" style="display: inline-block; width: 90%; text-align: left;">답변 내용</label>
-                                <textarea id="rep-content" name="platformQaReplyContent" style="width: 90%; height: 300px;"></textarea>
+                                <textarea id="rep-content" name="platformQaReplyContent" style="width: 90%; height: 300px; resize: none;"></textarea>
                                 <input type="hidden" id="platformQaNo" name="platformQaNo" th:value="${ platformQa.platformQaNo }">
                             </div>
                         </div>
@@ -252,7 +252,7 @@
                         <div th:each="platformQaReply : ${ platformQa.getPlatformQaReplyList() }" class="modal-body" style="padding: 0;">
                             <div class="content-form">
                                 <label for="platformQaReplyContent" style="display: inline-block; width: 90%; text-align: left;">답변 내용</label>
-                                <textarea id="platformQaReplyContent" name="platformQaReplyContent" th:text="${ platformQaReply.platformQaReplyContent }" style="width: 90%; height: 300px;"></textarea>
+                                <textarea id="platformQaReplyContent" name="platformQaReplyContent" th:text="${ platformQaReply.platformQaReplyContent }" style="width: 90%; height: 300px; resize: none;"></textarea>
                                 <input type="hidden" id="platformQaReplyNo" name="platformQaReplyNo" th:value="${ platformQaReply.platformQaReplyNo }">
                             </div>
                         </div>
@@ -360,8 +360,8 @@
                     <colgroup>
                         <col style="width: 5%">
                         <col style="width: 10%">
-                        <col style="width: 10%">
-                        <col style="width: 50%">
+<!--                        <col style="width: 10%">-->
+                        <col style="width: 60%">
                         <col style="width: 10%">
                         <col style="width: 15%">
                     </colgroup>
@@ -369,7 +369,7 @@
                         <tr>
                             <th>번호</th>
                             <th>문의 유형</th>
-                            <th>답변 상태</th>
+<!--                            <th>답변 상태</th>-->
                             <th>제목</th>
                             <th>작성자</th>
                             <th>작성일</th>
@@ -380,7 +380,7 @@
                         <tr>
                             <td th:text="${ platformQa.platformQaNo }"></td>
                             <td th:text="${ platformQa.qnaCategory.platformQaCategoryName }"></td>
-                            <td th:text="${ platformQa.platformQaAnswerStatus }"></td>
+<!--                            <td th:text="${ platformQa.platformQaAnswerStatus }"></td>-->
                             <td th:text="${ platformQa.platformQaTitle }" class="align_l tit" style="cursor: pointer;"></td>
                             <td th:text="${ platformQa.member.memberId }"></td>
                             <td th:text="${ platformQa.platformQaRegistDate }"></td>
@@ -389,7 +389,7 @@
                         <tr style="display: none;">
                             <td></td>
                             <td></td>
-                            <td></td>
+<!--                            <td></td>-->
                             <td th:text="${ platformQa.platformQaContent }" class="align_l"></td>
                             <td colspan="2" class="text-end">
                                 <!-- 답변 작성 버튼 -->
@@ -408,15 +408,15 @@
                         <tr th:each="platformQaReply : ${ platformQa.getPlatformQaReplyList() }" style="display: none; background: #fafafa;">
                             <td></td>
                             <td></td>
-                            <td></td>
+<!--                            <td></td>-->
                             <th:block>
-                                <td class="align_l"><span style="background: #BAC34E; color: #fff; border-radius: 5px;">답변</span> [[${ platformQaReply.platformQaReplyContent }]]</td>
+                                <td class="align_l" style="padding: 10px 0;"><span style="background: #BAC34E; color: #fff; border-radius: 5px;">답변</span> [[${ platformQaReply.platformQaReplyContent }]]</td>
                             </th:block>
 <!--                            <td th:text="${ platformQaReply.member.memberNo }"></td>-->
                             <td>
                                 <th:block sec:authorize="hasRole('ADMIN')">
                                     <input type="hidden" th:value="${ platformQaReply.platformQaReplyNo }" name="platformQaReplyNo">
-                                    <button class="modify-reply" data-bs-toggle="modal" data-bs-target="#modifyRepModalToggle" style="cursor: pointer; border: none; background: transparent;">수정</button> | <button class="delete-reply" data-bs-toggle="modal" data-bs-target="#removeRepModalToggle" style="cursor: pointer; border: none; background: transparent;">삭제</button>
+                                    <button class="modify-reply" data-bs-toggle="modal" data-bs-target="#modifyRepModalToggle" style="cursor: pointer; border: none; background: transparent; color: #BAC34E;">수정</button> | <button class="delete-reply" data-bs-toggle="modal" data-bs-target="#removeRepModalToggle" style="cursor: pointer; border: none; background: transparent; color: #C2423A;">삭제</button>
                                 </th:block>
                             </td>
                             <td th:text="${ platformQaReply.platformQaReplyRegistDate }"></td>
