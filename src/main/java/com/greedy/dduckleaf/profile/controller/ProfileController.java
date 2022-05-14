@@ -177,7 +177,17 @@ public class ProfileController {
     @ResponseBody
     public String sendEmailVerification(@RequestBody String email) {
 
-        return profileService.sendEmailVerification(email);
+        String result = profileService.sendEmailVerification(email);
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .setPrettyPrinting()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .create();
+
+        return gson.toJson(result);
     }
 
     /**
@@ -211,7 +221,17 @@ public class ProfileController {
     @ResponseBody
     public String sendPhoneVerification(@RequestBody String phone) {
 
-        return profileService.sendPhoneVerification(phone);
+        String result = profileService.sendPhoneVerification(phone);
+
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd")
+                .setPrettyPrinting()
+                .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)
+                .serializeNulls()
+                .disableHtmlEscaping()
+                .create();
+
+        return gson.toJson(result);
     }
 
     /**
