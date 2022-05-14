@@ -157,7 +157,7 @@
 					<option disabled selected>은행명</option>
 					<option th:each="bank : ${ bankList }" th:value="${bank.bankNo}" th:text="${bank.bankName}"></option>
 				</select>
-				<input class="shipping-fee-select-account" name="refundAccountInfo.accountNo" type="number" placeholder="'-' 없이 숫자만 입력해주세요.">
+				<input class="shipping-fee-select-account" name="refundAccountInfo.accountNo" type="text">
 			</div>
 
 			<input type="hidden" id="totalFunding" name="totalFunding">
@@ -260,25 +260,25 @@
             $sendform.action = "/funding/regist/fundinginfo";
 
 
-            // $sendform.submit();
-            
+            $sendform.submit();
 
-            IMP.request_pay({ // param
-                pg: "kakaopay",
-                pay_method: "kakaopay",
-                merchant_uid: "dduckleaf" + new Date().getTime(),
-                name: "상품명",
-                amount: $totalFunding.value,
-                buyer_tel: "휴대폰번호",
-            },function (rsp) {
-                if (rsp.success) {
-				
-                    $sendform.submit();
 
-                }else{
-                    alert("결제에 실패했습니다.");
-                }
-            });
+            // IMP.request_pay({ // param
+            //     pg: "kakaopay",
+            //     pay_method: "kakaopay",
+            //     merchant_uid: "dduckleaf" + new Date().getTime(),
+            //     name: "상품명",
+            //     amount: $totalFunding.value,
+            //     buyer_tel: "휴대폰번호",
+            // },function (rsp) {
+            //     if (rsp.success) {
+			//
+            //         $sendform.submit();
+			//
+            //     }else{
+            //         alert("결제에 실패했습니다.");
+            //     }
+            // });
         }
 
 
@@ -287,6 +287,5 @@
 	<div th:replace="/funding/regist/policyfirst.html"></div>
 	<div th:replace="/funding/regist/policysecond.html"></div>
 </div>
-<footer class="footer" th:replace="/common/footer.html"></footer>
 </body>
 </html>

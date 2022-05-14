@@ -94,7 +94,7 @@
               <option disabled selected>은행명</option>
               <option th:each="bank : ${ bankList }" th:value="${bank.bankNo}" th:text="${bank.bankName}" th:selected="${bank.bankName eq funding.refundBankCode.bankName}"></option>
             </select>
-            <input class="" name="refundAccount" type="number" th:value="${funding.refundAccount}">
+            <input class="" name="refundAccount" type="text" th:value="${funding.refundAccount}">
           </div>
         </div>
         <div class="submitgoback">
