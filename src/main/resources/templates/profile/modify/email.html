@@ -116,7 +116,7 @@
                 let $emailVerification = document.getElementById("email-verification").value;
                 let $verification = document.getElementById("verification").value;
 
-                if($emailVerification === $verification){
+                if($emailVerification == $verification){
                     document.getElementById("checkEmailResult").value = "true";
                     Swal.fire({
                         title: '인증되었습니다.',
