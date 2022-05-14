@@ -206,8 +206,6 @@
 
 </body>
 <script>
-
-
     let $verificationPhone = document.getElementById("verification-phone").value;
     const $sendcomplete = document.getElementById("sendcomplete");
     /* 휴대폰 인증번호 전송 */
@@ -252,18 +250,10 @@
 
         const $checkPhoneVerification = document.getElementById("check-phone-verification");
 
-
         $checkPhoneVerification.onclick = function() {
-
-
-
             if($phoneVerification.value === $verificationPhone) {
                 $checkPhoneResult = 'true';
-                console.log($checkPhoneResult);
-                // $phoneVerification.style.border = '1px solid #39F928';
-
                 $checkmention.style.display = 'block';
-
             } else {
                 $checkPhoneResult = "false";
                 alert("인증번호가 일치하지 않습니다.");
@@ -271,11 +261,9 @@
         }
     }
 
-
     var acc = document.getElementsByClassName("accordion");
 
     for (var i = 0; i < acc.length; i++) {
-
         acc[i].onclick = function() {
             // 클릭이 일어났을 때 기존에 열려 있던 아코디언을 접는다. (1개의 아코디언만 열리게)
             for (var j = 0 ; j<acc.length; j++){
@@ -295,11 +283,8 @@
             } else {
                 panel.style.maxHeight = panel.scrollHeight + "px";
             }
-
         }
     }
-
-
 
     $("#agreement").click(async function (agreement) {
         const {value: formValues} = await Swal.fire({
@@ -354,6 +339,5 @@
             scroll()
         }));
     });
-
 </script>
 </html>

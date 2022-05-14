@@ -59,7 +59,6 @@
                         <div class="category-form">
                             <label for="categoryNo">분류</label>
                             <select name="noticeCategoryNo" id="categoryNo">
-<!--                                <option th:each="category : ${ categoryList }" th:value="${category.noticeCategoryNo}" th:text="${category.noticeCategoryName}"></option>-->
                                 <option th:each="category : ${ categoryList }" th:value="${ category.noticeCategoryNo }" th:utext="${ category.noticeCategoryName }" th:selected="${ noticeDetail.noticeCategoryNo == category.noticeCategoryNo }"></option>
                             </select>
                         </div>
@@ -78,11 +77,6 @@
         </div>
     </main>
     <!-- Main Content Area End Here -->
-
-    <!-- 배경색 본문 -->
-    <!-- <div class="bgcolor-div">
-
-    </div> -->
 
     <!-- Begin Footer Area -->
     <footer th:replace="/common/footer.html"></footer>

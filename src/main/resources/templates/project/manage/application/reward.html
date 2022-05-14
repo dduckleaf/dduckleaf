@@ -38,46 +38,46 @@
 <div class="container">
     <div style="width: 1000px;">
         <div class="row1">
-                <div class="col-md-7">
-                    <div class="breadcrumb">
-                        <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">펀딩 준비</span>&nbsp;
-                        <span class="breadcrumb">></span>&nbsp;
-                        <span class="breadcrumb">리워드설계</span>
-                    </div>
-                    <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">리워드 설계</a><br><hr>
-                    <div class="basicmenu">
-                        <a class="basictitle">금액</a><br>
-                        <input id="projectApplicationNo" name="projectApplicationNo" type="hidden" th:value="${ detail.projectApplicationNo }">
-                        <input class="mockfundtitle1" id="rewardPrice" name="rewardPrice" type="number" th:value="${ detail.rewardRegistInfo.rewardPrice}" readonly>
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">리워드명</a><br>
-                        <input class="mockfundtitle1" id="rewardName" name="rewardName" type="text" th:value="${ detail.rewardRegistInfo.rewardName }" readonly>
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">상세설명</a><br>
-                        <textarea id="rewardInfo" name="rewardInfo" type="text" th:text="${ detail.rewardRegistInfo.rewardInfo }" style="width: 100%; height: 150px;" readonly></textarea>
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">단위</a><br>
-                        <input class="mockfundtitle1" id="rewardUnit" name="rewardUnit" type="text" th:value="${ detail.rewardRegistInfo.rewardUnit }" readonly>
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">배송비</a><br>
-                        <input type="number" id="shippingFee" name="shippingFee" th:value="${ detail.projectShippingInfo.shippingFee}" style="width: 250px; margin-right: 3%;" readonly>
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">추가 배송비</a><br>
-                        <input type="number" id="extraShippingFee" name="extraShippingFee" th:value="${ detail.projectShippingInfo.extraShippingFee }" style="width: 250px; margin-right: 3%;" readonly>
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">예상 발송 시작일</a><br>
-                        <input type="text" id="shippingDueDate" name="shippingDueDate" th:value="${ detail.projectShippingInfo.shippingDueDate }" readonly>
-                    </div><br>
-                    <div>
-                        <button type="button" class="btn3 big-btn back" style="float:right;">뒤로가기</button>
-                    </div>
+            <div class="col-md-7">
+                <div class="breadcrumb">
+                    <span class="breadcrumb home" onclick="location.href='../../mockfund/1'">펀딩 준비</span>&nbsp;
+                    <span class="breadcrumb">></span>&nbsp;
+                    <span class="breadcrumb">리워드설계</span>
                 </div>
+                <a style="font-size: 30pt; font-weight: bold;"><img class="leaf" th:src="@{ /images/common/Leaf.png}">리워드 설계</a><br><hr>
+                <div class="basicmenu">
+                    <a class="basictitle">금액</a><br>
+                    <input id="projectApplicationNo" name="projectApplicationNo" type="hidden" th:value="${ detail.projectApplicationNo }">
+                    <input class="mockfundtitle1" id="rewardPrice" name="rewardPrice" type="number" th:value="${ detail.rewardRegistInfo.rewardPrice}" readonly>
+                </div>
+                <div class="basicmenu">
+                    <a class="basictitle">리워드명</a><br>
+                    <input class="mockfundtitle1" id="rewardName" name="rewardName" type="text" th:value="${ detail.rewardRegistInfo.rewardName }" readonly>
+                </div>
+                <div class="basicmenu">
+                    <a class="basictitle">상세설명</a><br>
+                    <textarea id="rewardInfo" name="rewardInfo" type="text" th:text="${ detail.rewardRegistInfo.rewardInfo }" style="width: 100%; height: 150px;" readonly></textarea>
+                </div>
+                <div class="basicmenu">
+                    <a class="basictitle">단위</a><br>
+                    <input class="mockfundtitle1" id="rewardUnit" name="rewardUnit" type="text" th:value="${ detail.rewardRegistInfo.rewardUnit }" readonly>
+                </div>
+                <div class="basicmenu">
+                    <a class="basictitle">배송비</a><br>
+                    <input type="number" id="shippingFee" name="shippingFee" th:value="${ detail.projectShippingInfo.shippingFee}" style="width: 250px; margin-right: 3%;" readonly>
+                </div>
+                <div class="basicmenu">
+                    <a class="basictitle">추가 배송비</a><br>
+                    <input type="number" id="extraShippingFee" name="extraShippingFee" th:value="${ detail.projectShippingInfo.extraShippingFee }" style="width: 250px; margin-right: 3%;" readonly>
+                </div>
+                <div class="basicmenu">
+                    <a class="basictitle">예상 발송 시작일</a><br>
+                    <input type="text" id="shippingDueDate" name="shippingDueDate" th:value="${ detail.projectShippingInfo.shippingDueDate }" readonly>
+                </div><br>
+                <div>
+                    <button type="button" class="btn3 big-btn back" style="float:right;">뒤로가기</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

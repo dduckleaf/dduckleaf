@@ -452,11 +452,6 @@
     </main>
     <!-- Main Content Area End Here -->
 
-    <!-- 배경색 본문 -->
-    <!-- <div class="bgcolor-div">
-
-    </div> -->
-
     <!-- Begin Footer Area -->
     <footer th:replace="/common/footer.html"></footer>
     <!-- Footer Area End Here -->
@@ -507,17 +502,11 @@
 
     $(".write-reply").click(function () {
         const platformQaNo = this.parentNode.children[0].value;
-        // alert(platformQaNo);
         $("#platformQaNo").val(platformQaNo);
     });
-    // $("#replyRegist").click(function () {
-    //     const platformQaNo = $("#platformQaNo").val();
-    //     location.href="/qna/registRep/"+platformQaNo;
-    // });
 
     $(".delete-question").click(function () {
         const platformQaNo = this.parentNode.children[0].value;
-        // alert(platformQaNo);
         $(".questionRemove").click(function () {
             location.href="/qna/remove/"+platformQaNo;
         });
@@ -525,17 +514,14 @@
 
     $(".modify-reply").click(function () {
         const platformQaReplyNo = this.parentNode.children[0].value;
-        // alert(platformQaReplyNo);
         $("#platformQaReplyNo").val(platformQaReplyNo);
 
         const platformQaReplyContent = this.parentNode.parentNode.children[3].lastChild.textContent;
-        // alert(platformQaReplyContent);
         $("#platformQaReplyContent").val(platformQaReplyContent);
     });
 
     $(".delete-reply").click(function () {
         const platformQaReplyNo = this.parentNode.children[0].value;
-        // alert(platformQaReplyNo);
         $(".replyRemove").click(function () {
             location.href="/qna/removeRep/"+platformQaReplyNo;
         });

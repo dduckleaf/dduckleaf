@@ -306,14 +306,12 @@
 ============================================ -->
 <!-- Global Vendor, plugins JS -->
 <script>
-
     $("#back").click(function() {
         const projectNo = $("#projectNo").val();
         console.log(projectNo);
         location.href='/project/notice/list/' + projectNo;
     });
 
-    // $("#notice").click(function() {
     console.log("도착?");
     const projectNo = 2;
 
@@ -331,23 +329,13 @@
             let html = '';
 
             if (!json.length) {
-                // alert("암것도 없음");
-                // console.log("암것도 없음");
                 html = '<td colspan="5">등록된 게시글이 없습니다.</td>';
             } else {
                 json.forEach((projectNoticeData, idx) => {
-                    // console.log("게시글있음");
                 });
-
-
             }
-
-
         });
-
     }
-
-    // });
 </script>
 <script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
 <script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>

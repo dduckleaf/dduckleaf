@@ -27,7 +27,6 @@
   <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
 
   <!-- Style CSS -->
-  <!--  <link rel="stylesheet" href="assets/css/style.css">-->
   <link rel="stylesheet" th:href="@{/css/style.css}">
   <link rel="stylesheet" th:href="@{/css/mypage.css}">
   <style>
@@ -56,14 +55,9 @@
           </div>
           <div>
             <ul>
-<!--              <li><a th:href="@{/}">농사일지</a></li>-->
-<!--              <li><a th:href="@{/}">달성 현황</a></li>-->
-<!--              <li><a th:href="@{/}">리워드 정보</a></li>-->
-<!--              <li><a th:href="@{/}">반환정책</a></li>-->
               <li><a th:href="@{/project/notice/list/{projectNo} (projectNo = ${project.projectNo})}">공지사항</a></li>
               <li style="height: 40px; line-height: 40px; background: #fff; border: 1px solid #bac34e; font-size: 20px;"><a th:href="@{/common/farmerpage}" style="color: #bac34e">나가기</a></li>
               <li style="height: 40px; line-height: 40px; font-size: 20px; border-radius: 5%; color: #C2423A; background: #FFF; border: 1px solid #C2423A; cursor: pointer;">
-<!--              <a th:href="@{/project/application/cancel/{projectNo} (projectNo = ${ project.projectNo })}"  style="color: #C2423A">프로젝트 신청 취소</a></li>-->
               <a id="cancel" style="color: #C2423A">프로젝트 신청 취소</a></li>
             </ul>
           </div>
@@ -105,10 +99,6 @@
 <script>
 
   const projectNo = $("#projectNo").val();
-
-  // $(".cancel").click(function() {
-  //   location.href= "/project/application/cancel/" + projectNo;
-  // });
 
   const profile = document.getElementById("profile")
   if(profile) {

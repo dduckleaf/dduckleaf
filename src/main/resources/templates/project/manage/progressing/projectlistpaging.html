@@ -15,7 +15,7 @@
 <button th:onclick="'location.href=\'/project/manage/' + @{${intent}} + '?page=' + @{${pagingInfo.currentPage - 1}} + '\''"
 		th:disabled="${ projectList.first }" class="paging-btn prev"><</button>
 
-<!--&lt;!&ndash; 숫자 버튼&ndash;&gt;-->
+<!-- 숫자 버튼 -->
 <th:block th:each="page : ${#numbers.sequence(pagingInfo.startPage, pagingInfo.endPage)}">
 	<button th:onclick="'location.href=\'/project/manage/' + @{${intent}} + '?page=' + @{${page}} + '\''"
 			th:text="${ page }" th:disabled="${ pagingInfo.currentPage eq page}" class="paging-btn"></button>

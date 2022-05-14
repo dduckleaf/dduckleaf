@@ -120,35 +120,11 @@
 <script th:src="@{ /js/main.js }"></script>
 
 <script>
-
     /*조회해 와야 하는 필드명*/
     function noticeCategoryData(noticeCategoryNo, noticeCategoryName) {
 
         return {noticeCategoryNo, noticeCategoryName};
     }
-    /*컨트롤러 메소드*/
-    // function findNoticeCategoryList() {
-    //     /*컨트롤러 주소*/
-    //     fetch('/notice/category').then(response => {
-    //         if (response.ok) {
-    //             return response.json();
-    //         }
-    //     }).then(json => {
-    //         let html = '';
-    //
-    //         if (!json.length) {
-    //             alert("암것도 없음");
-    //             console.log("암것도 없음");
-    //             html = '<option>등록된 분류가 없습니다.</option>';
-    //         } else {
-    //             json.forEach((noticeCategoryData, idx) => {
-    //                 console.log("분류 있음");
-    //
-    //             });
-    //         }
-    //     });
-    // }
 </script>
 </body>
-
 </html>

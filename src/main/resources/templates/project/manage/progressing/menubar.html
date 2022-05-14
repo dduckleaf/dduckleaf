@@ -22,13 +22,7 @@
         <p>달성률</p>
         <p class="text-subtitle" th:text="${ detail.project.achievementRate + '%'}"></p>
     </div>
-    <!--            <button class="basic-btn btn1 custom-btn">프로젝트 수정</button><br>-->
-    <!--            <button class="basic-btn btn4 custom-btn">프로젝트 취소</button>-->
     <div class="block">
-        <!--                <span class="text-list-name">프로젝트 문의 목록</span><br>-->
-        <!--                    <a class="list-icon">●</a><a class="submenu" th:href="@{/report/projectmanager/list}">파머 문의 내역</a><br>-->
-        <!--                    <a class="list-icon">●</a><a class="submenu" th:href="@{/report/projectmanager/list}">서포터 문의 내역</a><br>-->
-        <!--                    <br>-->
         <span class="text-list-name">신고 목록</span><br>
         <a class="list-icon">●</a><a class="submenu" th:href="@{/report/projectmanager/list/{projectNo} (projectNo = ${detail.project.projectNo})}">프로젝트 신고 내역</a><br>
         <br>

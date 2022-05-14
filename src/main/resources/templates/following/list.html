@@ -33,26 +33,24 @@
         <br clear="both">
         <div class="row" style="margin-top: 70px">
             <th:block th:each="project : ${followingProjectList}">
-<!--                <th:block th:if="${ project.reward ne null}">-->
-                    <div class="col-3 project-list-box">
-                        <div class="product-img img-zoom-effect">
-                            <a th:href="'/project/projectdetail/' + ${project.projectNo}">
-                                <img class="img-full mainimg" th:src="'/upload/original/' + ${project.attachmentSavedName}" alt="Product Images">
-                            </a>
-                        </div>
-                        <div class="product-content">
-                            <a class="product-name" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.projectName}]]</a><br>
-                            <div class="price-box pb-1">
-                                <span class="new-price">[[${project.farmer.businessName}]]</span>
-                            </div>
-                            <progress class="project-progress" th:value="${project.achievementRate}" max="100"></progress>
-                            <a class="progressbar-list" href="/project/projectdetail/@{${project.projectNo}}">[[${project.achievementRate}]]%</a><br>
-
-                            <a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.projectProgressStatus.projectProgressStatusName}]]</a><br>
-                            <a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.deadLine}]]일 남음</a>
-                        </div>
+                <div class="col-3 project-list-box">
+                    <div class="product-img img-zoom-effect">
+                        <a th:href="'/project/projectdetail/' + ${project.projectNo}">
+                            <img class="img-full mainimg" th:src="'/upload/original/' + ${project.attachmentSavedName}" alt="Product Images">
+                        </a>
                     </div>
-<!--                </th:block>-->
+                    <div class="product-content">
+                        <a class="product-name" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.projectName}]]</a><br>
+                        <div class="price-box pb-1">
+                            <span class="new-price">[[${project.farmer.businessName}]]</span>
+                        </div>
+                        <progress class="project-progress" th:value="${project.achievementRate}" max="100"></progress>
+                        <a class="progressbar-list" href="/project/projectdetail/@{${project.projectNo}}">[[${project.achievementRate}]]%</a><br>
+
+                        <a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.projectProgressStatus.projectProgressStatusName}]]</a><br>
+                        <a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.deadLine}]]일 남음</a>
+                    </div>
+                </div>
             </th:block>
         </div>
     </div>

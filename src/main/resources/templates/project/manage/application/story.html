@@ -38,26 +38,26 @@
 <div class="container">
     <div style="width: 1000px;">
         <div class="row1 story">
-                <div class="col-md-7">
-                    <div style="width: 130%;">
-                        <img class="leaf" th:src="@{ /images/common/Leaf.png}"><a style="font-size: 30pt; font-weight: bold;" th:text="${ detail.farmer.farmerName }"></a>
-                        <a style="font-size: 30pt; font-weight: bold;">등록 정보</a>
-                        <a style="font-size: 30pt; font-weight: bold;"> > </a>
-                        <a style="font-size: 30pt; font-weight: bold;">스토리</a><br>
-                    </div><hr>
-                    <input id="projectApplicationNo" name="projectApplicationNo" type="hidden" th:value="${ detail.projectApplicationNo }">
-                    <div class="basicmenu">
-                        <a class="basictitle">프로젝트 요약</a><br>
-                        <input class="projectsummary" id="projectInfo" name="projectInfo" type="text" th:value="${ detail.projectBasicInfo.projectInfo }">
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">프로젝트 스토리</a><br>
-                        <img th:src="@{${ '/upload/original/'+ attachment.projectAttachmentSaveName }}" style="width: 100%; height: 1000px;">
-                    </div><br>
-                    <div>
-                        <button type="button" class="btn3 big-btn back" style="float:right;">뒤로가기</button>
-                    </div>
+            <div class="col-md-7">
+                <div style="width: 130%;">
+                    <img class="leaf" th:src="@{ /images/common/Leaf.png}"><a style="font-size: 30pt; font-weight: bold;" th:text="${ detail.farmer.farmerName }"></a>
+                    <a style="font-size: 30pt; font-weight: bold;">등록 정보</a>
+                    <a style="font-size: 30pt; font-weight: bold;"> > </a>
+                    <a style="font-size: 30pt; font-weight: bold;">스토리</a><br>
+                </div><hr>
+                <input id="projectApplicationNo" name="projectApplicationNo" type="hidden" th:value="${ detail.projectApplicationNo }">
+                <div class="basicmenu">
+                    <a class="basictitle">프로젝트 요약</a><br>
+                    <input class="projectsummary" id="projectInfo" name="projectInfo" type="text" th:value="${ detail.projectBasicInfo.projectInfo }">
                 </div>
+                <div class="basicmenu">
+                    <a class="basictitle">프로젝트 스토리</a><br>
+                    <img th:src="@{${ '/upload/original/'+ attachment.projectAttachmentSaveName }}" style="width: 100%; height: 1000px;">
+                </div><br>
+                <div>
+                    <button type="button" class="btn3 big-btn back" style="float:right;">뒤로가기</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

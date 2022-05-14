@@ -24,10 +24,6 @@
             margin-top: 5%;
             float: left;
         }
-
-        .container {
-            /*height: 1200px;*/
-        }
     </style>
 </head>
 <body>
@@ -38,30 +34,30 @@
 <div class="container">
     <div style="width: 1000px;">
         <div class="row1">
-                <div class="col-md-7">
-                    <div style="width: 130%;">
-                        <img class="leaf" th:src="@{ /images/common/Leaf.png}"><a style="font-size: 30pt; font-weight: bold;" th:text="${ detail.farmer.farmerName }"></a>
-                        <a style="font-size: 30pt; font-weight: bold;">등록 정보</a>
-                        <a style="font-size: 30pt; font-weight: bold;"> > </a>
-                        <a style="font-size: 30pt; font-weight: bold;">기본 요건</a><br>
-                    </div><hr>
-                    <div class="basicmenu">
-                        <a class="basictitle">1. 리워드의 준비 상태 및 앞으로의 계획이 어떻게 되나요?</a><br>
-                        <textarea class="mockfundtitle1" id="rewardPreparingStatus" name="rewardPreparingStatus" type="text" th:text="${ detail.rewardRegistInfo.rewardPreparingStatus }" readonly></textarea>
-                        <input id="projectApplicationNo" name="projectApplicationNo" type="hidden" th:value="${ detail.projectApplicationNo }">
-                    </div>
-                    <div class="basicmenu form-date">
-                        <a class="basictitle">2. 리워드 전달 계획을 적어주세요.</a><br>
-                        <textarea class="mockfundtitle1" id="rewardDeliveryPlan" name="rewardDeliveryPlan" type="text" th:text="${ detail.rewardRegistInfo.rewardDeliveryPlan }" readonly></textarea>
-                    </div>
-                    <div class="basicmenu">
-                        <a class="basictitle">3. 소개 사진</a><br>
-                        <img th:src="@{${ '/upload/original/'+ attachment.projectAttachmentSaveName }}" style="width: 150px; height: 150px;">
-                    </div><br>
-                    <div>
-                        <button type="button" class="btn3 big-btn back" style="float:right;">뒤로가기</button>
-                    </div>
+            <div class="col-md-7">
+                <div style="width: 130%;">
+                    <img class="leaf" th:src="@{ /images/common/Leaf.png}"><a style="font-size: 30pt; font-weight: bold;" th:text="${ detail.farmer.farmerName }"></a>
+                    <a style="font-size: 30pt; font-weight: bold;">등록 정보</a>
+                    <a style="font-size: 30pt; font-weight: bold;"> > </a>
+                    <a style="font-size: 30pt; font-weight: bold;">기본 요건</a><br>
+                </div><hr>
+                <div class="basicmenu">
+                    <a class="basictitle">1. 리워드의 준비 상태 및 앞으로의 계획이 어떻게 되나요?</a><br>
+                    <textarea class="mockfundtitle1" id="rewardPreparingStatus" name="rewardPreparingStatus" type="text" th:text="${ detail.rewardRegistInfo.rewardPreparingStatus }" readonly></textarea>
+                    <input id="projectApplicationNo" name="projectApplicationNo" type="hidden" th:value="${ detail.projectApplicationNo }">
                 </div>
+                <div class="basicmenu form-date">
+                    <a class="basictitle">2. 리워드 전달 계획을 적어주세요.</a><br>
+                    <textarea class="mockfundtitle1" id="rewardDeliveryPlan" name="rewardDeliveryPlan" type="text" th:text="${ detail.rewardRegistInfo.rewardDeliveryPlan }" readonly></textarea>
+                </div>
+                <div class="basicmenu">
+                    <a class="basictitle">3. 소개 사진</a><br>
+                    <img th:src="@{${ '/upload/original/'+ attachment.projectAttachmentSaveName }}" style="width: 150px; height: 150px;">
+                </div><br>
+                <div>
+                    <button type="button" class="btn3 big-btn back" style="float:right;">뒤로가기</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
