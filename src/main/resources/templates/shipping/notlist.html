@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>떡잎펀드</title>
     <link rel="stylesheet" th:href="@{/css/shipping.css}">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
 </head>
 <body>
 <main style="width: 1920px">
@@ -19,8 +21,8 @@
             <input type="hidden" name="projectNo" th:value="${project.projectNo}">
             <hr width="100%">
         </div>
-        <button type="button" class="shippingbtn" onclick="checkbox(); return false;">발송완료</button>
-        <button type="button" class="delay" onclick="checkbox1(); return false;">발송지연</button>
+        <button type="button" class="shippingbtn">발송완료</button>
+        <button type="button" class="delay">발송지연</button>
         <table class="shippingdetail">
             <tr>
                 <th><input type="checkbox" value="selectall" onclick="selectAll(this)"></th>
@@ -62,39 +64,5 @@
         checkboxes.forEach((checkbox) => {
             checkbox.checked = selectAll.checked;
         })
-    }
-
-    function checkbox(shippingstatus) {
-        let form = document.updatestatus;
-        let check = $('.check');
-        let url = '/shipping/management/modify/status/' + [[${project.projectNo}]];
-
-        if(check.is(':checked') == false) {
-            alert("선택된 값이 없습니다.");
-            return false;
-        } else {
-            form.shippingStatusName = shippingstatus;
-
-            form.action = url;
-            form.method = 'post';
-            form.submit();
-        }
-    }
-
-    function checkbox1(shippingstatus) {
-        let form = document.updatestatus;
-        let check = $('.check');
-        let url = '/shipping/management/modify/delaystatus/' + [[${project.projectNo}]];
-
-        if(check.is(':checked') == false) {
-            alert("선택된 값이 없습니다.");
-            return false;
-        } else {
-            form.shippingStatusName = shippingstatus;
-
-            form.action = url;
-            form.method = 'post';
-            form.submit();
-        }
     }
 </script>

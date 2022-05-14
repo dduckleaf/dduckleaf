@@ -211,11 +211,12 @@ label {
 #removeMember {
     border: 1px solid #C2423A!important;
     position: relative;
-    top: 580px;
-    left: 465px;
+    top: 526px;
+    left: 19px;
     height: 50px!important;
     width: 458px!important;
     color: #C2423A!important;
     background: #FFF;
+    cursor: pointer;
 }
 
