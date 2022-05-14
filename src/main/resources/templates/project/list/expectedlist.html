@@ -22,6 +22,9 @@
         .filter-pointer{
             cursor: pointer;
         }
+        .product-content{
+	        height: 184px;
+        }
 	</style>
 </head>
 <body>
@@ -35,9 +38,6 @@
                     <label id="keyword">오픈 예정 프로젝트</label>
 				</span>
 			<hr style="width: 100%">
-			<div id="filter" style="width: 50%;" class="filter-pointer" data-bs-toggle="modal" data-bs-target="#writeModal">
-				<img src="/images/project/find/img.png" alt="">
-			</div>
 		</div>
 	</div>
 	<div class="row" style="margin-top: 70px">
@@ -56,8 +56,9 @@
 						</div>
 						<progress class="project-progress" th:value="${project.achievementRate}" max="100"></progress>
 						<a class="progressbar-list" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.achievementRate}]]%</a><br>
-						<a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}"> [[${project.timeInfo}]] </a>
-						<a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}"> [[${project.progressStatus.projectProgressStuatusName}]] </a>
+						<a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}"> [[${project.timeInfo}]]&nbsp;&nbsp; </a>
+						<br>
+						<a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}"> [[${project.progressStatus.projectProgressStuatusName}]]&nbsp;&nbsp; </a>
 					</div>
 				</div>
 			</th:block>
