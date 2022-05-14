@@ -13,7 +13,7 @@ public class FundingDTO {
     private String rewardCategoryName;
     private String extraShippingFeeStatus;
     private BankDTO refundBankCode;
-    private int refundAccount;
+    private String refundAccount;
     private String refundName;
     private ProjectDTO project;
 
@@ -22,7 +22,7 @@ public class FundingDTO {
     public FundingDTO() {
     }
 
-    public FundingDTO(int fundingInfoNo, String fundingDate, int fundingAmount, int rewardAmount, String fundingStatus, int donateAmount, int projectNo, int shippingFeeNo, int memberNo, String rewardCategoryName, String extraShippingFeeStatus, BankDTO refundBankCode, int refundAccount, String refundName, ProjectDTO project, RefundAccountDTO refundAccountInfo) {
+    public FundingDTO(int fundingInfoNo, String fundingDate, int fundingAmount, int rewardAmount, String fundingStatus, int donateAmount, int projectNo, int shippingFeeNo, int memberNo, String rewardCategoryName, String extraShippingFeeStatus, BankDTO refundBankCode, String refundAccount, String refundName, ProjectDTO project, RefundAccountDTO refundAccountInfo) {
         this.fundingInfoNo = fundingInfoNo;
         this.fundingDate = fundingDate;
         this.fundingAmount = fundingAmount;
@@ -137,11 +137,11 @@ public class FundingDTO {
         this.refundBankCode = refundBankCode;
     }
 
-    public int getRefundAccount() {
+    public String getRefundAccount() {
         return refundAccount;
     }
 
-    public void setRefundAccount(int refundAccount) {
+    public void setRefundAccount(String refundAccount) {
         this.refundAccount = refundAccount;
     }
 

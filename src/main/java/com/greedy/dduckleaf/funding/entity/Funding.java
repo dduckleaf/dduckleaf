@@ -56,7 +56,7 @@ public class Funding {
     private Bank refundBankCode;
 
     @Column(name = "REFUND_ACCOUNT")
-    private int refundAccount;
+    private String refundAccount;
 
     @Override
     public String toString() {

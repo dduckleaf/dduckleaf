@@ -41,7 +41,7 @@ public class FundingCount {
     private String extraShippingFeeStatus;
 
     @Column(name = "REFUND_ACCOUNT")
-    private int refundAccount;
+    private String refundAccount;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "FUNDING_INFO_NO")
@@ -50,7 +50,7 @@ public class FundingCount {
     public FundingCount() {
     }
 
-    public FundingCount(int fundingInfoNo, String fundingDate, int fundingAmount, int rewardAmount, String fundingStatus, int donateAmount, String refundName, int projectNo, int memberNo, String extraShippingFeeStatus, int refundAccount, List<RefundingCount> refundings) {
+    public FundingCount(int fundingInfoNo, String fundingDate, int fundingAmount, int rewardAmount, String fundingStatus, int donateAmount, String refundName, int projectNo, int memberNo, String extraShippingFeeStatus, String refundAccount, List<RefundingCount> refundings) {
         this.fundingInfoNo = fundingInfoNo;
         this.fundingDate = fundingDate;
         this.fundingAmount = fundingAmount;
@@ -145,11 +145,11 @@ public class FundingCount {
         this.extraShippingFeeStatus = extraShippingFeeStatus;
     }
 
-    public int getRefundAccount() {
+    public String getRefundAccount() {
         return refundAccount;
     }
 
-    public void setRefundAccount(int refundAccount) {
+    public void setRefundAccount(String refundAccount) {
         this.refundAccount = refundAccount;
     }
 

@@ -3,12 +3,12 @@ package com.greedy.dduckleaf.funding.dto;
 public class RefundAccountDTO {
 
     private int bankCode;
-    private int accountNo;
+    private String accountNo;
 
     public RefundAccountDTO() {
     }
 
-    public RefundAccountDTO(int bankCode, int accountNo) {
+    public RefundAccountDTO(int bankCode, String accountNo) {
         this.bankCode = bankCode;
         this.accountNo = accountNo;
     }
@@ -21,11 +21,11 @@ public class RefundAccountDTO {
         this.bankCode = bankCode;
     }
 
-    public int getAccountNo() {
+    public String getAccountNo() {
         return accountNo;
     }
 
-    public void setAccountNo(int accountNo) {
+    public void setAccountNo(String accountNo) {
         this.accountNo = accountNo;
     }
 
