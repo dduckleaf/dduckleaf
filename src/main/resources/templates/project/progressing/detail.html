@@ -29,6 +29,7 @@
   <link rel="stylesheet" th:href="@{ /css/style.css }">
   <link rel="stylesheet" th:href="@{ /css/project.css }">
   <link rel="stylesheet" th:href="@{ /css/report.css }">
+  <link rel="stylesheet" th:href="@{ /css/following.css }">
 
   <!-- 신기한 모달 -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -91,10 +92,10 @@
 
                     <button class="basic-btn btn3 alittle-big-btn" id="following-project" th:value="${ followingStatus }">관심
                       <th:block th:if="${ followingStatus == 'Y' }">
-                        <img src="/images/common/fullheart.png" alt="Product Image">
+                        <img src="/images/common/fullheart.png" id="following-img" alt="Product Image">
                       </th:block>
                       <th:block th:if="${ followingStatus == 'N' }">
-                        <img src="/images/common/heart.png"  alt="Product Image">
+                        <img src="/images/common/heart.png" id="following-img"  alt="Product Image">
                       </th:block>
                     </button>
 
@@ -181,10 +182,10 @@
 
               <!-- Begin 공지사항 -->
               <div class="tab-pane fade" id="notice" role="tabpanel" aria-labelledby="notice-tab">
-                <div class="title-div">
-                      <span class="text-title">
-                        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">농사일지</span>
-                  <hr width="100%">
+<!--                <div class="title-div">-->
+<!--                      <span class="text-title">-->
+<!--                        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">농사일지</span>-->
+<!--                  <hr width="100%">-->
                   <div class="notice-wrap">
                     <div class="cont-div">
                       <div id="projectNoticeList">
@@ -215,7 +216,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+<!--            </div>-->
             <!-- 게시판영역 End Here -->
           </div>
         </div>
