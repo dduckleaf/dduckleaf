@@ -70,7 +70,7 @@ public class FundingForMemberFindController {
         /* 조회해온 펀딩목록과 페이징 정보를 모델에 저장 후 출력 페이지로 반환합니다. */
         mv.addObject("fundingList", fundingList);
         mv.addObject("paging", paging);
-
+        mv.addObject("fundingSize", fundingList != null ?fundingList.getTotalPages(): 0);
         mv.setViewName("/funding/find/supporter/fundinglist");
 
         return mv;
