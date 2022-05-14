@@ -50,6 +50,7 @@
 <script>
     /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
     const tds = document.getElementsByTagName("td");
+    const projectNo = [[${projectNo}]];
     if(tds) {
         for(let i = 0; i < tds.length; i++) {
 
@@ -64,7 +65,7 @@
 
             tds[i].onclick = function() {
                 const refundingNo = this.parentNode.children[0].children[0].value;
-                location.href = "/refund/find/admin/refundingdetail/" + refundingNo;
+                location.href = "/refund/find/admin/refundingdetail/" + refundingNo + "/" + projectNo ;
             }
         }
     }

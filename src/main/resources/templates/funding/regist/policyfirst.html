@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+    .modal-dialog {
+    
+    }
+    .modal-content {
+      width: 127% !important;
+      padding: 20px;
+    }
+    .modal-o{
+      height: 600PX!important;
+    }
+    .refund-title {
+      font-size: 2em;
+      font-weight: 1000;
+    }
+    .refund-guide {
+      font-size: 0.8em;
+      color: #ababab;
+      margin-top: 3%;
+    }
+    .submitgoback {
+      text-align: right;
+      width: 95%;
+      margin-top: 5%
+    }
+    #refund-category {
+      
+      width: 100%;
+      height: 35px;
+    }
+    
+    #refund-content {
+      
+      width: 100%;
+      height: 300px;
+    }
+  
+  </style>
+  <!-- CSS
+============================================ -->
+  
+  <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+  <link rel="stylesheet" href="../../static/css/vendor/font-awesome.min.css" />
+  <link rel="stylesheet" href="../../static/css/vendor/Pe-icon-7-stroke.css" />
+  
+  <!-- Plugin CSS (Global Plugins Files) -->
+  <link rel="stylesheet" href="../../static/css/plugins/animate.min.css">
+  <link rel="stylesheet" href="../../static/css/plugins/jquery-ui.min.css">
+  <link rel="stylesheet" href="../../static/css/plugins/swiper-bundle.min.css">
+  <link rel="stylesheet" href="../../static/css/plugins/nice-select.css">
+  <link rel="stylesheet" href="../../static/css/plugins/magnific-popup.min.css" />
+  
+  <!-- Style CSS -->
+  <link rel="stylesheet" th:href="@{ /css/style.css }">
+  <link rel="stylesheet" th:href="@{ /css/filter.css }">
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+</head>
+
+<body>
+<div class="modal fade" id="policyfirst"
+     data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-o" style="top: 112px">
+      <div>
+        <label style="font-size: 1.1em;font-weight: 1000">개인정보 제3자 제공 동의
+        </label>
+      </div>
+      <br>
+      <div>
+      <label>떡잎펀드는 제3자 서비스와의 연결을 위해서 아래와 같이 이요아의 개인정보를 제공하고 있습니다.<br>
+      1. 회사가 제3자에게 게종하는 이용자 제공정보<br>
+       펀딩하기 서비스 개인정보 제3자 제공현황<br>
+      파머 제공항목 : 서포터 정보 (이름, 이메일 주소, 휴대전화 번호) 수취인 정보(이름, 휴대전화 번호, 주소)<br>
+      제공목적 : 펀딩 정보 확인 및 발송, 리워드 발송과 관련된 공지 및 민원처리<br>
+      2. 동의없이 제공하는 예외 사항<br>
+      관련 통계법 등에 따라 통계작성·학술연구 또는 시장조사를 위하여 필요한 경우로서 특정 개인을 알아볼 수 없는 형태로 가공하여 제공하는 경우<br>
+      금융실명거래및비밀보장에관한법률, 신용정보의이용및보호에관한법률, 전기통신기본법, 전기통신사업법, 지방세법, 소비자보호법, 한국은행법, 형사소송법 등 법률에 특별한 규정이 있는 경우<br>
+      정부기관(준정부기관 포함)이나 법원의 명령에 의하여 개인정보를 제공하는 경우<br>
+      기타 관계법령에서 정한 절차에 따른 요청이 있는 경우<br>
+      회사는 예외 사항의 경우에도 정보 제공 내용을 이용자에게 고지하는 것을 원칙으로 하며 본래 수집과 이용 목적에 반하여 무분별하게 제공되지 않도록 최대한 노력하겠습니다.<br><br>
+      </label>
+      </div>
+      <div style="text-align: right;margin-right: 2%;">
+      <button class="btn3 basic-btn medium-btn" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
