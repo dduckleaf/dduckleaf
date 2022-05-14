@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/adminrefund.css}">
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+
+</head>
+<body>
+<div th:replace="/common/adminheader.html"></div>
+<div class="container" style="height: 70%">
+
+    <div class="" style="width: 1200px;">
+        <div class="title-div" style="margin-top: 3%">
+				<span class="text-title">
+					<img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">
+                    <label id="keyword">[[${title}]] 조회</label>
+				</span>
+            <hr style="width: 100%">
+        </div>
+    </div>
+    <div class="row" style="margin-left: 2%">
+        <table class="basic-table" align="center" style="width: 100%">
+            <tr>
+                <th style="width: 1%;"></th>
+                <th style="width: 15%;">환불 상태</th>
+                <th style="width: 34%;">프로젝트명</th>
+                <th style="width: 20%;">환불 신청자 이름</th>
+                <th style="width: 15%;">환불 신청일</th>
+                <th style="width: 15%;">환불처리 종료일</th>
+            </tr>
+            <tr th:each="refund : ${ refundings }">
+                <td><input type="hidden" th:value="${refund.refundingInfoNo}"></td>
+                <td th:text="${ refund.refundStatus }"></td>
+                <td th:text="${ refund.projectName }"></td>
+                <td th:text="${ refund.farmerName }"></td>
+                <td th:text="${ refund.refundingDate}"></td>
+                <td th:text="${ refund.refundingEndDate }"></td>
+            </tr>
+        </table>
+    </div>
+    <!-- 페이징 공간  -->
+    <div class="project-list-paging">
+        <!-- 맨 앞으로 이동 -->
+        <button th:onclick="'location.href=\'/refund/find/admin/refundlist/'+ @{${refundstatus}} +'?page=' + @{${paging.startPage}} + '\''"
+                th:disabled="${ refundings.first }" class="paging-btn first"><<</button>
+    
+        <!-- 이전 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${refundstatus}} +'?page=' + @{${paging.currentPage - 1}} + '\''"
+                th:disabled="${ refundings.first }" class="paging-btn prev"><</button>
+    
+        <!-- 숫자 버튼-->
+        <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+            <button th:onclick="'location.href=\'/project/notice/list/'+ @{${refundstatus}} +'?page=' + @{${page}} + '\''"
+                    th:text="${ page }" th:disabled="${ paging.currentPage eq page}" class="paging-btn"></button>
+        </th:block>
+    
+        <!-- 다음 페이지로 이동 -->
+        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${refundstatus}} +'?page=' + @{${paging.currentPage + 1}} + '\''"
+                th:disabled="${ refundings.last}" class="paging-btn next">></button>
+    
+        <!-- 맨 마지막으로 이동-->
+        <button th:onclick="'location.href=\'/project/notice/list/'+ @{${refundstatus}} +'?page=' + @{${paging.endPage}} + '\''"
+                th:disabled="${ refundings.last }" class="paging-btn last">>></button>
+    </div>
+
+    <div style="text-align: right; margin-right: 1%;margin-top: 3%">
+        <button  onclick="location.href='/refund/find/admin/refundlist'" class="btn3 basic-btn medium-btn">뒤로가기</button>
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for(let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function() {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function() {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function() {
+                const refundingNo = this.parentNode.children[0].children[0].value;
+                const refundstatus = [[${refundstatus}]];
+                location.href = "/refund/find/admin/refundingdetail/" + refundingNo + "/"  + refundstatus;
+            }
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <style>
+    .modal-dialog {
+    
+    }
+    .modal-content {
+      width: 127% !important;
+      padding: 20px;
+    }
+    .modal-o{
+      height: 600PX!important;
+    }
+    .refund-title {
+      font-size: 2em;
+      font-weight: 1000;
+    }
+    .refund-guide {
+      font-size: 0.8em;
+      color: #ababab;
+      margin-top: 3%;
+    }
+    .submitgoback {
+      text-align: right;
+      width: 95%;
+      margin-top: 5%
+    }
+    #refund-category {
+      
+      width: 100%;
+      height: 35px;
+    }
+    
+    #refund-content {
+      
+      width: 100%;
+      height: 300px;
+    }
+  
+  </style>
+  <!-- CSS
+============================================ -->
+  
+  <!-- Vendor CSS (Contain Bootstrap, Icon Fonts) -->
+  <link rel="stylesheet" href="../../static/css/vendor/font-awesome.min.css" />
+  <link rel="stylesheet" href="../../static/css/vendor/Pe-icon-7-stroke.css" />
+  
+  <!-- Plugin CSS (Global Plugins Files) -->
+  <link rel="stylesheet" href="../../static/css/plugins/animate.min.css">
+  <link rel="stylesheet" href="../../static/css/plugins/jquery-ui.min.css">
+  <link rel="stylesheet" href="../../static/css/plugins/swiper-bundle.min.css">
+  <link rel="stylesheet" href="../../static/css/plugins/nice-select.css">
+  <link rel="stylesheet" href="../../static/css/plugins/magnific-popup.min.css" />
+  
+  <!-- Style CSS -->
+  <link rel="stylesheet" th:href="@{ /css/style.css }">
+  <link rel="stylesheet" th:href="@{ /css/filter.css }">
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+</head>
+
+<body>
+<div class="modal fade" id="policysecond"
+     data-bs-backdrop="static" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content modal-o" style="top: 112px">
+      <div>
+        <label style="font-size: 1.1em;font-weight: 1000">책임 규정
+        </label>
+      </div>
+      <br>
+      <div>
+        <label>본 약관은 공유누리 (이하 "당 사이트")이 제공하는 모든 서비스(이하 "서비스")의 이용조건 및 절차, 이용자와 당 사이트의 권리, 의무, 책임사항과 기타 필요한 사항을 규정함을 목적으로 합니다.
+          <br>본 약관에서 사용하는 용어의 정의는 다음과 같습니다.<br>
+  
+          ① 이용자 : 본 약관에 따라 당 사이트가 제공하는 서비스를 이용할 수 있는 자.<br>
+          ② 가 입 : 당 사이트가 제공하는 신청서 양식에 해당 정보를 기입하고, 본 약관에 동의하여 서비스 이용계약을 완료시키는 행위<br>
+          ③ 회 원 : 당 사이트에 개인정보 등 관련 정보를 제공하여 회원등록을 한 개인(재외국민, 국내거주 외국인 포함)또는 법인으로서 당 사이트의 정보를 제공 받으며, 당 사이트가 제공하는 서비스를 이용할 수 있는 자.<br>
+          ④ 아이디(ID) : 회원의 식별과 서비스 이용을 위하여 회원이 문자와 숫자의 조합으로 설정한 고유의 체계<br>
+          ⑤ 비밀번호 : 이용자와 아이디가 일치하는지를 확인하고 통신상의 자신의 비밀보호를 위하여 이용자 자신이 선정한 문자와 숫자의 조합.<br>
+          ⑥ 탈 퇴 : 회원이 이용계약을 종료 시키는 행위<br>
+          ⑦ 본 약관에서 정의하지 않은 용어는 개별서비스에 대한 별도 약관 및 이용규정에서 정의하거나 일반적인 개념에 의합니다.<br>
+        </label>
+      </div>
+      <div style="text-align: right;margin-right: 2%;">
+        <button class="btn3 basic-btn medium-btn" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

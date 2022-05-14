@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<div class="vertical-menubar-area">
+    <span class="text-title" th:text="${ detail.project.projectName }">프로젝트명</span>
+    <div class="block">
+        <p>파머 이름</p>
+        <p class="text-subtitle" th:text="${ detail.farmer.farmerName }">파머이름</p>
+        <p>상호명</p>
+        <p class="text-subtitle" th:text="${ detail.farmer.businessName }"></p>
+        <p>프로젝트 오픈일</p>
+        <p class="text-subtitle" th:text="${ detail.project.openDate }"></p>
+        <p>프로젝트 종료일</p>
+        <p class="text-subtitle" th:text="${ detail.project.endDate }"></p>
+        <p>달성률</p>
+        <p class="text-subtitle" th:text="${ detail.project.achievementRate + '%'}"></p>
+    </div>
+    <!--            <button class="basic-btn btn1 custom-btn">프로젝트 수정</button><br>-->
+    <!--            <button class="basic-btn btn4 custom-btn">프로젝트 취소</button>-->
+    <div class="block">
+        <!--                <span class="text-list-name">프로젝트 문의 목록</span><br>-->
+        <!--                    <a class="list-icon">●</a><a class="submenu" th:href="@{/report/projectmanager/list}">파머 문의 내역</a><br>-->
+        <!--                    <a class="list-icon">●</a><a class="submenu" th:href="@{/report/projectmanager/list}">서포터 문의 내역</a><br>-->
+        <!--                    <br>-->
+        <span class="text-list-name">신고 목록</span><br>
+        <a class="list-icon">●</a><a class="submenu" th:href="@{/report/projectmanager/list/{projectNo} (projectNo = ${detail.project.projectNo})}">프로젝트 신고 내역</a><br>
+        <br>
+        <span class="text-list-name">펀딩 내역</span><br>
+        <a class="list-icon">●</a><a class="submenu" th:href="@{/refund/find/admin/projectlist/{projectNo} (projectNo = ${detail.project.projectNo})}">펀딩 내역</a>
+    </div>
+    <div>
+        <button class="basic-btn btn3 medium-btn" style="width: 100%; margin-top: 2%;" onclick="location.href='/project/manage/progressing/list'">목록으로</button>
+    </div>
+</div>
+</body>
+</html>

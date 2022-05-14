@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/adminrefund.css}">
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+
+</head>
+<body>
+<div th:replace="/common/adminheader.html"></div>
+<div class="container" style="height: 70%">
+
+    <div class="" style="width: 1200px;">
+        <div class="title-div" style="margin-top: 3%">
+				<span class="text-title">
+					<img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">
+                    <label id="keyword">환불 관리</label>
+				</span>
+            <hr style="width: 100%">
+        </div>
+    </div>
+        <div class="box">
+            <button class="basic-btn btn1" id="find-all">전체 조회</button>
+            <button class="basic-btn btn1" id="waiting">이의신청</button>
+            <button class="basic-btn btn1" id="refundconfirm">승인목록</button>
+            <button class="basic-btn btn1" id="refuse">거절목록</button>
+        </div>
+
+</div>
+
+<script>
+    const findall = document.getElementById("find-all");
+    const waiting = document.getElementById("waiting");
+    const confirm = document.getElementById("refundconfirm");
+    const refuse = document.getElementById("refuse");
+
+    if(findall) {
+        findall.onclick = function() {
+
+            location.href = "/refund/find/admin/list";
+        }
+    }
+    if(waiting) {
+        waiting.onclick = function() {
+            location.href = "/refund/find/admin/statuslist/1";
+        }
+    }
+    if(confirm) {
+        confirm.onclick = function() {
+            location.href = "/refund/find/admin/statuslist/2";
+        }
+    }
+    if(refuse) {
+        refuse.onclick = function() {
+            location.href = "/refund/find/admin/statuslist/3";
+        }
+    }
+
+
+</script>
+</body>
+</html>

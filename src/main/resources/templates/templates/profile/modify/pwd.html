@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>떡잎펀드</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div th:replace="/profile/thumbnail.html"></div>
+    <div class="email-div">
+        <br clear="both">
+        <div id="changeEmail-pw">이메일 변경</div>
+        <div id="changePhone-pw">Phone 변경</div>
+        <div id="changePwd-pw">비밀번호 변경</div>
+        <hr style="width: 540px; margin-left: -30px" align="center">
+        <form id="pwd-form" name="saveForm" action="/profile/modify/pwd" method="post">
+            <label>비밀번호</label><br>
+            <input type="password" id="memberPwd" name="memberPwd" placeholder="비밀번호">
+            <br>
+            <br>
+            <input type="password" id="memberPwdCheck" placeholder="비밀번호 확인">
+            <br>
+            <input type="submit" id="save" value="저장">
+            <input type="button" id="cancel" value="취소">
+        </form>
+    </div>
+</body>
+    <script>
+
+        document.getElementById("changeEmail-pw").onclick = function() {
+        location.href = "/profile/modify/email";
+        }
+
+        document.getElementById("changePhone-pw").onclick = function() {
+        location.href = "/profile/modify/phone";
+        }
+
+        document.getElementById("changePwd-pw").onclick = function() {
+        location.href = "/profile/modify/pwd";
+        }
+
+        window.addEventListener('load', (e) => {
+
+            const $save = document.getElementById("save");
+            const $form = document.getElementById("pwd-form");
+
+            $save.addEventListener('click', (e) => {
+                e.preventDefault(); //form 동작 잠깐 만두국
+
+                let memberPwd = document.getElementById("memberPwd").value;
+                let memberPwdCheck = document.getElementById("memberPwdCheck").value;
+
+                if(memberPwd == "") {
+                    Swal.fire({
+                        title: '변경할 비밀번호를 입력해주세요.',
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonText: '확인',
+                        allowEnterKey: false,
+                        confirmButtonWidth: '100px',
+                        customClass: {
+                            cancelButton: 'savecancel',
+                            popup: 'savepopup'
+                        },
+                        buttonsStyling: false,
+                    });
+                } else if(memberPwdCheck == "") {
+                    Swal.fire({
+                        title: '비밀번호를 한번 더 입력해주세요.',
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonText: '확인',
+                        allowEnterKey: false,
+                        confirmButtonWidth: '100px',
+                        customClass: {
+                            cancelButton: 'savecancel',
+                            popup: 'savepopup'
+                        },
+                        buttonsStyling: false,
+                    });
+                } else if(memberPwd !== memberPwdCheck) {
+                    Swal.fire({
+                        title: '비밀번호가 일치하지 않습니다.',
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonText: '확인',
+                        allowEnterKey: false,
+                        confirmButtonWidth: '100px',
+                        customClass: {
+                            cancelButton: 'savecancel',
+                            popup: 'savepopup'
+                        },
+                        buttonsStyling: false,
+                    });
+                } else if(memberPwd === memberPwdCheck) {
+                    Swal.fire({
+                        title: '비밀번호가 변경되었습니다.',
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonText: '확인',
+                        allowEnterKey: false,
+                        confirmButtonWidth: '100px',
+                        customClass: {
+                            cancelButton: 'savecancel',
+                            popup: 'savepopup'
+                        },
+                        buttonsStyling: false,
+                    });
+                    $form.submit();
+                }
+            })
+        });
+
+        document.getElementById("cancel").onclick = function() {
+            location.href = "/following/list";
+        }
+    </script>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/css/adminrefund.css}">
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+
+    <style>
+        .tab-body-area {
+            position: absolute;
+            z-index: 1;
+            left: 33%;
+            right: 25%;
+            top: 18%;
+            width: 50%;
+            height: 1220px;
+        }
+        .refund-detail-area {
+            width: 84%;
+            height: 800px;
+            background-color: rgba(229, 221, 204, 0.5);
+            margin-top: 8%;
+        }
+        .refund-detail-area-box {
+            margin: 12%;
+            width: 92%;
+            height: 71%;
+        }
+        .refund-detail-title {
+            font-size: 1.2em;
+            font-weight: 1000;
+            margin-bottom: 10px;
+            width: 45%;
+        }
+        .refund-detail-content {
+            width: 50%;
+        }
+        /* Round Corners */
+        .round-corners {
+            color: #BAC34E;
+            background: #FFF;
+            border: 1px solid #BAC34E;;
+            width: 250px;
+            height: 40px;
+            font-size: 20px;
+
+
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="/common/adminheader.html"></div>
+<div class="container" style="height: 70%">
+
+    <div class="" style="width: 1200px;">
+        <div class="title-div" style="margin-top: 3%">
+				<span class="text-title">
+					<img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">
+                    <label id="keyword">환불 내역</label>
+				</span>
+            <hr style="width: 100%">
+        </div>
+    </div>
+    <div class="row" style="margin-left: 2%">
+
+        <div class="refund-detail-area">
+            <div class="refund-detail-area-box">
+                <div style="height: 50px"></div>
+                <label class="refund-detail-title">주문일</label>
+                <label class="refund-detail-content">[[${refunding.refundingDate}]]</label><br>
+                <label class="refund-detail-title">펀딩 금액</label>
+                <label class="refund-detail-content">[[${refunding.funding.fundingAmount}]]</label><br>
+                <label class="refund-detail-title">리워드 금액</label>
+                <label class="refund-detail-content">[[${refunding.project.rewardInfo.rewardPrice}]]</label><br>
+                <label class="refund-detail-title">리워드 수량</label>
+                <label class="refund-detail-content">[[${refunding.project.rewardInfo.rewardUnit}]] X [[${refunding.funding.rewardAmount}]] EA</label><br>
+                <label class="refund-detail-title">프로젝트상태</label>
+                <label class="refund-detail-content">[[${refunding.project.progressStatus.progressName}]]</label><br>
+                <label class="refund-detail-title">환불 신청일</label>
+                <label class="refund-detail-content">[[${refunding.refundingDate}]]</label><br>
+                <br>
+
+                <label class="refund-detail-title">신청 사유</label>
+                <label class="refund-detail-content">[[${refunding.refundingCategory.refundingCategoryName}]]</label><br><br>
+                <label class="refund-detail-title">상세 이유</label>
+                <label class="refund-detail-content">[[${refunding.refundingReason}]]</label><br><br>
+                <th:block th:if="${refunding.refundingStatus.refundingStatusNo eq 2}">
+                    <label class="refund-detail-title">환불 승인일</label>
+                    <label class="refund-detail-content">[[${refunding.refundingEndDate}]]</label><br><br>
+                    결국</th:block>
+                <th:block th:if="${refunding.refundingStatus.refundingStatusNo eq 3}">
+                    <label class="refund-detail-title">환불 거부일</label>
+                    <label class="refund-detail-content">[[${refunding.refundingEndDate}]]</label><br><br>
+                </th:block>
+                <th:block th:if="${refunding.refundingStatus.refundingStatusNo eq 5}">
+                    <label class="refund-detail-title">환불 승인일</label>
+                    <label class="refund-detail-content">[[${refunding.refundingEndDate}]]</label><br><br>
+                </th:block>
+                <th:block th:if="${refunding.refundingStatus.refundingStatusNo eq 6}">
+                    <label class="refund-detail-title">환불 거부일</label>
+                    <label class="refund-detail-content">[[${refunding.refundingEndDate}]]</label><br><br>
+                </th:block>
+            </div>
+        </div>
+        <th:block th:if="${refunding.refundingStatus.refundingStatusNo eq 4}">
+            <button id="detail-confirm" class="btn1 basic-btn medium-btn">승인 </button>
+            <button id="detail-refuse"  class="btn2 basic-btn medium-btn" data-bs-toggle="modal" data-bs-target="#refuse-modal">거절</button>
+        </th:block>
+        <button id="detail-back" class="btn3 basic-btn medium-btn" >뒤로가기</button>
+        <div style="height: 200px"></div>
+    </div>
+</div>
+<div th:replace="/refund/find/admin/refusereasonmodal.html"></div>
+<script>
+    const $confirm = document.getElementById("detail-confirm");
+    const $refuse = document.getElementById("detail-refuse");
+    const $back = document.getElementById("detail-back");
+    const $projectNo= [[${refunding.project.projectNo}]];
+    const $refundNo = [[${refunding.refundingInfoNo}]];
+    const $refundstatus = [[${refundstatus}]];
+    if($confirm) {
+        $confirm.onclick = function() {
+            location.href = "/refund/examine/platform/objection/confirm/" + $refundNo;
+        }
+    }
+    if($back) {
+        $back.onclick = function() {
+            location.href = "/refund/find/admin/statuslist/" + $refundstatus;
+        }
+    }
+</script>
+</body>
+</html>

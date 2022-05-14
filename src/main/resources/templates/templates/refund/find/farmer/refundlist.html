@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>펀딩 목록 조회</title>
+	<meta name="robots" content="noindex, follow" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+	<script src="https://kit.fontawesome.com/c24bc5c6f2.js" crossorigin="anonymous"></script>
+	<!-- Style CSS -->
+	<link rel="stylesheet" th:href="@{ /css/funding.css }">
+	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	
+	<!-- JQuery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<style>
+        .tab-body-area {
+            position: absolute;
+            z-index: 1;
+            left: 33%;
+            right: 25%;
+            top: 18%;
+            width: 50%;
+            height: 1220px;
+        }
+        .sungwon-btn {
+            height: 35px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+	</style>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div th:replace="/common/farmerheader.html"></div>
+
+
+<div class="tab-body-area" style="width: 47%">
+	<span class="text-title">
+        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+		 환불 관리
+	</span>
+	<div class="title-div">
+		<hr width="100%">
+		<div style="margin-left: 2%">
+		</div>
+		<div class="notice-wrap">
+			<div class="cont-div">
+				<div id="projectNoticeList">
+					<table class="basic-table" id="project-qna-table projectNoticeList" align="center" style="width: 100%">
+						<tr>
+							<th></th>
+							<th>상태</th>
+							<th>주문일</th>
+							<th>서포터</th>
+							<th>펀딩 금액</th>
+							<th>리워드단위</th>
+							<th>수량</th>
+							<th></th>
+						</tr>
+						<tr th:each="refunding : ${refundings}">
+							<td><input type="hidden" th:value="${refunding.refundingInfoNo}"></td>
+							<td th:text="${refunding.refundingStatus.refundingStatusName}"></td>
+							<td th:text="${refunding.funding.fundingDate}"></td>
+							<td th:text="${refunding.refundingMemberName}"></td>
+							<td th:text="${refunding.funding.fundingAmount}"></td>
+							<td th:text="${refunding.project.rewardInfo.rewardUnit}"></td>
+							<td th:text="${refunding.funding.rewardAmount}">EA</td>
+							<td><button class="basic-btn btn1 small-btn" th:onclick="'location.href=\'/refund/find/detail/farmer/' + @{${refunding.refundingInfoNo}} + '\''">확인하기</button></td>
+						</tr>
+					</table>
+				</div><br>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<script>
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for (let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function () {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function () {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+        }
+    }
+</script>
+
+
+<div th:replace="/common/footer.html"></div>
+</body>
+</html>

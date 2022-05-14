@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>펀딩 신청 완료</title>
+	<meta name="robots" content="noindex, follow" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+	<script src="https://kit.fontawesome.com/c24bc5c6f2.js" crossorigin="anonymous"></script>
+	<!-- Style CSS -->
+	<link rel="stylesheet" th:href="@{ /css/funding.css }">
+	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div class="container" style="height: 70%">
+	<div class="" style="width: 1200px;">
+		<div class="fundingrewardstep-front">
+			<button class="mt-3 basic-btn btn3 big-btn"> < &nbsp스토리로 돌아가기</button>
+			<label>펀딩하기는 쇼핑하기가 아닙니다! 자세히 알아보세요.</label><br>
+		</div>
+		<div class="fundingrewardstep">
+			<img class=""  src="/images/funding/regist/fundingrewardstep3.png">
+		</div>
+		<div style="height: 100px;"></div>
+		<label class="title">펀딩 완료</label><br>
+		<div class="complete-funding-info">
+			<div style="height: 20px"></div>
+			
+			<div class="complete-funding-info-text">
+				<label>
+						* 펀딩에 성공하셨습니다! 리워드 발송 예정일은 [[${ endDate }]] 입니다.
+				</label>
+			</div>
+			</div>
+		</div>
+		
+		<!-- 버튼 -->
+		<div style="text-align: center; width: 100%; margin: 5%">
+			<button id="funding-list" class="funding-result-btn basic-btn btn3 bigbig-btn">펀딩 내역 보기</button>
+			<button id="dduckleaf-home" class="funding-result-btn basic-btn btn1 bigbig-btn">떡잎펀드 홈</button>
+		</div>
+	</div>
+</div>
+<script th:inline="javascript">
+    $fundinglist = document.getElementById("funding-list");
+    $dduckleafhome = document.getElementById("dduckleaf-home");
+    
+    if($fundinglist) {
+        $fundinglist.onclick = function() {
+            location.href = '/funding/find/list/member';
+        }
+    }
+    if($dduckleafhome) {
+        $dduckleafhome.onclick = function() {
+            location.href = '/';
+        }
+    }
+    
+</script>
+<footer class="footer" th:replace="/common/footer.html"></footer>
+</body>
+</html>

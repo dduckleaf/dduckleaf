@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>떡잎펀드</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member.css}">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
+</head>
+<body style="overflow: hidden">
+    <div th:replace="/common/userheader.html"></div>
+    <h1 class="find-modify-title">비밀번호 재설정</h1>
+    <form class="find-modify-pwd-form" action="/member/modify/pwd" method="post">
+        <h3 class="find-modify-subtitle">새로 허용하기를 원하는 비밀번호를 입력해주세요.</h3>
+        <br>
+        <br>
+        <label>비밀번호</label><br>
+        <input type="password" id="password" name="memberPwd" placeholder="비밀번호 입력">
+        <input type="password" id="passwordCheck" placeholder="비밀번호 확인">
+        <input type="hidden" id="memberNo" name="memberNo" th:value="${ memberNo }">
+        <br>
+        <br>
+        <button id="modify-btn" type="submit">확인</button>
+    </form>
+</body>
+    <script>
+        window.addEventListener('load', (e) => {
+            const modifyBtn = document.getElementById("modify-btn");
+            const form = document.getElementsByClassName("find-modify-pwd-form");
+
+            modifyBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                let password = document.getElementById("password").value;
+                let passwordCheck = document.getElementById("passwordCheck").value;
+
+                if(password != passwordCheck) {
+                    alert("비밀번호를 확인해주세요");
+                }
+
+                if(password == passwordCheck) {
+                    form.submit();
+                }
+            })
+        })
+
+    </script>
+</html>

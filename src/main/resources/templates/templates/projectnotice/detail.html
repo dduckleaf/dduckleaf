@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="stylesheet" th:href="@{/css/vendor/font-awesome.min.css}"/>
+    <link rel="stylesheet" th:href="@{/css/vendor/Pe-icon-7-stroke.css}" />
+
+    <!-- Plugin CSS (Global Plugins Files) -->
+    <link rel="stylesheet" th:href="@{/css/plugins/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/jquery-ui.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/swiper-bundle.min.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/css/plugins/magnific-popup.min.css}"/>
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css }">
+    <link rel="stylesheet" th:href="@{/css/projectnotice.css }">
+</head>
+<body>
+<div class="main-wrapper">
+<div th:include="/common/menubar.html"></div>
+
+<div class="mypage" th:replace="/common/project.html"></div>
+
+    <div class="tab-body-area">
+        <div class="title-div">
+            <span class="text-title">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">공지사항</span>
+                <hr width="100%">
+                <div class="notice-wrap">
+                    <div class="cont-div">
+                        <table>
+                            <tr class="title" th:each="notice : ${ projectNoticeDetail }">
+                                <input id="projectNo" name="projectNo" type="hidden" th:value="${ notice.projectNo }">
+                                <input class="projectNo" id="projectNoticeNo" type="hidden" th:value="${ notice.projectNoticeNo }">
+                                <td class="title" colspan="2" th:text="${ notice.projectNoticeTitle }">제목</td>
+                            </tr>
+                            <tr th:each="notice : ${ projectNoticeDetail }">
+                                <td class="date" th:text="${ notice.registDate }">작성일</td>
+                            </tr>
+                            <tr th:each="notice : ${ projectNoticeDetail }">
+                                <td class="content" colspan="2" th:text="${ notice.projectNoticeContent }">내용</td>
+                            </tr>
+                        </table><br>
+                        <div>
+                            <button class="basic-btn small-btn btn1" id="modifyProjectNotice" style="float: right;">수정</button>
+                            <button class="basic-btn small-btn btn2" id="removeProjectNotice" style="float: right; margin-right: 1%;">삭제</button>
+                            <button class="basic-btn small-btn btn3 back" id="back" style="float:left;">목록</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="/common/footer.html"></div>
+<script>
+
+    const projectNo = $("#projectNo").val();
+
+    $("#back").click(function() {
+
+        location.href='/project/notice/list/' + projectNo;
+    });
+
+    const projectNoticeNo = $("#projectNoticeNo").val();
+
+    $("#removeProjectNotice").click(function() {
+
+        if(!confirm("삭제하시겠습니까?")) {
+
+        } else {
+            location.href='/project/notice/remove/' + projectNoticeNo;
+        }
+    });
+
+    $("#modifyProjectNotice").click(function() {
+
+        const projectNoticeNo = $("#projectNoticeNo").val();
+
+        if(!confirm("수정하시겠습니까?")) {
+
+        } else {
+            location.href='/project/notice/modify/' + projectNoticeNo;
+        }
+    });
+
+</script>
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
+
+<!--Plugins JS-->
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
+</body>
+</html>

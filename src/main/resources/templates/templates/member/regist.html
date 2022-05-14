@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/member.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div th:replace="/common/userheader.html"></div>
+    <div class="regist-form">
+        <h1 class="regist-title">회원가입</h1>
+        <h5 style="margin-bottom: 20px; margin-top: 10px; font-family: inherit">최소한의 정보를 받고 있습니다.</h5>
+        <form action="/member/regist" method="post" id="regist-form">
+
+            <label>이름</label><br>
+            <input type="text" id="memberName" name="memberName" placeholder="이름">
+            <br>
+            <br>
+            <!--이메일-->
+            <label>e-mail</label><br>
+            <input type="text" id="email" name="email" placeholder="e-mail">
+            <input type="hidden" id="verification-email">
+            <!--이메일 인증번호 전송 버튼-->
+            <input type="button" class="small-btn" id="send-email" value="인증번호 전송" align="center">
+
+            <div id="email-verification-div">
+                <!--이메일 인증번호 입력칸-->
+                <input type="text" id="email-verification" name="verification" placeholder="인증번호">
+                <!--이메일 인증번호 확인 버튼-->
+                <input type="button" class="small-btn" id="check-email-verification" value="확인">
+                <input type="hidden" id="checkEmailResult" value="false">
+            </div>
+            <br>
+            <br>
+            <!--phone-->
+            <label>Phone</label><br>
+            <input type="number" id="phone" name="phone" placeholder="Phone">
+            <input type="hidden" id="verification-phone">
+            <!--phone 인증번호 전송 버튼-->
+            <input type="button" class="small-btn" id="send-phone" value="인증번호 전송">
+            <div id="phone-verification-div">
+                <!--phone 인증번호 입력칸-->
+                <input type="text" id="phone-verification" name="verification" placeholder="인증번호">
+                <!--phone 인증번호 확인 버튼-->
+                <input type="button" class="small-btn" id="check-phone-verification" value="확인">
+                <input type="hidden" id="checkPhoneResult" value="false">
+            </div>
+            <br>
+            <label>아이디</label><br>
+            <div class="id-duplicationCheck-div">
+                <!--아이디 입력칸-->
+                <input type="text" id="memberId" name="memberId" placeholder="아이디">
+                <!--아이디 중복체크 버튼-->
+                <input type="button" class="small-btn" id="check-id-duplication" value="중복 확인">
+                <input type="hidden" id="checkIdResult" value="false">
+            </div>
+            <br>
+            <label>비밀번호</label><br>
+            <input type="password" id="memberPwd" name="memberPwd" placeholder="비밀번호">
+            <input type="password" id="memberPwdCheck" name="memberPwdCheck" placeholder="비밀번호확인">
+            <br>
+            <br>
+            <button type="submit" class="bigbigbig-btn" id="regist-finish">완료</button>
+        </form>
+    </div>
+<script>
+
+    let $verificationEmail = document.getElementById("verification-email").value;
+
+    /* 이메일 인증번호 전송 */
+    if(document.getElementById("send-email")) {
+
+        const $sendEmail = document.getElementById("send-email");
+
+        $sendEmail.onclick = function () {
+
+            const $email = document.getElementById("email").value;
+
+            fetch("/member/sendEmailVerification?email=" + $email)
+                .then(response => response.json())
+                .then(response => {
+                    console.table(response);
+
+                    if(response == "이미 사용중인 이메일 입니다.") {
+                        alert(response);
+                    } else {
+                        $verificationEmail = response;
+                        console.log($verificationEmail);
+                        document.getElementById("email-verification-div").style.display = "block";
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    }
+
+    const $emailVerification = document.getElementById("email-verification");
+    let $checkEmailResult = document.getElementById("checkEmailResult").value;
+
+    /* 이메일 인증번호 확인 체크 */
+    if(document.getElementById("check-email-verification")) {
+
+        const $checkEmailVerification = document.getElementById("check-email-verification");
+
+        $checkEmailVerification.onclick = function() {
+
+            console.log($emailVerification.value);
+            console.log($verificationEmail);
+
+            if($emailVerification.value === $verificationEmail) {
+                $checkEmailResult = 'true';
+                $emailVerification.style.border = '1px solid #39F928';
+            } else {
+                $checkEmailResult = 'false';
+                alert("인증번호가 일치하지 않습니다.");
+            }
+        }
+    }
+
+    let $verificationPhone = document.getElementById("verification-phone").value;
+
+    /* 휴대폰 인증번호 전송 */
+    if(document.getElementById("send-phone")) {
+
+        const $sendPhone = document.getElementById("send-phone");
+        const $phoneVerificationDiv = document.getElementById("phone-verification-div");
+
+        $sendPhone.onclick = function() {
+            const $phone = document.getElementById("phone").value;
+
+            fetch("/member/sendPhoneVerification?phone=" + $phone)
+                .then(response => response.json())
+                .then(response => {
+                    console.table(response);
+
+                    if(response == "이미 사용중인 휴대전화 번호입니다.") {
+                        alert(response);
+                    } else if(response == "인증번호 전송 실패") {
+                        alert(response);
+                    } else if(response == "휴대폰 번호가 유효하지 않습니다."){
+                        alert(response);
+                    } else {
+                        $verificationPhone = response;
+                        console.table($verificationPhone);
+                        $phoneVerificationDiv.style.display = "block";
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+    }
+
+    const $phoneVerification = document.getElementById("phone-verification");
+    let $checkPhoneResult = document.getElementById("checkPhoneResult").value;
+    /* 휴대폰 인증번호 확인 체크*/
+    if(document.getElementById("check-phone-verification")) {
+
+        const $checkPhoneVerification = document.getElementById("check-phone-verification");
+
+        $checkPhoneVerification.onclick = function() {
+
+            if($phoneVerification.value === $verificationPhone) {
+                $checkPhoneResult = 'true';
+                console.log($checkPhoneResult);
+                $phoneVerification.style.border = '1px solid #39F928';
+            } else {
+                $checkPhoneResult = "false";
+                alert("인증번호가 일치하지 않습니다.");
+            }
+        }
+    }
+
+    let $memberId = document.getElementById("memberId");
+    let $checkIdResult = document.getElementById("checkIdResult").value;
+
+    /* 아이디 중복 체크 */
+    if(document.getElementById("check-id-duplication")) {
+
+        const $checkIdDuplication = document.getElementById("check-id-duplication");
+
+        $checkIdDuplication.onclick = function() {
+
+            fetch("/member/checkDuplicateMemberId?memberId=" + $memberId.value)
+                .then(response => response.json())
+                .then(response => {
+                    console.log(response);
+
+                    if(response == "아이디를 입력해주세요."){
+                        alert(response);
+                        $checkIdResult = 'false';
+                        $memberId.style.border = '1px solid #C8B5B5';
+                    } else if(response == "중복된 아이디입니다.") {
+                        alert(response);
+                        $checkIdResult = 'false';
+                        $memberId.style.border = '1px solid #C8B5B5';
+                    } else if(response == "사용가능한 아이디입니다.") {
+                        alert(response);
+                        $checkIdResult = 'true';
+                        $memberId.style.border = '1px solid #39F928';
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+        }
+
+        window.addEventListener('load', (e) => {
+            const $regist = document.getElementById("regist-finish");
+            const $form = document.getElementById("regist-form");
+
+
+            $regist.addEventListener('click', (e) => {
+                e.preventDefault();     //form 동작 잠깐 막기
+
+                let memberName = document.getElementById("memberName").value;
+                let memberPwd = document.getElementById("memberPwd").value;
+                let memberPwdCheck = document.getElementById("memberPwdCheck").value;
+
+                console.log($checkEmailResult);
+                console.log($checkPhoneResult);
+                console.log($checkIdResult);
+
+                if(memberName == "" || memberName == null) {
+                    alert("이름을 입력해주세요.")
+                }else if($checkEmailResult != 'true') {
+                    alert("이메일 인증을 해주세요.");
+                }else if($checkPhoneResult != 'true') {
+                    alert("휴대폰 인증을 해주세요.");
+                }else if($checkIdResult != 'true') {
+                    alert("아이디 중복확인을 해주세요.");
+                }else if(memberPwd == "" || memberPwdCheck == "" || memberPwd !== memberPwdCheck) {
+                    alert("비밀번호가 일치하지 않습니다.");
+                }else {
+                    alert("회원가입이 완료되었습니다.")
+                    $form.submit();   //form 동작 시작
+                }
+            })
+        })
+
+    }
+    // $.ajax({
+    //     url: "/member/sendEmailVerification",
+    //     type: "get",
+    //     data: { "email": $email },
+    //     dataType: "json",
+    //     success: function(data, status, xhr){
+    //         console.log(data);
+    //     },
+    //     error: function(xhr, status, error){
+    //         console.log(xhr);
+    //     }
+    // });
+</script>
+</body>
+</html>

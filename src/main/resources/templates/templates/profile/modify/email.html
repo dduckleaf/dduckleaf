@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>떡잎펀드</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/profile.css}">
+    <!-- Favicon -->
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <div th:replace="/profile/thumbnail.html"></div>
+    <div class="email-div">
+        <br clear="both">
+        <div id="changeEmail-e">이메일 변경</div>
+        <div id="changePhone-e">Phone 변경</div>
+        <div id="changePwd-e">비밀번호 변경</div>
+        <hr style="width: 540px; margin-left: -30px" align="center">
+        <form id="email-form" name="saveForm" action="/profile/modify/email" method="post">
+            <label>이메일</label><br>
+            <input type="email" id="email" name="email" th:value="${ member.email }" placeholder="이메일">
+            <input type="button" id="send-email" value="인증번호 전송">
+            <input type="hidden" id="email-verification">
+            <br>
+            <label>인증번호</label>
+            <div id="email-verification-div">
+                <!--이메일 인증번호 입력칸-->
+                <input type="text" id="verification" name="verification" placeholder="인증번호">
+                <!--이메일 인증번호 확인 버튼-->
+                <input type="button" class="small-btn" id="check-email-verification" value="확인">
+                <input type="hidden" id="checkEmailResult" value="false">
+            </div>
+            <input type="submit" id="save" value="저장">
+            <input type="button" id="cancel" value="취소">
+        </form>
+    </div>
+</body>
+    <script>
+
+        document.getElementById("changeEmail-e").onclick = function() {
+            location.href = "/profile/modify/email";
+        }
+
+        document.getElementById("changePhone-e").onclick = function() {
+            location.href = "/profile/modify/phone";
+        }
+
+        document.getElementById("changePwd-e").onclick = function() {
+            location.href = "/profile/modify/pwd";
+        }
+
+        document.getElementById("cancel").onclick = function() {
+            location.href = "/following/list";
+        }
+
+        document.getElementById("send-email").onclick = function() {
+
+            let $email = document.getElementById("email").value;
+
+            let email = {
+                method: 'POST',
+                body: $email,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
+            fetch("/profile/send/email/verification", email)
+                .then(response => response.json())
+                .then(response => {
+                    if(response === "이미 사용중인 이메일 입니다.") {
+                        Swal.fire({
+                            title: response,
+                            showCancelButton: true,
+                            showConfirmButton: false,
+                            cancelButtonText: '취소',
+                            allowEnterKey: false,
+                            confirmButtonWidth: '100px',
+                            customClass: {
+                                cancelButton: 'savecancel',
+                                popup: 'savepopup'
+                            },
+                            buttonsStyling: false,
+                        });
+                    } else {
+
+                        document.getElementById("email-verification").value = response;
+
+                        console.log(response);
+                        Swal.fire({
+                            title: '인증번호가 전송되었습니다.',
+                            showCancelButton: true,
+                            showConfirmButton: false,
+                            cancelButtonText: '확인',
+                            allowEnterKey: false,
+                            confirmButtonWidth: '100px',
+                            customClass: {
+                                cancelButton: 'savecancel',
+                                popup: 'savepopup'
+                            },
+                            buttonsStyling: false,
+                        });
+                    }
+                })
+                .catch(error => {
+                    alert(error);
+                })
+        }
+
+        const $checkEmailVerification = document.getElementById("check-email-verification");
+
+        if($checkEmailVerification){
+            $checkEmailVerification.onclick = function() {
+
+                let $emailVerification = document.getElementById("email-verification").value;
+                let $verification = document.getElementById("verification").value;
+
+                if($emailVerification === $verification){
+                    document.getElementById("checkEmailResult").value = "true";
+                    Swal.fire({
+                        title: '인증되었습니다.',
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonText: '확인',
+                        allowEnterKey: false,
+                        confirmButtonWidth: '100px',
+                        customClass: {
+                            cancelButton: 'savecancel',
+                            popup: 'savepopup'
+                        },
+                        buttonsStyling: false,
+                    });
+                }
+                if($emailVerification !== $verification) {
+                    Swal.fire({
+                        title: '인증 번호가 일치하지 않습니다.',
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonText: '확인',
+                        allowEnterKey: false,
+                        confirmButtonWidth: '100px',
+                        customClass: {
+                            cancelButton: 'savecancel',
+                            popup: 'savepopup'
+                        },
+                        buttonsStyling: false,
+                    });
+                }
+
+            }
+        }
+
+        /*이메일 변경 저장*/
+        window.addEventListener('load', (e) => {
+            const $save = document.getElementById("save");
+            const $form = document.getElementById("email-form");
+
+            $save.addEventListener('click', (e) => {
+                e.preventDefault(); //form 동작 잠깐 만두국
+
+                let email = document.getElementById("email").value;
+                let checkEmailResult = document.getElementById("checkEmailResult").value;
+
+                if(email == null){
+                    Swal.fire({
+                        title: '이메일은 입력해주세요.',
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonText: '확인',
+                        allowEnterKey: false,
+                        confirmButtonWidth: '100px',
+                        customClass: {
+                            cancelButton: 'savecancel',
+                            popup: 'savepopup'
+                        },
+                        buttonsStyling: false,
+                    });
+                }
+                if(checkEmailResult == "false") {
+                    Swal.fire({
+                        title: '이메일 인증을 해주세요.',
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonText: '확인',
+                        allowEnterKey: false,
+                        confirmButtonWidth: '100px',
+                        customClass: {
+                            cancelButton: 'savecancel',
+                            popup: 'savepopup'
+                        },
+                        buttonsStyling: false,
+                    });
+                }
+                if(checkEmailResult == "true") {
+                    Swal.fire({
+                        title: '이메일이 변경되었습니다.',
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                        cancelButtonText: '확인',
+                        allowEnterKey: false,
+                        confirmButtonWidth: '100px',
+                        customClass: {
+                            cancelButton: 'savecancel',
+                            popup: 'savepopup'
+                        },
+                        buttonsStyling: false,
+                    });
+                    $form.submit();
+                }
+            })
+        });
+
+
+
+    </script>
+</html>

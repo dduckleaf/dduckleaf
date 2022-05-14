@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/settlement.css}">
+</head>
+<body>
+    <main style="width: 1920px">
+        <br>
+        <div class="row">
+            <div th:replace="/common/adminheader.html"></div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <div th:replace="/project/manage/end/submenu.html"></div>
+            </div>
+            <div class="col-10">
+                <div class="body-area2">
+                    <br>
+                    <div class="title-div">
+                            <span class="text-title">
+                                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">정산금 관리</span>
+                        <hr width="100%">
+                    </div>
+                    <div>
+                        <div align="center">
+                            <div class="step-block" align="center">
+                                정산금계산
+                                <br>
+                                <button class="basic-btn small-btn btn5" id="calculate">정산금 계산</button>
+                            </div>
+                            <div class="step-block" align="center">
+                                정산금 지급 관리
+                                <br>
+                                <button class="basic-btn small-btn btn5" onclick="setFirstPayment();">관리</button>
+                            </div>
+<!--                            <div class="step-block" align="center">-->
+<!--                                1차 정산금 지급일 등록-->
+<!--                                <br>-->
+<!--                                <button class="basic-btn small-btn btn5">등록</button>-->
+<!--                            </div>-->
+<!--                            <div class="step-block" align="center">-->
+<!--                                2차 정산금 지급 관리-->
+<!--                                <br>-->
+<!--                                <button class="basic-btn small-btn btn5" onclick="setSecondPayment();">관리</button>-->
+<!--                            </div>-->
+<!--                            <div class="step-block" align="center">-->
+<!--                                2차 정산금 지급일 등록-->
+<!--                                <br>-->
+<!--                                <button class="basic-btn small-btn btn5">등록</button>-->
+<!--                            </div>-->
+                        </div>
+<!--                        <br><br><br>-->
+<!--                        <div class="title-div">-->
+<!--                            <span class="text-title">-->
+<!--                                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">정산정보 이력 관리</span>-->
+<!--    &lt;!&ndash;                        <hr width="100%">&ndash;&gt;-->
+<!--                        </div>-->
+                        <!-- 정산정보 이력 테이블 -->
+<!--                        <table class="basic-table" style="width: 100%">-->
+<!--                            <tr>-->
+<!--                                <th>정산 변동 카테고리</th>-->
+<!--                                <th>처리 상태</th>-->
+<!--                                <th>일시</th>-->
+<!--                                <th>상세 보기</th>-->
+<!--                            </tr>-->
+    <!--                        <th:block th:if="${}">-->
+<!--                                <tr>-->
+<!--                                    <td colspan="3" align="center">이력이 존재하지 않습니다.</td>-->
+<!--                                </tr>-->
+    <!--                        </th:block>-->
+    <!--                        <th:block th:if="">-->
+<!--                                <tr>-->
+<!--                                    <td>1차 정산금</td>-->
+<!--                                    <td>이의신청 접수</td>-->
+<!--                                    <td>2020-01-01 00:00</td>-->
+<!--                                    <td><button class="basic-btn small-btn btn3">상세보기</button></td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td>1차 정산금</td>-->
+<!--                                    <td>이의신청 승인</td>-->
+<!--                                    <td>2020-01-01 00:00</td>-->
+<!--                                    <td><button class="basic-btn small-btn btn3">상세보기</button></td>-->
+<!--                                </tr>-->
+    <!--                        </th:block>-->
+<!--                        </table>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    /* 정산금 계산 페이지로 이동 */
+    const calculate = document.getElementById("calculate");
+    if(calculate) {
+        calculate.onclick = function() {
+            location.href = "/settlement/calculate/table/[[${project.projectNo}]]";
+        }
+    }
+
+    /* 정산금 지급관리 페이지로 이동 */
+    function setFirstPayment() {
+        location.href = "/settlement/paymentSetting/[[${project.projectNo}]]";
+    }
+
+</script>
+</html>

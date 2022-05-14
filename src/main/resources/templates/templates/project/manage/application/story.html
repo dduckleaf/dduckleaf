@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>펀딩 신청</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+    <link rel="stylesheet" th:href="@{ /css/projectapplication.css }">
+    <style>
+        .bigcontainer,.container {
+            display: inline-block;
+        }
+
+        .bigcontainer {
+            margin-top: 5%;
+            float: left;
+        }
+
+        .container {
+            /*height: 1200px;*/
+        }
+    </style>
+</head>
+<body>
+<div th:replace="/common/adminheader.html"></div>
+<div class="col-2 bigcontainer">
+    <div th:replace="/project/manage/application/submenu.html"></div>
+</div>
+<div class="container">
+    <div style="width: 1000px;">
+        <div class="row1 story">
+                <div class="col-md-7">
+                    <div style="width: 130%;">
+                        <img class="leaf" th:src="@{ /images/common/Leaf.png}"><a style="font-size: 30pt; font-weight: bold;" th:text="${ detail.farmer.farmerName }"></a>
+                        <a style="font-size: 30pt; font-weight: bold;">등록 정보</a>
+                        <a style="font-size: 30pt; font-weight: bold;"> > </a>
+                        <a style="font-size: 30pt; font-weight: bold;">스토리</a><br>
+                    </div><hr>
+                    <input id="projectApplicationNo" name="projectApplicationNo" type="hidden" th:value="${ detail.projectApplicationNo }">
+                    <div class="basicmenu">
+                        <a class="basictitle">프로젝트 요약</a><br>
+                        <input class="projectsummary" id="projectInfo" name="projectInfo" type="text" th:value="${ detail.projectBasicInfo.projectInfo }">
+                    </div>
+                    <div class="basicmenu">
+                        <a class="basictitle">프로젝트 스토리</a><br>
+                        <img th:src="@{${ '/upload/original/'+ attachment.projectAttachmentSaveName }}" style="width: 100%; height: 1000px;">
+                    </div><br>
+                    <div>
+                        <button type="button" class="btn3 big-btn back" style="float:right;">뒤로가기</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+<!-- JS Files
+============================================ -->
+<!-- Global Vendor, plugins JS -->
+
+<!-- Vendor JS -->
+<script th:src="@{ /js/vendor/bootstrap.bundle.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery-migrate-3.3.0.min.js }"></script>
+<script th:src="@{ /js/vendor/modernizr-3.11.2.min.js }"></script>
+<script th:src="@{ /js/vendor/jquery.waypoints.js }"></script>
+
+<!--Plugins JS-->
+<script th:src="@{ /js/plugins/wow.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery-ui.min.js }"></script>
+<script th:src="@{ /js/plugins/swiper-bundle.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.nice-select.js }"></script>
+<script th:src="@{ /js/plugins/parallax.min.js }"></script>
+<script th:src="@{ /js/plugins/jquery.magnific-popup.min.js }"></script>
+
+<!--Main JS (Common Activation Codes)-->
+<script th:src="@{ /js/main.js }"></script>
+
+</body>
+<script>
+
+    $(".back").click(function () {
+
+        const projectApplicationNo = $("#projectApplicationNo").val();
+
+        location.href = "/project/examination/detail/" + projectApplicationNo;
+
+    });
+
+</script>
+</html>

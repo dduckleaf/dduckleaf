@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>프로젝트 검색</title>
+  <meta name="robots" content="noindex, follow" />
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+  
+  <!-- Style CSS -->
+  <link rel="stylesheet" th:href="@{ /css/mockfund.css }">
+  <link rel="stylesheet" th:href="@{ /css/style.css }">
+  <link rel="stylesheet" th:href="@{ /css/projectlist.css }">
+  <!-- 신기한 모달 -->
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    .filter-pointer{
+      cursor: pointer;
+    }
+    .product-content {
+      height: 180px !important;
+    }
+  </style>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div class="container" style="height: 70%">
+  
+  <div class="" style="width: 1200px;">
+    <div class="title-div" style="margin-top: 3%">
+				<span class="text-title">
+					<img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">
+                    <label id="keyword">진행중 프로젝트</label>
+				</span>
+      <hr style="width: 100%">
+    </div>
+  </div>
+  <div class="row" style="margin-top: 70px">
+    <th:block th:each="project : ${projectList}">
+      <th:block th:if="${ project.reward ne null}">
+        <div class="col-3 project-list-box">
+          <div class="product-img img-zoom-effect">
+            <a th:href="'/project/projectdetail/' + @{${project.projectNo}}">
+              <img class="img-full mainimg" th:src="${project.imagePath}" alt="Product Images">
+            </a>
+          </div>
+          <div class="product-content">
+            <a class="product-name" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.projectName}]]</a><br>
+            <div class="price-box pb-1">
+              <span class="new-price">[[${project.farmer.farmerInfo.businessName}]]</span>
+            </div>
+            <progress class="project-progress" th:value="${project.achievementRate}" max="100"></progress>
+            <a class="progressbar-list" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.achievementRate}]]%</a><br>
+            
+            <a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.progressStatus.projectProgressStuatusName}]]&nbsp;&nbsp;&nbsp;</a><br>
+            <a class="progressName" th:href="'/project/projectdetail/' + @{${project.projectNo}}">[[${project.timeInfo}]]&nbsp;&nbsp;&nbsp;</a>
+          </div>
+        </div>
+      </th:block>
+    </th:block>
+  </div>
+  <div class="project-list-paging">
+    <div th:replace="/project/list/projectlistpaging.html"></div>
+  </div>
+</div>
+<footer th:replace="/common/footer.html"></footer>
+<div th:replace="/project/list/projectlistfilter.html"></div>
+</body>
+</html>

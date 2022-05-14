@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+    <link rel="stylesheet" th:href="@{ /css/projectapplication.css }">
+    <style>
+        .bigcontainer,.container {
+            display: inline-block;
+        }
+        
+        .bigcontainer {
+            margin-top: 5%;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<main style="width: 1920px">
+<div th:replace="/common/adminheader.html"></div>
+    <div class="col-2 bigcontainer">
+        <div th:replace="/project/manage/application/submenu.html"></div>
+    </div>
+    <div class="col-md-2"></div>
+    <div class="col-md-7 container">
+        <input type="hidden" id="projectApplicationNo" name="projectApplicationNo" th:value="${ detail.projectApplicationNo }">
+        <div class="fundtitle">
+            <img class="leaf" th:src="@{ /images/common/Leaf.png }">등록 정보
+        </div><hr>
+        <div class="funddata">
+            <a class="fundsubtitle">기본 요건</a><a class="fundstatus"></a><a class="fund-btn basicreq">확인하기</a>
+        </div>
+        <div class="funddata">
+            <a class="fundsubtitle">기본 정보</a><a class="fundstatus"></a><a class="fund-btn basicinfo">확인하기</a>
+        </div>
+        <div class="funddata">
+            <a class="fundsubtitle">스토리 작성</a><a class="fundstatus"></a><a class="fund-btn story" style="height: 30px !important;">확인하기</a>
+        </div>
+        <div class="funddata">
+            <a class="fundsubtitle">리워드 설계</a><a class="fundstatus"></a><a class="fund-btn reward">확인하기</a>
+        </div>
+        <div class="funddata">
+            <a class="fundsubtitle">위험요인 및 정책</a><a class="fundstatus"></a><a class="fund-btn policy">확인하기</a>
+        </div>
+        <div class="funddata">
+            <a class="fundsubtitle">파머 정보</a><a class="fundstatus"></a><a class="fund-btn farmer">확인하기</a>
+        </div>
+        <div class="funddata">
+            <a class="fundsubtitle">대표자 및 정산 정보</a><a class="fundstatus"></a><a class="fund-btn representative">확인하기</a>
+        </div>
+        <div style="height: 30px;"></div>
+    </div>
+</main>
+
+</body>
+<script>
+
+    const projectApplicationNo = $("#projectApplicationNo").val();
+
+    $(".basicreq").click(function () {
+          location.href = "/project/examination/basicreq/" + projectApplicationNo;
+    })
+
+    $(".basicinfo").click(function () {
+        location.href = "/project/examination/basicinfo/" + projectApplicationNo;
+    })
+
+    $(".story").click(function () {
+        location.href = "/project/examination/story/" + projectApplicationNo;
+    })
+
+    $(".reward").click(function () {
+        location.href = "/project/examination/reward/" + projectApplicationNo;
+    })
+
+    $(".policy").click(function () {
+        location.href = "/project/examination/policy/" + projectApplicationNo;
+    })
+
+    $(".farmer").click(function () {
+        location.href = "/project/examination/farmer/" + projectApplicationNo;
+    })
+
+    $(".representative").click(function () {
+        location.href = "/project/examination/representative/" + projectApplicationNo;
+    })
+</script>
+</html>

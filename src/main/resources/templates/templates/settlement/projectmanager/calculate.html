@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/settlement.css}">
+    <style>
+        #back, #calculate {
+            margin-top: 20px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<main style="width: 1920px">
+    <div class="row">
+        <div th:replace="/common/adminheader.html"></div>
+    </div>
+    <div class="row">
+        <div class="col-2">
+            <div th:replace="/project/manage/end/submenu.html"></div>
+        </div>
+        <div class="col-10">
+            <div class="body-area2">
+                <br><br>
+                <div class="title-div">
+                            <span class="text-title">
+                                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">정산금 계산</span>
+                    <hr width="100%">
+                </div>
+                <div class="table-area" align="center">
+                    <table class="settlement-info-table" style="width: 100%">
+                        <tr>
+                            <th style="width: 20%">펀딩금 (원)</th>
+                            <td style="width: 30%" id="fundingAmount"></td>
+                            <th style="width: 20%">달성률 (%)</th>
+                            <td style="width: 30%" id="achieveRate"></td>
+                        </tr>
+                        <tr>
+                            <th style="width: 20%">적용수수료율 (%)</th>
+                            <td style="width: 30%" id="feeRate"></td>
+                            <th style="width: 20%">수수료 (원)</th>
+                            <td style="width: 30%" id="commissionAmount"></td>
+                        </tr>
+                        <tr>
+                            <th style="width: 20%">1차 정산금 (원)</th>
+                            <td style="width: 30%" id="first-payment"></td>
+                            <th style="width: 20%">2차 정산금 (원)</th>
+                            <td style="width: 30%" id="second-payment"></td>
+                        </tr>
+                    </table>
+                    <input type="hidden" id="farmerCheckStatus">
+                    <button class="basic-btn big-btn btn1" id="calculate">계산하기</button>
+<!--                    <button class="basic-btn big-btn btn1" id="farmerCheck">파머 확인여부 보기</button>-->
+                    <button class="basic-btn big-btn btn3" id="back">이전 화면</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<script th:src="@{ /js/vendor/jquery-3.5.1.min.js }"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    /* 정산금 계산하기 */
+    const calculate = document.getElementById("calculate");
+    if(calculate) {
+        calculate.onclick = function() {
+
+            fetch("/settlement/calculate/[[${project.projectNo}]]")
+                .then(response => response.json())
+                .then(response => {
+                    console.table(response);
+
+
+                    const $fundingAmount = $("#fundingAmount");
+                    const $achieveRate = $("#achieveRate");
+                    const $feeRate = $("#feeRate");
+                    const $commissionAmount = $("#commissionAmount");
+                    const $firstPayment = $("#first-payment");
+                    const $secondPayment = $("#second-payment");
+                    const $farmerCheckStatus = $("#farmerCheckStatus");
+
+                    /* 계산한 값을 테이블에 삽입 */
+                    $fundingAmount.text(response.settlementInfo.fundingTotalAmount);
+                    $achieveRate.text(response.settlementInfo.project.achievementRate);
+                    $feeRate.text(response.feeInfo.feePolicy.feeApplyRate);
+                    $commissionAmount.text(response.settlementInfo.totalCommissionAmount);
+                    $firstPayment.text(response.settlementPaymentInfos[0].settlementPaymentAmount);
+                    $secondPayment.text(response.settlementPaymentInfos[1].settlementPaymentAmount);
+                    $farmerCheckStatus.val(response.settlementPaymentInfos[0].farmerSettlementCheckStatus);
+                });
+        }
+    }
+
+    /* 이전 화면으로 이동 */
+    const back = document.getElementById("back");
+    if(back) {
+        back.onclick = function() {
+            location.href = "/settlement/projectmanager/overview/[[${project.projectNo}]]";
+        }
+    }
+</script>
+</html>

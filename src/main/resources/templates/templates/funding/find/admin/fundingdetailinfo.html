@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>펀딩 상세 정보</title>
+	<meta name="robots" content="noindex, follow" />
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Favicon -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+	<script src="https://kit.fontawesome.com/c24bc5c6f2.js" crossorigin="anonymous"></script>
+	<!-- Style CSS -->
+	<link rel="stylesheet" th:href="@{ /css/funding.css }">
+	<link rel="stylesheet" th:href="@{ /css/style.css }">
+	
+	<!-- JQuery-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- 신기한 모달 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+<div th:replace="/common/adminheader.html"></div>
+<div class="container" style="height: 70%">
+	<div class="" style="width: 1200px;">
+		<div style="margin-top:5%;"></div>
+		<span class="text-title">
+	        <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">
+			 펀딩 내역
+		</span>
+		<hr width="100%" >
+		
+		<div class="funding-detail-info-border">
+			<div class="funding-detail-info-box">
+				<label class="category">[[${funding.rewardCategoryName}]]</label><br>
+				<label class="projectStatus">
+					<th:block th:if="${ funding.project.progressStatus eq '3'}">진행중</th:block>
+					<th:block th:if="${ funding.project.progressStatus eq '4'}">완료</th:block>
+				</label><br>
+				<label class="projectName">[[${funding.project.projectName}]]</label><br>
+				<label class="farmerName">[[${funding.project.farmer.farmer.businessName}]]</label><br>
+				<br>
+				<br>
+				<div class="row">
+					<div class="col-10">
+						<label class="funding-order">주문일</label><br>
+					</div>
+					<div class="col " style="text-align: right;">
+						<label class="funding-order">[[${funding.fundingDate}]]</label><br>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-10 ">
+						<label class="funding-order">펀딩금 총액</label><br>
+					</div>
+					<div class="col" style="text-align: right;">
+						<label class="funding-order">[[${funding.fundingAmount}]] 원</label><br>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-10 ">
+						<label class="funding-order">리워드 결제금액</label><br>
+					</div>
+					<div class="col" style="text-align: right;">
+						<label class="funding-order" th:text="${ funding.rewardAmount * funding.project.rewardInfo.rewardPrice} + ' 원'"> </label><br>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-10 ">
+						<label class="funding-order">후원금</label><br>
+					</div>
+					<div class="col" style="text-align: right;">
+						<label class="funding-order">[[${funding.donateAmount}]] 원</label><br>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-10 ">
+						<label class="funding-order">배송비</label><br>
+					</div>
+					<div class="col" style="text-align: right;">
+						<th:block th:if="${ funding.extraShippingFeeStatus eq 'N'}">
+							<label class="funding-order">[[${funding.project.projectShippingFee.shippingFee}]] 원</label><br>
+						</th:block>
+						<th:block th:if="${ funding.extraShippingFeeStatus eq 'Y'}">
+							<label class="funding-order">[[${funding.project.projectShippingFee.extraShippingFee}]] 원</label><br>
+						</th:block>
+						
+					</div>
+				</div>
+				<br>
+			</div>
+		</div>
+		<div class="funding-detail-info-border">
+			<div class="funding-detail-reward-info-box">
+				<label class="funding-detail-reward-name">환불계좌 정보</label><br><br>
+				<label class="funding-detail-reward-info">예금주명 : [[${funding.refundName}]]</label><br><br>
+				<label class="funding-detail-reward-info">은행 : [[${funding.refundBankCode.bankName}]]</label><br><br>
+				<label class="funding-detail-reward-info">환불계좌 : [[${funding.refundAccount}]]</label><br><br>
+				<label class="funding-detail-reward-info">* 프로젝트 교환/ 펀딩금반환/AS정책은 반환정책을 확인하세요</label><br><br>
+				<a class="funding-detail-reward-info" style="font-size: 1em;"><u>프로젝트 반환 정책 바로가기</u></a><br><br>
+			</div>
+		</div>
+		<div class="funding-detail-info-border">
+			<div class="funding-detail-shipping-info-box">
+				<label>배송지 정보</label><br><br>
+				<label>[[${addressInfo.shippingMemberName}]]</label><br>
+				<label>[[${addressInfo.shippingMemberPhone}]]</label><br><br>
+				<label>[ [[${addressInfo.zipCode}]] ] [[${addressInfo.address1}]] [[${addressInfo.address2}]]</label><br>
+				<label>[[${addressInfo.shippingRequire}]]</label><br><br>
+			</div>
+		</div>
+		
+		
+		<div style="; text-align: right;margin: 3%">
+			<button class="basic-btn btn3 medium-btn" th:onclick="'location.href=\'/funding/find/admin/memberlist/detail/' + ${funding.memberNo} + '\''">뒤로가기</button>
+		</div>
+	</div>
+</div>
+<script th:inline="javascript">
+ 
+    // const $refundbtn = document.getElementById("refund-button");
+    // if($refundbtn) {
+    //     $refundbtn.onclick = function() {
+	//         const $url = "/refund/regist/refundregist/" + [[${funding.fundingInfoNo}]];
+	//         location.href = $url;
+    //     }
+    // }
+</script>
+
+
+
+</body>
+</html>

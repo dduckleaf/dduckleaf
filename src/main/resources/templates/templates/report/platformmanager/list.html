@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/report.css}">
+    <style>
+        #back {
+            float: right;
+        }
+    </style>
+</head>
+<script>
+    /* 신고 답변 등록 성공 메시지 */
+    const registSuccessMessage = "[[${ registSuccessMessage }]]";
+    registSuccessMessage && alert(registSuccessMessage);
+</script>
+<body>
+<main style="width: 1920px">
+    <div th:replace="/common/adminheader.html"></div>
+    <div class="body-area">
+        <div class="title-div">
+            <span class="text-title">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">전체 프로젝트 신고내역 </span>
+            <hr width="100%">
+        </div>
+        <!-- Begin 게시판영역 -->
+        <table class="basic-table" align="center" style="width: 100%">
+            <tr>
+                <th style="width: 5%;">신고번호</th>
+                <th style="width: 8%;">처리상태</th>
+                <th style="width: 45%;">신고 프로젝트 명</th>
+                <th style="width: 25%;">신고유형</th>
+                <th style="width: 8%;">신고자 아이디</th>
+                <th style="width: 9%;">신고일</th>
+            </tr>
+            <th:block th:if="${ #strings.isEmpty(projectReportList) }">
+                <tr>
+                    <td colspan="6" align="center">신고내역이 없습니다.</td>
+                </tr>
+            </th:block>
+            <th:block th:if="${ !#strings.isEmpty(projectReportList) }">
+                <tr th:each="report : ${ projectReportList }">
+                    <td th:text="${ report.projectReportNo }">1</td>
+                    <td th:text="${ report.projectReportStatus }">test</td>
+                    <td th:text="${ report.project.projectName }">test</td>
+                    <td th:text="${ report.reportCategory.reportCategoryName }">test</td>
+                    <td th:text="${ report.member.memberId }">test</td>
+                    <td th:text="${ report.projectReportDate }">test</td>
+                </tr>
+            </th:block>
+        </table>
+        <br>
+        <button class="basic-btn small-btn btn3" id="back" onclick="location.href='/report/platformmanager/default'">이전</button>
+        <br>
+        <!-- paging -->
+        <div style="text-align: center">
+            <div th:replace="/report/platformmanager/paging.html"></div>
+        </div>
+
+
+        <!-- 게시판영역 End Here -->
+    </div>
+</main>
+<script>
+    /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for(let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function() {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function() {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function() {
+                const reportNo = this.parentNode.children[0].innerText;
+                location.href = "/report/platformmanager/detail/" + reportNo;
+            }
+        }
+    }
+
+    /* 검색 기능 */
+    // let keyword = document.getElementById("searchValue").innerText;
+    // let category = document.getElementById("category");
+    //
+    // const search = document.getElementById("search");
+    // if(search) {
+    //     search.onclick = function() {
+    //         location.href = "/report/platformmanager"/ + category + "/" + keyword;
+    //     }
+    // }
+</script>
+</body>
+</html>

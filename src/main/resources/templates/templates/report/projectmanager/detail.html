@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/report.css}">
+</head>
+<style>
+    #registPage, #registReply, #backToList, #backToDetail {
+        margin-top: 10px !important;
+    }
+</style>
+<body>
+<main style="width: 1920px">
+    <div th:replace="/common/adminheader.html"></div>
+    <div class="row">
+        <div class="col-2">
+            <div th:replace="/common/projectmanager/menubar.html"></div>
+        </div>
+        <div class="col-10">
+            <div class="body-area">
+                <div class="title-div">
+                        <span class="text-title">
+                            <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">프로젝트 신고내역 상세조회</span>
+                    <hr width="100%">
+                </div>
+                <br>
+                <span class="test-subtitle">신고내용 상세</span>
+                <table class="basic-table detail-view" align="center">
+                    <tr>
+                        <th>프로젝트명</th>
+                        <td th:text="${ reportDetailInfo.projectReport.project.projectName }"></td>
+                    </tr>
+                    <tr>
+                        <th>신고유형</th>
+                        <td th:text="${ reportDetailInfo.projectReport.reportCategory.reportCategoryName }">프로젝트 내 허위사실</td>
+                    </tr>
+                    <tr>
+                        <th>처리상태</th><td th:text="${ reportDetailInfo.projectReport.projectReportStatus }"></td>
+                    </tr>
+                    <tr>
+                        <th>신고사유</th>
+                        <td><textarea cols="95" rows="7" style="margin-top: 10px; resize: none;" readonly
+                                      th:text="${ reportDetailInfo.projectReport.projectReportContent }"></textarea></td>
+                    </tr>
+                    <tr>
+                        <th>참고 URL</th>
+                        <td th:text="${ reportDetailInfo.projectReport.reportRefUrl }"></td>
+                    </tr>
+                    <tr>
+                        <th>신고일</th>
+                        <td th:text="${ reportDetailInfo.projectReport.projectReportDate }"></td>
+                    </tr>
+                </table>
+                <br><br>
+                <span class="test-subtitle">신고자 정보</span>
+                <table class="basic-table detail-view" align="center">
+                    <tr>
+                        <th>이름</th>
+                        <td th:text="${ reportDetailInfo.projectReport.reporterName }">박상범</td>
+                    </tr>
+                    <tr>
+                        <th>휴대폰번호</th>
+                        <td th:text="${ reportDetailInfo.projectReport.reporterPhone }"></td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td th:text="${ reportDetailInfo.projectReport.reporterEmail }"></td>
+                    </tr>
+                </table>
+                <br><br>
+                <span class="test-subtitle">신고 답변</span>
+                <div id="replyArea">
+                    <table class="basic-table detail-view" align="center">
+                        <!-- 처리상태가 '미답변'인 경우 보여질 내용 -->
+                        <th:block th:if="${ reportDetailInfo.projectReportReply.getProjectReportReplyNo() eq 0 }">
+                            <tr>
+                                <td th:colspan="2" id="not-exist">
+                                    작성된 답변이 없습니다.
+                                </td>
+                            </tr>
+                        </th:block>
+                        <!-- 처리상태가 '답변완료'인 경우 보여질 내용 -->
+                        <th:block th:if="${ reportDetailInfo.projectReportReply.getProjectReportReplyNo() ne 0 }">
+                            <tr>
+                                <th>답변일</th>
+                                <td th:text="${ reportDetailInfo.projectReportReply.projectReportReplyDate }"></td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td><textarea cols="95" rows="7" style="margin-top: 10px; resize: none;" readonly
+                                              th:text="${ reportDetailInfo.projectReportReply.projectReportReplyContent }" required></textarea></td>
+                            </tr>
+                        </th:block>
+                    </table>
+                    <div class="btn-area">
+                        <input type="button" value="목록으로" class="basic-btn medium-btn btn3" id="backToList" style="float:left;">
+                        <input type="button" value="신고 답변" class="basic-btn medium-btn btn1" id="registPage" style="float:right;">
+                    </div>
+                </div>
+
+                <!-- 숨겨진 답변등록용 div -->
+                <div id="registArea" style="display: none;">
+                    <form th:action="'/report/projectmanager/regist/' + @{${project.projectNo}}" method="post"
+                          onsubmit="return confirm('답변이 등록되면 수정 또는 삭제할 수 없습니다. \n신고 답변을 등록하시겠습니까?');">
+                        <table class="basic-table detail-view" align="center">
+                            <tr>
+                                <th>답변일</th>
+                                <td name="projectReportReplyDate">
+                                    <input name="projectReportReplyDate" type="text" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" readonly>
+                                    <input name="projectReportNo" id="test" type="hidden" th:value="${ reportDetailInfo.projectReport.projectReportNo }">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>내용</th>
+                                <td><textarea name="projectReportReplyContent" cols="95" rows="7" style="margin-top: 10px; resize: none;"></textarea></td>
+                            </tr>
+                        </table>
+                        <div class="btn-area">
+                            <input type="button" value="이전화면" class="basic-btn medium-btn btn3" id="backToDetail"
+                                   th:onclick="'location.href=\'/report/projectmanager/detail/' + @{${ projectNo }} + '/' + @{${ projectReportNo }} + '\''" style="float:left;">
+                            <input type="submit" value="답변등록" class="basic-btn medium-btn btn1" id="registReply" style="float:right;">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<script>
+    /* 목록화면으로 이동 */
+    const backToList = document.getElementById("backToList");
+    if(backToList) {
+        backToList.onclick = function() {
+            location.href = "/report/projectmanager/list/[[${project.projectNo}]]";
+        }
+    }
+
+    /* 상세조회 화면으로 돌아가기 */
+    const backToDetail = document.getElementById("backToDetail");
+    if(backToDetail) {
+        backToDetail.onclick = function() {
+            location.href = "/report/projectmanager/detail/[[${ projectReportNo }]]";
+        }
+    }
+
+    /* 답변 작성 영역 보여주기 */
+    const showRegistArea = document.getElementById("registPage");
+
+    if(showRegistArea) {
+        showRegistArea.onclick = function () {
+            const replyArea = document.getElementById('replyArea');
+            const registArea = document.getElementById("registArea");
+            console.log(replyArea);
+            console.log(registArea);
+
+            if('[[${ reportDetailInfo.projectReportReply.getProjectReportReplyNo() }]]' == 0) {
+                replyArea.style.display = 'none';
+                registArea.style.display = 'block';
+            } else {
+                alert("답변을 완료하였습니다.");
+            }
+        }
+    }
+</script>
+</html>

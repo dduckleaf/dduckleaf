@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>떡잎펀드</title>
+    <link rel="stylesheet" th:href="@{/css/shipping.css}">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
+</head>
+<body>
+<main style="width: 1920px">
+    <div th:replace="/common/menubar.html"></div>
+    <div class="mypage" th:replace="/common/endproject.html"></div>
+    <div class="tab-body-area">
+        <form name="saveForm">
+        <div class="title-div">
+            <span class="text-title">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: 0%; width: 25px; height: 27px; margin-right: 7px;">
+                발송관리
+            </span>
+            <hr width="100%">
+            <input type="hidden" name="projectNo" th:value="${project.projectNo}">
+        </div>
+        <table class="shippinglist">
+            <tr>
+                <th>발송/배송 상태</th>
+                <th>미발송</th>
+                <th>발송완료</th>
+                <th>발송지연</th>
+            </tr>
+            <tr>
+                <td th:text="'총 ' + ${rewardNotShipping.size() + rewardCompleteShipping.size() + rewardDelayShipping.size()} + ' 개'"></td>
+                <th:block th:if="${rewardNotShipping.indexOf('shippingStatusNo=1') == -1}">
+                    <td th:text="${rewardNotShipping.size()}" th:onclick="'location.href=\'/shipping/management/notshipped/' + @{${project.projectNo}} + '\''" style="cursor: pointer;"></td>
+                </th:block>
+                <th:block th:if="${rewardNotShipping.indexOf('shippingStatusNo=1') != -1}">
+                    <td th:text="0" th:onclick="'location.href=\'/shipping/management/noshipped/' + @{${project.projectNo}} + '\''" style="cursor: pointer;"></td>
+                </th:block>
+                <th:block th:if="${rewardCompleteShipping.indexOf('shippingStatusNo=2') == -1}">
+                    <td th:text="${rewardCompleteShipping.size()}" th:onclick="'location.href=\'/shipping/management/completeshipped/' + @{${project.projectNo}} + '\''" style="cursor: pointer;"></td>
+                </th:block>
+                <th:block th:if="${rewardCompleteShipping.indexOf('shippingStatusNo=2') != -1}">
+                    <td th:text="0" th:onclick="'location.href=\'/shipping/management/completeshipped/' + @{${project.projectNo}} + '\''" style="cursor: pointer;"></td>
+                </th:block>
+                <th:block th:if="${rewardDelayShipping.indexOf('shippingStatusNo=3') == -1}">
+                    <td th:text="${rewardDelayShipping.size()}" th:onclick="'location.href=\'/shipping/management/delayshipped/' + @{${project.projectNo}} + '\''" style="cursor: pointer;"></td>
+                </th:block>
+                <th:block th:if="${rewardDelayShipping.indexOf('shippingStatusNo=3') != -1}">
+                    <td th:text="0" th:onclick="'location.href=\'/shipping/management/delayshipped/' + @{${project.projectNo}} + '\''" style="cursor: pointer;"></td>
+                </th:block>
+            </tr>
+        </table>
+        <br>리워드 발송이 완료되면 발송 정보 입력을 통해 발송 처리를 진행하세요.
+            <button type="button" id="modifydate" class="modifydatebtn">발송예정일 수정</button>
+        </form>
+    </div>
+
+    <div th:replace="/common/footer.html"></div>
+
+
+
+</main>
+</body>
+</html>
+<script>
+    $("#modifydate").click(async function (modifydate) {
+        const {value: formValues} = await Swal.fire({
+            title: '발송 예정일 수정',
+            html:
+                '<div class="checkedarea2">' +
+                '<input type="date" th:value="${project.rewardShippingList.shippingDueDate}" name="shippingDueDate">' +
+                '<div class="btnArea">' +
+                '<button class="confirmbtn" id="confirmbtn">확인</button>' +
+                '</div>',
+            focusConfirm: false,
+            showConfirmButton: false,
+            customClass: {
+                title: 'confirmtitle',
+                popup: 'confirmpopup',
+                htmlContainer: 'confirmcontainer',
+                confirmButton: 'confirmbtn',
+            },
+            buttonsStyling: false,
+        })
+    });
+</script>

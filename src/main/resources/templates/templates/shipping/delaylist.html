@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>떡잎펀드</title>
+    <link rel="stylesheet" th:href="@{/css/shipping.css}">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/images/common/favicon.ico"/>
+</head>
+<body>
+<main style="width: 1920px">
+    <form name="updatestatus">
+    <div th:replace="/common/menubar.html"></div>
+    <div class="mypage" th:replace="/common/endproject.html"></div>
+    <div class="tab-body-area">
+        <div class="title-div">
+            <span class="text-title">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: 0%; width: 25px; height: 27px; margin-right: 7px;">
+                발송관리
+            </span>
+            <hr width="100%">
+        </div>
+        <button type="button" class="delaybtn">발송완료</button>
+        <table class="shippingdetail">
+            <tr>
+                <th><input type="checkbox" value="selectall" onclick="selectAll(this)"></th>
+                <th>주문번호</th>
+                <th>상태</th>
+                <th>주문일</th>
+                <th>서포터</th>
+                <th>펀딩 금액</th>
+                <th>수량</th>
+                <th>배송지</th>
+            </tr>
+            <th:block th:if="${funding.rewardShippingList.shippingStatus.shippingStatusNo == 3}" th:each="funding:${funding}">
+                <tr>
+                    <td><input type="checkbox" class="check"></td>
+                    <input type="hidden" name="fundingInfoNo" th:value="${funding.fundingInfoNo}">
+                    <td th:text="${funding.fundingInfoNo}"></td>
+                    <td th:text="${funding.rewardShippingList.shippingStatus.shippingStatusName}"></td>
+                    <td th:text="${funding.fundingDate}"></td>
+                    <td th:text="${funding.member.memberName}"></td>
+                    <td th:text="${funding.fundingAmount}"></td>
+                    <td th:text="${funding.rewardAmount}"></td>
+                    <td th:text="${#strings.arraySplit(funding.shippingAddress.shippingAddress, '$')[1]}"></td>
+                </tr>
+            </th:block>
+        </table>
+    </div>
+
+    <div th:replace="/common/footer.html"></div>
+    </form>
+
+
+</main>
+</body>
+</html>
+<script>
+    function selectAll(selectAll) {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.checked = selectAll.checked;
+        })
+    }
+</script>

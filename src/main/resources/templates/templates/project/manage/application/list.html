@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/report.css}">
+    <style>
+        #back {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<main style="width: 1920px">
+    <div th:replace="/common/adminheader.html"></div>
+    <div class="body-area">
+        <div class="title-div">
+            <span class="text-title">
+                <img th:src="@{/images/common/Leaf.png}" style="vertical-align: -10%; width: 25px; height: 27px; margin-right: 7px;">신청 프로젝트 </span>
+            <hr width="100%">
+        </div>
+        <!-- Begin 게시판영역 -->
+        <table class="basic-table" align="center" style="width: 100%">
+            <tr>
+                <th style="width: 5%;">번호</th>
+                <th style="width: 40%;">프로젝트 명</th>
+                <th style="width: 15%;">파머 명</th>
+                <th style="width: 5%;">목표 금액</th>
+                <th style="width: 5%;">최고 금액</th>
+                <th style="width: 10%;">희망 오픈 예정일</th>
+                <th style="width: 8%;">상태</th>
+            </tr>
+<!--            <th:block th:if="${ #strings.isEmpty(projectApplicationInfoList) }">-->
+<!--                <tr>-->
+<!--                    <td colspan="6" align="center">신고내역이 없습니다.</td>-->
+<!--                </tr>-->
+<!--            </th:block>-->
+            <th:block th:if="${ !#strings.isEmpty(projectApplicationInfoList) }">
+                <tr th:each="list : ${ projectApplicationInfoList }">
+                    <td th:text="${ list.projectApplicationNo }"></td>
+                    <td th:text="${ list.project.projectName }"></td>
+                    <td th:text="${ list.farmer.farmerName }"></td>
+                    <td th:text="${ list.project.fundTargetAmount }"></td>
+                    <td th:text="${ list.project.maxTargetAmount }"></td>
+                    <td th:text="${ list.project.openDate }"></td>
+                    <td th:text="${ list.projectApplicationCategory }"></td>
+                </tr>
+            </th:block>
+        </table><br><br>
+        <div id="paging-area" align="center">
+            <!-- 맨 앞으로 이동 -->
+            <button class="paging-btn first" th:onclick="'location.href=\'/project/examination/list?page=' + @{${paging.startPage}}  + '\''"
+                    th:disabled="${ projectApplicationInfoList.first }"><<</button>
+
+            <!-- 이전 페이지로 이동 -->
+            <button class="paging-btn prev" th:onclick="'location.href=\'/project/examination/list?page=' + @{${paging.currentPage - 1}}  + '\''"
+                    th:disabled="${ projectApplicationInfoList.first }"><</button>
+
+            <!-- 숫자 버튼 -->
+            <th:block th:each="page : ${#numbers.sequence(paging.startPage, paging.endPage)}">
+                <button class="paging-btn" th:onclick="'location.href=\'/project/examination/list?page=' + @{${page}}  + '\''"
+                        th:text="${ page }" th:disabled="${ paging.currentPage eq page }"></button>
+            </th:block>
+
+            <!-- 다음 페이지로 이동 -->
+            <button class="paging-btn next" th:onclick="'location.href=\'/project/examination/list?page=' + @{${paging.currentPage + 1}}  + '\''"
+                    th:disabled="${ projectApplicationInfoList.last }">></button>
+
+            <!-- 맨 마지막으로 이동 -->
+            <button class="paging-btn last" th:onclick="'location.href=\'/project/examination/list?page=' + @{${paging.endPage}}  + '\''"
+                    th:disabled="${ projectApplicationInfoList.last }">>></button>
+        </div>
+        <!-- 게시판영역 End Here -->
+    </div>
+</main>
+<script>
+    /* 표의 각 행 호버링 이벤트, 클릭 이벤트 */
+    const tds = document.getElementsByTagName("td");
+    if(tds) {
+        for(let i = 0; i < tds.length; i++) {
+
+            tds[i].onmouseenter = function() {
+                this.parentNode.style.backgroundColor = "#f0f0f0";
+                this.parentNode.style.cursor = "pointer";
+            }
+
+            tds[i].onmouseout = function() {
+                this.parentNode.style.backgroundColor = "#fff";
+            }
+
+            tds[i].onclick = function() {
+                const projectApplicationNo = this.parentNode.children[0].innerText;
+
+                location.href = "/project/examination/review/" + projectApplicationNo;
+            }
+        }
+    }
+
+    /* 검색 기능 */
+    let keyword = document.getElementById("searchValue").innerText;
+    let category = document.getElementById("category");
+
+    const search = document.getElementById("search");
+    if(search) {
+        search.onclick = function() {
+            location.href = "/report/platformmanager"/ + category + "/" + keyword;
+        }
+    }
+</script>
+</body>
+</html>

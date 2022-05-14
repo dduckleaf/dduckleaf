@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>프로젝트 검색</title>
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico" />
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" th:href="@{ /css/mockfund.css }">
+    <link rel="stylesheet" th:href="@{ /css/style.css }">
+    <link rel="stylesheet" th:href="@{ /css/projectlist.css }">
+    <style>
+        .filter-pointer{
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="/common/menubar.html"></div>
+<div class="container" style="height: 70%">
+
+    <div class="" style="width: 1200px;">
+        <div class="title-div" style="margin-top: 3%">
+			<span class="text-title">
+				<img class="icon-title" src="/images/common/Leaf.png" alt="" width="30px">
+				<label id="keyword">감자</label>
+				<label id="search-result">검색결과</label>
+			</span>
+            <hr style="width: 100%">
+            <div class="filter-pointer"><img src="/images/project/find/img.png" alt=""></div>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 70px">
+        <th:block th:each="mockFundList : ${mockFundList}">
+            <input type="hidden" class="mockNo" th:value="${mockFundList.mockFundNo}">
+            <div class="col-3 project-list-box">
+                <div class="product-img img-zoom-effect">
+                    <a class="mockdetail" th:href="'/mockfunding/detail/' + @{${mockFundList.mockFundNo}}">
+                        <img class="img-full mainimg" src="/images/main/mushroom.png" alt="Product Images">
+                    </a>
+                </div>
+                <div class="product-content">
+                    <a class="product-name" href="single-product.html" th:text="${ mockFundList.mockFundName }"></a>
+                    <div class="price-box pb-1">
+                        <span class="new-price">[[${mockFundList.farmer.memberName}]]</span>
+                    </div>
+                    <progress class="project-progress" th:value="50" th:max="${ mockFundList.targetTicketAmount }"></progress>
+                    <a class="progressbar">획득 티켓 /</a>
+                    <a class="progressbar1">참여 서포터 수</a>
+                </div>
+            </div>
+        </th:block>
+    </div>
+    <div class="project-list-paging">
+
+        <div id="paging" align="center">
+            <button><<</button>
+            <button><</button>
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>5</button>
+            <button>></button>
+            <button>>></button>
+        </div>
+    </div>
+</div>
+<footer th:replace="/common/footer.html"></footer>
+</body>
+</html>
