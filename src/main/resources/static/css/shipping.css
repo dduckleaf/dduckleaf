@@ -72,3 +72,15 @@ td {
     color: #FFFFFF;
     margin-bottom: 10px;
 }
+
+.confirmbtn {
+    border-radius: 5px;
+    border-color: rgba(0,0,0,0);
+    background-color: #bac34e;
+    color: #FFFFFF;
+    margin-top: 10px;
+}
+
+.confirmtitle {
+    font-family: inherit !important;
+}
