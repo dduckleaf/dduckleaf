@@ -58,7 +58,6 @@ public class FaqService {
 
             return faqDTO;
         });
-        fq.forEach(System.out::println);
 
         return fq;
 

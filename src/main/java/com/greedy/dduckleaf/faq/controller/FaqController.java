@@ -55,9 +55,7 @@ public class FaqController {
     @GetMapping("/list")
     public ModelAndView findFaqList(ModelAndView mv, @PageableDefault Pageable pageable){
 
-        System.out.println("pageable= " + pageable);
         Page<FaqDTO> faqList = faqService.findFaqList(pageable);
-        faqList.forEach(System.out::println);
 
         PagingButtonInfo paging = Pagenation.getPagingButtonInfo(faqList);
 
@@ -135,7 +133,7 @@ public class FaqController {
     */
     @GetMapping("/modify/{faqNo}")
     public ModelAndView modifyFaq(ModelAndView mv, @PathVariable int faqNo) {
-        System.out.println(faqNo);
+
         FaqDTO faqmodify = faqService.findFaqDetail(faqNo);
 
         mv.addObject("modify", faqmodify);
@@ -153,7 +151,6 @@ public class FaqController {
     */
     @PostMapping("/modify")
     public ModelAndView modifyFaq(ModelAndView mv, FaqDTO updateFaq ) {
-        System.out.println(updateFaq);
         faqService.modifyFaq(updateFaq);
 
         mv.setViewName("redirect:/faq/list");
