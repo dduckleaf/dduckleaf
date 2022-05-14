@@ -165,7 +165,7 @@ public class ProjectApplicationService {
         farmerInfo.setBusinessName("상호명");
         farmerInfo.setBusinessOwnNo("사업자 등록번호");
         farmerInfo.setBusinessOwnType("사업자 유형");
-        farmerInfo.setCorporateName("법인명");
+        farmerInfo.setCorporateName(" ");
         farmerInfo.setFarmerName("파머 이름");
         farmerInfo.setFarmerEmail("이메일");
         farmerInfo.setFarmerPhone("전화번호");
