@@ -239,7 +239,7 @@ public class FundingRegistService {
         }
         funding.setExtraShippingFeeStatus(extraShippingFeeStatus);
         funding.setRefundBankCode(bankRepository.findById(registDTO.getRefundAccountInfo().getBankCode()).get());
-        funding.setRefundAccount(Integer.parseInt(registDTO.getRefundAccountInfo().getAccountNo().replace("\"", "")));
+        funding.setRefundAccount(registDTO.getRefundAccountInfo().getAccountNo());
 
         return funding;
     }

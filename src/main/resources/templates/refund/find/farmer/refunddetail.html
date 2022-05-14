@@ -104,10 +104,11 @@
 		</div>
 	</div>
 	<div style="text-align: right; margin-right: 8%;margin-top: 2%" >
-		<button class="basic-btn btn1 medium-btn" th:onclick="'location.href=\'/refund/examine/farmer/confirm/' + @{${refunding.refundingInfoNo}} + '\''">승인</button>
-		<button class="basic-btn btn2 medium-btn" data-bs-toggle="modal" data-bs-target="#refuse-modal">거절</button>
+		<th:block th:if="${refunding.refundingStatus.refundingStatusNo eq 1}">
+			<button class="basic-btn btn1 medium-btn" th:onclick="'location.href=\'/refund/examine/farmer/confirm/' + @{${refunding.refundingInfoNo}} + '\''">승인</button>
+			<button class="basic-btn btn2 medium-btn" data-bs-toggle="modal" data-bs-target="#refuse-modal">거절</button>
+		</th:block>
 		<button class="basic-btn btn3 medium-btn" onclick="location.href='/refund/find/list/farmer'">뒤로가기</button>
-	
 	</div>
 </div>
 <div th:replace="/common/footer.html"></div>

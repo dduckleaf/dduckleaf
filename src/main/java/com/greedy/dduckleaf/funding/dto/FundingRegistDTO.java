@@ -8,14 +8,14 @@ import lombok.*;
 @Getter
 @ToString
 public class FundingRegistDTO {
-    private int memberNo;         //
-    private int totalFunding;       //
-    private int rewardTotal;         //
-    private int rewardPrice;        //
-    private int rewardAmount;       //
-    private int donate;             //
-    private int shippingFee;        //
-    private int extraShippingFee;   //
+    private int memberNo;
+    private int totalFunding;
+    private int rewardTotal;
+    private int rewardPrice;
+    private int rewardAmount;
+    private int donate;
+    private int shippingFee;
+    private int extraShippingFee;
     private int projectNo;
     private String refundName;
 
