@@ -42,7 +42,7 @@ public class RefundingRegistController {
 
         service.registRefunding(refundingInfo);
 
-        mv.setViewName("redirect:/myfunding/default");
+        mv.setViewName("redirect:/refund/find/member/list");
 
         return mv;
     }
