@@ -87,6 +87,7 @@
                     if(response == "이미 사용중인 이메일 입니다.") {
                         alert(response);
                     } else {
+                        alert("인증번호가 전송되었습니다.");
                         $verificationEmail = response;
                         console.log($verificationEmail);
                         document.getElementById("email-verification-div").style.display = "block";
@@ -112,6 +113,7 @@
             console.log($verificationEmail);
 
             if($emailVerification.value === $verificationEmail) {
+                alert("인증되었습니다.");
                 $checkEmailResult = 'true';
                 $emailVerification.style.border = '1px solid #39F928';
             } else {
@@ -165,6 +167,7 @@
         $checkPhoneVerification.onclick = function() {
 
             if($phoneVerification.value === $verificationPhone) {
+                alert("인증되었습니다.");
                 $checkPhoneResult = 'true';
                 console.log($checkPhoneResult);
                 $phoneVerification.style.border = '1px solid #39F928';
