@@ -6,9 +6,9 @@
   spring:
     datasource:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc:mysql://220.78.127.194:3306/dduckleaf
-      username: team2member
-      password: team2
+      url: jdbc:mysql://3.39.171.7:59977/dduckleaf
+      username: dduckleaf
+      password: dduckleaf
       hikari:
         auto-commit: false
 
